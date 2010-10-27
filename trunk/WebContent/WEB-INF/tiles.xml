@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+    <definition name="podstawowy" template="/template.jsp">
+        <put-attribute name="header" value="/admin/head.html"/>
+        <put-attribute name="body" value="body"/>
+        <put-attribute name="body2" value=""/>
+        <put-attribute name="menu" value="menu"/>
+        <put-attribute name="menuP" value="prawe menu"/>
+        <put-attribute name="footer" value="footer"/>
+    </definition>
+    <definition name="admin.index.test" extends="podstawowy">
+        <put-attribute name="body" value="/admin/index.jsp"/>
+        <put-attribute name="menu" value="/admin/menu.jsp"/>
+        <put-attribute name="menuP" value="/admin/menuPrawe.jsp"/>
+    </definition>
+    <definition name="admin.users.form" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/user.jsp"/>
+    </definition>
+    <definition name="admin.users.list" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/userLista.jsp"/>
+    </definition>
+    <definition name="admin.users.info" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/info.jsp"/>
+    </definition>    
+    <definition name="admin.kursy.list" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/kursyLista.jsp"/>
+    </definition>
+    <definition name="admin.kursy.form" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/kurs.jsp"/>
+    </definition>
+    <definition name="admin.statyczne.list" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/statyczneLista.jsp"/>
+    </definition>
+    <definition name="admin.statyczne.form" extends="admin.index.test">
+        <put-attribute name="body" value="/admin/statyczne.jsp"/>
+    </definition>
+    
+	<definition name="all.index" extends="podstawowy">
+		<put-attribute name="menuP" value="menu prawe"/>
+        <put-attribute name="body" value="cialo"/>
+        <put-attribute name="body2" value=""/>
+        <put-attribute name="menu" value="/all/menu.jsp"/>
+        <put-attribute name="footer" value="footer"/>
+    </definition>
+    <definition name="all.statyczne" extends="all.index">
+        <put-attribute name="body" value="/all/statyczne.jsp"/>
+    </definition>
+    <definition name="all.kursy.list" extends="all.index">
+        <put-attribute name="body" value="/all/kursyLista.jsp"/>
+    </definition>
+    <definition name="all.kursy.detale" extends="all.index">
+        <put-attribute name="body" value="/all/kursyDetale.jsp"/>
+    </definition>
+    
+    	<definition name="wykladowcy.index" extends="podstawowy">
+		<put-attribute name="menuP" value="menu prawe"/>
+        <put-attribute name="body" value="/wykladowcy/index.jsp"/>
+        <put-attribute name="body2" value=""/>
+        <put-attribute name="menu" value="/wykladowcy/menu.jsp"/>
+        <put-attribute name="footer" value="footer"/>
+    </definition>    
+</tiles-definitions>
