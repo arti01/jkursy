@@ -1,0 +1,9 @@
+<Context path="/slowphotography" debug="99" privileged="true"
+	antiResourceLocking="false" antiJARLocking="false">
+
+<Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
+      driverName="org.postgresql.Driver"
+   connectionURL="jdbc:postgresql://stacja/slow?user=slow&amp;password=slow01"
+       userTable="_users" userNameCol="username" userCredCol="userpass"
+   userRoleTable="_user_roles" roleNameCol="role_name" resourceName="UserSlow"/>
+</Context>

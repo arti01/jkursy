@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+
+<package extends="struts-default" name="admin" namespace="/admin">
+	<result-types>
+  		<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+	</result-types> 
+	<interceptors>
+		<interceptor name="UserInter" class="org.arti01.all.UserInter"/>
+     </interceptors>          
+		<action class="org.arti01.admin.IndexAc" name="index">
+			<interceptor-ref name="jsonValidationWorkflowStack" />
+			<interceptor-ref name="UserInter" />
+			<result name="test">/admin/index.jsp</result>
+			<result name="input">/admin/index.jsp</result>
+			<result type="tiles">admin.index.test</result>
+		</action>
+		<action class="org.arti01.admin.UsersAc" name="users">
+			<interceptor-ref name="jsonValidationWorkflowStack"/>
+			<interceptor-ref name="UserInter" />
+			<result name="form" type="tiles">admin.users.form</result>
+			<result name="list" type="tiles">admin.users.list</result>
+			<result name="info" type="tiles">admin.users.info</result>
+			<result name="next" type="redirect">${nextAction}</result>
+			<result type="tiles">admin.index.test</result>
+			<result name="error">/admin/info.jsp</result>
+		</action>
+		<action class="org.arti01.admin.KursyAc" name="kursy">
+			<interceptor-ref name="jsonValidationWorkflowStack" />
+			<interceptor-ref name="UserInter" />
+			<result name="list" type="tiles">admin.kursy.list</result>
+			<result name="form" type="tiles">admin.kursy.form</result>
+			<result name="info" type="tiles">admin.users.info</result>
+			<result name="input" type="tiles">admin.kursy.form</result>
+		</action>
+		<action class="org.arti01.admin.StatyczneAc" name="statyczne">
+			<interceptor-ref name="jsonValidationWorkflowStack" />
+			<interceptor-ref name="UserInter" />
+			<result name="list" type="tiles">admin.statyczne.list</result>
+			<result name="form" type="tiles">admin.statyczne.form</result>
+			<result name="info" type="tiles">admin.users.info</result>
+			<result name="relist" type="redirectAction">statyczne!list</result>
+			<result name="input" type="tiles">admin.statyczne.form</result>
+		</action>
+	</package>
+</struts>
