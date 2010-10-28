@@ -47,7 +47,7 @@ public class User{
 		return username;
 	}
 
-	@FieldExpressionValidator(key = "login juz istnieje", expression = "new UserImp().istnieje(username)")
+	@FieldExpressionValidator(key = "login juz istnieje", expression = "!isIstnieje()")
 	@RequiredStringValidator(message="login nie moze byc pusty")
 	public void setUsername(String username) {
 		this.username = username;
@@ -173,6 +173,10 @@ public class User{
 
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	public boolean isIstnieje() {
+		return new UserImp().istnieje(this);
 	}
 
 	}
