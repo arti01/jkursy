@@ -132,11 +132,14 @@ public class UserImp implements UserInt {
 		return userNew;
 	}
 
-	public boolean istnieje(String username){
-		if(username==null) return true;
+	public boolean test(){
+		return true;
+	}
+	public boolean istnieje(User user){
+		if(user.getUsername()==null) return true;
 		Baza baza = new Baza();
 		Query query = baza.przygotuj("from User where username=:username");
-		query.setString("username", username);
+		query.setString("username", user.getUsername());
 		if(query.list().size()==0) return false;
 		else return true; 
 	}

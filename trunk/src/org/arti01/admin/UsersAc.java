@@ -35,13 +35,13 @@ public class UsersAc extends Akcja {
 	List<Rola> roleAll;
 	// private String nextAction;
 	private boolean admin = false;
+
 	private String prawo=null;
 	private boolean asc = true;
 	private String sortTyp = "";
 
 	@SkipValidation
 	public String formAdmin() throws Exception {
-		logger.info("issssssssssssssssssssssss"+new UserImp().istnieje(null));
 		prawo=Rola.ADMIN;
 		if (user != null) {
 			user = new UserImp().find(user);
