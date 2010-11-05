@@ -3,17 +3,20 @@
           "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
           "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-	<session-factory>
+	<session-factory name="java:comp/env/hibernate/SessionFactory">
+	<!-- 
 		<property name="connection.url">jdbc:postgresql://stacja/slow</property>
 		<property name="connection.username">slow</property>
 		<property name="connection.driver_class">org.postgresql.Driver</property>
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		<property name="connection.password">slow01</property>
+		 -->
+		 <property name="connection.datasource">jdbc/slow</property>
 		<property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
-		<!-- Use the C3P0 connection pool. -->
+		<!-- Use the C3P0 connection pool.
         <property name="c3p0.min_size">1</property>
         <property name="c3p0.max_size">3</property>
-        <property name="c3p0.timeout">6000</property>
+        <property name="c3p0.timeout">6000</property> -->
     
         <!-- Disable second-level cache. -->
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
