@@ -10,10 +10,10 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 @SuppressWarnings("serial")
 public class AllInter extends AbstractInterceptor {
 	Logger logger = Logger.getLogger(AllInter.class);
-	
-    public String intercept(ActionInvocation invocation) throws Exception {
-    	All action = (All)invocation.getAction();
-        action.setStatyczne(new StatyczneImp().findAll());
-       return invocation.invoke();
-    }
+
+	public String intercept(ActionInvocation invocation) throws Exception {
+		All action = (All) invocation.getAction();
+		action.setStatyczne(new StatyczneImp().findAll());
+		return invocation.invoke();
+	}
 }

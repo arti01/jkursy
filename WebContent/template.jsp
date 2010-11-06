@@ -5,12 +5,12 @@
 <body>
 <table>
 <tr>
-<td>
+<td valign="top">
 <tiles:insertAttribute name="menu" />
 </td><td>
 <tiles:insertAttribute name="body" />
 <tiles:insertAttribute name="body2"/>
-</td><td>
+</td><td valign="top">
 <tiles:insertAttribute name="menuP" />
 </td>
 </tr>

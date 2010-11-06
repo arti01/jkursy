@@ -3,10 +3,8 @@ package org.arti01.abstrakt;
 import java.util.List;
 import org.arti01.obiekty.Statyczne;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 @SuppressWarnings("serial")
-public abstract class All extends ActionSupport {
+public abstract class All extends Akcja {
 	private List<Statyczne> statyczne;
 
 	public List<Statyczne> getStatyczne() {

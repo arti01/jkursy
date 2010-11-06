@@ -1,7 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<sx:head extraLocales="pl-pl"/>
+<sx:head/>
 <body>
 <s:actionerror />
 <s:form method="post" namespace="/admin" action="statyczne!dodaj.action" theme="simple">
