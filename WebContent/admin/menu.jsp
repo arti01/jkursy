@@ -15,6 +15,10 @@
 		method="listKursant"></s:url> <s:a href="%{url1}">
 		<s:text name="lista kursantów" />
 	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="users"
+		method="listNowych"></s:url> <s:a href="%{url1}">
+		<s:text name="lista nowych userów" />
+	</s:a></li>
 	<li><s:url id="url1" namespace="/admin" action="kursy"
 		method="listKursy"></s:url> <s:a href="%{url1}">
 		<s:text name="lista kursów" />

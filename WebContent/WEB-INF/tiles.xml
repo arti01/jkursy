@@ -47,6 +47,9 @@
         <put-attribute name="menu" value="/all/menu.jsp"/>
         <put-attribute name="footer" value="footer"/>
     </definition>
+    <definition name="all.zalozKonto.form" extends="all.index">
+        <put-attribute name="body" value="/all/user.jsp"/>
+    </definition>
     <definition name="all.statyczne" extends="all.index">
         <put-attribute name="body" value="/all/statyczne.jsp"/>
     </definition>

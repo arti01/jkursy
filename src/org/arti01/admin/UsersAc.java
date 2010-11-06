@@ -126,11 +126,13 @@ public class UsersAc extends Akcja {
 		// koniec obslugi roli
 		if (!zmien) {// dodawanie
 			try {
+				logger.info("dodanie"+user.getImieNazwisko());
 				user.setRole(role);
 				user.setKursy(kursy);
 				new UserImp().insert(user);
 				setInfoText("login.dodany");
 			} catch (Exception e) {
+				logger.error("dodanie", e);
 				addActionError("Nie udało się stworzyć użytkownika - najprawdopodobniej już taki istnieje");
 				return "info";
 			}
@@ -154,7 +156,7 @@ public class UsersAc extends Akcja {
 				setInfoText("login.zmieniony");
 			} catch (Exception e) {
 				addActionError("problem z edycja danych usera");
-				logger.info("ssssssss", e);
+				logger.error("ssssssss", e);
 				return "info";
 			}
 		}
@@ -185,6 +187,14 @@ public class UsersAc extends Akcja {
 		return "list";
 	}
 
+	@SkipValidation
+	public String listNowych() throws Exception {
+		prawo=Rola.NOWY;
+		users = new UserImp().findNowy(sortTyp, asc);
+		// logger.info("ssssssss"+users.size());
+		return "list";
+	}
+	
 	@SkipValidation
 	public String sortListAdmin() throws Exception {
 		prawo=Rola.ADMIN;

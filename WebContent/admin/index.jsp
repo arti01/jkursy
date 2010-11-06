@@ -5,3 +5,5 @@ treść
 <H2>Witaj, <s:property value="zalogowany.username"/>...</H2>
 <H3>Info: <s:property value="zalogowany.wiadomosc"/>...</H3>
 
+
+
