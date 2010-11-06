@@ -46,7 +46,6 @@ public class KursyAc extends Akcja {
 	}
 	
 	public String dodaj() throws Exception {
-		logger.info("tutaj");
 		if (!zmien) {// dodawanie
 			try {
 				new KursImp().insert(kurs);

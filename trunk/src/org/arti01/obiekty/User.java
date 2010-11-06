@@ -16,10 +16,8 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 @Table(name = "_users")
 public class User{
 	
-	//@OneToMany(mappedBy="user",fetch=FetchType.EAGER, orphanRemoval=true)
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="_user_roles", joinColumns = @JoinColumn( name="username"),inverseJoinColumns = @JoinColumn( name="role_name"))
-	//@JoinTable(inverseJoinColumns = @JoinColumn( name="username"))
 	private Set <Rola> role;
 	
 	@ManyToMany(fetch=FetchType.LAZY)

@@ -70,6 +70,27 @@ public class UserImp implements UserInt {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<User> findNowy(String order, boolean asc) {
+		order="imieNazwisko";
+		Query query;
+		String ascS;
+		if(asc) ascS="asc";
+		else ascS="desc";
+		Baza baza=new Baza();
+		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role)");
+		Set<Rola> role=new HashSet<Rola>();
+		Rola rola=new Rola();
+		rola.setRola("");
+		role.add(rola);
+		query.setParameterList("role", role);
+		for(Object o:baza.select(query)){
+			User u=(User) o;
+			logger.info(u.getUsername());	
+		}
+		return baza.select(query);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<User>findOrderUsername(boolean asc) {
 		 Baza baza=new Baza();
 		 Query query;
