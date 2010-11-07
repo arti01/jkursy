@@ -77,12 +77,12 @@ public class UserImp implements UserInt {
 		if(asc) ascS="asc";
 		else ascS="desc";
 		Baza baza=new Baza();
-		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role)");
+		query=baza.przygotuj("select distinct u from User as u where u not in (select u from User as u join u.role as r)");
 		Set<Rola> role=new HashSet<Rola>();
 		Rola rola=new Rola();
 		rola.setRola("");
 		role.add(rola);
-		query.setParameterList("role", role);
+		//query.setParameterList("role", role);
 		for(Object o:baza.select(query)){
 			User u=(User) o;
 			logger.info(u.getUsername());	
