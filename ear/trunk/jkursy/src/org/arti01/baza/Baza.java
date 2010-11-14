@@ -3,16 +3,16 @@ package org.arti01.baza;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Baza implements Serializable {
 	private static final long serialVersionUID = 1L;
-	final static Logger logger = LoggerFactory.getLogger(Baza.class);
+	final static Logger logger = Logger.getLogger(Baza.class);
 	Transaction tx = null;
 
 	public Query przygotuj(String select) {

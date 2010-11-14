@@ -8,16 +8,13 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
 import org.hibernate.StaleObjectStateException;
 
 public class HibernateSessionRequestFilter implements Filter {
 
-	private static Log log = LogFactory
-			.getLog(HibernateSessionRequestFilter.class);
+	private static Logger log = Logger.getLogger(HibernateSessionRequestFilter.class);
 
 	private SessionFactory sf;
 
