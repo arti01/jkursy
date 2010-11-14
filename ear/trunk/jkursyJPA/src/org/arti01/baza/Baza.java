@@ -1,4 +1,4 @@
-package baza;
+package org.arti01.baza;
 
 import java.io.Serializable;
 import java.util.ArrayList;

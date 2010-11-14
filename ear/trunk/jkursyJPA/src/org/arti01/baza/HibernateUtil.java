@@ -1,4 +1,4 @@
-package baza;
+package org.arti01.baza;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;

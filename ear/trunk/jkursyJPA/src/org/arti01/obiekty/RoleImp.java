@@ -1,4 +1,4 @@
-package obiekty;
+package org.arti01.obiekty;
 
 import java.util.List;
 
@@ -6,33 +6,33 @@ import org.apache.log4j.Logger;
 import org.arti01.baza.Baza;
 import org.hibernate.Query;
 
-public class RolaImp implements RolesInt {
-	Logger logger = Logger.getLogger(RolaImp.class);
+public class RoleImp  {
+	Logger logger = Logger.getLogger(RoleImp.class);
 
 	@SuppressWarnings("unchecked")
-	public List<Rola> findAll() {
-		return new Baza().getAll("from Rola");
+	public List<Role> findAll() {
+		return new Baza().getAll("from Role");
 	}
 
-	public void insert(Rola userRoles) {
+	public void insert(Role userRoles) {
 		new Baza().dodaj(userRoles);
 	}
 
-	public void update(Rola userRoles) throws Exception {
+	public void update(Role userRoles) throws Exception {
 		new Baza().update(userRoles);
 	}
 
-	public void remove(Rola userRoles) throws Exception {
+	public void remove(Role userRoles) throws Exception {
 			new Baza().usun(userRoles);
 	}
 
-	public Rola find(Rola rola) {
-		Rola userRolesNew;
+	public Role find(Role rola) {
+		Role userRolesNew;
 			Baza baza = new Baza();
 			Query query = baza
-					.przygotuj("from Rola where rola=:rola");
+					.przygotuj("from Role where rola=:rola");
 			query.setEntity("rola", rola);
-			userRolesNew = (Rola) baza.select(query).iterator().next();
+			userRolesNew = (Role) baza.select(query).iterator().next();
 			logger.info("rola"+userRolesNew.getRola());
 			// userNew=(UserRoles) new
 			// Baza().pobierz("from UserRoles where username='" +

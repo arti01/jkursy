@@ -1,4 +1,4 @@
-package obiekty;
+package org.arti01.obiekty;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,7 +10,7 @@ import org.arti01.baza.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-public class UserImp implements UserInt {
+public class UserImp {
 	Logger logger = Logger.getLogger(UserImp.class);
 
 	@SuppressWarnings("unchecked")
@@ -27,9 +27,9 @@ public class UserImp implements UserInt {
 		else ascS="desc";
 		Baza baza=new Baza();
 		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role) order by u."+order+" "+ascS);
-		Rola rola=new Rola();
+		Role rola=new Role();
 		rola.setRola("admin");
-		Set<Rola> role=new HashSet<Rola>();
+		Set<Role> role=new HashSet<Role>();
 		role.add(rola);
 		query.setParameterList("role", role);
 		return baza.select(query);
@@ -44,9 +44,9 @@ public class UserImp implements UserInt {
 		else ascS="desc";
 		Baza baza=new Baza();
 		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role) order by u."+order+" "+ascS);
-		Rola rola=new Rola();
+		Role rola=new Role();
 		rola.setRola("wykladowca");
-		Set<Rola> role=new HashSet<Rola>();
+		Set<Role> role=new HashSet<Role>();
 		role.add(rola);
 		query.setParameterList("role", role);
 		return baza.select(query);
@@ -61,9 +61,9 @@ public class UserImp implements UserInt {
 		else ascS="desc";
 		Baza baza=new Baza();
 		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role) order by u."+order+" "+ascS);
-			Rola rola=new Rola();
+			Role rola=new Role();
 		rola.setRola("kursant");
-		Set<Rola> role=new HashSet<Rola>();
+		Set<Role> role=new HashSet<Role>();
 		role.add(rola);
 		query.setParameterList("role", role);
 		return baza.select(query);
@@ -78,8 +78,8 @@ public class UserImp implements UserInt {
 		else ascS="desc";
 		Baza baza=new Baza();
 		query=baza.przygotuj("select distinct u from User as u where u not in (select u from User as u join u.role as r)");
-		Set<Rola> role=new HashSet<Rola>();
-		Rola rola=new Rola();
+		Set<Role> role=new HashSet<Role>();
+		Role rola=new Role();
 		rola.setRola("");
 		role.add(rola);
 		//query.setParameterList("role", role);

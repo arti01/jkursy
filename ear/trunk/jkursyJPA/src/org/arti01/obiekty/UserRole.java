@@ -1,4 +1,4 @@
-package obiekty;
+package org.arti01.obiekty;
 
 import java.io.Serializable;
 import javax.persistence.*;
