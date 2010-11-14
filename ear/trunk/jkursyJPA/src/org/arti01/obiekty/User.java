@@ -3,6 +3,7 @@ package org.arti01.obiekty;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 
 /**
@@ -41,6 +42,14 @@ public class User implements Serializable {
 	private String userpass;
 
 	private String wiadomosc;
+
+	//bi-directional many-to-one association to UserRole
+	@OneToMany(mappedBy="user")
+	private Set<UserRole> userRoles;
+
+	//bi-directional many-to-one association to KursyUser
+	@OneToMany(mappedBy="user")
+	private Set<KursyUser> kursyUsers;
 
     public User() {
     }
@@ -133,4 +142,20 @@ public class User implements Serializable {
 		this.wiadomosc = wiadomosc;
 	}
 
+	public Set<UserRole> getUserRoles() {
+		return this.userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
+	}
+	
+	public Set<KursyUser> getKursyUsers() {
+		return this.kursyUsers;
+	}
+
+	public void setKursyUsers(Set<KursyUser> kursyUsers) {
+		this.kursyUsers = kursyUsers;
+	}
+	
 }
