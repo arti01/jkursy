@@ -23,7 +23,8 @@ public class IndexAc extends All {
 	
 	public String execute() throws Exception{
 		User u=new User();
-		//logger.info("jestemmmm");
+		u.setUsername("aa");
+		logger.info("jestemmmm"+u.getImieNazwisko());
 		//statyczne= new StatyczneImp().findAll();
 		return SUCCESS;
 	}

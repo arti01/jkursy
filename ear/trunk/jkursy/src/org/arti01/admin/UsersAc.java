@@ -10,12 +10,13 @@ import java.util.Set;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.Kurs;
-import org.arti01.obiekty.KursImp;
+import org.arti01.obiekty.Kursy;
+import org.arti01.obiekty.KursyImp;
 import org.arti01.obiekty.User;
 import org.arti01.obiekty.UserImp;
-import org.arti01.obiekty.Rola;
-import org.arti01.obiekty.RolaImp;
+import org.arti01.obiekty.Role;
+import org.arti01.obiekty.RoleImp;
+import org.arti01.obiekty.UserRole;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
@@ -29,10 +30,10 @@ public class UsersAc extends Akcja {
 	// boolean zmianaHasla;
 	boolean zmien;
 	List<User> users;
-	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
-	List<Kurs> kursyAll;
+	List<Integer> zaznaczoneKursyy = new ArrayList<Integer>();
+	List<Kursy> KursyyAll;
 	List<String> zaznaczone = new ArrayList<String>();
-	List<Rola> roleAll;
+	List<Role> roleAll;
 	// private String nextAction;
 	private boolean admin = false;
 
@@ -42,86 +43,86 @@ public class UsersAc extends Akcja {
 
 	@SkipValidation
 	public String formAdmin() throws Exception {
-		prawo=Rola.ADMIN;
+		prawo=Role.ADMIN;
 		if (user != null) {
 			user = new UserImp().find(user);
 			zmien = true;
-			for (Rola r : user.getRole()) {
-				zaznaczone.add(r.getRola());
+			for (UserRole r : user.getUserRole()) {
+				zaznaczone.add(r.getRole());
 			}
-			for (Kurs k : user.getKursy()) {
-				zaznaczoneKursy.add(k.getIdkursy());
+			for (Kursy k : user.getKursyy()) {
+				zaznaczoneKursyy.add(k.getIdKursyy());
 			}
 			zmien = true;
 		} else {
 			user= new User();
 			user.setData_zmiany(new SimpleDateFormat("yyyy-MM-dd").format( new Date()));
-			zaznaczone.add(Rola.ADMIN);
+			zaznaczone.add(Role.ADMIN);
 		}
-		roleAll = new RolaImp().findAll();
-		kursyAll=new KursImp().findNiezakończone();
+		roleAll = new RoleImp().findAll();
+		KursyyAll=new KursyImp().findNiezakończone();
 		return "form";
 	}
 	
 	@SkipValidation
 	public String formWyklad() throws Exception {
-		prawo=Rola.WYKLADOWCA;
+		prawo=Role.WYKLADOWCA;
 		if (user != null) {
 			user = new UserImp().find(user);
 			zmien = true;
-			for (Rola r : user.getRole()) {
-				zaznaczone.add(r.getRola());
+			for (Role r : user.getRole()) {
+				zaznaczone.add(r.getRole());
 			}
-			for (Kurs k : user.getKursy()) {
-				zaznaczoneKursy.add(k.getIdkursy());
+			for (Kursy k : user.getKursyy()) {
+				zaznaczoneKursyy.add(k.getIdKursyy());
 			}
 			zmien = true;
 		} else {
 			user= new User();
 			user.setData_zmiany(new SimpleDateFormat("yyyy-MM-dd").format( new Date()));
-			zaznaczone.add(Rola.WYKLADOWCA);
+			zaznaczone.add(Role.WYKLADOWCA);
 		}
-		roleAll = new RolaImp().findAll();
-		kursyAll=new KursImp().findNiezakończone();
+		roleAll = new RoleImp().findAll();
+		KursyyAll=new KursyImp().findNiezakończone();
 		return "form";
 	}
 
 	@SkipValidation
-	public String formKursant() throws Exception {
-		prawo=Rola.KURSANT;
+	public String formKursyant() throws Exception {
+		prawo=Role.KursyANT;
 		if (user != null) {
 			user = new UserImp().find(user);
 			zmien = true;
-			for (Rola r : user.getRole()) {
-				zaznaczone.add(r.getRola());
+			for (Role r : user.getRole()) {
+				zaznaczone.add(r.getRole());
 			}
-			for (Kurs k : user.getKursy()) {
-				zaznaczoneKursy.add(k.getIdkursy());
+			for (Kursy k : user.getKursyy()) {
+				zaznaczoneKursyy.add(k.getIdKursyy());
 			}
 			zmien = true;
 		} else {
 			user= new User();
 			user.setData_zmiany(new SimpleDateFormat("yyyy-MM-dd").format( new Date()));
-			zaznaczone.add(Rola.KURSANT);
+			zaznaczone.add(Role.KursyANT);
 		}
-		roleAll = new RolaImp().findAll();
-		kursyAll=new KursImp().findNiezakończone();
+		roleAll = new RoleImp().findAll();
+		KursyyAll=new KursyImp().findNiezakończone();
 		return "form";
 	}
 
 	public String dodaj() throws Exception {
 		// obsluga roli
-		Set<Rola> role = new HashSet<Rola>();
+		Set<Role> role = new HashSet<Role>();
 		for (String i : zaznaczone) {
-			Rola r = new Rola();
-			r.setRola(i);
+			Role r = new Role();
+			r.setRole(i);
 			role.add(r);
 		}
-		Set<Kurs> kursy = new HashSet<Kurs>();
-		for (Integer i : zaznaczoneKursy) {
-			Kurs k = new Kurs();
-			k.setIdkursy(i);
-			kursy.add(k);
+		Set<Kursy> Kursyy = new HashSet<Kursy>();
+		for (Integer i : zaznaczoneKursyy) {
+			Kursy k = new Kursy();
+			k.setIdKursyy(i);
+			Kursyy.add(k);
 		}
 		// koniec obslugi roli
 		if (!zmien) {// dodawanie
@@ -150,8 +151,8 @@ public class UsersAc extends Akcja {
 				userNew.setOpis(user.getOpis());
 				userNew.getRole().clear();
 				userNew.setRole(role);
-				userNew.setKursy(kursy);
-				logger.info("ilosc kursow"+ userNew.getKursy().size());
+				userNew.setKursyy(Kursyy);
+				logger.info("ilosc Kursyow"+ userNew.getKursyy().size());
 				new UserImp().update(userNew);
 				setInfoText("login.zmieniony");
 			} catch (Exception e) {
@@ -165,7 +166,7 @@ public class UsersAc extends Akcja {
 
 	@SkipValidation
 	public String listAdmin() throws Exception {
-		prawo=Rola.ADMIN;
+		prawo=Role.ADMIN;
 		users = new UserImp().findAdmin("imieNazwisko", asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
@@ -173,23 +174,23 @@ public class UsersAc extends Akcja {
 	
 	@SkipValidation
 	public String listWyklad() throws Exception {
-		prawo=Rola.WYKLADOWCA;
+		prawo=Role.WYKLADOWCA;
 		users = new UserImp().findWyklad("imieNazwisko", asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
 	}
 
 	@SkipValidation
-	public String listKursant() throws Exception {
-		prawo=Rola.KURSANT;
-		users = new UserImp().findKursant(sortTyp, asc);
+	public String listKursyant() throws Exception {
+		prawo=Role.KursyANT;
+		users = new UserImp().findKursyant(sortTyp, asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
 	}
 
 	@SkipValidation
 	public String listNowych() throws Exception {
-		prawo=Rola.NOWY;
+		prawo=Role.NOWY;
 		users = new UserImp().findNowy(sortTyp, asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
@@ -197,21 +198,21 @@ public class UsersAc extends Akcja {
 	
 	@SkipValidation
 	public String sortListAdmin() throws Exception {
-		prawo=Rola.ADMIN;
+		prawo=Role.ADMIN;
 		users = new UserImp().findAdmin(sortTyp, asc);
 		return "list";
 	}
 	
 	@SkipValidation
 	public String sortListWyklad() throws Exception {
-		prawo = Rola.WYKLADOWCA;
+		prawo = Role.WYKLADOWCA;
 		users = new UserImp().findWyklad(sortTyp, asc);
 		return "list";
 	}
 	
 	@SkipValidation
-	public String sortListKursanci() throws Exception {
-		prawo = Rola.KURSANT;
+	public String sortListKursyanci() throws Exception {
+		prawo = Role.KursyANT;
 		users = new UserImp().findWyklad(sortTyp, asc);
 		return "list";
 	}
@@ -262,11 +263,11 @@ public class UsersAc extends Akcja {
 		this.zmien = zmien;
 	}
 
-	public List<Rola> getRoleAll() {
+	public List<Role> getRoleAll() {
 		return roleAll;
 	}
 
-	public void setRoleAll(List<Rola> roleAll) {
+	public void setRoleAll(List<Role> roleAll) {
 		this.roleAll = roleAll;
 	}
 
@@ -329,20 +330,20 @@ public class UsersAc extends Akcja {
 		this.sortTyp = sortTyp;
 	}
 
-	public List<Kurs> getKursyAll() {
-		return kursyAll;
+	public List<Kursy> getKursyyAll() {
+		return KursyyAll;
 	}
 
-	public void setKursyAll(List<Kurs> kursyAll) {
-		this.kursyAll = kursyAll;
+	public void setKursyyAll(List<Kursy> KursyyAll) {
+		this.KursyyAll = KursyyAll;
 	}
 
-	public List<Integer> getZaznaczoneKursy() {
-		return zaznaczoneKursy;
+	public List<Integer> getZaznaczoneKursyy() {
+		return zaznaczoneKursyy;
 	}
 
-	public void setZaznaczoneKursy(List<Integer> zaznaczoneKursy) {
-		this.zaznaczoneKursy = zaznaczoneKursy;
+	public void setZaznaczoneKursyy(List<Integer> zaznaczoneKursyy) {
+		this.zaznaczoneKursyy = zaznaczoneKursyy;
 	}
 
 	public void setPrawo(String prawo) {

@@ -5,22 +5,22 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.Kursyy;
-import org.arti01.obiekty.KursyyImp;
+import org.arti01.obiekty.Kursy;
+import org.arti01.obiekty.KursyImp;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
-public class KursyyAc extends Akcja {
+public class KursyAc extends Akcja {
 
 	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(KursyyAc.class);
+	Logger logger = Logger.getLogger(KursyAc.class);
 	
-	private List<Kursyy> kursy;
-	private Kursyyy kurs;
+	private List<Kursy> kursy;
+	private Kursy kurs;
 	private boolean zmien;
 
 	@SkipValidation
 	public String listKursyy() throws Exception{
-		kursy= new KursyyImp().findAll();
+		kursy= new KursyImp().findAll();
 		return "list";
 	}
 	
@@ -28,14 +28,14 @@ public class KursyyAc extends Akcja {
 	@SkipValidation
 	public String form() throws Exception{
 		if (kurs != null) zmien = true;
-		kurs= new KursyyImp().load(kurs);
+		kurs= new KursyImp().load(kurs);
 		return "form";
 	}
 	
 	@SkipValidation
 	public String usun() throws Exception {
 		try {
-			new KursyyImp().remove(kurs);
+			new KursyImp().remove(kurs);
 			setInfoText("kurs.usuniety");
 		} catch (Exception e) {
 			logger.info("ssssssss", e);
@@ -48,7 +48,7 @@ public class KursyyAc extends Akcja {
 	public String dodaj() throws Exception {
 		if (!zmien) {// dodawanie
 			try {
-				new KursyyImp().insert(kurs);
+				new KursyImp().insert(kurs);
 				setInfoText("kurs.dodany");
 			} catch (Exception e) {
 				logger.info("ssssssss", e);
@@ -61,12 +61,12 @@ public class KursyyAc extends Akcja {
 				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				Kursy kursNew = new KursyImp().load(kurs);
 				kursNew.setNazwa(kurs.getNazwa());
-				logger.info("eee"+kurs.getTresc()+"eeeeeeee");
-				kursNew.setTresc(kurs.getTresc());
+				logger.info("eee"+kurs.getOpis()+"eeeeeeee");
+				kursNew.setOpis(kurs.getOpis());
 				kursNew.setOpisKrotki(kurs.getOpisKrotki());
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-				kursNew.setDataOd(sdf.format(kurs.getDataOd()));
-				kursNew.setDataDo(sdf.format(kurs.getDataDo()));
+				kursNew.setDataod(kurs.getDataod());
+				kursNew.setDatado(kurs.getDatado());
 				new KursyImp().update(kursNew);
 				setInfoText("kurs.zmieniony");
 			} catch (Exception e) {
