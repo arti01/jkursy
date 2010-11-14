@@ -4,41 +4,41 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.arti01.abstrakt.All;
-import org.arti01.obiekty.Kurs;
-import org.arti01.obiekty.KursImp;
+import org.arti01.obiekty.Kursy;
+import org.arti01.obiekty.KursyImp;
 
 
 public class KursyAc extends All {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
-	private List<Kurs>kursy;
-	private Kurs kurs;
+	private List<Kursy>kursy;
+	private Kursy kurs;
 	
 	public String list() throws Exception{
 		//logger.info("jestemmmm");
-		kursy=new KursImp().findAll();
+		kursy=new KursyImp().findAll();
 		return "list";
 	}
 	
 	public String detale() throws Exception{
 		//logger.info("jestemmmm");
-		kurs=new KursImp().load(kurs);
+		kurs=new KursyImp().load(kurs);
 		return "detale";
 	}
 
-	public List<Kurs> getKursy() {
+	public List<Kursy> getKursy() {
 		return kursy;
 	}
 
-	public void setKursy(List<Kurs> kursyAll) {
+	public void setKursy(List<Kursy> kursyAll) {
 		this.kursy = kursyAll;
 	}
 
-	public Kurs getKurs() {
+	public Kursy getKurs() {
 		return kurs;
 	}
 
-	public void setKurs(Kurs kurs) {
+	public void setKurs(Kursy kurs) {
 		this.kurs = kurs;
 	}
 	

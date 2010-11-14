@@ -5,22 +5,22 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.Kurs;
-import org.arti01.obiekty.KursImp;
+import org.arti01.obiekty.Kursyy;
+import org.arti01.obiekty.KursyyImp;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
-public class KursyAc extends Akcja {
+public class KursyyAc extends Akcja {
 
 	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(KursyAc.class);
+	Logger logger = Logger.getLogger(KursyyAc.class);
 	
-	private List<Kurs> kursy;
-	private Kurs kurs;
+	private List<Kursyy> kursy;
+	private Kursyyy kurs;
 	private boolean zmien;
 
 	@SkipValidation
-	public String listKursy() throws Exception{
-		kursy= new KursImp().findAll();
+	public String listKursyy() throws Exception{
+		kursy= new KursyyImp().findAll();
 		return "list";
 	}
 	
@@ -28,14 +28,14 @@ public class KursyAc extends Akcja {
 	@SkipValidation
 	public String form() throws Exception{
 		if (kurs != null) zmien = true;
-		kurs= new KursImp().load(kurs);
+		kurs= new KursyyImp().load(kurs);
 		return "form";
 	}
 	
 	@SkipValidation
 	public String usun() throws Exception {
 		try {
-			new KursImp().remove(kurs);
+			new KursyyImp().remove(kurs);
 			setInfoText("kurs.usuniety");
 		} catch (Exception e) {
 			logger.info("ssssssss", e);
@@ -48,7 +48,7 @@ public class KursyAc extends Akcja {
 	public String dodaj() throws Exception {
 		if (!zmien) {// dodawanie
 			try {
-				new KursImp().insert(kurs);
+				new KursyyImp().insert(kurs);
 				setInfoText("kurs.dodany");
 			} catch (Exception e) {
 				logger.info("ssssssss", e);
@@ -59,7 +59,7 @@ public class KursyAc extends Akcja {
 		else{
 			try {
 				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
-				Kurs kursNew = new KursImp().load(kurs);
+				Kursy kursNew = new KursyImp().load(kurs);
 				kursNew.setNazwa(kurs.getNazwa());
 				logger.info("eee"+kurs.getTresc()+"eeeeeeee");
 				kursNew.setTresc(kurs.getTresc());
@@ -67,7 +67,7 @@ public class KursyAc extends Akcja {
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 				kursNew.setDataOd(sdf.format(kurs.getDataOd()));
 				kursNew.setDataDo(sdf.format(kurs.getDataDo()));
-				new KursImp().update(kursNew);
+				new KursyImp().update(kursNew);
 				setInfoText("kurs.zmieniony");
 			} catch (Exception e) {
 				addActionError("problem z edycja danych kursu");
@@ -78,20 +78,20 @@ public class KursyAc extends Akcja {
 		return "info";
 	}
 
-	public List<Kurs> getKursy() {
+	public List<Kursy> getKursyy() {
 		return kursy;
 	}
 
-	public void setKursy(List<Kurs> kursy) {
+	public void setKursyy(List<Kursy> kursy) {
 		this.kursy = kursy;
 	}
 
-	public Kurs getKurs() {
+	public Kursy getKursy() {
 		return kurs;
 	}
 	
 	@VisitorFieldValidator(message = "błąd: ", key = "blad.kursu")
-	public void setKurs(Kurs kurs) {
+	public void setKursy(Kursy kurs) {
 		this.kurs = kurs;
 	}
 

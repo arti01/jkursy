@@ -22,6 +22,7 @@ public class IndexAc extends All {
 	User user;
 	
 	public String execute() throws Exception{
+		User u=new User();
 		//logger.info("jestemmmm");
 		//statyczne= new StatyczneImp().findAll();
 		return SUCCESS;
@@ -34,7 +35,7 @@ public class IndexAc extends All {
 	}
 	public String zalozKonto() throws Exception{
 		user= new User();
-		user.setData_zmiany(new SimpleDateFormat("yyyy-MM-dd").format( new Date()));
+		user.setDataZmiany(new Date());
 		//logger.info(this.getZalogowany());
 		return "zalozKonto";
 	}
