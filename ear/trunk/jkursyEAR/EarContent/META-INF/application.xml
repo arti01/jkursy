@@ -7,4 +7,7 @@
       <context-root>jkursy</context-root>
     </web>
   </module>
+  <module>
+    <ejb>jKursyEjb.jar</ejb>
+  </module>
 </application>
