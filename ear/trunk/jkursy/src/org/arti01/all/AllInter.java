@@ -13,7 +13,7 @@ public class AllInter extends AbstractInterceptor {
 
 	public String intercept(ActionInvocation invocation) throws Exception {
 		All action = (All) invocation.getAction();
-		action.setStatyczne(new StatyczneImp().findAll());
+		//action.setStatyczne(new StatyczneImp().findAll());
 		return invocation.invoke();
 	}
 }

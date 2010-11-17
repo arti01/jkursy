@@ -23,7 +23,7 @@ public class UserInter extends AbstractInterceptor {
         User zalogowany=new User();
         zalogowany.setUsername(request.getRemoteUser());
         //zalogowany=new UserImp().load(zalogowany);
-        zalogowany=new UserImp().find(zalogowany);
+       // zalogowany=new UserImp().find(zalogowany);
         action.setZalogowany(zalogowany);
        return invocation.invoke();
     }

@@ -19,7 +19,7 @@ public class KursyAc extends Akcja {
 	private boolean zmien;
 
 	@SkipValidation
-	public String listKursyy() throws Exception{
+	public String listKursy() throws Exception{
 		kursy= new KursyImp().findAll();
 		return "list";
 	}
@@ -61,12 +61,12 @@ public class KursyAc extends Akcja {
 				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				Kursy kursNew = new KursyImp().load(kurs);
 				kursNew.setNazwa(kurs.getNazwa());
-				logger.info("eee"+kurs.getOpis()+"eeeeeeee");
+				logger.info("eee"+kurs.getOpis());
 				kursNew.setOpis(kurs.getOpis());
 				kursNew.setOpisKrotki(kurs.getOpisKrotki());
 				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-				kursNew.setDataod(kurs.getDataod());
-				kursNew.setDatado(kurs.getDatado());
+				//kursNew.setDataod(sdf.format(kurs.getDataod()));
+				//kursNew.setDatado(sdf.format(kurs.getDatado()));
 				new KursyImp().update(kursNew);
 				setInfoText("kurs.zmieniony");
 			} catch (Exception e) {
