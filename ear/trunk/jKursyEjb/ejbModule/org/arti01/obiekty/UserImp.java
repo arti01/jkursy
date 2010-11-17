@@ -4,17 +4,24 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
-import org.arti01.baza.Baza;
 
+@Stateless
+@LocalBean
 public class UserImp {
+	@PersistenceContext
+	EntityManager em;
 	Logger logger = Logger.getLogger(UserImp.class);
 
 	@SuppressWarnings("unchecked")
 	public List<User> findAll() {
-		return new Baza().getAll("from User by username desc");
+		return em.createQuery("from User by username desc").getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
