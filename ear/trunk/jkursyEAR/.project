@@ -5,7 +5,6 @@
 	<projects>
 		<project>jkursy</project>
 		<project>jKursyEjb</project>
-		<project>jKursyEjb</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
