@@ -14,7 +14,8 @@ import org.apache.log4j.Logger;
 
 @Stateless
 @LocalBean
-public class UserImp {
+public class UserImp  implements UserImpLocal{
+	
 	@PersistenceContext
 	EntityManager em;
 	Logger logger = Logger.getLogger(UserImp.class);
@@ -31,17 +32,16 @@ public class UserImp {
 		Query query;
 		if(asc) ascS="asc";
 		else ascS="desc";
-		Baza baza=new Baza();
 		//query=baza.przygotuj("select distinct u from User as u join u.userRoles as r where r in(:role) order by u."+order+" "+ascS);
-		query=baza.przygotuj("select distinct ur.user from UserRole as ur where ur.role=:role");
+		query=em.createQuery("select distinct ur.user from UserRole as ur where ur.role=:role");
 		Role rola=new Role();
 		rola.setRola("admin");
 		//Set<Role> role=new HashSet<Role>();
 		//role.add(rola);
 		query.setParameter("role", rola);
-		return baza.select(query);
+		return query.getResultList();
 	}
-	
+	/*
 	@SuppressWarnings("unchecked")
 	public List<User> findWyklad(String order, boolean asc) {
 		if (order==null)order="imieNazwisko";
@@ -138,13 +138,6 @@ public class UserImp {
 		}
 	}
 
-	/*public User load(User user) {
-		if (user.getUsername() != null) {
-			session.load(user, user.getUsername());
-		} else
-			user = new User();
-		return user;
-	}*/
 
 	public User find(User user) {
 		User userNew;
@@ -169,5 +162,5 @@ public class UserImp {
 		query.setParameter("username", user.getUsername());
 		if(query.getResultList().size()==0) return false;
 		else return true; 
-	}
+	}*/
 }
