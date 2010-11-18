@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.ejb.EJB;
+
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
@@ -16,6 +18,8 @@ import org.arti01.obiekty.User;
 import org.arti01.obiekty.UserImp;
 import org.arti01.obiekty.Role;
 import org.arti01.obiekty.RoleImp;
+import org.arti01.obiekty.UserImpLocal;
+import org.arti01.sb.UserBeanLocal;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
@@ -25,6 +29,8 @@ public class UsersAc extends Akcja {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
+	@EJB UserImpLocal userImp;
+	@EJB UserBeanLocal  userBean;
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
@@ -166,8 +172,9 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
-		users = new UserImp().findAdmin("imieNazwisko", asc);
-		// logger.info("ssssssss"+users.size());
+		logger.info("sssssssssssssss");
+		users = userImp.findAdmin("imieNazwisko", asc);
+		logger.info("ssssssss"+ userBean.test("imieNazwisko"));
 		return "list";
 	}
 	
