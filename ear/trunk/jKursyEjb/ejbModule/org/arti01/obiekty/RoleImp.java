@@ -18,7 +18,7 @@ public class RoleImp implements RoleImpLocal{
 
 	@SuppressWarnings("unchecked")
 	public List<Role> findAll() {
-		Query query=em.createQuery("from Role");
+		Query query=em.createQuery("select r from Role r");
 		return query.getResultList();
 	}
 /*
