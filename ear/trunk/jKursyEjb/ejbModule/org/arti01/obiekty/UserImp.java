@@ -1,10 +1,8 @@
 package org.arti01.obiekty;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.ejb.LocalBean;
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,6 +23,24 @@ public class UserImp  implements UserImpLocal{
 		return em.createQuery("from User by username desc").getResultList();
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findWyklad(String order, boolean asc) {
+		if (order==null)order="imieNazwisko";
+		String ascS;
+		Query query;
+		if(asc) ascS="asc";
+		else ascS="desc";
+		query=
+			em.createQuery("select distinct ur.user from UserRole as ur where ur.role=:role");
+		Role rola=new Role();
+		rola.setRola(Role.WYKLADOWCA);
+		//Set<Role> role=new HashSet<Role>();
+		//role.add(rola);
+		query.setParameter("role", rola);
+		return query.getResultList();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<User> findAdmin(String order, boolean asc) {
 		if (order==null)order="imieNazwisko";
@@ -35,29 +51,13 @@ public class UserImp  implements UserImpLocal{
 		//query=baza.przygotuj("select distinct u from User as u join u.userRoles as r where r in(:role) order by u."+order+" "+ascS);
 		query=em.createQuery("select distinct ur.user from UserRole as ur where ur.role=:role");
 		Role rola=new Role();
-		rola.setRola("admin");
+		rola.setRola(Role.ADMIN);
 		//Set<Role> role=new HashSet<Role>();
 		//role.add(rola);
 		query.setParameter("role", rola);
 		return query.getResultList();
 	}
-	/*
-	@SuppressWarnings("unchecked")
-	public List<User> findWyklad(String order, boolean asc) {
-		if (order==null)order="imieNazwisko";
-		String ascS;
-		Query query;
-		if(asc) ascS="asc";
-		else ascS="desc";
-		Baza baza=new Baza();
-		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role) order by u."+order+" "+ascS);
-		Role rola=new Role();
-		rola.setRola("wykladowca");
-		Set<Role> role=new HashSet<Role>();
-		role.add(rola);
-		query.setParameter("role", role);
-		return baza.select(query);
-	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<User> findKursant(String order, boolean asc) {
@@ -66,14 +66,17 @@ public class UserImp  implements UserImpLocal{
 		String ascS;
 		if(asc) ascS="asc";
 		else ascS="desc";
-		Baza baza=new Baza();
-		query=baza.przygotuj("select distinct u from User as u join u.role as r where r in(:role) order by u."+order+" "+ascS);
+		logger.info("start");
+		query=em.createQuery("select distinct ur.user from UserRole as ur where ur.role=:role");
 			Role rola=new Role();
-		rola.setRola("kursant");
-		Set<Role> role=new HashSet<Role>();
-		role.add(rola);
-		query.setParameter("role", role);
-		return baza.select(query);
+		rola.setRola(Role.KURSANT);
+		//Set<Role> role=new HashSet<Role>();
+		//role.add(rola);
+		query.setParameter("role", rola);
+		logger.info("stop");
+		query.getResultList();
+		logger.info("stop2");
+		return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -83,29 +86,47 @@ public class UserImp  implements UserImpLocal{
 		String ascS;
 		if(asc) ascS="asc";
 		else ascS="desc";
-		Baza baza=new Baza();
-		query=baza.przygotuj("select distinct u from User as u where u not in (select u from User as u join u.role as r)");
-		Set<Role> role=new HashSet<Role>();
-		Role rola=new Role();
-		rola.setRola("");
-		role.add(rola);
+		query=em.createQuery("select distinct u from User as u where u not in (select u from User as u join u.userRoles as r)");
+		//Set<Role> role=new HashSet<Role>();
+		//Role rola=new Role();
+		//rola.setRola("");
+		//role.add(rola);
 		//query.setParameterList("role", role);
-		for(Object o:baza.select(query)){
+		for(Object o:query.getResultList()){
 			User u=(User) o;
 			logger.info(u.getUsername());	
 		}
-		return baza.select(query);
+		return query.getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<User>findOrderUsername(boolean asc) {
-		 Baza baza=new Baza();
-		 Query query;
-		if(asc) query=baza.przygotuj("from User user order by user.username asc");
-		 else query=baza.przygotuj("from User user order by user.username desc");
-		 return baza.select(query);
+		Query query;
+		if(asc) query=em.createQuery("from User user order by user.username asc");
+		 else query=em.createQuery("from User user order by user.username desc");
+		 return query.getResultList();
 	 }
 	
+	public User find(User user) {
+		User userNew;
+		if (user.getUsername() != null) {
+			userNew=em.find(User.class, user.getUsername());
+			logger.info(user.getUsername());
+		} else
+			userNew = new User();
+		return userNew;
+	}
+	
+	public void insert(User user) {
+		em.persist(user);
+	}
+	
+	public void remove(User user) {
+		em.remove(em.find(User.class, user.getUsername()));
+		//em.remove(em.merge(user));
+		}
+	}
+	/*
 	@SuppressWarnings("unchecked")
 	public List<User>findOrderDataZmiany(boolean asc) {
 		 Baza baza=new Baza();
@@ -120,9 +141,7 @@ public class UserImp  implements UserImpLocal{
 		return new Baza().getAll("from User where aktywny=false order by data_zmiany desc");
 	}
 
-	public void insert(User user) {
-		new Baza().dodaj(user);
-	}
+	
 
 	public void update(User user) throws Exception {
 			//logger.info("rola--------"+user.getRole().iterator().next().getRolename());
@@ -130,27 +149,8 @@ public class UserImp  implements UserImpLocal{
 		new Baza().update(user);
 	}
 
-	public void remove(User user) throws Exception {
-		if (user.getUsername() != null) {
-			user = find(user);
-			user = new UserImp().find(user);
-			new Baza().usun(user);
-		}
-	}
+	
 
-
-	public User find(User user) {
-		User userNew;
-		if (user.getUsername() != null) {
-			Baza baza = new Baza();
-			Query query = baza.przygotuj("from User where username=:username");
-			logger.info(user.getUsername());
-			query.setParameter("username", user.getUsername());
-			userNew = (User) baza.select(query).iterator().next();
-		} else
-			userNew = new User();
-		return userNew;
-	}
 
 	public boolean test(){
 		return true;
@@ -163,4 +163,3 @@ public class UserImp  implements UserImpLocal{
 		if(query.getResultList().size()==0) return false;
 		else return true; 
 	}*/
-}

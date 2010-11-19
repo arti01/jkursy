@@ -44,7 +44,7 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-one association to UserRole
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
 
 	//bi-directional many-to-one association to KursyUser

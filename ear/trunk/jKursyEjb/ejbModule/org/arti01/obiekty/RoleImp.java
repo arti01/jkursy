@@ -2,19 +2,26 @@ package org.arti01.obiekty;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
-import org.arti01.baza.Baza;
 
-public class RoleImp  {
+@Stateless
+@LocalBean
+public class RoleImp implements RoleImpLocal{
 	Logger logger = Logger.getLogger(RoleImp.class);
+	@PersistenceContext
+	EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	public List<Role> findAll() {
-		return new Baza().getAll("from Role");
+		Query query=em.createQuery("from Role");
+		return query.getResultList();
 	}
-
+/*
 	public void insert(Role userRoles) {
 		new Baza().dodaj(userRoles);
 	}
@@ -40,4 +47,5 @@ public class RoleImp  {
 			// user.getUserRolesname()+"'").iterator().next();
 		return userRolesNew;
 	}
+	*/
 }
