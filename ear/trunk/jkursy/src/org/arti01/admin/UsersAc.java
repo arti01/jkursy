@@ -8,17 +8,21 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
 import org.arti01.obiekty.Kursy;
 import org.arti01.obiekty.KursyImp;
+import org.arti01.obiekty.RoleImpLocal;
 import org.arti01.obiekty.User;
 import org.arti01.obiekty.UserImp;
 import org.arti01.obiekty.Role;
 import org.arti01.obiekty.RoleImp;
 import org.arti01.obiekty.UserImpLocal;
+import org.arti01.obiekty.UserRole;
 import org.arti01.sb.UserBeanLocal;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
@@ -30,7 +34,9 @@ public class UsersAc extends Akcja {
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
 	@EJB UserImpLocal userImp;
+	@EJB RoleImpLocal roleImp;
 	@EJB UserBeanLocal  userBean;
+	
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
@@ -50,12 +56,12 @@ public class UsersAc extends Akcja {
 	public String formAdmin() throws Exception {
 		prawo=Role.ADMIN;
 		if (user != null) {
-			user = new UserImp().find(user);
+			user = userImp.find(user);
 			zmien = true;
-			/*for (Role r : user.getRole()) {
-				zaznaczone.add(r.getRole());
+			for (UserRole r : user.getUserRoles()) {
+				zaznaczone.add(r.getRole().getRola());
 			}
-			for (Kursy k : user.getKursy()) {
+			/*for (Kursy k : user.getKursy()) {
 				zaznaczoneKursyy.add(k.getIdkursy());
 			}*/
 			zmien = true;
@@ -64,8 +70,8 @@ public class UsersAc extends Akcja {
 			user.setDataZmiany(new Date());
 			zaznaczone.add(Role.ADMIN);
 		}
-		roleAll = new RoleImp().findAll();
-		kursyAll=new KursyImp().findNiezakończone();
+		roleAll = roleImp.findAll();
+		//kursyAll=new KursyImp().findNiezakończone();
 		return "form";
 	}
 	
@@ -73,7 +79,7 @@ public class UsersAc extends Akcja {
 	public String formWyklad() throws Exception {
 		prawo=Role.WYKLADOWCA;
 		if (user != null) {
-			user = new UserImp().find(user);
+			user = userImp.find(user);
 			zmien = true;
 			/*for (Role r : user.getRole()) {
 				zaznaczone.add(r.getRole());
@@ -93,10 +99,10 @@ public class UsersAc extends Akcja {
 	}
 
 	@SkipValidation
-	public String formKursyant() throws Exception {
+	public String formKursant() throws Exception {
 		prawo=Role.KURSANT;
 		if (user != null) {
-			user = new UserImp().find(user);
+			user = userImp.find(user);
 			zmien = true;
 			/*for (Role r : user.getRole()) {
 				zaznaczone.add(r.getRole());
@@ -181,15 +187,15 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listWyklad() throws Exception {
 		prawo=Role.WYKLADOWCA;
-		users = new UserImp().findWyklad("imieNazwisko", asc);
+		users = userImp.findWyklad("imieNazwisko", asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
 	}
 
 	@SkipValidation
-	public String listKursyant() throws Exception {
+	public String listKursant() throws Exception {
 		prawo=Role.KURSANT;
-		users = new UserImp().findKursant(sortTyp, asc);
+		users = userImp.findKursant(sortTyp, asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
 	}
@@ -197,7 +203,7 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listNowych() throws Exception {
 		prawo=Role.NOWY;
-		users = new UserImp().findNowy(sortTyp, asc);
+		users = userImp.findNowy(sortTyp, asc);
 		// logger.info("ssssssss"+users.size());
 		return "list";
 	}
@@ -205,28 +211,28 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String sortListAdmin() throws Exception {
 		prawo=Role.ADMIN;
-		users = new UserImp().findAdmin(sortTyp, asc);
+		users = userImp.findNowy(sortTyp, asc);
 		return "list";
 	}
 	
 	@SkipValidation
 	public String sortListWyklad() throws Exception {
 		prawo = Role.WYKLADOWCA;
-		users = new UserImp().findWyklad(sortTyp, asc);
+		users = userImp.findNowy(sortTyp, asc);
 		return "list";
 	}
 	
 	@SkipValidation
 	public String sortListKursyanci() throws Exception {
 		prawo = Role.KURSANT;
-		users = new UserImp().findWyklad(sortTyp, asc);
+		users = userImp.findNowy(sortTyp, asc);
 		return "list";
 	}
 	
 	@SkipValidation
 	public String usun() throws Exception {
 		try {
-			new UserImp().remove(user);
+			userImp.remove(user);
 			setInfoText("login.usuniety");
 		} catch (Exception e) {
 			logger.info("ssssssss", e);
