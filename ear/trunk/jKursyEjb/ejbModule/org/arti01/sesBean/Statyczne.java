@@ -1,4 +1,4 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -9,21 +9,24 @@ import javax.persistence.*;
  * 
  */
 @Entity
+@Table(name="statyczne")
 public class Statyczne implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="STATYCZNE_IDSTATYCZNE_GENERATOR", sequenceName="STATYCZNE_ID_STATYCZNE_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="STATYCZNE_IDSTATYCZNE_GENERATOR")
-	@Column(name="id_statyczne")
+	@Column(name="id_statyczne", unique=true, nullable=false)
 	private Integer idStatyczne;
 
+	@Column(nullable=false)
 	private Integer lp;
 
+	@Column(nullable=false, length=255)
 	private String opis;
 
+	@Column(nullable=false, length=2147483647)
 	private String tresc;
 
+	@Column(nullable=false, length=255)
 	private String tytul;
 
     public Statyczne() {

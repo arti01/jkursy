@@ -1,11 +1,8 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.util.List;
-
 import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
-import org.arti01.baza.Baza;
 
 public class UserRolesImp {
 	Logger logger = Logger.getLogger(UserRolesImp.class);

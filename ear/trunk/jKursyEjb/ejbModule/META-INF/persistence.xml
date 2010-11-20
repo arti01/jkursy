@@ -8,16 +8,11 @@
 		<class>org.arti01.obiekty.Role</class>
 		<class>org.arti01.obiekty.KursyUser</class>
 		<class>org.arti01.obiekty.Kursy</class>
-        <!--
-            <class>pl.jaceklaskowski.Pracownik</class>
-        -->
-		
 		<properties>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.SunONETransactionManagerLookup" />
-        </properties>
-		
+			<property name="eclipselink.logging.level" value="INFO"/>
+			<property name="eclipselink.logging.exceptions" value="true"/>
+			<property name="eclipselink.jdbc.cache-statements" value="false"/>
+			<property name="eclipselink.cache.type.default" value="NONE"/>
+		</properties>
 	</persistence-unit>
 </persistence>

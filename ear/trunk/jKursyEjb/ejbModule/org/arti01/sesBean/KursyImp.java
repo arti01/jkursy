@@ -1,28 +1,40 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.util.Date;
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
-import org.arti01.baza.Baza;
 
-public class KursyImp {
+@Stateless
+@LocalBean
+public class KursyImp implements KursyImpLocal {
 	Logger logger = Logger.getLogger(KursyImp.class);
+	@PersistenceContext
+	EntityManager em;
 
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAll() {
 		return new Baza().getAll("from Kursy order by dataod desc");
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.arti01.obiekty.KursyImpLocal#findNiezakonczone()
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<Kursy> findNiezakończone() {
-		Baza baza = new Baza();
-		Query query = baza.przygotuj("from Kursy where datado>=:datado order by dataod desc");
+	public List<Kursy> findNiezakonczone() {
+		Query query=em.createNamedQuery("findNiezakonczone");
 		query.setParameter("datado", new Date());
-		logger.info("ile kursów"+baza.select(query).size());
-		return  baza.select(query);
+		return  query.getResultList();
 	}
 	
 	public Kursy load(Kursy kurs) {

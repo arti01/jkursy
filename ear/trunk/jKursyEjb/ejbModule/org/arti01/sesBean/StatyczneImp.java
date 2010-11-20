@@ -1,35 +1,47 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.util.List;
 
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
-import org.arti01.baza.Baza;
 
-public class StatyczneImp {
+@Stateless
+@LocalBean
+public class StatyczneImp implements StatyczneImpLocal {
 	Logger logger = Logger.getLogger(StatyczneImp.class);
-
+	@PersistenceContext
+	EntityManager em;
+	
+	/* (non-Javadoc)
+	 * @see org.arti01.obiekty.StatyczneImpLocal#findAll()
+	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<Statyczne> findAll() {
-		return new Baza().getAll("from Statyczne order by lp");
+		return em.createQuery("select s from Statyczne s order by s.lp").getResultList();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.arti01.obiekty.StatyczneImpLocal#insert(org.arti01.obiekty.Statyczne)
+	 */
+	@Override
 	public void insert(Statyczne statyczne) {
-		new Baza().dodaj(statyczne);
+		em.persist(statyczne);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void update(Statyczne statyczne, Integer oldLp) throws Exception {
-		Baza baza = new Baza();
 		logger.info(statyczne.getTytul()+"-------------"+statyczne.getLp());
 		if (oldLp > statyczne.getLp()) {//idziemy w góre
-			baza.usun(statyczne);
-			Query select= baza
-			.przygotuj("from Statyczne where lp<:oldLp and lp>=:newLp order by lp desc");
+			em.remove(statyczne);
+			Query select= em.createQuery("from Statyczne where lp<:oldLp and lp>=:newLp order by lp desc");
 			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
-			List<Statyczne> sl=new Baza().select(select);
+			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
 				Query query = baza
 				.przygotuj("update Statyczne s set lp=lp+1 where s=:s");

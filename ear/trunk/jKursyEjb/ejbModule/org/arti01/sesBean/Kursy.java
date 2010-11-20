@@ -1,4 +1,4 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -11,25 +11,29 @@ import java.util.Set;
  * 
  */
 @Entity
+@Table(name="kursy")
 public class Kursy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="KURSY_IDKURSY_GENERATOR", sequenceName="KURSY_IDKURSY_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KURSY_IDKURSY_GENERATOR")
+	@Column(unique=true, nullable=false)
 	private Integer idkursy;
 
     @Temporal( TemporalType.DATE)
+	@Column(nullable=false)
 	private Date datado;
 
     @Temporal( TemporalType.DATE)
+	@Column(nullable=false)
 	private Date dataod;
 
+	@Column(nullable=false, length=255)
 	private String nazwa;
 
+	@Column(nullable=false, length=2147483647)
 	private String opis;
 
-	@Column(name="opis_krotki")
+	@Column(name="opis_krotki", length=2147483647)
 	private String opisKrotki;
 
 	//bi-directional many-to-one association to KursyUser

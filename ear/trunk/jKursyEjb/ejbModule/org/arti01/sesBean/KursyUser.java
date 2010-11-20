@@ -1,4 +1,4 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -14,18 +14,17 @@ public class KursyUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="KURSY_USERS_IDKURSYUSERS_GENERATOR", sequenceName="KURSY_USERS_IDKURSYUSERS_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KURSY_USERS_IDKURSYUSERS_GENERATOR")
+	@Column(unique=true, nullable=false)
 	private Integer idkursyusers;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="username")
+    @ManyToOne
+	@JoinColumn(name="username", nullable=false)
 	private User user;
 
 	//bi-directional many-to-one association to Kursy
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idkursy")
+    @ManyToOne
+	@JoinColumn(name="idkursy", nullable=false)
 	private Kursy kursy;
 
     public KursyUser() {

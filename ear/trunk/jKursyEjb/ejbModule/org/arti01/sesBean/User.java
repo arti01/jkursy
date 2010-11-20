@@ -1,4 +1,4 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -16,35 +16,42 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="_USERS_USERNAME_GENERATOR", sequenceName="_USERS_USERNAME_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="_USERS_USERNAME_GENERATOR")
+	@Column(unique=true, nullable=false, length=50)
 	private String username;
 
     @Temporal( TemporalType.DATE)
-	@Column(name="data_zmiany")
+	@Column(name="data_zmiany", nullable=false)
 	private Date dataZmiany;
 
+	@Column(length=100)
 	private String email;
 
-	@Column(name="imie_nazwisko")
+	@Column(name="imie_nazwisko", nullable=false, length=2147483647)
 	private String imieNazwisko;
 
+	@Column(nullable=false, length=2147483647)
 	private String miasto;
 
+	@Column(nullable=false, length=2147483647)
 	private String nip;
 
+	@Column(length=2147483647)
 	private String opis;
 
+	@Column(nullable=false, length=2147483647)
 	private String tel1;
 
+	@Column(nullable=false, length=2147483647)
 	private String ulica;
 
+	@Column(nullable=false, length=50)
 	private String userpass;
 
+	@Column(length=255)
 	private String wiadomosc;
 
 	//bi-directional many-to-one association to UserRole
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user")
 	private Set<UserRole> userRoles;
 
 	//bi-directional many-to-one association to KursyUser

@@ -1,8 +1,7 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -73,9 +72,7 @@ public class UserImp  implements UserImpLocal{
 		//Set<Role> role=new HashSet<Role>();
 		//role.add(rola);
 		query.setParameter("role", rola);
-		logger.info("stop");
 		query.getResultList();
-		logger.info("stop2");
 		return query.getResultList();
 	}
 	
@@ -111,7 +108,6 @@ public class UserImp  implements UserImpLocal{
 		User userNew;
 		if (user.getUsername() != null) {
 			userNew=em.find(User.class, user.getUsername());
-			logger.info(user.getUsername());
 		} else
 			userNew = new User();
 		return userNew;

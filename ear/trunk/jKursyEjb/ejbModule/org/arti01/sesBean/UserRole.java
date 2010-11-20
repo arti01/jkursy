@@ -1,4 +1,4 @@
-package org.arti01.obiekty;
+package org.arti01.sesBean;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -14,19 +14,17 @@ public class UserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="_USER_ROLES_IDUSERROLES_GENERATOR", sequenceName="_USER_ROLES_ID_USER_ROLES_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="_USER_ROLES_IDUSERROLES_GENERATOR")
-	@Column(name="id_user_roles")
+	@Column(name="id_user_roles", unique=true, nullable=false)
 	private Integer idUserRoles;
 
 	//bi-directional many-to-one association to Role
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="role_name")
+    @ManyToOne
+	@JoinColumn(name="role_name", nullable=false)
 	private Role role;
 
 	//bi-directional many-to-one association to User
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="username")
+    @ManyToOne
+	@JoinColumn(name="username", nullable=false)
 	private User user;
 
     public UserRole() {
