@@ -1,4 +1,4 @@
- package org.arti01.sesBean;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -13,8 +13,14 @@ import java.util.Set;
 @Table(name="_roles")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public static final String ADMIN ="admin" ;
+	public static final String WYKLADOWCA ="wykladowca" ;
+	public static final String KURSANT ="kursant" ;
+	public static final String NOWY ="nowy" ;
 
 	@Id
+	@SequenceGenerator(name="_ROLES_ROLA_GENERATOR", sequenceName="_ROLES_ROLA_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="_ROLES_ROLA_GENERATOR")
 	@Column(unique=true, nullable=false, length=2147483647)
 	private String rola;
 

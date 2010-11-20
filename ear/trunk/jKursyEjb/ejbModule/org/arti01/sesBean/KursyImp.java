@@ -13,6 +13,7 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 import org.apache.log4j.Logger;
+import org.arti01.entit.Kursy;
 
 @Stateless
 @LocalBean

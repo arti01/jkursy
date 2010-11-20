@@ -8,6 +8,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.arti01.entit.Role;
+import org.arti01.entit.User;
 
 @Stateless
 @LocalBean

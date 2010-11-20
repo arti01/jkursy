@@ -1,4 +1,4 @@
-package org.arti01.sesBean;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -16,6 +16,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="_USERS_USERNAME_GENERATOR", sequenceName="_USERS_USERNAME_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="_USERS_USERNAME_GENERATOR")
 	@Column(unique=true, nullable=false, length=50)
 	private String username;
 

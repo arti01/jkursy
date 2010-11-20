@@ -3,6 +3,7 @@ package org.arti01.sesBean;
 import java.util.List;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
+import org.arti01.entit.UserRole;
 
 public class UserRolesImp {
 	Logger logger = Logger.getLogger(UserRolesImp.class);

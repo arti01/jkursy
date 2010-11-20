@@ -1,4 +1,4 @@
-package org.arti01.sesBean;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -14,6 +14,8 @@ public class KursyUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="KURSY_USERS_IDKURSYUSERS_GENERATOR", sequenceName="KURSY_USERS_IDKURSYUSERS_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KURSY_USERS_IDKURSYUSERS_GENERATOR")
 	@Column(unique=true, nullable=false)
 	private Integer idkursyusers;
 

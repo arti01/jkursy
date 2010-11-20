@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.arti01.entit.User;
+
 @Local
 public interface UserImpLocal {
 	public List<User> findAdmin(String order, boolean asc);

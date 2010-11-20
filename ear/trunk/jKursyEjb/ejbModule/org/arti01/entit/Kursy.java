@@ -1,4 +1,4 @@
-package org.arti01.sesBean;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -12,10 +12,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name="kursy")
+@NamedQuery(name="findNiezakonczone", query="select k from Kursy k where k.datado>=:datado order by k.dataod desc")
 public class Kursy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@SequenceGenerator(name="KURSY_IDKURSY_GENERATOR", sequenceName="KURSY_IDKURSY_SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="KURSY_IDKURSY_GENERATOR")
 	@Column(unique=true, nullable=false)
 	private Integer idkursy;
 

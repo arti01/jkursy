@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import org.arti01.entit.Kursy;
+
 @Local
 public interface KursyImpLocal {
 
