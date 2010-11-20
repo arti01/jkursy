@@ -1,6 +1,6 @@
 package org.arti01.abstrakt;
 
-import org.arti01.obiekty.User;
+import org.arti01.entit.User;
 
 import com.opensymphony.xwork2.ActionSupport;
 

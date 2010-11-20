@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.*;
+import org.arti01.entit.User;
+import org.arti01.sesBean.*;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;

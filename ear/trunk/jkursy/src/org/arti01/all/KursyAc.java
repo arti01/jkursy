@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.arti01.abstrakt.All;
-import org.arti01.obiekty.Kursy;
-import org.arti01.obiekty.KursyImp;
+import org.arti01.entit.Kursy;
+import org.arti01.sesBean.KursyImp;
 
 
 public class KursyAc extends All {

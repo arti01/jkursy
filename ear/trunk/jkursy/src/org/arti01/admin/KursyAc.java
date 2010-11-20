@@ -5,8 +5,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.Kursy;
-import org.arti01.obiekty.KursyImp;
+import org.arti01.entit.Kursy;
+import org.arti01.sesBean.KursyImp;
+
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 public class KursyAc extends Akcja {

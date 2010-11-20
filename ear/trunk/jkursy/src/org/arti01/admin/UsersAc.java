@@ -1,6 +1,5 @@
 package org.arti01.admin;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,22 +7,19 @@ import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
-import org.arti01.obiekty.Kursy;
-import org.arti01.obiekty.KursyImp;
-import org.arti01.obiekty.RoleImpLocal;
-import org.arti01.obiekty.User;
-import org.arti01.obiekty.UserImp;
-import org.arti01.obiekty.Role;
-import org.arti01.obiekty.RoleImp;
-import org.arti01.obiekty.UserImpLocal;
-import org.arti01.obiekty.UserRole;
-import org.arti01.sb.UserBeanLocal;
+import org.arti01.entit.Kursy;
+import org.arti01.entit.KursyUser;
+import org.arti01.entit.Role;
+import org.arti01.entit.User;
+import org.arti01.entit.UserRole;
+import org.arti01.sesBean.KursyImpLocal;
+import org.arti01.sesBean.RoleImpLocal;
+import org.arti01.sesBean.UserImp;
+import org.arti01.sesBean.UserImpLocal;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
@@ -35,13 +31,13 @@ public class UsersAc extends Akcja {
 	User user;
 	@EJB UserImpLocal userImp;
 	@EJB RoleImpLocal roleImp;
-	@EJB UserBeanLocal  userBean;
+	@EJB KursyImpLocal kursyImp;
 	
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
 	List<User> users;
-	List<Integer> zaznaczoneKursyy = new ArrayList<Integer>();
+	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	List<Kursy> kursyAll;
 	List<String> zaznaczone = new ArrayList<String>();
 	List<Role> roleAll;
@@ -52,85 +48,60 @@ public class UsersAc extends Akcja {
 	private boolean asc = true;
 	private String sortTyp = "";
 
-	@SkipValidation
-	public String formAdmin() throws Exception {
-		prawo=Role.ADMIN;
+	private void form(String prawo){
 		if (user != null) {
 			user = userImp.find(user);
 			zmien = true;
 			for (UserRole r : user.getUserRoles()) {
 				zaznaczone.add(r.getRole().getRola());
 			}
-			/*for (Kursy k : user.getKursy()) {
-				zaznaczoneKursyy.add(k.getIdkursy());
-			}*/
+			for (KursyUser ku : user.getKursyUsers()) {
+				zaznaczoneKursy.add(ku.getKursy().getIdkursy());
+				logger.info(ku.getKursy().getIdkursy());
+			}
 			zmien = true;
 		} else {
 			user= new User();
 			user.setDataZmiany(new Date());
-			zaznaczone.add(Role.ADMIN);
+			zaznaczone.add(prawo);
 		}
 		roleAll = roleImp.findAll();
-		//kursyAll=new KursyImp().findNiezakończone();
+		kursyAll=kursyImp.findNiezakonczone();
+	}
+	
+	@SkipValidation
+	public String formAdmin() throws Exception {
+		prawo=Role.ADMIN;
+		form(prawo);
 		return "form";
 	}
 	
 	@SkipValidation
 	public String formWyklad() throws Exception {
 		prawo=Role.WYKLADOWCA;
-		if (user != null) {
-			user = userImp.find(user);
-			zmien = true;
-			/*for (Role r : user.getRole()) {
-				zaznaczone.add(r.getRole());
-			}
-			for (Kursy k : user.getKursyy()) {
-				zaznaczoneKursyy.add(k.getIdkursy());
-			}*/
-			zmien = true;
-		} else {
-			user= new User();
-			user.setDataZmiany(new Date());
-			zaznaczone.add(Role.WYKLADOWCA);
-		}
-		roleAll = new RoleImp().findAll();
-		kursyAll=new KursyImp().findNiezakończone();
+		form(prawo);
 		return "form";
 	}
 
 	@SkipValidation
 	public String formKursant() throws Exception {
 		prawo=Role.KURSANT;
-		if (user != null) {
-			user = userImp.find(user);
-			zmien = true;
-			/*for (Role r : user.getRole()) {
-				zaznaczone.add(r.getRole());
-			}
-			for (Kursy k : user.getKursyy()) {
-				zaznaczoneKursyy.add(k.getIdkursy());
-			}*/
-			zmien = true;
-		} else {
-			user= new User();
-			user.setDataZmiany(new Date());
-			zaznaczone.add(Role.KURSANT);
-		}
-		roleAll = new RoleImp().findAll();
-		kursyAll=new KursyImp().findNiezakończone();
+		form(prawo);
 		return "form";
 	}
 
 	public String dodaj() throws Exception {
 		// obsluga roli
-		Set<Role> role = new HashSet<Role>();
+		Set<UserRole> userRoles = new HashSet<UserRole>();
 		for (String i : zaznaczone) {
 			Role r = new Role();
-			//r.setRole(i);
-			role.add(r);
+			r.setRola(i);
+			UserRole ur =new UserRole();
+			ur.setRole(r);
+			userRoles.add(ur);
 		}
 		Set<Kursy> kursy = new HashSet<Kursy>();
-		for (Integer i : zaznaczoneKursyy) {
+		for (Integer i : zaznaczoneKursy) {
 			Kursy k = new Kursy();
 			k.setIdkursy(i);
 			kursy.add(k);
@@ -139,9 +110,9 @@ public class UsersAc extends Akcja {
 		if (!zmien) {// dodawanie
 			try {
 				logger.info("dodanie"+user.getImieNazwisko());
-				//user.setUserRoles(role);
+				user.setUserRoles(userRoles);
 				//user.setKursy(kursy);
-				new UserImp().insert(user);
+				//userImp.insert(user);
 				setInfoText("login.dodany");
 			} catch (Exception e) {
 				logger.error("dodanie", e);
@@ -150,7 +121,7 @@ public class UsersAc extends Akcja {
 			}
 		} else {// edycja
 			try {
-				// logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
+				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				User userNew = new UserImp().find(user);
 				userNew.setUserpass(user.getUserpass());
 				userNew.setEmail(user.getEmail());
@@ -164,7 +135,7 @@ public class UsersAc extends Akcja {
 				//userNew.setRole(role);
 				//userNew.setKursy(kursy);
 				//logger.info("ilosc kursow"+ userNew.getKursyy().size());
-				new UserImp().update(userNew);
+				//new UserImp().update(userNew);
 				setInfoText("login.zmieniony");
 			} catch (Exception e) {
 				addActionError("problem z edycja danych usera");
@@ -178,9 +149,7 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
-		logger.info("sssssssssssssss");
 		users = userImp.findAdmin("imieNazwisko", asc);
-		logger.info("ssssssss"+ userBean.test("imieNazwisko"));
 		return "list";
 	}
 	
@@ -342,20 +311,20 @@ public class UsersAc extends Akcja {
 		this.sortTyp = sortTyp;
 	}
 
-	public List<Kursy> getKursyyAll() {
+	public List<Kursy> getKursyAll() {
 		return kursyAll;
 	}
 
-	public void setKursyyAll(List<Kursy> kursyAll) {
+	public void setKursyAll(List<Kursy> kursyAll) {
 		this.kursyAll = kursyAll;
 	}
 
-	public List<Integer> getZaznaczoneKursyy() {
-		return zaznaczoneKursyy;
+	public List<Integer> getZaznaczoneKursy() {
+		return zaznaczoneKursy;
 	}
 
-	public void setZaznaczoneKursyy(List<Integer> zaznaczoneKursyy) {
-		this.zaznaczoneKursyy = zaznaczoneKursyy;
+	public void setZaznaczoneKursy(List<Integer> zaznaczoneKursy) {
+		this.zaznaczoneKursy = zaznaczoneKursy;
 	}
 
 	public void setPrawo(String prawo) {

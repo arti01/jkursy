@@ -8,9 +8,9 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.arti01.abstrakt.All;
 import org.arti01.admin.UsersAc;
-import org.arti01.obiekty.Statyczne;
-import org.arti01.obiekty.StatyczneImp;
-import org.arti01.obiekty.User;
+import org.arti01.entit.Statyczne;
+import org.arti01.entit.User;
+import org.arti01.sesBean.StatyczneImp;
 
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
@@ -22,10 +22,6 @@ public class IndexAc extends All {
 	User user;
 	
 	public String execute() throws Exception{
-		User u=new User();
-		u.setUsername("aa");
-		logger.info("jestemmmm"+u.getImieNazwisko());
-		//statyczne= new StatyczneImp().findAll();
 		return SUCCESS;
 	}
 	

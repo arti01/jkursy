@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import org.apache.log4j.Logger;
-import org.arti01.obiekty.Fota;
+import org.arti01.sesBean.Fota;
 
 public class ObsFot {
 	Logger logger = Logger.getLogger(ObsFot.class);

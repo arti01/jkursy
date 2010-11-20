@@ -1,7 +1,8 @@
 package org.arti01.abstrakt;
 
 import java.util.List;
-import org.arti01.obiekty.Statyczne;
+
+import org.arti01.entit.Statyczne;
 
 @SuppressWarnings("serial")
 public abstract class All extends Akcja {
