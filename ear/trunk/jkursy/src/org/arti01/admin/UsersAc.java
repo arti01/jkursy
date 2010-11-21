@@ -36,7 +36,7 @@ public class UsersAc extends Akcja {
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
-	List<User> users;
+	List<UserImpLocal> users;
 	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	List<Kursy> kursyAll;
 	List<String> zaznaczone = new ArrayList<String>();
@@ -50,24 +50,23 @@ public class UsersAc extends Akcja {
 
 	@SkipValidation
 	private void form(String prawo){
-		logger.info("userImp"+userImp);
+		/*logger.info("userImp"+userImp);
 		logger.info("userImp"+userImp+userImp.getUser());
-		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
+		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());*/
 		this.prawo=prawo;
 		//if (user != null) {
-		if (userImp.getUser() != null) {
-			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
-			//user = userImp.find(user);
-			user = userImp.find(userImp.getUser());
+		if (zmien) {
+			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername()+userImp.getUser().getImieNazwisko());
+			logger.info("userImp"+userImp.getUser().getUserRoles().size());
+			//user = userImp.find(userImp.getUser());
 			zmien = true;
-			for (UserRole r : user.getUserRoles()) {
+			for (UserRole r : userImp.getUser().getUserRoles()) {
 				zaznaczone.add(r.getRole().getRola());
 			}
-			for (KursyUser ku : user.getKursyUsers()) {
+			for (KursyUser ku : userImp.getUser().getKursyUsers()) {
 				zaznaczoneKursy.add(ku.getKursy().getIdkursy());
 				logger.info(ku.getKursy().getIdkursy());
 			}
-			zmien = true;
 		} else {
 			user= new User();
 			user.setDataZmiany(new Date());
@@ -217,11 +216,11 @@ public class UsersAc extends Akcja {
 		return SUCCESS;
 	}
 
-	public List<User> getUsers() {
+	public List<UserImpLocal> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(List<UserImpLocal> users) {
 		this.users = users;
 	}
 

@@ -1,7 +1,9 @@
 package org.arti01.sesBean;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.LocalBean;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -11,8 +13,8 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 
-@Stateless
-@LocalBean
+@Stateful
+//@LocalBean
 public class UserImp  implements UserImpLocal{
 	
 	@PersistenceContext
@@ -44,7 +46,7 @@ public class UserImp  implements UserImpLocal{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> findAdmin(String order, boolean asc) {
+	public List<UserImpLocal> findAdmin(String order, boolean asc) {
 		if (order==null)order="imieNazwisko";
 		String ascS;
 		Query query;
@@ -57,7 +59,16 @@ public class UserImp  implements UserImpLocal{
 		//Set<Role> role=new HashSet<Role>();
 		//role.add(rola);
 		query.setParameter("role", rola);
-		return query.getResultList();
+		List<UserImpLocal> list=new ArrayList<UserImpLocal>();
+		for(Object o :query.getResultList()){
+			User u=(User)o;
+			//u=new UserImp().find(u);
+			logger.info(u.getImieNazwisko());
+			UserImpLocal ui = null;
+			ui.setUser(u);
+			list.add(ui);
+		}
+		return list;
 	}
 	
 	

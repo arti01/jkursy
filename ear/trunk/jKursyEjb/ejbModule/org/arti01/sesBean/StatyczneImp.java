@@ -34,7 +34,7 @@ public class StatyczneImp implements StatyczneImpLocal {
 		em.persist(statyczne);
 	}
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public void update(Statyczne statyczne, Integer oldLp) throws Exception {
 		logger.info(statyczne.getTytul()+"-------------"+statyczne.getLp());
 		if (oldLp > statyczne.getLp()) {//idziemy w góre
@@ -105,5 +105,5 @@ public class StatyczneImp implements StatyczneImpLocal {
 	public List<Integer> lpAll() {
 		return (List<Integer>) new Baza()
 				.getAll("select lp from Statyczne order by lp");
-	}
+	}*/
 }

@@ -32,18 +32,24 @@ function takNie(){
 	<s:property />
 	<s:if test="%{prawo.equals('kursant')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formKursant">
-		<s:param name="user.username" value="%{username}"/></s:url>
+		<s:param name="user.username" value="%{username}"/>
+		<s:param name="zmien" value="true" />
+		</s:url>
 	</s:if>
 	<s:elseif test="%{prawo.equals('admin')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formAdmin">
-		<s:param name="userImp.user.username" value="username"/></s:url>
+		<s:param name="userImp.user.username" value="user.username"/>
+		<s:param name="zmien" value="true" />
+		</s:url>
 	</s:elseif>
 	<s:else>
 		<s:url id="url1" namespace="/admin" action="users" method="formWyklad">
-		<s:param name="user.username" value="%{username}"/></s:url>
+		<s:param name="user.username" value="%{username}"/>
+		<s:param name="zmien" value="true" />
+		</s:url>
 	</s:else>
 		<s:a href="%{url1}">
-			<s:property value="imieNazwisko"/>
+			<s:property value="user.imieNazwisko"/>
 		</s:a>
 		<s:url id="url1" namespace="/admin" action="users" method="formAdmin"><s:param name="user.username" value="%{username}"/><s:param name="zmianaHasla" value="true"/></s:url>
 		<s:a href="%{url1}">

@@ -8,7 +8,7 @@ import org.arti01.entit.User;
 
 @Local
 public interface UserImpLocal {
-	public List<User> findAdmin(String order, boolean asc);
+	public List<UserImpLocal> findAdmin(String order, boolean asc);
 	public List<User> findWyklad(String order, boolean asc);
 	public List<User> findKursant(String order, boolean asc);
 	public List<User> findNowy(String order, boolean asc);
