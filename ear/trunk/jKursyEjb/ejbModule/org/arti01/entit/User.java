@@ -2,6 +2,11 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.Email;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -16,8 +21,6 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="_USERS_USERNAME_GENERATOR", sequenceName="_USERS_USERNAME_SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="_USERS_USERNAME_GENERATOR")
 	@Column(unique=true, nullable=false, length=50)
 	private String username;
 
@@ -74,7 +77,12 @@ public class User implements Serializable {
 	public Date getDataZmiany() {
 		return this.dataZmiany;
 	}
-
+	
+	public void setDataZmiany(String dataZmiany) throws ParseException {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		this.dataZmiany = sdf.parse(dataZmiany);
+	}
+	
 	public void setDataZmiany(Date dataZmiany) {
 		this.dataZmiany = dataZmiany;
 	}
