@@ -16,4 +16,6 @@ public interface UserImpLocal {
 	public User find(User user);
 	public void insert(User user);
 	public void remove(User user);
+	public User getUser();
+	public void setUser(User user);
 }

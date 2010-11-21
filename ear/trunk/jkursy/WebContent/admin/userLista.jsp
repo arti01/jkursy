@@ -29,13 +29,14 @@ function takNie(){
 <ul>
 <s:iterator value="users">
 	<li>
+	<s:property />
 	<s:if test="%{prawo.equals('kursant')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formKursant">
 		<s:param name="user.username" value="%{username}"/></s:url>
 	</s:if>
 	<s:elseif test="%{prawo.equals('admin')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formAdmin">
-		<s:param name="user.username" value="%{username}"/></s:url>
+		<s:param name="userImp.user.username" value="username"/></s:url>
 	</s:elseif>
 	<s:else>
 		<s:url id="url1" namespace="/admin" action="users" method="formWyklad">

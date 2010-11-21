@@ -5,6 +5,9 @@ import javax.persistence.*;
 
 import org.hibernate.validator.constraints.Email;
 
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,20 +59,18 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-one association to UserRole
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private Set<UserRole> userRoles;
 
 	//bi-directional many-to-one association to KursyUser
 	@OneToMany(mappedBy="user")
 	private Set<KursyUser> kursyUsers;
 
-    public User() {
-    }
-
 	public String getUsername() {
 		return this.username;
 	}
-
+	
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -78,6 +79,7 @@ public class User implements Serializable {
 		return this.dataZmiany;
 	}
 	
+	//@RequiredStringValidator(key="nie może byc puste")
 	public void setDataZmiany(String dataZmiany) throws ParseException {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 		this.dataZmiany = sdf.parse(dataZmiany);
@@ -90,7 +92,9 @@ public class User implements Serializable {
 	public String getEmail() {
 		return this.email;
 	}
-
+	
+	@RequiredStringValidator(key="nie może byc puste")
+	@EmailValidator(key="to nie jest email")
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -98,7 +102,8 @@ public class User implements Serializable {
 	public String getImieNazwisko() {
 		return this.imieNazwisko;
 	}
-
+	
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setImieNazwisko(String imieNazwisko) {
 		this.imieNazwisko = imieNazwisko;
 	}
@@ -146,7 +151,8 @@ public class User implements Serializable {
 	public String getUserpass() {
 		return this.userpass;
 	}
-
+	
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setUserpass(String userpass) {
 		this.userpass = userpass;
 	}

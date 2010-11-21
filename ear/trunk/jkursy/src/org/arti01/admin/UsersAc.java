@@ -48,9 +48,17 @@ public class UsersAc extends Akcja {
 	private boolean asc = true;
 	private String sortTyp = "";
 
+	@SkipValidation
 	private void form(String prawo){
-		if (user != null) {
-			user = userImp.find(user);
+		logger.info("userImp"+userImp);
+		logger.info("userImp"+userImp+userImp.getUser());
+		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
+		this.prawo=prawo;
+		//if (user != null) {
+		if (userImp.getUser() != null) {
+			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
+			//user = userImp.find(user);
+			user = userImp.find(userImp.getUser());
 			zmien = true;
 			for (UserRole r : user.getUserRoles()) {
 				zaznaczone.add(r.getRole().getRola());
@@ -71,22 +79,19 @@ public class UsersAc extends Akcja {
 	
 	@SkipValidation
 	public String formAdmin() throws Exception {
-		prawo=Role.ADMIN;
-		form(prawo);
+		form(Role.ADMIN);
 		return "form";
 	}
 	
 	@SkipValidation
 	public String formWyklad() throws Exception {
-		prawo=Role.WYKLADOWCA;
-		form(prawo);
+		form(Role.WYKLADOWCA);
 		return "form";
 	}
 
 	@SkipValidation
 	public String formKursant() throws Exception {
-		prawo=Role.KURSANT;
-		form(prawo);
+		form(Role.KURSANT);
 		return "form";
 	}
 
@@ -98,6 +103,7 @@ public class UsersAc extends Akcja {
 			r.setRola(i);
 			UserRole ur =new UserRole();
 			ur.setRole(r);
+			ur.setUser(user);
 			userRoles.add(ur);
 		}
 		Set<Kursy> kursy = new HashSet<Kursy>();
@@ -112,7 +118,7 @@ public class UsersAc extends Akcja {
 				logger.info("dodanie"+user.getImieNazwisko());
 				user.setUserRoles(userRoles);
 				//user.setKursy(kursy);
-				//userImp.insert(user);
+				userImp.insert(user);
 				setInfoText("login.dodany");
 			} catch (Exception e) {
 				logger.error("dodanie", e);
@@ -333,5 +339,13 @@ public class UsersAc extends Akcja {
 
 	public String getPrawo() {
 		return prawo;
+	}
+
+	public UserImpLocal getUserImp() {
+		return userImp;
+	}
+
+	public void setUserImp(UserImpLocal userImp) {
+		this.userImp = userImp;
 	}
 }

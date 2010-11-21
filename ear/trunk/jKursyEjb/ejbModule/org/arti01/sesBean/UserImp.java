@@ -18,6 +18,7 @@ public class UserImp  implements UserImpLocal{
 	@PersistenceContext
 	EntityManager em;
 	Logger logger = Logger.getLogger(UserImp.class);
+	User user;
 
 	@SuppressWarnings("unchecked")
 	public List<User> findAll() {
@@ -107,12 +108,11 @@ public class UserImp  implements UserImpLocal{
 	 }
 	
 	public User find(User user) {
-		User userNew;
 		if (user.getUsername() != null) {
-			userNew=em.find(User.class, user.getUsername());
+			user=em.find(User.class, user.getUsername());
 		} else
-			userNew = new User();
-		return userNew;
+			user = new User();
+		return user;
 	}
 	
 	public void insert(User user) {
@@ -123,6 +123,16 @@ public class UserImp  implements UserImpLocal{
 		em.remove(em.find(User.class, user.getUsername()));
 		//em.remove(em.merge(user));
 		}
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	}
 	/*
 	@SuppressWarnings("unchecked")

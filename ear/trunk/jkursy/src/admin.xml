@@ -27,6 +27,7 @@
 			<result name="next" type="redirect">${nextAction}</result>
 			<result type="tiles">admin.index.test</result>
 			<result name="error">/admin/info.jsp</result>
+			<result name="input">/admin/info.jsp</result>
 		</action>
 		<action class="org.arti01.admin.KursyAc" name="kursy">
 			<interceptor-ref name="jsonValidationWorkflowStack" />

@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 @SuppressWarnings("serial")
 public class UserInter extends AbstractInterceptor {
 	Logger logger = Logger.getLogger(UserInter.class);
-	@EJB UserImpLocal userImp;
+	@EJB UserImpLocal userZalog;
 	
     public String intercept(ActionInvocation invocation) throws Exception {
     	Akcja action = (Akcja)invocation.getAction();
@@ -24,7 +24,7 @@ public class UserInter extends AbstractInterceptor {
         action.setLogin(request.getRemoteUser());
         User zalogowany=new User();
         zalogowany.setUsername(request.getRemoteUser());
-        zalogowany=userImp.find(zalogowany);
+        zalogowany=userZalog.find(zalogowany);
         action.setZalogowany(zalogowany);
        return invocation.invoke();
     }
