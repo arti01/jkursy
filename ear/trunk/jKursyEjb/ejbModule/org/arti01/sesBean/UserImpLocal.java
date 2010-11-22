@@ -3,6 +3,7 @@ package org.arti01.sesBean;
 import java.util.List;
 
 import javax.ejb.Local;
+import javax.ejb.Stateless;
 
 import org.arti01.entit.User;
 
