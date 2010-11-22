@@ -29,7 +29,6 @@ function takNie(){
 <ul>
 <s:iterator value="users">
 	<li>
-	<s:property />
 	<s:if test="%{prawo.equals('kursant')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formKursant">
 		<s:param name="user.username" value="%{username}"/>
@@ -38,7 +37,7 @@ function takNie(){
 	</s:if>
 	<s:elseif test="%{prawo.equals('admin')}">
 		<s:url id="url1" namespace="/admin" action="users" method="formAdmin">
-		<s:param name="userImp.user.username" value="user.username"/>
+		<s:param name="userImp.user.username" value="username"/>
 		<s:param name="zmien" value="true" />
 		</s:url>
 	</s:elseif>
@@ -49,7 +48,7 @@ function takNie(){
 		</s:url>
 	</s:else>
 		<s:a href="%{url1}">
-			<s:property value="user.imieNazwisko"/>
+			<s:property value="imieNazwisko"/>
 		</s:a>
 		<s:url id="url1" namespace="/admin" action="users" method="formAdmin"><s:param name="user.username" value="%{username}"/><s:param name="zmianaHasla" value="true"/></s:url>
 		<s:a href="%{url1}">

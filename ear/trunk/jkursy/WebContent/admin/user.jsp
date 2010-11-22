@@ -3,6 +3,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <sx:head />
 <body>
+<s:property value="userImp"/>
+<s:property value="userImp.user"/>
 <s:form method="post" namespace="/admin" action="users!dodaj.action">
 	<s:actionerror />
 	<s:textfield label="login" name="userImp.user.username" size="70"

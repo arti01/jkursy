@@ -20,6 +20,7 @@ import org.arti01.sesBean.KursyImpLocal;
 import org.arti01.sesBean.RoleImpLocal;
 import org.arti01.sesBean.UserImp;
 import org.arti01.sesBean.UserImpLocal;
+import org.arti01.sesBean.UserSImpLocal;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
@@ -30,13 +31,14 @@ public class UsersAc extends Akcja {
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
 	@EJB UserImpLocal userImp;
+	@EJB UserSImpLocal userSImp;
 	@EJB RoleImpLocal roleImp;
 	@EJB KursyImpLocal kursyImp;
 	
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
-	List<UserImpLocal> users;
+	List<User> users;
 	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	List<Kursy> kursyAll;
 	List<String> zaznaczone = new ArrayList<String>();
@@ -56,6 +58,7 @@ public class UsersAc extends Akcja {
 		this.prawo=prawo;
 		//if (user != null) {
 		if (zmien) {
+			userImp.setUser(userImp.find(userImp.getUser()));
 			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername()+userImp.getUser().getImieNazwisko());
 			logger.info("userImp"+userImp.getUser().getUserRoles().size());
 			//user = userImp.find(userImp.getUser());
@@ -68,8 +71,8 @@ public class UsersAc extends Akcja {
 				logger.info(ku.getKursy().getIdkursy());
 			}
 		} else {
-			user= new User();
-			user.setDataZmiany(new Date());
+			userImp.setUser(new User());
+			userImp.getUser().setDataZmiany(new Date());
 			zaznaczone.add(prawo);
 		}
 		roleAll = roleImp.findAll();
@@ -102,7 +105,7 @@ public class UsersAc extends Akcja {
 			r.setRola(i);
 			UserRole ur =new UserRole();
 			ur.setRole(r);
-			ur.setUser(user);
+			ur.setUser(userImp.getUser());
 			userRoles.add(ur);
 		}
 		Set<Kursy> kursy = new HashSet<Kursy>();
@@ -114,10 +117,11 @@ public class UsersAc extends Akcja {
 		// koniec obslugi roli
 		if (!zmien) {// dodawanie
 			try {
-				logger.info("dodanie"+user.getImieNazwisko());
-				user.setUserRoles(userRoles);
+				logger.info("dodanie"+userImp.getUser().getImieNazwisko());
+				logger.info("dodanie"+userImp.getUser().getUsername());
+				userImp.getUser().setUserRoles(userRoles);
 				//user.setKursy(kursy);
-				userImp.insert(user);
+				userImp.insert(userImp.getUser());
 				setInfoText("login.dodany");
 			} catch (Exception e) {
 				logger.error("dodanie", e);
@@ -126,6 +130,23 @@ public class UsersAc extends Akcja {
 			}
 		} else {// edycja
 			try {
+				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
+				logger.info("userImp"+userImp+userImp.getUser());
+				userImp.getUser().setUserRoles(userRoles);
+				//user.setKursy(kursy);
+				userImp.update(userImp.getUser());
+				//userNew.getRole().clear();
+				//userNew.setRole(role);
+				//userNew.setKursy(kursy);
+				//logger.info("ilosc kursow"+ userNew.getKursyy().size());
+				//new UserImp().update(userNew);
+				setInfoText("login.zmieniony");
+			} catch (Exception e) {
+				addActionError("problem z edycja danych usera");
+				logger.error("ssssssss", e);
+				return "info";
+			}
+			/*try {
 				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				User userNew = new UserImp().find(user);
 				userNew.setUserpass(user.getUserpass());
@@ -146,7 +167,7 @@ public class UsersAc extends Akcja {
 				addActionError("problem z edycja danych usera");
 				logger.error("ssssssss", e);
 				return "info";
-			}
+			}*/
 		}
 		return "info";
 	}
@@ -154,7 +175,7 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
-		users = userImp.findAdmin("imieNazwisko", asc);
+		users = userSImp.findAdmin("imieNazwisko", asc);
 		return "list";
 	}
 	
@@ -216,11 +237,11 @@ public class UsersAc extends Akcja {
 		return SUCCESS;
 	}
 
-	public List<UserImpLocal> getUsers() {
+	public List<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<UserImpLocal> users) {
+	public void setUsers(List<User> users) {
 		this.users = users;
 	}
 
@@ -236,7 +257,7 @@ public class UsersAc extends Akcja {
 		return user;
 	}
 
-	@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
+	//@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -269,7 +290,7 @@ public class UsersAc extends Akcja {
 		return haslo2;
 	}
 
-	@FieldExpressionValidator(key = "hasla.rozne", expression = "haslo2.equals(user.getUserpass())")
+	@FieldExpressionValidator(key = "hasla.rozne", expression = "haslo2.equals(userImp.getUser().getUserpass())")
 	public void setHaslo2(String haslo2) {
 		this.haslo2 = haslo2;
 	}
@@ -344,6 +365,7 @@ public class UsersAc extends Akcja {
 		return userImp;
 	}
 
+	@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
 	public void setUserImp(UserImpLocal userImp) {
 		this.userImp = userImp;
 	}
