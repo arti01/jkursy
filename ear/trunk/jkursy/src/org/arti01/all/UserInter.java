@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.arti01.abstrakt.Akcja;
 import org.arti01.entit.User;
-import org.arti01.sesBean.UserImpLocal;
+import org.arti01.sesBean.UserImp;
 
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
@@ -15,7 +15,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 @SuppressWarnings("serial")
 public class UserInter extends AbstractInterceptor {
 	Logger logger = Logger.getLogger(UserInter.class);
-	@EJB UserImpLocal userZalog;
+	@EJB UserImp userZalog;
 	
     public String intercept(ActionInvocation invocation) throws Exception {
     	Akcja action = (Akcja)invocation.getAction();

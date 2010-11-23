@@ -18,7 +18,7 @@ import java.util.Set;
  * The persistent class for the _users database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="_users")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;

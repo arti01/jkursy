@@ -9,7 +9,7 @@ import java.util.Set;
  * The persistent class for the _roles database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="_roles")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;

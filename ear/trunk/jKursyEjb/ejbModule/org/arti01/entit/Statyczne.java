@@ -1,4 +1,4 @@
-package org.arti01.entit_new;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;

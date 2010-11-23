@@ -9,4 +9,5 @@ import org.arti01.entit.Role;
 @Local
 public interface RoleImpLocal {
 	public List<Role> findAll();
+	public Role find(Role role);
 }

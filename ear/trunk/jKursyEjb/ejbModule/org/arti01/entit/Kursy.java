@@ -1,7 +1,9 @@
-package org.arti01.entit_new;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name="kursy")
+@NamedQuery(name="findNiezakonczone", query="select k from Kursy k where k.datado>=:datado order by k.dataod desc")
 public class Kursy implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,6 +38,7 @@ public class Kursy implements Serializable {
 	private String opis;
 
 	@Column(name="opis_krotki", length=2147483647)
+	@NotNull(message="problem")
 	private String opisKrotki;
 
 	//bi-directional many-to-many association to User

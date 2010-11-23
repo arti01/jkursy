@@ -1,6 +1,8 @@
 package org.arti01.admin;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -12,14 +14,11 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.arti01.abstrakt.Akcja;
 import org.arti01.entit.Kursy;
-import org.arti01.entit.KursyUser;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
-import org.arti01.entit.UserRole;
 import org.arti01.sesBean.KursyImpLocal;
 import org.arti01.sesBean.RoleImpLocal;
 import org.arti01.sesBean.UserImp;
-import org.arti01.sesBean.UserImpLocal;
 import org.arti01.sesBean.UserSImpLocal;
 
 import com.opensymphony.xwork2.validator.annotations.FieldExpressionValidator;
@@ -30,7 +29,7 @@ public class UsersAc extends Akcja {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
-	@EJB UserImpLocal userImp;
+	@EJB UserImp userImp;
 	@EJB UserSImpLocal userSImp;
 	@EJB RoleImpLocal roleImp;
 	@EJB KursyImpLocal kursyImp;
@@ -52,30 +51,28 @@ public class UsersAc extends Akcja {
 
 	@SkipValidation
 	private void form(String prawo){
-		/*logger.info("userImp"+userImp);
+		logger.info("userImp"+userImp);
 		logger.info("userImp"+userImp+userImp.getUser());
-		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());*/
+		/*logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());*/
 		this.prawo=prawo;
 		//if (user != null) {
 		if (zmien) {
 			userImp.setUser(userImp.find(userImp.getUser()));
 			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername()+userImp.getUser().getImieNazwisko());
-			logger.info("userImp"+userImp.getUser().getUserRoles().size());
 			//user = userImp.find(userImp.getUser());
 			zmien = true;
-			for (UserRole r : userImp.getUser().getUserRoles()) {
-				zaznaczone.add(r.getRole().getRola());
+			for (Role r : userImp.getUser().getRoles()) {
+				zaznaczone.add(r.getRola());
 			}
-			for (KursyUser ku : userImp.getUser().getKursyUsers()) {
-				zaznaczoneKursy.add(ku.getKursy().getIdkursy());
-				logger.info(ku.getKursy().getIdkursy());
+			for (Kursy ku : userImp.getUser().getKursies()) {
+				zaznaczoneKursy.add(ku.getIdkursy());
 			}
 		} else {
 			userImp.setUser(new User());
 			userImp.getUser().setDataZmiany(new Date());
 			zaznaczone.add(prawo);
 		}
-		roleAll = roleImp.findAll();
+		roleAll=roleImp.findAll();
 		kursyAll=kursyImp.findNiezakonczone();
 	}
 	
@@ -99,14 +96,10 @@ public class UsersAc extends Akcja {
 
 	public String dodaj() throws Exception {
 		// obsluga roli
-		Set<UserRole> userRoles = new HashSet<UserRole>();
 		for (String i : zaznaczone) {
 			Role r = new Role();
 			r.setRola(i);
-			UserRole ur =new UserRole();
-			ur.setRole(r);
-			ur.setUser(userImp.getUser());
-			userRoles.add(ur);
+			userImp.getUser().getRoles().add(r);
 		}
 		Set<Kursy> kursy = new HashSet<Kursy>();
 		for (Integer i : zaznaczoneKursy) {
@@ -119,7 +112,6 @@ public class UsersAc extends Akcja {
 			try {
 				logger.info("dodanie"+userImp.getUser().getImieNazwisko());
 				logger.info("dodanie"+userImp.getUser().getUsername());
-				userImp.getUser().setUserRoles(userRoles);
 				//user.setKursy(kursy);
 				userImp.insert(userImp.getUser());
 				setInfoText("login.dodany");
@@ -132,7 +124,11 @@ public class UsersAc extends Akcja {
 			try {
 				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				logger.info("userImp"+userImp+userImp.getUser());
-				userImp.getUser().setUserRoles(userRoles);
+				logger.info("userImp"+userImp.getUser().getRoles().size());
+				for(Role r:userImp.getUser().getRoles()){
+					logger.info(r.getRola());	
+				}
+				//userImp.getUser().setUserRoles(userRoles);
 				//user.setKursy(kursy);
 				userImp.update(userImp.getUser());
 				//userNew.getRole().clear();
@@ -175,7 +171,11 @@ public class UsersAc extends Akcja {
 	@SkipValidation
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
-		users = userSImp.findAdmin("imieNazwisko", asc);
+		Role rola=new Role();
+		rola.setRola(prawo);
+		//rola=;
+		//users =roleImp.findSortUser(rola, null, null).getUsers();
+		users=new ArrayList<User>(roleImp.find(rola).getUsers());
 		return "list";
 	}
 	
@@ -361,12 +361,12 @@ public class UsersAc extends Akcja {
 		return prawo;
 	}
 
-	public UserImpLocal getUserImp() {
+	public UserImp getUserImp() {
 		return userImp;
 	}
 
 	@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
-	public void setUserImp(UserImpLocal userImp) {
+	public void setUserImp(UserImp userImp) {
 		this.userImp = userImp;
 	}
 }

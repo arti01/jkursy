@@ -1,23 +1,15 @@
 package org.arti01.sesBean;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.LocalBean;
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import org.apache.log4j.Logger;
-import org.arti01.entit.Role;
 import org.arti01.entit.User;
-
-import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 @Stateless
 @LocalBean
-public class UserImp  implements UserImpLocal{
+public class UserImp {
 	
 	@PersistenceContext
 	EntityManager em;

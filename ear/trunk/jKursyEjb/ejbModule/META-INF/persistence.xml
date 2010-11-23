@@ -2,12 +2,10 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="jkursyJPA">
 		<jta-data-source>jdbc/slow</jta-data-source>
-		<class>org.arti01.entit.UserRole</class>
-		<class>org.arti01.entit.User</class>
-		<class>org.arti01.entit.Statyczne</class>
-		<class>org.arti01.entit.Role</class>
-		<class>org.arti01.entit.KursyUser</class>
 		<class>org.arti01.entit.Kursy</class>
+		<class>org.arti01.entit.Role</class>
+		<class>org.arti01.entit.Statyczne</class>
+		<class>org.arti01.entit.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 			<property name="eclipselink.logging.exceptions" value="true"/>

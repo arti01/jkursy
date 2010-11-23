@@ -21,9 +21,7 @@ public class UserSImp implements UserSImpLocal {
 	@PersistenceContext
 	EntityManager em;
 	Logger logger = Logger.getLogger(UserSImp.class);
-	@EJB UserImpLocal userImp;
-	
-	List<UserImpLocal> admini;
+	@EJB UserImp userImp;
 	
 	
 	@SuppressWarnings("unchecked")
@@ -119,18 +117,6 @@ public class UserSImp implements UserSImpLocal {
 		 else query=em.createQuery("from User user order by user.username desc");
 		 return query.getResultList();
 	 }
-
-
-
-	public List<UserImpLocal> getAdmini() {
-		return admini;
-	}
-
-
-
-	public void setAdmini(List<UserImpLocal> admini) {
-		this.admini = admini;
-	}
 
 	}
 	/*

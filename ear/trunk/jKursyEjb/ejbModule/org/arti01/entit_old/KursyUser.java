@@ -8,7 +8,7 @@ import javax.persistence.*;
  * The persistent class for the kursy_users database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="kursy_users")
 public class KursyUser implements Serializable {
 	private static final long serialVersionUID = 1L;

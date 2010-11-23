@@ -47,6 +47,9 @@ function takNie(){
 		<s:param name="zmien" value="true" />
 		</s:url>
 	</s:else>
+	<s:property value="userImp"/><br>
+	<s:property value="userImp.user"/><br>
+	<s:property/><br>
 		<s:a href="%{url1}">
 			<s:property value="imieNazwisko"/>
 		</s:a>

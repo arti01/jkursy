@@ -1,7 +1,9 @@
-package org.arti01.entit_new;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.List;
 import java.util.Set;
 
 
@@ -13,6 +15,10 @@ import java.util.Set;
 @Table(name="_roles")
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public static final String ADMIN ="admin" ;
+	public static final String WYKLADOWCA ="wykladowca" ;
+	public static final String KURSANT ="kursant" ;
+	public static final String NOWY ="nowy" ;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

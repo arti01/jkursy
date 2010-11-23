@@ -1,7 +1,7 @@
 package org.arti01.sesBean;
 
+import java.util.HashSet;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Role;
+import org.arti01.entit.User;
 
 @Stateless
 @LocalBean
@@ -17,6 +18,14 @@ public class RoleImp implements RoleImpLocal{
 	@PersistenceContext
 	EntityManager em;
 
+	public Role find(Role role) {
+		if (role.getRola() != null) {
+			role=em.find(Role.class, role.getRola());
+		} else
+			role = new Role();
+		return role;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<Role> findAll() {
 		Query query=em.createQuery("select r from Role r");

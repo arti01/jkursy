@@ -10,7 +10,7 @@ import java.util.Set;
  * The persistent class for the kursy database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="kursy")
 @NamedQuery(name="findNiezakonczone", query="select k from Kursy k where k.datado>=:datado order by k.dataod desc")
 public class Kursy implements Serializable {

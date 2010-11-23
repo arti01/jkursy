@@ -1,7 +1,15 @@
-package org.arti01.entit_new;
+package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,6 +20,10 @@ import java.util.Set;
  */
 @Entity
 @Table(name="_users")
+@NamedQueries({
+	@NamedQuery(name="sortByNameAsc", query="select u from User u order by u.imieNazwisko asc"),
+	@NamedQuery(name="sortByNameDesc", query="select u from User u order by u.imieNazwisko desc")
+})
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +36,8 @@ public class User implements Serializable {
 	@Column(name="data_zmiany", nullable=false)
 	private Date dataZmiany;
 
-	@Column(length=100)
+	@Column(nullable=false, length=100)
+	@NotNull(message="problem")
 	private String email;
 
 	@Column(name="imie_nazwisko", nullable=false, length=2147483647)
@@ -52,7 +65,7 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-many association to Role
-	@ManyToMany(mappedBy="users")
+	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
 	private Set<Role> roles;
 
 	//bi-directional many-to-many association to Kursy
@@ -75,6 +88,7 @@ public class User implements Serializable {
 		return this.username;
 	}
 
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -82,23 +96,31 @@ public class User implements Serializable {
 	public Date getDataZmiany() {
 		return this.dataZmiany;
 	}
-
-	public void setDataZmiany(Date dataZmiany) {
+	
+	public void setDataZmiany(String dataZmiany) throws ParseException {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		this.dataZmiany = sdf.parse(dataZmiany);
+	}
+	
+	public void setDataZmiany(Date dataZmiany)  {
 		this.dataZmiany = dataZmiany;
 	}
 
 	public String getEmail() {
 		return this.email;
 	}
-
+	
+	@RequiredStringValidator(key="nie może byc puste")
+	@EmailValidator(key="to nie jest email")
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getImieNazwisko() {
 		return this.imieNazwisko;
 	}
 
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setImieNazwisko(String imieNazwisko) {
 		this.imieNazwisko = imieNazwisko;
 	}
@@ -147,6 +169,7 @@ public class User implements Serializable {
 		return this.userpass;
 	}
 
+	@RequiredStringValidator(key="nie może byc puste")
 	public void setUserpass(String userpass) {
 		this.userpass = userpass;
 	}

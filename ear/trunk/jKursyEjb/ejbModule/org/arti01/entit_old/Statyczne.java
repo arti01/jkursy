@@ -8,7 +8,7 @@ import javax.persistence.*;
  * The persistent class for the statyczne database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="statyczne")
 public class Statyczne implements Serializable {
 	private static final long serialVersionUID = 1L;

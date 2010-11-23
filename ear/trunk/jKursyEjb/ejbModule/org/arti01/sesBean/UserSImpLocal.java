@@ -22,7 +22,4 @@ public interface UserSImpLocal {
 	public abstract List<User> findKursant(String order, boolean asc);
 	public abstract List<User> findNowy(String order, boolean asc);
 	public abstract List<User> findOrderUsername(boolean asc);
-	public List<UserImpLocal> getAdmini();
-	public void setAdmini(List<UserImpLocal> admini);
-
 }

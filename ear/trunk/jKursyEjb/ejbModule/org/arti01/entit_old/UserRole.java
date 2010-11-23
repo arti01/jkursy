@@ -8,7 +8,7 @@ import javax.persistence.*;
  * The persistent class for the _user_roles database table.
  * 
  */
-@Entity
+//@Entity
 @Table(name="_user_roles")
 public class UserRole implements Serializable {
 	private static final long serialVersionUID = 1L;
