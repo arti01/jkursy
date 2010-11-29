@@ -13,7 +13,9 @@ nazwa:
 <h2><h:outputText value="#{kursyAc.kurs.nazwa}"/></h2>
 krótki opis:
 <h3><h:outputText value="#{kursyAc.kurs.opisKrotki}"/></h3>
-od:<h:outputText value="#{kursyAc.kurs.dataod}"/>do:<h:outputText value="#{kursyAc.kurs.datado}"/><br/>
+od:<h:outputText value="#{kursyAc.kurs.dataod}"><f:convertDateTime type="date"/> </h:outputText>
+do:<h:outputText value="#{kursyAc.kurs.datado}"><f:convertDateTime type="date"/> </h:outputText>
+<br/>
 wykładowcy:<br/>
 <!-- 
 <s:iterator value="kurs.wykladowcy">
