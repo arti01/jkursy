@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf129083666365419" configfile="/jkursyjs/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="/all/index.xhtml" x="220" y="12" id="pf12909746279770" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf129097589630120 pf129097594217522" path="/all/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="/all/kursyLista.xhtml" x="331" y="120" id="pf12909746279774" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf129097594217522 pf129097594217523 pf129097594217524" inlinks="pf129097589630121 pf129097594217523" path="/all/kursyLista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="/all/wszystko" x="54" y="120" id="pf129097556096011" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf129097589630120 pf129097589630121 pf129097594217525 pf129098147820627" path="/all/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="all/kursyDetale.xhtml" x="202" y="296" id="pf129097594217526" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf129097594217524 pf129097594217525" path="/all/kursyDetale.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="all/statyczneDetale.xhtml" x="12" y="12" id="pf129098147820628" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf129098147820627" path="/all/statyczneDetale.xhtml"/>
+  <links id="pf129097589630120" target="pf12909746279770" source="pf129097556096011" outcome="index"/>
+  <links id="pf129097589630121" target="pf12909746279774" source="pf129097556096011" outcome="kursy.list"/>
+  <links id="pf129097594217522" target="pf12909746279770" source="pf12909746279774" outcome="index"/>
+  <links id="pf129097594217524" target="pf129097594217526" source="pf12909746279774" outcome="kursy.detale"/>
+  <links id="pf129097594217525" target="pf129097594217526" source="pf129097556096011" outcome="kursy.detale"/>
+  <links id="pf129098147820627" target="pf129098147820628" source="pf129097556096011" outcome="index.statyczne"/>
+  <links id="pf129097594217523" target="pf12909746279774" source="pf12909746279774" outcome="kursy.list">
+    <bendPoints d1Height="-36" d2Height="-36"/>
+    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
+    <bendPoints d1Width="-64" d2Width="-64"/>
+  </links>
+</pageflow:Pageflow>

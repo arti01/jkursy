@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="jkursyZiarn">
+        <wb-resource deploy-path="/" source-path="/ejbModule"/>
+        <property name="java-output-path" value="/jkursyZiarn/build/classes"/>
+        <property name="ClientProject" value="jkursyZiarnClient"/>
+        <property name="ClientJARURI" value="jkursyZiarnClient.jar"/>
+    </wb-module>
+</project-modules>
