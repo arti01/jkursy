@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.arti01.entit.Statyczne;
@@ -20,7 +21,7 @@ public class StatyczneImp {
 	 * @see org.arti01.obiekty.StatyczneImpLocal#findAll()
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Statyczne> findAll() {
+	public List<Statyczne> getFindAll() {
 		return em.createQuery("select s from Statyczne s order by s.lp").getResultList();
 	}
 
