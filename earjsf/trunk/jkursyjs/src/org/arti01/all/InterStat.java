@@ -18,7 +18,7 @@ public class InterStat {
 
 	public ListDataModel<Statyczne> getStatyczneModel() {
 		logger.info(statyczneModel.getRowIndex());
-		if(statyczneModel.getRowIndex()==-1) statyczneModel.setWrappedData(statyczne.findAll());
+		if(statyczneModel.getRowIndex()==-1) statyczneModel.setWrappedData(statyczne.getFindAll());
 		return statyczneModel;
 	}
 
