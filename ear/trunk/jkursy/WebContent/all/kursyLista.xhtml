@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/templates/template.xhtml">
+		<ui:define name="body">
+	<body>
+	kursy
+	<h:form>
+	<h:dataTable var="kurs" value="#{kursyAc.model}">
+	<h:column>
+	<h:commandLink action="#{kursyAc.detale}">
+		<h:outputText value="#{kurs.nazwa}"/>
+	</h:commandLink>
+	</h:column>
+	</h:dataTable>
+	</h:form>
+	</body>
+	
+<!--
+<ul>
+<s:iterator value="kursy">
+	<li>
+		<s:url id="url1" namespace="/all" action="kursy" method="detale"><s:param name="kurs.idkursy" value="idkursy"/></s:url>
+		<s:a href="%{url1}">
+			<s:property value="nazwa"/>
+		</s:a>
+		od:<s:date name="dataOd" format="yyyy-MM-dd"/>
+		do:<s:date name="dataDo" format="yyyy-MM-dd"/>
+		<s:iterator value="wykladowcy">
+			<s:property value="imieNazwisko"/>
+		</s:iterator>
+	</li>
+</s:iterator>
+</ul>
+-->
+</ui:define>
+</ui:composition>
+</html>
