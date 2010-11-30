@@ -3,20 +3,21 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <body>
-<h3>menu</h3>
 
 <h:form>
-<ul>
-<li><h:commandLink value="index"  action="index" immediate="true"/></li>
-<li><h:commandLink value="kursy" action="#{kursyAc.list}" immediate="true"/></li>
-	<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
-	<li>
-		<h:commandLink action="#{indexAc.statyczna}">
-			<h:outputText value="#{strona.tytul}"/>
-		</h:commandLink>
-	</li>
-	</ui:repeat>
-<!--
+	<h:commandLink value="do strony głównej" action="index"/>
+	<br/>
+	<h:commandLink value="administracja" action="indexAdm"/>
+	<h3><h:commandLink value="kursy" action="#{kursyAc.list}"
+		immediate="true" /></h3>
+	<h3>strony statyczne</h3>
+	<ul>
+		<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
+			<li><h:commandLink action="#{indexAc.statyczna}">
+				<h:outputText value="#{strona.tytul}" />
+			</h:commandLink></li>
+		</ui:repeat>
+		<!--
 	<li><s:url id="url1" namespace="/wykladowcy" action="index">
 	</s:url><s:a href="%{url1}">
 		<s:text name="wykladowcy" />
@@ -47,7 +48,7 @@
 <s:if test="zalogowany.username!=null">
 Jesteś zalogowany jako:<s:property value="zalogowany.username"/>(<s:property value="zalogowany.imieNazwisko"/>)
 </s:if>-->
-</ul>
+	</ul>
 </h:form>
 </body>
 </html>

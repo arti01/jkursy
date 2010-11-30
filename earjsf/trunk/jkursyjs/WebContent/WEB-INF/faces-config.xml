@@ -22,6 +22,10 @@
 			<to-view-id>/all/index.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>indexAdm</from-outcome>
+			<to-view-id>/admin/index.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>index.statyczne</from-outcome>
 			<to-view-id>/all/statyczneDetale.xhtml</to-view-id>
 		</navigation-case>
