@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf129083666365419" configfile="/jkursyjs/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="/all/index.xhtml" x="220" y="12" id="pf12909746279770" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf129097589630120 pf129097594217522" path="/all/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="/all/kursyLista.xhtml" x="331" y="120" id="pf12909746279774" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf129097594217522 pf129097594217523 pf129097594217524" inlinks="pf129097589630121 pf129097594217523" path="/all/kursyLista.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="/all/wszystko" x="54" y="120" id="pf129097556096011" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf129097589630120 pf129097589630121 pf129097594217525 pf129098147820627 pf12910921898060" path="/all/*"/>
-  <nodes xsi:type="pageflow:PFPage" name="all/kursyDetale.xhtml" x="202" y="296" id="pf129097594217526" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf129097594217524 pf129097594217525" path="/all/kursyDetale.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="all/statyczneDetale.xhtml" x="12" y="12" id="pf129098147820628" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf129098147820627" path="/all/statyczneDetale.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/index.xhtml" id="pf12910921898071" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf12910921898060" path="/admin/index.xhtml"/>
-  <links id="pf129097589630120" target="pf12909746279770" source="pf129097556096011" outcome="index"/>
-  <links id="pf129097589630121" target="pf12909746279774" source="pf129097556096011" outcome="kursy.list"/>
-  <links id="pf129097594217522" target="pf12909746279770" source="pf12909746279774" outcome="index"/>
-  <links id="pf129097594217524" target="pf129097594217526" source="pf12909746279774" outcome="kursy.detale"/>
-  <links id="pf129097594217525" target="pf129097594217526" source="pf129097556096011" outcome="kursy.detale"/>
-  <links id="pf129098147820627" target="pf129098147820628" source="pf129097556096011" outcome="index.statyczne"/>
-  <links id="pf129097594217523" target="pf12909746279774" source="pf12909746279774" outcome="kursy.list">
-    <bendPoints d1Height="-36" d2Height="-36"/>
-    <bendPoints d1Width="-64" d1Height="-36" d2Width="-64" d2Height="-36"/>
-    <bendPoints d1Width="-64" d2Width="-64"/>
-  </links>
-  <links id="pf12910921898060" target="pf12910921898071" source="pf129097556096011" outcome="indexAdm"/>
+  <nodes xsi:type="pageflow:PFPage" name="/all/wszystko" x="99" y="18" id="pf12911216217200" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf12911216217201 pf12911216217202 pf12911216217203 pf12911216217204 pf12911216217205" path="/all/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="all/index.xhtml" x="411" y="228" id="pf12911216217356" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf12911216217201 pf12911216217357" path="/all/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/index.xhtml" x="504" y="48" id="pf12911216217358" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf12911216217202" path="/admin/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="all/statyczneDetale.xhtml" x="336" y="108" id="pf12911216217359" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf12911216217203" path="/all/statyczneDetale.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="/all/kursyLista.xhtml" x="82" y="132" id="pf129112162173510" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf12911216217357 pf129112162173511 pf129112162173512" inlinks="pf12911216217204 pf129112162173511" path="/all/kursyLista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="all/kursyDetale.xhtml" x="300" id="pf129112162173513" referenceLink="//@navigationRule.2/@navigationCase.2/@toViewId|" inlinks="pf12911216217205 pf129112162173512" path="/all/kursyDetale.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="/test/wszystko" x="132" y="312" id="pf129112173747619" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf129112173747620 pf129112173747621" path="/test/*"/>
+  <nodes xsi:type="pageflow:PFPage" name="test/index.xhtml" x="21" y="228" id="pf129112173747622" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf129112173747620" path="/test/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="test/kursyLista.xhtml" x="168" y="204" id="pf129112173747623" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf129112173747621" path="/test/kursyLista.xhtml"/>
+  <links id="pf12911216217201" target="pf12911216217356" source="pf12911216217200" outcome="index"/>
+  <links id="pf12911216217202" target="pf12911216217358" source="pf12911216217200" outcome="indexAdm"/>
+  <links id="pf12911216217203" target="pf12911216217359" source="pf12911216217200" outcome="index.statyczne"/>
+  <links id="pf12911216217204" target="pf129112162173510" source="pf12911216217200" outcome="kursy.list"/>
+  <links id="pf12911216217205" target="pf129112162173513" source="pf12911216217200" outcome="kursy.detale"/>
+  <links id="pf12911216217357" target="pf12911216217356" source="pf129112162173510" outcome="index"/>
+  <links id="pf129112162173511" target="pf129112162173510" source="pf129112162173510" outcome="kursy.list"/>
+  <links id="pf129112162173512" target="pf129112162173513" source="pf129112162173510" outcome="kursy.detale"/>
+  <links id="pf129112173747620" target="pf129112173747622" source="pf129112173747619" outcome="index" redirect="true"/>
+  <links id="pf129112173747621" target="pf129112173747623" source="pf129112173747619" outcome="kursy" redirect="true"/>
 </pageflow:Pageflow>

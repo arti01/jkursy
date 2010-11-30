@@ -14,7 +14,22 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
-<navigation-rule>
+	<navigation-rule>
+		<display-name>/test/wszystko</display-name>
+		<from-view-id>/test/*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/test/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>kursy</from-outcome>
+			<to-view-id>/test/kursyLista.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
 		<display-name>/all/wszystko</display-name>
 		<from-view-id>/all/*</from-view-id>
 		<navigation-case>
@@ -37,23 +52,13 @@
 			<from-outcome>kursy.detale</from-outcome>
 			<to-view-id>/all/kursyDetale.xhtml</to-view-id>
 		</navigation-case>
-</navigation-rule>
-
-<!-- 
-	<navigation-rule>
-		<display-name>/all/index.xhtml</display-name>
-		<from-view-id>/all/index.xhtml</from-view-id>
-		<navigation-case>
-			<from-outcome>index</from-outcome>
-			<to-view-id>/all/index.xhtml</to-view-id>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>kursy.list</from-outcome>
-			<to-view-id>/all/kursyLista.xhtml</to-view-id>
-		</navigation-case>
 	</navigation-rule>
- -->
-	
+
+	<!-- <navigation-rule> <display-name>/all/index.xhtml</display-name> <from-view-id>/all/index.xhtml</from-view-id> 
+		<navigation-case> <from-outcome>index</from-outcome> <to-view-id>/all/index.xhtml</to-view-id> 
+		</navigation-case> <navigation-case> <from-outcome>kursy.list</from-outcome> 
+		<to-view-id>/all/kursyLista.xhtml</to-view-id> </navigation-case> </navigation-rule> -->
+
 	<navigation-rule>
 		<display-name>/all/kursyLista.xhtml</display-name>
 		<from-view-id>/all/kursyLista.xhtml</from-view-id>
