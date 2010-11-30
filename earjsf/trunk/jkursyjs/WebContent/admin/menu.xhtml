@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<h2>menu</h2>
+<h4>Jesteś zalogowany jako:<br/>
+<h:outputText value="#{adminUsersAc.zalogowany.imieNazwisko}"/>(<h:outputText value="#{adminUsersAc.zalogowany.username}"/>)<br/>
+<h:form>
+<h:commandButton value="wyloguj" action="#{adminUsersAc.wyloguj}"/>
+</h:form>
+</h4>
+<h:form>
+	<h:commandLink value="do strony głównej" action="indexAll"/>
+	<br/>
+	<h:commandLink value="lista adminów" action="indexAll"/>
+	<br/>
+</h:form>
+</body>
+</html>
+<!-- 
+<ul>
+	<li><s:url id="url1" namespace="/admin" action="users"
+		method="listAdmin"></s:url> <s:a href="%{url1}">
+		<s:text name="lista adminów" />
+	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="users"
+		method="listWyklad"></s:url> <s:a href="%{url1}">
+		<s:text name="lista wykładowców" />
+	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="users"
+		method="listKursant"></s:url> <s:a href="%{url1}">
+		<s:text name="lista kursantów" />
+	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="users"
+		method="listNowych"></s:url> <s:a href="%{url1}">
+		<s:text name="lista nowych userów" />
+	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="kursy"
+		method="listKursy"></s:url> <s:a href="%{url1}">
+		<s:text name="lista kursów" />
+	</s:a></li>
+	<li><s:url id="url1" namespace="/admin" action="statyczne"
+		method="list"></s:url> <s:a href="%{url1}">
+		<s:text name="strony statyczne" />
+	</s:a></li>
+</ul>
+-->
+
+
