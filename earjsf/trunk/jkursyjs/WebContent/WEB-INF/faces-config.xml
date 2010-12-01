@@ -18,6 +18,11 @@
 		<managed-bean-class>org.arti01.admin.UsersAc</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>adminStatyczneAc</managed-bean-name>
+		<managed-bean-class>org.arti01.admin.StatyczneAc</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>/all/wszystko</display-name>
@@ -52,6 +57,14 @@
 			<from-outcome>indexAll</from-outcome>
 			<to-view-id>/all/index.xhtml</to-view-id>
 			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>statyczneLista</from-outcome>
+			<to-view-id>/admin/statyczneLista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>statyczneForm</from-outcome>
+			<to-view-id>/admin/statyczne.xhtml</to-view-id>
 		</navigation-case>
 </navigation-rule>
 

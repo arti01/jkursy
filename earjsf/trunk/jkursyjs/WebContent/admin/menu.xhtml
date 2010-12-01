@@ -7,13 +7,15 @@
 <h4>Jesteś zalogowany jako:<br/>
 <h:outputText value="#{adminUsersAc.zalogowany.imieNazwisko}"/>(<h:outputText value="#{adminUsersAc.zalogowany.username}"/>)<br/>
 <h:form>
-<h:commandButton value="wyloguj" action="#{adminUsersAc.wyloguj}"/>
+<h:commandLink value="wyloguj" action="#{adminUsersAc.wyloguj}"/>
 </h:form>
 </h4>
 <h:form>
 	<h:commandLink value="do strony głównej" action="indexAll"/>
 	<br/>
 	<h:commandLink value="lista adminów" action="indexAll"/>
+	<br/>
+	<h:commandLink value="strony statyczne" action="statyczneLista"/>
 	<br/>
 </h:form>
 </body>

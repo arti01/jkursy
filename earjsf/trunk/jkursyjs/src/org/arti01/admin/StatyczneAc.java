@@ -2,40 +2,37 @@ package org.arti01.admin;
 
 import java.util.Collections;
 import java.util.List;
+
+import javax.ejb.EJB;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
+import javax.faces.model.ScalarDataModel;
+
 import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.arti01.abstrakt.Akcja;
 import org.arti01.entit.Statyczne;
+import org.arti01.sesBean.Rozne;
 import org.arti01.sesBean.StatyczneImp;
 
-import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
-
-public class StatyczneAc extends Akcja {
+public class StatyczneAc {
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(StatyczneAc.class);
 	
-	private List<Statyczne> statyczne;
-	private Statyczne strona;
+	private DataModel<Statyczne> allStatyczne=new ListDataModel<Statyczne>();
+	private Statyczne statyczne;
 	private boolean zmien;
-	private List<Integer>lpAll=new StatyczneImp().lpAll();
-
-	@SkipValidation
-	public String list() throws Exception{
-		statyczne= new StatyczneImp().findAll();
-		logger.info(statyczne.size());
-		return "list";
-	}
 	
+	@EJB StatyczneImp statImp;
 
-	@SkipValidation
+	
 	public String form() throws Exception{
-		if (strona != null) zmien = true;
-		strona= new StatyczneImp().find(strona);
-		return "form";
+		statyczne=allStatyczne.getRowData();
+		logger.info(statyczne.getTytul());
+		//if (strona != null) zmien = true;
+		//strona= new StatyczneImp().find(strona);
+		return "statyczneForm";
 	}
 	
-	@SkipValidation
 	public String usun() throws Exception {
 		try {
 			new StatyczneImp().remove(strona);
@@ -50,7 +47,9 @@ public class StatyczneAc extends Akcja {
 	
 	public String dodaj() throws Exception {
 		if (!zmien) {// dodawanie
-			try {
+			statImp.
+		}
+			/*try {
 				if(lpAll.size()==0) lpAll.add(0);
 				strona.setLp(Collections.max(lpAll)+1);
 				new StatyczneImp().insert(strona);
@@ -79,11 +78,10 @@ public class StatyczneAc extends Akcja {
 				logger.info("ssssssss", e);
 				return "info";
 			}			
-		}
+		}*/
 		return "relist";
 	}
 
-	@SkipValidation
 	public String zmienLp() throws Exception {
 		Statyczne stronaNew = new StatyczneImp().find(strona);
 		Integer oldLp=stronaNew.getLp();
@@ -91,21 +89,8 @@ public class StatyczneAc extends Akcja {
 		new StatyczneImp().update(stronaNew, oldLp);
 		return "relist";
 	}
-	public List<Statyczne> getStatyczne() {
-		return statyczne;
-	}
 
-
-	public void setStatyczne(List<Statyczne> statyczne) {
-		this.statyczne = statyczne;
-	}
-
-
-	public Statyczne getStrona() {
-		return strona;
-	}
-
-	@VisitorFieldValidator(message = "błąd: ", key = "blad.strony")
+//	@VisitorFieldValidator(message = "błąd: ", key = "blad.strony")
 	public void setStrona(Statyczne strona) {
 		this.strona = strona;
 	}
@@ -129,6 +114,21 @@ public class StatyczneAc extends Akcja {
 	public void setLpAll(List<Integer> lpAll) {
 		this.lpAll = lpAll;
 	}
-	
 
+	public DataModel<Statyczne> getAllStatyczne() {
+		allStatyczne.setWrappedData(statImp.getFindAll());
+		return allStatyczne;
+	}
+
+	public void setAllStatyczne(DataModel<Statyczne> allStatyczne) {
+		this.allStatyczne = allStatyczne;
+	}
+
+	public Statyczne getStatyczne() {
+		return statyczne;
+	}
+
+	public void setStatyczne(Statyczne statyczne) {
+		this.statyczne = statyczne;
+	}
 }

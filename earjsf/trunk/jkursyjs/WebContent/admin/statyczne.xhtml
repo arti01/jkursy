@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+	<body>
+	<h:form>
+	<h:panelGrid columns="2">
+	<h:outputLabel value="tytul"/>
+	<h:inputText value="#{adminStatyczneAc.statyczne.tytul}"/>
+	<!-- 
+<tr><td>
+	<s:hidden name="strona.idStatyczne" value="%{strona.idStatyczne}"/>
+	<s:fielderror fieldName="strona.tytul"/>
+	tytuł:<s:textfield name="strona.tytul" size="70" theme="simple"/><br><br>
+</td></tr><tr><td>
+	<s:fielderror fieldName="strona.opis"/>
+	opis:<s:textfield name="strona.opis" size="70" theme="simple"/><br><br>
+</td></tr>
+<tr><td><s:fielderror fieldName="strona.tresc"/></td></tr>
+<tr height="200px" valign="top"><td>
+	<s:textarea id="editor1" name="strona.tresc" rows="10" cols="70" theme="simple"/>
+	<script type="text/javascript">CKEDITOR.replace( 'editor1' );</script>
+</td></tr><tr><td>
+	<s:hidden name="zmien" value="%{zmien}"/>
+	<s:submit key="submit_Dodaj" theme="simple"/>
+	<s:reset key="submit_wyjdz" onclick="history.go(-1)" theme="simple"/>
+	 -->
+	 <h:commandButton value="wyślij" action="#{adminStatyczneAc.dodaj}"/>
+	</h:panelGrid>
+</h:form>
+</body>
+</ui:define>
+</ui:composition>
+</html>
