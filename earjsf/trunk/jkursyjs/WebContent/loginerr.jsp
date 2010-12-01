@@ -5,6 +5,6 @@
 </head>
 <body>
 <h1>nie udalo się zalogować</h1>
-<a href="index.action">jeszcze raz</a>
+<a href="index.xhtml">jeszcze raz</a>
 </body>
 </html>

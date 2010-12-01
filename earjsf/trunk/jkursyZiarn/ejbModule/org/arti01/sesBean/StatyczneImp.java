@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.arti01.entit.Statyczne;
@@ -31,6 +30,9 @@ public class StatyczneImp {
 	public Statyczne find(Statyczne statyczne){
 		strona=em.find(Statyczne.class, statyczne.getIdStatyczne());
 		return strona;
+	}
+	public void update(Statyczne statyczne){
+		em.merge(statyczne);
 	}
 	
 	public void insert(Statyczne statyczne) {

@@ -8,11 +8,10 @@
 		<ui:define name="body">
 	<body>
 <h2>Strony statyczne</h2>
-<h3><h:outputText value="#{indexAc.strona.tytul}"/></h3>
-<!-- 
-wstęp:<s:text name="strona.opis"/>
-<br/>
-<s:text name="strona.tresc"/> -->
+<h3>tytuł:<h:outputText value="#{indexAc.strona.tytul}"/></h3> 
+wstęp:<br/><h:outputText value="#{indexAc.strona.opis}"/>
+<br/><br/>
+Treść:<br/><h:outputText value="#{indexAc.strona.tresc}"/>
 <br/>
 </body>
 </ui:define>

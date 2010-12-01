@@ -47,7 +47,7 @@ public class StatyczneAc {
 	
 	public String dodaj() throws Exception {
 		if (!zmien) {// dodawanie
-			statImp.
+			statImp.update(statyczne);
 		}
 			/*try {
 				if(lpAll.size()==0) lpAll.add(0);
