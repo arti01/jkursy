@@ -9,15 +9,18 @@ import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
+import org.arti01.sesBean.Rozne;
 import org.arti01.sesBean.StatyczneImp;
 
 
-public class IndexAc extends InterStat{
+public class IndexAc {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(IndexAc.class);
 	@EJB StatyczneImp statyczneImp;
+	@EJB Rozne rozne;
 	User user;
 	Statyczne strona;
+	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
 	
 	public String execute() throws Exception{
 		return "SUCCESS";
@@ -71,6 +74,15 @@ public class IndexAc extends InterStat{
 
 	public void setStrona(Statyczne strona) {
 		this.strona = strona;
+	}
+
+	public ListDataModel<Statyczne> getStatyczneModel() {
+		if(statyczneModel.getRowIndex()==-1) statyczneModel.setWrappedData(rozne.getStatyczneAll());
+		return statyczneModel;
+	}
+
+	public void setStatyczneModel(ListDataModel<Statyczne> statyczneModel) {
+		this.statyczneModel = statyczneModel;
 	}
 
 }

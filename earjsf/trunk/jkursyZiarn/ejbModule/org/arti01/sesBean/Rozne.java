@@ -1,9 +1,13 @@
 package org.arti01.sesBean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
 
+import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
 
 /**
@@ -14,7 +18,9 @@ import org.arti01.entit.User;
 public class Rozne {
 	User zalogowany;
 	String infoText;
+	List<Statyczne> statyczneAll=new ArrayList<Statyczne>();
 	@EJB UserImp userImp;
+	@EJB StatyczneImp statyczneImp;
 
     /**
      * Default constructor. 
@@ -42,7 +48,14 @@ public class Rozne {
 	public void setInfoText(String infoText) {
 		this.infoText = infoText;
 	}
-    
-    
+
+	public List<Statyczne> getStatyczneAll() {
+		if(statyczneAll.size()==0)statyczneAll=statyczneImp.getFindAll();
+		return statyczneAll;
+	}
+
+	public void setStatyczneAll(List<Statyczne> statyczneAll) {
+		this.statyczneAll = statyczneAll;
+	}
 
 }

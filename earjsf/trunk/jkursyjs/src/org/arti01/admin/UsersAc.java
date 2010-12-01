@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -344,9 +345,14 @@ public class UsersAc {
 	public String wyloguj(){
 		HttpServletRequest r=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		logger.info(r.getRemoteUser()+"wwwwwwwwwwwwwww");
-		r.getSession().invalidate();
+		try {
+			r.logout();
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		rozne.setZalogowany(null);
-		//rozne.setInfoText("jesteś wylogowany");
+		rozne.setInfoText("jesteś wylogowany");
 		return "indexAll";
 	}
 	public User getZalogowany() {
