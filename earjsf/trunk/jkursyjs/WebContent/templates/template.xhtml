@@ -6,6 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <head>
   <title><ui:insert name="title">Default title</ui:insert></title>
+  <link rel="stylesheet" type="text/css" href="../grey-blog/assets/css/style.css"/>
 </head>
 <f:view>
 <body>
@@ -16,10 +17,12 @@
 <ui:insert name="menu" />
 <ui:include src="/all/menu.xhtml" />
 </td><td>
+<div id="right">
 body
 <ui:insert name="body" />
 body2
 <ui:insert name="body2"/>
+</div>
 </td><td valign="top">
 <ui:insert name="menuP" />
 </td>

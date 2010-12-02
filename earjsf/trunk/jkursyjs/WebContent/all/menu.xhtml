@@ -3,20 +3,18 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <body>
-
+<div id="left">
 <h:form>
-	<h:commandLink value="do strony głównej" action="index" immediate="true"/>
-	<br/>
-	<h:commandLink value="administracja" action="indexAdm"  immediate="true"/>
-	<h3><h:commandLink value="kursy" action="#{kursyAc.list}"
-		immediate="true" /></h3>
-	<h3>strony statyczne</h3>
-	<ul>
+<ul>
+	<li><h:commandLink value="do strony głównej" action="index" immediate="true"/></li>
+	<li><h:commandLink value="administracja" action="indexAdm"  immediate="true"/></li>
+	<li><h:commandLink value="kursy" action="#{kursyAc.list}" immediate="true" /></li>
 		<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 			<li><h:commandLink action="#{indexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />
 			</h:commandLink></li>
-		</ui:repeat>
+	</ui:repeat>
+	</ul>
 		<!--
 	<li><s:url id="url1" namespace="/wykladowcy" action="index">
 	</s:url><s:a href="%{url1}">
@@ -48,8 +46,8 @@
 <s:if test="zalogowany.username!=null">
 Jesteś zalogowany jako:<s:property value="zalogowany.username"/>(<s:property value="zalogowany.imieNazwisko"/>)
 </s:if>-->
-	</ul>
 </h:form>
+</div>
 </body>
 </html>
 

@@ -3,7 +3,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <body>
-<h2>menu</h2>
+<div id="left">
 <h4>Jesteś zalogowany jako:<br/>
 <h:outputText value="#{adminUsersAc.zalogowany.imieNazwisko}"/>(<h:outputText value="#{adminUsersAc.zalogowany.username}"/>)<br/>
 <h:form>
@@ -11,13 +11,15 @@
 </h:form>
 </h4>
 <h:form>
-	<h:commandLink value="do strony głównej" action="indexAll"/>
-	<br/>
-	<h:commandLink value="lista adminów" action="indexAll"/>
-	<br/>
-	<h:commandLink value="strony statyczne" action="statyczneLista"/>
-	<br/>
+<ul>
+<li><h:commandLink value="do strony głównej" action="indexAll"/></li>
+<li>
+	<h:commandLink value="lista adminów" action="indexAll"/></li>
+<li>
+	<h:commandLink value="strony statyczne" action="statyczneLista"/></li>
+</ul>
 </h:form>
+</div>
 </body>
 </html>
 <!-- 
