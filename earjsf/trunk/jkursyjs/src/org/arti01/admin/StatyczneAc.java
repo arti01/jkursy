@@ -23,7 +23,6 @@ public class StatyczneAc {
 	private Statyczne statyczne;
 	private ValueChangeEvent zmienE;
 	@EJB StatyczneImp statImp;
-
 	
 	public String form(){
 		logger.info(allStatyczne.isRowAvailable()+"dostepne");
@@ -34,6 +33,11 @@ public class StatyczneAc {
 	public String formNew(){
 		statyczne=new Statyczne();
 		return "statyczneForm";
+	}
+	
+	public String listStatyczne(){
+		allStatyczne.setWrappedData(statImp.getFindAll());
+		return "statyczneLista";
 	}
 	
 	
@@ -81,17 +85,21 @@ public class StatyczneAc {
 	public void zmienEe(ValueChangeEvent event){
 		logger.info(event.getNewValue());
 		logger.info(event.getOldValue());
+		logger.info("tttttttttttttttt");
 		Statyczne st;//=new Statyczne();
 		st=allStatyczne.getRowData();
 		logger.info(st.getTytul());
-		//statImp.update(statyczne, (Integer)event.getOldValue());
+		st.setLp((Integer)event.getNewValue());
+		logger.info(st.getLp()+"LP");
+		logger.info(st.getIdStatyczne()+"id");
+		statImp.update(st, (Integer)event.getOldValue());
+		allStatyczne.setWrappedData(statImp.getFindAll());
 	}
 
 
 
 	public DataModel<Statyczne> getAllStatyczne() {
 		logger.info("sssssssssssssssssssssss");
-		allStatyczne.setWrappedData(statImp.getFindAll());
 		logger.info(allStatyczne.getRowIndex());
 		return allStatyczne;
 	}

@@ -13,10 +13,10 @@
 </h:form>
 
 <h:form>
-<ui:repeat var="statyczna" value="#{adminStatyczneAc.allStatyczne}">	
+<ui:repeat var="statyczna" value="#{adminStatyczneAc.allStatyczne}">
 	<h:selectOneMenu value="#{statyczna.lp}" onchange="submit();" valueChangeListener="#{adminStatyczneAc.zmienEe}">
 		<f:selectItems value="#{adminStatyczneAc.statImp.lpAll}"/>
-	</h:selectOneMenu>	
+	</h:selectOneMenu>
 	<h:commandLink action="#{adminStatyczneAc.form}">
 		<h:outputText value="#{statyczna.tytul}"/><br/>
 	</h:commandLink>

@@ -62,35 +62,32 @@ public class StatyczneImp {
 
 	@SuppressWarnings("unchecked")
 	public void update(Statyczne statyczne, Integer oldLp) {
+		System.out.println(statyczne.getLp()+"old"+oldLp);
+		em.remove(statyczne);
+		em.flush();
 		if (oldLp > statyczne.getLp()) {//idziemy w góre
-			//em.remove(find(statyczne));
 			Query select=em.createQuery("select s from Statyczne s where s.lp<:oldLp and s.lp>=:newLp order by s.lp desc");
 			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
 			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
-				System.out.println(s.getLp()+"ssssssssssssss");
+				System.out.println(statyczne.getLp());
+				System.out.println(s.getTytul());
+				System.out.println(s.getLp()+1);
 				s.setLp(s.getLp()+1);
 				em.merge(s);
-				System.out.println(s.getLp());
-				/*Query query = em.createQuery("update Statyczne s set s.lp=s.lp+1 where s.idStatyczne=:idstatyczne");
-				query.setParameter("idstatyczne", s.getIdStatyczne());
-				query.executeUpdate();*/
 			}
-			//logger.info(query.getQueryString()+"--------------------------------------++++++++++");
-			em.merge(statyczne);
+			em.persist(statyczne);
 		} else if (oldLp < statyczne.getLp()) {//idziemy w dół
-			em.remove(statyczne);
 			Query select=em.createQuery("select s from Statyczne s where s.lp>:oldLp and s.lp<=:newLp order by s.lp asc");
 			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
 			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
-				Query query = em.createQuery("update Statyczne s set s.lp=s.lp-1 where s.idstatyczne=:idStatyczne");
-				query.setParameter("idstatyczne", s.getIdStatyczne());
-				query.executeUpdate();
+				s.setLp(s.getLp()-1);
+				em.merge(s);
 			}
-			insert(statyczne);
+			em.merge(statyczne);
 		}else update(statyczne);
 	}
 	/*
