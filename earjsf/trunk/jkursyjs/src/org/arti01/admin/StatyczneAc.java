@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.ScalarDataModel;
@@ -20,35 +21,26 @@ public class StatyczneAc {
 	
 	private DataModel<Statyczne> allStatyczne=new ListDataModel<Statyczne>();
 	private Statyczne statyczne;
-	private boolean zmien;
-	
+	private ValueChangeEvent zmienE;
 	@EJB StatyczneImp statImp;
 
 	
-	public String form() throws Exception{
+	public String form(){
+		logger.info(allStatyczne.isRowAvailable()+"dostepne");
+		logger.info(allStatyczne.getRowIndex()+"indexsssssssssss");
 		statyczne=allStatyczne.getRowData();
-		logger.info(statyczne.getTytul());
-		//if (strona != null) zmien = true;
-		//strona= new StatyczneImp().find(strona);
+		return "statyczneForm";
+	}
+	public String formNew(){
+		statyczne=new Statyczne();
 		return "statyczneForm";
 	}
 	
-	public String usun() throws Exception {
-		try {
-			new StatyczneImp().remove(strona);
-			setInfoText("strona.usuniety");
-		} catch (Exception e) {
-			logger.info("ssssssss", e);
-			addActionError("nie uda�o si�");
-			return "info";
-		}
-		return "relist";
-	}
 	
 	public String dodaj() throws Exception {
-		if (!zmien) {// dodawanie
+		if (statyczne.getIdStatyczne()!=null) {// edycja
+			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 			statImp.update(statyczne);
-		}
 			/*try {
 				if(lpAll.size()==0) lpAll.add(0);
 				strona.setLp(Collections.max(lpAll)+1);
@@ -58,10 +50,14 @@ public class StatyczneAc {
 				logger.info("ssssssss", e);
 				addActionError("nie udało się stworzyć strony, sprawdz, czy juz taka nie istnieje");
 				return "info";
-			}
+			}*/
 		}
 		else{
-			try {
+			logger.info("doooooooodawanie");
+			if(statImp.getLpAll().size()==0) statImp.getLpAll().add(0);
+			statyczne.setLp(Collections.max(statImp.getLpAll())+1);
+			statImp.insert(statyczne);
+			/*try {
 				// logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 				Statyczne stronaNew = new StatyczneImp().find(strona);
 				Integer oldLp=stronaNew.getLp();
@@ -77,46 +73,26 @@ public class StatyczneAc {
 				addActionError("problem z edycja danych strony");
 				logger.info("ssssssss", e);
 				return "info";
-			}			
-		}*/
-		return "relist";
+			}*/			
+		}
+		return "statyczneLista";
 	}
 
-	public String zmienLp() throws Exception {
-		Statyczne stronaNew = new StatyczneImp().find(strona);
-		Integer oldLp=stronaNew.getLp();
-		stronaNew.setLp(strona.getLp());
-		new StatyczneImp().update(stronaNew, oldLp);
-		return "relist";
-	}
-
-//	@VisitorFieldValidator(message = "błąd: ", key = "blad.strony")
-	public void setStrona(Statyczne strona) {
-		this.strona = strona;
+	public void zmienEe(ValueChangeEvent event){
+		logger.info(event.getNewValue());
+		logger.info(event.getOldValue());
+		Statyczne st;//=new Statyczne();
+		st=allStatyczne.getRowData();
+		logger.info(st.getTytul());
+		//statImp.update(statyczne, (Integer)event.getOldValue());
 	}
 
 
-	public boolean isZmien() {
-		return zmien;
-	}
-
-
-	public void setZmien(boolean zmien) {
-		this.zmien = zmien;
-	}
-
-
-	public List<Integer> getLpAll() {
-		return lpAll;
-	}
-
-
-	public void setLpAll(List<Integer> lpAll) {
-		this.lpAll = lpAll;
-	}
 
 	public DataModel<Statyczne> getAllStatyczne() {
+		logger.info("sssssssssssssssssssssss");
 		allStatyczne.setWrappedData(statImp.getFindAll());
+		logger.info(allStatyczne.getRowIndex());
 		return allStatyczne;
 	}
 
@@ -130,5 +106,17 @@ public class StatyczneAc {
 
 	public void setStatyczne(Statyczne statyczne) {
 		this.statyczne = statyczne;
+	}
+	public StatyczneImp getStatImp() {
+		return statImp;
+	}
+	public void setStatImp(StatyczneImp statImp) {
+		this.statImp = statImp;
+	}
+	public void setZmienE(ValueChangeEvent zmienE) {
+		this.zmienE = zmienE;
+	}
+	public ValueChangeEvent getZmienE() {
+		return zmienE;
 	}
 }

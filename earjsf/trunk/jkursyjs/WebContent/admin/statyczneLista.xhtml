@@ -9,14 +9,20 @@
 	<body>
 <h2>Strony statyczne</h2>
 <h:form>
-<h:dataTable var="statyczne" value="#{adminStatyczneAc.allStatyczne}">
-	<h:column>
-		<h:commandLink action="#{adminStatyczneAc.form}">
-		<h:outputText value="#{statyczne.tytul}"/>
-		</h:commandLink>
-	</h:column>
-</h:dataTable>
+<h:commandButton value="dodaj nowa" action="#{adminStatyczneAc.formNew}"/>
 </h:form>
+
+<h:form>
+<ui:repeat var="statyczna" value="#{adminStatyczneAc.allStatyczne}">	
+	<h:selectOneMenu value="#{statyczna.lp}" onchange="submit();" valueChangeListener="#{adminStatyczneAc.zmienEe}">
+		<f:selectItems value="#{adminStatyczneAc.statImp.lpAll}"/>
+	</h:selectOneMenu>	
+	<h:commandLink action="#{adminStatyczneAc.form}">
+		<h:outputText value="#{statyczna.tytul}"/><br/>
+	</h:commandLink>
+</ui:repeat>
+</h:form>
+	 
 </body>
 </ui:define>
 </ui:composition>

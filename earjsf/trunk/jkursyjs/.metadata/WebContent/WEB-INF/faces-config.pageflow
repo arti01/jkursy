@@ -10,7 +10,7 @@
   <nodes xsi:type="pageflow:PFPage" name="test/index.xhtml" id="pf12911416652889" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf12911416652887" path="/test/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="test/kursyLista.xhtml" id="pf129114166528810" referenceLink="//@navigationRule.2/@navigationCase.1/@toViewId|" inlinks="pf12911416652888" path="/test/kursyLista.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="/admin/wszystko" id="pf129114166528811" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf12911416652875 pf129119024949524 pf12912120437740" path="/admin/*"/>
-  <nodes xsi:type="pageflow:PFPage" name="admin/statyczneLista.xhtml" id="pf129119024949525" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf129119024949524" path="/admin/statyczneLista.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="admin/statyczneLista.xhtml" id="pf129119024949525" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf129119024949524" path="/admin/statyczneLista.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="admin/statyczne.xhtml" id="pf12912120437741" referenceLink="//@navigationRule.1/@navigationCase.2/@toViewId|" inlinks="pf12912120437740" path="/admin/statyczne.xhtml"/>
   <links id="pf12911216217201" target="pf12911216217356" source="pf12911216217200" outcome="index"/>
   <links id="pf12911216217202" target="pf12911216217358" source="pf12911216217200" outcome="indexAdm" redirect="true"/>

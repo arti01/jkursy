@@ -6,6 +6,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.arti01.entit.Statyczne;
 
 @Stateless
@@ -15,6 +17,7 @@ public class StatyczneImp {
 	@PersistenceContext
 	EntityManager em;
 	Statyczne strona;
+	List<Integer> lpAll;
 	
 	/* (non-Javadoc)
 	 * @see org.arti01.obiekty.StatyczneImpLocal#findAll()
@@ -47,42 +50,50 @@ public class StatyczneImp {
 		this.strona = strona;
 	}
 
-	/*@SuppressWarnings("unchecked")
-	public void update(Statyczne statyczne, Integer oldLp) throws Exception {
-		logger.info(statyczne.getTytul()+"-------------"+statyczne.getLp());
+	@SuppressWarnings("unchecked")
+	public List<Integer> getLpAll() {
+		lpAll= em.createQuery("select s.lp from Statyczne s order by s.lp").getResultList();
+		return lpAll;
+	}
+
+	public void setLpAll(List<Integer> lpAll) {
+		this.lpAll = lpAll;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void update(Statyczne statyczne, Integer oldLp) {
 		if (oldLp > statyczne.getLp()) {//idziemy w góre
-			em.remove(statyczne);
-			Query select= em.createQuery("from Statyczne where lp<:oldLp and lp>=:newLp order by lp desc");
+			//em.remove(find(statyczne));
+			Query select=em.createQuery("select s from Statyczne s where s.lp<:oldLp and s.lp>=:newLp order by s.lp desc");
 			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
 			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
-				Query query = baza
-				.przygotuj("update Statyczne s set lp=lp+1 where s=:s");
-				query.setParameter("s", s);
-				//query.executeUpdate();
-				baza.update(query);
+				System.out.println(s.getLp()+"ssssssssssssss");
+				s.setLp(s.getLp()+1);
+				em.merge(s);
+				System.out.println(s.getLp());
+				/*Query query = em.createQuery("update Statyczne s set s.lp=s.lp+1 where s.idStatyczne=:idstatyczne");
+				query.setParameter("idstatyczne", s.getIdStatyczne());
+				query.executeUpdate();*/
 			}
 			//logger.info(query.getQueryString()+"--------------------------------------++++++++++");
-			insert(statyczne);
+			em.merge(statyczne);
 		} else if (oldLp < statyczne.getLp()) {//idziemy w dół
-			baza.usun(statyczne);
-			Query select= baza
-			.przygotuj("from Statyczne where lp>:oldLp and lp<=:newLp order by lp asc");
+			em.remove(statyczne);
+			Query select=em.createQuery("select s from Statyczne s where s.lp>:oldLp and s.lp<=:newLp order by s.lp asc");
 			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
-			List<Statyczne> sl=new Baza().select(select);
+			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
-				Query query = baza
-				.przygotuj("update Statyczne s set lp=lp-1 where s=:s");
-				query.setParameter("s", s);
-				logger.info(s.getLp()+"--------------------------------------++++++++++");
-				//query.executeUpdate();
-				baza.update(query);
+				Query query = em.createQuery("update Statyczne s set s.lp=s.lp-1 where s.idstatyczne=:idStatyczne");
+				query.setParameter("idstatyczne", s.getIdStatyczne());
+				query.executeUpdate();
 			}
 			insert(statyczne);
-		}else baza.update(statyczne);
+		}else update(statyczne);
 	}
+	/*
 
 	@SuppressWarnings("unchecked")
 	public void remove(Statyczne statyczne) throws Exception {
@@ -102,17 +113,6 @@ public class StatyczneImp {
 		logger.info(statyczne.getLp()+"rrrrrrrrrrrrrrr");
 	}
 
-	public Statyczne find(Statyczne statyczne) {
-		Statyczne statyczneNew;
-		if (statyczne != null) {
-			Baza baza = new Baza();
-			Query query = baza.przygotuj("from Statyczne s where s=:statyczne");
-			query.setParameter("statyczne", statyczne);
-			statyczneNew = (Statyczne) baza.select(query).iterator().next();
-		} else
-			statyczneNew = new Statyczne();
-		return statyczneNew;
-	}
 
 	@SuppressWarnings("unchecked")
 	public List<Integer> lpAll() {

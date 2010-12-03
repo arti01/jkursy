@@ -50,7 +50,7 @@ public class Rozne {
 	}
 
 	public List<Statyczne> getStatyczneAll() {
-		if(statyczneAll.size()==0)statyczneAll=statyczneImp.getFindAll();
+		statyczneAll=statyczneImp.getFindAll();
 		return statyczneAll;
 	}
 

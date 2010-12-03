@@ -2,7 +2,7 @@
 
 body { font-family:Arial, Helvetica, sans-serif; color:#333333; font-size:12px; }
 
-a { color:#2D2D2D; text-decoration:none; }
+a { color:blue; text-decoration:none; }
 h1 { font-size:16px; }
 h2 { font-size:14px; }
 
@@ -21,7 +21,7 @@ h2 { font-size:14px; }
 #nav { width:100%; overflow:auto; padding:1px; margin:0; background-color:#D2D2D2; }
 #nav ul { margin:0; padding:0; }
 #nav ul li { float:left; list-style:none; padding:0; }
-#nav ul li a { display:block; width:100px; height:15px; padding:8px 0; margin:0 1px 0 0; background-color:#EFEFEF; text-align:center; }
+#nav ul li a { display:block; width:150px; height:15px; padding:8px 0; margin:0 1px 0 0; background-color:#EFEFEF; text-align:center; }
 #nav ul li a:hover { background-color: #FFFFFF; color:#999999; }
 
 #content { width:100%; }
@@ -29,7 +29,7 @@ h2 { font-size:14px; }
 #left { float:left; width:20%; }
 #left ul { margin: 0; padding:0; }
 #left ul li { list-style:none; margin:1px 0; padding:0; }
-#left ul li a { display:block; width:120px; margin:0; padding:5px; background-color:#E6E6E6; }
+#left ul li a { display:block; width:150px; margin:0; padding:5px; background-color:#E6E6E6; }
 #left ul li a:hover { background-color:#FFCD59; }
 #left ul li ul { margin: 0; padding:0; }
 #left ul li ul li { list-style:none; margin:1px 0; padding:0; }
@@ -37,7 +37,7 @@ h2 { font-size:14px; }
 
 #breadcrumb { float:left; width:80%; background-color:#EFEFEF; }
 
-#right { float:left; width:80%; }
+#right { float:left; width:300; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:#FFCD59; font-weight:bold; text-decoration:underline; }
 
