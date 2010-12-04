@@ -5,8 +5,10 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 
 import org.arti01.entit.Statyczne;
 
@@ -61,32 +63,39 @@ public class StatyczneImp {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void update(Statyczne statyczne, Integer oldLp) {
-		System.out.println(statyczne.getLp()+"old"+oldLp);
-		em.remove(statyczne);
-		em.flush();
-		if (oldLp > statyczne.getLp()) {//idziemy w góre
+	public void update(Statyczne statyczne, Integer newLp) {
+		Integer oldLp=new Integer(statyczne.getLp());
+		statyczne.setLp(-1);
+		em.merge(statyczne);
+		//System.out.println(statyczne+"statOld");
+		//System.out.println(oldLp+"new"+newLp);
+		if (newLp < oldLp) {//idziemy w góre
+			//System.out.println("upupup");
 			Query select=em.createQuery("select s from Statyczne s where s.lp<:oldLp and s.lp>=:newLp order by s.lp desc");
-			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
 			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
-				System.out.println(statyczne.getLp());
-				System.out.println(s.getTytul());
-				System.out.println(s.getLp()+1);
+				//System.out.println(statyczne.getLp());
+				//System.out.println(s.getTytul());
+				//System.out.println(s.getLp()+1);
 				s.setLp(s.getLp()+1);
 				em.merge(s);
+				em.flush();
 			}
-			em.persist(statyczne);
-		} else if (oldLp < statyczne.getLp()) {//idziemy w dół
+			statyczne.setLp(newLp);
+			em.merge(statyczne);
+		} else if (newLp > oldLp) {//idziemy w dół
 			Query select=em.createQuery("select s from Statyczne s where s.lp>:oldLp and s.lp<=:newLp order by s.lp asc");
-			select.setParameter("newLp", statyczne.getLp());
 			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
 			List<Statyczne> sl=select.getResultList();
 			for (Statyczne s:sl){
 				s.setLp(s.getLp()-1);
 				em.merge(s);
+				em.flush();
 			}
+			statyczne.setLp(newLp);
 			em.merge(statyczne);
 		}else update(statyczne);
 	}

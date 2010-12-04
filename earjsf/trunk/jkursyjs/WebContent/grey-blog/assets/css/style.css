@@ -40,5 +40,7 @@ h2 { font-size:14px; }
 #right { float:left; width:300; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:#FFCD59; font-weight:bold; text-decoration:underline; }
+#right td{background: #E6E6E6}
+#right td a:hover { background: #FFCD59;}
 
 .clear { clear:both; }

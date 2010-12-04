@@ -1,9 +1,11 @@
 package org.arti01.admin;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -25,8 +27,8 @@ public class StatyczneAc {
 	@EJB StatyczneImp statImp;
 	
 	public String form(){
-		logger.info(allStatyczne.isRowAvailable()+"dostepne");
-		logger.info(allStatyczne.getRowIndex()+"indexsssssssssss");
+		//logger.info(allStatyczne.isRowAvailable()+"dostepne");
+		//logger.info(allStatyczne.getRowIndex()+"indexsssssssssss");
 		statyczne=allStatyczne.getRowData();
 		return "statyczneForm";
 	}
@@ -81,26 +83,32 @@ public class StatyczneAc {
 		}
 		return "statyczneLista";
 	}
+	
+	public String usun() throws Exception {
+		return "statyczneLista";
+	}
 
-	public void zmienEe(ValueChangeEvent event){
-		logger.info(event.getNewValue());
-		logger.info(event.getOldValue());
-		logger.info("tttttttttttttttt");
+	public void zmienEe(ValueChangeEvent event) throws IOException{
+		//logger.info(event.getNewValue());
+		//logger.info(event.getOldValue());
+		//logger.info("tttttttttttttttt");
 		Statyczne st;//=new Statyczne();
 		st=allStatyczne.getRowData();
-		logger.info(st.getTytul());
-		st.setLp((Integer)event.getNewValue());
-		logger.info(st.getLp()+"LP");
-		logger.info(st.getIdStatyczne()+"id");
-		statImp.update(st, (Integer)event.getOldValue());
-		allStatyczne.setWrappedData(statImp.getFindAll());
+		//logger.info(st.getTytul());
+		//st.setLp((Integer)event.getNewValue());
+		//logger.info(st.getLp()+"LP");
+		//logger.info(st.getIdStatyczne()+"id");
+		statImp.update(st, (Integer)event.getNewValue());
+		//allStatyczne.setWrappedData(statImp.getFindAll());
+		FacesContext.getCurrentInstance().getExternalContext().redirect("statyczneLista.xhtml");
 	}
 
 
 
 	public DataModel<Statyczne> getAllStatyczne() {
-		logger.info("sssssssssssssssssssssss");
-		logger.info(allStatyczne.getRowIndex());
+		allStatyczne.setWrappedData(statImp.getFindAll());
+		//logger.info("sssssssssssssssssssssss");
+		//logger.info(allStatyczne.getRowIndex());
 		return allStatyczne;
 	}
 
