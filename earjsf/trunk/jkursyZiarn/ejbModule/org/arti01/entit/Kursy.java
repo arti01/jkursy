@@ -3,6 +3,7 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 import java.util.Set;
@@ -32,12 +33,15 @@ public class Kursy implements Serializable {
 	private Date dataod;
 
 	@Column(nullable=false, length=255)
+	@Size(min=1, max=255)
 	private String nazwa;
 
 	@Column(nullable=false, length=2147483647)
+	@Size(min=1)
 	private String opis;
 
 	@Column(name="opis_krotki", length=2147483647)
+	@Size(min=1)
 	@NotNull(message="problem")
 	private String opisKrotki;
 

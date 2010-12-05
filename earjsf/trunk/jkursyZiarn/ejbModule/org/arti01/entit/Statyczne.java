@@ -23,17 +23,17 @@ public class Statyczne implements Serializable {
 	@Column(nullable=false)
 	private Integer lp;
 
-	@Size(min=1, message="{validator.size}")
+	@Size(min=1, max=255)
 	@Column(nullable=false, length=255)
 	private String opis;
 	
-	@Size(min=1, message="{validator.size}")
+	@Size(min=1)
 	@Column(nullable=false, length=2147483647)
 	private String tresc;
 
 	@Column(nullable=false, length=255)
 	@NotNull
-	@Size(min=1, message="{validator.size}")
+	@Size(min=1, max=255)
 	private String tytul;
 
     public Statyczne() {
