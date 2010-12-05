@@ -5,10 +5,8 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.UserTransaction;
 
 import org.arti01.entit.Statyczne;
 
@@ -42,6 +40,16 @@ public class StatyczneImp {
 	
 	public void insert(Statyczne statyczne) {
 		em.persist(statyczne);
+	}
+	
+	public void delete(Statyczne statyczne) {
+		Integer lp=statyczne.getLp();
+		statyczne=em.find(statyczne.getClass(), statyczne.getIdStatyczne());
+		em.remove(statyczne);
+		em.flush();
+		Query query=em.createQuery("update Statyczne s set s.lp=s.lp-1 where s.lp>:lp");
+		query.setParameter("lp", lp);
+		query.executeUpdate();
 	}
 
 	public Statyczne getStrona() {
@@ -99,30 +107,5 @@ public class StatyczneImp {
 			em.merge(statyczne);
 		}else update(statyczne);
 	}
-	/*
-
-	@SuppressWarnings("unchecked")
-	public void remove(Statyczne statyczne) throws Exception {
-		Baza baza = new Baza();
-		statyczne=this.find(statyczne);
-		baza.usun(statyczne);
-		Query select= baza
-		.przygotuj("from Statyczne where lp>:lp order by lp asc");
-		select.setParameter("lp", statyczne.getLp());
-		List<Statyczne> sl=new Baza().select(select);
-		for (Statyczne s:sl){
-			Query query = baza
-			.przygotuj("update Statyczne s set lp=lp-1 where s=:s");
-			query.setParameter("s", s);
-			baza.update(query);
-		}
-		logger.info(statyczne.getLp()+"rrrrrrrrrrrrrrr");
-	}
-
-
-	@SuppressWarnings("unchecked")
-	public List<Integer> lpAll() {
-		return (List<Integer>) new Baza()
-				.getAll("select lp from Statyczne order by lp");
-	}*/
+	
 }

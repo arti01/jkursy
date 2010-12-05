@@ -3,6 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
+	<application>
+	<message-bundle>Messages</message-bundle>
+	</application>
 	<managed-bean>
 		<managed-bean-name>kursyAc</managed-bean-name>
 		<managed-bean-class>org.arti01.all.KursyAc</managed-bean-class>
@@ -17,6 +20,11 @@
 		<managed-bean-name>adminUsersAc</managed-bean-name>
 		<managed-bean-class>org.arti01.admin.UsersAc</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>adminKursyAc</managed-bean-name>
+		<managed-bean-class>org.arti01.admin.KursyAc</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>adminStatyczneAc</managed-bean-name>
@@ -59,12 +67,12 @@
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>statyczneLista</from-outcome>
-			<to-view-id>/admin/statyczneLista.xhtml</to-view-id>
+			<from-outcome>*Lista</from-outcome>
+			<to-view-id>/admin/*Lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>statyczneForm</from-outcome>
-			<to-view-id>/admin/statyczne.xhtml</to-view-id>
+			<from-outcome>*Form</from-outcome>
+			<to-view-id>/admin/*Form.xhtml</to-view-id>
 		</navigation-case>
 </navigation-rule>
 

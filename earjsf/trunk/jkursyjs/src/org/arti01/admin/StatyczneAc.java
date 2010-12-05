@@ -2,18 +2,13 @@ package org.arti01.admin;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.faces.model.ScalarDataModel;
-
 import org.apache.log4j.Logger;
 import org.arti01.entit.Statyczne;
-import org.arti01.sesBean.Rozne;
 import org.arti01.sesBean.StatyczneImp;
 
 public class StatyczneAc {
@@ -38,7 +33,7 @@ public class StatyczneAc {
 	}
 	
 	public String listStatyczne(){
-		allStatyczne.setWrappedData(statImp.getFindAll());
+		//allStatyczne.setWrappedData(statImp.getFindAll());
 		return "statyczneLista";
 	}
 	
@@ -59,9 +54,9 @@ public class StatyczneAc {
 			}*/
 		}
 		else{
-			logger.info("doooooooodawanie");
-			if(statImp.getLpAll().size()==0) statImp.getLpAll().add(0);
-			statyczne.setLp(Collections.max(statImp.getLpAll())+1);
+			//logger.info("doooooooodawanie"+statImp.getLpAll().size());
+			if(statImp.getLpAll().size()==0) statyczne.setLp(1);
+			else statyczne.setLp(Collections.max(statImp.getLpAll())+1);
 			statImp.insert(statyczne);
 			/*try {
 				// logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
@@ -85,6 +80,8 @@ public class StatyczneAc {
 	}
 	
 	public String usun() throws Exception {
+		statyczne=allStatyczne.getRowData();
+		statImp.delete(statyczne);
 		return "statyczneLista";
 	}
 

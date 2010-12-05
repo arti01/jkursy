@@ -12,33 +12,26 @@ function takNie(){
 	   return confirm('czy jestes pewien, ze chcesz tego?');
 };
 </script>
-<h2>Strony statyczne</h2>
+<h2>Kursy</h2>
 <h:form>
-<h:commandButton value="dodaj nowa" action="#{adminStatyczneAc.formNew}"/>
+<h:commandButton value="dodaj nowy" action="#{adminKursyAc.formNew}"/>
 </h:form>
 
 <h:form>
-<h:dataTable var="statyczna" value="#{adminStatyczneAc.allStatyczne}" border="0" width="100%">
+<h:dataTable var="kurs" value="#{adminKursyAc.allKursy}" border="0" width="100%">
 	<h:column>
-	<f:facet name="header">kolejnosc</f:facet>
-	<h:selectOneMenu value="#{statyczna.lp}" onchange="submit();" valueChangeListener="#{adminStatyczneAc.zmienEe}">
-		<f:selectItems value="#{adminStatyczneAc.statImp.lpAll}"/>
-	</h:selectOneMenu>
-	</h:column>
-	<h:column>
-	<f:facet name="header">tytul strony</f:facet>
-	<h:commandLink action="#{adminStatyczneAc.form}">
-		<h:outputText value="#{statyczna.tytul}"/>
+	<f:facet name="header">nazwa kursu</f:facet>
+	<h:commandLink action="#{adminKursyAc.form}">
+		<h:outputText value="#{kurs.nazwa}"/>
 	</h:commandLink>
 	</h:column>
 	<h:column>
-	<h:commandLink action="#{adminStatyczneAc.usun}" onclick="return takNie();">
+	<h:commandLink action="#{adminKursyAc.usun}" onclick="return takNie();">
 		<h:outputText value="usun"/><br/>
 	</h:commandLink>
 	</h:column>
 </h:dataTable>
 </h:form>
-	 
 </body>
 </ui:define>
 </ui:composition>

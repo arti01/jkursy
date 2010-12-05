@@ -17,8 +17,8 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
-import org.arti01.sesBean.KursyImpLocal;
-import org.arti01.sesBean.RoleImpLocal;
+import org.arti01.sesBean.KursyImp;
+import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.Rozne;
 import org.arti01.sesBean.UserImp;
 import org.arti01.sesBean.UserSImpLocal;
@@ -30,8 +30,8 @@ public class UsersAc {
 	User user;
 	@EJB Rozne rozne;
 	@EJB UserImp userImp;
-	@EJB RoleImpLocal roleImp;
-	@EJB KursyImpLocal kursyImp;
+	@EJB RoleImp roleImp;
+	@EJB KursyImp kursyImp;
 	
 	String haslo2;
 	// boolean zmianaHasla;

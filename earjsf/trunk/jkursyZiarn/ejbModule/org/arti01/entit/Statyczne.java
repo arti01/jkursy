@@ -2,6 +2,8 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -21,13 +23,17 @@ public class Statyczne implements Serializable {
 	@Column(nullable=false)
 	private Integer lp;
 
+	@Size(min=1, message="{validator.size}")
 	@Column(nullable=false, length=255)
 	private String opis;
-
+	
+	@Size(min=1, message="{validator.size}")
 	@Column(nullable=false, length=2147483647)
 	private String tresc;
 
 	@Column(nullable=false, length=255)
+	@NotNull
+	@Size(min=1, message="{validator.size}")
 	private String tytul;
 
     public Statyczne() {

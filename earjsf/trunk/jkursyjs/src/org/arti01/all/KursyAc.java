@@ -23,7 +23,7 @@ public class KursyAc {
     }
 	
 	public String list() throws Exception{
-		logger.info("jestemmmm");
+		//logger.info("jestemmmm");
 		kursy=kursyImp.findAll();
 		model.setWrappedData(kursyImp.findAll());
 		return "kursy.list";
@@ -32,7 +32,7 @@ public class KursyAc {
 	public String detale() throws Exception{
 		//kurs=kursyImp.find(model.getRowData());
 		kurs=model.getRowData();
-		logger.info(kurs.getNazwa()+"dddddddd"+model.getWrappedData().getClass()+"clasa");
+		//logger.info(kurs.getNazwa()+"dddddddd"+model.getWrappedData().getClass()+"clasa");
 		return "kursy.detale";
 	}
 

@@ -3,9 +3,7 @@ package org.arti01.all;
 import java.util.Date;
 
 import javax.ejb.EJB;
-import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
 import org.apache.log4j.Logger;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
@@ -27,14 +25,14 @@ public class IndexAc {
 	}
 	
 	public String statyczna() throws Exception{
-		logger.info(this.getStatyczneModel().getRowCount()+"count");
+		/*logger.info(this.getStatyczneModel().getRowCount()+"count");
 		logger.info(this.getStatyczneModel().getRowIndex()+"indeks");
 		logger.info(this.getStatyczneModel().isRowAvailable()+"dostepny");
 		logger.info(this.getStatyczneModel().getWrappedData().getClass()+"clasa");
 		logger.info(this.getStatyczneModel().getRowData().getTytul());
-		//strona=statyczneImp.find(this.getStatyczneModel().getRowData());
+		strona=statyczneImp.find(this.getStatyczneModel().getRowData());*/
 		strona=this.getStatyczneModel().getRowData();
-		logger.info(strona.getTytul());
+		//logger.info(strona.getTytul());
 		return "index.statyczne";
 	}
 	public String zalozKonto() throws Exception{

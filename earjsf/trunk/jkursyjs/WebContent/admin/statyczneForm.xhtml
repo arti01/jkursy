@@ -8,13 +8,16 @@
 	<ui:define name="body">
 		<body>
 		<h:form>
-			<h:panelGrid columns="2">
-				<h:outputLabel value="tytul" />
-				<h:inputText value="#{adminStatyczneAc.statyczne.tytul}" />
+			<h:panelGrid columns="3">
+			<h:message for="tytul" styleClass="error"/>
+				<h:outputLabel  value="tytul" />
+				<h:inputText id="tytul" value="#{adminStatyczneAc.statyczne.tytul}" />
+			<h:message for="opis"  styleClass="error"/>
 				<h:outputLabel value="krótki opis" />
-				<h:inputText value="#{adminStatyczneAc.statyczne.opis}" />
-				<h:outputLabel value="tresc" />
-				<h:inputTextarea value="#{adminStatyczneAc.statyczne.tresc}" />
+				<h:inputText id="opis" value="#{adminStatyczneAc.statyczne.opis}" />
+			<h:message for="tresc"  styleClass="error"/>
+				<h:outputLabel value="tresc"/>
+				<h:inputTextarea id="tresc" value="#{adminStatyczneAc.statyczne.tresc}"/>
 <script type="text/javascript">
 tinyMCE.init({
 	// General options
@@ -47,27 +50,9 @@ tinyMCE.init({
 		staffid : "991234"
 	}
 });
-</script>
-				<!-- 
-<tr><td>
-	<s:hidden name="strona.idStatyczne" value="%{strona.idStatyczne}"/>
-	<s:fielderror fieldName="strona.tytul"/>
-	tytuł:<s:textfield name="strona.tytul" size="70" theme="simple"/><br><br>
-</td></tr><tr><td>
-	<s:fielderror fieldName="strona.opis"/>
-	opis:<s:textfield name="strona.opis" size="70" theme="simple"/><br><br>
-</td></tr>
-<tr><td><s:fielderror fieldName="strona.tresc"/></td></tr>
-<tr height="200px" valign="top"><td>
-	<s:textarea id="editor1" name="strona.tresc" rows="10" cols="70" theme="simple"/>
-	<script type="text/javascript">CKEDITOR.replace( 'editor1' );</script>
-</td></tr><tr><td>
-	<s:hidden name="zmien" value="%{zmien}"/>
-	<s:submit key="submit_Dodaj" theme="simple"/>
-	<s:reset key="submit_wyjdz" onclick="history.go(-1)" theme="simple"/>
-	 -->
+</script>			
+</h:panelGrid>
 				<h:commandButton value="wyślij" action="#{adminStatyczneAc.dodaj}" />
-			</h:panelGrid>
 		</h:form>
 		</body>
 	</ui:define>
