@@ -11,23 +11,23 @@
 			<h:panelGrid columns="3">
 				<h:message for="nazwa" styleClass="error" />
 				<h:outputLabel value="nazwa" />
-				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}" />
+				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}"  immediate="true"/>
 				<h:message for="opisKrotki" styleClass="error" />
 				<h:outputLabel value="krótki opis" />
-				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" />
+				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" immediate="true"/>
 				<h:message for="dataod" styleClass="error" />
 				<h:outputLabel value="data od" />
-				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}">
+				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}" immediate="true">
 					<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:inputText>
 				<h:message for="datado" styleClass="error" />
 				<h:outputLabel value="data do" />
-				<h:inputText id="datado" value="#{adminKursyAc.kurs.datado}">
+				<h:inputText id="datado" value="#{adminKursyAc.kurs.datado}" immediate="true">
 					<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:inputText>
 				<h:message for="opis" styleClass="error" />
 				<h:outputLabel value="opis" />
-				<h:inputTextarea id="opis" value="#{adminKursyAc.kurs.opis}" />
+				<h:inputTextarea id="opis" value="#{adminKursyAc.kurs.opis}"  immediate="true"/>
 				<script type="text/javascript">
 	tinyMCE
 			.init({

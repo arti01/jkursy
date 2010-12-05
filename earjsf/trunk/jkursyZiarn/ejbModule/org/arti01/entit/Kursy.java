@@ -13,6 +13,7 @@ import java.util.Set;
  * The persistent class for the kursy database table.
  * 
  */
+
 @Entity
 @Table(name="kursy")
 @NamedQuery(name="findNiezakonczone", query="select k from Kursy k where k.datado>=:datado order by k.dataod desc")
@@ -26,10 +27,13 @@ public class Kursy implements Serializable {
 
     @Temporal( TemporalType.DATE)
 	@Column(nullable=false)
+	@NotNull
 	private Date datado;
 
     @Temporal( TemporalType.DATE)
 	@Column(nullable=false)
+	@NotNull
+	@DataWiekszaOd(data="0000-00-00")
 	private Date dataod;
 
 	@Column(nullable=false, length=255)
@@ -48,7 +52,7 @@ public class Kursy implements Serializable {
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="kursies")
 	private Set<User> users;
-
+	
     public Kursy() {
     }
 
@@ -107,5 +111,4 @@ public class Kursy implements Serializable {
 	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
-	
 }
