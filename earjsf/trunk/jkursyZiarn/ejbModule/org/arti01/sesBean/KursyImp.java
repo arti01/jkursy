@@ -41,4 +41,13 @@ public class KursyImp {
 		em.persist(kursy);
 	}
 	
+	public void delete(Kursy kurs) {
+		em.remove(kurs);
+	}
+	
+	public boolean valid(Kursy kurs){
+		if(kurs.getDataod().before(kurs.getDatado())) return false;
+		if(kurs.getDatado().after(new Date())) return false;
+		return true;
+	}
 }

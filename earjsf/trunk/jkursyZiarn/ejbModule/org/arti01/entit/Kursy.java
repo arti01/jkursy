@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
 
-
 /**
  * The persistent class for the kursy database table.
  * 
@@ -33,7 +32,6 @@ public class Kursy implements Serializable {
     @Temporal( TemporalType.DATE)
 	@Column(nullable=false)
 	@NotNull
-	@DataWiekszaOd(data="0000-00-00")
 	private Date dataod;
 
 	@Column(nullable=false, length=255)

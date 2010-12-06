@@ -1,17 +1,12 @@
 package org.arti01.admin;
 
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
-import org.arti01.entit.Statyczne;
 import org.arti01.sesBean.KursyImp;
+import org.arti01.sesBean.Rozne;
 
 public class KursyAc {
 
@@ -38,18 +33,19 @@ public class KursyAc {
 	
 	
 	public String usun() throws Exception {
-		try {
-			new KursyImp().remove(kurs);
-			setInfoText("kurs.usuniety");
-		} catch (Exception e) {
-			logger.info("ssssssss", e);
-			addActionError("nie uda�o si�");
-			return "info";
-		}
-		return "info";
+		kurs=allKursy.getRowData();
+		kursyImp.delete(kurs);
+		return "statyczneLista";
 	}
 	
 	public String dodaj() {
+		if (kursyImp.valid(kurs)) {
+			logger.info("zle");
+			
+			logger.info(new UsersAc().getRozne().getInfoText());	
+			new UsersAc().getRozne().setErrorText("ssssssssssssss");
+			return "indexAdm";
+		}
 		logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 		if (kurs.getIdkursy()!=null) {// edycja
 			kursyImp.update(kurs);

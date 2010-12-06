@@ -368,10 +368,7 @@ public class UsersAc {
 
 	public Rozne getRozne() {
 		logger.info("rozne"+rozne.getInfoText());
+		logger.info("rozne-error"+rozne.getErrorText());
 		return rozne;
-	}
-
-	public void setRozne(Rozne rozne) {
-		this.rozne = rozne;
 	}
 }

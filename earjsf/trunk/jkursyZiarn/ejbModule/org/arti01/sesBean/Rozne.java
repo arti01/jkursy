@@ -13,11 +13,12 @@ import org.arti01.entit.User;
 /**
  * Session Bean implementation class Rozne
  */
-@Stateful(mappedName = "Rozne")
+@Stateful
 @LocalBean
 public class Rozne {
 	User zalogowany;
 	String infoText;
+	String errorText;
 	List<Statyczne> statyczneAll=new ArrayList<Statyczne>();
 	@EJB UserImp userImp;
 	@EJB StatyczneImp statyczneImp;
@@ -46,16 +47,27 @@ public class Rozne {
 	}
 
 	public void setInfoText(String infoText) {
+		//System.out.println("settter"+infoText);
 		this.infoText = infoText;
 	}
 
 	public List<Statyczne> getStatyczneAll() {
-		statyczneAll=statyczneImp.getFindAll();
+		//statyczneAll=statyczneImp.getFindAll();
 		return statyczneAll;
 	}
 
 	public void setStatyczneAll(List<Statyczne> statyczneAll) {
 		this.statyczneAll = statyczneAll;
+	}
+
+	public String getErrorText() {
+		System.out.println("gett"+errorText);
+		return errorText;
+	}
+
+	public void setErrorText(String errorText) {
+		System.out.println("sett"+errorText);
+		this.errorText = errorText;
 	}
 
 }
