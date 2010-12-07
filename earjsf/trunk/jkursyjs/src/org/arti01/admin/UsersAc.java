@@ -19,16 +19,13 @@ import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.RoleImp;
-import org.arti01.sesBean.Rozne;
 import org.arti01.sesBean.UserImp;
-import org.arti01.sesBean.UserSImpLocal;
 
 public class UsersAc {
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
-	@EJB Rozne rozne;
 	@EJB UserImp userImp;
 	@EJB RoleImp roleImp;
 	@EJB KursyImp kursyImp;
@@ -340,35 +337,5 @@ public class UsersAc {
 	//@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
 	public void setUserImp(UserImp userImp) {
 		this.userImp = userImp;
-	}
-
-	public String wyloguj(){
-		HttpServletRequest r=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		logger.info(r.getRemoteUser()+"wwwwwwwwwwwwwww");
-		try {
-			r.logout();
-		} catch (ServletException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		rozne.setZalogowany(null);
-		rozne.setInfoText("jesteś wylogowany");
-		return "indexAll";
-	}
-	public User getZalogowany() {
-		HttpServletRequest r=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		logger.info(r.getRemoteUser());
-		User z=new User();
-		z.setUsername(r.getRemoteUser());
-		rozne.ustaw(z);
-		rozne.setInfoText("jesteś zalogowany");
-		return rozne.getZalogowany();
-	}
-
-
-	public Rozne getRozne() {
-		logger.info("rozne"+rozne.getInfoText());
-		logger.info("rozne-error"+rozne.getErrorText());
-		return rozne;
 	}
 }

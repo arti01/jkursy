@@ -46,8 +46,8 @@ public class KursyImp {
 	}
 	
 	public boolean valid(Kursy kurs){
-		if(kurs.getDataod().before(kurs.getDatado())) return false;
-		if(kurs.getDatado().after(new Date())) return false;
-		return true;
+		//if(kurs.getDataod().after(kurs.getDatado())) return false;
+		if(kurs.getDatado().before(new Date())) return false;
+		else return true;
 	}
 }

@@ -9,6 +9,9 @@
 		<body>
 		<h:form>
 			<h:panelGrid columns="3">
+				<h:outputLabel for="bledy" />
+				<h:outputText id="bledy" value="#{adminKursyAc.errorText}" styleClass="error"/>
+				<h:outputLabel for="bledy" />
 				<h:message for="nazwa" styleClass="error" />
 				<h:outputLabel value="nazwa" />
 				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}"/>
@@ -20,7 +23,7 @@
 				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}" immediate="true">
 					<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:inputText>
-				<h:message for="datado" styleClass="error" />
+				<h:message for="datado" styleClass="error"/>
 				<h:outputLabel value="data do" />
 				<h:inputText id="datado" value="#{adminKursyAc.kurs.datado}" immediate="true">
 					<f:convertDateTime pattern="yyyy-MM-dd" />

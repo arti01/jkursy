@@ -4,12 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <body>
 <div id="left">
-<h4>Jesteś zalogowany jako:<br/>
-<h:outputText value="#{adminUsersAc.zalogowany.imieNazwisko}"/>(<h:outputText value="#{adminUsersAc.zalogowany.username}"/>)<br/>
+<h5>Jesteś zalogowany jako:<br/>
+<h:outputText value="#{login.zalogowany.imieNazwisko}"/>(<h:outputText value="#{login.zalogowany.username}"/>)<br/>
 <h:form>
-<h:commandLink value="wyloguj" action="#{adminUsersAc.wyloguj}"/>
+<h:commandLink value="wyloguj" action="#{login.wyloguj}"/>
 </h:form>
-</h4>
+</h5>
 <h:form>
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
