@@ -10,6 +10,8 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,7 +37,7 @@ public class UsersAc {
 	boolean zmien;
 	List<User> users;
 	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
-	List<Kursy> kursyAll;
+	private DataModel<User> allUsers=new ListDataModel<User>();
 	List<String> zaznaczone = new ArrayList<String>();
 	List<Role> roleAll;
 	// private String nextAction;
@@ -45,10 +47,21 @@ public class UsersAc {
 	private boolean asc = true;
 	private String sortTyp = "";
 
-	private void form(String prawo){
+	public String form(){
+		//errorText="";
+		user=allKursy.getRowData();
+		return "kursyForm";
+	}
+	public String formNew(){
+		errorText="";
+		kurs=new Kursy();
+		return "kursyForm";
+	}
+	
+	/*private void form(String prawo){
 		logger.info("userImp"+userImp);
 		logger.info("userImp"+userImp+userImp.getUser());
-		/*logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());*/
+		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
 		this.prawo=prawo;
 		//if (user != null) {
 		if (zmien) {
@@ -74,7 +87,7 @@ public class UsersAc {
 	public String formAdmin() throws Exception {
 		form(Role.ADMIN);
 		return "form";
-	}
+	}*/
 	
 	public String formWyklad() throws Exception {
 		form(Role.WYKLADOWCA);
@@ -141,11 +154,11 @@ public class UsersAc {
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
 		Role rola=new Role();
-		rola.setRola(prawo);
+		//rola.setRola(prawo);
 		//rola=;
 		//users =roleImp.findSortUser(rola, null, null).getUsers();
 		users=new ArrayList<User>(roleImp.find(rola).getUsers());
-		return "list";
+		return "usersList";
 	}
 	
 	
@@ -306,14 +319,6 @@ public class UsersAc {
 		this.sortTyp = sortTyp;
 	}
 
-	public List<Kursy> getKursyAll() {
-		return kursyAll;
-	}
-
-	public void setKursyAll(List<Kursy> kursyAll) {
-		this.kursyAll = kursyAll;
-	}
-
 	public List<Integer> getZaznaczoneKursy() {
 		return zaznaczoneKursy;
 	}
@@ -337,5 +342,12 @@ public class UsersAc {
 	//@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
 	public void setUserImp(UserImp userImp) {
 		this.userImp = userImp;
+	}
+	public DataModel<User> getAllUsers() {
+		allUsers.setWrappedData(userImp.);
+		return allUsers;
+	}
+	public void setAllUsers(DataModel<User> allUsers) {
+		this.allUsers = allUsers;
 	}
 }

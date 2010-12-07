@@ -3,18 +3,18 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 <body>
-<div id="left">
 <h5>Jesteś zalogowany jako:<br/>
-<h:outputText value="#{login.zalogowany.imieNazwisko}"/>(<h:outputText value="#{login.zalogowany.username}"/>)<br/>
+<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})"/>
 <h:form>
-<h:commandLink value="wyloguj" action="#{login.wyloguj}"/>
+<h:commandButton value="wyloguj" action="#{login.wyloguj}"/>
 </h:form>
 </h5>
+<div id="left">
 <h:form>
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
 <li>
-	<h:commandLink value="lista adminów" action="indexAll"/></li>
+	<h:commandLink value="lista adminów" action="#{adminUsersAc.listAdmin}"/></li>
 	<li>
 	<h:commandLink value="kursy" action="#{adminKursyAc.kursyLista}"/></li>
 <li>
