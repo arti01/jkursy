@@ -3,8 +3,6 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

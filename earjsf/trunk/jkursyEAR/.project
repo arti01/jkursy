@@ -3,8 +3,8 @@
 	<name>jkursyEAR</name>
 	<comment></comment>
 	<projects>
-		<project>jkursyZiarn</project>
 		<project>jkursyjs</project>
+		<project>jkursyZiarn</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:outputLabel for="bledy" />
+				<h:outputText id="bledy" value="#{adminUsersAc.errorText}" styleClass="error"/>
+				<h:outputLabel for="bledy" />
+				
+				<h:message for="username" styleClass="error" />
+				<h:outputLabel value="username" />
+				<h:inputText id="username" value="#{adminUsersAc.user.username}" size="50"/>
+				
+				<h:message for="imieNazwisko" styleClass="error" />
+				<h:outputLabel value="imie i nazwisko" />
+				<h:inputText id="imieNazwisko" value="#{adminUsersAc.user.imieNazwisko}" immediate="true" size="50"/>
+				
+				<h:message for="email" styleClass="error" />
+				<h:outputLabel value="email" />
+				<h:inputText id="email" value="#{adminUsersAc.user.email}" immediate="true" size="50"/>
+				
+				<h:message for="miasto" styleClass="error"/>
+				<h:outputLabel value="miasto" />
+				<h:inputText id="miasto" value="#{adminUsersAc.user.miasto}" immediate="true" size="50"/>
+				
+				<h:message for="ulica" styleClass="error" />
+				<h:outputLabel value="ulica" />
+				<h:inputText id="ulica" value="#{adminUsersAc.user.ulica}"  immediate="true" size="50"/>
+				
+				<h:message for="nip" styleClass="error" />
+				<h:outputLabel value="nip" />
+				<h:inputText id="nip" value="#{adminUsersAc.user.nip}"  immediate="true" size="50"/>
+				
+				<h:message for="tel1" styleClass="error" />
+				<h:outputLabel value="telefon" />
+				<h:inputText id="tel1" value="#{adminUsersAc.user.tel1}"  immediate="true" size="50"/>
+				
+				<h:message for="dataZmiany" styleClass="error" />
+				<h:outputLabel value="data zmiany" />
+				<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}"  immediate="true" readonly="true" size="10">
+					<f:convertDateTime pattern="yyyy-MM-dd" />
+				</h:inputText>
+				
+				<h:message for="opis" styleClass="error" />
+				<h:outputLabel value="opis" />
+				<h:inputTextarea id="opis" value="#{adminUsersAc.user.opis}"  immediate="true" cols="48"/>
+
+			</h:panelGrid>
+			<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
+		</h:form>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

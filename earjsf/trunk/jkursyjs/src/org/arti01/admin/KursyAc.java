@@ -1,7 +1,5 @@
 package org.arti01.admin;
 
-import java.util.Date;
-
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -43,23 +41,18 @@ public class KursyAc {
 	}
 	
 	public String dodaj() {
-		//logger.info(kurs.getDataod().toString()+new Date()+(kurs.getDataod().before(new Date()))+"bieżąca");
-		//logger.info(kurs.getDataod().toString()+new Date()+(kurs.getDataod().after(new Date()))+"bieżąca");
-		logger.info(kursyImp.valid(kurs));
-		if(!kursyImp.valid(kurs)) {
-			logger.info("zle");
-			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
-			return "kursyForm";
-		}
-		logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja"+kursyImp.valid(kurs));
 		if (kurs.getIdkursy()!=null) {// edycja
-			kursyImp.update(kurs);
+			if(kursyImp.update(kurs)){
+				return "kursyLista";
+			}
 		}
 		else{
-			//logger.info("doooooooodawanie"+statImp.getLpAll().size());
-			kursyImp.insert(kurs);
+			if(kursyImp.insert(kurs)){
+				return "kursyLista";
+			}
 		}
-		return "kursyLista";
+		errorText=kursyImp.getErrorText();
+		return "kursyForm";//bo nie udala się zmiana
 	}
 
 

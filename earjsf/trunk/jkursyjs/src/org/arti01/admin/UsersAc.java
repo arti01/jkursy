@@ -35,27 +35,26 @@ public class UsersAc {
 	String haslo2;
 	// boolean zmianaHasla;
 	boolean zmien;
-	List<User> users;
 	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	private DataModel<User> allUsers=new ListDataModel<User>();
 	List<String> zaznaczone = new ArrayList<String>();
 	List<Role> roleAll;
 	// private String nextAction;
 	private boolean admin = false;
-
 	private String prawo=null;
 	private boolean asc = true;
 	private String sortTyp = "";
+	String errorText;
 
 	public String form(){
-		//errorText="";
-		user=allKursy.getRowData();
-		return "kursyForm";
+		errorText="";
+		user=allUsers.getRowData();
+		return "usersForm";
 	}
 	public String formNew(){
 		errorText="";
-		kurs=new Kursy();
-		return "kursyForm";
+		user=new User();
+		return "usersForm";
 	}
 	
 	/*private void form(String prawo){
@@ -99,7 +98,7 @@ public class UsersAc {
 		return "form";
 	}
 
-	public String dodaj() throws Exception {
+	/*public String dodaj() throws Exception {
 		// obsluga roli
 		for (String i : zaznaczone) {
 			Role r = new Role();
@@ -149,16 +148,16 @@ public class UsersAc {
 			}
 		}
 		return "info";
-	}
+	}*/
 
 	public String listAdmin() throws Exception {
 		prawo=Role.ADMIN;
 		Role rola=new Role();
-		//rola.setRola(prawo);
+		rola.setRola(prawo);
 		//rola=;
 		//users =roleImp.findSortUser(rola, null, null).getUsers();
-		users=new ArrayList<User>(roleImp.find(rola).getUsers());
-		return "usersList";
+		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+		return "usersLista";
 	}
 	
 	
@@ -217,14 +216,6 @@ public class UsersAc {
 			return "info";
 		}
 		return SUCCESS;
-	}
-
-	public List<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<User> users) {
-		this.users = users;
 	}
 
 	public boolean isAdmin() {
@@ -335,19 +326,17 @@ public class UsersAc {
 		return prawo;
 	}
 
-	public UserImp getUserImp() {
-		return userImp;
-	}
-
-	//@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
-	public void setUserImp(UserImp userImp) {
-		this.userImp = userImp;
-	}
 	public DataModel<User> getAllUsers() {
-		allUsers.setWrappedData(userImp.);
 		return allUsers;
+		
 	}
 	public void setAllUsers(DataModel<User> allUsers) {
 		this.allUsers = allUsers;
+	}
+	public String getErrorText() {
+		return errorText;
+	}
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
 	}
 }

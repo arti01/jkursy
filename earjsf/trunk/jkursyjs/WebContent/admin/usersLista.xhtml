@@ -22,11 +22,11 @@ function takNie(){
 	<h:column>
 	<f:facet name="header">login(imię nazwisko)</f:facet>
 	<h:commandLink action="#{adminUsersAc.form}">
-		<h:outputText value="#{user.username}(user.imieNazwisko)"/>
+		<h:outputText value="#{user.username} (#{user.imieNazwisko})"/>
 	</h:commandLink>
 	</h:column>
 	<h:column>
-	<h:commandLink action="#{adminKursyAc.usun}" onclick="return takNie();">
+	<h:commandLink action="#{adminUsersAc.usun}" onclick="return takNie();">
 		<h:outputText value="usun"/><br/>
 	</h:commandLink>
 	</h:column>

@@ -15,6 +15,7 @@ import org.arti01.entit.Kursy;
 public class KursyImp {
 	@PersistenceContext
 	EntityManager em;
+	String errorText="";
 
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAll() {
@@ -33,12 +34,24 @@ public class KursyImp {
 		} else kurs = new Kursy();
 		return kurs;
 	}
-	public void update(Kursy kursy){
-		em.merge(kursy);
+	
+	
+	public boolean update(Kursy kursy){
+		if(valid(kursy)){
+			em.merge(kursy);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
-	public void insert(Kursy kursy) {
-		em.persist(kursy);
+	public boolean insert(Kursy kursy){
+		if(valid(kursy)){
+			em.persist(kursy);
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public void delete(Kursy kurs) {
@@ -46,8 +59,18 @@ public class KursyImp {
 	}
 	
 	public boolean valid(Kursy kurs){
-		//if(kurs.getDataod().after(kurs.getDatado())) return false;
-		if(kurs.getDatado().before(new Date())) return false;
+		if(kurs.getDataod().after(kurs.getDatado())||kurs.getDatado().before(new Date())){
+			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
+			return false;
+		}
 		else return true;
+	}
+
+	public String getErrorText() {
+		return errorText;
+	}
+
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
 	}
 }
