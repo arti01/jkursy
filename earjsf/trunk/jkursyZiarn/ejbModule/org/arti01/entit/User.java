@@ -3,8 +3,9 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
 import java.util.Date;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false, length=50)
+	@Size(min=2, max=50)
 	private String username;
 
     @Temporal( TemporalType.DATE)
@@ -32,7 +34,7 @@ public class User implements Serializable {
 	private Date dataZmiany;
 
 	@Column(nullable=false, length=100)
-	@NotNull(message="problem")
+	@NotNull
 	private String email;
 
 	@Column(name="imie_nazwisko", nullable=false, length=2147483647)
@@ -85,19 +87,6 @@ public class User implements Serializable {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public Date getDataZmiany() {
-		return this.dataZmiany;
-	}
-	
-	public void setDataZmiany(String dataZmiany) throws ParseException {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-		this.dataZmiany = sdf.parse(dataZmiany);
-	}
-	
-	public void setDataZmiany(Date dataZmiany)  {
-		this.dataZmiany = dataZmiany;
 	}
 
 	public String getEmail() {
@@ -187,6 +176,14 @@ public class User implements Serializable {
 
 	public void setKursies(Set<Kursy> kursies) {
 		this.kursies = kursies;
+	}
+
+	public Date getDataZmiany() {
+		return dataZmiany;
+	}
+
+	public void setDataZmiany(Date dataZmiany) {
+		this.dataZmiany = dataZmiany;
 	}
 	
 }

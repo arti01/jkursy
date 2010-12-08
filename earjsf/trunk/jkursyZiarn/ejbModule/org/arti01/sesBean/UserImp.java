@@ -24,12 +24,14 @@ public class UserImp {
 		return user;
 	}
 	
-	public void insert(User user) {
+	public boolean insert(User user) {
 		em.persist(user);
+		return true;
 	}
 	
-	public void update(User user) {
+	public boolean update(User user) {
 		em.merge(user);
+		return true;
 	}
 	
 	public void remove(User user) {

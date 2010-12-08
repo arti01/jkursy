@@ -34,16 +34,16 @@ public class UsersAc {
 	
 	String haslo2;
 	// boolean zmianaHasla;
-	boolean zmien;
-	List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
+	//boolean zmien;
+	//List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	private DataModel<User> allUsers=new ListDataModel<User>();
-	List<String> zaznaczone = new ArrayList<String>();
-	List<Role> roleAll;
+	//List<String> zaznaczone = new ArrayList<String>();
+	//List<Role> roleAll;
 	// private String nextAction;
-	private boolean admin = false;
+	//private boolean admin = false;
 	private String prawo=null;
-	private boolean asc = true;
-	private String sortTyp = "";
+	//private boolean asc = true;
+	//private String sortTyp = "";
 	String errorText;
 
 	public String form(){
@@ -55,6 +55,21 @@ public class UsersAc {
 		errorText="";
 		user=new User();
 		return "usersForm";
+	}
+	
+	public String dodaj() {
+		if (user.getUsername()!=null) {// edycja
+			if(userImp.update(user)){
+				return "usersLista";
+			}
+		}
+		else{
+			if(userImp.insert(user)){
+				return "usersLista";
+			}
+		}
+		//errorText=kursyImp.getErrorText();
+		return "usersForm";//bo nie udala się zmiana
 	}
 	
 	/*private void form(String prawo){
@@ -86,7 +101,7 @@ public class UsersAc {
 	public String formAdmin() throws Exception {
 		form(Role.ADMIN);
 		return "form";
-	}*/
+	}
 	
 	public String formWyklad() throws Exception {
 		form(Role.WYKLADOWCA);
@@ -97,7 +112,7 @@ public class UsersAc {
 		form(Role.KURSANT);
 		return "form";
 	}
-
+*/
 	/*public String dodaj() throws Exception {
 		// obsluga roli
 		for (String i : zaznaczone) {
@@ -154,109 +169,17 @@ public class UsersAc {
 		prawo=Role.ADMIN;
 		Role rola=new Role();
 		rola.setRola(prawo);
-		//rola=;
-		//users =roleImp.findSortUser(rola, null, null).getUsers();
 		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
 		return "usersLista";
 	}
 	
 	
-	public String listWyklad() throws Exception {
-		prawo=Role.WYKLADOWCA;
-		users = userImp.findWyklad("imieNazwisko", asc);
-		// logger.info("ssssssss"+users.size());
-		return "list";
-	}
-
-	
-	public String listKursant() throws Exception {
-		prawo=Role.KURSANT;
-		users = userImp.findKursant(sortTyp, asc);
-		// logger.info("ssssssss"+users.size());
-		return "list";
-	}
-
-	
-	public String listNowych() throws Exception {
-		prawo=Role.NOWY;
-		users = userImp.findNowy(sortTyp, asc);
-		// logger.info("ssssssss"+users.size());
-		return "list";
-	}
-	
-	
-	public String sortListAdmin() throws Exception {
-		prawo=Role.ADMIN;
-		users = userImp.findNowy(sortTyp, asc);
-		return "list";
-	}
-	
-	
-	public String sortListWyklad() throws Exception {
-		prawo = Role.WYKLADOWCA;
-		users = userImp.findNowy(sortTyp, asc);
-		return "list";
-	}
-	
-	
-	public String sortListKursyanci() throws Exception {
-		prawo = Role.KURSANT;
-		users = userImp.findNowy(sortTyp, asc);
-		return "list";
-	}
-	
-	
-	public String usun() throws Exception {
-		try {
-			userImp.remove(user);
-			setInfoText("login.usuniety");
-		} catch (Exception e) {
-			logger.info("ssssssss", e);
-			addActionError("Nie udało się usunąc użytkownika - najprawdopodobniej posiada obiekty");
-			return "info";
-		}
-		return SUCCESS;
-	}
-
-	public boolean isAdmin() {
-		return admin;
-	}
-
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
-	}
-
 	public User getUser() {
 		return user;
 	}
 
-	//@VisitorFieldValidator(message = "błąd: ", key = "blad.loginu")
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public boolean isZmien() {
-		return zmien;
-	}
-
-	public void setZmien(boolean zmien) {
-		this.zmien = zmien;
-	}
-
-	public List<Role> getRoleAll() {
-		return roleAll;
-	}
-
-	public void setRoleAll(List<Role> roleAll) {
-		this.roleAll = roleAll;
-	}
-
-	public List<String> getZaznaczone() {
-		return zaznaczone;
-	}
-
-	public void setZaznaczone(List<String> zaznaczone) {
-		this.zaznaczone = zaznaczone;
 	}
 
 	public String getHaslo2() {
@@ -293,31 +216,6 @@ public class UsersAc {
 	 * 
 	 * public void setAsc(boolean asc) { this.asc = asc; }
 	 */
-
-	public boolean isAsc() {
-		return asc;
-	}
-
-	public void setAsc(boolean asc) {
-		this.asc = asc;
-	}
-
-	public String getSortTyp() {
-		return sortTyp;
-	}
-
-	public void setSortTyp(String sortTyp) {
-		this.sortTyp = sortTyp;
-	}
-
-	public List<Integer> getZaznaczoneKursy() {
-		return zaznaczoneKursy;
-	}
-
-	public void setZaznaczoneKursy(List<Integer> zaznaczoneKursy) {
-		this.zaznaczoneKursy = zaznaczoneKursy;
-	}
-
 	public void setPrawo(String prawo) {
 		this.prawo = prawo;
 	}
