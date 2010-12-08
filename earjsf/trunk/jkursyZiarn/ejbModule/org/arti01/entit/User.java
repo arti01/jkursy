@@ -4,8 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
 import java.util.Date;
 import java.util.Set;
 
@@ -24,7 +22,6 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false, length=50)
 	@Size(min=2, max=50)
 	private String username;
@@ -38,24 +35,30 @@ public class User implements Serializable {
 	private String email;
 
 	@Column(name="imie_nazwisko", nullable=false, length=2147483647)
+	@Size(min=3, max=255)
 	private String imieNazwisko;
 
 	@Column(nullable=false, length=2147483647)
+	@Size(min=2, max=255)
 	private String miasto;
 
 	@Column(nullable=false, length=2147483647)
+	@Size(min=10, max=15)
 	private String nip;
 
 	@Column(length=2147483647)
 	private String opis;
 
 	@Column(nullable=false, length=2147483647)
+	@Size(min=2, max=255)
 	private String tel1;
 
 	@Column(nullable=false, length=2147483647)
+	@Size(min=2, max=15)
 	private String ulica;
 
 	@Column(nullable=false, length=50)
+	@Size(min=2, max=15)
 	private String userpass;
 
 	@Column(length=255)

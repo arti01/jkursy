@@ -13,11 +13,13 @@
 <h:form>
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
-<li>
+	<li>
 	<h:commandLink value="lista adminów" action="#{adminUsersAc.listAdmin}"/></li>
 	<li>
+	<h:commandLink value="lista wszystkich" action="#{adminUsersAc.listAll}"/></li>
+	<li>
 	<h:commandLink value="kursy" action="#{adminKursyAc.kursyLista}"/></li>
-<li>
+	<li>
 	<h:commandLink value="strony statyczne" action="#{adminStatyczneAc.listStatyczne}"/></li>
 </ul>
 </h:form>

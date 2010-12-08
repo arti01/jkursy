@@ -1,10 +1,13 @@
 package org.arti01.sesBean;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 //import org.apache.log4j.Logger;
+import org.arti01.entit.Kursy;
 import org.arti01.entit.User;
 
 @Stateless
@@ -13,7 +16,6 @@ public class UserImp {
 	
 	@PersistenceContext
 	EntityManager em;
-	//Logger logger = Logger.getLogger(UserImp.class);
 	User user;
 
 	public User find(User user) {
@@ -22,6 +24,11 @@ public class UserImp {
 		} else
 			user = new User();
 		return user;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> findAll() {
+		return em.createQuery("select u from User u order by u.username").getResultList();
 	}
 	
 	public boolean insert(User user) {

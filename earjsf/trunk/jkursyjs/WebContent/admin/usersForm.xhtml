@@ -15,7 +15,17 @@
 				
 				<h:message for="username" styleClass="error" />
 				<h:outputLabel value="username" />
-				<h:inputText id="username" value="#{adminUsersAc.user.username}" size="50"/>
+				<h:inputText id="username" value="#{adminUsersAc.user.username}" size="50" 
+					readonly="#{adminUsersAc.user.username!=null}" immediate="true"/>
+				
+				<h:message for="userpass" styleClass="error" />
+				<h:outputLabel value="hasło" />
+				<h:inputText id="userpass" value="#{adminUsersAc.user.userpass}" immediate="true" size="50"/>
+				
+				<h:message for="userpass1" styleClass="error" />
+				<h:outputLabel value="hasło ponownie" />
+				<h:inputText id="userpass1" value="#{adminUsersAc.userpass1}" immediate="true" size="50"/>
+				
 				
 				<h:message for="imieNazwisko" styleClass="error" />
 				<h:outputLabel value="imie i nazwisko" />

@@ -1,22 +1,12 @@
 package org.arti01.admin;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.log4j.Logger;
-import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
@@ -32,8 +22,7 @@ public class UsersAc {
 	@EJB RoleImp roleImp;
 	@EJB KursyImp kursyImp;
 	
-	String haslo2;
-	// boolean zmianaHasla;
+	String userpass1;
 	//boolean zmien;
 	//List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
 	private DataModel<User> allUsers=new ListDataModel<User>();
@@ -49,6 +38,7 @@ public class UsersAc {
 	public String form(){
 		errorText="";
 		user=allUsers.getRowData();
+		userpass1=user.getUserpass();
 		return "usersForm";
 	}
 	public String formNew(){
@@ -58,7 +48,9 @@ public class UsersAc {
 	}
 	
 	public String dodaj() {
+		user.setDataZmiany(new Date());
 		if (user.getUsername()!=null) {// edycja
+			logger.info("edycja");
 			if(userImp.update(user)){
 				return "usersLista";
 			}
@@ -165,11 +157,15 @@ public class UsersAc {
 		return "info";
 	}*/
 
-	public String listAdmin() throws Exception {
+	public String listAdmin() {
 		prawo=Role.ADMIN;
 		Role rola=new Role();
 		rola.setRola(prawo);
 		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+		return "usersLista";
+	}
+	public String listAll() {
+		allUsers.setWrappedData(userImp.findAll());
 		return "usersLista";
 	}
 	
@@ -181,16 +177,6 @@ public class UsersAc {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-	public String getHaslo2() {
-		return haslo2;
-	}
-
-	//@FieldExpressionValidator(key = "hasla.rozne", expression = "haslo2.equals(userImp.getUser().getUserpass())")
-	public void setHaslo2(String haslo2) {
-		this.haslo2 = haslo2;
-	}
-
 	/*
 	 *  public String sortDataZmiany() throws Exception { users =
 	 * new UserImp().findOrderDataZmiany(asc); return "lista"; }
@@ -236,5 +222,11 @@ public class UsersAc {
 	}
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
+	}
+	public String getUserpass1() {
+		return userpass1;
+	}
+	public void setUserpass1(String userpass1) {
+		this.userpass1 = userpass1;
 	}
 }
