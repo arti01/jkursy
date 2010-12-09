@@ -64,11 +64,9 @@
 
 			</h:panelGrid>
 			<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
-				<br/>-----
-				<h:selectManyCheckbox value="#{adminUsersAc.user.roles}">
-					<f:selectItems value="#{adminUsersAc.allRolesArr}" var="rola" itemValue="#{rola}"/>
+				<h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
+					<f:selectItems value="#{adminUsersAc.allRolesName}" var="role" itemValue="#{role}"/>
 				</h:selectManyCheckbox>
-			
 			</h:panelGroup>
 		</h:form>
 		</body>

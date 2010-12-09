@@ -24,15 +24,10 @@ public class UsersAc {
 	@EJB KursyImp kursyImp;
 	
 	String userpass1;
-	//boolean zmien;
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
 	
 	private DataModel<User> allUsers=new ListDataModel<User>();
-	
-	//List<String> zaznaczone = new ArrayList<String>();
-	//List<Role> roleAll;
-	// private String nextAction;
 	private String prawo=null;;
 	String errorText;
 
@@ -42,31 +37,26 @@ public class UsersAc {
 		user=allUsers.getRowData();
 		userpass1=user.getUserpass();
 		rolesName=userImp.getRolesName(user);
-		
-		for (Role ra:all){
-			allRolesArr.add(ra);
-			for(Role r:user.getRoles()){
-				//logger.info(ra.getRola()+"ra");
-				if(ra.getRola().equals(r.getRola())){
-					allRolesArr.remove(ra);
-					allRolesArr.add(r);	
-				}
-			}
-		}
-		logger.info(allRolesArr.size());
 		return "usersForm";
 	}
 	public String formNew(){
+		allRolesName=roleImp.getRolesName();		
 		errorText="";
+		user=allUsers.getRowData();
+		userpass1=user.getUserpass();
+		rolesName=userImp.getRolesName(user);
 		user=new User();
 		return "usersForm";
 	}
 	
 	public String dodaj() {
-		logger.info(user.getRoles().size());
-		
-		logger.info(user.getRoles().iterator().next().getClass().toString());
-		logger.info(user.getRoles().iterator().next().getUsers().size());
+		user.getRoles().clear();
+		for(String name:rolesName){
+			Role r=new Role();
+			r.setRola(name);
+			r=roleImp.find(r);
+			user.getRoles().add(r);
+		}
 		user.setDataZmiany(new Date());
 		if (user.getUsername()!=null) {// edycja
 			logger.info("edycja");

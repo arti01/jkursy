@@ -2,8 +2,6 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import java.util.List;
 import java.util.Set;
 
 

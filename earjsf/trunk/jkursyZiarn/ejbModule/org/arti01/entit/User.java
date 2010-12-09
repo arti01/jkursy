@@ -3,6 +3,7 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.Set;
@@ -43,7 +44,7 @@ public class User implements Serializable {
 	private String miasto;
 
 	@Column(nullable=false, length=2147483647)
-	@Size(min=10, max=15)
+	@Pattern(regexp="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
 	private String nip;
 
 	@Column(length=2147483647)
