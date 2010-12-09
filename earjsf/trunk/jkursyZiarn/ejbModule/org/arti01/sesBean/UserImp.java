@@ -8,6 +8,11 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
@@ -21,6 +26,15 @@ public class UserImp {
 	
 	@EJB RoleImp roleImp;
 
+	public void Test(){ 
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<User> cq = cb.createQuery(User.class);
+		Metamodel m = em.getMetamodel();
+		EntityType<User> User_ = m.entity(User.class);
+		Root<User> pet = cq.from(User.class);
+		cq.where(pet.get(User_.nip).isNull());
+	}
+	
 	public User find(User user) {
 		if (user.getUsername() != null) {
 			user = em.find(User.class, user.getUsername());
