@@ -2,6 +2,7 @@ package org.arti01.admin;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
@@ -24,21 +25,35 @@ public class UsersAc {
 	
 	String userpass1;
 	//boolean zmien;
-	//List<Integer> zaznaczoneKursy = new ArrayList<Integer>();
+	List<String> allRolesName = new ArrayList<String>();
+	List<String> rolesName = new ArrayList<String>();
+	
 	private DataModel<User> allUsers=new ListDataModel<User>();
+	
 	//List<String> zaznaczone = new ArrayList<String>();
 	//List<Role> roleAll;
 	// private String nextAction;
-	//private boolean admin = false;
-	private String prawo=null;
-	//private boolean asc = true;
-	//private String sortTyp = "";
+	private String prawo=null;;
 	String errorText;
 
 	public String form(){
+		allRolesName=roleImp.getRolesName();		
 		errorText="";
 		user=allUsers.getRowData();
 		userpass1=user.getUserpass();
+		rolesName=userImp.getRolesName(user);
+		
+		for (Role ra:all){
+			allRolesArr.add(ra);
+			for(Role r:user.getRoles()){
+				//logger.info(ra.getRola()+"ra");
+				if(ra.getRola().equals(r.getRola())){
+					allRolesArr.remove(ra);
+					allRolesArr.add(r);	
+				}
+			}
+		}
+		logger.info(allRolesArr.size());
 		return "usersForm";
 	}
 	public String formNew(){
@@ -48,6 +63,10 @@ public class UsersAc {
 	}
 	
 	public String dodaj() {
+		logger.info(user.getRoles().size());
+		
+		logger.info(user.getRoles().iterator().next().getClass().toString());
+		logger.info(user.getRoles().iterator().next().getUsers().size());
 		user.setDataZmiany(new Date());
 		if (user.getUsername()!=null) {// edycja
 			logger.info("edycja");
@@ -228,5 +247,17 @@ public class UsersAc {
 	}
 	public void setUserpass1(String userpass1) {
 		this.userpass1 = userpass1;
+	}
+	public List<String> getAllRolesName() {
+		return allRolesName;
+	}
+	public void setAllRolesName(List<String> allRolesName) {
+		this.allRolesName = allRolesName;
+	}
+	public List<String> getRolesName() {
+		return rolesName;
+	}
+	public void setRolesName(List<String> rolesName) {
+		this.rolesName = rolesName;
 	}
 }

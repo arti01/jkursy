@@ -54,7 +54,7 @@ public class User implements Serializable {
 	private String tel1;
 
 	@Column(nullable=false, length=2147483647)
-	@Size(min=2, max=15)
+	@Size(min=2, max=255)
 	private String ulica;
 
 	@Column(nullable=false, length=50)

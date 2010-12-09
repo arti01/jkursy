@@ -8,6 +8,7 @@
 	<ui:define name="body">
 		<body>
 		<h:form>
+		<h:panelGroup>
 			<h:panelGrid columns="3">
 				<h:outputLabel for="bledy" />
 				<h:outputText id="bledy" value="#{adminUsersAc.errorText}" styleClass="error"/>
@@ -63,6 +64,12 @@
 
 			</h:panelGrid>
 			<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
+				<br/>-----
+				<h:selectManyCheckbox value="#{adminUsersAc.user.roles}">
+					<f:selectItems value="#{adminUsersAc.allRolesArr}" var="rola" itemValue="#{rola}"/>
+				</h:selectManyCheckbox>
+			
+			</h:panelGroup>
 		</h:form>
 		</body>
 	</ui:define>
