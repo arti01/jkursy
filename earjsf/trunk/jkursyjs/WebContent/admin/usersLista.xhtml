@@ -18,6 +18,11 @@ function takNie(){
 </h:form>
 
 <h:form>
+<ui:repeat var="or" value="#{adminUsersAc.order}">
+	<h:commandLink action="#{adminUsersAc.form}">
+		<h:outputText value="#{or}"/>
+	</h:commandLink>
+</ui:repeat>
 <h:dataTable var="user" value="#{adminUsersAc.allUsers}" border="0" width="100%">
 	<h:column>
 	<f:facet name="header">login(imię nazwisko)</f:facet>

@@ -1,0 +1,5 @@
+#Thu Dec 09 21:17:04 CET 2010
+eclipse.preferences.version=1
+org.eclipse.jdt.apt.aptEnabled=true
+org.eclipse.jdt.apt.genSrcDir=metadane
+org.eclipse.jdt.apt.reconcileEnabled=true

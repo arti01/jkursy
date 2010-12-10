@@ -26,7 +26,8 @@ public class UsersAc {
 	String userpass1;
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
-	
+	private DataModel<String> order=new ListDataModel<String>();
+	boolean asc;
 	private DataModel<User> allUsers=new ListDataModel<User>();
 	private String prawo=null;;
 	String errorText;
@@ -42,9 +43,6 @@ public class UsersAc {
 	public String formNew(){
 		allRolesName=roleImp.getRolesName();		
 		errorText="";
-		user=allUsers.getRowData();
-		userpass1=user.getUserpass();
-		rolesName=userImp.getRolesName(user);
 		user=new User();
 		return "usersForm";
 	}
@@ -174,7 +172,9 @@ public class UsersAc {
 		return "usersLista";
 	}
 	public String listAll() {
-		allUsers.setWrappedData(userImp.findAll());
+		//logger.info(order+ asc);
+		if (order==null)allUsers.setWrappedData(userImp.findAll());
+		else allUsers.setWrappedData(userImp.allOrder(asc));
 		return "usersLista";
 	}
 	
@@ -249,5 +249,22 @@ public class UsersAc {
 	}
 	public void setRolesName(List<String> rolesName) {
 		this.rolesName = rolesName;
+	}
+	public boolean isAsc() {
+		return asc;
+	}
+	public void setAsc(boolean asc) {
+		this.asc = asc;
+	}
+	public DataModel<String> getOrder() {
+		List<String> list=new ArrayList<String>();
+		list.add("username");
+		list.add("datazmiany");
+		list.add("imieNazwisko");
+		order.setWrappedData(list);
+		return order;
+	}
+	public void setOrder(DataModel<String> order) {
+		this.order = order;
 	}
 }
