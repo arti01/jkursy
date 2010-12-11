@@ -66,7 +66,16 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-many association to Role
-	@ManyToMany(mappedBy="users", cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(
+		name="_users__roles"
+		, joinColumns={
+			@JoinColumn(name="username", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="roles_rola", nullable=false)
+			}
+		)
 	private Set<Role> roles;
 
 	//bi-directional many-to-many association to Kursy

@@ -22,10 +22,16 @@
 			<br/>
 			<br/>
 			<h:panelGrid columns="4">
-				<h:commandButton value="admini" action="#{adminUsersAc.listAdmin}" render="table"/>
-				<a4j:commandButton value="wykladowcy" action="#{adminUsersAc.listWyklad}" render="table"/>
-				<h:commandButton value="kursanci" action="#{adminUsersAc.listKursant}" render="table"/>
-				<h:commandButton value="nieprzypisani" action="#{adminUsersAc.formNew}" render="table"/>
+				<h:commandButton value="admini" action="#{adminUsersAc.listAll}">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="admin" />
+				</h:commandButton>
+				<h:commandButton value="wykladowcy" action="#{adminUsersAc.listAll}">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="wykladowca" />
+				</h:commandButton>
+				<h:commandButton value="kursanci" action="#{adminUsersAc.listAll}">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="kursant" />
+				</h:commandButton>
+				<h:commandButton value="nieprzypisani" action="#{adminUsersAc.formNew}"/>
 			</h:panelGrid>
 		</h:form>
 		</h:panelGroup>

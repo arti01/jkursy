@@ -19,6 +19,7 @@ public class RoleImp{
 	public Role find(Role role) {
 		if (role.getRola() != null) {
 			role=em.find(Role.class, role.getRola());
+			em.refresh(role);
 		} else
 			role = new Role();
 		return role;

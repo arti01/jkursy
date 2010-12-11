@@ -14,7 +14,10 @@
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
 	<li>
-	<h:commandLink value="użytkownicy" action="#{adminUsersAc.listAll}"/></li>
+	<h:commandLink value="użytkownicy" action="#{adminUsersAc.listAll}">
+		<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="" />
+	</h:commandLink>
+	</li>
 	<li>
 	<h:commandLink value="kursy" action="#{adminKursyAc.kursyLista}"/></li>
 	<li>

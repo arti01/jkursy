@@ -35,7 +35,8 @@ public class UsersAc {
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
 	private DataModel<User> allUsers = new ListDataModel<User>();
-	private String prawo = null;;
+	//@ManagedProperty(value = "prawo")
+	private String prawo = "";
 	String errorText;
 
 	public void sortByUsername() {
@@ -98,10 +99,12 @@ public class UsersAc {
 			if (user.getUsername() != null) {// edycja
 				logger.info("edycja");
 					if (userImp.update(user)) {
+						listAll();
 						return "usersLista";
 					}
 			} else {
 				if (userImp.insert(user)) {
+					listAll();
 					return "usersLista";
 				}
 			}
@@ -112,34 +115,13 @@ public class UsersAc {
 		return "usersForm";// bo nie udala się zmiana
 	}
 
-	public String listAdmin() {
-		prawo = Role.ADMIN;
-		Role rola = new Role();
-		rola.setRola(prawo);
-		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
-				.getUsers()));
-		return "usersLista";
-	}
-	public String listWyklad() {
-		prawo = Role.WYKLADOWCA;
-		Role rola = new Role();
-		rola.setRola(prawo);
-		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
-				.getUsers()));
-		return "usersLista";
-	}
-	public String listKursant() {
-		prawo = Role.KURSANT;
-		Role rola = new Role();
-		rola.setRola(prawo);
-		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
-				.getUsers()));
-		return "usersLista";
-	}
-
 	public String listAll() {
 		allRolesName = roleImp.getRolesName();
-		allUsers.setWrappedData(userImp.findAll());
+		if(!prawo.equals("")){
+			Role rola = new Role();
+			rola.setRola(prawo);
+			allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+		}else allUsers.setWrappedData(userImp.findAll());
 		return "usersLista";
 	}
 

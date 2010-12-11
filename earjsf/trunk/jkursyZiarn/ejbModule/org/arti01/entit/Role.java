@@ -2,6 +2,7 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Set;
 
 
@@ -27,16 +28,7 @@ public class Role implements Serializable {
 	private String opis;
 
 	//bi-directional many-to-many association to User
-    @ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(
-		name="_user_roles"
-		, joinColumns={
-			@JoinColumn(name="role_name", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="username", nullable=false)
-			}
-		)
+	@ManyToMany(cascade=CascadeType.ALL, mappedBy="roles")
 	private Set<User> users;
 
     public Role() {

@@ -2,7 +2,6 @@ package org.arti01.sesBean;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -57,8 +56,6 @@ public class UserImp {
 	}
 
 	public boolean update(User user) throws Exception{
-		System.out.println(user.getDataZmiany());
-		System.out.println(user.getRoles().size());
 		em.merge(user);
 		return true;
 	}
