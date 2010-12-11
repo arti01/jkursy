@@ -27,7 +27,7 @@ public class Role implements Serializable {
 	private String opis;
 
 	//bi-directional many-to-many association to User
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(
 		name="_user_roles"
 		, joinColumns={

@@ -27,7 +27,7 @@ public class User implements Serializable {
 	@Size(min=2, max=50)
 	private String username;
 
-    @Temporal( TemporalType.DATE)
+    @Temporal( TemporalType.TIMESTAMP)
 	@Column(name="data_zmiany", nullable=false)
 	private Date dataZmiany;
 

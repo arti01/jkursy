@@ -13,172 +13,136 @@ import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.UserImp;
+import org.richfaces.component.SortOrder;
 
 public class UsersAc {
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
-	@EJB UserImp userImp;
-	@EJB RoleImp roleImp;
-	@EJB KursyImp kursyImp;
-	
+	@EJB
+	UserImp userImp;
+	@EJB
+	RoleImp roleImp;
+	@EJB
+	KursyImp kursyImp;
+
+	private SortOrder usernameOrder = SortOrder.unsorted;
+	private SortOrder imieNazwiskoOrder = SortOrder.unsorted;
+	private SortOrder dataZmianyOrder = SortOrder.unsorted;
+
 	String userpass1;
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
-	private DataModel<String> order=new ListDataModel<String>();
-	boolean asc;
-	private DataModel<User> allUsers=new ListDataModel<User>();
-	private String prawo=null;;
+	private DataModel<User> allUsers = new ListDataModel<User>();
+	private String prawo = null;;
 	String errorText;
 
-	public String form(){
-		allRolesName=roleImp.getRolesName();		
-		errorText="";
-		user=allUsers.getRowData();
-		userpass1=user.getUserpass();
-		rolesName=userImp.getRolesName(user);
+	public void sortByUsername() {
+		setImieNazwiskoOrder(SortOrder.unsorted);
+		setDataZmianyOrder(SortOrder.unsorted);
+		if (usernameOrder.equals(SortOrder.ascending)) {
+			setUsernameOrder(SortOrder.descending);
+		} else {
+			setUsernameOrder(SortOrder.ascending);
+		}
+	}
+
+	public void sortByImieNazwisko() {
+		setUsernameOrder(SortOrder.unsorted);
+		setDataZmianyOrder(SortOrder.unsorted);
+		if (imieNazwiskoOrder.equals(SortOrder.ascending)) {
+			setImieNazwiskoOrder(SortOrder.descending);
+		} else {
+			setImieNazwiskoOrder(SortOrder.ascending);
+		}
+	}
+
+	public void sortByDataZmiany() {
+		setUsernameOrder(SortOrder.unsorted);
+		setImieNazwiskoOrder(SortOrder.unsorted);
+		if (dataZmianyOrder.equals(SortOrder.ascending)) {
+			setDataZmianyOrder(SortOrder.descending);
+		} else {
+			setDataZmianyOrder(SortOrder.ascending);
+		}
+	}
+
+	public String form() {
+		allRolesName = roleImp.getRolesName();
+		errorText = "";
+		user = allUsers.getRowData();
+		userpass1 = user.getUserpass();
+		rolesName = userImp.getRolesName(user);
 		return "usersForm";
 	}
-	public String formNew(){
-		allRolesName=roleImp.getRolesName();		
-		errorText="";
-		user=new User();
+
+	public String formNew() {
+		allRolesName = roleImp.getRolesName();
+		errorText = "";
+		user = new User();
 		return "usersForm";
 	}
-	
+
 	public String dodaj() {
+		user.setDataZmiany(new Date());
 		user.getRoles().clear();
-		for(String name:rolesName){
-			Role r=new Role();
+		for (String name : rolesName) {
+			Role r = new Role();
 			r.setRola(name);
-			r=roleImp.find(r);
+			r = roleImp.find(r);
 			user.getRoles().add(r);
 		}
 		user.setDataZmiany(new Date());
-		if (user.getUsername()!=null) {// edycja
-			logger.info("edycja");
-			if(userImp.update(user)){
-				return "usersLista";
-			}
-		}
-		else{
-			if(userImp.insert(user)){
-				return "usersLista";
-			}
-		}
-		//errorText=kursyImp.getErrorText();
-		return "usersForm";//bo nie udala się zmiana
-	}
-	
-	/*private void form(String prawo){
-		logger.info("userImp"+userImp);
-		logger.info("userImp"+userImp+userImp.getUser());
-		logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername());
-		this.prawo=prawo;
-		//if (user != null) {
-		if (zmien) {
-			userImp.setUser(userImp.find(userImp.getUser()));
-			logger.info("userImp"+userImp+userImp.getUser()+userImp.getUser().getUsername()+userImp.getUser().getImieNazwisko());
-			//user = userImp.find(userImp.getUser());
-			zmien = true;
-			for (Role r : userImp.getUser().getRoles()) {
-				zaznaczone.add(r.getRola());
-			}
-			for (Kursy ku : userImp.getUser().getKursies()) {
-				zaznaczoneKursy.add(ku.getIdkursy());
-			}
-		} else {
-			userImp.setUser(new User());
-			userImp.getUser().setDataZmiany(new Date());
-			zaznaczone.add(prawo);
-		}
-		roleAll=roleImp.findAll();
-		kursyAll=kursyImp.findNiezakonczone();
-	}
-	
-	public String formAdmin() throws Exception {
-		form(Role.ADMIN);
-		return "form";
-	}
-	
-	public String formWyklad() throws Exception {
-		form(Role.WYKLADOWCA);
-		return "form";
-	}
-
-	public String formKursant() throws Exception {
-		form(Role.KURSANT);
-		return "form";
-	}
-*/
-	/*public String dodaj() throws Exception {
-		// obsluga roli
-		for (String i : zaznaczone) {
-			Role r = new Role();
-			r.setRola(i);
-			userImp.getUser().getRoles().add(r);
-		}
-		Set<Kursy> kursy = new HashSet<Kursy>();
-		for (Integer i : zaznaczoneKursy) {
-			Kursy k = new Kursy();
-			k.setIdkursy(i);
-			kursy.add(k);
-		}
-		// koniec obslugi roli
-		if (!zmien) {// dodawanie
-			try {
-				logger.info("dodanie"+userImp.getUser().getImieNazwisko());
-				logger.info("dodanie"+userImp.getUser().getUsername());
-				//user.setKursy(kursy);
-				userImp.insert(userImp.getUser());
-				setInfoText("login.dodany");
-			} catch (Exception e) {
-				logger.error("dodanie", e);
-				addActionError("Nie udało się stworzyć użytkownika - najprawdopodobniej już taki istnieje");
-				return "info";
-			}
-		} else {// edycja
-			try {
-				logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
-				logger.info("userImp"+userImp+userImp.getUser());
-				logger.info("userImp"+userImp.getUser().getRoles().size());
-				for(Role r:userImp.getUser().getRoles()){
-					logger.info(r.getRola());	
+		try {
+			if (user.getUsername() != null) {// edycja
+				logger.info("edycja");
+					if (userImp.update(user)) {
+						return "usersLista";
+					}
+			} else {
+				if (userImp.insert(user)) {
+					return "usersLista";
 				}
-				//userImp.getUser().setUserRoles(userRoles);
-				//user.setKursy(kursy);
-				userImp.update(userImp.getUser());
-				//userNew.getRole().clear();
-				//userNew.setRole(role);
-				//userNew.setKursy(kursy);
-				//logger.info("ilosc kursow"+ userNew.getKursyy().size());
-				//new UserImp().update(userNew);
-				setInfoText("login.zmieniony");
-			} catch (Exception e) {
-				addActionError("problem z edycja danych usera");
-				logger.error("ssssssss", e);
-				return "info";
 			}
+		} catch (Exception e) {
+			logger.error(e);
 		}
-		return "info";
-	}*/
+		// errorText=kursyImp.getErrorText();
+		return "usersForm";// bo nie udala się zmiana
+	}
 
 	public String listAdmin() {
-		prawo=Role.ADMIN;
-		Role rola=new Role();
+		prawo = Role.ADMIN;
+		Role rola = new Role();
 		rola.setRola(prawo);
-		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
+				.getUsers()));
 		return "usersLista";
 	}
+	public String listWyklad() {
+		prawo = Role.WYKLADOWCA;
+		Role rola = new Role();
+		rola.setRola(prawo);
+		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
+				.getUsers()));
+		return "usersLista";
+	}
+	public String listKursant() {
+		prawo = Role.KURSANT;
+		Role rola = new Role();
+		rola.setRola(prawo);
+		allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola)
+				.getUsers()));
+		return "usersLista";
+	}
+
 	public String listAll() {
-		//logger.info(order+ asc);
-		if (order==null)allUsers.setWrappedData(userImp.findAll());
-		else allUsers.setWrappedData(userImp.allOrder(asc));
+		allRolesName = roleImp.getRolesName();
+		allUsers.setWrappedData(userImp.findAll());
 		return "usersLista";
 	}
-	
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -186,31 +150,7 @@ public class UsersAc {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	/*
-	 *  public String sortDataZmiany() throws Exception { users =
-	 * new UserImp().findOrderDataZmiany(asc); return "lista"; }
-	 * 
-	 * 
-	 * public String getHaslo2() { return haslo2; }
-	 * 
-	 *  //@FieldExpressionValidator(key = "hasla.rozne",
-	 * expression = "haslo2.equals(user.getUserpass())") public void
-	 * setHaslo2(String haslo2) { this.haslo2 = haslo2; }
-	 * 
-	 * public boolean isZmianaHasla() { return zmianaHasla; }
-	 * 
-	 * public void setZmianaHasla(boolean zmianaHasla) { this.zmianaHasla =
-	 * zmianaHasla; }
-	 * 
-	 * public String getNextAction() { return nextAction; }
-	 * 
-	 * public void setNextAction(String nextAction) { this.nextAction =
-	 * nextAction; }
-	 * 
-	 * public boolean isAsc() { return asc; }
-	 * 
-	 * public void setAsc(boolean asc) { this.asc = asc; }
-	 */
+
 	public void setPrawo(String prawo) {
 		this.prawo = prawo;
 	}
@@ -221,50 +161,66 @@ public class UsersAc {
 
 	public DataModel<User> getAllUsers() {
 		return allUsers;
-		
+
 	}
+
 	public void setAllUsers(DataModel<User> allUsers) {
 		this.allUsers = allUsers;
 	}
+
 	public String getErrorText() {
 		return errorText;
 	}
+
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
 	}
+
 	public String getUserpass1() {
 		return userpass1;
 	}
+
 	public void setUserpass1(String userpass1) {
 		this.userpass1 = userpass1;
 	}
+
 	public List<String> getAllRolesName() {
 		return allRolesName;
 	}
+
 	public void setAllRolesName(List<String> allRolesName) {
 		this.allRolesName = allRolesName;
 	}
+
 	public List<String> getRolesName() {
 		return rolesName;
 	}
+
 	public void setRolesName(List<String> rolesName) {
 		this.rolesName = rolesName;
 	}
-	public boolean isAsc() {
-		return asc;
+
+	public SortOrder getUsernameOrder() {
+		return usernameOrder;
 	}
-	public void setAsc(boolean asc) {
-		this.asc = asc;
+
+	public void setUsernameOrder(SortOrder usernameOrder) {
+		this.usernameOrder = usernameOrder;
 	}
-	public DataModel<String> getOrder() {
-		List<String> list=new ArrayList<String>();
-		list.add("username");
-		list.add("datazmiany");
-		list.add("imieNazwisko");
-		order.setWrappedData(list);
-		return order;
+
+	public SortOrder getImieNazwiskoOrder() {
+		return imieNazwiskoOrder;
 	}
-	public void setOrder(DataModel<String> order) {
-		this.order = order;
+
+	public void setImieNazwiskoOrder(SortOrder imieNazwiskoOrder) {
+		this.imieNazwiskoOrder = imieNazwiskoOrder;
+	}
+
+	public SortOrder getDataZmianyOrder() {
+		return dataZmianyOrder;
+	}
+
+	public void setDataZmianyOrder(SortOrder dataZmianyOrder) {
+		this.dataZmianyOrder = dataZmianyOrder;
 	}
 }

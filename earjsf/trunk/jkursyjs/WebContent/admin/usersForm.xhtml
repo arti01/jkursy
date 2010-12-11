@@ -54,8 +54,8 @@
 				
 				<h:message for="dataZmiany" styleClass="error" />
 				<h:outputLabel value="data zmiany" />
-				<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}"  immediate="true" readonly="true" size="10">
-					<f:convertDateTime pattern="yyyy-MM-dd" />
+				<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}"  immediate="true" readonly="true" size="19">
+					<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
 				</h:inputText>
 				
 				<h:message for="opis" styleClass="error" />

@@ -56,7 +56,9 @@ public class UserImp {
 		return true;
 	}
 
-	public boolean update(User user) {
+	public boolean update(User user) throws Exception{
+		System.out.println(user.getDataZmiany());
+		System.out.println(user.getRoles().size());
 		em.merge(user);
 		return true;
 	}
