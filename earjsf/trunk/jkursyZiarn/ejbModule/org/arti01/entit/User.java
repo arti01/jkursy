@@ -66,7 +66,7 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-many association to Role
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 		name="_users__roles"
 		, joinColumns={

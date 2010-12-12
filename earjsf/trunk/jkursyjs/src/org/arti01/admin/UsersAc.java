@@ -80,14 +80,24 @@ public class UsersAc {
 
 	public String formNew() {
 		allRolesName = roleImp.getRolesName();
+		rolesName=new ArrayList<String>();
+		userpass1="";
 		errorText = "";
 		user = new User();
 		return "usersForm";
 	}
 
+	public String usun() {
+		user = allUsers.getRowData();
+		logger.info(user.getUsername());
+		userImp.remove(user);
+		listAll();
+		return "usersLista";
+	}
+	
 	public String dodaj() {
 		user.setDataZmiany(new Date());
-		user.getRoles().clear();
+		if (userImp.find(user)!=null)user.getRoles().clear();
 		for (String name : rolesName) {
 			Role r = new Role();
 			r.setRola(name);
@@ -96,13 +106,15 @@ public class UsersAc {
 		}
 		user.setDataZmiany(new Date());
 		try {
-			if (user.getUsername() != null) {// edycja
+			if (userImp.find(user)!=null) {// edycja
 				logger.info("edycja");
 					if (userImp.update(user)) {
 						listAll();
 						return "usersLista";
 					}
 			} else {
+				logger.info("dodanie");
+				user.getUsername();
 				if (userImp.insert(user)) {
 					listAll();
 					return "usersLista";
@@ -117,14 +129,17 @@ public class UsersAc {
 
 	public String listAll() {
 		allRolesName = roleImp.getRolesName();
-		if(!prawo.equals("")){
+		if(prawo.equals("nieprzypisani")){
+			allUsers.setWrappedData(userImp.findNieprzypisani());	
+		}
+		else if(!prawo.equals("")){
 			Role rola = new Role();
 			rola.setRola(prawo);
 			allUsers.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
 		}else allUsers.setWrappedData(userImp.findAll());
 		return "usersLista";
 	}
-
+	
 	public User getUser() {
 		return user;
 	}

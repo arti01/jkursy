@@ -5,8 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	xmlns:a4j="http://richfaces.org/a4j">
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
@@ -31,7 +30,9 @@
 				<h:commandButton value="kursanci" action="#{adminUsersAc.listAll}">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="kursant" />
 				</h:commandButton>
-				<h:commandButton value="nieprzypisani" action="#{adminUsersAc.formNew}"/>
+				<h:commandButton value="nieprzypisani" action="#{adminUsersAc.listAll}">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="nieprzypisani" />
+				</h:commandButton>
 			</h:panelGrid>
 		</h:form>
 		</h:panelGroup>
@@ -39,15 +40,14 @@
 		<h:form>
 			<rich:dataTable value="#{adminUsersAc.allUsers}" var="user"
 				id="table">
-				
 				<rich:column sortBy="#{user.username}" id="username"
 					sortOrder="#{adminUsersAc.usernameOrder}">
 					<f:facet name="header">
 						<a4j:commandLink value="sortowanie login" render="table"
-							action="#{adminUsersAc.sortByUsername}" />
+							action="#{adminUsersAc.sortByUsername}"/>
 					</f:facet>
 					<h:commandLink action="#{adminUsersAc.form}">
-						<h:outputText value="#{user.username}" />
+						<h:outputText value="#{user.username}"/>
 					</h:commandLink>
 				</rich:column>
 				
@@ -71,6 +71,13 @@
 						<h:outputText value="#{user.dataZmiany}">
 							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
 						</h:outputText>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.usun}" onclick="return takNie();">
+						<h:outputText value="usuń" rendered="#{login.zalogowany.username!=user.username}"/>
 					</h:commandLink>
 				</rich:column>
 			</rich:dataTable>

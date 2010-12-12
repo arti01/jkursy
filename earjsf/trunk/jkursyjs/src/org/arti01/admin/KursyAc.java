@@ -6,6 +6,7 @@ import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.sesBean.KursyImp;
+import org.richfaces.component.SortOrder;
 
 public class KursyAc {
 
@@ -16,7 +17,41 @@ public class KursyAc {
 	private Kursy kurs;
 	private String errorText;
 	@EJB KursyImp kursyImp;
+	
+	private SortOrder nazwaOrder = SortOrder.unsorted;
+	private SortOrder dataodOrder = SortOrder.unsorted;
+	private SortOrder datadoOrder = SortOrder.unsorted;
 
+	public void sortBynazwa() {
+		setDatadoOrder(SortOrder.unsorted);
+		setDataodOrder(SortOrder.unsorted);
+		if (nazwaOrder.equals(SortOrder.ascending)) {
+			setNazwaOrder(SortOrder.descending);
+		} else {
+			setNazwaOrder(SortOrder.ascending);
+		}
+	}
+	
+	public void sortBydataod() {
+		setDatadoOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		if (dataodOrder.equals(SortOrder.ascending)) {
+			setDataodOrder(SortOrder.descending);
+		} else {
+			setDataodOrder(SortOrder.ascending);
+		}
+	}
+	
+	public void sortBydatado() {
+		setDataodOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		if (datadoOrder.equals(SortOrder.ascending)) {
+			setDatadoOrder(SortOrder.descending);
+		} else {
+			setDatadoOrder(SortOrder.ascending);
+		}
+	}
+	
 	
 	public String kursyLista() throws Exception{
 		return "kursyLista";
@@ -37,7 +72,7 @@ public class KursyAc {
 	public String usun() throws Exception {
 		kurs=allKursy.getRowData();
 		kursyImp.delete(kurs);
-		return "statyczneLista";
+		return "kursyLista";
 	}
 	
 	public String dodaj() {
@@ -82,6 +117,30 @@ public class KursyAc {
 
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
+	}
+
+	public SortOrder getNazwaOrder() {
+		return nazwaOrder;
+	}
+
+	public void setNazwaOrder(SortOrder nazwaOrder) {
+		this.nazwaOrder = nazwaOrder;
+	}
+
+	public SortOrder getDataodOrder() {
+		return dataodOrder;
+	}
+
+	public void setDataodOrder(SortOrder dataodOrder) {
+		this.dataodOrder = dataodOrder;
+	}
+
+	public SortOrder getDatadoOrder() {
+		return datadoOrder;
+	}
+
+	public void setDatadoOrder(SortOrder datadoOrder) {
+		this.datadoOrder = datadoOrder;
 	}
 
 }

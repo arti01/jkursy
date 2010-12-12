@@ -32,7 +32,7 @@ public class UserImp {
 		if(asc) o=queryBuilder.asc(user.get("username"));
 		else o=queryBuilder.desc(user.get("username"));
 		queryDefinition.select(user).orderBy(o);
-		System.out.println(em.createQuery(queryDefinition).getResultList());
+		//System.out.println(em.createQuery(queryDefinition).getResultList());
 		return em.createQuery(queryDefinition).getResultList(); 
 	}
 	
@@ -50,7 +50,7 @@ public class UserImp {
 				.getResultList();
 	}
 
-	public boolean insert(User user) {
+	public boolean insert(User user) throws Exception{
 		em.persist(user);
 		return true;
 	}
@@ -61,8 +61,13 @@ public class UserImp {
 	}
 
 	public void remove(User user) {
-		em.remove(em.find(User.class, user.getUsername()));
-		// em.remove(em.merge(user));
+		/*user=em.find(User.class, user.getUsername());
+		user.getKursies().clear();
+		user.getRoles().clear();
+		em.merge(user);
+		em.flush();*/
+		//em.remove(user);
+		em.remove(em.merge(user));
 	}
 	
 	public List<String> getRolesName(User user){
@@ -84,6 +89,18 @@ public class UserImp {
 			user.getRoles().add(r);
 		}
 		return user;
+	}
+
+	public List<User> findNieprzypisani() {
+		CriteriaBuilder qB = em.getCriteriaBuilder();
+		CriteriaQuery<User> cQ = qB.createQuery(User.class);
+		Root<User> user = cQ.from(User.class);
+		Order o;
+		o=qB.asc(user.get("username"));
+		cQ.select(user).orderBy(o);
+		cQ.where(qB.isEmpty(user.<List<User>>get("roles")));
+		//System.out.println(em.createQuery(cQ).getResultList());
+		return em.createQuery(cQ).getResultList();
 	}
 }
 /*

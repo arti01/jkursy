@@ -32,7 +32,7 @@ h2 { font-size:14px; }
 #left ul { margin: 0; padding:0; }
 #left ul li { list-style:none; margin:1px 0; padding:0; }
 #left ul li a { display:block; width:150px; margin:0; padding:5px; background-color:#E6E6E6; }
-#left ul li a:hover { background-color:#FFCD59; }
+#left ul li a:hover { background-color:white; }
 #left ul li ul { margin: 0; padding:0; }
 #left ul li ul li { list-style:none; margin:1px 0; padding:0; }
 #left ul li ul li a { padding:5px; background-color:#EFEFEF; }
@@ -41,9 +41,11 @@ h2 { font-size:14px; }
 
 #right { float:left; width:300; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
-#right p a { color:#FFCD59;}
+#right p a { color:black;}
 #right td{background: #E6E6E6}
+#right td:hover { background: white;}
 #right td a { color:blue; background-color:#E6E6E6; }
-#right td a:hover { background: #FFCD59;}
+#right td a:hover { background: white;}
+
 
 .clear { clear:both; }

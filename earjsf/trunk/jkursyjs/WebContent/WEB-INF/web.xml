@@ -4,6 +4,52 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 	<display-name>jkursyjs</display-name>
+	
+	<!--  Facelets tuning -->
+<context-param>
+<param-name>
+facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE
+</param-name>
+<param-value>false</param-value>
+</context-param>
+
+<context-param>
+<param-name>
+facelets.BUILD_BEFORE_RESTORE
+</param-name>
+<param-value>false</param-value>
+</context-param>
+
+<context-param>
+<param-name>facelets.DEVELOPMENT</param-name>
+<param-value>false</param-value>
+</context-param>
+
+<context-param>
+<param-name>facelets.REFRESH_PERIOD</param-name>
+<param-value>-1</param-value>
+</context-param>
+
+<!--  JSF RI Performance tuning -->
+<context-param>
+<param-name>com.sun.faces.responseBufferSize</param-name>
+<param-value>500000</param-value>
+</context-param>
+
+<context-param>
+<param-name>com.sun.faces.verifyObjects</param-name>
+<param-value>false</param-value>
+</context-param>
+
+<!-- Allows the JavaScript to be cached -->
+<context-param>
+<param-name>
+com.sun.faces.externalizeJavaScript
+</param-name>
+<param-value>true</param-value>
+</context-param>
+	
+	
 	<resource-ref>
 		<res-ref-name>jsf/ProjectStage</res-ref-name>
 		<res-type>java.lang.String</res-type>
@@ -28,7 +74,7 @@
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
-		<param-value>client</param-value>
+		<param-value>server</param-value>
 	</context-param>
 	<context-param>
 		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
@@ -38,6 +84,12 @@
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
 		<param-value>/WEB-INF/app-tags.taglib.xml</param-value>
 	</context-param>
+	
+	<context-param>
+    	<param-name>org.richfaces.LoadStyleStrategy</param-name>
+    	<param-value>NONE</param-value>
+	</context-param>    
+    
 	<listener>
 		<listener-class>com.sun.faces.config.ConfigureListener</listener-class>
 	</listener>
