@@ -1,10 +1,14 @@
 package org.arti01.admin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
+import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.richfaces.component.SortOrder;
 
@@ -17,6 +21,7 @@ public class KursyAc {
 	private Kursy kurs;
 	private String errorText;
 	@EJB KursyImp kursyImp;
+	private List<User>users=new ArrayList<User>();
 	
 	private SortOrder nazwaOrder = SortOrder.unsorted;
 	private SortOrder dataodOrder = SortOrder.unsorted;
@@ -55,6 +60,11 @@ public class KursyAc {
 	
 	public String kursyLista() throws Exception{
 		return "kursyLista";
+	}
+	
+	public String kursyusersLista() throws Exception{
+		users=new ArrayList<User>(allKursy.getRowData().getUsers());
+		return "kursyusersLista";
 	}
 	
 	public String form(){
@@ -141,6 +151,14 @@ public class KursyAc {
 
 	public void setDatadoOrder(SortOrder datadoOrder) {
 		this.datadoOrder = datadoOrder;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 
 }

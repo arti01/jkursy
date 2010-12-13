@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<script type="text/javascript">
+	function takNie() {
+		return confirm('czy jestes pewien, ze chcesz tego?');
+	};
+</script>
+		<h2>Użytkownicy kursu</h2>
+<br/>
+		<h:form>
+			<h:dataTable value="#{adminKursyAc.users}" var="user"
+				id="table">
+				<h:column id="username">
+					<f:facet name="header">
+						<h:outputText value="login" render="table"/>
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.username}"/>
+					</h:commandLink>
+				</h:column>
+				
+				<h:column id="imieNazwisko">
+					<f:facet name="header">
+						<h:outputText value="imie nazwisko" render="table"/>
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.imieNazwisko}" />
+					</h:commandLink>
+				</h:column>
+				<h:column id="dataZmiany">
+					<f:facet name="header">
+						<h:outputText value="data zmiany" render="table"/>
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.dataZmiany}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+						</h:outputText>
+					</h:commandLink>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>
