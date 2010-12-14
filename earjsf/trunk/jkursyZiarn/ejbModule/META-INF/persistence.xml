@@ -6,8 +6,5 @@
 		<class>org.arti01.entit.Statyczne</class>
 		<class>org.arti01.entit.Role</class>
 		<class>org.arti01.entit.Kursy</class>
-		<properties>
-			<property name="eclipselink.logging.level" value="FINEST"/>
-		</properties>
 	</persistence-unit>
 </persistence>

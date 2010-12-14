@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
@@ -35,7 +36,8 @@ public class UsersAc {
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
 	private DataModel<User> allUsers = new ListDataModel<User>();
-	private DataModel<User> dostepneKursy = new ListDataModel<User>();
+	private DataModel<Kursy> dostepneKursy = new ListDataModel<Kursy>();
+	private DataModel<Kursy> jestWkursach = new ListDataModel<Kursy>();
 	private String prawo = "";
 	String errorText;
 
@@ -75,6 +77,7 @@ public class UsersAc {
 		user = allUsers.getRowData();
 		user=userImp.find(user);
 		dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+		jestWkursach.setWrappedData(user.getKursies());
 		logger.info(userImp.dostepneKursy(user));
 		userpass1 = user.getUserpass();
 		rolesName = userImp.getRolesName(user);
@@ -97,6 +100,30 @@ public class UsersAc {
 		userImp.remove(user);
 		listAll();
 		return "usersLista";
+	}
+	
+	public String usunZkursu() {
+		Kursy kurs = jestWkursach.getRowData();
+		user.getKursies().remove(kurs);
+		try {
+			userImp.update(user);
+			dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return "usersForm";
+	}
+	
+	public String dodajDokursu() {
+		Kursy kurs = dostepneKursy.getRowData();
+		user.getKursies().add(kurs);
+		try {
+			userImp.update(user);
+			dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+		} catch (Exception e) {
+			logger.error(e);
+		}
+		return "usersForm";
 	}
 	
 	public String dodaj() {
@@ -225,11 +252,19 @@ public class UsersAc {
 		this.dataZmianyOrder = dataZmianyOrder;
 	}
 
-	public DataModel<User> getDostepneKursy() {
+	public DataModel<Kursy> getDostepneKursy() {
 		return dostepneKursy;
 	}
 
-	public void setDostepneKursy(DataModel<User> dostepneKursy) {
+	public void setDostepneKursy(DataModel<Kursy> dostepneKursy) {
 		this.dostepneKursy = dostepneKursy;
+	}
+
+	public DataModel<Kursy> getJestWkursach() {
+		return jestWkursach;
+	}
+
+	public void setJestWkursach(DataModel<Kursy> jestWkursach) {
+		this.jestWkursach = jestWkursach;
 	}
 }

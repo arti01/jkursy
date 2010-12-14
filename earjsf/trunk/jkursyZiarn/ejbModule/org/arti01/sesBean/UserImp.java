@@ -1,10 +1,7 @@
 package org.arti01.sesBean;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -13,13 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
-
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
@@ -82,8 +74,6 @@ public class UserImp {
 	@SuppressWarnings("unchecked")
 	public List<Kursy> dostepneKursy(User user){
 		Query q=em.createQuery("select k from Kursy k where k.idkursy not in(select kr.idkursy from User u join u.kursies kr where u.username=:username)");
-		//Set<Kursy> kursy=new HashSet<Kursy>();
-		//kursy.add(user.getKursies().iterator().next());
 		q.setParameter("username", user.getUsername());
 		return q.getResultList();
 	}

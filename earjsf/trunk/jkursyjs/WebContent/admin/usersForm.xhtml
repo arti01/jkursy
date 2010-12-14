@@ -10,101 +10,175 @@
 	<ui:define name="body">
 		<body>
 		<h:form>
-		<h:panelGroup>
-			<h:panelGrid columns="3">
-				<h:outputLabel for="bledy" />
-				<h:outputText id="bledy" value="#{adminUsersAc.errorText}" styleClass="error"/>
-				<h:outputLabel for="bledy" />
-				
-				<h:message for="username" styleClass="error" />
-				<h:outputLabel value="username" />
-				<h:inputText id="username" value="#{adminUsersAc.user.username}" size="50" 
-					readonly="#{adminUsersAc.user.username!=null}" immediate="true"/>
-				
-				<h:message for="userpass" styleClass="error" />
-				<h:outputLabel value="hasło" />
-				<h:inputText id="userpass" value="#{adminUsersAc.user.userpass}" immediate="true" size="50"/>
-				
-				<h:message for="userpass1" styleClass="error" />
-				<h:outputLabel value="hasło ponownie" />
-				<h:inputText id="userpass1" value="#{adminUsersAc.userpass1}" immediate="true" size="50"/>
-				
-				
-				<h:message for="imieNazwisko" styleClass="error" />
-				<h:outputLabel value="imie i nazwisko" />
-				<h:inputText id="imieNazwisko" value="#{adminUsersAc.user.imieNazwisko}" immediate="true" size="50"/>
-				
-				<h:message for="email" styleClass="error" />
-				<h:outputLabel value="email" />
-				<h:inputText id="email" value="#{adminUsersAc.user.email}" immediate="true" size="50"/>
-				
-				<h:message for="miasto" styleClass="error"/>
-				<h:outputLabel value="miasto" />
-				<h:inputText id="miasto" value="#{adminUsersAc.user.miasto}" immediate="true" size="50"/>
-				
-				<h:message for="ulica" styleClass="error" />
-				<h:outputLabel value="ulica" />
-				<h:inputText id="ulica" value="#{adminUsersAc.user.ulica}"  immediate="true" size="50"/>
-				
-				<h:message for="nip" styleClass="error" />
-				<h:outputLabel value="nip" />
-				<h:inputText id="nip" value="#{adminUsersAc.user.nip}"  immediate="true" size="50"/>
-				
-				<h:message for="tel1" styleClass="error" />
-				<h:outputLabel value="telefon" />
-				<h:inputText id="tel1" value="#{adminUsersAc.user.tel1}"  immediate="true" size="50"/>
-				
-				<h:message for="dataZmiany" styleClass="error" />
-				<h:outputLabel value="data zmiany" />
-				<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}"  immediate="true" readonly="true" size="19">
-					<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
-				</h:inputText>
-				
-				<h:message for="opis" styleClass="error" />
-				<h:outputLabel value="opis" />
-				<h:inputTextarea id="opis" value="#{adminUsersAc.user.opis}"  immediate="true" cols="48"/>
+			<h:panelGroup>
+				<h:panelGrid columns="3">
+					<h:outputLabel for="bledy" />
+					<h:outputText id="bledy" value="#{adminUsersAc.errorText}"
+						styleClass="error" />
+					<h:outputLabel for="bledy" />
 
-			</h:panelGrid>
-			<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
+					<h:message for="username" styleClass="error" />
+					<h:outputLabel value="username" />
+					<h:inputText id="username" value="#{adminUsersAc.user.username}"
+						size="50" readonly="#{adminUsersAc.user.username!=null}"
+						immediate="true" />
+
+					<h:message for="userpass" styleClass="error" />
+					<h:outputLabel value="hasło" />
+					<h:inputText id="userpass" value="#{adminUsersAc.user.userpass}"
+						immediate="true" size="50" />
+
+					<h:message for="userpass1" styleClass="error" />
+					<h:outputLabel value="hasło ponownie" />
+					<h:inputText id="userpass1" value="#{adminUsersAc.userpass1}"
+						immediate="true" size="50" />
+
+
+					<h:message for="imieNazwisko" styleClass="error" />
+					<h:outputLabel value="imie i nazwisko" />
+					<h:inputText id="imieNazwisko"
+						value="#{adminUsersAc.user.imieNazwisko}" immediate="true"
+						size="50" />
+
+					<h:message for="email" styleClass="error" />
+					<h:outputLabel value="email" />
+					<h:inputText id="email" value="#{adminUsersAc.user.email}"
+						immediate="true" size="50" />
+
+					<h:message for="miasto" styleClass="error" />
+					<h:outputLabel value="miasto" />
+					<h:inputText id="miasto" value="#{adminUsersAc.user.miasto}"
+						immediate="true" size="50" />
+
+					<h:message for="ulica" styleClass="error" />
+					<h:outputLabel value="ulica" />
+					<h:inputText id="ulica" value="#{adminUsersAc.user.ulica}"
+						immediate="true" size="50" />
+
+					<h:message for="nip" styleClass="error" />
+					<h:outputLabel value="nip" />
+					<h:inputText id="nip" value="#{adminUsersAc.user.nip}"
+						immediate="true" size="50" />
+
+					<h:message for="tel1" styleClass="error" />
+					<h:outputLabel value="telefon" />
+					<h:inputText id="tel1" value="#{adminUsersAc.user.tel1}"
+						immediate="true" size="50" />
+
+					<h:message for="dataZmiany" styleClass="error" />
+					<h:outputLabel value="data zmiany" />
+					<h:inputText id="dataZmiany"
+						value="#{adminUsersAc.user.dataZmiany}" immediate="true"
+						readonly="true" size="19">
+						<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+					</h:inputText>
+
+					<h:message for="opis" styleClass="error" />
+					<h:outputLabel value="opis" />
+					<h:inputTextarea id="opis" value="#{adminUsersAc.user.opis}"
+						immediate="true" cols="48" />
+
+				</h:panelGrid>
+				<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
 				<h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
-					<f:selectItems value="#{adminUsersAc.allRolesName}" var="role" itemValue="#{role}"/>
+					<f:selectItems value="#{adminUsersAc.allRolesName}" var="role"
+						itemValue="#{role}" />
 				</h:selectManyCheckbox>
 			</h:panelGroup>
 		</h:form>
-<br/><br/>
-<table><tr>
-<td>
-		<h:form>
-			<h:dataTable value="#{adminUsersAc.user.kursies}" var="kurs"
-				id="tabled">
-				<f:facet name="header">należy do kursów</f:facet>
-				<h:column>
-					<h:outputText value="#{kurs.nazwa}" />
-				</h:column>
-			</h:dataTable>
-		</h:form>
-		</td>
-		
-		<td>
-		<h:form>
-			<rich:dataTable value="#{adminUsersAc.user.kursies}" var="kurs"
-				id="table">
-				<f:facet name="header">dostępne kursy</f:facet>
-				<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
-					sortOrder="#{adminKursyAc.nazwaOrder}">
-					<f:facet name="header">
-						<a4j:commandLink value="sortowanie nazwa" render="table"
-							action="#{adminKursyAc.sortBynazwa}" />
-					</f:facet>
-					<h:commandLink action="#{adminKursyAc.form}">
-						<h:outputText value="#{kurs.nazwa}" />
-					</h:commandLink>
-				</rich:column>
-				</rich:dataTable>
-				</h:form>
-		</td>
-		
-		</tr></table>
+		<br />
+		<br />
+		<table>
+			<tr valign="top">
+				<td><h:form>
+					<rich:dataTable value="#{adminUsersAc.jestWkursach}" var="kurs"
+						id="tabled">
+						<f:facet name="header">należy do kursów</f:facet>
+						<rich:column>
+							<h:commandLink action="#{adminUsersAc.usunZkursu}">
+								<h:outputText value="usun kurs" />
+							</h:commandLink>
+						</rich:column>
+						<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
+							sortOrder="#{adminKursyAc.nazwaOrder}">
+							<f:facet name="header"><a4j:commandLink value="sortowanie nazwa" render="tabled"
+									action="#{adminKursyAc.sortBynazwa}" /></f:facet>
+							<h:outputText value="#{kurs.nazwa}" />
+						</rich:column>
+						
+						<rich:column sortBy="#{kurs.dataod}" id="dataod"
+							sortOrder="#{adminKursyAc.dataodOrder}">
+							<f:facet name="header">
+								<a4j:commandLink value="sortowanie data od" render="tabled"
+									action="#{adminKursyAc.sortBydataod}" />
+							</f:facet>
+								<h:outputText value="#{kurs.dataod}">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:outputText>
+						</rich:column>
+
+						<rich:column sortBy="#{kurs.datado}" id="datado"
+							sortOrder="#{adminKursyAc.datadoOrder}">
+							<f:facet name="header">
+								<a4j:commandLink value="sortowanie data do" render="tabled"
+									action="#{adminKursyAc.sortBydatado}" />
+							</f:facet>
+								<h:outputText value="#{kurs.datado}">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:outputText>
+						</rich:column>
+						
+					</rich:dataTable>
+				</h:form></td>
+
+				<td><h:form>
+					<rich:dataTable value="#{adminUsersAc.dostepneKursy}" var="kurs"
+						id="table">
+						<f:facet name="header">dostępne kursy</f:facet>
+
+						<rich:column>
+							<f:facet name="header">
+							</f:facet>
+							<h:commandLink action="#{adminUsersAc.dodajDokursu}">
+								<h:outputText value="dodaj kurs" />
+							</h:commandLink>
+						</rich:column>
+
+						<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
+							sortOrder="#{adminKursyAc.nazwaOrder}">
+							<f:facet name="header">
+								<a4j:commandLink value="sortowanie nazwa" render="table"
+									action="#{adminKursyAc.sortBynazwa}" />
+							</f:facet>
+								<h:outputText value="#{kurs.nazwa}" />
+						</rich:column>
+
+						<rich:column sortBy="#{kurs.dataod}" id="dataod"
+							sortOrder="#{adminKursyAc.dataodOrder}">
+							<f:facet name="header">
+								<a4j:commandLink value="sortowanie data od" render="table"
+									action="#{adminKursyAc.sortBydataod}" />
+							</f:facet>
+								<h:outputText value="#{kurs.dataod}">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:outputText>
+						</rich:column>
+
+						<rich:column sortBy="#{kurs.datado}" id="datado"
+							sortOrder="#{adminKursyAc.datadoOrder}">
+							<f:facet name="header">
+								<a4j:commandLink value="sortowanie data do" render="table"
+									action="#{adminKursyAc.sortBydatado}" />
+							</f:facet>
+								<h:outputText value="#{kurs.datado}">
+									<f:convertDateTime pattern="yyyy-MM-dd" />
+								</h:outputText>
+						</rich:column>
+					</rich:dataTable>
+				</h:form></td>
+
+			</tr>
+		</table>
 		</body>
 	</ui:define>
 </ui:composition>

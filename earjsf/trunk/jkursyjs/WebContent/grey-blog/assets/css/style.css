@@ -43,7 +43,6 @@ h2 { font-size:14px; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:black;}
 #right td{background: #E6E6E6}
-#right td:hover { background: white;}
 #right td a { color:blue; background-color:#E6E6E6; }
 #right td a:hover { background: white;}
 
