@@ -51,6 +51,12 @@ public class Kursy implements Serializable {
 	@ManyToMany(mappedBy="kursies")
 	private Set<User> users;
 	
+	@Transient
+	private Set<User> wykladowcy;
+	
+	@Transient
+	private Set<User> kursanci;
+	
     public Kursy() {
     }
 
@@ -108,5 +114,21 @@ public class Kursy implements Serializable {
 
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	public Set<User> getWykladowcy() {
+		return wykladowcy;
+	}
+
+	public void setWykladowcy(Set<User> wykladowcy) {
+		this.wykladowcy = wykladowcy;
+	}
+
+	public Set<User> getKursanci() {
+		return kursanci;
+	}
+
+	public void setKursanci(Set<User> kursanci) {
+		this.kursanci = kursanci;
 	}
 }

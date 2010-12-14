@@ -62,8 +62,17 @@ public class KursyAc {
 		return "kursyLista";
 	}
 	
-	public String kursyusersLista() throws Exception{
-		users=new ArrayList<User>(allKursy.getRowData().getUsers());
+	public String kursantLista() throws Exception{
+		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
+		Kursy kurs=kursyImp.find(allKursy.getRowData());
+		users=new ArrayList<User>(kurs.getKursanci());
+		return "kursyusersLista";
+	}
+	
+	public String wykladLista() throws Exception{
+		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
+		Kursy kurs=kursyImp.find(allKursy.getRowData());
+		users=new ArrayList<User>(kurs.getWykladowcy());
 		return "kursyusersLista";
 	}
 	

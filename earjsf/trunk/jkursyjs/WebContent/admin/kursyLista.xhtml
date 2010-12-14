@@ -62,8 +62,15 @@
 				<rich:column>
 					<f:facet name="header">
 					</f:facet>
-					<h:commandLink action="#{adminKursyAc.kursyusersLista}">
+					<h:commandLink action="#{adminKursyAc.kursantLista}">
 						<h:outputText value="pokaż kursantów"/>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.wykladLista}">
+						<h:outputText value="pokaż wykładowców"/>
 					</h:commandLink>
 				</rich:column>
 				<rich:column>
