@@ -1,14 +1,19 @@
 package org.arti01.sesBean;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
@@ -74,23 +79,13 @@ public class UserImp {
 		em.remove(em.merge(user));
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Kursy> dostepneKursy(User user){
-		
-		
-		CriteriaBuilder qB = em.getCriteriaBuilder();
-		CriteriaQuery<Kursy> cQ = qB.createQuery(Kursy.class);
-		Metamodel m = em.getMetamodel();
-		
-		EntityType<User> User_ = m.entity(User.class);
-		EntityType<Kursy> Kursy_ = m.entity(Kursy.class);
-		
-		//Join<Kursy, User> users = kursy.join(<List>kursy.get("users"));
-		cQ.
-		Join<Kursy, User> address=cQ.join(User_.getCollection("kursies")).join(Kursy_.getCollection("users"));
-		//cQ.where(qB.in(user.getKursies()));
-		//cQ.where(qB.isEmpty(user.<List<User>>get("roles")));
-		System.out.println(em.createQuery(cQ).getResultList());
-		return em.createQuery(cQ).getResultList();
+		Query q=em.createQuery("select u from Kursy k join k.users u");
+		//Set<Kursy> kursy=new HashSet<Kursy>();
+		//kursy.add(user.getKursies().iterator().next());
+		//q.setParameter("kursy", user.getKursies());
+		return q.getResultList();
 	}
 	
 	public List<String> getRolesName(User user){
