@@ -75,6 +75,7 @@ public class UsersAc {
 		user = allUsers.getRowData();
 		user=userImp.find(user);
 		dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+		logger.info(userImp.dostepneKursy(user));
 		userpass1 = user.getUserpass();
 		rolesName = userImp.getRolesName(user);
 		logger.info(user.getKursies().size());

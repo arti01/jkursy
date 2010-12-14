@@ -81,10 +81,10 @@ public class UserImp {
 
 	@SuppressWarnings("unchecked")
 	public List<Kursy> dostepneKursy(User user){
-		Query q=em.createQuery("select u from Kursy k join k.users u");
+		Query q=em.createQuery("select k from Kursy k where k.idkursy not in(select kr.idkursy from User u join u.kursies kr where u.username=:username)");
 		//Set<Kursy> kursy=new HashSet<Kursy>();
 		//kursy.add(user.getKursies().iterator().next());
-		//q.setParameter("kursy", user.getKursies());
+		q.setParameter("username", user.getUsername());
 		return q.getResultList();
 	}
 	
