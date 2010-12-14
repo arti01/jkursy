@@ -136,4 +136,8 @@ com.sun.faces.externalizeJavaScript
 		<description>role</description>
 		<role-name>admin</role-name>
 	</security-role>
+	<error-page>
+  <error-code>404</error-code>
+  <location>/index.html</location>
+</error-page>
 </web-app>

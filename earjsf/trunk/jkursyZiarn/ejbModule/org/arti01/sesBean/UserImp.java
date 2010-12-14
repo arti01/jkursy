@@ -9,9 +9,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
 
+import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 
@@ -68,6 +72,25 @@ public class UserImp {
 		em.flush();*/
 		//em.remove(user);
 		em.remove(em.merge(user));
+	}
+
+	public List<Kursy> dostepneKursy(User user){
+		
+		
+		CriteriaBuilder qB = em.getCriteriaBuilder();
+		CriteriaQuery<Kursy> cQ = qB.createQuery(Kursy.class);
+		Metamodel m = em.getMetamodel();
+		
+		EntityType<User> User_ = m.entity(User.class);
+		EntityType<Kursy> Kursy_ = m.entity(Kursy.class);
+		
+		//Join<Kursy, User> users = kursy.join(<List>kursy.get("users"));
+		cQ.
+		Join<Kursy, User> address=cQ.join(User_.getCollection("kursies")).join(Kursy_.getCollection("users"));
+		//cQ.where(qB.in(user.getKursies()));
+		//cQ.where(qB.isEmpty(user.<List<User>>get("roles")));
+		System.out.println(em.createQuery(cQ).getResultList());
+		return em.createQuery(cQ).getResultList();
 	}
 	
 	public List<String> getRolesName(User user){

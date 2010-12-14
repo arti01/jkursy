@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -89,7 +90,7 @@ public class User implements Serializable {
 			@JoinColumn(name="idkursy", nullable=false)
 			}
 		)
-	private Set<Kursy> kursies;
+	private List<Kursy> kursies;
 
     public User() {
     }
@@ -183,11 +184,11 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 	
-	public Set<Kursy> getKursies() {
+	public List<Kursy> getKursies() {
 		return this.kursies;
 	}
 
-	public void setKursies(Set<Kursy> kursies) {
+	public void setKursies(List<Kursy> kursies) {
 		this.kursies = kursies;
 	}
 

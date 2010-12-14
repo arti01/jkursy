@@ -35,7 +35,7 @@ public class UsersAc {
 	List<String> allRolesName = new ArrayList<String>();
 	List<String> rolesName = new ArrayList<String>();
 	private DataModel<User> allUsers = new ListDataModel<User>();
-	//@ManagedProperty(value = "prawo")
+	private DataModel<User> dostepneKursy = new ListDataModel<User>();
 	private String prawo = "";
 	String errorText;
 
@@ -73,8 +73,11 @@ public class UsersAc {
 		allRolesName = roleImp.getRolesName();
 		errorText = "";
 		user = allUsers.getRowData();
+		user=userImp.find(user);
+		dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
 		userpass1 = user.getUserpass();
 		rolesName = userImp.getRolesName(user);
+		logger.info(user.getKursies().size());
 		return "usersForm";
 	}
 
@@ -219,5 +222,13 @@ public class UsersAc {
 
 	public void setDataZmianyOrder(SortOrder dataZmianyOrder) {
 		this.dataZmianyOrder = dataZmianyOrder;
+	}
+
+	public DataModel<User> getDostepneKursy() {
+		return dostepneKursy;
+	}
+
+	public void setDostepneKursy(DataModel<User> dostepneKursy) {
+		this.dostepneKursy = dostepneKursy;
 	}
 }

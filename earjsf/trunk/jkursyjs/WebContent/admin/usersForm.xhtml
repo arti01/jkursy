@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
@@ -69,6 +71,40 @@
 				</h:selectManyCheckbox>
 			</h:panelGroup>
 		</h:form>
+<br/><br/>
+<table><tr>
+<td>
+		<h:form>
+			<h:dataTable value="#{adminUsersAc.user.kursies}" var="kurs"
+				id="tabled">
+				<f:facet name="header">należy do kursów</f:facet>
+				<h:column>
+					<h:outputText value="#{kurs.nazwa}" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</td>
+		
+		<td>
+		<h:form>
+			<rich:dataTable value="#{adminUsersAc.user.kursies}" var="kurs"
+				id="table">
+				<f:facet name="header">dostępne kursy</f:facet>
+				<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
+					sortOrder="#{adminKursyAc.nazwaOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie nazwa" render="table"
+							action="#{adminKursyAc.sortBynazwa}" />
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.nazwa}" />
+					</h:commandLink>
+				</rich:column>
+				</rich:dataTable>
+				</h:form>
+		</td>
+		
+		</tr></table>
 		</body>
 	</ui:define>
 </ui:composition>
