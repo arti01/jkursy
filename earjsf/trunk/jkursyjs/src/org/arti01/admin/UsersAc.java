@@ -2,7 +2,9 @@ package org.arti01.admin;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
@@ -91,6 +93,8 @@ public class UsersAc {
 		userpass1="";
 		errorText = "";
 		user = new User();
+		dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+		jestWkursach = new ListDataModel<Kursy>();
 		return "usersForm";
 	}
 
@@ -127,14 +131,20 @@ public class UsersAc {
 	}
 	
 	public String dodaj() {
+		if(user.getUserpass()!=userpass1){
+			errorText="różne hasła";
+			return "usersForm";	
+		}
 		user.setDataZmiany(new Date());
-		if (userImp.find(user)!=null)user.getRoles().clear();
+		//if (userImp.find(user)!=null)user.getRoles().clear();
+		Set<Role> role=new HashSet<Role>(); 
 		for (String name : rolesName) {
 			Role r = new Role();
 			r.setRola(name);
 			r = roleImp.find(r);
-			user.getRoles().add(r);
+			role.add(r);
 		}
+		user.setRoles(role);
 		user.setDataZmiany(new Date());
 		try {
 			if (userImp.find(user)!=null) {// edycja

@@ -2,9 +2,10 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -33,7 +34,8 @@ public class User implements Serializable {
 	private Date dataZmiany;
 
 	@Column(nullable=false, length=100)
-	@NotNull
+	@NotEmpty
+	@Email
 	private String email;
 
 	@Column(name="imie_nazwisko", nullable=false, length=2147483647)
@@ -44,8 +46,8 @@ public class User implements Serializable {
 	@Size(min=2, max=255)
 	private String miasto;
 
-	@Column(nullable=false, length=2147483647)
-	@Pattern(regexp="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
+	@Column(nullable=true, length=2147483647)
+	//@Pattern(regexp="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
 	private String nip;
 
 	@Column(length=2147483647)
@@ -67,7 +69,7 @@ public class User implements Serializable {
 	private String wiadomosc;
 
 	//bi-directional many-to-many association to Role
-	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(
 		name="_users__roles"
 		, joinColumns={

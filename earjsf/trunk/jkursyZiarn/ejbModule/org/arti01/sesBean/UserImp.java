@@ -110,6 +110,7 @@ public class UserImp {
 		//System.out.println(em.createQuery(cQ).getResultList());
 		return em.createQuery(cQ).getResultList();
 	}
+	
 }
 /*
  * @SuppressWarnings("unchecked") public List<User>findOrderDataZmiany(boolean
