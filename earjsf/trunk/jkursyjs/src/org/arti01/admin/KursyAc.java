@@ -1,8 +1,6 @@
 package org.arti01.admin;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -10,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
+import org.arti01.sesBean.UserImp;
 import org.richfaces.component.SortOrder;
 
 public class KursyAc {
@@ -21,7 +20,8 @@ public class KursyAc {
 	private Kursy kurs;
 	private String errorText;
 	@EJB KursyImp kursyImp;
-	private List<User>users=new ArrayList<User>();
+	@EJB UserImp userImp;
+	private DataModel<User> users = new ListDataModel<User>();
 	
 	private SortOrder nazwaOrder = SortOrder.unsorted;
 	private SortOrder dataodOrder = SortOrder.unsorted;
@@ -59,20 +59,22 @@ public class KursyAc {
 	
 	
 	public String kursyLista() throws Exception{
+		allKursy.setWrappedData(kursyImp.findAll());
 		return "kursyLista";
 	}
 	
 	public String kursantLista() throws Exception{
 		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
-		Kursy kurs=kursyImp.find(allKursy.getRowData());
-		users=new ArrayList<User>(kurs.getKursanci());
+		kurs=kursyImp.find(allKursy.getRowData());
+		users.setWrappedData(new ArrayList<User>(kurs.getKursanci()));
 		return "kursyusersLista";
 	}
 	
 	public String wykladLista() throws Exception{
 		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
-		Kursy kurs=kursyImp.find(allKursy.getRowData());
-		users=new ArrayList<User>(kurs.getWykladowcy());
+		kurs=kursyImp.find(allKursy.getRowData());
+		//users=new ArrayList<User>(kurs.getWykladowcy());
+		users.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
 		return "kursyusersLista";
 	}
 	
@@ -91,7 +93,23 @@ public class KursyAc {
 	public String usun() throws Exception {
 		kurs=allKursy.getRowData();
 		kursyImp.delete(kurs);
-		return "kursyLista";
+		return "kursyusersLista";
+	}
+	
+	public String usunZkursu() throws Exception{
+		logger.info(kurs.getNazwa());
+		logger.info(kurs.getUsers());
+		User user=users.getRowData();
+		user=userImp.find(user);
+		logger.info(user.getKursies());
+		user.getKursies().remove(kurs);
+		userImp.update(user);
+		logger.info(user.getKursies());
+		kurs=kursyImp.find(kurs);
+		//kurs.getUsers().remove(user);
+		//kursyImp.update(kurs);
+		logger.info(kurs.getUsers());
+		return "kursyusersLista";
 	}
 	
 	public String dodaj() {
@@ -112,7 +130,6 @@ public class KursyAc {
 
 
 	public DataModel<Kursy> getAllKursy() {
-		allKursy.setWrappedData(kursyImp.findAll());
 		return allKursy;
 	}
 
@@ -162,11 +179,11 @@ public class KursyAc {
 		this.datadoOrder = datadoOrder;
 	}
 
-	public List<User> getUsers() {
+	public DataModel<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(DataModel<User> users) {
 		this.users = users;
 	}
 

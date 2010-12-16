@@ -131,7 +131,7 @@ public class UsersAc {
 	}
 	
 	public String dodaj() {
-		if(user.getUserpass()!=userpass1){
+		if(!user.getUserpass().equals(userpass1)){
 			errorText="różne hasła";
 			return "usersForm";	
 		}

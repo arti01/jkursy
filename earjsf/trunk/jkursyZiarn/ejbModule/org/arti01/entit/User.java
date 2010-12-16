@@ -82,7 +82,7 @@ public class User implements Serializable {
 	private Set<Role> roles;
 
 	//bi-directional many-to-many association to Kursy
-    @ManyToMany
+    @ManyToMany(cascade={CascadeType.MERGE})
 	@JoinTable(
 		name="kursy_users"
 		, joinColumns={

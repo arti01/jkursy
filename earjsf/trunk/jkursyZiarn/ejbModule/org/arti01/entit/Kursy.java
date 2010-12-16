@@ -48,7 +48,7 @@ public class Kursy implements Serializable {
 	private String opisKrotki;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="kursies")
+	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE)
 	private Set<User> users;
 	
 	@Transient

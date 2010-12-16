@@ -15,6 +15,7 @@
 	};
 </script>
 		<h2>Użytkownicy kursu</h2>
+		<h2><h:outputText value="#{adminKursyAc.kurs.nazwa}"/></h2>
 <br/>
 		<h:form>
 			<h:dataTable value="#{adminKursyAc.users}" var="user"
@@ -23,27 +24,20 @@
 					<f:facet name="header">
 						<h:outputText value="login" render="table"/>
 					</f:facet>
-					<h:commandLink action="#{adminUsersAc.form}">
 						<h:outputText value="#{user.username}"/>
-					</h:commandLink>
 				</h:column>
 				
 				<h:column id="imieNazwisko">
 					<f:facet name="header">
 						<h:outputText value="imie nazwisko" render="table"/>
 					</f:facet>
-					<h:commandLink action="#{adminUsersAc.form}">
 						<h:outputText value="#{user.imieNazwisko}" />
-					</h:commandLink>
 				</h:column>
-				<h:column id="dataZmiany">
+				<h:column id="usun">
 					<f:facet name="header">
-						<h:outputText value="data zmiany" render="table"/>
 					</f:facet>
-					<h:commandLink action="#{adminUsersAc.form}">
-						<h:outputText value="#{user.dataZmiany}">
-							<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
-						</h:outputText>
+					<h:commandLink action="#{adminKursyAc.usunZkursu}">
+						<h:outputText value="usuń z kursu"/>
 					</h:commandLink>
 				</h:column>
 			</h:dataTable>
