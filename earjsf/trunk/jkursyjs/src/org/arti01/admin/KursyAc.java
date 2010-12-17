@@ -101,11 +101,13 @@ public class KursyAc {
 		logger.info(kurs.getUsers());
 		User user=users.getRowData();
 		user=userImp.find(user);
-		logger.info(user.getKursies());
-		user.getKursies().remove(kurs);
-		userImp.update(user);
-		logger.info(user.getKursies());
 		kurs=kursyImp.find(kurs);
+		logger.info(user.getKursies().size());
+		user.getKursies().remove(kurs);
+		logger.info(user.getKursies().size());
+		userImp.update(user);
+		logger.info(user.getKursies().size());
+		//kurs=kursyImp.find(kurs);
 		//kurs.getUsers().remove(user);
 		//kursyImp.update(kurs);
 		logger.info(kurs.getUsers());

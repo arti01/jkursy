@@ -27,7 +27,14 @@ public class KursyImp {
 
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAll() {
-		return em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
+		//em.clear();
+		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
+		System.out.println(wynik+"----------------");
+		for(Kursy k :wynik){
+			System.out.println(k.getNazwa());
+			System.out.println(k.getUsers().size());
+		}
+		return wynik;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -39,6 +46,7 @@ public class KursyImp {
 	public Kursy find(Kursy kurs) {
 		if (kurs != null) {
 			kurs=em.find(Kursy.class, kurs.getIdkursy());
+			em.refresh(kurs);
 			Set<User>kursanci=new HashSet<User>();
 			Set<User>wykladowcy=new HashSet<User>();
 			Role wyklad=new Role();
