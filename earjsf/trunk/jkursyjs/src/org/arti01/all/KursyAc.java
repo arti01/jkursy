@@ -14,7 +14,7 @@ public class KursyAc {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
 	private List<Kursy>kursy;
-	private ListDataModel<Kursy> model = new ListDataModel<Kursy>();
+	private ListDataModel<Kursy> allKursy = new ListDataModel<Kursy>();
 	private Kursy kurs;
 	@EJB KursyImp kursyImp;
 	
@@ -25,13 +25,13 @@ public class KursyAc {
 	public String list() throws Exception{
 		//logger.info("jestemmmm");
 		kursy=kursyImp.findAll();
-		model.setWrappedData(kursyImp.findAll());
+		allKursy.setWrappedData(kursyImp.findAll());
 		return "kursy.list";
 	}
 	
 	public String detale() throws Exception{
 		//kurs=kursyImp.find(model.getRowData());
-		kurs=model.getRowData();
+		kurs=allKursy.getRowData();
 		//logger.info(kurs.getNazwa()+"dddddddd"+model.getWrappedData().getClass()+"clasa");
 		return "kursy.detale";
 	}
@@ -52,12 +52,12 @@ public class KursyAc {
 		this.kurs = kurs;
 	}
 
-	public ListDataModel<Kursy> getModel() {
-		return model;
+	public ListDataModel<Kursy> getAllKursy() {
+		return allKursy;
 	}
 
-	public void setModel(ListDataModel<Kursy> model) {
-		this.model = model;
+	public void setAllKursy(ListDataModel<Kursy> allKursy) {
+		this.allKursy = allKursy;
 	}
 	
 }

@@ -29,11 +29,11 @@ public class KursyImp {
 	public List<Kursy> findAll() {
 		//em.clear();
 		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
-		System.out.println(wynik+"----------------");
+		/*System.out.println(wynik+"----------------");
 		for(Kursy k :wynik){
 			System.out.println(k.getNazwa());
 			System.out.println(k.getUsers().size());
-		}
+		}*/
 		return wynik;
 	}
 	
@@ -69,16 +69,17 @@ public class KursyImp {
 	
 	
 	public boolean update(Kursy kursy){
-		if(valid(kursy)){
+		if(validUpdate(kursy)){
 			em.merge(kursy);
 			return true;
 		}else {
+			System.out.println("NIEWALID ;)");
 			return false;
 		}
 	}
 	
 	public boolean insert(Kursy kursy){
-		if(valid(kursy)){
+		if(validInsert(kursy)){
 			em.persist(kursy);
 			return true;
 		}else {
@@ -90,7 +91,15 @@ public class KursyImp {
 		em.remove(em.merge(kurs));
 	}
 	
-	public boolean valid(Kursy kurs){
+	public boolean validUpdate(Kursy kurs){
+		if(kurs.getDataod().after(kurs.getDatado())){
+			errorText="Daty bez sensu ('data do' < 'data od')";
+			return false;
+		}
+		else return true;
+	}
+	
+	public boolean validInsert(Kursy kurs){
 		if(kurs.getDataod().after(kurs.getDatado())||kurs.getDatado().before(new Date())){
 			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
 			return false;

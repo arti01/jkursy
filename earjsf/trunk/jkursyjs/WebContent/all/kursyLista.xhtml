@@ -3,39 +3,70 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
 	<body>
 	kursy
-	<h:form>
-	<h:dataTable var="kurs" value="#{kursyAc.model}">
-	<h:column>
-	<h:commandLink action="#{kursyAc.detale}">
-		<h:outputText value="#{kurs.nazwa}"/>
-	</h:commandLink>
-	</h:column>
-	</h:dataTable>
-	</h:form>
-	</body>
 	
-<!--
-<ul>
-<s:iterator value="kursy">
-	<li>
-		<s:url id="url1" namespace="/all" action="kursy" method="detale"><s:param name="kurs.idkursy" value="idkursy"/></s:url>
-		<s:a href="%{url1}">
-			<s:property value="nazwa"/>
-		</s:a>
-		od:<s:date name="dataOd" format="yyyy-MM-dd"/>
-		do:<s:date name="dataDo" format="yyyy-MM-dd"/>
-		<s:iterator value="wykladowcy">
-			<s:property value="imieNazwisko"/>
-		</s:iterator>
-	</li>
-</s:iterator>
-</ul>
--->
+	<h:form>
+			<rich:dataTable value="#{kursyAc.allKursy}" var="kurs"
+				id="table">
+				<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
+					sortOrder="#{adminKursyAc.nazwaOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie nazwa" render="table"
+							action="#{adminKursyAc.sortBynazwa}" />
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.nazwa}" />
+					</h:commandLink>
+				</rich:column>
+				
+				<rich:column sortBy="#{kurs.dataod}" id="dataod"
+					sortOrder="#{adminKursyAc.dataodOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie data od" render="table"
+							action="#{adminKursyAc.sortBydataod}" />
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.dataod}">
+							<f:convertDateTime pattern="yyyy-MM-dd"/>
+						</h:outputText>
+					</h:commandLink>
+				</rich:column>
+				
+				<rich:column sortBy="#{kurs.datado}" id="datado"
+					sortOrder="#{adminKursyAc.datadoOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie data do" render="table"
+							action="#{adminKursyAc.sortBydatado}" />
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.datado}">
+							<f:convertDateTime pattern="yyyy-MM-dd"/>
+						</h:outputText>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.usersLista}">
+						<h:outputText value="pokaż uczestników"/>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.usun}" onclick="return takNie();">
+						<h:outputText value="usuń"/>
+					</h:commandLink>
+				</rich:column>
+			</rich:dataTable>
+		</h:form>
+		</body>
 </ui:define>
 </ui:composition>
 </html>

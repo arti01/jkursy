@@ -15,14 +15,17 @@ public class KursyAc {
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
-	
-	private DataModel<Kursy> allKursy=new ListDataModel<Kursy>();
+
+	private DataModel<Kursy> allKursy = new ListDataModel<Kursy>();
 	private Kursy kurs;
 	private String errorText;
-	@EJB KursyImp kursyImp;
-	@EJB UserImp userImp;
-	private DataModel<User> users = new ListDataModel<User>();
-	
+	@EJB
+	KursyImp kursyImp;
+	@EJB
+	UserImp userImp;
+	private DataModel<User> wykladowcy = new ListDataModel<User>();
+	private DataModel<User> kursanci = new ListDataModel<User>();
+
 	private SortOrder nazwaOrder = SortOrder.unsorted;
 	private SortOrder dataodOrder = SortOrder.unsorted;
 	private SortOrder datadoOrder = SortOrder.unsorted;
@@ -36,7 +39,7 @@ public class KursyAc {
 			setNazwaOrder(SortOrder.ascending);
 		}
 	}
-	
+
 	public void sortBydataod() {
 		setDatadoOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
@@ -46,7 +49,7 @@ public class KursyAc {
 			setDataodOrder(SortOrder.ascending);
 		}
 	}
-	
+
 	public void sortBydatado() {
 		setDataodOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
@@ -56,92 +59,82 @@ public class KursyAc {
 			setDatadoOrder(SortOrder.ascending);
 		}
 	}
-	
-	
-	public String kursyLista() throws Exception{
+
+	public String kursyLista() throws Exception {
 		allKursy.setWrappedData(kursyImp.findAll());
 		return "kursyLista";
 	}
-	
-	public String kursantLista() throws Exception{
-		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
-		kurs=kursyImp.find(allKursy.getRowData());
-		users.setWrappedData(new ArrayList<User>(kurs.getKursanci()));
+
+	public String usersLista() {
+		kurs = kursyImp.find(allKursy.getRowData());
+		wykladowcy.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
+		kursanci.setWrappedData(new ArrayList<User>(kurs.getKursanci()));
 		return "kursyusersLista";
 	}
-	
-	public String wykladLista() throws Exception{
-		//users=new ArrayList<User>(allKursy.getRowData().getUsers());
-		kurs=kursyImp.find(allKursy.getRowData());
-		//users=new ArrayList<User>(kurs.getWykladowcy());
-		users.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
-		return "kursyusersLista";
-	}
-	
-	public String form(){
-		errorText="";
-		kurs=allKursy.getRowData();
+
+	public String form() {
+		errorText = "";
+		kurs = allKursy.getRowData();
 		return "kursyForm";
 	}
-	public String formNew(){
-		errorText="";
-		kurs=new Kursy();
+
+	public String formNew() {
+		errorText = "";
+		kurs = new Kursy();
 		return "kursyForm";
 	}
-	
-	
+
 	public String usun() throws Exception {
-		kurs=allKursy.getRowData();
+		kurs = allKursy.getRowData();
 		kursyImp.delete(kurs);
 		return "kursyusersLista";
 	}
-	
-	public String usunZkursu() throws Exception{
-		logger.info(kurs.getNazwa());
-		logger.info(kurs.getUsers());
-		User user=users.getRowData();
-		user=userImp.find(user);
-		kurs=kursyImp.find(kurs);
-		logger.info(user.getKursies().size());
+
+	public String usunZkursu() {
+		User user;
+		if (wykladowcy.getRowIndex() < 0) {
+			user = kursanci.getRowData();
+		} else {
+			user = wykladowcy.getRowData();
+		}
+
 		user.getKursies().remove(kurs);
-		logger.info(user.getKursies().size());
-		userImp.update(user);
-		logger.info(user.getKursies().size());
-		//kurs=kursyImp.find(kurs);
-		//kurs.getUsers().remove(user);
-		//kursyImp.update(kurs);
-		logger.info(kurs.getUsers());
+		try {
+			userImp.update(user);
+			kurs.getKursanci().remove(user);
+			kurs.getWykladowcy().remove(user);
+			wykladowcy
+					.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
+			kursanci.setWrappedData(new ArrayList<User>(kurs.getKursanci()));
+		} catch (Exception e) {
+			logger.info(e);
+		}
 		return "kursyusersLista";
 	}
-	
+
 	public String dodaj() {
-		if (kurs.getIdkursy()!=null) {// edycja
-			if(kursyImp.update(kurs)){
+		if (kurs.getIdkursy() != null) {// edycja
+			if (kursyImp.update(kurs)) {
+				return "kursyLista";
+			}
+		} else {
+			if (kursyImp.insert(kurs)) {
 				return "kursyLista";
 			}
 		}
-		else{
-			if(kursyImp.insert(kurs)){
-				return "kursyLista";
-			}
-		}
-		errorText=kursyImp.getErrorText();
-		return "kursyForm";//bo nie udala się zmiana
+		errorText = kursyImp.getErrorText();
+		return "kursyForm";// bo nie udala się zmiana
 	}
-
-
 
 	public DataModel<Kursy> getAllKursy() {
 		return allKursy;
 	}
 
-
-
 	public void setAllKursy(DataModel<Kursy> allKursy) {
 		this.allKursy = allKursy;
 	}
 
-	public Kursy getKurs(){
+	public Kursy getKurs() {
 		return kurs;
 	}
 
@@ -181,12 +174,20 @@ public class KursyAc {
 		this.datadoOrder = datadoOrder;
 	}
 
-	public DataModel<User> getUsers() {
-		return users;
+	public DataModel<User> getWykladowcy() {
+		return wykladowcy;
 	}
 
-	public void setUsers(DataModel<User> users) {
-		this.users = users;
+	public void setWykladowcy(DataModel<User> wykladowcy) {
+		this.wykladowcy = wykladowcy;
+	}
+
+	public DataModel<User> getKursanci() {
+		return kursanci;
+	}
+
+	public void setKursanci(DataModel<User> kursanci) {
+		this.kursanci = kursanci;
 	}
 
 }
