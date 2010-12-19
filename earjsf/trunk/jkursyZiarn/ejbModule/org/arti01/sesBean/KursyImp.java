@@ -1,10 +1,8 @@
 package org.arti01.sesBean;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -29,12 +27,12 @@ public class KursyImp {
 	public List<Kursy> findAll() {
 		//em.clear();
 		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
-		/*System.out.println(wynik+"----------------");
+		List<Kursy> ret=new ArrayList<Kursy>();
 		for(Kursy k :wynik){
-			System.out.println(k.getNazwa());
-			System.out.println(k.getUsers().size());
-		}*/
-		return wynik;
+			k=find(k);
+			ret.add(k);
+		}
+		return ret;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -47,8 +45,8 @@ public class KursyImp {
 		if (kurs != null) {
 			kurs=em.find(Kursy.class, kurs.getIdkursy());
 			em.refresh(kurs);
-			Set<User>kursanci=new HashSet<User>();
-			Set<User>wykladowcy=new HashSet<User>();
+			List<User>kursanci=new ArrayList<User>();
+			List<User>wykladowcy=new ArrayList<User>();
 			Role wyklad=new Role();
 			wyklad.setRola(Role.WYKLADOWCA);
 			wyklad=roleImp.find(wyklad);
@@ -59,7 +57,7 @@ public class KursyImp {
 			for(User u:kurs.getUsers()){
 				if(u.getRoles().contains(wyklad)) wykladowcy.add(u);
 				if(u.getRoles().contains(kursant)) kursanci.add(u);
-				System.out.println(wykladowcy.size()+""+kursanci.size());
+				//System.out.println(wykladowcy.size()+""+kursanci.size());
 			}
 			kurs.setKursanci(kursanci);
 			kurs.setWykladowcy(wykladowcy);

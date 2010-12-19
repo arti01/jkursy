@@ -4,8 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -48,14 +48,15 @@ public class Kursy implements Serializable {
 	private String opisKrotki;
 
 	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE)
+	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	private Set<User> users;
 	
 	@Transient
-	private Set<User> wykladowcy;
+	private List<User> wykladowcy;
 	
 	@Transient
-	private Set<User> kursanci;
+	private List<User> kursanci;
+	
 	
     public Kursy() {
     }
@@ -116,19 +117,19 @@ public class Kursy implements Serializable {
 		this.users = users;
 	}
 
-	public Set<User> getWykladowcy() {
+	public List<User> getWykladowcy() {
 		return wykladowcy;
 	}
 
-	public void setWykladowcy(Set<User> wykladowcy) {
+	public void setWykladowcy(List<User> wykladowcy) {
 		this.wykladowcy = wykladowcy;
 	}
 
-	public Set<User> getKursanci() {
+	public List<User> getKursanci() {
 		return kursanci;
 	}
 
-	public void setKursanci(Set<User> kursanci) {
+	public void setKursanci(List<User> kursanci) {
 		this.kursanci = kursanci;
 	}
 }
