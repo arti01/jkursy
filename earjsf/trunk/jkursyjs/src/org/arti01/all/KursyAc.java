@@ -1,12 +1,11 @@
 package org.arti01.all;
 
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.model.ListDataModel;
-
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
+import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 
 
@@ -15,6 +14,7 @@ public class KursyAc {
 	Logger logger = Logger.getLogger(KursyAc.class);
 	private List<Kursy>kursy;
 	private ListDataModel<Kursy> allKursy = new ListDataModel<Kursy>();
+	private User wykladowca;
 	private Kursy kurs;
 	@EJB KursyImp kursyImp;
 	
@@ -26,14 +26,18 @@ public class KursyAc {
 		//logger.info("jestemmmm");
 		kursy=kursyImp.findAll();
 		allKursy.setWrappedData(kursyImp.findAll());
-		return "kursy.list";
+		return "kursyLista";
 	}
 	
 	public String detale() throws Exception{
-		//kurs=kursyImp.find(model.getRowData());
 		kurs=allKursy.getRowData();
-		//logger.info(kurs.getNazwa()+"dddddddd"+model.getWrappedData().getClass()+"clasa");
-		return "kursy.detale";
+		return "kursyDetale";
+	}
+	
+	public String wykladDetale() throws Exception{
+		//wykladowca=wykladowcy.getRowData();
+		//wykladowca=allKursy.getRowData().getWykladowcy()
+		return "wykladowcaDetale";
 	}
 
 	public List<Kursy> getKursy() {
@@ -51,6 +55,15 @@ public class KursyAc {
 	public void setKurs(Kursy kurs) {
 		this.kurs = kurs;
 	}
+
+	public User getWykladowca() {
+		return wykladowca;
+	}
+
+	public void setWykladowca(User wykladowca) {
+		this.wykladowca = wykladowca;
+	}
+
 
 	public ListDataModel<Kursy> getAllKursy() {
 		return allKursy;

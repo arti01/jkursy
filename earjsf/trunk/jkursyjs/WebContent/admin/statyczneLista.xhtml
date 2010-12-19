@@ -18,7 +18,7 @@ function takNie(){
 </h:form>
 
 <h:form>
-<h:dataTable var="statyczna" value="#{adminStatyczneAc.allStatyczne}" border="0" width="100%">
+<h:dataTable var="statyczna" value="#{adminStatyczneAc.allStatyczne}" border="0" width="100%" id="kolejnosc">
 	<h:column>
 	<f:facet name="header">kolejnosc</f:facet>
 	<h:selectOneMenu value="#{statyczna.lp}" onchange="submit();" valueChangeListener="#{adminStatyczneAc.zmienEe}">

@@ -39,12 +39,19 @@ h2 { font-size:14px; }
 
 #breadcrumb { float:left; width:80%; background-color:#EFEFEF; }
 
-#right { float:left; width:300; }
+#right { float:left; width:550; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:black;}
-#right td{background: #E6E6E6}
+#right td{background: #E6E6E6;width:550px;}
 #right td a { color:blue; background-color:#E6E6E6; }
 #right td a:hover { background: white;}
+#right ul { margin: 0; padding:0; }
+#right ul li { list-style:none; margin:1px 0; padding:0;}
+#right ul li a { display:block; width:550px; margin:0; padding:5px; background-color:#E6E6E6; }
+#right ul li a:hover { background-color:white; }
+#right ul li ul { margin: 0; padding:0; }
+#right ul li ul li { list-style:none; margin:1px 0; padding:0; }
+#right ul li ul li a { padding:5px; background-color:#EFEFEF; }
 
 
 .clear { clear:both; }

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+  <title><ui:insert name="title">Default title</ui:insert></title>
+  <script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
+  <link rel="stylesheet" type="text/css" href="../grey-blog/assets/css/style.css"/> 
+</h:head>
+<f:view>
+<body>
+<table>
+<tr>
+<td valign="top">
+<h3>menu</h3>
+<ui:insert name="menu" />
+<ui:include src="/wykladowca/menu.xhtml" />
+</td><td>
+<div id="right">
+<p>
+body
+<ui:insert name="body" />
+body2
+<ui:insert name="body2"/>
+</p>
+</div>
+</td><td valign="top">
+<ui:insert name="menuP" />
+</td>
+</tr>
+</table>
+footer
+<ui:insert name="footer" />
+</body>
+</f:view>
+</html>
+

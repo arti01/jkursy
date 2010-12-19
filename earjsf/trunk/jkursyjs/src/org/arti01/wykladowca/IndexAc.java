@@ -1,4 +1,4 @@
-package org.arti01.all;
+package org.arti01.wykladowca;
 
 import java.util.Date;
 

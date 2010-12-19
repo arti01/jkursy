@@ -17,10 +17,18 @@ od:<h:outputText value="#{kursyAc.kurs.dataod}"><f:convertDateTime type="date"/>
 do:<h:outputText value="#{kursyAc.kurs.datado}"><f:convertDateTime type="date"/> </h:outputText>
 <br/>
 wykładowcy:<br/>
-<!-- 
-<s:iterator value="kurs.wykladowcy">
-	<s:property value="imieNazwisko"/><br>
-</s:iterator> -->
+<h:form>
+<ul>
+<ui:repeat var="wyklad" value="#{kursyAc.kurs.wykladowcy}">
+<li>
+<h:commandLink action="#{kursyAc.wykladDetale}">
+	<h:outputText value="#{wyklad.imieNazwisko}"/>
+	<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}"/>
+</h:commandLink>
+</li>
+</ui:repeat>
+</ul>
+</h:form>
 opis:<br/>
 <h:outputText value="#{kursyAc.kurs.opis}" escape="false"/>
 </body>

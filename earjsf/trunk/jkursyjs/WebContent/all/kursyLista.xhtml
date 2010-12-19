@@ -20,9 +20,20 @@
 						<a4j:commandLink value="sortowanie nazwa" render="table"
 							action="#{adminKursyAc.sortBynazwa}" />
 					</f:facet>
-					<h:commandLink action="#{adminKursyAc.form}">
-						<h:outputText value="#{kurs.nazwa}" />
+					<h:commandLink action="#{kursyAc.detale}">
+						<h3><h:outputText value="#{kurs.nazwa}" /></h3>
 					</h:commandLink>
+					<h:outputText value="#{kurs.opisKrotki}" />
+					<br/>wykładowcy:<br/>
+					<ul>
+						<ui:repeat var="wyklad" value="#{kurs.wykladowcy}">
+							<li><h:commandLink action="#{kursyAc.wykladDetale}">
+								<f:setPropertyActionListener target="#{kursyAc.wykladowca}"
+									value="#{wyklad}" />
+								<h:outputText value="#{wyklad.imieNazwisko}" />
+							</h:commandLink></li>
+						</ui:repeat>
+					</ul>
 				</rich:column>
 				
 				<rich:column sortBy="#{kurs.dataod}" id="dataod"
@@ -31,7 +42,7 @@
 						<a4j:commandLink value="sortowanie data od" render="table"
 							action="#{adminKursyAc.sortBydataod}" />
 					</f:facet>
-					<h:commandLink action="#{adminKursyAc.form}">
+					<h:commandLink action="#{kursyAc.detale}">
 						<h:outputText value="#{kurs.dataod}">
 							<f:convertDateTime pattern="yyyy-MM-dd"/>
 						</h:outputText>
@@ -44,24 +55,10 @@
 						<a4j:commandLink value="sortowanie data do" render="table"
 							action="#{adminKursyAc.sortBydatado}" />
 					</f:facet>
-					<h:commandLink action="#{adminKursyAc.form}">
+					<h:commandLink action="#{kursyAc.detale}">
 						<h:outputText value="#{kurs.datado}">
 							<f:convertDateTime pattern="yyyy-MM-dd"/>
 						</h:outputText>
-					</h:commandLink>
-				</rich:column>
-				<rich:column>
-					<f:facet name="header">
-					</f:facet>
-					<h:commandLink action="#{adminKursyAc.usersLista}">
-						<h:outputText value="pokaż uczestników"/>
-					</h:commandLink>
-				</rich:column>
-				<rich:column>
-					<f:facet name="header">
-					</f:facet>
-					<h:commandLink action="#{adminKursyAc.usun}" onclick="return takNie();">
-						<h:outputText value="usuń"/>
 					</h:commandLink>
 				</rich:column>
 			</rich:dataTable>

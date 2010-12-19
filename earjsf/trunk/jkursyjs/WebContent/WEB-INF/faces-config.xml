@@ -58,16 +58,17 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>index.statyczne</from-outcome>
-			<to-view-id>/all/statyczneDetale.xhtml</to-view-id>
+			<from-outcome>indexWyklad</from-outcome>
+			<to-view-id>/wykladowca/index.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>kursy.list</from-outcome>
-			<to-view-id>/all/kursyLista.xhtml</to-view-id>
+			<from-outcome>*Lista</from-outcome>
+			<to-view-id>/all/*Lista.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>kursy.detale</from-outcome>
-			<to-view-id>/all/kursyDetale.xhtml</to-view-id>
+			<from-outcome>*Detale</from-outcome>
+			<to-view-id>/all/*Detale.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 
@@ -93,6 +94,30 @@
 			<to-view-id>/admin/*Form.xhtml</to-view-id>
 		</navigation-case>
 </navigation-rule>
+
+<navigation-rule>
+		<display-name>/wykladowca/wszystko</display-name>
+		<from-view-id>/wykladowca/*</from-view-id>
+		<navigation-case>
+			<from-outcome>indexAll</from-outcome>
+			<to-view-id>/all/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>indexAdm</from-outcome>
+			<to-view-id>/wykladowca/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>*Lista</from-outcome>
+			<to-view-id>/wykladowca/*Lista.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>*Form</from-outcome>
+			<to-view-id>/wykladowca/*Form.xhtml</to-view-id>
+		</navigation-case>
+</navigation-rule>
+
 
 	<navigation-rule>
 		<display-name>/test/wszystko</display-name>

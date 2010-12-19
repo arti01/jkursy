@@ -1,0 +1,24 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<h5>Jesteś zalogowany jako:<br/>
+<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})"/>
+<h:form>
+<h:commandButton value="wyloguj" action="#{login.wyloguj}"/>
+</h:form>
+</h5>
+<div id="left">
+<h:form>
+<ul>
+<li><h:commandLink value="do strony głównej" action="indexAll"/></li>
+<li><h:outputText value="Twoje kursy"/></li>
+
+</ul>
+</h:form>
+</div>
+</body>
+</html>
+
+
