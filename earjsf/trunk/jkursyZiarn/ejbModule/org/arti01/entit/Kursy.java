@@ -51,6 +51,11 @@ public class Kursy implements Serializable {
 	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	private Set<User> users;
 	
+	//bi-directional many-to-one association to Lekcja
+	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+	@OrderBy(value="lp")
+	private List<Lekcja> lekcjas;
+	
 	@Transient
 	private List<User> wykladowcy;
 	
@@ -131,5 +136,13 @@ public class Kursy implements Serializable {
 
 	public void setKursanci(List<User> kursanci) {
 		this.kursanci = kursanci;
+	}
+
+	public List<Lekcja> getLekcjas() {
+		return lekcjas;
+	}
+
+	public void setLekcjas(List<Lekcja> lekcjas) {
+		this.lekcjas = lekcjas;
 	}
 }

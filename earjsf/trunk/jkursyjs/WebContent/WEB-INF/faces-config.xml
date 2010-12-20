@@ -44,6 +44,11 @@
 		<managed-bean-class>org.arti01.admin.StatyczneAc</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>wykladKursyAc</managed-bean-name>
+		<managed-bean-class>org.arti01.wykladowca.KursyAc</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
 
 	<navigation-rule>
 		<display-name>/all/wszystko</display-name>

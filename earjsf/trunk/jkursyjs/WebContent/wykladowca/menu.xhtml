@@ -14,6 +14,14 @@
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
 <li><h:outputText value="Twoje kursy"/></li>
+<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
+	<li>
+	<h:commandLink action="#{wykladKursyAc.kursForm}">
+		<f:setPropertyActionListener target="#{wykladKursyAc.kurs}" value="#{kurs}"/>
+		<h:outputText value="#{kurs.nazwa}"/>
+	</h:commandLink>
+	</li>
+</ui:repeat>
 
 </ul>
 </h:form>

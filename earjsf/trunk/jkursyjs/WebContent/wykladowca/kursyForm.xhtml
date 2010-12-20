@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/templates/templatewyklad.xhtml">
+		<ui:define name="body">
+<h:body>
+kursy detale:)
+<br/>
+nazwa:
+<h2><h:outputText value="#{wykladKursyAc.kurs.nazwa}"/></h2>
+krótki opis:
+<h3><h:outputText value="#{wykladKursyAc.kurs.opisKrotki}"/></h3>
+<p>
+od:<h:outputText value="#{wykladKursyAc.kurs.dataod}"><f:convertDateTime type="date"/> </h:outputText>
+do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="date"/> </h:outputText>
+</p>
+<h:form>
+	<h:commandButton value="dodaj nową lekcję" action="#{wykladKursyAc.lekcjaForm}"/>
+</h:form>
+<ul>
+<ui:repeat var="lekcja" value="#{wykladKursyAc.kurs.lekcjas}">
+<li>
+<h:outputText value="#{lekcja.tytul} (#{lekcja.datazmiany})"/>
+</li>
+</ui:repeat>
+</ul>
+</h:body>
+</ui:define>
+</ui:composition>
+</html>
