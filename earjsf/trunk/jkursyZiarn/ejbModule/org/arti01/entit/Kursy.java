@@ -62,6 +62,8 @@ public class Kursy implements Serializable {
 	@Transient
 	private List<User> kursanci;
 	
+	@Transient
+	private List<Integer> lekcjeLpAll;
 	
     public Kursy() {
     }
@@ -144,5 +146,13 @@ public class Kursy implements Serializable {
 
 	public void setLekcjas(List<Lekcja> lekcjas) {
 		this.lekcjas = lekcjas;
+	}
+
+	public List<Integer> getLekcjeLpAll() {
+		return lekcjeLpAll;
+	}
+
+	public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
+		this.lekcjeLpAll = lekcjeLpAll;
 	}
 }

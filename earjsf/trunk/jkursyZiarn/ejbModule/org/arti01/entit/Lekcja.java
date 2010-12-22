@@ -2,6 +2,9 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -21,11 +24,13 @@ public class Lekcja implements Serializable {
 
 	private Timestamp datazmiany;
 
-	@Column(nullable=false, length=255)
+	@NotEmpty
 	private String tresc;
 
+	@NotEmpty
 	private String tytul;
 	
+	@NotNull
 	private Integer lp;
 
 	//bi-directional many-to-one association to Kursy
@@ -40,9 +45,6 @@ public class Lekcja implements Serializable {
 	//bi-directional many-to-one association to Lekcjapliki
 	@OneToMany(mappedBy="lekcja")
 	private Set<Lekcjapliki> lekcjaplikis;
-
-    public Lekcja() {
-    }
 
 	public Integer getIdlekcja() {
 		return this.idlekcja;

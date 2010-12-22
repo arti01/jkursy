@@ -20,7 +20,7 @@ public class KursyImp {
 	@PersistenceContext
 	EntityManager em;
 	String errorText="";
-	
+	List<Integer> lekcjeLpAll;
 	@EJB RoleImp roleImp;
 
 	@SuppressWarnings("unchecked")
@@ -61,6 +61,7 @@ public class KursyImp {
 			}
 			kurs.setKursanci(kursanci);
 			kurs.setWykladowcy(wykladowcy);
+			kurs.setLekcjeLpAll(getLpAll(kurs));
 		} else kurs = new Kursy();
 		return kurs;
 	}
@@ -104,6 +105,14 @@ public class KursyImp {
 		}
 		else return true;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> getLpAll(Kursy kursy) {
+		Query query = em.createQuery("select l.lp from Lekcja l where l.kursy=:kursy order by l.lp");
+		query.setParameter("kursy", kursy);
+		lekcjeLpAll=query.getResultList();
+		return lekcjeLpAll;
+	}
 
 	public String getErrorText() {
 		return errorText;
@@ -111,5 +120,13 @@ public class KursyImp {
 
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
+	}
+
+	public List<Integer> getLekcjeLpAll() {
+		return lekcjeLpAll;
+	}
+
+	public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
+		this.lekcjeLpAll = lekcjeLpAll;
 	}
 }

@@ -138,6 +138,10 @@
 		<location>/index.html</location>
 	</error-page>
 	<error-page>
+		<error-code>403</error-code>
+		<location>/err403.html</location>
+	</error-page>
+	<error-page>
 		<error-code>501</error-code>
 		<location>/err500.html</location>
 	</error-page>

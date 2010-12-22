@@ -8,8 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
-import org.arti01.entit.Statyczne;
 
 @Stateless
 @LocalBean
@@ -18,11 +18,10 @@ public class LekacjaImp {
 	@PersistenceContext
 	EntityManager em;
 	Lekcja lekcja;
-	List<Integer> lpAll;
 
 	@SuppressWarnings("unchecked")
-	public List<Statyczne> getFindAll() {
-		return em.createQuery("select s from Statyczne s order by s.lp").getResultList();
+	public List<Lekcja> getFindAll() {
+		return em.createQuery("select l from Lekcja l order by l.lp").getResultList();
 	}
 
 	public Lekcja find(Lekcja lekcja){
@@ -38,63 +37,56 @@ public class LekacjaImp {
 		em.persist(lekcja);
 	}
 	
-	public void delete(Statyczne statyczne) {
-		Integer lp=statyczne.getLp();
-		statyczne=em.find(statyczne.getClass(), statyczne.getIdStatyczne());
-		em.remove(statyczne);
+	public void delete(Lekcja lekcja) {
+		Integer lp=lekcja.getLp();
+		Kursy kursy=lekcja.getKursy();
+		lekcja=em.find(lekcja.getClass(), lekcja.getIdlekcja());
+		em.remove(lekcja);
 		em.flush();
-		Query query=em.createQuery("update Statyczne s set s.lp=s.lp-1 where s.lp>:lp");
+		Query query=em.createQuery("update Lekcja l set l.lp=l.lp-1 where l.lp>:lp and l.kursy=:kursy");
 		query.setParameter("lp", lp);
+		query.setParameter("kursy", kursy);
 		query.executeUpdate();
 	}
 
-	
 	@SuppressWarnings("unchecked")
-	public List<Integer> getLpAll() {
-		lpAll= em.createQuery("select l.lp from Lekcja l order by l.lp").getResultList();
-		return lpAll;
-	}
-
-	public void setLpAll(List<Integer> lpAll) {
-		this.lpAll = lpAll;
-	}
-
-	/*@SuppressWarnings("unchecked")
-	public void update(Statyczne statyczne, Integer newLp) {
-		Integer oldLp=new Integer(statyczne.getLp());
-		statyczne.setLp(-1);
-		em.merge(statyczne);
-		//System.out.println(statyczne+"statOld");
+	public void update(Lekcja lekcja, Integer newLp) {
+		Integer oldLp=new Integer(lekcja.getLp());
+		lekcja.setLp(-1);
+		em.merge(lekcja);
+		//System.out.println(lekcja+"statOld");
 		//System.out.println(oldLp+"new"+newLp);
 		if (newLp < oldLp) {//idziemy w góre
 			//System.out.println("upupup");
-			Query select=em.createQuery("select s from Statyczne s where s.lp<:oldLp and s.lp>=:newLp order by s.lp desc");
+			Query select=em.createQuery("select l from Lekcja l where l.lp<:oldLp and l.lp>=:newLp and l.kursy=:kurs order by l.lp desc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);
-			List<Statyczne> sl=select.getResultList();
-			for (Statyczne s:sl){
-				//System.out.println(statyczne.getLp());
+			select.setParameter("kurs", lekcja.getKursy());
+			List<Lekcja> sl=select.getResultList();
+			for (Lekcja s:sl){
+				//System.out.println(lekcja.getLp());
 				//System.out.println(s.getTytul());
 				//System.out.println(s.getLp()+1);
 				s.setLp(s.getLp()+1);
 				em.merge(s);
 				em.flush();
 			}
-			statyczne.setLp(newLp);
-			em.merge(statyczne);
+			lekcja.setLp(newLp);
+			em.merge(lekcja);
 		} else if (newLp > oldLp) {//idziemy w dół
-			Query select=em.createQuery("select s from Statyczne s where s.lp>:oldLp and s.lp<=:newLp order by s.lp asc");
+			Query select=em.createQuery("select l from Lekcja l where l.lp>:oldLp and l.lp<=:newLp and l.kursy=:kurs order by l.lp asc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);
-			List<Statyczne> sl=select.getResultList();
-			for (Statyczne s:sl){
+			select.setParameter("kurs", lekcja.getKursy());
+			List<Lekcja> sl=select.getResultList();
+			for (Lekcja s:sl){
 				s.setLp(s.getLp()-1);
 				em.merge(s);
 				em.flush();
 			}
-			statyczne.setLp(newLp);
-			em.merge(statyczne);
-		}else update(statyczne);
-	}*/
+			lekcja.setLp(newLp);
+			em.merge(lekcja);
+		}else update(lekcja);
+	}
 	
 }
