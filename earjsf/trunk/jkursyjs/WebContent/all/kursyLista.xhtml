@@ -9,27 +9,27 @@
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
 	<body>
-	kursy
-	
-	<h:form>
+	kursy<h:form id="form1">	
 			<rich:dataTable value="#{kursyAc.allKursy}" var="kurs"
-				id="table">
+				id="table">	
 				<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
 					sortOrder="#{adminKursyAc.nazwaOrder}">
 					<f:facet name="header">
 						<a4j:commandLink value="sortowanie nazwa" render="table"
 							action="#{adminKursyAc.sortBynazwa}" />
 					</f:facet>
+					<ul><li>
 					<h:commandLink action="#{kursyAc.detale}">
 						<h3><h:outputText value="#{kurs.nazwa}" /></h3>
 					</h:commandLink>
+					</li></ul>
 					<h:outputText value="#{kurs.opisKrotki}" />
+				
 					<br/>wykładowcy:<br/>
 					<ul>
-						<ui:repeat var="wyklad" value="#{kurs.wykladowcy}">
+						<ui:repeat var="wyklad" value="#{kurs.wykladowcy}" varStatus="aaa">
 							<li><h:commandLink action="#{kursyAc.wykladDetale}">
-								<f:setPropertyActionListener target="#{kursyAc.wykladowca}"
-									value="#{wyklad}" />
+							<f:param name="username" value="#{wyklad.username}"/>
 								<h:outputText value="#{wyklad.imieNazwisko}" />
 							</h:commandLink></li>
 						</ui:repeat>
@@ -42,11 +42,13 @@
 						<a4j:commandLink value="sortowanie data od" render="table"
 							action="#{adminKursyAc.sortBydataod}" />
 					</f:facet>
+					<ul><li>
 					<h:commandLink action="#{kursyAc.detale}">
 						<h:outputText value="#{kurs.dataod}">
 							<f:convertDateTime pattern="yyyy-MM-dd"/>
 						</h:outputText>
 					</h:commandLink>
+					</li></ul>
 				</rich:column>
 				
 				<rich:column sortBy="#{kurs.datado}" id="datado"
@@ -55,14 +57,17 @@
 						<a4j:commandLink value="sortowanie data do" render="table"
 							action="#{adminKursyAc.sortBydatado}" />
 					</f:facet>
+					<ul><li>
 					<h:commandLink action="#{kursyAc.detale}">
 						<h:outputText value="#{kurs.datado}">
 							<f:convertDateTime pattern="yyyy-MM-dd"/>
 						</h:outputText>
 					</h:commandLink>
+					</li></ul>
 				</rich:column>
+				
 			</rich:dataTable>
-		</h:form>
+			</h:form>
 		</body>
 </ui:define>
 </ui:composition>

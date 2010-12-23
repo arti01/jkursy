@@ -1,22 +1,35 @@
 package org.arti01.all;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
+import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
+import org.arti01.sesBean.RoleImp;
+import org.arti01.sesBean.UserImp;
 
-
+@ManagedBean(name="kursyAc")
+@SessionScoped
 public class KursyAc {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
 	private List<Kursy>kursy;
 	private ListDataModel<Kursy> allKursy = new ListDataModel<Kursy>();
-	private User wykladowca;
+	private ListDataModel<User> allWykladowcy = new ListDataModel<User>();
+	private User wykladowca=new User();
 	private Kursy kurs;
 	@EJB KursyImp kursyImp;
+	@EJB UserImp userImp;
+	@EJB RoleImp roleImp;
 	
 	public KursyAc() {
 		kurs=new Kursy();
@@ -29,14 +42,33 @@ public class KursyAc {
 		return "kursyLista";
 	}
 	
+	public String wykladList(){
+		Role rola = new Role();
+		rola.setRola(Role.WYKLADOWCA);
+		allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+		return "wykladLista";
+	}
+	
 	public String detale() throws Exception{
-		kurs=allKursy.getRowData();
+		FacesContext fs = FacesContext.getCurrentInstance();
+		Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
+		String idkursy = params.get("idkursy");
+		if(idkursy!=null){
+			kurs.setIdkursy(new Integer(idkursy));
+			kurs=kursyImp.find(kurs);
+		}
+		else kurs=allKursy.getRowData();
 		return "kursyDetale";
 	}
 	
-	public String wykladDetale() throws Exception{
-		//wykladowca=wykladowcy.getRowData();
-		//wykladowca=allKursy.getRowData().getWykladowcy()
+	public String wykladDetale(){
+		FacesContext fs = FacesContext.getCurrentInstance();
+		Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
+		String username = params.get("username");
+		if(username!=null)wykladowca.setUsername(username);
+		wykladowca=userImp.find(wykladowca);
+		//logger.info(wykladowca.getImieNazwisko());
+		//logger.info(username);
 		return "wykladowcaDetale";
 	}
 
@@ -72,5 +104,14 @@ public class KursyAc {
 	public void setAllKursy(ListDataModel<Kursy> allKursy) {
 		this.allKursy = allKursy;
 	}
+	
+	public ListDataModel<User> getAllWykladowcy() {
+		return allWykladowcy;
+	}
+
+	public void setAllWykladowcy(ListDataModel<User> allWykladowcy) {
+		this.allWykladowcy = allWykladowcy;
+	}
+	
 	
 }

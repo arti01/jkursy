@@ -17,7 +17,7 @@ public class Login {
 	
 	public String wyloguj(){
 		HttpServletRequest r=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		logger.info(r.getRemoteUser()+"wwwwwwwwwwwwwww");
+		//logger.info(r.getRemoteUser()+"wwwwwwwwwwwwwww");
 		try {
 			r.logout();
 			zalogowany=null;
@@ -31,11 +31,11 @@ public class Login {
 
 	public User getZalogowany() {
 		HttpServletRequest r=(HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		logger.info(r.getRemoteUser());
+		//logger.info(r.getRemoteUser());
 		User z=new User();
 		z.setUsername(r.getRemoteUser());
 		zalogowany=userImp.find(z);
-		logger.info("imie nazwisko"+zalogowany.getImieNazwisko());
+		//logger.info("imie nazwisko"+zalogowany.getImieNazwisko());
 		//rozne.ustaw(z);
 		//rozne.setInfoText("jesteś zalogowany");
 		return zalogowany;

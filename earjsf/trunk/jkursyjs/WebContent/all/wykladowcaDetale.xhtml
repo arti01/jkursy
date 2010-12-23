@@ -10,8 +10,10 @@
 		<ui:define name="body">
 <h3>wykladowca</h3>
 
-<h:panelGrid columns="1">
+<h:panelGrid columns="2">
+<h:outputLabel value="imię i nazwisko"/>
 <h:outputText value="#{kursyAc.wykladowca.imieNazwisko}"/>
+<h:outputLabel value="o wykładowcy:"/>
 <h:outputText value="#{kursyAc.wykladowca.opis}" escape="false"/>
 </h:panelGrid>
 

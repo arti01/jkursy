@@ -5,7 +5,7 @@
 	version="3.0">
 	<display-name>jkursyjs</display-name>
 
-	<!-- Facelets tuning -->
+	<!-- Facelets tuning 
 	<context-param>
 		<param-name>
 			facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
@@ -19,13 +19,13 @@
 
 	<context-param>
 		<param-name>facelets.DEVELOPMENT</param-name>
-		<param-value>false</param-value>
+		<param-value>true</param-value>
 	</context-param>
 
 	<context-param>
 		<param-name>facelets.REFRESH_PERIOD</param-name>
 		<param-value>-1</param-value>
-	</context-param>
+	</context-param>-->
 
 	<!-- JSF RI Performance tuning -->
 	<context-param>
@@ -35,7 +35,7 @@
 
 	<context-param>
 		<param-name>com.sun.faces.verifyObjects</param-name>
-		<param-value>false</param-value>
+		<param-value>true</param-value>
 	</context-param>
 
 	<!-- Allows the JavaScript to be cached -->
