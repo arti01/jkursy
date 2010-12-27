@@ -57,11 +57,11 @@ public class Lekcjafoty implements Serializable {
 		this.opis = opis;
 	}
 
-	public byte[] getPlik() {
+	public byte[] getData() {
 		return this.plik;
 	}
 
-	public void setPlik(byte[] plik) {
+	public void setData(byte[] plik) {
 		this.plik = plik;
 	}
 
