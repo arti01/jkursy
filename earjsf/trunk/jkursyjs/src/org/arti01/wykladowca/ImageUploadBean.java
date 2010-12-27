@@ -3,6 +3,7 @@ package org.arti01.wykladowca;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
+import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.LekcjafotyImp;
 import org.arti01.utility.UploadedFileArti;
 import org.richfaces.event.FileUploadEvent;
@@ -29,7 +30,8 @@ public class ImageUploadBean implements Serializable {
     private boolean useFlash = false;
     private Lekcja lekcja;
     @EJB LekcjafotyImp lekcjafotyImp;
-
+    @EJB LekacjaImp lekcjaImp;
+    
     public int getSize() {
         if (getFiles().size() > 0) {
             return getFiles().size();
@@ -85,6 +87,8 @@ public class ImageUploadBean implements Serializable {
     }
 
     public String pokazFoty() {
+    	foty.clear();
+    	lekcja=lekcjaImp.find(lekcja);
     	logger.info(lekcja.getTytul());
     	logger.info(lekcja.getLekcjafoties().size());
     	for(Lekcjafoty lf:lekcja.getLekcjafoties()){

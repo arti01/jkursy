@@ -26,6 +26,7 @@ public class LekacjaImp {
 
 	public Lekcja find(Lekcja lekcja){
 		lekcja=em.find(Lekcja.class, lekcja.getIdlekcja());
+		em.refresh(lekcja);
 		return lekcja;
 	}
 	
