@@ -2,6 +2,8 @@ package org.arti01.wykladowca;
 
 import org.apache.log4j.Logger;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Lekcjafoty;
+import org.arti01.sesBean.LekcjafotyImp;
 import org.arti01.utility.UploadedFileArti;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
@@ -11,6 +13,8 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import javax.ejb.EJB;
+
 /**
  * @author Ilya Shaikovsky
  * 
@@ -19,10 +23,12 @@ public class FileUploadBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(FileUploadBean.class);
 	private ArrayList<UploadedFileArti> files = new ArrayList<UploadedFileArti>();
+	private ArrayList<Lekcjafoty> foty = new ArrayList<Lekcjafoty>();
     private int uploadsAvailable = 5;
     private boolean autoUpload = false;
     private boolean useFlash = false;
     private Lekcja lekcja;
+    @EJB LekcjafotyImp lekcjafotyImp;
 
     public int getSize() {
         if (getFiles().size() > 0) {
@@ -61,8 +67,16 @@ public class FileUploadBean implements Serializable {
     
     public String akceptuj() {
     	logger.info(lekcja.getTytul());
-        //files.clear();
-        //setUploadsAvailable(5);
+    	for(UploadedFileArti f:files){
+        	logger.info(f.getName());
+        	logger.info(f.getMime());
+            Lekcjafoty fota=new Lekcjafoty();
+            fota.setLekcja(lekcja);
+            fota.setPlik(f.getData());
+            lekcjafotyImp.insert(fota);
+        }
+        files.clear();
+        setUploadsAvailable(5);
         return null;
     }
 
