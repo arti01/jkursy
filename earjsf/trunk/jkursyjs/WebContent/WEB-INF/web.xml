@@ -77,7 +77,7 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/app-tags.taglib.xml</param-value>
+		<param-value>/WEB-INF/app-tags.taglib.xml; /WEB-INF/balusc.taglib.xml</param-value>
 	</context-param>
 
 	<context-param>

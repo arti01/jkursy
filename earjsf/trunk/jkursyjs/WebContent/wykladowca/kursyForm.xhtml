@@ -43,6 +43,11 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 		</h:commandLink>
 	</h:column>
+	<h:column>
+		<h:commandLink value="zdjęcia" action="#{wykladKursyAc.foty}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+		</h:commandLink>
+	</h:column>
 </h:dataTable>
 </h:form>
 </ul>

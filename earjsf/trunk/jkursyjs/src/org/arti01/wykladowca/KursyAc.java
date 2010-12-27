@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
-
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
@@ -49,6 +47,7 @@ public class KursyAc {
 	}
 	
 	public String lekcjaDodaj(){
+		logger.info("lekcjaDodaj");
 		lekcja.setKursy(kurs);
 		lekcja.setDatazmiany(new Timestamp(new Date().getTime()));
 		if (lekcja.getIdlekcja()!=null) {// edycja
@@ -64,6 +63,11 @@ public class KursyAc {
 		kurs=kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
 		return "kursyForm";
+	}
+	
+	public String foty(){
+		logger.info("dodaj plik");
+		return "fotyForm";
 	}
 	
 	public String lekcjaUsun(){
@@ -121,5 +125,4 @@ public class KursyAc {
 	public void setLekcje(DataModel<Lekcja> lekcje) {
 		this.lekcje = lekcje;
 	}
-	
 }
