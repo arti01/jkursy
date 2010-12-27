@@ -19,9 +19,9 @@ import javax.ejb.EJB;
  * @author Ilya Shaikovsky
  * 
  */
-public class FileUploadBean implements Serializable {
+public class ImageUploadBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(FileUploadBean.class);
+	Logger logger = Logger.getLogger(ImageUploadBean.class);
 	private ArrayList<UploadedFileArti> files = new ArrayList<UploadedFileArti>();
 	private ArrayList<Lekcjafoty> foty = new ArrayList<Lekcjafoty>();
     private int uploadsAvailable = 5;
@@ -40,6 +40,10 @@ public class FileUploadBean implements Serializable {
 
     public void paint(OutputStream stream, Object object) throws IOException {
         stream.write(getFiles().get((Integer) object).getData());
+    }
+    
+    public void paintBazy(OutputStream stream, Object object) throws IOException {
+        stream.write(getFoty().get((Integer) object).getData());
     }
 
     public void listener(FileUploadEvent event) throws Exception {
@@ -72,7 +76,7 @@ public class FileUploadBean implements Serializable {
         	logger.info(f.getMime());
             Lekcjafoty fota=new Lekcjafoty();
             fota.setLekcja(lekcja);
-            fota.setPlik(f.getData());
+            fota.setData(f.getData());
             lekcjafotyImp.insert(fota);
         }
         files.clear();
@@ -80,7 +84,18 @@ public class FileUploadBean implements Serializable {
         return null;
     }
 
+    public String pokazFoty() {
+    	logger.info(lekcja.getTytul());
+    	logger.info(lekcja.getLekcjafoties().size());
+    	for(Lekcjafoty lf:lekcja.getLekcjafoties()){
+            lf=lekcjafotyImp.find(lf);
+            logger.info(lf.getData());
+            foty.add(lf);
+        }
+        return null;
+    }
 
+    
     public long getTimeStamp() {
         return System.currentTimeMillis();
     }
@@ -123,6 +138,14 @@ public class FileUploadBean implements Serializable {
 
 	public void setLekcja(Lekcja lekcja) {
 		this.lekcja = lekcja;
+	}
+
+	public ArrayList<Lekcjafoty> getFoty() {
+		return foty;
+	}
+
+	public void setFoty(ArrayList<Lekcjafoty> foty) {
+		this.foty = foty;
 	}
 
 }

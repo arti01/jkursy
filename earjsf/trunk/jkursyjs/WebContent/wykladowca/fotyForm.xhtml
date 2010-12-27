@@ -13,8 +13,8 @@
 	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
 			<h:panelGrid columns="2" columnClasses="top,top">
 				<rich:fileUpload
-					fileUploadListener="#{wykladFileUploadBean.listener}"
-					maxFilesQuantity="#{wykladFileUploadBean.uploadsAvailable}"
+					fileUploadListener="#{wykladImageUploadBean.listener}"
+					maxFilesQuantity="#{wykladImageUploadBean.uploadsAvailable}"
 					id="upload">
 					<a4j:ajax event="uploadcomplete" execute="@none" render="info" />
 				</rich:fileUpload>
@@ -24,16 +24,17 @@
 							<h:outputText value="Uploaded Files Info" />
 						</f:facet>
 						<h:outputText value="No files currently uploaded"
-							rendered="#{wykladFileUploadBean.size==0}" />
-						<rich:dataGrid columns="1" value="#{wykladFileUploadBean.files}"
+							rendered="#{wykladImageUploadBean.size==0}" />
+						<rich:dataGrid columns="1" value="#{wykladImageUploadBean.files}"
 							var="file" rowKeyVar="row">
 							<rich:panel bodyClass="rich-laguna-panel-no-header">
 								<h:panelGrid columns="2">
 									<a4j:mediaOutput element="img" mimeType="#{file.mime}"
-										createContent="#{wykladFileUploadBean.paint}" value="#{row}"
+										createContent="#{wykladImageUploadBean.paint}" value="#{row}"
 										style="height:100px;" cacheable="false">
-										<f:param value="#{wykladFileUploadBean.timeStamp}" name="time" />
+										<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 									</a4j:mediaOutput>
+									<h:outputText value="#{row}" />
 									<h:panelGrid columns="2">
 										<h:outputText value="File Name:" />
 										<h:outputText value="#{file.name}" />
@@ -45,24 +46,30 @@
 						</rich:dataGrid>
 					</rich:panel>
 					<br />
-					<a4j:commandButton action="#{wykladFileUploadBean.clearUploadData}"
+					<a4j:commandButton action="#{wykladImageUploadBean.clearUploadData}"
 						render="info, upload" value="Clear Uploaded Data"
-						rendered="#{wykladFileUploadBean.size>0}" />
-					<a4j:commandButton action="#{wykladFileUploadBean.akceptuj}"
+						rendered="#{wykladImageUploadBean.size>0}" />
+					<a4j:commandButton action="#{wykladImageUploadBean.akceptuj}"
 						render="info, upload" value="Akceptuj"
-						rendered="#{wykladFileUploadBean.size>0}">
+						rendered="#{wykladImageUploadBean.size>0}">
 						<f:setPropertyActionListener
-							target="#{wykladFileUploadBean.lekcja}"
+							target="#{wykladImageUploadBean.lekcja}"
 							value="#{wykladKursyAc.lekcja}" />
 					</a4j:commandButton>
 				</h:panelGroup>
 			</h:panelGrid>
 
+		<a4j:commandButton action="#{wykladImageUploadBean.pokazFoty}"
+						render="foty" value="pokaż foty lekcji">
+						<f:setPropertyActionListener
+							target="#{wykladImageUploadBean.lekcja}"
+							value="#{wykladKursyAc.lekcja}" />
+						</a4j:commandButton>
 			<h:panelGroup id="foty">
-				<rich:dataGrid columns="1" value="#{wykladFileUploadBean.files}"
+				<rich:dataGrid columns="1" value="#{wykladImageUploadBean.foty}"
 					var="fota" rowKeyVar="rowf">
-					<a4j:mediaOutput element="img" mimeType="#{file.mime}"
-						createContent="#{wykladFileUploadBean.paint}" value="#{rowf}"
+					<a4j:mediaOutput element="img"
+						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf}"
 						style="height:100px;" cacheable="false">
 					</a4j:mediaOutput>
 				</rich:dataGrid>

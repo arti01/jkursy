@@ -50,8 +50,8 @@
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 	<managed-bean>
-		<managed-bean-name>wykladFileUploadBean</managed-bean-name>
-		<managed-bean-class>org.arti01.wykladowca.FileUploadBean</managed-bean-class>
+		<managed-bean-name>wykladImageUploadBean</managed-bean-name>
+		<managed-bean-class>org.arti01.wykladowca.ImageUploadBean</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
 
