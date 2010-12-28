@@ -29,6 +29,7 @@ public class ImageUploadBean implements Serializable {
     private boolean autoUpload = false;
     private boolean useFlash = false;
     private boolean upload = false;
+    private boolean fotyview = false;
     private Lekcja lekcja;
     private Lekcjafoty fota;
     @EJB LekcjafotyImp lekcjafotyImp;
@@ -184,6 +185,14 @@ public class ImageUploadBean implements Serializable {
 
 	public void setFota(Lekcjafoty fota) {
 		this.fota = fota;
+	}
+
+	public boolean isFotyview() {
+		return fotyview;
+	}
+
+	public void setFotyview(boolean fotyview) {
+		this.fotyview = fotyview;
 	}
 
 }

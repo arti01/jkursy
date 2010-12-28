@@ -66,7 +66,7 @@
 							target="#{wykladImageUploadBean.lekcja}"
 							value="#{wykladKursyAc.lekcja}"/>
 						</a4j:commandButton>
-			<h:panelGroup id="foty">
+			<h:panelGroup id="foty" rendered="#{wykladImageUploadBean.}">
 				<rich:dataGrid columns="3" value="#{wykladImageUploadBean.foty}"
 					var="fota" rowKeyVar="rowf">
 					<rich:panel bodyClass="info">
