@@ -46,6 +46,8 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 	<h:column>
 		<h:commandLink value="zdjęcia" action="#{wykladKursyAc.foty}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+			<f:setPropertyActionListener target="#{wykladImageUploadBean.upload}" value="false"/>
+			<f:setPropertyActionListener target="#{wykladImageUploadBean.fotyview}" value="false"/>
 		</h:commandLink>
 	</h:column>
 </h:dataTable>

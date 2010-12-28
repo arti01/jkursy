@@ -99,6 +99,7 @@ public class ImageUploadBean implements Serializable {
     }
 
     public String pokazFoty() {
+    	fotyview=true;
     	foty.clear();
     	lekcja=lekcjaImp.find(lekcja);
     	logger.info(lekcja.getTytul());
