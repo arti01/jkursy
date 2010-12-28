@@ -28,9 +28,12 @@ public class ImageUploadBean implements Serializable {
     private int uploadsAvailable = 5;
     private boolean autoUpload = false;
     private boolean useFlash = false;
+    private boolean upload = false;
     private Lekcja lekcja;
+    private Lekcjafoty fota;
     @EJB LekcjafotyImp lekcjafotyImp;
     @EJB LekacjaImp lekcjaImp;
+    
     
     public int getSize() {
         if (getFiles().size() > 0) {
@@ -40,6 +43,13 @@ public class ImageUploadBean implements Serializable {
         }
     }
 
+    public String pokazUpload(){
+    	if(upload) upload=false;
+    	else upload=true;
+    	logger.info(upload);
+    	return null;
+    }
+    
     public void paint(OutputStream stream, Object object) throws IOException {
         stream.write(getFiles().get((Integer) object).getData());
     }
@@ -83,6 +93,7 @@ public class ImageUploadBean implements Serializable {
         }
         files.clear();
         setUploadsAvailable(5);
+        pokazFoty();
         return null;
     }
 
@@ -93,10 +104,17 @@ public class ImageUploadBean implements Serializable {
     	logger.info(lekcja.getLekcjafoties().size());
     	for(Lekcjafoty lf:lekcja.getLekcjafoties()){
             lf=lekcjafotyImp.find(lf);
-            logger.info(lf.getData());
+            logger.info(lf);
+            logger.info(lf.getIdlekcjafoty());
             foty.add(lf);
         }
         return null;
+    }
+    
+    public String usun() {
+    	lekcjafotyImp.delete(fota);
+    	pokazFoty();
+    	return null;
     }
 
     
@@ -150,6 +168,22 @@ public class ImageUploadBean implements Serializable {
 
 	public void setFoty(ArrayList<Lekcjafoty> foty) {
 		this.foty = foty;
+	}
+
+	public boolean isUpload() {
+		return upload;
+	}
+
+	public void setUpload(boolean upload) {
+		this.upload = upload;
+	}
+
+	public Lekcjafoty getFota() {
+		return fota;
+	}
+
+	public void setFota(Lekcjafoty fota) {
+		this.fota = fota;
 	}
 
 }

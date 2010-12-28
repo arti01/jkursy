@@ -69,8 +69,8 @@ public class LekcjafotyImp {
 		}*/
 	}
 	
-	public void delete(Kursy kurs) {
-		em.remove(em.merge(kurs));
+	public void delete(Lekcjafoty lf) {
+		em.remove(em.merge(lf));
 	}
 	
 	public boolean validUpdate(Kursy kurs){
