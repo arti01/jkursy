@@ -60,18 +60,19 @@
 				</h:panelGroup>
 			</h:panelGrid>
 
-		<a4j:commandButton action="#{wykladImageUploadBean.pokazFoty}"
-						render="foty" value="pokaż foty lekcji">
+		<h:commandButton action="#{wykladImageUploadBean.pokazFoty}"
+						value="pokaż foty lekcji">
 						<f:setPropertyActionListener
 							target="#{wykladImageUploadBean.lekcja}"
 							value="#{wykladKursyAc.lekcja}"/>
-						</a4j:commandButton>
-			<h:panelGroup id="foty">
-				<rich:dataGrid columns="3" value="#{wykladImageUploadBean.foty}"
-					var="fota" rowKeyVar="rowf" rendered="#{wykladImageUploadBean.fotyview}">
-					<rich:panel bodyClass="info">
+						</h:commandButton>
+						#{wykladImageUploadBean.foty.size()}
+						
+				<ui:repeat value="#{wykladImageUploadBean.foty}"
+					var="fota" varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
+					#{rowf}
 					<a4j:mediaOutput element="img"
-						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf}"
+						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}"
 						style="height:100px;" cacheable="false">
 						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 					</a4j:mediaOutput>
@@ -82,9 +83,7 @@
 							target="#{wykladImageUploadBean.fota}"
 							value="#{fota}"/>
 						</a4j:commandButton>
-						</rich:panel>
-				</rich:dataGrid>
-			</h:panelGroup>
+				</ui:repeat>
 		</h:form>
 	</ui:define>
 </ui:composition>

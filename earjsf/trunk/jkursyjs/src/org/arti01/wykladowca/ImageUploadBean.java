@@ -110,7 +110,7 @@ public class ImageUploadBean implements Serializable {
             logger.info(lf.getIdlekcjafoty());
             foty.add(lf);
         }
-        return null;
+        return "fotyForm";
     }
     
     public String usun() {
