@@ -66,24 +66,25 @@
 							target="#{wykladImageUploadBean.lekcja}"
 							value="#{wykladKursyAc.lekcja}"/>
 						</h:commandButton>
-						#{wykladImageUploadBean.foty.size()}
-						
+
+			<h:panelGrid columns="3" columnClasses="top,top" >
 				<ui:repeat value="#{wykladImageUploadBean.foty}"
 					var="fota" varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
-					#{rowf}
+					<h:panelGrid columns="2">
 					<a4j:mediaOutput element="img"
 						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}"
 						style="height:100px;" cacheable="false">
 						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 					</a4j:mediaOutput>
-					<br/>
-					<a4j:commandButton action="#{wykladImageUploadBean.usun}"
+					<h:commandButton action="#{wykladImageUploadBean.usun}"
 						render="foty" value="usun">
 						<f:setPropertyActionListener
 							target="#{wykladImageUploadBean.fota}"
 							value="#{fota}"/>
-						</a4j:commandButton>
+						</h:commandButton>
+				</h:panelGrid>
 				</ui:repeat>
+			</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
