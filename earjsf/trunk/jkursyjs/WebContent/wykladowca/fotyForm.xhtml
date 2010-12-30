@@ -67,10 +67,10 @@
 							value="#{wykladKursyAc.lekcja}"/>
 						</h:commandButton>
 
-			<h:panelGrid columns="3" columnClasses="top,top" >
 				<ui:repeat value="#{wykladImageUploadBean.foty}"
 					var="fota" varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
-					<h:panelGrid columns="2">
+					<h:panelGroup>
+					<h:panelGrid columns="1">
 					<a4j:mediaOutput element="img"
 						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}"
 						style="height:100px;" cacheable="false">
@@ -83,8 +83,8 @@
 							value="#{fota}"/>
 						</h:commandButton>
 				</h:panelGrid>
+				</h:panelGroup>
 				</ui:repeat>
-			</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>
