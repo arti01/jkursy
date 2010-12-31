@@ -61,12 +61,6 @@ public class LekcjafotyImp {
 	public boolean insert(Lekcjafoty fota){
 		em.persist(fota);
 		return true;
-		/*if(validInsert(kursy)){
-			em.persist(kursy);
-			return true;
-		}else {
-			return false;
-		}*/
 	}
 	
 	public void delete(Lekcjafoty lf) {
