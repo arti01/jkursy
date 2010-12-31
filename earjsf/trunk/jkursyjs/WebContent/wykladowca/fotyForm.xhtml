@@ -50,13 +50,13 @@
 					<a4j:commandButton action="#{wykladImageUploadBean.clearUploadData}"
 						render="info, upload" value="Clear Uploaded Data"
 						rendered="#{wykladImageUploadBean.size>0}" />
-					<a4j:commandButton action="#{wykladImageUploadBean.akceptuj}"
+					<h:commandButton action="#{wykladImageUploadBean.akceptuj}"
 						render="info, upload, foty" value="Akceptuj"
 						rendered="#{wykladImageUploadBean.size>0}">
 						<f:setPropertyActionListener
 							target="#{wykladImageUploadBean.lekcja}"
 							value="#{wykladKursyAc.lekcja}" />
-					</a4j:commandButton>
+					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGrid>
 
@@ -72,8 +72,7 @@
 					<h:panelGroup>
 					<h:panelGrid columns="1">
 					<a4j:mediaOutput element="img"
-						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}"
-						style="height:100px;" cacheable="false">
+						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}" cacheable="false">
 						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 					</a4j:mediaOutput>
 					<h:commandButton action="#{wykladImageUploadBean.usun}"

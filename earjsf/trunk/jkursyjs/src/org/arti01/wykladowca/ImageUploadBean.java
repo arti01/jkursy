@@ -5,6 +5,7 @@ import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
 import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.LekcjafotyImp;
+import org.arti01.utility.ResizeJpg;
 import org.arti01.utility.UploadedFileArti;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
@@ -89,13 +90,14 @@ public class ImageUploadBean implements Serializable {
         	logger.info(f.getMime());
             Lekcjafoty fota=new Lekcjafoty();
             fota.setLekcja(lekcja);
-            fota.setData(f.getData());
+            fota.setData(new ResizeJpg().zrobB(900, 600, f.getData()));
+            fota.setPlikmini(new ResizeJpg().zrobB(150, 100, f.getData()));
             lekcjafotyImp.insert(fota);
         }
         files.clear();
         setUploadsAvailable(5);
         pokazFoty();
-        return null;
+        return "fotyForm";
     }
 
     public String pokazFoty() {
