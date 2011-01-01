@@ -57,7 +57,7 @@ public class ImageUploadBean implements Serializable {
     }
     
     public void paintBazy(OutputStream stream, Object object) throws IOException {
-        stream.write(getFoty().get((Integer) object).getData());
+        stream.write(getFoty().get((Integer) object).getPlikmini());
     }
 
     public void listener(FileUploadEvent event) throws Exception {
@@ -100,6 +100,19 @@ public class ImageUploadBean implements Serializable {
         return "fotyForm";
     }
 
+    public String akceptujOpis() {
+    	lekcjafotyImp.update(fota);
+    	fotyview=true;
+    	foty.clear();
+    	lekcja=lekcjaImp.find(lekcja);
+    	logger.info(lekcja.getTytul());
+    	logger.info(lekcja.getLekcjafoties().size());
+    	for(Lekcjafoty lf:lekcja.getLekcjafoties()){
+            lf=lekcjafotyImp.find(lf);
+            foty.add(lf);
+        }
+    	return "fotyForm";
+    }
     public String pokazFoty() {
     	fotyview=true;
     	foty.clear();

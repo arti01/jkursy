@@ -27,7 +27,7 @@
 		<param-value>-1</param-value>
 	</context-param>-->
 
-	<!-- JSF RI Performance tuning -->
+	<!-- JSF RI Performance tuning
 	<context-param>
 		<param-name>com.sun.faces.responseBufferSize</param-name>
 		<param-value>500000</param-value>
@@ -37,14 +37,14 @@
 		<param-name>com.sun.faces.verifyObjects</param-name>
 		<param-value>true</param-value>
 	</context-param>
-
-	<!-- Allows the JavaScript to be cached -->
+ -->
+	<!-- Allows the JavaScript to be cached 
 	<context-param>
 		<param-name>com.sun.faces.externalizeJavaScript</param-name>
 		<param-value>true</param-value>
 	</context-param>
 
-
+-->
 	<resource-ref>
 		<res-ref-name>jsf/ProjectStage</res-ref-name>
 		<res-type>java.lang.String</res-type>

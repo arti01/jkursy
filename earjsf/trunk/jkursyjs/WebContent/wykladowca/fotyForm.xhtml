@@ -8,11 +8,13 @@
 
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
-		<h:form>
+		
 	foty lekcji:
-	<h:outputText value="#{wykladKursyAc.lekcja.tytul}"/><br/>
-	<a4j:commandButton action="#{wykladImageUploadBean.pokazUpload}"
-						render="uploadpg" value="pokaż/ukryj okno dodaj zdjęcia"/>
+	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
+			<br />
+			<h:form>
+			<a4j:commandButton action="#{wykladImageUploadBean.pokazUpload}"
+				render="uploadpg" value="pokaż/ukryj okno dodaj zdjęcia" />
 			<h:panelGrid columns="2" columnClasses="top,top" id="uploadpg">
 				<rich:fileUpload
 					fileUploadListener="#{wykladImageUploadBean.listener}"
@@ -33,8 +35,9 @@
 								<h:panelGrid columns="2">
 									<a4j:mediaOutput element="img" mimeType="#{file.mime}"
 										createContent="#{wykladImageUploadBean.paint}" value="#{row}"
-										style="height:100px;" cacheable="false">
-										<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+										style="height:100px;" cacheable="false" rel="">
+										<f:param value="#{wykladImageUploadBean.timeStamp}"
+											name="time" />
 									</a4j:mediaOutput>
 									<h:panelGrid columns="2">
 										<h:outputText value="File Name:" />
@@ -47,7 +50,8 @@
 						</rich:dataGrid>
 					</rich:panel>
 					<br />
-					<a4j:commandButton action="#{wykladImageUploadBean.clearUploadData}"
+					<a4j:commandButton
+						action="#{wykladImageUploadBean.clearUploadData}"
 						render="info, upload" value="Clear Uploaded Data"
 						rendered="#{wykladImageUploadBean.size>0}" />
 					<h:commandButton action="#{wykladImageUploadBean.akceptuj}"
@@ -59,32 +63,46 @@
 					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGrid>
-
-		<h:commandButton action="#{wykladImageUploadBean.pokazFoty}"
-						value="pokaż foty lekcji">
-						<f:setPropertyActionListener
-							target="#{wykladImageUploadBean.lekcja}"
-							value="#{wykladKursyAc.lekcja}"/>
-						</h:commandButton>
-
-				<ui:repeat value="#{wykladImageUploadBean.foty}"
-					var="fota" varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
-					<h:panelGroup>
+			<h:commandButton action="#{wykladImageUploadBean.pokazFoty}"
+				value="pokaż foty lekcji">
+				<f:setPropertyActionListener
+					target="#{wykladImageUploadBean.lekcja}"
+					value="#{wykladKursyAc.lekcja}" />
+			</h:commandButton>
+</h:form>
+<h:form>
+<ul>
+			<ui:repeat value="#{wykladImageUploadBean.foty}" var="fota"
+				varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
+				<li>
+				<h:panelGroup>
 					<h:panelGrid columns="1">
-					<a4j:mediaOutput element="img"
-						createContent="#{wykladImageUploadBean.paintBazy}" value="#{rowf.index}" cacheable="false">
-						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
-					</a4j:mediaOutput>
-					<h:commandButton action="#{wykladImageUploadBean.usun}"
-						render="foty" value="usun">
-						<f:setPropertyActionListener
-							target="#{wykladImageUploadBean.fota}"
-							value="#{fota}"/>
+						<a4j:mediaOutput element="img"
+							createContent="#{wykladImageUploadBean.paintBazy}"
+							value="#{rowf.index}" cacheable="false">
+							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+						</a4j:mediaOutput>
+						<h:panelGrid columns="2">
+						<h:outputLabel value="opis zdjęcia"/>
+						<h:inputTextarea id="opis" value="#{fota.opis}"/>
+						
+						<h:commandButton action="#{wykladImageUploadBean.akceptujOpis}"
+							render="foty" value="akceptuj opis">
+							<f:setPropertyActionListener
+								target="#{wykladImageUploadBean.fota}" value="#{fota}" />
 						</h:commandButton>
-				</h:panelGrid>
+						<h:commandButton action="#{wykladImageUploadBean.usun}"
+							render="foty" value="usun zdjęcie">
+							<f:setPropertyActionListener
+								target="#{wykladImageUploadBean.fota}" value="#{fota}" />
+						</h:commandButton>
+						</h:panelGrid>
+					</h:panelGrid>
 				</h:panelGroup>
-				</ui:repeat>
-		</h:form>
+				</li>
+			</ui:repeat>
+			</ul>
+			</h:form>
 	</ui:define>
 </ui:composition>
 
