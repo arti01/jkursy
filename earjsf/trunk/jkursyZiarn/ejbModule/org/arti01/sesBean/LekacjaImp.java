@@ -1,5 +1,6 @@
 package org.arti01.sesBean;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -27,6 +28,7 @@ public class LekacjaImp {
 	public Lekcja find(Lekcja lekcja){
 		lekcja=em.find(Lekcja.class, lekcja.getIdlekcja());
 		em.refresh(lekcja);
+		lekcja.setFotyLpAll(getLpAll(lekcja));
 		return lekcja;
 	}
 	
@@ -35,6 +37,9 @@ public class LekacjaImp {
 	}
 	
 	public void insert(Lekcja lekcja) {
+		Kursy kursy=lekcja.getKursy();
+		if(kursy.getLekcjeLpAll().size()==0) lekcja.setLp(1);
+		else lekcja.setLp(Collections.max(kursy.getLekcjeLpAll())+1);
 		em.persist(lekcja);
 	}
 	
@@ -88,6 +93,13 @@ public class LekacjaImp {
 			lekcja.setLp(newLp);
 			em.merge(lekcja);
 		}else update(lekcja);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> getLpAll(Lekcja lekcja) {
+		Query query = em.createQuery("select lf.lp from Lekcjafoty lf where lf.lekcja=:lekcja order by lf.lp");
+		query.setParameter("lekcja", lekcja);
+		return query.getResultList();
 	}
 	
 }

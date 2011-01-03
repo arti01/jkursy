@@ -1,6 +1,6 @@
 package org.arti01.sesBean;
 
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -8,7 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.arti01.entit.Kursy;
+import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
 
 @Stateless
@@ -18,27 +18,8 @@ public class LekcjafotyImp {
 	EntityManager em;
 	String errorText="";
 	List<Integer> lekcjeLpAll;
-	@EJB RoleImp roleImp;
-
-	/*
-	@SuppressWarnings("unchecked")
-	public List<Kursy> findAll() {
-		//em.clear();
-		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
-		List<Kursy> ret=new ArrayList<Kursy>();
-		for(Kursy k :wynik){
-			k=find(k);
-			ret.add(k);
-		}
-		return ret;
-	}*/
+	@EJB LekacjaImp lekcjaImp;
 	
-	@SuppressWarnings("unchecked")
-	public List<Kursy> findNiezakonczone() {
-		Query query=em.createNamedQuery("findNiezakonczone");
-		query.setParameter("datado", new Date());
-		return  query.getResultList();
-	}
 	public Lekcjafoty find(Lekcjafoty lf) {
 		if (lf != null) {
 			lf=em.find(Lekcjafoty.class, lf.getIdlekcjafoty());
@@ -47,49 +28,69 @@ public class LekcjafotyImp {
 		return lf;
 	}
 	
-	
-	public boolean update(Kursy kursy){
-		if(validUpdate(kursy)){
-			em.merge(kursy);
+	public boolean update(Lekcjafoty lf){
+			em.merge(lf);
 			return true;
-		}else {
-			System.out.println("NIEWALID ;)");
-			return false;
-		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void update(Lekcjafoty lf, Integer newLp) {
+		Integer oldLp=new Integer(lf.getLp());
+		lf.setLp(-1);
+		em.merge(lf);
+		//System.out.println(lekcja+"statOld");
+		//System.out.println(oldLp+"new"+newLp);
+		if (newLp < oldLp) {//idziemy w góre
+			//System.out.println("upupup");
+			Query select=em.createQuery("select lf from Lekcjafoty lf where lf.lp<:oldLp and lf.lp>=:newLp and lf.lekcja=:lekcja order by lf.lp desc");
+			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
+			select.setParameter("lekcja", lf.getLekcja());
+			List<Lekcjafoty> sl=select.getResultList();
+			for (Lekcjafoty s:sl){
+				s.setLp(s.getLp()+1);
+				em.merge(s);
+				em.flush();
+			}
+			lf.setLp(newLp);
+			em.merge(lf);
+		} else if (newLp > oldLp) {//idziemy w dół
+			Query select=em.createQuery("select lf from Lekcjafoty lf where lf.lp>:oldLp and lf.lp<=:newLp and lf.lekcja=:lekcja order by lf.lp asc");
+			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
+			select.setParameter("lekcja", lf.getLekcja());
+			List<Lekcjafoty> sl=select.getResultList();
+			for (Lekcjafoty s:sl){
+				s.setLp(s.getLp()-1);
+				em.merge(s);
+				em.flush();
+			}
+			lf.setLp(newLp);
+			em.merge(lf);
+		}else update(lf);
 	}
 	
 	public boolean insert(Lekcjafoty fota){
+		Lekcja lekcja=fota.getLekcja();
+		lekcja=lekcjaImp.find(lekcja);
+		if(lekcja.getFotyLpAll().size()==0) fota.setLp(1);
+		else fota.setLp(Collections.max(lekcja.getFotyLpAll())+1);
 		em.persist(fota);
 		return true;
 	}
 	
 	public void delete(Lekcjafoty lf) {
-		em.remove(em.merge(lf));
+		Integer lp=lf.getLp();
+		Lekcja lekcja=lf.getLekcja();
+		lf=em.find(lf.getClass(), lf.getIdlekcjafoty());
+		em.remove(lf);
+		em.flush();
+		Query query=em.createQuery("update Lekcjafoty lf set lf.lp=lf.lp-1 where lf.lp>:lp and lf.lekcja=:lekcja");
+		query.setParameter("lp", lp);
+		query.setParameter("lekcja", lekcja);
+		query.executeUpdate();
 	}
 	
-	public boolean validUpdate(Kursy kurs){
-		if(kurs.getDataod().after(kurs.getDatado())){
-			errorText="Daty bez sensu ('data do' < 'data od')";
-			return false;
-		}
-		else return true;
-	}
-	
-	public boolean validInsert(Kursy kurs){
-		if(kurs.getDataod().after(kurs.getDatado())||kurs.getDatado().before(new Date())){
-			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
-			return false;
-		}
-		else return true;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Integer> getLpAll(Kursy kursy) {
-		Query query = em.createQuery("select l.lp from Lekcja l where l.kursy=:kursy order by l.lp");
-		query.setParameter("kursy", kursy);
-		lekcjeLpAll=query.getResultList();
-		return lekcjeLpAll;
-	}
 
 	public String getErrorText() {
 		return errorText;
@@ -97,13 +98,5 @@ public class LekcjafotyImp {
 
 	public void setErrorText(String errorText) {
 		this.errorText = errorText;
-	}
-
-	public List<Integer> getLekcjeLpAll() {
-		return lekcjeLpAll;
-	}
-
-	public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
-		this.lekcjeLpAll = lekcjeLpAll;
 	}
 }

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Set;
 
 
@@ -33,6 +34,9 @@ public class Lekcja implements Serializable {
 	@NotNull
 	private Integer lp;
 
+	@Transient
+	private List<Integer> fotyLpAll;
+	
 	//bi-directional many-to-one association to Kursy
     @ManyToOne
 	@JoinColumn(name="idkursy")
@@ -40,7 +44,8 @@ public class Lekcja implements Serializable {
 
 	//bi-directional many-to-one association to Lekcjafoty
 	@OneToMany(mappedBy="lekcja")
-	private Set<Lekcjafoty> lekcjafoties;
+	@OrderBy("lp")
+	private List<Lekcjafoty> lekcjafoties;
 
 	//bi-directional many-to-one association to Lekcjapliki
 	@OneToMany(mappedBy="lekcja")
@@ -86,11 +91,11 @@ public class Lekcja implements Serializable {
 		this.kursy = kursy;
 	}
 	
-	public Set<Lekcjafoty> getLekcjafoties() {
+	public List<Lekcjafoty> getLekcjafoties() {
 		return this.lekcjafoties;
 	}
 
-	public void setLekcjafoties(Set<Lekcjafoty> lekcjafoties) {
+	public void setLekcjafoties(List<Lekcjafoty> lekcjafoties) {
 		this.lekcjafoties = lekcjafoties;
 	}
 	
@@ -108,6 +113,14 @@ public class Lekcja implements Serializable {
 
 	public void setLp(Integer lp) {
 		this.lp = lp;
+	}
+
+	public List<Integer> getFotyLpAll() {
+		return fotyLpAll;
+	}
+
+	public void setFotyLpAll(List<Integer> fotyLpAll) {
+		this.fotyLpAll = fotyLpAll;
 	}
 	
 }

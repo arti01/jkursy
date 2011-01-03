@@ -2,6 +2,8 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import java.sql.Timestamp;
 
 
@@ -24,6 +26,9 @@ public class Lekcjafoty implements Serializable {
 	private byte[] plik;
 
 	private byte[] plikmini;
+	
+	@NotNull
+	private Integer lp;
 
 	//bi-directional many-to-one association to Lekcja
     @ManyToOne
@@ -79,6 +84,14 @@ public class Lekcjafoty implements Serializable {
 
 	public void setLekcja(Lekcja lekcja) {
 		this.lekcja = lekcja;
+	}
+
+	public Integer getLp() {
+		return lp;
+	}
+
+	public void setLp(Integer lp) {
+		this.lp = lp;
 	}
 	
 }
