@@ -10,7 +10,7 @@
 	<ui:define name="body">
 		
 	foty lekcji:
-	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
+	<h:outputText value="#{wykladImageUploadBean.lekcja.tytul}" />
 			<br />
 			<h:form>
 			<a4j:commandButton action="#{wykladImageUploadBean.pokazUpload}"
@@ -63,45 +63,38 @@
 					</h:commandButton>
 				</h:panelGroup>
 			</h:panelGrid>
-			<h:commandButton action="#{wykladImageUploadBean.pokazFoty}"
-				value="pokaż foty lekcji">
-				<f:setPropertyActionListener
-					target="#{wykladImageUploadBean.lekcja}"
-					value="#{wykladKursyAc.lekcja}" />
-			</h:commandButton>
 </h:form>
 <h:form>
-<ul>
-			<ui:repeat value="#{wykladImageUploadBean.foty}" var="fota"
-				varStatus="rowf" rendered="#{wykladImageUploadBean.fotyview}">
-				<li>
-				<h:panelGroup>
-					<h:panelGrid columns="1">
+			<h:dataTable value="#{wykladImageUploadBean.fotyMd}" var="fota">
+				<h:column>
+					<h:selectOneMenu value="#{fota.lp}" onchange="submit();" valueChangeListener="#{wykladImageUploadBean.zmienFotaLp}">
+						<f:selectItems value="#{wykladImageUploadBean.lekcja.fotyLpAll}"/>
+					</h:selectOneMenu>
+					</h:column>
+					<h:column>
 						<a4j:mediaOutput element="img"
 							createContent="#{wykladImageUploadBean.paintBazy}"
-							value="#{rowf.index}" cacheable="false">
+							value="#{fota.idlekcjafoty}" cacheable="false">
 							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 						</a4j:mediaOutput>
-						<h:panelGrid columns="2">
-						<h:outputLabel value="opis zdjęcia"/>
+						</h:column>
+						<h:column>
 						<h:inputTextarea id="opis" value="#{fota.opis}"/>
-						
+						<br/>
 						<h:commandButton action="#{wykladImageUploadBean.akceptujOpis}"
 							render="foty" value="akceptuj opis">
 							<f:setPropertyActionListener
 								target="#{wykladImageUploadBean.fota}" value="#{fota}" />
 						</h:commandButton>
+						</h:column>
+						<h:column>
 						<h:commandButton action="#{wykladImageUploadBean.usun}"
 							render="foty" value="usun zdjęcie">
 							<f:setPropertyActionListener
 								target="#{wykladImageUploadBean.fota}" value="#{fota}" />
 						</h:commandButton>
-						</h:panelGrid>
-					</h:panelGrid>
-				</h:panelGroup>
-				</li>
-			</ui:repeat>
-			</ul>
+						</h:column>
+			</h:dataTable>
 			</h:form>
 	</ui:define>
 </ui:composition>

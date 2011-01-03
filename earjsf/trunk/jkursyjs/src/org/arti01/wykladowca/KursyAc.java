@@ -2,9 +2,13 @@ package org.arti01.wykladowca;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -12,10 +16,13 @@ import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Lekcjafoty;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.LekacjaImp;
 
+@ManagedBean(name="wykladKursyAc")
+@SessionScoped
 public class KursyAc {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
@@ -26,7 +33,8 @@ public class KursyAc {
 	@EJB LekacjaImp lekcjaImp;
 	@EJB KursyImp kursyImp;
 	private String errorText;
-	
+	@ManagedProperty(value="#{wykladImageUploadBean}")
+	private ImageUploadBean iub;	
 	
 	public String kursForm(){
 		kurs=kursyImp.find(kurs);
@@ -66,7 +74,10 @@ public class KursyAc {
 	}
 	
 	public String foty(){
-		logger.info("dodaj plik");
+		logger.info("obsluga zdjec");
+		//logger.info(lekcja.getFotyLpAll());
+		iub.setLekcja(lekcjaImp.find(lekcja));
+		iub.setFoty(new ArrayList<Lekcjafoty>(lekcja.getLekcjafoties()));
 		return "fotyForm";
 	}
 	
@@ -124,5 +135,9 @@ public class KursyAc {
 
 	public void setLekcje(DataModel<Lekcja> lekcje) {
 		this.lekcje = lekcje;
+	}
+
+	public void setIub(ImageUploadBean iub) {
+		this.iub = iub;
 	}
 }

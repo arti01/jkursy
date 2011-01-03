@@ -16,21 +16,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 /**
  * @author Ilya Shaikovsky
  * 
  */
+@ManagedBean(name="wykladImageUploadBean")
+@SessionScoped
 public class ImageUploadBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(ImageUploadBean.class);
 	private ArrayList<UploadedFileArti> files = new ArrayList<UploadedFileArti>();
 	private ArrayList<Lekcjafoty> foty = new ArrayList<Lekcjafoty>();
+	private DataModel<Lekcjafoty> fotyMd=new ListDataModel<Lekcjafoty>();
     private int uploadsAvailable = 5;
     private boolean autoUpload = false;
     private boolean useFlash = false;
     private boolean upload = false;
-    private boolean fotyview = false;
     private Lekcja lekcja;
     private Lekcjafoty fota;
     @EJB LekcjafotyImp lekcjafotyImp;
@@ -56,8 +64,10 @@ public class ImageUploadBean implements Serializable {
         stream.write(getFiles().get((Integer) object).getData());
     }
     
-    public void paintBazy(OutputStream stream, Object object) throws IOException {
-        stream.write(getFoty().get((Integer) object).getPlikmini());
+	public void paintBazy(OutputStream stream, Object object) throws IOException {
+		Lekcjafoty lf=new Lekcjafoty();
+    	lf.setIdlekcjafoty((Integer)object);
+    	stream.write(lekcjafotyImp.find(lf).getPlikmini());
     }
 
     public void listener(FileUploadEvent event) throws Exception {
@@ -76,6 +86,18 @@ public class ImageUploadBean implements Serializable {
         }
         uploadsAvailable--;
     }
+    
+    public void zmienFotaLp(ValueChangeEvent event) throws IOException{
+    	logger.info("sssssssssssssssssssssssssssss");
+		logger.info(event.getNewValue());
+		logger.info(event.getOldValue());
+		fota=fotyMd.getRowData();		
+		lekcjafotyImp.update(fota, (Integer)event.getNewValue());
+		lekcja=lekcjaImp.find(lekcja);
+		foty.clear();
+		foty= new ArrayList<Lekcjafoty>(lekcja.getLekcjafoties());
+		FacesContext.getCurrentInstance().getExternalContext().redirect("fotyForm.xhtml");
+	}
 
     public String clearUploadData() {
         files.clear();
@@ -102,7 +124,6 @@ public class ImageUploadBean implements Serializable {
 
     public String akceptujOpis() {
     	lekcjafotyImp.update(fota);
-    	fotyview=true;
     	foty.clear();
     	lekcja=lekcjaImp.find(lekcja);
     	logger.info(lekcja.getTytul());
@@ -114,7 +135,6 @@ public class ImageUploadBean implements Serializable {
     	return "fotyForm";
     }
     public String pokazFoty() {
-    	fotyview=true;
     	foty.clear();
     	lekcja=lekcjaImp.find(lekcja);
     	logger.info(lekcja.getTytul());
@@ -203,12 +223,13 @@ public class ImageUploadBean implements Serializable {
 		this.fota = fota;
 	}
 
-	public boolean isFotyview() {
-		return fotyview;
+	public DataModel<Lekcjafoty> getFotyMd() {
+		fotyMd.setWrappedData(foty);
+		return fotyMd;
 	}
 
-	public void setFotyview(boolean fotyview) {
-		this.fotyview = fotyview;
+	public void setFotyMd(DataModel<Lekcjafoty> fotyMd) {
+		this.fotyMd = fotyMd;
 	}
 
 }
