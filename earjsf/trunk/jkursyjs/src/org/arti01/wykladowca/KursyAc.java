@@ -82,9 +82,14 @@ public class KursyAc {
 	}
 	
 	public String lekcjaUsun(){
-		lekcjaImp.delete(lekcja);
-		kurs=kursyImp.find(kurs);
-		lekcje.setWrappedData(kurs.getLekcjas());
+			try {
+				lekcjaImp.delete(lekcja);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				errorText="nieudane usunięcie - lekcja zawiera zdjęcia, należy je usunąć";
+			}
+			kurs=kursyImp.find(kurs);
+			lekcje.setWrappedData(kurs.getLekcjas());
 		return "kursyForm";
 	}
 	

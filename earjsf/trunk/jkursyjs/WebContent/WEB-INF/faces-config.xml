@@ -12,12 +12,6 @@
 		<managed-bean-class>org.arti01.utility.Login</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
 	</managed-bean>
-	
-	<managed-bean>
-		<managed-bean-name>kursyAc</managed-bean-name>
-		<managed-bean-class>org.arti01.all.KursyAc</managed-bean-class>
-		<managed-bean-scope>session</managed-bean-scope>
-	</managed-bean>
 	<managed-bean>
 		<managed-bean-name>indexAc</managed-bean-name>
 		<managed-bean-class>org.arti01.all.IndexAc</managed-bean-class>

@@ -64,7 +64,7 @@
 				</h:panelGroup>
 			</h:panelGrid>
 </h:form>
-<h:form>
+<h:form id="foty">
 			<h:dataTable value="#{wykladImageUploadBean.fotyMd}" var="fota">
 				<h:column>
 					<h:selectOneMenu value="#{fota.lp}" onchange="submit();" valueChangeListener="#{wykladImageUploadBean.zmienFotaLp}">

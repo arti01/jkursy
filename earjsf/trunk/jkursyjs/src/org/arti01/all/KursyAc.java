@@ -67,8 +67,6 @@ public class KursyAc {
 		String username = params.get("username");
 		if(username!=null)wykladowca.setUsername(username);
 		wykladowca=userImp.find(wykladowca);
-		//logger.info(wykladowca.getImieNazwisko());
-		//logger.info(username);
 		return "wykladowcaDetale";
 	}
 

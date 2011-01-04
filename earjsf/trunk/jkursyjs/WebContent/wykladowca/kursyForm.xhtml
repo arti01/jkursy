@@ -20,6 +20,7 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 <h:form>
 	<h:commandButton value="dodaj nową lekcję" action="#{wykladKursyAc.lekcjaFormNew}"/>
 </h:form>
+<h2><h:outputText value="#{wykladKursyAc.errorText}"  styleClass="error"/></h2>
 <ul>
 <h:form>
 <h:dataTable var="lekcja" value="#{wykladKursyAc.lekcje}">
