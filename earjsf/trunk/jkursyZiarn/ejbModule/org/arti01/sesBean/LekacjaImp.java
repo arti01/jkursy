@@ -1,5 +1,6 @@
 package org.arti01.sesBean;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.persistence.Query;
 
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
 @Stateless
 @LocalBean
@@ -43,7 +45,7 @@ public class LekacjaImp {
 		em.persist(lekcja);
 	}
 	
-	public void delete(Lekcja lekcja) {
+	public void delete(Lekcja lekcja) throws  org.eclipse.persistence.exceptions.DatabaseException {
 		Integer lp=lekcja.getLp();
 		Kursy kursy=lekcja.getKursy();
 		lekcja=em.find(lekcja.getClass(), lekcja.getIdlekcja());
