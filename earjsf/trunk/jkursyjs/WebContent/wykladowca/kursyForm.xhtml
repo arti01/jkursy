@@ -50,6 +50,11 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 			<f:setPropertyActionListener target="#{wykladImageUploadBean.upload}" value="false"/>
 		</h:commandLink>
 	</h:column>
+	<h:column>
+		<h:commandLink value="podgląd lekcji" action="#{wykladKursyAc.lekcjaPodglad}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+		</h:commandLink>
+	</h:column>
 </h:dataTable>
 </h:form>
 </ul>

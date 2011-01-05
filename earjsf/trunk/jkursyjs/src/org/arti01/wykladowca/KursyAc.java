@@ -93,6 +93,11 @@ public class KursyAc {
 		return "kursyForm";
 	}
 	
+	public String lekcjaPodglad(){
+		logger.info(lekcja);
+		return "lekcja.xhtml";
+	}
+	
 	public void zmienLekcjaLp(ValueChangeEvent event) throws IOException{
 		logger.info(event.getNewValue());
 		logger.info(event.getOldValue());
