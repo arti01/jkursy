@@ -3,6 +3,7 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -31,6 +32,10 @@ public class Role implements Serializable {
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="roles")
 	private Set<User> users;
 
+	@OneToMany(mappedBy="role")
+	@OrderBy("lp")
+	private List<Statyczne> statyczne;
+	
     public Role() {
     }
 
@@ -56,6 +61,14 @@ public class Role implements Serializable {
 	@ManyToMany(mappedBy="roles", cascade=CascadeType.ALL)
 	public void setUsers(Set<User> users) {
 		this.users = users;
+	}
+
+	public List<Statyczne> getStatyczne() {
+		return statyczne;
+	}
+
+	public void setStatyczne(List<Statyczne> statyczne) {
+		this.statyczne = statyczne;
 	}
 	
 }

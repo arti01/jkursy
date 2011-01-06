@@ -8,13 +8,19 @@
 	<ui:define name="body">
 		<body>
 		<h:form>
-			<h:panelGrid columns="3">
+		<h:panelGrid columns="3">
+		<h:message styleClass="error"/>
+		<h:outputLabel for="wroli" value="widocze w menu: (pusta wartość widoczne dla wszystkich)"/>
+		<h:selectOneMenu id="wroli" value="#{adminStatyczneAc.rola}">
+			<f:selectItems value="#{adminStatyczneAc.rolesName}"/>
+		</h:selectOneMenu>
+			
 			<h:message for="tytul" styleClass="error"/>
 				<h:outputLabel  value="tytul" />
 				<h:inputText id="tytul" value="#{adminStatyczneAc.statyczne.tytul}" />
 			<h:message for="opis"  styleClass="error"/>
 				<h:outputLabel value="krótki opis" />
-				<h:inputText id="opis" value="#{adminStatyczneAc.statyczne.opis}" />
+				<h:inputText id="opis" value="#{adminStatyczneAc.statyczne.opis}" size="100"/>
 			<h:message for="tresc"  styleClass="error"/>
 				<h:outputLabel value="tresc"/>
 				<h:inputTextarea id="tresc" value="#{adminStatyczneAc.statyczne.tresc}"/>

@@ -1,14 +1,19 @@
 package org.arti01.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Role;
 import org.arti01.entit.Statyczne;
+import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.StatyczneImp;
 
 public class StatyczneAc {
@@ -20,15 +25,23 @@ public class StatyczneAc {
 	private Statyczne statyczne;
 	private ValueChangeEvent zmienE;
 	@EJB StatyczneImp statImp;
+	@EJB RoleImp roleImp;
+	private List<String> rolesName=new ArrayList<String>();
+	private String rola;
 	
 	public String form(){
 		//logger.info(allStatyczne.isRowAvailable()+"dostepne");
 		//logger.info(allStatyczne.getRowIndex()+"indexsssssssssss");
 		statyczne=allStatyczne.getRowData();
+		if(statyczne.getRole()==null) rola="wszyscy";
+		else rola=statyczne.getRole().getRola();
 		return "statyczneForm";
 	}
+	
 	public String formNew(){
 		statyczne=new Statyczne();
+		if(statyczne.getRole()==null) rola="wszyscy";
+		else rola=statyczne.getRole().getRola();
 		return "statyczneForm";
 	}
 	
@@ -39,6 +52,13 @@ public class StatyczneAc {
 	
 	
 	public String dodaj() throws Exception {
+		logger.info(rola);
+		Role rolaN=new Role();
+		if(!rola.equals("wszyscy")) {
+			rolaN.setRola(rola);
+			statyczne.setRole(rolaN);
+		}
+		else statyczne.setRole(null);
 		if (statyczne.getIdStatyczne()!=null) {// edycja
 			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 			statImp.update(statyczne);
@@ -100,10 +120,8 @@ public class StatyczneAc {
 		FacesContext.getCurrentInstance().getExternalContext().redirect("statyczneLista.xhtml");
 	}
 
-
-
 	public DataModel<Statyczne> getAllStatyczne() {
-		allStatyczne.setWrappedData(statImp.getFindAll());
+		allStatyczne.setWrappedData(statImp.getAll());
 		//logger.info("sssssssssssssssssssssss");
 		//logger.info(allStatyczne.getRowIndex());
 		return allStatyczne;
@@ -131,5 +149,32 @@ public class StatyczneAc {
 	}
 	public ValueChangeEvent getZmienE() {
 		return zmienE;
+	}
+
+	public RoleImp getRoleImp() {
+		return roleImp;
+	}
+
+	public void setRoleImp(RoleImp roleImp) {
+		this.roleImp = roleImp;
+	}
+
+	public List<String> getRolesName() {
+		rolesName.clear();
+		rolesName.add("wszyscy");
+		rolesName.addAll(roleImp.getRolesName());
+		return rolesName;
+	}
+
+	public void setRolesName(List<String> rolesName) {
+		this.rolesName = rolesName;
+	}
+
+	public String getRola() {
+		return rola;
+	}
+
+	public void setRola(String rola) {
+		this.rola = rola;
 	}
 }

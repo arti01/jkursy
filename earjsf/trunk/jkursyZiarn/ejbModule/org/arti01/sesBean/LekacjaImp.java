@@ -1,18 +1,14 @@
 package org.arti01.sesBean;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
-import org.eclipse.persistence.exceptions.DatabaseException;
 
 @Stateless
 @LocalBean

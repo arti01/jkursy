@@ -23,7 +23,12 @@ public class StatyczneImp {
 	 * @see org.arti01.obiekty.StatyczneImpLocal#findAll()
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Statyczne> getFindAll() {
+	public List<Statyczne> getFindForAll() {
+		return em.createQuery("select s from Statyczne s where s.role is null order by s.lp").getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Statyczne> getAll() {
 		return em.createQuery("select s from Statyczne s order by s.lp").getResultList();
 	}
 

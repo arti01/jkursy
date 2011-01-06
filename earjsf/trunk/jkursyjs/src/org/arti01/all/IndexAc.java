@@ -73,7 +73,7 @@ public class IndexAc {
 	}
 
 	public ListDataModel<Statyczne> getStatyczneModel() {
-		if(statyczneModel.getRowIndex()==-1) statyczneModel.setWrappedData(statyczneImp.getFindAll());
+		if(statyczneModel.getRowIndex()==-1) statyczneModel.setWrappedData(statyczneImp.getFindForAll());
 		return statyczneModel;
 	}
 

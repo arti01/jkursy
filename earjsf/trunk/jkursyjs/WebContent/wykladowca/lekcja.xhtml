@@ -10,10 +10,16 @@
 		<h3><h:outputText value="#{wykladKursyAc.lekcja.tytul}"/></h3>
 		<h4>numer kolejny lekcji:<h:outputText value="#{wykladKursyAc.lekcja.lp}"/></h4>
 		<h:outputText value="#{wykladKursyAc.lekcja.tresc}" escape="false"/>
-
-		<ui:repeat var="#{wykladKursyAc.lekcja.foties}" value="fota">
-		#{fota}
-		#{fota.idlekcjafoty}
+		
+		<ui:repeat value="#{wykladKursyAc.lekcja.lekcjafoties}" var="fota">
+		<h:panelGrid columns="1">
+			<a4j:mediaOutput element="img"
+				createContent="#{wykladImageUploadBean.paintBazyDuze}"
+				value="#{fota.idlekcjafoty}" cacheable="false">
+				<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+			</a4j:mediaOutput>
+			<h:outputText value="#{fota.opis}"/>
+		</h:panelGrid>
 		</ui:repeat>
 		</ui:define>
 </ui:composition>

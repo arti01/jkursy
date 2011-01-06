@@ -35,6 +35,10 @@ public class Statyczne implements Serializable {
 	@NotNull
 	@Size(min=1, max=255)
 	private String tytul;
+	
+	@ManyToOne
+	@JoinColumn(name="rola")
+	private Role role;
 
     public Statyczne() {
     }
@@ -77,6 +81,14 @@ public class Statyczne implements Serializable {
 
 	public void setTytul(String tytul) {
 		this.tytul = tytul;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }

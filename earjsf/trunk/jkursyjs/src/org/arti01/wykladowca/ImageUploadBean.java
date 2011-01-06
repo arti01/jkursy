@@ -69,6 +69,12 @@ public class ImageUploadBean implements Serializable {
     	lf.setIdlekcjafoty((Integer)object);
     	stream.write(lekcjafotyImp.find(lf).getPlikmini());
     }
+	
+	public void paintBazyDuze(OutputStream stream, Object object) throws IOException {
+		Lekcjafoty lf=new Lekcjafoty();
+    	lf.setIdlekcjafoty((Integer)object);
+    	stream.write(lekcjafotyImp.find(lf).getData());
+    }
 
     public void listener(FileUploadEvent event) throws Exception {
         UploadedFile item = event.getUploadedFile();

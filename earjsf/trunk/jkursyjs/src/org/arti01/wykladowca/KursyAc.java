@@ -17,9 +17,13 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
+import org.arti01.entit.Role;
+import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.LekacjaImp;
+import org.arti01.sesBean.RoleImp;
+import org.arti01.sesBean.StatyczneImp;
 
 @ManagedBean(name="wykladKursyAc")
 @SessionScoped
@@ -34,7 +38,11 @@ public class KursyAc {
 	@EJB KursyImp kursyImp;
 	private String errorText;
 	@ManagedProperty(value="#{wykladImageUploadBean}")
-	private ImageUploadBean iub;	
+	private ImageUploadBean iub;
+	@EJB RoleImp roleImp;
+	@EJB StatyczneImp statyczneImp;
+	private Role role=new Role();
+	private Statyczne strona;
 	
 	public String kursForm(){
 		kurs=kursyImp.find(kurs);
@@ -47,6 +55,13 @@ public class KursyAc {
 	public String lekcjaFormNew(){
 		lekcja=new Lekcja();
 		return "lekcjaForm";
+	}
+	
+	public String statyczna(){
+		logger.info(strona.getTytul());
+		strona =statyczneImp.find(strona);
+		logger.info(strona.getTytul());
+		return "/wykladowca/statyczneDetale.xhtml";
 	}
 	
 	public String lekcjaForm(){
@@ -94,7 +109,6 @@ public class KursyAc {
 	}
 	
 	public String lekcjaPodglad(){
-		logger.info(lekcja);
 		return "lekcja.xhtml";
 	}
 	
@@ -149,5 +163,39 @@ public class KursyAc {
 
 	public void setIub(ImageUploadBean iub) {
 		this.iub = iub;
+	}
+
+	public RoleImp getRoleImp() {
+		return roleImp;
+	}
+
+	public void setRoleImp(RoleImp roleImp) {
+		this.roleImp = roleImp;
+	}
+
+	public Role getRole() {
+		role.setRola(Role.WYKLADOWCA);
+		role=roleImp.find(role);
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Statyczne getStrona() {
+		return strona;
+	}
+
+	public void setStrona(Statyczne statyczna) {
+		this.strona = statyczna;
+	}
+
+	public StatyczneImp getStatyczneImp() {
+		return statyczneImp;
+	}
+
+	public void setStatyczneImp(StatyczneImp statyczneImp) {
+		this.statyczneImp = statyczneImp;
 	}
 }

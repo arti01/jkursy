@@ -13,9 +13,12 @@ import org.arti01.entit.Role;
 @LocalBean
 public class RoleImp{
 	//Logger logger = Logger.getLogger(RoleImp.class);
+	
 	@PersistenceContext
 	EntityManager em;
 
+	List<String>rolesName=new ArrayList<String>();
+	
 	public Role find(Role role) {
 		if (role.getRola() != null) {
 			role=em.find(Role.class, role.getRola());
@@ -32,7 +35,7 @@ public class RoleImp{
 	}
 	
 	public List<String> getRolesName(){
-		List<String> rolesName=new ArrayList<String>();
+		rolesName.clear();
 		for(Role r:findAll()){
 			rolesName.add(r.getRola());
 		}
@@ -65,4 +68,8 @@ public class RoleImp{
 		return userRolesNew;
 	}
 	*/
+
+	public void setRolesName(List<String> rolesName) {
+		this.rolesName = rolesName;
+	}
 }
