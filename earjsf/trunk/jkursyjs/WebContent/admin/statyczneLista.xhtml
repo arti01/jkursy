@@ -34,6 +34,11 @@ pojawiające się na stronie głównej, jeśli ustawi się widoczność na upraw
 	</h:commandLink>
 	</h:column>
 	<h:column>
+	<f:facet name="header">dotyczy menu</f:facet>
+		<h:outputText value="strona główna" rendered="#{statyczna.role==null}"/>
+		<h:outputText value="#{statyczna.role.rola}" rendered="#{statyczna.role!=null}"/>
+	</h:column>
+	<h:column>
 	<h:commandLink action="#{adminStatyczneAc.usun}" onclick="return takNie();">
 		<h:outputText value="usun"/><br/>
 	</h:commandLink>
