@@ -45,9 +45,15 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 		</h:commandLink>
 	</h:column>
 	<h:column>
-		<h:commandLink value="zdjęcia" action="#{wykladKursyAc.foty}">
+		<h:commandLink value="obsługa zdjęć" action="#{wykladKursyAc.foty}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 			<f:setPropertyActionListener target="#{wykladImageUploadBean.upload}" value="false"/>
+		</h:commandLink>
+	</h:column>
+	<h:column>
+		<h:commandLink value="obsługa załączników (plików)" action="#{wykladKursyAc.pliki}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+			<f:setPropertyActionListener target="#{wykladPlikUploadBean.upload}" value="false"/>
 		</h:commandLink>
 	</h:column>
 	<h:column>

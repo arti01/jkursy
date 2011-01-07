@@ -23,9 +23,6 @@ public class Lekcjapliki implements Serializable {
 
 	private byte[] plik;
 
-	private byte[] plikmini;
-
-	//bi-directional many-to-one association to Lekcja
     @ManyToOne
 	@JoinColumn(name="idlekcja")
 	private Lekcja lekcja;
@@ -64,15 +61,7 @@ public class Lekcjapliki implements Serializable {
 	public void setPlik(byte[] plik) {
 		this.plik = plik;
 	}
-
-	public byte[] getPlikmini() {
-		return this.plikmini;
-	}
-
-	public void setPlikmini(byte[] plikmini) {
-		this.plikmini = plikmini;
-	}
-
+	
 	public Lekcja getLekcja() {
 		return this.lekcja;
 	}

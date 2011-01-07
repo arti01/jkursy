@@ -4,40 +4,38 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	<ui:composition template="/templates/template.xhtml">
-		<ui:define name="body">
-	<body>
-	wykladowcy<h:form id="form1">	
-			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="table">	
-				<h:column  id="nazwa">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<body>
+		wykladowcy
+		<h:form id="form1">
+			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="table">
+				<h:column id="nazwa">
 					<f:facet name="header">
 						<h:outputText value="Imie Nazwisko" />
 					</f:facet>
-					<ul><li>
 					<h:commandLink action="#{kursyAc.wykladDetale}">
-						<h3><h:outputText value="#{wyklad.imieNazwisko}"/></h3>
-						<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}"/>
+						<h5><h:outputText value="#{wyklad.imieNazwisko}" /></h5>
+						<f:setPropertyActionListener target="#{kursyAc.wykladowca}"
+							value="#{wyklad}" />
 					</h:commandLink>
-					</li></ul>
-					</h:column>
-				<h:column  id="kursy">
+				</h:column>
+				<h:column id="kursy">
 					<f:facet name="header">
 						<h:outputText value="prowadzone kursy" />
 					</f:facet>
 					<ul>
-					<ui:repeat var="kurs" value="#{wyklad.kursies}">
-					<li>
-					<h:commandLink action="#{kursyAc.detale}">
-						<f:param name="idkursy" value="#{kurs.idkursy}"/>
-						<h:outputText value="#{kurs.nazwa}"/>
-					</h:commandLink>
-					</li>
-					</ui:repeat>
+						<ui:repeat var="kurs" value="#{wyklad.kursies}">
+							<li><h:commandLink action="#{kursyAc.detale}">
+								<f:param name="idkursy" value="#{kurs.idkursy}" />
+								<h:outputText value="#{kurs.nazwa}" />
+							</h:commandLink></li>
+						</ui:repeat>
 					</ul>
 				</h:column>
 			</h:dataTable>
-			</h:form>
+		</h:form>
 		</body>
-</ui:define>
+	</ui:define>
 </ui:composition>
 </html>
