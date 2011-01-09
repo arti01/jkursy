@@ -1,5 +1,6 @@
 package org.arti01.all;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.ejb.EJB;
@@ -10,7 +11,7 @@ import org.arti01.entit.User;
 import org.arti01.sesBean.StatyczneImp;
 
 
-public class IndexAc {
+public class IndexAc implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(IndexAc.class);
 	@EJB StatyczneImp statyczneImp;

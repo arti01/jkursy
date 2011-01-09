@@ -1,6 +1,7 @@
 package org.arti01.wykladowca;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
+import org.arti01.entit.Lekcjapliki;
 import org.arti01.entit.Role;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
@@ -27,7 +29,7 @@ import org.arti01.sesBean.StatyczneImp;
 
 @ManagedBean(name="wykladKursyAc")
 @SessionScoped
-public class KursyAc {
+public class KursyAc implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
 	private User zalogowany;
@@ -37,8 +39,8 @@ public class KursyAc {
 	@EJB LekacjaImp lekcjaImp;
 	@EJB KursyImp kursyImp;
 	private String errorText;
-	@ManagedProperty(value="#{wykladImageUploadBean}")
-	private ImageUploadBean iub;
+	@ManagedProperty(value="#{wykladImageUploadBean}") private ImageUploadBean iub;
+	@ManagedProperty(value="#{wykladPlikUploadBean}")private PlikUploadBean pub;
 	@EJB RoleImp roleImp;
 	@EJB StatyczneImp statyczneImp;
 	private Role role=new Role();
@@ -47,8 +49,8 @@ public class KursyAc {
 	public String kursForm(){
 		kurs=kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
-		logger.info(kurs.getNazwa());
-		logger.info(kurs.getLekcjeLpAll());
+		//logger.info(kurs.getNazwa());
+		//logger.info(kurs.getLekcjeLpAll());
 		return "kursyForm";
 	}
 	
@@ -94,6 +96,14 @@ public class KursyAc {
 		iub.setLekcja(lekcjaImp.find(lekcja));
 		iub.setFoty(new ArrayList<Lekcjafoty>(lekcja.getLekcjafoties()));
 		return "fotyForm";
+	}
+	
+	public String pliki(){
+		logger.info("obsluga plikow");
+		pub.setLekcja(lekcjaImp.find(lekcja));
+		pub.setPliki(new ArrayList<Lekcjapliki>(lekcja.getLekcjaplikis()));
+		//logger.info(lekcja.getLekcjaplikis().size());
+		return "plikiForm.xhtml";
 	}
 	
 	public String lekcjaUsun(){
@@ -197,5 +207,13 @@ public class KursyAc {
 
 	public void setStatyczneImp(StatyczneImp statyczneImp) {
 		this.statyczneImp = statyczneImp;
+	}
+
+	public PlikUploadBean getPub() {
+		return pub;
+	}
+
+	public void setPub(PlikUploadBean pub) {
+		this.pub = pub;
 	}
 }

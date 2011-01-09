@@ -20,6 +20,8 @@ public class Lekcjapliki implements Serializable {
 	private Timestamp datadodania;
 
 	private String opis;
+	
+	private String nazwapliku;
 
 	private byte[] plik;
 
@@ -68,6 +70,14 @@ public class Lekcjapliki implements Serializable {
 
 	public void setLekcja(Lekcja lekcja) {
 		this.lekcja = lekcja;
+	}
+
+	public String getNazwapliku() {
+		return nazwapliku;
+	}
+
+	public void setNazwapliku(String nazwapliku) {
+		this.nazwapliku = nazwapliku;
 	}
 	
 }

@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -49,7 +48,8 @@ public class Lekcja implements Serializable {
 
 	//bi-directional many-to-one association to Lekcjapliki
 	@OneToMany(mappedBy="lekcja")
-	private Set<Lekcjapliki> lekcjaplikis;
+	@OrderBy("opis")
+	private List<Lekcjapliki> lekcjaplikis;
 
 	public Integer getIdlekcja() {
 		return this.idlekcja;
@@ -99,11 +99,11 @@ public class Lekcja implements Serializable {
 		this.lekcjafoties = lekcjafoties;
 	}
 	
-	public Set<Lekcjapliki> getLekcjaplikis() {
+	public List<Lekcjapliki> getLekcjaplikis() {
 		return this.lekcjaplikis;
 	}
 
-	public void setLekcjaplikis(Set<Lekcjapliki> lekcjaplikis) {
+	public void setLekcjaplikis(List<Lekcjapliki> lekcjaplikis) {
 		this.lekcjaplikis = lekcjaplikis;
 	}
 
