@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
 import org.arti01.sesBean.StatyczneImp;
 
-
+@ManagedBean(name="indexAc")
+@SessionScoped
 public class IndexAc implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(IndexAc.class);
@@ -21,6 +24,10 @@ public class IndexAc implements Serializable {
 	
 	public String execute() throws Exception{
 		return "SUCCESS";
+	}
+	
+	public String index() throws Exception{
+		return "index.xhtml?faces-redirect=true";
 	}
 	
 	public String statyczna() throws Exception{

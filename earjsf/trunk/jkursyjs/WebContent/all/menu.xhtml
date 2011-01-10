@@ -1,12 +1,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 <body>
 <div id="left">
 <h:form>
 <ul>
-	<li><h:commandLink value="do strony głównej" action="index" immediate="true">
+	<li><h:commandLink value="do strony głównej" action="#{indexAc.index}" immediate="true">
 	</h:commandLink>
 	</li>
 	<li><h:commandLink value="strefa administratorów" action="indexAdm"  immediate="true"/></li>
