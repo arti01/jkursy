@@ -22,6 +22,8 @@ public class Lekcjafoty implements Serializable {
 	private Timestamp datadodania;
 
 	private String opis;
+	
+	private String exif;
 
 	private byte[] plik;
 
@@ -92,6 +94,14 @@ public class Lekcjafoty implements Serializable {
 
 	public void setLp(Integer lp) {
 		this.lp = lp;
+	}
+
+	public String getExif() {
+		return exif;
+	}
+
+	public void setExif(String exif) {
+		this.exif = exif;
 	}
 	
 }

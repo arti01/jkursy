@@ -10,10 +10,18 @@ import org.arti01.utility.UploadedFileArti;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -118,8 +126,29 @@ public class ImageUploadBean implements Serializable {
         	logger.info(f.getMime());
             Lekcjafoty fota=new Lekcjafoty();
             fota.setLekcja(lekcja);
+            String exif ="";
+            try {
+				Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(f.getData()));
+				Iterator<?> directories = metadata.getDirectoryIterator();
+				while (directories.hasNext()) {
+				    Directory directory = (Directory)directories.next();
+				    // iterate through tags and print to System.out
+				    Iterator<?> tags = directory.getTagIterator();
+				    while (tags.hasNext()) {
+				        Tag tag = (Tag)tags.next();
+				        //System.out.println(tag.getTagName());
+				        // use Tag.toString()
+				        //tag.toString().c
+				        if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"<br/>";
+				    }
+				}
+			} catch (JpegProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             fota.setData(new ResizeJpg().zrobB(900, 600, f.getData()));
             fota.setPlikmini(new ResizeJpg().zrobB(150, 100, f.getData()));
+            fota.setExif(exif);
             lekcjafotyImp.insert(fota);
         }
         files.clear();

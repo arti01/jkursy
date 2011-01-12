@@ -29,15 +29,30 @@ public class ResizeJpg {
          
          if(var5.getWidth()/var5.getHeight()>var1/var2) {
             dlugosc =var1;
-            wysokosc=var5.getHeight()*dlugosc/var5.getWidth();
-            //logger.info("szerokie"+dlugosc+"--"  + var5.getWidth()+"--" + wysokosc+"--"+var5.getHeight());
-            AffineTransform var13=AffineTransform.getTranslateInstance(0, (var2-wysokosc)/2);
+            if (var1<var5.getWidth()) {
+            	wysokosc=var5.getHeight()*dlugosc/var5.getWidth();
+            	dlugosc=0;
+            }
+            else {
+            	wysokosc=var5.getHeight();
+            	dlugosc=(var1-var5.getWidth())/2;
+            }
+            logger.info("szerokie"+dlugosc+"--"  + var5.getWidth()+"--" + wysokosc+"--"+var5.getHeight());
+            AffineTransform var13=AffineTransform.getTranslateInstance(dlugosc, (var2-wysokosc)/2);
             var11.setTransform(var13);
          } else {
         	wysokosc=var2;
-            dlugosc = var5.getWidth()*wysokosc/var5.getHeight();
-            //logger.info("waskie"+dlugosc+"--"  + var5.getWidth()+"--" + wysokosc+"--"+var5.getHeight());
-            AffineTransform var14=AffineTransform.getTranslateInstance((var1-dlugosc)/2,0);
+        	 if (var2<var5.getHeight()){
+        		 dlugosc = var5.getWidth()*wysokosc/var5.getHeight();
+        		 wysokosc=0;
+        	 }
+        		 
+        	 else {
+        		 dlugosc = var5.getWidth();
+        		 wysokosc=(var2-var5.getHeight())/2;
+        	 }
+            logger.info("waskie"+dlugosc+"--"  + var5.getWidth()+"--" + wysokosc+"--"+var5.getHeight());
+            AffineTransform var14=AffineTransform.getTranslateInstance((var1-dlugosc)/2,wysokosc);
             var11.setTransform(var14);
          }
  
