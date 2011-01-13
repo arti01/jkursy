@@ -20,6 +20,7 @@ public class IndexAc implements Serializable {
 	@EJB StatyczneImp statyczneImp;
 	User user;
 	Statyczne strona;
+	boolean newsPokaz=false;
 	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
 	
 	public String execute() throws Exception{
@@ -28,6 +29,13 @@ public class IndexAc implements Serializable {
 	
 	public String index() throws Exception{
 		return "index.xhtml?faces-redirect=true";
+	}
+	
+	public String newsWiecej() throws Exception{
+		logger.info("dddddddddd");
+		if(newsPokaz)newsPokaz=false;
+		else newsPokaz=true;
+		return null;
 	}
 	
 	public String statyczna() throws Exception{
@@ -87,6 +95,14 @@ public class IndexAc implements Serializable {
 
 	public void setStatyczneModel(ListDataModel<Statyczne> statyczneModel) {
 		this.statyczneModel = statyczneModel;
+	}
+
+	public boolean isNewsPokaz() {
+		return newsPokaz;
+	}
+
+	public void setNewsPokaz(boolean newsPokaz) {
+		this.newsPokaz = newsPokaz;
 	}
 
 }

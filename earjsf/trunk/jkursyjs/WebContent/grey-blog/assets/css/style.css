@@ -6,7 +6,7 @@ a { color:blue; text-decoration:none; }
 h1 { font-size:16px; }
 h2 { font-size:14px; }
 
-.error {color: red; font-weight: bold;}
+.error {color: red; font-weight: bold; width: 50px}
 
 #wrapper { width:760px; margin:0 auto; padding:0; }
 
@@ -42,7 +42,7 @@ h2 { font-size:14px; }
 #right { float:left; }
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:black;}
-#right td {background: #E6E6E6;  width: 300px}
+#right td {background: #E6E6E6;  width: 170px}
 #right td a { color:blue; background-color:#E6E6E6;}
 #right td a:hover { background: white;}
 #right ul { margin: 0; padding:0; }
