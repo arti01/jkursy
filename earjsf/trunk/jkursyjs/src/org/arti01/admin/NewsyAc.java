@@ -62,13 +62,11 @@ public class NewsyAc {
 		return "newsyLista";
 	}
 	
-	/*
 	public String usun() throws Exception {
-		statyczne=allStatyczne.getRowData();
-		statImp.delete(statyczne);
-		return "statyczneLista";
+		news=allNewsy.getRowData();
+		newsyImp.delete(news);
+		return "newsyLista";
 	}
-*/
 
 	public RoleImp getRoleImp() {
 		return roleImp;

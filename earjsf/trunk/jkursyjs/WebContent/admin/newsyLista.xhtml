@@ -24,12 +24,12 @@ function takNie(){
 
 <ul>
 <rich:list var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="Car Store">
-<h:commandLink action="#{adminNewsyAc.form}">
-	<li><h:outputText value="#{news.tytul}"/>
+<li><h:commandLink action="#{adminNewsyAc.form}">
+	<h:outputText value="#{news.tytul}"/>
 	(<h:outputText value="#{news.datadodania}">
 				<f:convertDateTime pattern="yyyy-MM-dd" />
-				</h:outputText>)</li>
-				</h:commandLink>
+				</h:outputText>)
+				</h:commandLink><h:commandButton action="#{adminNewsyAc.usun}" value="usuń"/></li>
 	<hr/>
 </rich:list>
 </ul>

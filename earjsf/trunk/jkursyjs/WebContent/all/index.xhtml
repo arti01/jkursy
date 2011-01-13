@@ -13,14 +13,19 @@
 <h3>ciałko</h3>
 <h:form>
 <ul>
-<rich:list var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="Car Store">
+<rich:list var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="news">
 	<li><h:outputText value="#{news.tytul}"/>
 	(<h:outputText value="#{news.datadodania}">
 				<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:outputText>)</li>
-				<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" render="ss"/>
+				<h:panelGroup id="link">
+					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" render="ss, link" rendered="#{!(indexAc.newsPokaz)}"/>
+					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" render="ss, link" rendered="#{(indexAc.newsPokaz)}"/>
+				</h:panelGroup>
 				<h:panelGrid id="ss">
-				<h:outputText value="#{news.tresc}" escape="false" rendered="#{indexAc.newsPokaz}"/>
+					<a4j:commandLink action="#{indexAc.newsWiecej}" render="link, ss">
+					<h:outputText value="#{news.tresc}" escape="false" rendered="#{indexAc.newsPokaz}"/>
+					</a4j:commandLink>
 				</h:panelGrid>
 	<hr/>
 </rich:list>
