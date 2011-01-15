@@ -56,6 +56,10 @@ public class Kursy implements Serializable {
 	@OrderBy(value="lp")
 	private List<Lekcja> lekcjas;
 	
+	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+	@OrderBy(value="datadodania")
+	private List<Newsykursy> newsykursy;
+	
 	@Transient
 	private List<User> wykladowcy;
 	
@@ -154,5 +158,13 @@ public class Kursy implements Serializable {
 
 	public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
 		this.lekcjeLpAll = lekcjeLpAll;
+	}
+
+	public List<Newsykursy> getNewsykursy() {
+		return newsykursy;
+	}
+
+	public void setNewsykursy(List<Newsykursy> newsykursy) {
+		this.newsykursy = newsykursy;
 	}
 }
