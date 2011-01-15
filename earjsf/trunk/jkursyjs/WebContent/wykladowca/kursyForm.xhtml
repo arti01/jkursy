@@ -64,6 +64,37 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 </h:dataTable>
 </h:form>
 </ul>
+
+<hr/>
+
+<h2>Newsy kursu</h2>
+<h:form>
+	<h:commandButton value="dodaj nowy news" action="#{wykladNewsyAc.formNew}"/>
+</h:form>
+
+<h:form>
+<h:dataTable var="news" value="#{wykladKursyAc.wn.allNewsy}">
+<h:column>
+<f:facet name="header">tytuł</f:facet>
+<h:commandLink action="#{wykladKursyAc.wn.form}">
+	<h:outputText value="#{news.tytul}"/>
+	<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}"/>
+</h:commandLink>
+</h:column>
+<h:column>
+<f:facet name="header">data dodania</f:facet>
+<h:outputText value="#{news.datadodania}">
+	<f:convertDateTime pattern="yyyy-MM-dd"/>
+</h:outputText>
+</h:column>
+<h:column>
+		<h:commandLink value="usuń news" action="#{wykladKursyAc.wn.usun}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}"/>
+		</h:commandLink>
+	</h:column>
+</h:dataTable>
+</h:form>
+
 </h:body>
 </ui:define>
 </ui:composition>

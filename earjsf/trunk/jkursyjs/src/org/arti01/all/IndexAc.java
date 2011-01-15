@@ -27,12 +27,12 @@ public class IndexAc implements Serializable {
 		return "SUCCESS";
 	}
 	
-	public String index() throws Exception{
+	public String index(){
+	newsPokaz=false;
 		return "index.xhtml?faces-redirect=true";
 	}
 	
-	public String newsWiecej() throws Exception{
-		logger.info("dddddddddd");
+	public String newsWiecej(){
 		if(newsPokaz)newsPokaz=false;
 		else newsPokaz=true;
 		return null;

@@ -1,5 +1,6 @@
 package org.arti01.admin;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.faces.model.DataModel;
@@ -11,7 +12,7 @@ import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.UserImp;
 import org.richfaces.component.SortOrder;
 
-public class KursyAc {
+public class KursyAc implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);

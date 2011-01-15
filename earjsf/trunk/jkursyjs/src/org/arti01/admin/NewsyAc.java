@@ -1,28 +1,22 @@
 package org.arti01.admin;
 
-import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Newsy;
-import org.arti01.entit.Role;
-import org.arti01.entit.Statyczne;
 import org.arti01.sesBean.NewsyImp;
 import org.arti01.sesBean.RoleImp;
 
 @ManagedBean(name="adminNewsyAc")
 @SessionScoped
-public class NewsyAc {
+public class NewsyAc implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(NewsyAc.class);

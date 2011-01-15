@@ -41,6 +41,7 @@ public class KursyAc implements Serializable {
 	private String errorText;
 	@ManagedProperty(value="#{wykladImageUploadBean}") private ImageUploadBean iub;
 	@ManagedProperty(value="#{wykladPlikUploadBean}")private PlikUploadBean pub;
+	@ManagedProperty(value="#{wykladNewsyAc}")private NewsyAc wn;
 	@EJB RoleImp roleImp;
 	@EJB StatyczneImp statyczneImp;
 	private Role role=new Role();
@@ -49,6 +50,7 @@ public class KursyAc implements Serializable {
 	public String kursForm(){
 		kurs=kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
+		wn.setKurs(kurs);
 		//logger.info(kurs.getNazwa());
 		//logger.info(kurs.getLekcjeLpAll());
 		return "kursyForm";
@@ -216,4 +218,13 @@ public class KursyAc implements Serializable {
 	public void setPub(PlikUploadBean pub) {
 		this.pub = pub;
 	}
+
+	public void setWn(NewsyAc wn) {
+		this.wn = wn;
+	}
+
+	public NewsyAc getWn() {
+		return wn;
+	}
+
 }

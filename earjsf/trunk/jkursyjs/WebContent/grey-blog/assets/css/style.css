@@ -27,6 +27,8 @@ h2 { font-size:14px; }
 #nav ul li a:hover { background-color: #FFFFFF; color:#999999; }
 
 #content { width:100%; }
+#content td {background: black;  width: 700px}
+#content ul li {width: 700px}
 
 #left { float:left; width:20%; }
 #left ul { margin: 0; padding:0; }
@@ -39,7 +41,7 @@ h2 { font-size:14px; }
 
 #breadcrumb { float:left; width:80%; background-color:#EFEFEF; }
 
-#right { float:left; }
+#right { float:left; vertical-align: top;}
 #right .postinfo { display:block; width:90%; margin:5px; padding:6px; background-color:#EFEFEF; border:1px solid #D4D4D4; }
 #right p a { color:black;}
 #right td {background: #E6E6E6;  width: 170px}

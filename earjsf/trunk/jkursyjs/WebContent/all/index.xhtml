@@ -10,27 +10,26 @@
 	<body>
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
-<h3>ciałko</h3>
+		<div id="content">
 <h:form>
 <ul>
 <rich:list var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="news">
-	<li><h:outputText value="#{news.tytul}"/>
+	<li>
+	<h:panelGroup id="ss">
+	<h4><h:outputText value="#{news.tytul}"/>
 	(<h:outputText value="#{news.datadodania}">
 				<f:convertDateTime pattern="yyyy-MM-dd" />
-				</h:outputText>)</li>
-				<h:panelGroup id="link">
-					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" render="ss, link" rendered="#{!(indexAc.newsPokaz)}"/>
-					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" render="ss, link" rendered="#{(indexAc.newsPokaz)}"/>
-				</h:panelGroup>
-				<h:panelGrid id="ss">
-					<a4j:commandLink action="#{indexAc.newsWiecej}" render="link, ss">
-					<h:outputText value="#{news.tresc}" escape="false" rendered="#{indexAc.newsPokaz}"/>
-					</a4j:commandLink>
-				</h:panelGrid>
-	<hr/>
+				</h:outputText>)</h4>
+					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" rendered="#{!(indexAc.newsPokaz)}" render="ss"/>
+					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
+
+					<h:outputText value="#{news.tresc}" escape="false" rendered="#{(indexAc.newsPokaz)}"/>
+					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
+	<hr/><br/></h:panelGroup></li>
 </rich:list>
 </ul>
 </h:form>
+</div>
 </ui:define>
 </ui:composition>
 </body>
