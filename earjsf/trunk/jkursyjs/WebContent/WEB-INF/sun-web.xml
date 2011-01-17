@@ -10,6 +10,10 @@
 		<role-name>wykladowca</role-name>
 		<group-name>wykladowca</group-name>
 	</security-role-mapping>
+	<security-role-mapping>
+		<role-name>kursant</role-name>
+		<group-name>kursant</group-name>
+	</security-role-mapping>
 	<resource-ref>
 		<res-ref-name>jsf/ProjectStage</res-ref-name>
 		<jndi-name>javax.faces.PROJECT_STAGE</jndi-name>

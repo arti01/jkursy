@@ -1,39 +1,56 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:a4j="http://richfaces.org/a4j">
-	<ui:composition template="/templates/template.xhtml">
+	<ui:composition template="/templates/templatekursant.xhtml">
 		<ui:define name="body">
-		<div id="content">
+<h:body>
+<br/>
+<div id="content">
+<h2>newys kursu</h2>
+<h:form>
 
-<ul>
-<a4j:repeat var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="news">
-	<li>
-	<h:form>
+<rich:list var="news" value="#{kursantKursyAc.kurs.newsykursy}" type="unordered" title="news">
 	<h:panelGroup id="ss">
+	<hr/>
 	<h4><h:outputText value="#{news.tytul}"/>
 	(<h:outputText value="#{news.datadodania}">
 				<f:convertDateTime pattern="yyyy-MM-dd" />
 				</h:outputText>)</h4>
 					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" rendered="#{!(indexAc.newsPokaz)}" render="ss"/>
 					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-
 					<h:outputText value="#{news.tresc}" escape="false" rendered="#{(indexAc.newsPokaz)}"/>
 					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-	<hr/><br/></h:panelGroup>
-	</h:form>
-	</li>
-</a4j:repeat>
-</ul>
+	<hr/></h:panelGroup>
+</rich:list>
+</h:form>
 </div>
+<br/>
+<div id="right">
+<h2>lista lekcji:)</h2>
+<h:form>
+<h:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
+	<h:column>
+	<f:facet name="header">tytuł lekcji</f:facet>
+		<h:outputText value="#{lekcja.lp}"/>.
+		<h:commandLink action="#{kursantLekcjaAc.pokaz}">
+			<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+		<h:outputText value="#{lekcja.tytul}"/>
+		</h:commandLink>
+	</h:column>
+	<h:column>
+		<f:facet name="header">data modyfikacji lekcji</f:facet>
+		<h:outputText value="#{lekcja.datazmiany}"/>
+	</h:column>
+</h:dataTable>
+</h:form>
+</div>
+<br/>
+</h:body>
 </ui:define>
 </ui:composition>
 </html>
-
-
-

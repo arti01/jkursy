@@ -1,5 +1,6 @@
 package org.arti01.all;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import org.arti01.sesBean.UserImp;
 
 @ManagedBean(name="kursyAc")
 @SessionScoped
-public class KursyAc {
+public class KursyAc implements Serializable{
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
 	private List<Kursy>kursy;
@@ -35,11 +36,18 @@ public class KursyAc {
 		kurs=new Kursy();
     }
 	
-	public String list() throws Exception{
+	public String list() {
 		//logger.info("jestemmmm");
 		kursy=kursyImp.findAll();
-		allKursy.setWrappedData(kursyImp.findAll());
+		allKursy.setWrappedData(kursy);
 		return "kursyLista";
+	}
+	
+	public String listA() {
+		logger.info("jestemmmm");
+		kursy=kursyImp.findAll();
+		allKursy.setWrappedData(kursy);
+		return null;
 	}
 	
 	public String wykladList(){

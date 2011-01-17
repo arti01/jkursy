@@ -2,12 +2,67 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
 
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
+	<div id="right">
+		<h3><h:outputText value="#{kursantLekcjaAc.lekcja.tytul}"/></h3>
+		<h4>numer kolejny lekcji:<h:outputText value="#{kursantLekcjaAc.lekcja.lp}"/></h4>
 		
+		Inne lekcje:<br/>
+		<h:form>
+		<ui:repeat var="lekcja" value="#{kursantLekcjaAc.lekcja.kursy.lekcjas}">
+		<h:commandButton action="#{kursantLekcjaAc.pokaz}" value="#{lekcja.lp}.#{lekcja.tytul}" rendered="#{lekcja!=kursantLekcjaAc.lekcja}">
+			<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+		</h:commandButton>
+		</ui:repeat>
+		</h:form>
+		<hr size="-1"/>
+		<h:form>
+		<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjaplikis}" var="plik">
+		<h:panelGrid columns="2">
+			<h:outputText value="#{plik.opis}"/>
+			<h:commandButton value="pobierz plik"
+						action="#{wykladPlikUploadBean.download}">
+						<f:setPropertyActionListener target="#{wykladPlikUploadBean.plik}"
+							value="#{plik}" />
+					</h:commandButton>
+		</h:panelGrid>
+		</ui:repeat>
+		</h:form>
+		</div>
+		<br/>
+		<div id="content">
+		<br/>
+		<h:outputText value="#{kursantLekcjaAc.lekcja.tresc}" escape="false"/>
+		<br/>
+		
+		<h:form>
+		<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjafoties}" var="fota">
+		<h:panelGrid columns="2">
+		<h:panelGroup id="fota">
+			<a4j:mediaOutput element="img"
+				createContent="#{wykladImageUploadBean.paintBazyDuze}"
+				value="#{fota.idlekcjafoty}" cacheable="false">
+				<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+			</a4j:mediaOutput><br/>
+			<h:outputText value="#{fota.opis}"/>
+		</h:panelGroup>
+		<h:panelGroup id="exif">
+		<a4j:commandLink value="EXIF" action="#{kursantLekcjaAc.exifPokazZmien}" render="exif" rendered="#{!(kursantLekcjaAc.exifPokaz)}"/>
+		<br/>
+		<a4j:commandLink action="#{kursantLekcjaAc.exifPokazZmien}" render="exif" rendered="#{kursantLekcjaAc.exifPokaz}">
+		<h:outputText value="#{fota.exif}" escape="false" rendered="#{kursantLekcjaAc.exifPokaz}"/>
+		<h:outputText value="zwiń"/>
+		</a4j:commandLink>
+		 </h:panelGroup>
+		</h:panelGrid>
+		</ui:repeat>
+		</h:form>
+		</div>
 		</ui:define>
 </ui:composition>
-
 </html>

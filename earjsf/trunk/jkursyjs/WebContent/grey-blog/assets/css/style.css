@@ -26,8 +26,9 @@ h2 { font-size:14px; }
 #nav ul li a { display:block; width:150px; height:15px; padding:8px 0; margin:0 1px 0 0; background-color:#EFEFEF; text-align:center; }
 #nav ul li a:hover { background-color: #FFFFFF; color:#999999; }
 
-#content { width:100%; }
-#content td {background: black;  width: 700px}
+#content { float:left; vertical-align: top;}
+#content td {background: #E6E6E6;}
+#content td a { color:blue;background-color:#E6E6E6;}
 #content ul li {width: 700px}
 
 #left { float:left; width:20%; }

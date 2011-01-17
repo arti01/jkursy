@@ -6,13 +6,13 @@
 <div id="left">
 <h:form>
 <ul>
-	<li><h:commandLink value="do strony głównej" action="#{indexAc.index}" immediate="true">
-	</h:commandLink>
+	<li><h:commandLink value="do strony głównej" action="#{indexAc.index}"/>
 	</li>
-	<li><h:commandLink value="strefa administratorów" action="indexAdm"  immediate="true"/></li>
-	<li><h:commandLink value="strefa wykładowców" action="indexWyklad"  immediate="true"/></li>
-	<li><h:commandLink value="kursy" action="#{kursyAc.list}" immediate="true" /></li>
-	<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" immediate="true" /></li>
+	<li><h:commandLink value="strefa administratorów" action="indexAdm"/></li>
+	<li><h:commandLink value="strefa wykładowców" action="indexWyklad"/></li>
+	<li><h:commandLink value="strefa kursantów" action="indexKursant" /></li>
+	<li><h:commandLink value="kursy" action="#{kursyAc.list}" /></li>
+	<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}"/></li>
 		<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 			<li><h:commandLink action="#{indexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />
