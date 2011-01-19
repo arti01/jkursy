@@ -18,6 +18,9 @@
 				<h:message for="opisKrotki" styleClass="error" />
 				<h:outputLabel value="krótki opis" />
 				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" immediate="true"/>
+				<h:message for="stacjonarny" styleClass="error" />
+				<h:outputLabel value="stacjonarny (Tak/Nie)" />
+				<h:selectBooleanCheckbox id="stacjonarny" value="#{adminKursyAc.kurs.stacjonarny}"/>
 				<h:message for="dataod" styleClass="error" />
 				<h:outputLabel value="data od" />
 				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}" immediate="true">

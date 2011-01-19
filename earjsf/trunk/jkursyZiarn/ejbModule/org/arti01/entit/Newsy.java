@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -33,6 +34,9 @@ public class Newsy implements Serializable {
     @Temporal( TemporalType.DATE)
 	private Date datadodania;
 
+    @Transient
+    private String datadodaniaS;
+    
 	private String tresc;
 
 	@NotEmpty
@@ -71,6 +75,16 @@ public class Newsy implements Serializable {
 
 	public void setTytul(String tytul) {
 		this.tytul = tytul;
+	}
+
+	public String getDatadodaniaS() {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		datadodaniaS=sdf.format(datadodania);
+		return datadodaniaS;
+	}
+
+	public void setDatadodaniaS(String datadodaniaS) {
+		this.datadodaniaS = datadodaniaS;
 	}
 
 }

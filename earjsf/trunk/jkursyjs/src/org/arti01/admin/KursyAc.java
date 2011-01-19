@@ -28,22 +28,36 @@ public class KursyAc implements Serializable{
 	private DataModel<User> kursanci = new ListDataModel<User>();
 
 	private SortOrder nazwaOrder = SortOrder.unsorted;
+	private SortOrder stacjonarnyTNOrder = SortOrder.unsorted;
 	private SortOrder dataodOrder = SortOrder.unsorted;
 	private SortOrder datadoOrder = SortOrder.unsorted;
 
 	public void sortBynazwa() {
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
 		if (nazwaOrder.equals(SortOrder.ascending)) {
 			setNazwaOrder(SortOrder.descending);
 		} else {
 			setNazwaOrder(SortOrder.ascending);
 		}
 	}
+	
+	public void sortBystacjonarnyTN() {
+		setDatadoOrder(SortOrder.unsorted);
+		setDataodOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		if (stacjonarnyTNOrder.equals(SortOrder.ascending)) {
+			setStacjonarnyTNOrder(SortOrder.descending);
+		} else {
+			setStacjonarnyTNOrder(SortOrder.ascending);
+		}
+	}
 
 	public void sortBydataod() {
 		setDatadoOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
 		if (dataodOrder.equals(SortOrder.ascending)) {
 			setDataodOrder(SortOrder.descending);
 		} else {
@@ -54,6 +68,7 @@ public class KursyAc implements Serializable{
 	public void sortBydatado() {
 		setDataodOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
 		if (datadoOrder.equals(SortOrder.ascending)) {
 			setDatadoOrder(SortOrder.descending);
 		} else {
@@ -189,6 +204,14 @@ public class KursyAc implements Serializable{
 
 	public void setKursanci(DataModel<User> kursanci) {
 		this.kursanci = kursanci;
+	}
+
+	public SortOrder getStacjonarnyTNOrder() {
+		return stacjonarnyTNOrder;
+	}
+
+	public void setStacjonarnyTNOrder(SortOrder stacjonarnyTNOrder) {
+		this.stacjonarnyTNOrder = stacjonarnyTNOrder;
 	}
 
 }

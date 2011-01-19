@@ -60,6 +60,9 @@ public class Kursy implements Serializable {
 	@OrderBy(value="datadodania")
 	private List<Newsykursy> newsykursy;
 	
+	@NotNull
+	private boolean stacjonarny;
+	
 	@Transient
 	private List<User> wykladowcy;
 	
@@ -68,6 +71,9 @@ public class Kursy implements Serializable {
 	
 	@Transient
 	private List<Integer> lekcjeLpAll;
+	
+	@Transient
+	private String stacjonarnyTN;
 	
     public Kursy() {
     }
@@ -166,5 +172,23 @@ public class Kursy implements Serializable {
 
 	public void setNewsykursy(List<Newsykursy> newsykursy) {
 		this.newsykursy = newsykursy;
+	}
+
+	public boolean isStacjonarny() {
+		return stacjonarny;
+	}
+
+	public void setStacjonarny(boolean stacjonarny) {
+		this.stacjonarny = stacjonarny;
+	}
+
+	public String getStacjonarnyTN() {
+		if(stacjonarny) stacjonarnyTN="Stacjonarny";
+		else stacjonarnyTN="Internetowy";
+		return stacjonarnyTN;
+	}
+
+	public void setStacjonarnyTN(String stacjonarnyTN) {
+		this.stacjonarnyTN = stacjonarnyTN;
 	}
 }

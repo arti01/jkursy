@@ -10,26 +10,14 @@
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
 		<div id="content">
-
-<ul>
+<br/>
 <a4j:repeat var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="news">
-	<li>
 	<h:form>
-	<h:panelGroup id="ss">
-	<h4><h:outputText value="#{news.tytul}"/>
-	(<h:outputText value="#{news.datadodania}">
-				<f:convertDateTime pattern="yyyy-MM-dd" />
-				</h:outputText>)</h4>
-					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" rendered="#{!(indexAc.newsPokaz)}" render="ss"/>
-					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-
-					<h:outputText value="#{news.tresc}" escape="false" rendered="#{(indexAc.newsPokaz)}"/>
-					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-	<hr/><br/></h:panelGroup>
+	<rich:collapsiblePanel expanded="false" header="#{news.tytul}(#{news.datadodaniaS})" switchType="client" styleClass="logotext">
+		<h:outputText value="#{news.tresc}" escape="false"/>
+	</rich:collapsiblePanel>
 	</h:form>
-	</li>
 </a4j:repeat>
-</ul>
 </div>
 </ui:define>
 </ui:composition>

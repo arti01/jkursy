@@ -16,7 +16,7 @@ h2 { font-size:14px; }
 #headinfo a { color:#EFEFEF; }
 #headinfo a:hover { color:#D2D2D2; border-bottom:1px solid #D2D2D2; }
 
-.logotext { float:left; width:200px; margin:55px 0 50px 30px; font-family:Trebuchet MS; font-size:22px; color:#FFFFFF; }
+.logotext { float:left; width:700px; margin:0px 0 0px 0px; font-family:Trebuchet MS; font-size:22px; color:#FFFFFF; }
 .logotext strong { color:#EFEFEF; }
 .logotext2 { font-size:14px; }
 
@@ -27,7 +27,7 @@ h2 { font-size:14px; }
 #nav ul li a:hover { background-color: #FFFFFF; color:#999999; }
 
 #content { float:left; vertical-align: top;}
-#content td {background: #E6E6E6;}
+#content td {background: #E6E6E6; width: 700px}
 #content td a { color:blue;background-color:#E6E6E6;}
 #content ul li {width: 700px}
 

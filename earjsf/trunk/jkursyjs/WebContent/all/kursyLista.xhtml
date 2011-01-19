@@ -35,6 +35,19 @@
 					</ul>
 				</rich:column>
 				
+				<rich:column sortBy="#{kurs.stacjonarnyTN}" id="stacjonarny"
+					sortOrder="#{adminKursyAc.stacjonarnyTNOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie rodzaj kursu" render="table"
+							action="#{adminKursyAc.sortBystacjonarnyTN}" />
+					</f:facet>
+					<ul><li>
+					<h:commandLink action="#{kursyAc.detale}">
+						<h:outputText value="#{kurs.stacjonarnyTN}"/>
+					</h:commandLink>
+					</li></ul>
+				</rich:column>
+				
 				<rich:column sortBy="#{kurs.dataod}" id="dataod"
 					sortOrder="#{adminKursyAc.dataodOrder}">
 					<f:facet name="header">
