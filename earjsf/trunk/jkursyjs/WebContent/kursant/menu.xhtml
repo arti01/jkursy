@@ -24,9 +24,9 @@
 </ui:repeat>
 <li><h:outputText value="pomoc i informacje dla kursantów"/></li>
 <ui:repeat var="strona" value="#{kursantIndexAc.role.statyczne}">
-	<li><h:commandLink action="#{wykladKursyAc.statyczna}">
+	<li><h:commandLink action="#{kursantIndexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />
-				<f:setPropertyActionListener target="#{wykladKursyAc.strona}" value="#{strona}"/>
+				<f:setPropertyActionListener target="#{kursantIndexAc.strona}" value="#{strona}"/>
 			</h:commandLink></li>
 </ui:repeat>
 

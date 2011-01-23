@@ -31,10 +31,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
-/**
- * @author Ilya Shaikovsky
- * 
- */
 @ManagedBean(name="wykladImageUploadBean")
 @SessionScoped
 public class ImageUploadBean implements Serializable {
@@ -52,6 +48,10 @@ public class ImageUploadBean implements Serializable {
     @EJB LekcjafotyImp lekcjafotyImp;
     @EJB LekacjaImp lekcjaImp;
     
+    private static int DLUGOSC=600;
+    private static int WYSOKOSC=400;
+    private static int DLUGOSCmin=150;
+    private static int WYSOKOSCmin=100;
     
     public int getSize() {
         if (getFiles().size() > 0) {
@@ -86,25 +86,16 @@ public class ImageUploadBean implements Serializable {
 
     public void listener(FileUploadEvent event) throws Exception {
         UploadedFile item = event.getUploadedFile();
-        logger.info(item.getName());
+        //logger.info(item.getName());
         UploadedFileArti file = new UploadedFileArti();
         file.setLength(item.getData().length);
         file.setName(item.getName());
         file.setData(item.getData());
-        logger.info(file.getName());
-        logger.info(file.getData());
         files.add(file);
-        for(UploadedFileArti f:files){
-        	logger.info(f.getName());
-        	logger.info(f.getMime());
-        }
         uploadsAvailable--;
     }
     
     public void zmienFotaLp(ValueChangeEvent event) throws IOException{
-    	logger.info("sssssssssssssssssssssssssssss");
-		logger.info(event.getNewValue());
-		logger.info(event.getOldValue());
 		fota=fotyMd.getRowData();		
 		lekcjafotyImp.update(fota, (Integer)event.getNewValue());
 		lekcja=lekcjaImp.find(lekcja);
@@ -146,8 +137,8 @@ public class ImageUploadBean implements Serializable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-            fota.setData(new ResizeJpg().zrobB(900, 600, f.getData()));
-            fota.setPlikmini(new ResizeJpg().zrobB(150, 100, f.getData()));
+            fota.setData(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, f.getData()));
+            fota.setPlikmini(new ResizeJpg().zrobB(DLUGOSCmin, WYSOKOSCmin, f.getData()));
             fota.setExif(exif);
             lekcjafotyImp.insert(fota);
         }

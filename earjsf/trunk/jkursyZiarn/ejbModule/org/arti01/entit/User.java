@@ -93,6 +93,10 @@ public class User implements Serializable {
 			}
 		)
 	private List<Kursy> kursies;
+    
+    @OneToMany(mappedBy="user")
+	@OrderBy("datadodania")
+	private List<Lekcjakoment> lekcjakoments;
 
     public User() {
     }
@@ -200,6 +204,14 @@ public class User implements Serializable {
 
 	public void setDataZmiany(Date dataZmiany) {
 		this.dataZmiany = dataZmiany;
+	}
+
+	public void setLekcjakoments(List<Lekcjakoment> lekcjakoments) {
+		this.lekcjakoments = lekcjakoments;
+	}
+
+	public List<Lekcjakoment> getLekcjakoments() {
+		return lekcjakoments;
 	}
 	
 }

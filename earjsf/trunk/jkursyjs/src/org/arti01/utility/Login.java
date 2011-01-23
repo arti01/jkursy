@@ -3,6 +3,8 @@ package org.arti01.utility;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,8 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.User;
 import org.arti01.sesBean.UserImp;
 
+@ManagedBean(name="login")
+@SessionScoped
 public class Login implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(Login.class);

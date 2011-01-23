@@ -8,7 +8,8 @@
 			<ui:repeat var="news" value="#{adminNewsyAc.allNewsy}">
 				<tr>
 					<td>
-					<h2><h:outputText value="#{news.tytul} "/></h2><h4><h:outputText value="(#{news.datadodaniaS})"/></h4>
+					<h2><h:outputText value="#{news.tytul} " /></h2>
+					<h4><h:outputText value="(#{news.datadodaniaS})" /></h4>
 					<div class="copy"><h:outputText value="#{news.skrot}" /></div>
 					<div id="wiecej"><h:form>
 						<h:commandLink action="#{indexAc.newsWiecej}">

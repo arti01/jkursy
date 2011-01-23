@@ -4,7 +4,9 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jsoup.Jsoup;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -18,8 +20,14 @@ public class Newsykursy implements Serializable {
 
     @Temporal( TemporalType.DATE)
 	private Date datadodania;
+    
+    @Transient
+    private String datadodaniaS;
 
 	private String tresc;
+	
+	@Transient
+	private String skrot;
 
 	@NotEmpty
 	private String tytul;
@@ -69,6 +77,31 @@ public class Newsykursy implements Serializable {
 
 	public void setKursy(Kursy kursy) {
 		this.kursy = kursy;
+	}
+
+	public String getDatadodaniaS() {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		datadodaniaS=sdf.format(datadodania);
+		return datadodaniaS;
+	}
+
+	public void setDatadodaniaS(String datadodaniaS) {
+		this.datadodaniaS = datadodaniaS;
+	}
+
+	public String getSkrot() {
+		int maxDlugosc=300;
+		if(tresc.length()<maxDlugosc) skrot=tresc;
+		else {
+			skrot=tresc.substring(0, maxDlugosc);
+		}
+		skrot=Jsoup.parse(skrot).text();
+		if(skrot.lastIndexOf(" ")!=-1)skrot=skrot.substring(0, skrot.lastIndexOf(" "));
+		return skrot;
+	}
+
+	public void setSkrot(String skrot) {
+		this.skrot = skrot;
 	}
 
 }

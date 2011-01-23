@@ -11,6 +11,7 @@ import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Newsykursy;
 import org.arti01.sesBean.KursyImp;
 
 @ManagedBean(name="kursantKursyAc")
@@ -19,14 +20,19 @@ public class KursyAc implements Serializable{
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
 
-	Kursy kurs;
+	private Kursy kurs;
 	private DataModel<Lekcja> lekcje = new ListDataModel<Lekcja>();
 	@EJB KursyImp kursyImp;
+	private Newsykursy news;
 	
 	public String lekcjaLista(){
 		kurs=kursyImp.find(kurs);
 		lekcje.setWrappedData(new ArrayList<Lekcja>(kurs.getLekcjas()));
 		return "lekcjaLista";
+	}
+	
+	public String newsWiecej(){
+		return "news";
 	}
 
 	public Kursy getKursy() {
@@ -55,5 +61,13 @@ public class KursyAc implements Serializable{
 
 	public Kursy getKurs() {
 		return kurs;
+	}
+
+	public Newsykursy getNews() {
+		return news;
+	}
+
+	public void setNews(Newsykursy news) {
+		this.news = news;
 	}
 }

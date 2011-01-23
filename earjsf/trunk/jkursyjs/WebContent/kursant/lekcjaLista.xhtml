@@ -9,26 +9,27 @@
 	<ui:composition template="/templates/templatekursant.xhtml">
 		<ui:define name="body">
 <h:body>
-<br/>
-<div id="content">
-<h2>newys kursu</h2>
-<h:form>
 
-<rich:list var="news" value="#{kursantKursyAc.kurs.newsykursy}" type="unordered" title="news">
-	<h:panelGroup id="ss">
-	<hr/>
-	<h4><h:outputText value="#{news.tytul}"/>
-	(<h:outputText value="#{news.datadodania}">
-				<f:convertDateTime pattern="yyyy-MM-dd" />
-				</h:outputText>)</h4>
-					<a4j:commandLink value="więcej" action="#{indexAc.newsWiecej}" rendered="#{!(indexAc.newsPokaz)}" render="ss"/>
-					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-					<h:outputText value="#{news.tresc}" escape="false" rendered="#{(indexAc.newsPokaz)}"/>
-					<a4j:commandLink value="zwiń" action="#{indexAc.newsWiecej}" rendered="#{(indexAc.newsPokaz)}" render="ss"/>
-	<hr/></h:panelGroup>
-</rich:list>
-</h:form>
-</div>
+<h2>newys kursu</h2>
+
+		<table>
+			<ui:repeat var="news" value="#{kursantKursyAc.kurs.newsykursy}">
+				<tr>
+					<td>
+					<h2><h:outputText value="#{news.tytul} " /></h2>
+					<h4><h:outputText value="(#{news.datadodaniaS})" /></h4>
+					<div class="copy"><h:outputText value="#{news.skrot}" /></div>
+					<div id="wiecej"><h:form>
+						<h:commandLink action="#{kursantKursyAc.newsWiecej}">
+							<f:setPropertyActionListener target="#{kursantKursyAc.news}"
+								value="#{news}"/>
+		czytaj więcej...
+		</h:commandLink>
+					</h:form></div>
+					</td>
+				</tr>
+			</ui:repeat>
+		</table>
 <br/>
 <div id="right">
 <h2>lista lekcji:)</h2>

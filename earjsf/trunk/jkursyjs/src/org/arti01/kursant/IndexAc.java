@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
 import org.arti01.entit.Role;
+import org.arti01.entit.Statyczne;
 import org.arti01.sesBean.RoleImp;
 
 @ManagedBean(name="kursantIndexAc")
@@ -17,12 +18,17 @@ public class IndexAc implements Serializable{
 	Logger logger = Logger.getLogger(IndexAc.class);
 	
 	private Role role=new Role();
+	private Statyczne strona;
 	@EJB RoleImp roleImp;
 	
 	public Role getRole() {
 		role.setRola(Role.KURSANT);
 		role=roleImp.find(role);
 		return role;
+	}
+	
+	public String statyczna(){
+		return "statyczneDetale";
 	}
 
 	public void setRole(Role role) {
@@ -35,6 +41,14 @@ public class IndexAc implements Serializable{
 
 	public void setRoleImp(RoleImp roleImp) {
 		this.roleImp = roleImp;
+	}
+
+	public Statyczne getStrona() {
+		return strona;
+	}
+
+	public void setStrona(Statyczne strona) {
+		this.strona = strona;
 	}
 
 }

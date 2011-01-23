@@ -50,6 +50,10 @@ public class Lekcja implements Serializable {
 	@OneToMany(mappedBy="lekcja")
 	@OrderBy("opis")
 	private List<Lekcjapliki> lekcjaplikis;
+	
+	@OneToMany(mappedBy="lekcja")
+	@OrderBy("datadodania DESC")
+	private List<Lekcjakoment> lekcjakoments;
 
 	public Integer getIdlekcja() {
 		return this.idlekcja;
@@ -121,6 +125,14 @@ public class Lekcja implements Serializable {
 
 	public void setFotyLpAll(List<Integer> fotyLpAll) {
 		this.fotyLpAll = fotyLpAll;
+	}
+
+	public List<Lekcjakoment> getLekcjakoments() {
+		return lekcjakoments;
+	}
+
+	public void setLekcjakoments(List<Lekcjakoment> lekcjakoments) {
+		this.lekcjakoments = lekcjakoments;
 	}
 	
 }
