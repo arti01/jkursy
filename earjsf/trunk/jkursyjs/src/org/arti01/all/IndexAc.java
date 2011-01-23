@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Newsy;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
 import org.arti01.sesBean.StatyczneImp;
@@ -20,7 +21,7 @@ public class IndexAc implements Serializable {
 	@EJB StatyczneImp statyczneImp;
 	User user;
 	Statyczne strona;
-	boolean newsPokaz=false;
+	private Newsy news;
 	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
 	
 	public String execute() throws Exception{
@@ -28,14 +29,12 @@ public class IndexAc implements Serializable {
 	}
 	
 	public String index(){
-	newsPokaz=false;
-		return "index.xhtml?faces-redirect=true";
+		return "index.xhtml?faces-redirect=false";
 	}
 	
 	public String newsWiecej(){
-		if(newsPokaz)newsPokaz=false;
-		else newsPokaz=true;
-		return null;
+		//logger.info(news);
+		return "news";
 	}
 	
 	public String statyczna() throws Exception{
@@ -97,12 +96,11 @@ public class IndexAc implements Serializable {
 		this.statyczneModel = statyczneModel;
 	}
 
-	public boolean isNewsPokaz() {
-		return newsPokaz;
+	public Newsy getNews() {
+		return news;
 	}
 
-	public void setNewsPokaz(boolean newsPokaz) {
-		this.newsPokaz = newsPokaz;
+	public void setNews(Newsy news) {
+		this.news = news;
 	}
-
 }

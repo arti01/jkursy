@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:body>
+
+<div id="header">
+<div id="sitename">FOTO<font color="#000000">s</font><font
+	color="#454545">e</font><font color="#6C6C6C">r</font><font
+	color="#919191">w</font><font color="#ADADAD">i</font><font
+	color="#CECECE">s</font></div>
+	<h:graphicImage value="grafa/camera.jpg" alt="camera"/>
+</div>
+<div id="menu">
+<h:form>
+<h:commandLink action="#{indexAc.index}">
+	<h:graphicImage style="border: 0pt none;" onmouseover="this.src = 'grafa/mainon.png'" onmouseout="this.src = 'grafa/main.png'" value="grafa/main.png"/>
+</h:commandLink>
+
+<h:commandLink action="indexAdm">
+<h:graphicImage style="border: 0pt none;" onmouseover="this.src = 'grafa/adminon.png'" onmouseout="this.src = 'grafa/admin.png'" value="grafa/admin.png"/>
+</h:commandLink>
+
+<h:commandLink action="indexWyklad">
+	<h:graphicImage style="border: 0pt none;" onmouseover="this.src = 'grafa/wyklon.png'" onmouseout="this.src = 'grafa/wykl.png'" value="grafa/wykl.png"/>
+</h:commandLink>
+
+<h:commandLink action="indexKursant">
+	<h:graphicImage style="border: 0pt none;" onmouseover="this.src = 'grafa/kurson.png'" onmouseout="this.src = 'grafa/kurs.png'" value="grafa/kurs.png"/>
+</h:commandLink></h:form>
+</div>
+</h:body>
+</html>
+
+
+

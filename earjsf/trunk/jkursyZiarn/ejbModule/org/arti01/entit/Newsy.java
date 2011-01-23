@@ -4,9 +4,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.jsoup.Jsoup;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 
 
 /**
@@ -41,6 +43,9 @@ public class Newsy implements Serializable {
 
 	@NotEmpty
 	private String tytul;
+	
+	@Transient
+	private String skrot;
 
     public Newsy() {
     }
@@ -85,6 +90,23 @@ public class Newsy implements Serializable {
 
 	public void setDatadodaniaS(String datadodaniaS) {
 		this.datadodaniaS = datadodaniaS;
+	}
+
+	public String getSkrot() {
+		int maxDlugosc=300;
+		if(tresc.length()<maxDlugosc) skrot=tresc;
+		else {
+			skrot=tresc.substring(0, maxDlugosc);
+		}
+		skrot=Jsoup.parse(skrot).text();
+		//skrot=skrot.substring(0, skrot.lastIndexOf(" "));
+		//System.out.println(skrot);
+		if(skrot.lastIndexOf(" ")!=-1)skrot=skrot.substring(0, skrot.lastIndexOf(" "));
+		return skrot;
+	}
+
+	public void setSkrot(String skrot) {
+		this.skrot = skrot;
 	}
 
 }

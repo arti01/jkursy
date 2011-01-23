@@ -1,0 +1,16 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+	<table><tr><td>
+		<h2><h:outputText value="#{indexAc.news.tytul} "/></h2><h4><h:outputText value="(#{indexAc.news.datadodaniaS})"/></h4>
+		<div class="copy"><h:outputText value="#{indexAc.news.tresc}"
+			escape="false" /></div>
+			<h:form>
+			<div id="wiecej"><h:commandLink action="#{indexAc.index}" value="wróć do listy newsów"/></div></h:form>
+			</td></tr></table>
+	</ui:define>
+</ui:composition>
+</html>

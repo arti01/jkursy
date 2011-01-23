@@ -1,25 +1,27 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
-	<ui:composition template="/templates/template.xhtml">
-		<ui:define name="body">
-		<div id="content">
-<br/>
-<a4j:repeat var="news" value="#{adminNewsyAc.allNewsy}" rows="5" type="unordered" title="news">
-	<h:form>
-	<rich:collapsiblePanel expanded="false" header="#{news.tytul}(#{news.datadodaniaS})" switchType="client" styleClass="logotext">
-		<h:outputText value="#{news.tresc}" escape="false"/>
-	</rich:collapsiblePanel>
-	</h:form>
-</a4j:repeat>
-</div>
-</ui:define>
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<table>
+			<ui:repeat var="news" value="#{adminNewsyAc.allNewsy}">
+				<tr>
+					<td>
+					<h2><h:outputText value="#{news.tytul} "/></h2><h4><h:outputText value="(#{news.datadodaniaS})"/></h4>
+					<div class="copy"><h:outputText value="#{news.skrot}" /></div>
+					<div id="wiecej"><h:form>
+						<h:commandLink action="#{indexAc.newsWiecej}">
+							<f:setPropertyActionListener target="#{indexAc.news}"
+								value="#{news}" />
+		czytaj więcej...
+		</h:commandLink>
+					</h:form></div>
+					</td>
+				</tr>
+			</ui:repeat>
+		</table>
+	</ui:define>
 </ui:composition>
 </html>
 

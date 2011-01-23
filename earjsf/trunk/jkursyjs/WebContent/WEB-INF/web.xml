@@ -5,65 +5,6 @@
 	version="3.0">
 	<display-name>jkursyjs</display-name>
 
-	<!-- Facelets tuning--> 
-	<context-param>
-		<param-name>
-			facelets.RECREATE_VALUE_EXPRESSION_ON_BUILD_BEFORE_RESTORE</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>facelets.BUILD_BEFORE_RESTORE</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>facelets.DEVELOPMENT</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>javax.faces.FACELETS_REFRESH_PERIOD</param-name>
-		<param-value>-1</param-value>
-	</context-param>
-
-	<!-- JSF RI Performance tuning-->
-	<context-param>
-		<param-name>com.sun.faces.responseBufferSize</param-name>
-		<param-value>700000</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>com.sun.faces.verifyObjects</param-name>
-		<param-value>false</param-value>
-	</context-param>
-
-<filter>
-<filter-name>richfaces</filter-name>
-<filter-class>org.ajax4jsf.Filter</filter-class>
-<init-param>
-	<param-name>forceparser</param-name>
-	<param-value>false</param-value>
-</init-param>
-<init-param>
-	<param-name>enable-cache</param-name>
-	<param-value>true</param-value>
-</init-param>
-</filter>
-
-<context-param>
-<param-name>org.ajax4jsf.COMPRESS_SCRIPT</param-name>
-<param-value>true</param-value>
-</context-param>
-
-	<context-param>
-		<param-name>org.richfaces.LoadStyleStrategy</param-name>
-		<param-value>DEFAULT</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.richfaces.LoadScriptStrategy</param-name>
-		<param-value>DEFAULT</param-value>
-	</context-param>
 
 	<resource-ref>
 		<res-ref-name>jsf/ProjectStage</res-ref-name>
@@ -86,6 +27,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+	
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -97,7 +39,7 @@
 	</context-param>
 	<context-param>
 		<param-name>javax.faces.FACELETS_LIBRARIES</param-name>
-		<param-value>/WEB-INF/app-tags.taglib.xml; /WEB-INF/balusc.taglib.xml</param-value>
+		<param-value>/WEB-INF/app-tags.taglib.xml</param-value>
 	</context-param>
 
 

@@ -2,16 +2,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-<body>
-<div id="left">
+	
+<h:body>
 <h:form>
 <ul>
-	<li><h:commandLink value="do strony głównej" action="#{indexAc.index}"/>
-	</li>
-	<li><h:commandLink value="strefa administratorów" action="indexAdm"/></li>
-	<li><h:commandLink value="strefa wykładowców" action="indexWyklad"/></li>
-	<li><h:commandLink value="strefa kursantów" action="indexKursant" /></li>
-	<li><h:commandLink value="kursy" action="#{kursyAc.list}" /></li>
+	<li><h:commandLink value="kursy" action="#{kursyAc.list}"/></li>
 	<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}"/></li>
 		<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 			<li><h:commandLink action="#{indexAc.statyczna}">
@@ -20,8 +15,7 @@
 	</ui:repeat>
 	</ul>
 </h:form>
-</div>
-</body>
+</h:body>
 </html>
 
 

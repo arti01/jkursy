@@ -9,5 +9,8 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="jsoup-1.4.1.jar" deploy-path="/lib" handle="module:/classpath/lib/jkursyZiarn/lib/jsoup-1.4.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
