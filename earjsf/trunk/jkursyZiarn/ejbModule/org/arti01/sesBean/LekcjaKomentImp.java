@@ -1,19 +1,10 @@
 package org.arti01.sesBean;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
-import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcjakoment;
-import org.arti01.entit.Role;
-import org.arti01.entit.User;
 
 @Stateless
 @LocalBean

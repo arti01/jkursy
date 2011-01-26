@@ -3,6 +3,8 @@ package org.arti01.entit;
 import java.io.Serializable;
 import javax.persistence.*;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.sql.Timestamp;
 
 
@@ -24,6 +26,7 @@ public class Lekcjakoment implements Serializable {
 	private Timestamp datadodania;
 
 	@Column(nullable=false, length=2147483647)
+	@NotEmpty
 	private String tresc;
 	
 	@ManyToOne

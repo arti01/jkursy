@@ -30,11 +30,11 @@
 
 			<h5>dyskusja o lekcji</h5>
 			<h:form>
-				<h:panelGrid columns="4">
+				<h:panelGrid columns="4" id="wpis">
 					<h:message for="tresc" />
 					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarz.tresc}" cols="100"/>
 					<a4j:commandButton value="dodaj komentarz"
-						action="#{kursantLekcjaAc.dodajKomentarz}" render="komentarze, tresc"/>
+						action="#{kursantLekcjaAc.dodajKomentarz}" render="komentarze, wpis"/>
 				</h:panelGrid>
 			</h:form>
 			<h:panelGroup id="komentarze" >

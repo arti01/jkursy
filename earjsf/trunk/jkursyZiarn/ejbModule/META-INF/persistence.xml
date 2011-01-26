@@ -12,6 +12,7 @@
 		<class>org.arti01.entit.Lekcja</class>
 		<class>org.arti01.entit.Kursy</class>
 		<class>org.arti01.entit.Lekcjakoment</class>
+		<class>org.arti01.entit.Lekcjafotykursant</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>
