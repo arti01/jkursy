@@ -19,7 +19,6 @@ import org.arti01.sesBean.LekcjaKomentImp;
 import org.arti01.sesBean.LekcjafotykursantImp;
 import org.arti01.utility.Login;
 import org.arti01.utility.ResizeJpg;
-import org.arti01.utility.UploadedFileArti;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
 

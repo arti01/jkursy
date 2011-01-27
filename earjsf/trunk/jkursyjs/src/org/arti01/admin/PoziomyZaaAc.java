@@ -5,12 +5,16 @@ import java.util.ArrayList;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ActionListener;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 import org.arti01.entit.Poziomyzaawansowania;
+import org.arti01.entit.User;
 import org.arti01.sesBean.PoziomyZaawansowaniaImp;
 
 @ManagedBean(name="adminPoziomyZaaAc")
@@ -20,13 +24,14 @@ public class PoziomyZaaAc implements Serializable{
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(PoziomyZaaAc.class);
 	
-	private ArrayList<Poziomyzaawansowania> all=new ArrayList<Poziomyzaawansowania>();
+	private DataModel<Poziomyzaawansowania> all = new ListDataModel<Poziomyzaawansowania>();
+
 	private Poziomyzaawansowania pz;
 	@EJB PoziomyZaawansowaniaImp pzImp;
 	
 	public String list(){
 		pz=new Poziomyzaawansowania();
-		all=new ArrayList<Poziomyzaawansowania>(pzImp.getAll());
+		all.setWrappedData(pzImp.getAll());
 		return "pzForm";
 	}
 	
@@ -41,14 +46,16 @@ public class PoziomyZaaAc implements Serializable{
 			pzImp.insert(pz);			
 		}
 		pz=new Poziomyzaawansowania();
-		all=new ArrayList<Poziomyzaawansowania>(pzImp.getAll());
+		all.setWrappedData(pzImp.getAll());
 		return null;
 	}
 	
-	public String usun() throws Exception {
-		pzImp.delete(pz);
-		all=new ArrayList<Poziomyzaawansowania>(pzImp.getAll());
-		return null;
+	public String usun() {
+		//logger.info(pz.getNazwa()+"usun");
+		pzImp.delete(all.getRowData());
+		all.setWrappedData(pzImp.getAll());
+		logger.info(all.getRowCount());
+		return "pzFrom";
 	}
 
 	public Poziomyzaawansowania getPz() {
@@ -59,15 +66,12 @@ public class PoziomyZaaAc implements Serializable{
 		this.pz = pz;
 	}
 
-
-	public ArrayList<Poziomyzaawansowania> getAll() {
+	public DataModel<Poziomyzaawansowania> getAll() {
 		return all;
 	}
 
 
-	public void setAll(ArrayList<Poziomyzaawansowania> all) {
+	public void setAll(DataModel<Poziomyzaawansowania> all) {
 		this.all = all;
 	}
-
-
 }

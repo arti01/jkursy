@@ -9,8 +9,7 @@
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
-		<h:form>
-			<a4j:region id="form">
+		<h:form id="form">
 				<h:panelGrid columns="3">
 					<h:message for="nazwa" styleClass="error" />
 					<h:outputLabel value="nazwa" />
@@ -18,32 +17,26 @@
 						size="100" />
 				</h:panelGrid>
 				<a4j:commandButton value="wyślij"
-					action="#{adminPoziomyZaaAc.dodaj}" render="lista, form" />
-			</a4j:region>
+					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista" />
 		</h:form>
 		
-		<h:panelGroup  id="lista">
-				<h:panelGrid columns="5">
-					<a4j:repeat var="pz1" value="#{adminPoziomyZaaAc.all}">
-					<h:form>
-						<h:message for="nazwa" styleClass="error" />
-						<h:outputLabel value="nazwa" />
-						<h:inputText id="nazwa" value="#{pz1.nazwa}" size="100" />
-						<a4j:commandButton value="wyślij"
-							action="#{adminPoziomyZaaAc.dodaj}" render="lista, form">
-							<f:setPropertyActionListener target="#{adminPoziomyZaaAc.pz}"
-								value="#{pz1}" />
-						</a4j:commandButton>
-						<a4j:commandButton value="usun" action="#{adminPoziomyZaaAc.usun}"
-							render="lista, form">
-							<f:setPropertyActionListener target="#{adminPoziomyZaaAc.pz}"
-								value="#{pz1}" />
-						</a4j:commandButton>
-						</h:form>
-					</a4j:repeat>
-				</h:panelGrid>
-		</h:panelGroup>
-		</body>
+		<h:form>
+		<rich:dataTable var="pz" value="#{adminPoziomyZaaAc.all}" id="lista">
+		<rich:column>
+			<h:outputText value="#{pz.nazwa}"/>
+			<h:outputText value="#{adminPoziomyZaaAc.all}"/>
+		</rich:column>
+		<rich:column>
+
+		  <a4j:commandLink id="deletelink"
+                        action="#{adminPoziomyZaaAc.usun}" render="lista">
+                        <h:button value="usuń"/>
+                    </a4j:commandLink>
+		</rich:column>
+		</rich:dataTable>
+		</h:form>
+		
+</body>
 	</ui:define>
 </ui:composition>
 </html>
