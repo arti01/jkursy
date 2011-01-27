@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<h:form>
+			<a4j:region id="form">
+				<h:panelGrid columns="3">
+					<h:message for="nazwa" styleClass="error" />
+					<h:outputLabel value="nazwa" />
+					<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}"
+						size="100" />
+				</h:panelGrid>
+				<a4j:commandButton value="wyślij"
+					action="#{adminPoziomyZaaAc.dodaj}" render="lista, form" />
+			</a4j:region>
+		</h:form>
+		
+		<h:panelGroup  id="lista">
+				<h:panelGrid columns="5">
+					<a4j:repeat var="pz1" value="#{adminPoziomyZaaAc.all}">
+					<h:form>
+						<h:message for="nazwa" styleClass="error" />
+						<h:outputLabel value="nazwa" />
+						<h:inputText id="nazwa" value="#{pz1.nazwa}" size="100" />
+						<a4j:commandButton value="wyślij"
+							action="#{adminPoziomyZaaAc.dodaj}" render="lista, form">
+							<f:setPropertyActionListener target="#{adminPoziomyZaaAc.pz}"
+								value="#{pz1}" />
+						</a4j:commandButton>
+						<a4j:commandButton value="usun" action="#{adminPoziomyZaaAc.usun}"
+							render="lista, form">
+							<f:setPropertyActionListener target="#{adminPoziomyZaaAc.pz}"
+								value="#{pz1}" />
+						</a4j:commandButton>
+						</h:form>
+					</a4j:repeat>
+				</h:panelGrid>
+		</h:panelGroup>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>
