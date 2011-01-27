@@ -1,8 +1,10 @@
 package org.arti01.kursant;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -10,10 +12,22 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjakoment;
 import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.LekcjaKomentImp;
+import org.arti01.sesBean.LekcjafotykursantImp;
 import org.arti01.utility.Login;
+import org.arti01.utility.ResizeJpg;
+import org.arti01.utility.UploadedFileArti;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
+
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
 
 @ManagedBean(name="kursantLekcjaAc")
 @SessionScoped
@@ -26,7 +40,12 @@ public class LekcjaAc implements Serializable{
 	private boolean exifPokaz;
 	private Lekcjakoment komentarz=new Lekcjakoment();
 	@EJB LekcjaKomentImp lekcjaKomentImp;
+	@EJB LekcjafotykursantImp lfki;
 	@ManagedProperty(value="#{login}") private Login loginBean;
+	private static int DLUGOSC=600;
+    private static int WYSOKOSC=400;
+    private static int DLUGOSCmin=150;
+    private static int WYSOKOSCmin=100;
 	
 	public String pokaz(){
 		exifPokaz=false;
@@ -39,7 +58,47 @@ public class LekcjaAc implements Serializable{
 		//logger.info(exifPokaz);
 		return null;
 	}
+	
+	public String fotyForm(){
+		logger.info(lekcja);
+		logger.info(lekcja.getLekcjafotykursant());
+		return "fotyForm";
+	}
 
+	public void listenerFoty(FileUploadEvent event) {
+		logger.info(lekcja.getLekcjafotykursant());
+        UploadedFile item = event.getUploadedFile();
+        //logger.info(item.getName());
+        Lekcjafotykursant fota=new Lekcjafotykursant();
+        String exif ="";
+        try {
+			Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(item.getData()));
+			Iterator<?> directories = metadata.getDirectoryIterator();
+			while (directories.hasNext()) {
+			    Directory directory = (Directory)directories.next();
+			    // iterate through tags and print to System.out
+			    Iterator<?> tags = directory.getTagIterator();
+			    while (tags.hasNext()) {
+			        Tag tag = (Tag)tags.next();
+			        //System.out.println(tag.getTagName());
+			        // use Tag.toString()
+			        //tag.toString().c
+			        if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"<br/>";
+			    }
+			}
+		} catch (JpegProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        fota.setExif(exif);
+        fota.setPlik(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
+        fota.setPlikmini(new ResizeJpg().zrobB(DLUGOSCmin, WYSOKOSCmin, item.getData()));
+        fota.setUser(loginBean.getZalogowany());
+        fota.setLekcja(lekcja);
+        lfki.insert(fota);
+        logger.info(lekcja.getLekcjafotykursant());
+    }
+	
 	public String dodajKomentarz(){
 		komentarz.setDatadodania(new Timestamp(new Date().getTime()));
 		komentarz.setUser(loginBean.getZalogowany());

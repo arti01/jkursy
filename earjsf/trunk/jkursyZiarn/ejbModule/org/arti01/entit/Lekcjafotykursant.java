@@ -2,6 +2,7 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 
@@ -31,8 +32,13 @@ public class Lekcjafotykursant implements Serializable {
 
 	private byte[] plikmini;
 
-	@Column(nullable=false, length=50)
-	private String username;
+	@ManyToOne
+	@JoinColumn(name="idlekcja")
+	private Lekcja lekcja;
+	
+	@ManyToOne
+	@JoinColumn(name="username")
+	private User user;
 
     public Lekcjafotykursant() {
     }
@@ -85,12 +91,20 @@ public class Lekcjafotykursant implements Serializable {
 		this.plikmini = plikmini;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public Lekcja getLekcja() {
+		return lekcja;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLekcja(Lekcja lekcja) {
+		this.lekcja = lekcja;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

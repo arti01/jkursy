@@ -45,6 +45,18 @@ public class Lekcja implements Serializable {
 	@OneToMany(mappedBy="lekcja")
 	@OrderBy("lp")
 	private List<Lekcjafoty> lekcjafoties;
+	
+	@OneToMany(mappedBy="lekcja")
+	@OrderBy("datadodania")
+	private List<Lekcjafotykursant> lekcjafotykursant;
+
+	public List<Lekcjafotykursant> getLekcjafotykursant() {
+		return lekcjafotykursant;
+	}
+
+	public void setLekcjafotykursant(List<Lekcjafotykursant> lekcjafotykursant) {
+		this.lekcjafotykursant = lekcjafotykursant;
+	}
 
 	//bi-directional many-to-one association to Lekcjapliki
 	@OneToMany(mappedBy="lekcja")
