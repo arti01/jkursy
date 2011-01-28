@@ -27,7 +27,7 @@
 					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
 					<br/>
 					<h:outputText value="#{kurs.opisKrotki}" />
-					<br/>wykładowcy:<br/>
+					<br/>wykładowcy:
 					<ul>
 						<ui:repeat var="wyklad" value="#{kurs.wykladowcy}" varStatus="aaa">
 							<li><h:commandLink action="#{kursyAc.wykladDetale}">
