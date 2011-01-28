@@ -1,8 +1,6 @@
 package org.arti01.kursant;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -27,7 +25,7 @@ public class KursyAc implements Serializable{
 	
 	public String lekcjaLista(){
 		kurs=kursyImp.find(kurs);
-		lekcje.setWrappedData(new ArrayList<Lekcja>(kurs.getLekcjas()));
+		lekcje.setWrappedData(kurs.getLekcjeWidoczne());
 		return "lekcjaLista";
 	}
 	

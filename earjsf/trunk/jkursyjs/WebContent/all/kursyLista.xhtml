@@ -22,8 +22,11 @@
 						<h3><h:outputText value="#{kurs.nazwa}" /></h3>
 					</h:commandLink>
 					</li></ul>
+					<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+					<br/>
+					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
+					<br/>
 					<h:outputText value="#{kurs.opisKrotki}" />
-				
 					<br/>wykładowcy:<br/>
 					<ul>
 						<ui:repeat var="wyklad" value="#{kurs.wykladowcy}" varStatus="aaa">

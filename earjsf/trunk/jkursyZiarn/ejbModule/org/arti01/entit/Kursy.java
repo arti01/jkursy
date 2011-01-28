@@ -2,16 +2,13 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
-
-/**
- * The persistent class for the kursy database table.
- * 
- */
 
 @Entity
 @Table(name="kursy")
@@ -46,6 +43,10 @@ public class Kursy implements Serializable {
 	@Size(min=1)
 	@NotNull(message="problem")
 	private String opisKrotki;
+	
+	@NotNull
+	@DecimalMin(message="grupa nie może być mniejsza od 1", value="1")
+	private Integer wielkoscgrupy;
 
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
@@ -80,7 +81,10 @@ public class Kursy implements Serializable {
 	private String stacjonarnyTN;
 	
 	@Transient
-	private ArrayList lekcjeWidoczne;
+	private ArrayList<Lekcja> lekcjeWidoczne;
+	
+	@Transient
+	private Integer wolnychMiejsc;
 	
     public Kursy() {
     }
@@ -206,4 +210,33 @@ public class Kursy implements Serializable {
 	public void setPoziomyzaawansowania(Poziomyzaawansowania poziomyzaawansowania) {
 		this.poziomyzaawansowania = poziomyzaawansowania;
 	}
+
+	public void setLekcjeWidoczne(ArrayList<Lekcja> lekcjeWidoczne) {
+		this.lekcjeWidoczne = lekcjeWidoczne;
+	}
+
+	public ArrayList<Lekcja> getLekcjeWidoczne() {
+		lekcjeWidoczne =new ArrayList<Lekcja>();
+		for(Lekcja l:getLekcjas()){
+			if(l.isWidoczna())lekcjeWidoczne.add(l);
+		}
+		return lekcjeWidoczne;
+	}
+
+	public Integer getWielkoscgrupy() {
+		return wielkoscgrupy;
+	}
+
+	public void setWielkoscgrupy(Integer wielkoscgrupy) {
+		this.wielkoscgrupy = wielkoscgrupy;
+	}
+	public Integer getWolnychMiejsc() {
+		wolnychMiejsc=getWielkoscgrupy()-getKursanci().size();
+		return wolnychMiejsc;
+	}
+
+	public void setWolnychMiejsc(Integer wolnychMiejsc) {
+		this.wolnychMiejsc = wolnychMiejsc;
+	}
+
 }

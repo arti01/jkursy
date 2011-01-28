@@ -32,6 +32,10 @@
 					<h:commandLink action="#{adminKursyAc.form}">
 						<h:outputText value="#{kurs.nazwa}" />
 					</h:commandLink>
+					<br/>
+					<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+					<br/>
+					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
 				</rich:column>
 				
 				<rich:column sortBy="#{kurs.poziomyzaawansowania.nazwa}" id="poziomyzaawansowania"
@@ -41,9 +45,7 @@
 							action="#{adminKursyAc.sortBypoziomyzaawansowania}" />
 					</f:facet>
 					<h:commandLink action="#{adminKursyAc.form}">
-						<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}">
-							<f:convertDateTime pattern="yyyy-MM-dd"/>
-						</h:outputText>
+						<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}"/>
 					</h:commandLink>
 				</rich:column>
 				
