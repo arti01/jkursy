@@ -34,20 +34,20 @@
 <div id="right">
 <h2>lista lekcji:)</h2>
 <h:form>
-<h:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
-	<h:column>
+<rich:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
+	<rich:column>
 	<f:facet name="header">tytuł lekcji</f:facet>
 		<h:outputText value="#{lekcja.lp}"/>.
 		<h:commandLink action="#{kursantLekcjaAc.pokaz}">
 			<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
 		<h:outputText value="#{lekcja.tytul}"/>
 		</h:commandLink>
-	</h:column>
-	<h:column>
+	</rich:column>
+	<rich:column>
 		<f:facet name="header">data modyfikacji lekcji</f:facet>
 		<h:outputText value="#{lekcja.datazmiany}"/>
-	</h:column>
-</h:dataTable>
+	</rich:column>
+</rich:dataTable>
 </h:form>
 </div>
 <br/>

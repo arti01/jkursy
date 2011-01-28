@@ -79,6 +79,9 @@ public class Kursy implements Serializable {
 	@Transient
 	private String stacjonarnyTN;
 	
+	@Transient
+	private ArrayList lekcjeWidoczne;
+	
     public Kursy() {
     }
 

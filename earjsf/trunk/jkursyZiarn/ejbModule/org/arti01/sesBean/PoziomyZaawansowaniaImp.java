@@ -32,7 +32,7 @@ public class PoziomyZaawansowaniaImp {
 		em.persist(pz);
 	}
 	
-	public void delete(Poziomyzaawansowania pz) {
+	public void delete(Poziomyzaawansowania pz) throws Exception {
 		pz=em.find(Poziomyzaawansowania.class, pz.getIdpoziomyzaawansowania());
 		em.remove(pz);
 		em.flush();

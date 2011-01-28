@@ -30,6 +30,13 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 		<f:selectItems value="#{wykladKursyAc.kurs.lekcjeLpAll}"/>
 	</h:selectOneMenu>
 </h:column>
+
+<h:column>
+<f:facet name="header"><h:outputText value="widoczna"/></f:facet>
+<h:outputText value="Tak" rendered="#{lekcja.widoczna}"/>
+<h:outputText value="Nie" rendered="#{!lekcja.widoczna}"/>
+</h:column>
+
 <h:column>
 <f:facet name="header"><h:outputText value="tytuł (data zmiany)"/></f:facet>
 	<h:commandLink action="#{wykladKursyAc.lekcjaForm}">

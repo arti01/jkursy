@@ -48,6 +48,21 @@
 					</li></ul>
 				</rich:column>
 				
+				<rich:column sortBy="#{kurs.poziomyzaawansowania.nazwa}" id="poziomyzaawansowania"
+					sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie poziom zaawansowania" render="table"
+							action="#{adminKursyAc.sortBypoziomyzaawansowania}" />
+					</f:facet>
+					<ul><li>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}">
+							<f:convertDateTime pattern="yyyy-MM-dd"/>
+						</h:outputText>
+					</h:commandLink>
+					</li></ul>
+				</rich:column>
+				
 				<rich:column sortBy="#{kurs.dataod}" id="dataod"
 					sortOrder="#{adminKursyAc.dataodOrder}">
 					<f:facet name="header">

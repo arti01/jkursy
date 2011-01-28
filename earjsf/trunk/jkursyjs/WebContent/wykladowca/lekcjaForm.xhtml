@@ -4,7 +4,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:hh="http://balusc.net/jsf/html"
 	xmlns:a4j="http://richfaces.org/a4j"
  	xmlns:rich="http://richfaces.org/rich">
 <ui:composition template="/templates/templatewyklad.xhtml">
@@ -20,6 +19,10 @@
 			<h:message for="tytul" styleClass="error" />
 			<h:outputLabel value="tytuł lekcji" />
 			<h:inputText id="tytul" value="#{wykladKursyAc.lekcja.tytul}" size="100"/>
+			
+			<h:message for="widoczna" styleClass="error" />
+			<h:outputLabel value="widoczna (Tak/Nie)" />
+			<h:selectBooleanCheckbox id="widoczna" value="#{wykladKursyAc.lekcja.widoczna}"/>
 			
 			<h:message for="tresc" styleClass="error" />
 			<h:outputLabel value="treść lekcji" />

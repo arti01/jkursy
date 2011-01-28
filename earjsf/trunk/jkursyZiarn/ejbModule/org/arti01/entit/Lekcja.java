@@ -32,6 +32,9 @@ public class Lekcja implements Serializable {
 	
 	@NotNull
 	private Integer lp;
+	
+	@NotNull
+	private boolean widoczna;
 
 	@Transient
 	private List<Integer> fotyLpAll;
@@ -145,6 +148,14 @@ public class Lekcja implements Serializable {
 
 	public void setLekcjakoments(List<Lekcjakoment> lekcjakoments) {
 		this.lekcjakoments = lekcjakoments;
+	}
+
+	public boolean isWidoczna() {
+		return widoczna;
+	}
+
+	public void setWidoczna(boolean widoczna) {
+		this.widoczna = widoczna;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package org.arti01.sesBean;
 
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;

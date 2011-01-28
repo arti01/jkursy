@@ -14,7 +14,7 @@
 				<h:panelGrid columns="2">
 					<h:outputLabel value="nazwa" />
 					<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}"
-						size="100" />
+						size="50" />
 				</h:panelGrid>
 				<a4j:commandButton value="wyślij"
 					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
@@ -22,18 +22,19 @@
 		<hr/>
 		<br/>
 		<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
+		<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun"/>
 		<h:form>
 					<rich:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1" id="tabled">
 						<rich:column>
-							<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="tabled" value="usuń"/>
+							<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="tabled, infoTextUsun" value="usuń"/>
 						</rich:column>
 						
 						<rich:column>
 						<h:message for="tekst" styleClass="error" />
 								<h:inputText id="tekst" value="#{pz1.nazwa}">
-									<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText"/>
+									<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText" immediate="true"/>
 								</h:inputText>
-								<h:outputText value="#{adminPoziomyZaaAc.infoText}"  id="infoText"/>
+								<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText"/>
 						</rich:column>
 					</rich:dataTable>
 		</h:form>

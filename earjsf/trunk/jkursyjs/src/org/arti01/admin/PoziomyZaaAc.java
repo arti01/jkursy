@@ -22,30 +22,28 @@ public class PoziomyZaaAc implements Serializable{
 	private Poziomyzaawansowania pz;
 	@EJB PoziomyZaawansowaniaImp pzImp;
 	private String infoText;
-	
+	private String infoTextUsun;
+
 	public String list(){
 		pz=new Poziomyzaawansowania();
 		all.setWrappedData(pzImp.getAll());
+		infoText="";
 		return "pzForm";
 	}
 	
 	
 	public String dodaj() {
-		logger.info(pz.getNazwa());
-		if (pz.getIdpoziomyzaawansowania()!=null) {// edycja
-			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
-			pzImp.update(pz);
-		}
-		else{
-			pzImp.insert(pz);			
-		}
+		pzImp.insert(pz);			
 		pz=new Poziomyzaawansowania();
 		all.setWrappedData(pzImp.getAll());
+		infoText="";
+		infoTextUsun="";
 		return null;
 	}
 	
 	public void zmien() {
 		pz=all.getRowData();
+		infoTextUsun="";
 		//logger.info(pz.getNazwa());
 			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 			pzImp.update(pz);
@@ -55,9 +53,17 @@ public class PoziomyZaaAc implements Serializable{
 	
 	public String usun() {
 		//logger.info(pz.getNazwa()+"usun");
-		pzImp.delete(all.getRowData());
+		infoText="";
+		infoTextUsun="";
+		try {
+			pzImp.delete(all.getRowData());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			logger.error("usunięcie nieudane");
+			infoTextUsun="usunięcie nieudane - istnieją kursy z tym poziomem";
+		}
 		all.setWrappedData(pzImp.getAll());
-		logger.info(all.getRowCount());
+		//logger.info(all.getRowCount());
 		return null;
 	}
 
@@ -78,13 +84,21 @@ public class PoziomyZaaAc implements Serializable{
 		this.all = all;
 	}
 
-
 	public String getInfoText() {
 		return infoText;
 	}
 
-
 	public void setInfoText(String infoText) {
 		this.infoText = infoText;
 	}
+	
+	public String getInfoTextUsun() {
+		return infoTextUsun;
+	}
+
+	public void setInfoTextUsun(String infoTextUsun) {
+		this.infoTextUsun = infoTextUsun;
+	}
+
+
 }

@@ -36,11 +36,13 @@ public class KursyAc implements Serializable{
 	private SortOrder stacjonarnyTNOrder = SortOrder.unsorted;
 	private SortOrder dataodOrder = SortOrder.unsorted;
 	private SortOrder datadoOrder = SortOrder.unsorted;
+	private SortOrder poziomyzaawansowaniaOrder = SortOrder.unsorted;
 
 	public void sortBynazwa() {
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
 		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		if (nazwaOrder.equals(SortOrder.ascending)) {
 			setNazwaOrder(SortOrder.descending);
 		} else {
@@ -52,6 +54,7 @@ public class KursyAc implements Serializable{
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		if (stacjonarnyTNOrder.equals(SortOrder.ascending)) {
 			setStacjonarnyTNOrder(SortOrder.descending);
 		} else {
@@ -63,6 +66,7 @@ public class KursyAc implements Serializable{
 		setDatadoOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
 		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		if (dataodOrder.equals(SortOrder.ascending)) {
 			setDataodOrder(SortOrder.descending);
 		} else {
@@ -74,6 +78,7 @@ public class KursyAc implements Serializable{
 		setDataodOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
 		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		if (datadoOrder.equals(SortOrder.ascending)) {
 			setDatadoOrder(SortOrder.descending);
 		} else {
@@ -81,6 +86,18 @@ public class KursyAc implements Serializable{
 		}
 	}
 
+	public void sortBypoziomyzaawansowania() {
+		setDatadoOrder(SortOrder.unsorted);
+		setDataodOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		if (poziomyzaawansowaniaOrder.equals(SortOrder.ascending)) {
+			setPoziomyzaawansowaniaOrder(SortOrder.descending);
+		} else {
+			setPoziomyzaawansowaniaOrder(SortOrder.ascending);
+		}
+	}
+	
 	public String kursyLista() throws Exception {
 		allKursy.setWrappedData(kursyImp.findAll());
 		return "kursyLista";
@@ -237,6 +254,14 @@ public class KursyAc implements Serializable{
 
 	public void setAllPz(ArrayList<Poziomyzaawansowania> allPz) {
 		this.allPz = allPz;
+	}
+
+	public SortOrder getPoziomyzaawansowaniaOrder() {
+		return poziomyzaawansowaniaOrder;
+	}
+
+	public void setPoziomyzaawansowaniaOrder(SortOrder poziomyzaawansowaniaOrder) {
+		this.poziomyzaawansowaniaOrder = poziomyzaawansowaniaOrder;
 	}
 
 }
