@@ -7,8 +7,10 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
+import org.arti01.entit.Poziomyzaawansowania;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
+import org.arti01.sesBean.PoziomyZaawansowaniaImp;
 import org.arti01.sesBean.UserImp;
 import org.richfaces.component.SortOrder;
 
@@ -24,6 +26,9 @@ public class KursyAc implements Serializable{
 	KursyImp kursyImp;
 	@EJB
 	UserImp userImp;
+	@EJB PoziomyZaawansowaniaImp pzi;
+	private ArrayList<Poziomyzaawansowania> allPz=new ArrayList<Poziomyzaawansowania>();
+	
 	private DataModel<User> wykladowcy = new ListDataModel<User>();
 	private DataModel<User> kursanci = new ListDataModel<User>();
 
@@ -91,12 +96,15 @@ public class KursyAc implements Serializable{
 	public String form() {
 		errorText = "";
 		kurs = allKursy.getRowData();
+		allPz=new ArrayList<Poziomyzaawansowania>(pzi.getAll());
 		return "kursyForm";
 	}
 
 	public String formNew() {
 		errorText = "";
 		kurs = new Kursy();
+		kurs.setPoziomyzaawansowania(new Poziomyzaawansowania());
+		allPz=new ArrayList<Poziomyzaawansowania>(pzi.getAll());
 		return "kursyForm";
 	}
 
@@ -129,6 +137,7 @@ public class KursyAc implements Serializable{
 	}
 
 	public String dodaj() {
+		kurs.setPoziomyzaawansowania(pzi.find(kurs.getPoziomyzaawansowania()));
 		if (kurs.getIdkursy() != null) {// edycja
 			if (kursyImp.update(kurs)) {
 				return "kursyLista";
@@ -212,6 +221,22 @@ public class KursyAc implements Serializable{
 
 	public void setStacjonarnyTNOrder(SortOrder stacjonarnyTNOrder) {
 		this.stacjonarnyTNOrder = stacjonarnyTNOrder;
+	}
+
+	public PoziomyZaawansowaniaImp getPzi() {
+		return pzi;
+	}
+
+	public void setPzi(PoziomyZaawansowaniaImp pzi) {
+		this.pzi = pzi;
+	}
+
+	public ArrayList<Poziomyzaawansowania> getAllPz() {
+		return allPz;
+	}
+
+	public void setAllPz(ArrayList<Poziomyzaawansowania> allPz) {
+		this.allPz = allPz;
 	}
 
 }

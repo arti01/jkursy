@@ -15,6 +15,13 @@
 				<h:message for="nazwa" styleClass="error" />
 				<h:outputLabel value="nazwa" />
 				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}"/>
+				
+				<h:message for="poziom" styleClass="error" />
+				<h:outputLabel value="poziom zaawansowania" />
+				<h:selectOneMenu id="poziom" value="#{adminKursyAc.kurs.poziomyzaawansowania.idpoziomyzaawansowania}">
+				<f:selectItems value="#{adminKursyAc.allPz}" var="pz" itemLabel="#{pz.nazwa}" itemValue="#{pz.idpoziomyzaawansowania}"/>
+				</h:selectOneMenu>
+				
 				<h:message for="opisKrotki" styleClass="error" />
 				<h:outputLabel value="krótki opis" />
 				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" immediate="true"/>

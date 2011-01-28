@@ -60,6 +60,10 @@ public class Kursy implements Serializable {
 	@OrderBy(value="datadodania")
 	private List<Newsykursy> newsykursy;
 	
+	@ManyToOne
+	@JoinColumn(name="idpoziomyzaawansowania")
+	private Poziomyzaawansowania poziomyzaawansowania;
+	
 	@NotNull
 	private boolean stacjonarny;
 	
@@ -190,5 +194,13 @@ public class Kursy implements Serializable {
 
 	public void setStacjonarnyTN(String stacjonarnyTN) {
 		this.stacjonarnyTN = stacjonarnyTN;
+	}
+
+	public Poziomyzaawansowania getPoziomyzaawansowania() {
+		return poziomyzaawansowania;
+	}
+
+	public void setPoziomyzaawansowania(Poziomyzaawansowania poziomyzaawansowania) {
+		this.poziomyzaawansowania = poziomyzaawansowania;
 	}
 }

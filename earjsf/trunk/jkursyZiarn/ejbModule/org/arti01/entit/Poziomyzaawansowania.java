@@ -1,6 +1,8 @@
 package org.arti01.entit;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -23,6 +25,9 @@ public class Poziomyzaawansowania implements Serializable {
 	@NotEmpty
 	@Column(nullable=false, length=255)
 	private String nazwa;
+	
+	@OneToMany(mappedBy="poziomyzaawansowania", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	private List<Kursy> kursy;
 
     public Poziomyzaawansowania() {
     }
@@ -41,6 +46,14 @@ public class Poziomyzaawansowania implements Serializable {
 
 	public void setNazwa(String nazwa) {
 		this.nazwa = nazwa;
+	}
+
+	public List<Kursy> getKursy() {
+		return kursy;
+	}
+
+	public void setKursy(List<Kursy> kursy) {
+		this.kursy = kursy;
 	}
 
 }

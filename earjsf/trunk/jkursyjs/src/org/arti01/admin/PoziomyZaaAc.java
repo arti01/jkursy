@@ -1,20 +1,14 @@
 package org.arti01.admin;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ActionListener;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 import org.arti01.entit.Poziomyzaawansowania;
-import org.arti01.entit.User;
 import org.arti01.sesBean.PoziomyZaawansowaniaImp;
 
 @ManagedBean(name="adminPoziomyZaaAc")
@@ -25,9 +19,9 @@ public class PoziomyZaaAc implements Serializable{
 	Logger logger = Logger.getLogger(PoziomyZaaAc.class);
 	
 	private DataModel<Poziomyzaawansowania> all = new ListDataModel<Poziomyzaawansowania>();
-
 	private Poziomyzaawansowania pz;
 	@EJB PoziomyZaawansowaniaImp pzImp;
+	private String infoText;
 	
 	public String list(){
 		pz=new Poziomyzaawansowania();
@@ -50,12 +44,21 @@ public class PoziomyZaaAc implements Serializable{
 		return null;
 	}
 	
+	public void zmien() {
+		pz=all.getRowData();
+		//logger.info(pz.getNazwa());
+			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
+			pzImp.update(pz);
+			infoText="zmiana wykonana";
+		all.setWrappedData(pzImp.getAll());
+	}
+	
 	public String usun() {
 		//logger.info(pz.getNazwa()+"usun");
 		pzImp.delete(all.getRowData());
 		all.setWrappedData(pzImp.getAll());
 		logger.info(all.getRowCount());
-		return "pzFrom";
+		return null;
 	}
 
 	public Poziomyzaawansowania getPz() {
@@ -73,5 +76,15 @@ public class PoziomyZaaAc implements Serializable{
 
 	public void setAll(DataModel<Poziomyzaawansowania> all) {
 		this.all = all;
+	}
+
+
+	public String getInfoText() {
+		return infoText;
+	}
+
+
+	public void setInfoText(String infoText) {
+		this.infoText = infoText;
 	}
 }

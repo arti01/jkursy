@@ -10,32 +10,33 @@
 	<ui:define name="body">
 		<body>
 		<h:form id="form">
-				<h:panelGrid columns="3">
-					<h:message for="nazwa" styleClass="error" />
+				<h:message for="nazwa" styleClass="error" />
+				<h:panelGrid columns="2">
 					<h:outputLabel value="nazwa" />
 					<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}"
 						size="100" />
 				</h:panelGrid>
 				<a4j:commandButton value="wyślij"
-					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista" />
+					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
 		</h:form>
-		
+		<hr/>
+		<br/>
+		<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
 		<h:form>
-		<rich:dataTable var="pz" value="#{adminPoziomyZaaAc.all}" id="lista">
-		<rich:column>
-			<h:outputText value="#{pz.nazwa}"/>
-			<h:outputText value="#{adminPoziomyZaaAc.all}"/>
-		</rich:column>
-		<rich:column>
-
-		  <a4j:commandLink id="deletelink"
-                        action="#{adminPoziomyZaaAc.usun}" render="lista">
-                        <h:button value="usuń"/>
-                    </a4j:commandLink>
-		</rich:column>
-		</rich:dataTable>
+					<rich:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1" id="tabled">
+						<rich:column>
+							<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="tabled" value="usuń"/>
+						</rich:column>
+						
+						<rich:column>
+						<h:message for="tekst" styleClass="error" />
+								<h:inputText id="tekst" value="#{pz1.nazwa}">
+									<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText"/>
+								</h:inputText>
+								<h:outputText value="#{adminPoziomyZaaAc.infoText}"  id="infoText"/>
+						</rich:column>
+					</rich:dataTable>
 		</h:form>
-		
 </body>
 	</ui:define>
 </ui:composition>
