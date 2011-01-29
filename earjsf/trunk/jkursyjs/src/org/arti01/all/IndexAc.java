@@ -9,20 +9,34 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Newsy;
+import org.arti01.entit.Poziomyzaawansowania;
 import org.arti01.entit.Statyczne;
+import org.arti01.entit.Typykursu;
 import org.arti01.entit.User;
+import org.arti01.sesBean.PoziomyZaawansowaniaImp;
 import org.arti01.sesBean.StatyczneImp;
+import org.arti01.sesBean.TypyKursuImp;
 
 @ManagedBean(name="indexAc")
 @SessionScoped
 public class IndexAc implements Serializable {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(IndexAc.class);
-	@EJB StatyczneImp statyczneImp;
+
 	User user;
 	Statyczne strona;
 	private Newsy news;
+	
 	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
+	@EJB StatyczneImp statyczneImp;
+	
+	private ListDataModel<Poziomyzaawansowania> pzModel=new ListDataModel<Poziomyzaawansowania>() ;
+	@EJB PoziomyZaawansowaniaImp pzImp;
+	private Poziomyzaawansowania pz;
+	
+	private ListDataModel<Typykursu> tkModel=new ListDataModel<Typykursu>() ;
+	@EJB TypyKursuImp tkImp;
+	private Typykursu tk;
 	
 	public String execute() throws Exception{
 		return "SUCCESS";
@@ -48,6 +62,15 @@ public class IndexAc implements Serializable {
 		//logger.info(strona.getTytul());
 		return "statyczneDetale";
 	}
+	
+	public String pz() {
+		return "pzDetale";
+	}
+	
+	public String tk() {
+		return "tkDetale";
+	}
+	
 	public String zalozKonto() throws Exception{
 		user= new User();
 		user.setDataZmiany(new Date());
@@ -102,5 +125,39 @@ public class IndexAc implements Serializable {
 
 	public void setNews(Newsy news) {
 		this.news = news;
+	}
+
+	public ListDataModel<Poziomyzaawansowania> getPzModel() {
+		if(pzModel.getRowIndex()==-1) pzModel.setWrappedData(pzImp.getAll());
+		return pzModel;
+	}
+
+	public void setPzModel(ListDataModel<Poziomyzaawansowania> pzModel) {
+		this.pzModel = pzModel;
+	}
+
+	public Poziomyzaawansowania getPz() {
+		return pz;
+	}
+
+	public void setPz(Poziomyzaawansowania pz) {
+		this.pz = pz;
+	}
+
+	public void setTkModel(ListDataModel<Typykursu> tkModel) {
+		this.tkModel = tkModel;
+	}
+
+	public ListDataModel<Typykursu> getTkModel() {
+		if(tkModel.getRowIndex()==-1) tkModel.setWrappedData(tkImp.getAll());
+		return tkModel;
+	}
+
+	public void setTk(Typykursu tk) {
+		this.tk = tk;
+	}
+
+	public Typykursu getTk() {
+		return tk;
 	}
 }

@@ -20,23 +20,25 @@
 			<h:commandButton value="dodaj nowy" action="#{adminUsersAc.formNew}" />
 			<br/>
 			<br/>
-			<h:panelGrid columns="4">
-				<h:commandButton value="admini" action="#{adminUsersAc.listAll}">
+			<h:panelGrid columns="5">
+				<a4j:commandButton value="admini" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="admin" />
-				</h:commandButton>
-				<h:commandButton value="wykladowcy" action="#{adminUsersAc.listAll}">
+				</a4j:commandButton>
+				<a4j:commandButton value="wykladowcy" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="wykladowca" />
-				</h:commandButton>
-				<h:commandButton value="kursanci" action="#{adminUsersAc.listAll}">
+				</a4j:commandButton>
+				<a4j:commandButton value="kursanci" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="kursant" />
-				</h:commandButton>
-				<h:commandButton value="nieprzypisani" action="#{adminUsersAc.listAll}">
+				</a4j:commandButton>
+				<a4j:commandButton value="nieprzypisani" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="nieprzypisani" />
-				</h:commandButton>
+				</a4j:commandButton>
+				<a4j:commandButton value="wszyscy" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="" />
+				</a4j:commandButton>
 			</h:panelGrid>
 		</h:form>
 		</h:panelGroup>
-<br/>
 		<h:form>
 			<rich:dataTable value="#{adminUsersAc.allUsers}" var="user"
 				id="table">

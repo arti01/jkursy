@@ -14,6 +14,7 @@
 		<class>org.arti01.entit.Lekcjakoment</class>
 		<class>org.arti01.entit.Lekcjafotykursant</class>
 		<class>org.arti01.entit.Poziomyzaawansowania</class>
+		<class>org.arti01.entit.Typykursu</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>

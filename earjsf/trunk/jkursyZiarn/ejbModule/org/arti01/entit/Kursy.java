@@ -65,6 +65,10 @@ public class Kursy implements Serializable {
 	@JoinColumn(name="idpoziomyzaawansowania")
 	private Poziomyzaawansowania poziomyzaawansowania;
 	
+	@ManyToOne
+	@JoinColumn(name="idtypykursu")
+	private Typykursu typykursu;
+	
 	@NotNull
 	private boolean stacjonarny;
 	
@@ -237,6 +241,14 @@ public class Kursy implements Serializable {
 
 	public void setWolnychMiejsc(Integer wolnychMiejsc) {
 		this.wolnychMiejsc = wolnychMiejsc;
+	}
+
+	public Typykursu getTypykursu() {
+		return typykursu;
+	}
+
+	public void setTypykursu(Typykursu typykursu) {
+		this.typykursu = typykursu;
 	}
 
 }

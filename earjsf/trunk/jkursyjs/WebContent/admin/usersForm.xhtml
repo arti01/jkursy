@@ -9,13 +9,16 @@
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
+		
+		<table><tr><td>
+		
 		<h:form>
 			<h:panelGroup>
 				<h:panelGrid columns="3">
 					<h:outputLabel for="bledy" />
+					<h:outputLabel for="bledy"/>
 					<h:outputText id="bledy" value="#{adminUsersAc.errorText}"
 						styleClass="error" />
-					<h:outputLabel for="bledy" />
 
 					<h:message for="username" styleClass="error" />
 					<h:outputLabel value="username" />
@@ -79,21 +82,21 @@
 						immediate="true" cols="48" />
 
 				</h:panelGrid>
-				<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
 				<h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
 					<f:selectItems value="#{adminUsersAc.allRolesName}" var="role"
 						itemValue="#{role}" />
 				</h:selectManyCheckbox>
+				<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
 			</h:panelGroup>
 		</h:form>
-		<br />
-		<br />
-		<table>
+		</td>
+		<td>
+		<table id="tabeleKursow">
 			<tr valign="top">
 				<td>
 				<h:form>
 					<rich:dataTable value="#{adminUsersAc.jestWkursach}" var="kurs"
-						id="tabled">
+						id="tabled" rendered="#{adminUsersAc.pokazTabele}">
 						<f:facet name="header">należy do kursów</f:facet>
 						<rich:column>
 							<a4j:commandLink action="#{adminUsersAc.usunZkursu}" render="tabled, table">
@@ -134,7 +137,7 @@
 
 				<td><h:form>
 					<rich:dataTable value="#{adminUsersAc.dostepneKursy}" var="kurs"
-						id="table">
+						id="table"  rendered="#{adminUsersAc.pokazTabele}">
 						<f:facet name="header">dostępne kursy</f:facet>
 
 						<rich:column>
@@ -213,6 +216,7 @@ tinyMCE.init({
 	}
 });
 </script>
+</td></tr></table>
 		</body>
 	</ui:define>
 </ui:composition>

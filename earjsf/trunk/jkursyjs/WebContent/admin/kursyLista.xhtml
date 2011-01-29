@@ -38,6 +38,17 @@
 					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
 				</rich:column>
 				
+				<rich:column sortBy="#{kurs.typykursu.nazwa}" id="typykursu"
+					sortOrder="#{adminKursyAc.typykursuOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie typy kursu" render="table"
+							action="#{adminKursyAc.sortBytypykursu}" />
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.form}">
+						<h:outputText value="#{kurs.typykursu.nazwa}"/>
+					</h:commandLink>
+				</rich:column>
+				
 				<rich:column sortBy="#{kurs.poziomyzaawansowania.nazwa}" id="poziomyzaawansowania"
 					sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
 					<f:facet name="header">

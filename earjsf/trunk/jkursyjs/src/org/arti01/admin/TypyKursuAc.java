@@ -8,84 +8,72 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
-import org.arti01.entit.Poziomyzaawansowania;
-import org.arti01.sesBean.PoziomyZaawansowaniaImp;
+import org.arti01.entit.Typykursu;
+import org.arti01.sesBean.TypyKursuImp;
 
-@ManagedBean(name="adminPoziomyZaaAc")
+@ManagedBean(name="adminTypyKursuAc")
 @SessionScoped
-public class PoziomyZaaAc implements Serializable{
+public class TypyKursuAc implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(PoziomyZaaAc.class);
+	Logger logger = Logger.getLogger(TypyKursuAc.class);
 	
-	private DataModel<Poziomyzaawansowania> all = new ListDataModel<Poziomyzaawansowania>();
-	private Poziomyzaawansowania pz;
-	@EJB PoziomyZaawansowaniaImp pzImp;
+	private DataModel<Typykursu> all = new ListDataModel<Typykursu>();
+	private Typykursu tk;
+	@EJB TypyKursuImp tkImp;
 	private String infoText;
 	private String infoTextUsun;
 
 	public String list(){
-		pz=new Poziomyzaawansowania();
-		all.setWrappedData(pzImp.getAll());
+		tk=new Typykursu();
+		all.setWrappedData(tkImp.getAll());
 		infoText="";
-		return "pzForm";
+		return "tkForm";
+	}
+	
+	public void edytujForm(){
+		tk=all.getRowData();
+		all.setWrappedData(tkImp.getAll());
+		infoText="";
 	}
 	
 	
 	public void dodaj() {
-		if(pz.getIdpoziomyzaawansowania()==null){
+		if(tk.getIdtypykursu()==null){
 			//logger.info("dodanie--"+tk.getNazwa()+"--"+tk.getOpis());
-			pzImp.insert(pz);
+			tkImp.insert(tk);
 		}
 		else {
 			//logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
-			pzImp.update(pz); 
+			tkImp.update(tk); 
 		}
-		pz=new Poziomyzaawansowania();
-		all.setWrappedData(pzImp.getAll());
+		tk=new Typykursu();
+		all.setWrappedData(tkImp.getAll());
 		infoText="";
 		infoTextUsun="";
 	}
 	
 	public void zmien() {
-		pz=all.getRowData();
+		tk=all.getRowData();
 		//logger.info("zmien"+tk.getNazwa()+tk.getOpis());
 		infoText="";
 		infoTextUsun="";
-		all.setWrappedData(pzImp.getAll());
+		all.setWrappedData(tkImp.getAll());
 	}
 	
 	public String usun() {
-		//logger.info(pz.getNazwa()+"usun");
 		infoText="";
 		infoTextUsun="";
 		try {
-			pzImp.delete(all.getRowData());
+			tkImp.delete(all.getRowData());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error("usunięcie nieudane");
-			infoTextUsun="usunięcie nieudane - istnieją kursy z tym poziomem";
+			infoTextUsun="usunięcie nieudane - istnieją kursy z tym typem";
 		}
-		all.setWrappedData(pzImp.getAll());
-		pz=new Poziomyzaawansowania();
+		all.setWrappedData(tkImp.getAll());
+		tk=new Typykursu();
 		return null;
-	}
-
-	public Poziomyzaawansowania getPz() {
-		return pz;
-	}
-
-	public void setPz(Poziomyzaawansowania pz) {
-		this.pz = pz;
-	}
-
-	public DataModel<Poziomyzaawansowania> getAll() {
-		return all;
-	}
-
-
-	public void setAll(DataModel<Poziomyzaawansowania> all) {
-		this.all = all;
 	}
 
 	public String getInfoText() {
@@ -102,6 +90,26 @@ public class PoziomyZaaAc implements Serializable{
 
 	public void setInfoTextUsun(String infoTextUsun) {
 		this.infoTextUsun = infoTextUsun;
+	}
+
+
+	public DataModel<Typykursu> getAll() {
+		return all;
+	}
+
+
+	public void setAll(DataModel<Typykursu> all) {
+		this.all = all;
+	}
+
+
+	public Typykursu getTk() {
+		return tk;
+	}
+
+
+	public void setTk(Typykursu tk) {
+		this.tk = tk;
 	}
 
 

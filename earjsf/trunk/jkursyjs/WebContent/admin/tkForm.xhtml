@@ -9,41 +9,42 @@
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
+		typy kursów
 		<h:form>
 		<h:panelGroup id="form">
 				<h:message for="nazwa" styleClass="error" />
 				<h:panelGrid columns="2">
 					<h:outputLabel value="nazwa" />
-					<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}"
+					<h:inputText id="nazwa" value="#{adminTypyKursuAc.tk.nazwa}"
 						size="50" />
-					<h:outputLabel value="opis" />
-					<h:inputTextarea id="opis" value="#{adminPoziomyZaaAc.pz.opis}"
+				<h:outputLabel value="opis" />
+				<h:inputTextarea id="opis" value="#{adminTypyKursuAc.tk.opis}"
 					cols="70" rows="15"/>
 				</h:panelGrid>
 				<a4j:commandButton value="wyślij"
-					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
+					action="#{adminTypyKursuAc.dodaj}" render="form, tabled" />
 		</h:panelGroup>
 		</h:form>
 		<hr/>
 		<br/>
 		<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
-		<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun"/>
+		<h:outputText value="#{adminTypyKursuAc.infoTextUsun}" id="infoTextUsun"/>
 		<h:form>
-					<rich:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1" id="tabled">
+					<rich:dataTable value="#{adminTypyKursuAc.all}" var="tk1" id="tabled">
 						<rich:column>
-							<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="form, tabled, infoTextUsun" value="usuń"/>
+							<a4j:commandLink action="#{adminTypyKursuAc.usun}" render="form, tabled, infoTextUsun" value="usuń"/>
 						</rich:column>
 						
 						<rich:column>
-							<a4j:commandLink action="#{adminPoziomyZaaAc.zmien}" render="form, tabled, infoTextUsun" value="edytuj"/>
+							<a4j:commandLink action="#{adminTypyKursuAc.zmien}" render="form, tabled, infoTextUsun" value="edytuj"/>
 						</rich:column>
 						
 						<rich:column>
 						<h:message for="tekst" styleClass="error" />
-								<h:inputText id="tekst" value="#{pz1.nazwa}">
-									<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText" immediate="true"/>
+								<h:inputText id="tekst" value="#{tk1.nazwa}">
+									<a4j:ajax listener="#{adminTypyKursuAc.zmien}" render="infoText" immediate="true"/>
 								</h:inputText>
-								<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText"/>
+								<h:outputText value="#{adminTypyKursuAc.infoText}" id="infoText"/>
 						</rich:column>
 					</rich:dataTable>
 		</h:form>

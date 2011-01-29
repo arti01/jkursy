@@ -9,18 +9,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 /**
- * The persistent class for the poziomyzaawansowania database table.
+ * The persistent class for the typykursu database table.
  * 
  */
 @Entity
-@Table(name="poziomyzaawansowania")
-public class Poziomyzaawansowania implements Serializable {
+@Table(name="typykursu")
+public class Typykursu implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private Integer idpoziomyzaawansowania;
+	private Integer idtypykursu;
 
 	@NotEmpty
 	@Column(nullable=false, length=255)
@@ -30,18 +30,18 @@ public class Poziomyzaawansowania implements Serializable {
 	@Column(nullable=false)
 	private String opis;
 	
-	@OneToMany(mappedBy="poziomyzaawansowania", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="typykursu", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	private List<Kursy> kursy;
 
-    public Poziomyzaawansowania() {
+    public Typykursu() {
     }
 
-	public Integer getIdpoziomyzaawansowania() {
-		return this.idpoziomyzaawansowania;
+	public Integer getIdtypykursu() {
+		return this.idtypykursu;
 	}
 
-	public void setIdpoziomyzaawansowania(Integer idpoziomyzaawansowania) {
-		this.idpoziomyzaawansowania = idpoziomyzaawansowania;
+	public void setIdtypykursu(Integer idtypykursu) {
+		this.idtypykursu = idtypykursu;
 	}
 
 	public String getNazwa() {

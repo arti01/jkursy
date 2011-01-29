@@ -42,6 +42,7 @@ public class UsersAc {
 	private DataModel<Kursy> jestWkursach = new ListDataModel<Kursy>();
 	private String prawo = "";
 	String errorText;
+	private boolean pokazTabele=true;
 
 	public void sortByUsername() {
 		setImieNazwiskoOrder(SortOrder.unsorted);
@@ -74,6 +75,7 @@ public class UsersAc {
 	}
 
 	public String form() {
+		pokazTabele=true;
 		allRolesName = roleImp.getRolesName();
 		errorText = "";
 		user = allUsers.getRowData();
@@ -88,6 +90,7 @@ public class UsersAc {
 	}
 
 	public String formNew() {
+		pokazTabele=false;
 		allRolesName = roleImp.getRolesName();
 		rolesName=new ArrayList<String>();
 		userpass1="";
@@ -124,6 +127,7 @@ public class UsersAc {
 		try {
 			userImp.update(user);
 			dostepneKursy.setWrappedData(userImp.dostepneKursy(user));
+			jestWkursach.setWrappedData(user.getKursies());
 		} catch (Exception e) {
 			logger.error(e);
 		}
@@ -131,6 +135,7 @@ public class UsersAc {
 	}
 	
 	public String dodaj() {
+		pokazTabele=true;
 		if(!user.getUserpass().equals(userpass1)){
 			errorText="różne hasła";
 			return "usersForm";	
@@ -158,7 +163,8 @@ public class UsersAc {
 				user.getUsername();
 				if (userImp.insert(user)) {
 					listAll();
-					return "usersLista";
+					errorText="Użytkownik dodany - przypisz go do kursów";
+					return "usersForm";
 				}
 			}
 		} catch (Exception e) {
@@ -276,5 +282,13 @@ public class UsersAc {
 
 	public void setJestWkursach(DataModel<Kursy> jestWkursach) {
 		this.jestWkursach = jestWkursach;
+	}
+
+	public boolean isPokazTabele() {
+		return pokazTabele;
+	}
+
+	public void setPokazTabele(boolean pokazTabele) {
+		this.pokazTabele = pokazTabele;
 	}
 }

@@ -12,7 +12,19 @@
 			<li><h:commandLink action="#{indexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />
 			</h:commandLink></li>
-	</ui:repeat>
+		</ui:repeat>
+		<ui:repeat var="pz" value="#{indexAc.pzModel}">
+			<li><h:commandLink action="#{indexAc.pz}">
+				<f:setPropertyActionListener target="#{indexAc.pz}" value="#{pz}"/>
+				<h:outputText value="poziom zaawansowania: #{pz.nazwa}" />
+			</h:commandLink></li>
+		</ui:repeat>
+		<ui:repeat var="tk" value="#{indexAc.tkModel}">
+			<li><h:commandLink action="#{indexAc.tk}">
+				<f:setPropertyActionListener target="#{indexAc.tk}" value="#{tk}"/>
+				<h:outputText value="typy kursów: #{tk.nazwa}" />
+			</h:commandLink></li>
+		</ui:repeat>
 	</ul>
 </h:form>
 </h:body>

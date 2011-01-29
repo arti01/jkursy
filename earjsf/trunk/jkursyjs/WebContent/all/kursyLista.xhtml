@@ -36,7 +36,7 @@
 							</h:commandLink></li>
 						</ui:repeat>
 					</ul>
-				</rich:column>
+				</rich:column>				
 				
 				<rich:column sortBy="#{kurs.stacjonarnyTN}" id="stacjonarny"
 					sortOrder="#{adminKursyAc.stacjonarnyTNOrder}">
@@ -51,6 +51,18 @@
 					</li></ul>
 				</rich:column>
 				
+				<rich:column sortBy="#{kurs.typykursu.nazwa}" id="typykursu"
+					sortOrder="#{adminKursyAc.typykursuOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie typy kursu" render="table"
+							action="#{adminKursyAc.sortBytypykursu}" />
+					</f:facet>
+					<h:commandLink action="#{indexAc.tk}">
+						<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}"/>
+						<h:outputText value="#{kurs.typykursu.nazwa}"/>
+					</h:commandLink>
+				</rich:column>
+				
 				<rich:column sortBy="#{kurs.poziomyzaawansowania.nazwa}" id="poziomyzaawansowania"
 					sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
 					<f:facet name="header">
@@ -58,10 +70,9 @@
 							action="#{adminKursyAc.sortBypoziomyzaawansowania}" />
 					</f:facet>
 					<ul><li>
-					<h:commandLink action="#{adminKursyAc.form}">
-						<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}">
-							<f:convertDateTime pattern="yyyy-MM-dd"/>
-						</h:outputText>
+					<h:commandLink action="#{indexAc.pz}">
+						<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}"/>
+						<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}"/>
 					</h:commandLink>
 					</li></ul>
 				</rich:column>

@@ -20,6 +20,12 @@
 				<h:outputLabel value="krótki opis" />
 				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" immediate="true"/>
 				
+				<h:message for="typ" styleClass="error" />
+				<h:outputLabel value="typ kursu" />
+				<h:selectOneMenu id="typ" value="#{adminKursyAc.kurs.typykursu.idtypykursu}">
+				<f:selectItems value="#{adminKursyAc.allTk}" var="tk" itemLabel="#{tk.nazwa}" itemValue="#{tk.idtypykursu}"/>
+				</h:selectOneMenu>
+				
 				<h:message for="poziom" styleClass="error" />
 				<h:outputLabel value="poziom zaawansowania" />
 				<h:selectOneMenu id="poziom" value="#{adminKursyAc.kurs.poziomyzaawansowania.idpoziomyzaawansowania}">
