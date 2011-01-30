@@ -25,7 +25,7 @@ public class KursyAc implements Serializable{
 	
 	public String lekcjaLista(){
 		kurs=kursyImp.find(kurs);
-		lekcje.setWrappedData(kurs.getLekcjeWidoczne());
+		lekcje.setWrappedData(kurs.getLekcjeWidoczne());		
 		return "lekcjaLista";
 	}
 	

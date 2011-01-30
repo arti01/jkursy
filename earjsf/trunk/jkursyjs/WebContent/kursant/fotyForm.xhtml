@@ -21,16 +21,28 @@
 				</rich:fileUpload>
 			</h:panelGrid>
 			</h:form>
-
+		<h:form>
 			<h:dataTable value="#{kursantLekcjaAc.lekcja.lekcjafotykursant}" var="fota" id="foty">
 					<h:column>
 						<a4j:mediaOutput element="img"
-							createContent="#{wykladImageUploadBean.paintBazy}"
-							value="#{fota.idlekcjafoty}" cacheable="false">
+							createContent="#{kursantLekcjaAc.paintBazy}"
+							value="#{fota.idlekcjafotykursant}" cacheable="false">
 							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 						</a4j:mediaOutput>
 						</h:column>
+						<h:column>
+							<h:panelGrid columns="1">
+							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+							<h:outputText value="dodana: #{fota.datadodaniaS}">
+								<f:convertDateTime pattern="dd-MM-yyyy"/>
+							</h:outputText>
+							<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+							</h:commandLink>
+							</h:panelGrid>
+						</h:column>
 			</h:dataTable>
+		</h:form>
 	</ui:define>
 </ui:composition>
 

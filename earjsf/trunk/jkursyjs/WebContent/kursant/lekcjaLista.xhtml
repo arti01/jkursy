@@ -47,6 +47,28 @@
 		<f:facet name="header">data modyfikacji lekcji</f:facet>
 		<h:outputText value="#{lekcja.datazmiany}"/>
 	</rich:column>
+	<rich:column>
+		<f:facet name="header">ostatni komentarz</f:facet>
+		<h:outputText value="#{lekcja.lastKoment.datadodaniaS} " rendered="#{lekcja.lastKoment!=null}"/>
+		<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}" rendered="#{lekcja.lastKoment!=null}"/>
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">ostatno dodane zdjęcie kursanta</f:facet>
+		<h:panelGrid columns="2">
+			<h:outputText value="#{lekcja.lastFota.datadodaniaS} " rendered="#{lekcja.lastFota!=null}"/>
+			<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}"/>
+			<h:commandLink value="idź do zdjęć" action="#{kursantLekcjaAc.fotyForm}">
+				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+			</h:commandLink>
+		</h:panelGrid>
+	</rich:column>
+	<rich:column>
+		<f:facet name="header">ostatno dodany komentarz do zdjęcia</f:facet>
+		<h:panelGrid columns="2">
+			<h:outputText value="#{lekcja.lastKomentFota.datadodaniaS} " rendered="#{lekcja.lastKomentFota!=null}"/>
+			<h:outputText value="autor: #{lekcja.lastKomentFota.user.imieNazwisko}" rendered="#{lekcja.lastKomentFota!=null}"/>
+		</h:panelGrid>
+	</rich:column>
 </rich:dataTable>
 </h:form>
 </div>

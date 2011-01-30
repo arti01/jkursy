@@ -2,10 +2,9 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import org.hibernate.validator.constraints.NotEmpty;
-
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -22,8 +21,12 @@ public class Lekcjakoment implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer idlekcjakoment;
 
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
-	private Timestamp datadodania;
+	private Date datadodania;
+	
+	@Transient
+	private String datadodaniaS;
 
 	@Column(nullable=false, length=2147483647)
 	@NotEmpty
@@ -48,14 +51,6 @@ public class Lekcjakoment implements Serializable {
 		this.idlekcjakoment = idlekcjakoment;
 	}
 
-	public Timestamp getDatadodania() {
-		return this.datadodania;
-	}
-
-	public void setDatadodania(Timestamp datadodania) {
-		this.datadodania = datadodania;
-	}
-
 	public String getTresc() {
 		return this.tresc;
 	}
@@ -78,6 +73,24 @@ public class Lekcjakoment implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Date getDatadodania() {
+		return datadodania;
+	}
+
+	public void setDatadodania(Date datadodania) {
+		this.datadodania = datadodania;
+	}
+
+	public String getDatadodaniaS() {
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		datadodaniaS=sdf.format(getDatadodania());
+		return datadodaniaS;
+	}
+
+	public void setDatadodaniaS(String datadodaniaS) {
+		this.datadodaniaS = datadodaniaS;
 	}
 
 }

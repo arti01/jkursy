@@ -2,8 +2,11 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -20,7 +23,12 @@ public class Lekcjafotykursant implements Serializable {
 	@Column(unique=true, nullable=false)
 	private Integer idlekcjafotykursant;
 
-	private Timestamp datadodania;
+	@Temporal(TemporalType.TIMESTAMP)
+	@NotNull
+	private Date datadodania;
+	
+	@Transient
+	private String datadodaniaS;
 
 	@Column(length=2147483647)
 	private String exif;
@@ -40,6 +48,10 @@ public class Lekcjafotykursant implements Serializable {
 	@JoinColumn(name="username")
 	private User user;
 
+	@OneToMany(mappedBy="lekcjafotykursant", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@OrderBy(value="datadodania DESC")
+	private List<Fotykursantkoment> fotykursantkoment;
+	
     public Lekcjafotykursant() {
     }
 
@@ -49,14 +61,6 @@ public class Lekcjafotykursant implements Serializable {
 
 	public void setIdlekcjafotykursant(Integer idlekcjafotykursant) {
 		this.idlekcjafotykursant = idlekcjafotykursant;
-	}
-
-	public Timestamp getDatadodania() {
-		return this.datadodania;
-	}
-
-	public void setDatadodania(Timestamp datadodania) {
-		this.datadodania = datadodania;
 	}
 
 	public String getExif() {
@@ -105,6 +109,34 @@ public class Lekcjafotykursant implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getDatadodaniaS() {
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		//System.out.println(getDatadodania());
+		//System.out.println(getIdlekcjafotykursant());
+		datadodaniaS=sdf.format(getDatadodania());
+		return datadodaniaS;
+	}
+
+	public void setDatadodaniaS(String datadodaniaS) {
+		this.datadodaniaS = datadodaniaS;
+	}
+
+	public Date getDatadodania() {
+		return datadodania;
+	}
+
+	public void setDatadodania(Date datadodania) {
+		this.datadodania = datadodania;
+	}
+
+	public List<Fotykursantkoment> getFotykursantkoment() {
+		return fotykursantkoment;
+	}
+
+	public void setFotykursantkoment(List<Fotykursantkoment> fotykursantkoment) {
+		this.fotykursantkoment = fotykursantkoment;
 	}
 
 }

@@ -1,6 +1,8 @@
 package org.arti01.kursant;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -11,9 +13,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjakoment;
+import org.arti01.sesBean.FotykursantkomentImp;
 import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.LekcjaKomentImp;
 import org.arti01.sesBean.LekcjafotykursantImp;
@@ -41,6 +45,11 @@ public class LekcjaAc implements Serializable{
 	@EJB LekcjaKomentImp lekcjaKomentImp;
 	@EJB LekcjafotykursantImp lfki;
 	@ManagedProperty(value="#{login}") private Login loginBean;
+	private Lekcjafotykursant fotaKursant;
+	@EJB LekcjafotykursantImp fotaKursantImp;
+	private Fotykursantkoment komentarzFota=new Fotykursantkoment();
+	@EJB FotykursantkomentImp fkki;
+	
 	private static int DLUGOSC=600;
     private static int WYSOKOSC=400;
     private static int DLUGOSCmin=150;
@@ -59,11 +68,14 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String fotyForm(){
-		logger.info(lekcja);
 		logger.info(lekcja.getLekcjafotykursant());
 		return "fotyForm";
 	}
 
+	public String fotaKursant(){
+		return "fotaKursanta";
+	}
+	
 	public void listenerFoty(FileUploadEvent event) {
 		logger.info(lekcja.getLekcjafotykursant());
         UploadedFile item = event.getUploadedFile();
@@ -94,8 +106,21 @@ public class LekcjaAc implements Serializable{
         fota.setPlikmini(new ResizeJpg().zrobB(DLUGOSCmin, WYSOKOSCmin, item.getData()));
         fota.setUser(loginBean.getZalogowany());
         fota.setLekcja(lekcja);
+        fota.setDatadodania(new Timestamp(new Date().getTime()));
         lfki.insert(fota);
+        lekcja=lekcjaImp.find(lekcja);
         logger.info(lekcja.getLekcjafotykursant());
+    }
+	
+	public void paintBazy(OutputStream stream, Object object) throws IOException {
+		Lekcjafotykursant lfk=new Lekcjafotykursant();
+    	lfk.setIdlekcjafotykursant((Integer)object);
+    	stream.write(lfki.find(lfk).getPlikmini());
+    }
+	public void paintDuza(OutputStream stream, Object object) throws IOException {
+		Lekcjafotykursant lfk=new Lekcjafotykursant();
+    	lfk.setIdlekcjafotykursant((Integer)object);
+    	stream.write(lfki.find(lfk).getPlik());
     }
 	
 	public String dodajKomentarz(){
@@ -107,6 +132,17 @@ public class LekcjaAc implements Serializable{
 		komentarz=new Lekcjakoment();
 		return null;
 	}
+	
+	public String dodajKomentarzFota(){
+		komentarzFota.setDatadodania(new Timestamp(new Date().getTime()));
+		komentarzFota.setUser(loginBean.getZalogowany());
+		komentarzFota.setLekcjafotykursant(fotaKursant);
+		fkki.insert(komentarzFota);
+		fotaKursant=fotaKursantImp.find(fotaKursant);
+		komentarzFota=new Fotykursantkoment();
+		return null;
+	}
+	
 	public Lekcja getLekcja() {
 		return lekcja;
 	}
@@ -145,6 +181,18 @@ public class LekcjaAc implements Serializable{
 	}
 	public void setLekcjaImp(LekacjaImp lekcjaImp) {
 		this.lekcjaImp = lekcjaImp;
+	}
+	public Lekcjafotykursant getFotaKursant() {
+		return fotaKursant;
+	}
+	public void setFotaKursant(Lekcjafotykursant fotaKursant) {
+		this.fotaKursant = fotaKursant;
+	}
+	public Fotykursantkoment getKomentarzFota() {
+		return komentarzFota;
+	}
+	public void setKomentarzFota(Fotykursantkoment komentarzFota) {
+		this.komentarzFota = komentarzFota;
 	}
 
 }

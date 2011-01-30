@@ -3,18 +3,19 @@
 	<persistence-unit name="jkursyJPA">
 		<jta-data-source>jdbc/slow</jta-data-source>
 		<class>org.arti01.entit.User</class>
+		<class>org.arti01.entit.Typykursu</class>
 		<class>org.arti01.entit.Statyczne</class>
 		<class>org.arti01.entit.Role</class>
+		<class>org.arti01.entit.Poziomyzaawansowania</class>
 		<class>org.arti01.entit.Newsykursy</class>
 		<class>org.arti01.entit.Newsy</class>
 		<class>org.arti01.entit.Lekcjapliki</class>
+		<class>org.arti01.entit.Lekcjakoment</class>
+		<class>org.arti01.entit.Lekcjafotykursant</class>
 		<class>org.arti01.entit.Lekcjafoty</class>
 		<class>org.arti01.entit.Lekcja</class>
 		<class>org.arti01.entit.Kursy</class>
-		<class>org.arti01.entit.Lekcjakoment</class>
-		<class>org.arti01.entit.Lekcjafotykursant</class>
-		<class>org.arti01.entit.Poziomyzaawansowania</class>
-		<class>org.arti01.entit.Typykursu</class>
+		<class>org.arti01.entit.Fotykursantkoment</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>

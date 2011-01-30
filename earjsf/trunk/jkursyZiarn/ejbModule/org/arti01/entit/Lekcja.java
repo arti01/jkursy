@@ -50,7 +50,7 @@ public class Lekcja implements Serializable {
 	private List<Lekcjafoty> lekcjafoties;
 	
 	@OneToMany(mappedBy="lekcja")
-	@OrderBy("datadodania")
+	@OrderBy("datadodania DESC")
 	private List<Lekcjafotykursant> lekcjafotykursant;
 
 	public List<Lekcjafotykursant> getLekcjafotykursant() {
@@ -69,7 +69,16 @@ public class Lekcja implements Serializable {
 	@OneToMany(mappedBy="lekcja")
 	@OrderBy("datadodania DESC")
 	private List<Lekcjakoment> lekcjakoments;
+	
+	@Transient
+	private Lekcjakoment lastKoment;
 
+	@Transient
+	private Lekcjafotykursant lastFota;
+	
+	@Transient
+	private Fotykursantkoment lastKomentFota;
+	
 	public Integer getIdlekcja() {
 		return this.idlekcja;
 	}
@@ -156,6 +165,41 @@ public class Lekcja implements Serializable {
 
 	public void setWidoczna(boolean widoczna) {
 		this.widoczna = widoczna;
+	}
+
+	public Lekcjakoment getLastKoment() {
+		if(getLekcjakoments().size()!=0) lastKoment=getLekcjakoments().iterator().next();
+		else{
+			lastKoment=null;
+		}
+		return lastKoment;
+	}
+
+	public void setLastKoment(Lekcjakoment lastKoment) {
+		this.lastKoment = lastKoment;
+	}
+
+	public Lekcjafotykursant getLastFota() {
+		if(getLekcjafotykursant().size()!=0)lastFota=getLekcjafotykursant().iterator().next();
+		else {
+			lastFota=null;
+		}
+		return lastFota;
+	}
+
+	public void setLastFota(Lekcjafotykursant lastFota) {
+		this.lastFota = lastFota;
+	}
+
+	public Fotykursantkoment getLastKomentFota() {
+
+			lastKomentFota=null;
+		
+		return lastKomentFota;
+	}
+
+	public void setLastKomentFota(Fotykursantkoment lastKomentFota) {
+		this.lastKomentFota = lastKomentFota;
 	}
 	
 }

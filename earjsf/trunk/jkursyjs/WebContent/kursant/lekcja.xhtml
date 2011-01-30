@@ -12,11 +12,11 @@
 		<h3><h:outputText value="#{kursantLekcjaAc.lekcja.tytul}" /></h3>
 		<h4>numer kolejny lekcji:<h:outputText
 			value="#{kursantLekcjaAc.lekcja.lp}" /></h4>
-			
+
 		Inne lekcje:<br />
 		<h:form>
 			<ui:repeat var="lekcja"
-				value="#{kursantLekcjaAc.lekcja.kursy.lekcjas}">
+				value="#{kursantLekcjaAc.lekcja.kursy.lekcjeWidoczne}">
 				<h:commandButton action="#{kursantLekcjaAc.pokaz}"
 					value="#{lekcja.lp}.#{lekcja.tytul}"
 					rendered="#{lekcja!=kursantLekcjaAc.lekcja}">
@@ -26,31 +26,31 @@
 			</ui:repeat>
 		</h:form>
 		<hr size="-1" />
-		
+
 		<h:form>
-		<h:commandButton value="obsluga zdjec kursantów" action="#{kursantLekcjaAc.fotyForm}"/>
-		</h:form>
-		
-		<h:form>
+			<h:commandButton value="obsluga zdjec kursantów"
+				action="#{kursantLekcjaAc.fotyForm}" />
+		</h:form> <h:form>
 			<h5>dyskusja o lekcji</h5>
 			<h:form>
 				<h:panelGrid columns="4" id="wpis">
 					<h:message for="tresc" />
-					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarz.tresc}" cols="100"/>
+					<h:inputTextarea id="tresc"
+						value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
 					<a4j:commandButton value="dodaj komentarz"
-						action="#{kursantLekcjaAc.dodajKomentarz}" render="komentarze, wpis"/>
+						action="#{kursantLekcjaAc.dodajKomentarz}"
+						render="komentarze, wpis" />
 				</h:panelGrid>
 			</h:form>
-			<h:panelGroup id="komentarze" >
-<ui:repeat var="koment" value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
-<h5>
-	<h:outputText value="autor: #{koment.user.imieNazwisko}, "/>
-	<h:outputText value="dodany: #{koment.datadodania}"/>
-</h5>
-<h:outputText value="#{koment.tresc}"/>
-<hr/>
-</ui:repeat>
-</h:panelGroup>
+			<h:panelGroup id="komentarze">
+				<ui:repeat var="koment"
+					value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
+					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, " />
+					<h:outputText value="dodany: #{koment.datadodaniaS}" /></h5>
+					<h:outputText value="#{koment.tresc}" />
+					<hr />
+				</ui:repeat>
+			</h:panelGroup>
 
 			<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjaplikis}" var="plik">
 				<h:panelGrid columns="2">
