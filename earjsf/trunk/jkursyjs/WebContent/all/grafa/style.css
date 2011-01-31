@@ -1,8 +1,8 @@
 /* Set styles for body and head */
 body
 {
-	margin: 0px auto;
-	padding: 0px;
+	margin: 0 auto;
+	padding: 0;
 	font-size: 76%;
 	font-family: "georgia", serif;
 	background-color: #ffffff;
@@ -18,10 +18,11 @@ body
 
 #header
 {
-	margin:0px;
-	padding: 0px;
+	margin:0;
+	padding: 0;
 	width: 100%;
 	border: 0px solid #aaaaaa;
+
 }
 
 #header-a
@@ -46,35 +47,36 @@ body
 	color: #000000;
 	font-size: 60px;
 	letter-spacing: -3px;
-	margin: 20px 0px 0px 0px;
+	margin: 20px 0 0 0;
 }
 #menu
 {
- 	margin:0px 0px 10px 0px;
-	padding: 10px;
+	margin:0 0 10px 0;
+	padding: 10;
 	width: 100%;
-    clear: both;
-    text-align: center;
-    border-top: 2px solid #888888;
+        clear: both;
+        text-align: center;
+        border-top: 2px solid #888888;
+
 }
 
 #leftcol
 {
 	float: left;
-	font-size: 1.2em;
-	line-height: 1.2em;
+	font-size: 1.1em;
+	line-height: 1.3em;
 	color: #0F0F0C;
-	margin: 0px 10px 0px 10px;
+	margin: 0 10px 0 10px;
 	padding: 4px;
-	width: 170px;
+	width: 200px;
 	background-color: #ffffff;
 	border: 3px solid #888888;
 }
 
 #leftcol h1
 {
-	font-size: 1.2em;
-	line-height: 1.2em;
+	font-size: 1.3em;
+	line-height: 1.3em;
 	font-weight: bold;
 	margin: 0;
 	padding: 10px 10px 0 10px;
@@ -93,14 +95,14 @@ body
 
 .text
 {
-	margin: 0px;
+	margin: 0;
 	padding: 10px 10px 10px 10px;
 	background-color: #EEEEEE;
 
 }
 
 #leftcol a
-{	display:block;
+{
 	color: #EEEEEE;
 	text-decoration: underline;
 }
@@ -112,7 +114,7 @@ body
 
 #leftcol ul
 {
-	margin: 0px;
+	margin: 0;
 	padding: 5px 10px 5px 10px;
 	list-style: none;
 	background-color: #EEEEEE;
@@ -121,7 +123,7 @@ body
 
 #leftcol li
 {
-	margin: 0px;
+	margin: 0;
 	padding: 5px 10px 5px 10px;
 	border-bottom: 1px dotted #888888;
 }
@@ -145,15 +147,17 @@ body
 	background-color: #ffffff;
 	border: 1px solid #4C6F0F;
 	padding: 2px;
-	margin: 0px 5px 5px 0px;
+	margin: 0 5px 5px 0;
 }
 
 #main
 {
-	margin: 0px 0px 0px 220px;
-	padding: 0px;
+	float: left;
+        margin: 0 0 0 0;
+	padding: 0;
+        width: 750px;
 	color: #0F0F0C;
-	font-size: 1.3em;
+	font-size: 1.1em;
 	line-height: 1.3em;
 	text-align: justify;
 }
@@ -180,8 +184,10 @@ body
 
 #main .copy
 {
-	margin: 0px 0px 10px 0px;
+	margin: 0 0 10px 0;
 }
+
+
 
 #dateline
 {
@@ -201,7 +207,7 @@ body
 	margin: 0 0 30px 0;
 	padding: 10px 5px 3px 0;
 	background-color: #ffffff;
-    font-style: italic;
+        font-style: italic;
 	font-size: 15px;
 	font-weight: normal;
 	text-align: left;
@@ -256,11 +262,25 @@ body
 	font-size: 1.5em;
 }
 
+#info
+{
+	float: right;
+	font-size: 1.1em;
+	line-height: 1.3em;
+	color: #0F0F0C;
+	margin: 0 0 10px 0;
+	padding: 10px;
+	width: 180px;
+        
+	background-color: #eeeeee;
+}
+	
+
 #footer
 {
-	border-top: 2px solid #888888;
-	margin: 30px 0 0 0;
-	padding: 10px;
+        border-top: 2px solid #888888;
+	margin: 0 0 50px 0;
+        padding: 10px;
 	clear: both;
 	color: #a0a0a0;
 	font-size: 1em;
