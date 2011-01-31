@@ -109,7 +109,7 @@ public class LekcjaAc implements Serializable{
         fota.setDatadodania(new Timestamp(new Date().getTime()));
         lfki.insert(fota);
         lekcja=lekcjaImp.find(lekcja);
-        logger.info(lekcja.getLekcjafotykursant());
+        //logger.info(lekcja.getLekcjafotykursant());
     }
 	
 	public void paintBazy(OutputStream stream, Object object) throws IOException {

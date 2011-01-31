@@ -52,6 +52,9 @@ public class Lekcjafotykursant implements Serializable {
 	@OrderBy(value="datadodania DESC")
 	private List<Fotykursantkoment> fotykursantkoment;
 	
+	@Transient
+	private Fotykursantkoment lastKomentFota;
+	
     public Lekcjafotykursant() {
     }
 
@@ -137,6 +140,18 @@ public class Lekcjafotykursant implements Serializable {
 
 	public void setFotykursantkoment(List<Fotykursantkoment> fotykursantkoment) {
 		this.fotykursantkoment = fotykursantkoment;
+	}
+
+	public Fotykursantkoment getLastKomentFota() {
+		if(getFotykursantkoment().size()!=0)lastKomentFota=getFotykursantkoment().iterator().next();
+		else {
+			lastKomentFota=null;
+		}
+		return lastKomentFota;
+	}
+
+	public void setLastKomentFota(Fotykursantkoment lastKomentFota) {
+		this.lastKomentFota = lastKomentFota;
 	}
 
 }

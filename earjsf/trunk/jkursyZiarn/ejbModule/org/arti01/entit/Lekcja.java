@@ -1,9 +1,11 @@
 package org.arti01.entit;
 
 import java.io.Serializable;
+
+import javax.ejb.EJB;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+import org.arti01.sesBean.LekacjaImp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
@@ -17,6 +19,9 @@ import java.util.List;
 @Entity
 public class Lekcja implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	@Transient
+	@EJB LekacjaImp li;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -192,9 +197,17 @@ public class Lekcja implements Serializable {
 	}
 
 	public Fotykursantkoment getLastKomentFota() {
-
-			//lastKomentFota=null;
-		
+		lastKomentFota=null;
+		if(getLekcjafotykursant().size()!=0){
+			for(Lekcjafotykursant lfk:getLekcjafotykursant()){
+				if(lfk.getLastKomentFota()!=null){
+					if(lastKomentFota==null)lastKomentFota=lfk.getLastKomentFota();
+					if(lastKomentFota.getDatadodania().before(lfk.getLastKomentFota().getDatadodania())){
+						lastKomentFota=lfk.getLastKomentFota();	
+					}
+				}
+			}
+		}
 		return lastKomentFota;
 	}
 

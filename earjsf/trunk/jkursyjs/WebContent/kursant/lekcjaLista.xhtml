@@ -48,7 +48,7 @@
 		<h:outputText value="#{lekcja.datazmiany}"/>
 	</rich:column>
 	<rich:column>
-		<f:facet name="header">ostatni komentarz</f:facet>
+		<f:facet name="header">ostatni komentarz do lekcji</f:facet>
 		<h:outputText value="#{lekcja.lastKoment.datadodaniaS} " rendered="#{lekcja.lastKoment!=null}"/>
 		<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}" rendered="#{lekcja.lastKoment!=null}"/>
 	</rich:column>
@@ -63,10 +63,13 @@
 		</h:panelGrid>
 	</rich:column>
 	<rich:column>
-		<f:facet name="header">ostatno dodany komentarz do zdjęcia</f:facet>
+		<f:facet name="header">ostatno dodany komentarz do zdjęcia kursanta</f:facet>
 		<h:panelGrid columns="2">
 			<h:outputText value="#{lekcja.lastKomentFota.datadodaniaS} " rendered="#{lekcja.lastKomentFota!=null}"/>
 			<h:outputText value="autor: #{lekcja.lastKomentFota.user.imieNazwisko}" rendered="#{lekcja.lastKomentFota!=null}"/>
+			<h:commandLink value="idż do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+				<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{lekcja.lastKomentFota.lekcjafotykursant}"/>
+			</h:commandLink>
 		</h:panelGrid>
 	</rich:column>
 </rich:dataTable>

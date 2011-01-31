@@ -1,5 +1,6 @@
 package org.arti01.sesBean;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -7,15 +8,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 
 @Stateless
 @LocalBean
-public class LekacjaImp {
-
+public class LekacjaImp implements Serializable{
+	private static final long serialVersionUID = 1L;
 	@PersistenceContext
 	EntityManager em;
 	Lekcja lekcja;
@@ -29,7 +28,7 @@ public class LekacjaImp {
 		lekcja=em.find(Lekcja.class, lekcja.getIdlekcja());
 		em.refresh(lekcja);
 		lekcja.setFotyLpAll(getLpAll(lekcja));
-		lekcja.setLastKomentFota(findlastKomentFota(lekcja));
+		//lekcja.setLastKomentFota(findlastKomentFota(lekcja));
 		return lekcja;
 	}
 	
@@ -37,14 +36,15 @@ public class LekacjaImp {
 		em.merge(lekcja);
 	}
 	
-	public Fotykursantkoment findlastKomentFota(Lekcja lekcja){
+	/*public Fotykursantkoment findlastKomentFota(Lekcja lekcja){
 		Query query=em.createQuery("select from Lekcja l join l.lekcjafotykursant lfk join lfk.fotykursantkoment fkk where l=:lekcja order by fkk.datadodania DESC");
 		query.setParameter("lekcja", lekcja);
 		Fotykursantkoment fkk;
 		if(query.setMaxResults(1).getResultList().size()==1) fkk=(Fotykursantkoment)query.setMaxResults(1).getResultList().iterator().next();
 		else fkk=null;
+		System.out.println(fkk);
 		return fkk; 
-	}
+	}*/
 	
 	public void insert(Lekcja lekcja) {
 		Kursy kursy=lekcja.getKursy();
