@@ -193,7 +193,7 @@ public class Lekcja implements Serializable {
 
 	public Fotykursantkoment getLastKomentFota() {
 
-			lastKomentFota=null;
+			//lastKomentFota=null;
 		
 		return lastKomentFota;
 	}

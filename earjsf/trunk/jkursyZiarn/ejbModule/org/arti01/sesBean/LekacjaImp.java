@@ -7,6 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 
@@ -27,11 +29,21 @@ public class LekacjaImp {
 		lekcja=em.find(Lekcja.class, lekcja.getIdlekcja());
 		em.refresh(lekcja);
 		lekcja.setFotyLpAll(getLpAll(lekcja));
+		lekcja.setLastKomentFota(findlastKomentFota(lekcja));
 		return lekcja;
 	}
 	
 	public void update(Lekcja lekcja){
 		em.merge(lekcja);
+	}
+	
+	public Fotykursantkoment findlastKomentFota(Lekcja lekcja){
+		Query query=em.createQuery("select from Lekcja l join l.lekcjafotykursant lfk join lfk.fotykursantkoment fkk where l=:lekcja order by fkk.datadodania DESC");
+		query.setParameter("lekcja", lekcja);
+		Fotykursantkoment fkk;
+		if(query.setMaxResults(1).getResultList().size()==1) fkk=(Fotykursantkoment)query.setMaxResults(1).getResultList().iterator().next();
+		else fkk=null;
+		return fkk; 
 	}
 	
 	public void insert(Lekcja lekcja) {
