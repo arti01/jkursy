@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
+import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjapliki;
 import org.arti01.entit.Role;
 import org.arti01.entit.Statyczne;
@@ -38,7 +39,7 @@ public class KursyAc implements Serializable {
 	private DataModel<Lekcja> lekcje=new ListDataModel<Lekcja>();
 	@EJB LekacjaImp lekcjaImp;
 	@EJB KursyImp kursyImp;
-	private String errorText;
+	private String errorText="";
 	@ManagedProperty(value="#{wykladImageUploadBean}") private ImageUploadBean iub;
 	@ManagedProperty(value="#{wykladPlikUploadBean}")private PlikUploadBean pub;
 	@ManagedProperty(value="#{wykladNewsyAc}")private NewsyAc wn;
@@ -47,7 +48,10 @@ public class KursyAc implements Serializable {
 	private Role role=new Role();
 	private Statyczne strona;
 	
+	private Lekcjafotykursant fotaKursant;
+	
 	public String kursForm(){
+		errorText="";
 		kurs=kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
 		wn.setKurs(kurs);
@@ -57,11 +61,13 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String lekcjaFormNew(){
+		errorText="";
 		lekcja=new Lekcja();
 		return "lekcjaForm";
 	}
 	
 	public String statyczna(){
+		errorText="";
 		logger.info(strona.getTytul());
 		strona =statyczneImp.find(strona);
 		logger.info(strona.getTytul());
@@ -69,11 +75,13 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String lekcjaForm(){
+		errorText="";
 		logger.info(lekcja.getTytul());
 		return "lekcjaForm";
 	}
 	
 	public String lekcjaDodaj(){
+		errorText="";
 		logger.info("lekcjaDodaj");
 		lekcja.setKursy(kurs);
 		lekcja.setDatazmiany(new Timestamp(new Date().getTime()));
@@ -93,6 +101,7 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String foty(){
+		errorText="";
 		logger.info("obsluga zdjec");
 		//logger.info(lekcja.getFotyLpAll());
 		iub.setLekcja(lekcjaImp.find(lekcja));
@@ -101,6 +110,7 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String pliki(){
+		errorText="";
 		logger.info("obsluga plikow");
 		pub.setLekcja(lekcjaImp.find(lekcja));
 		pub.setPliki(new ArrayList<Lekcjapliki>(lekcja.getLekcjaplikis()));
@@ -109,11 +119,12 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String lekcjaUsun(){
+		errorText="";
 			try {
 				lekcjaImp.delete(lekcja);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				errorText="nieudane usunięcie - lekcja zawiera zdjęcia, należy je usunąć";
+				errorText="nieudane usunięcie - lekcja zawiera zdjęcia, komentarze, foty kursantów - należy je usunąć";
 			}
 			kurs=kursyImp.find(kurs);
 			lekcje.setWrappedData(kurs.getLekcjas());
@@ -121,10 +132,22 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String lekcjaPodglad(){
+		errorText="";
 		return "lekcja.xhtml";
 	}
 	
+	public String fotyKursantow(){
+		errorText="";
+		return "fotyKursantow.xhtml";
+	}
+	
+	public String fotaKursant(){
+		errorText="";
+		return "fotyKursantow.xhtml";
+	}
+	
 	public void zmienLekcjaLp(ValueChangeEvent event) throws IOException{
+		errorText="";
 		logger.info(event.getNewValue());
 		logger.info(event.getOldValue());
 		lekcja=lekcje.getRowData();
@@ -225,6 +248,14 @@ public class KursyAc implements Serializable {
 
 	public NewsyAc getWn() {
 		return wn;
+	}
+
+	public Lekcjafotykursant getFotaKursant() {
+		return fotaKursant;
+	}
+
+	public void setFotaKursant(Lekcjafotykursant fotaKursant) {
+		this.fotaKursant = fotaKursant;
 	}
 
 }

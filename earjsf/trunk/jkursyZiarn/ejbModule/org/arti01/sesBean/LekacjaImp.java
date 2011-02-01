@@ -18,7 +18,7 @@ public class LekacjaImp implements Serializable{
 	@PersistenceContext
 	EntityManager em;
 	Lekcja lekcja;
-
+	
 	@SuppressWarnings("unchecked")
 	public List<Lekcja> getFindAll() {
 		return em.createQuery("select l from Lekcja l order by l.lp").getResultList();

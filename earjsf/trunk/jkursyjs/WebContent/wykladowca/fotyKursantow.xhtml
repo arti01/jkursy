@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templatewyklad.xhtml">
+	<ui:define name="body">
+		
+	foty lekcji:
+	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
+			<br />
+			<h:form>
+			<h:dataTable value="#{wykladKursyAc.lekcja.lekcjafotykursant}" var="fota" id="foty">
+					<h:column>
+						<a4j:mediaOutput element="img"
+							createContent="#{kursantLekcjaAc.paintBazy}"
+							value="#{fota.idlekcjafotykursant}" cacheable="false">
+							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+						</a4j:mediaOutput>
+						</h:column>
+						<h:column>
+							<h:panelGrid columns="1">
+							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+							<h:outputText value="dodana: #{fota.datadodaniaS}">
+								<f:convertDateTime pattern="dd-MM-yyyy"/>
+							</h:outputText>
+							<h:commandLink value="do zdjęcia" action="#{wykladKursyAc.fotaKursant}">
+								<f:setPropertyActionListener target="#{wykladKursyAc.fotaKursant}" value="#{fota}"/>
+							</h:commandLink>
+							</h:panelGrid>
+						</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
