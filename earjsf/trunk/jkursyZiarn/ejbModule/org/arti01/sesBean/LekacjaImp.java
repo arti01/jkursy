@@ -53,16 +53,21 @@ public class LekacjaImp implements Serializable{
 		em.persist(lekcja);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void delete(Lekcja lekcja) throws  org.eclipse.persistence.exceptions.DatabaseException {
 		Integer lp=lekcja.getLp();
 		Kursy kursy=lekcja.getKursy();
 		lekcja=em.find(lekcja.getClass(), lekcja.getIdlekcja());
 		em.remove(lekcja);
 		em.flush();
-		Query query=em.createQuery("update Lekcja l set l.lp=l.lp-1 where l.lp>:lp and l.kursy=:kursy");
-		query.setParameter("lp", lp);
-		query.setParameter("kursy", kursy);
-		query.executeUpdate();
+		
+		Query qt=em.createQuery("select l from Lekcja l where l.lp>:lp and l.kursy=:kursy order by l.lp");
+		qt.setParameter("lp", lp);
+		qt.setParameter("kursy", kursy);
+		for(Lekcja l: (List<Lekcja>)qt.getResultList()){
+			l.setLp(l.getLp()-1);
+			em.merge(l);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
