@@ -72,8 +72,19 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
 	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
+	<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}"/>
 	</h:panelGrid>
 	</h:column>
+	
+	<h:column>
+	<h:panelGrid columns="1">
+	<h:commandLink value="komentarze do zdjęc kursantów (ilość: #{lekcja.iloscKolmentFota})" action="#{wykladKursyAc.fotyKursantow}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+	</h:commandLink>
+	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
+	</h:panelGrid>
+	</h:column>
+	
 </h:dataTable>
 </h:form>
 </ul>

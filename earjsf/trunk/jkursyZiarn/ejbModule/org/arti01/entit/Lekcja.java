@@ -84,6 +84,9 @@ public class Lekcja implements Serializable {
 	@Transient
 	private Fotykursantkoment lastKomentFota;
 	
+	@Transient
+	private Integer iloscKolmentFota=0;
+	
 	public Integer getIdlekcja() {
 		return this.idlekcja;
 	}
@@ -213,6 +216,19 @@ public class Lekcja implements Serializable {
 
 	public void setLastKomentFota(Fotykursantkoment lastKomentFota) {
 		this.lastKomentFota = lastKomentFota;
+	}
+
+	public Integer getIloscKolmentFota() {
+		for(Lekcjafotykursant lfk:getLekcjafotykursant()){
+			if(lfk.getFotykursantkoment()!=null){
+				iloscKolmentFota+=lfk.getFotykursantkoment().size();
+			}
+		}
+		return iloscKolmentFota;
+	}
+
+	public void setIloscKolmentFota(Integer iloscKolmentFota) {
+		this.iloscKolmentFota = iloscKolmentFota;
 	}
 	
 }

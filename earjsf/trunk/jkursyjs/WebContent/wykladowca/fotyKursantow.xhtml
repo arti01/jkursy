@@ -18,7 +18,6 @@
 						<a4j:mediaOutput element="img"
 							createContent="#{kursantLekcjaAc.paintBazy}"
 							value="#{fota.idlekcjafotykursant}" cacheable="false">
-							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 						</a4j:mediaOutput>
 						</h:column>
 						<h:column>
@@ -27,8 +26,8 @@
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
 							</h:outputText>
-							<h:commandLink value="do zdjęcia" action="#{wykladKursyAc.fotaKursant}">
-								<f:setPropertyActionListener target="#{wykladKursyAc.fotaKursant}" value="#{fota}"/>
+							<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							</h:commandLink>
 							</h:panelGrid>
 						</h:column>
