@@ -1,18 +1,25 @@
 package org.arti01.all;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Boksy;
+import org.arti01.entit.Boksycfg;
 import org.arti01.entit.Newsy;
 import org.arti01.entit.Poziomyzaawansowania;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.Typykursu;
 import org.arti01.entit.User;
+import org.arti01.sesBean.BoksyImp;
+import org.arti01.sesBean.BoksycfgImp;
 import org.arti01.sesBean.PoziomyZaawansowaniaImp;
 import org.arti01.sesBean.StatyczneImp;
 import org.arti01.sesBean.TypyKursuImp;
@@ -26,6 +33,11 @@ public class IndexAc implements Serializable {
 	User user;
 	Statyczne strona;
 	private Newsy news;
+	private DataModel<Boksy> allBoks = new ListDataModel<Boksy>();
+	@EJB BoksyImp boksImp;
+	private Boksycfg boxCfg=new Boksycfg();
+	@EJB BoksycfgImp boxcfgImp;
+	private Boksy boks;
 	
 	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
 	@EJB StatyczneImp statyczneImp;
@@ -37,10 +49,6 @@ public class IndexAc implements Serializable {
 	private ListDataModel<Typykursu> tkModel=new ListDataModel<Typykursu>() ;
 	@EJB TypyKursuImp tkImp;
 	private Typykursu tk;
-	
-	public String execute() throws Exception{
-		return "SUCCESS";
-	}
 	
 	public String index(){
 		return "index.xhtml?faces-redirect=false";
@@ -70,6 +78,13 @@ public class IndexAc implements Serializable {
 	public String tk() {
 		return "tkDetale";
 	}
+	
+	public void paintBazy(OutputStream stream, Object object) throws IOException {
+		Boksy b1=new Boksy();
+		b1.setIdboksy((Integer) object);
+		b1=boksImp.find(b1);
+    	stream.write(b1.getObraz());
+    }
 	
 	public String zalozKonto() throws Exception{
 		user= new User();
@@ -159,5 +174,32 @@ public class IndexAc implements Serializable {
 
 	public Typykursu getTk() {
 		return tk;
+	}
+
+	public DataModel<Boksy> getAllBoks() {
+		if(allBoks.getRowIndex()==-1) allBoks.setWrappedData(boksImp.getAll());
+		return allBoks;
+	}
+
+	public void setAllBoks(DataModel<Boksy> allBoks) {
+		this.allBoks = allBoks;
+	}
+
+	public Boksycfg getBoxCfg() {
+		boxCfg.setIdboksycfg(1);
+		boxCfg=boxcfgImp.find(boxCfg);
+		return boxCfg;
+	}
+
+	public void setBoxCfg(Boksycfg boxCfg) {
+		this.boxCfg = boxCfg;
+	}
+
+	public Boksy getBoks() {
+		return boks;
+	}
+
+	public void setBoks(Boksy boks) {
+		this.boks = boks;
 	}
 }

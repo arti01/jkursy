@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+	<h:head>
+	
+	</h:head>
+		<body>
+		Boksy zawartosc dla:
+		<h3><h:outputText value="#{adminBoksyAc.boxCfg.nazwa}"/></h3>
+		<h:form>
+		<h:panelGroup id="form">
+		<script type="text/javascript">
+	tinyMCE
+			.init({
+				// General options
+				mode : "textareas",
+				theme : "advanced",
+				plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+				// Theme options
+				theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+				theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+				theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+				theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "left",
+				theme_advanced_statusbar_location : "bottom",
+				theme_advanced_resizing : true,
+
+				// Example content CSS (should be your site CSS)
+				content_css : "../burned/default.css",
+
+				// Drop lists for link/image/media/template dialogs
+				template_external_list_url : "js/template_list.js",
+				external_link_list_url : "js/link_list.js",
+				external_image_list_url : "js/image_list.js",
+				media_external_list_url : "js/media_list.js",
+
+				// Replace values for the template plugin
+				template_replace_values : {
+					username : "Some User",
+					staffid : "991234"
+				}
+			});
+</script>
+				<h:message for="nazwa" styleClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="nagłówek" />
+					<h:inputText id="nazwa" value="#{adminBoksyAc.boks.naglowek}" size="100"/>
+					<h:outputLabel value="tresc" />
+					<h:inputTextarea id="tresc" value="#{adminBoksyAc.boks.tresc}"/>
+				</h:panelGrid>
+		</h:panelGroup>
+				<h:panelGrid columns="3" id="obrazek">
+					<rich:fileUpload
+						fileUploadListener="#{adminBoksyAc.listenerFoty}"
+						id="upload">
+						<a4j:ajax event="uploadcomplete" execute="@none" render="obrazek" />
+					</rich:fileUpload>
+					<a4j:mediaOutput id="obr" element="img"
+							createContent="#{adminBoksyAc.paintBazy}"
+							value="#{adminBoksyAc.boks.idboksy}" cacheable="false" style="height:100px;">
+							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+					</a4j:mediaOutput>
+					<a4j:commandLink value="usuń fotę" action="#{adminBoksyAc.usunFote}" render="obr" rendered="#{adminBoksyAc.boks.idboksy!=null}"/>
+				</h:panelGrid>
+				<h:commandButton value="wyslij"
+					action="#{adminBoksyAc.dodajBoks}" render="form, tabled, obrazek" />
+		</h:form>
+		<br/>
+		
+		<h:form>
+					<rich:dataTable value="#{adminBoksyAc.allBoks}" var="boks1" id="tabled">
+						
+						<rich:column>
+							<a4j:commandLink action="#{adminBoksyAc.edytujBoksForm}" value="edytuj" render="form, obrazek"/>
+						</rich:column>
+						
+						<rich:column>
+								<h:outputText id="tekst" value="#{boks1.naglowek}"/>
+								<h:outputText value="#{adminBoksyAc.infoText}" id="infoText"/>
+						</rich:column>
+						
+						<rich:column>
+							<a4j:commandLink action="#{adminBoksyAc.usunBoks}" render="form, tabled" value="usuń"/>
+						</rich:column>
+					</rich:dataTable>
+		</h:form>
+</body>
+	</ui:define>
+</ui:composition>
+</html>

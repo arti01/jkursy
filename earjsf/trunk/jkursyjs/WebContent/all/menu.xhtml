@@ -16,7 +16,7 @@
 		<ui:repeat var="pz" value="#{indexAc.pzModel}">
 			<li><h:commandLink action="#{indexAc.pz}">
 				<f:setPropertyActionListener target="#{indexAc.pz}" value="#{pz}"/>
-				<h:outputText value="poziom zaawansowania: #{pz.nazwa}" />
+				<h:outputText value="poziom #{pz.nazwa}" />
 			</h:commandLink></li>
 		</ui:repeat>
 		<ui:repeat var="tk" value="#{indexAc.tkModel}">

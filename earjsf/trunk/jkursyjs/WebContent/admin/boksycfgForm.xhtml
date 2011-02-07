@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<h:form>
+		<h:panelGroup id="form">
+		<h:panelGroup id="form1" rendered="#{adminBoksyAc.boxCfg.idboksycfg!=null}">
+				<h:message for="nazwa" styleClass="error" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="nazwa" />
+					<h:outputText id="nazwa" value="#{adminBoksyAc.boxCfg.nazwa}"/>
+					<h:outputLabel value="ilosc elementow" />
+					<h:inputText id="ilosc" value="#{adminBoksyAc.boxCfg.iloscelementow}"/>
+					<h:outputLabel value="widoczny" />
+					<h:selectBooleanCheckbox id="widoczna" value="#{adminBoksyAc.boxCfg.widoczny}"/>
+				</h:panelGrid>
+				<a4j:commandButton value="zmień"
+					action="#{adminBoksyAc.zmien}" render="form, tabled" />
+		</h:panelGroup>
+		</h:panelGroup>
+		</h:form>
+		<hr/>
+		<br/>
+		<h:form>
+					<rich:dataTable value="#{adminBoksyAc.all}" var="boxCfg1" id="tabled">
+						
+						<rich:column>
+							<a4j:commandLink action="#{adminBoksyAc.edytujForm}" render="form, tabled" value="edytuj"/>
+						</rich:column>
+
+						<rich:column>
+								<f:facet name="header">nazwa</f:facet>
+								<h:outputText id="tekst" value="#{boxCfg1.nazwa}"/>
+								<h:outputText value="#{adminBoksyAc.infoText}" id="infoText"/>
+						</rich:column>
+
+						<rich:column>
+								<f:facet name="header">ilosc wyświetlanych elementow</f:facet>
+								<h:outputText value="#{boxCfg1.iloscelementow}"/>
+						</rich:column>
+						
+						<rich:column>
+								<f:facet name="header">czy widoczny</f:facet>
+								<h:outputText value="#{boxCfg1.widoczny}"/>
+						</rich:column>
+						
+						<rich:column>
+								<f:facet name="header">edytuj zawartość</f:facet>
+								<h:commandLink action="#{adminBoksyAc.listaZawartosci}" value="zawartosc"/>
+						</rich:column>
+					</rich:dataTable>
+		</h:form>
+</body>
+	</ui:define>
+</ui:composition>
+</html>
