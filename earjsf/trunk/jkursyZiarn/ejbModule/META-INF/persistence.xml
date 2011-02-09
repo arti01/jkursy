@@ -18,6 +18,8 @@
 		<class>org.arti01.entit.Fotykursantkoment</class>
 		<class>org.arti01.entit.Boksycfg</class>
 		<class>org.arti01.entit.Boksy</class>
+		<class>org.arti01.entit.Absolwforposty</class>
+		<class>org.arti01.entit.Absolwforwatki</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>

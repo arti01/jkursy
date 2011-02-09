@@ -18,6 +18,7 @@ public class Role implements Serializable {
 	public static final String ADMIN ="admin" ;
 	public static final String WYKLADOWCA ="wykladowca" ;
 	public static final String KURSANT ="kursant" ;
+	public static final String ABSOLWENT ="absolwent" ;
 	public static final String NOWY ="nowy" ;
 
 	@Id

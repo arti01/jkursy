@@ -8,6 +8,7 @@
 <ul>
 	<li><h:commandLink value="kursy" action="#{kursyAc.list}"/></li>
 	<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}"/></li>
+	<li><h:commandLink value="dla absolwentów" action="indexAbsolw"/></li>
 		<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 			<li><h:commandLink action="#{indexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />

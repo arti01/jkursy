@@ -101,7 +101,15 @@ public class User implements Serializable {
     @OneToMany(mappedBy="user")
 	@OrderBy("datadodania")
 	private List<Lekcjafotykursant> lekcjafotykursant;
+    
+    @OneToMany(mappedBy="user")
+	@OrderBy("datadodania")
+	private List<Absolwforwatki> absolwforwatki;
 
+    @OneToMany(mappedBy="user")
+	@OrderBy("datadodania")
+	private List<Absolwforposty> absolwforposty;
+    
     public User() {
     }
 
@@ -224,6 +232,22 @@ public class User implements Serializable {
 
 	public void setLekcjafotykursant(List<Lekcjafotykursant> lekcjafotykursant) {
 		this.lekcjafotykursant = lekcjafotykursant;
+	}
+
+	public List<Absolwforwatki> getAbsolwforwatki() {
+		return absolwforwatki;
+	}
+
+	public void setAbsolwforwatki(List<Absolwforwatki> absolwforwatki) {
+		this.absolwforwatki = absolwforwatki;
+	}
+
+	public List<Absolwforposty> getAbsolwforposty() {
+		return absolwforposty;
+	}
+
+	public void setAbsolwforposty(List<Absolwforposty> absolwforposty) {
+		this.absolwforposty = absolwforposty;
 	}
 	
 }

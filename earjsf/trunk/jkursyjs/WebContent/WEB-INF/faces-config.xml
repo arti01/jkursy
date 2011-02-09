@@ -46,6 +46,11 @@
 			<redirect />
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>indexAbsolw</from-outcome>
+			<to-view-id>/absolwent/index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>indexKursant</from-outcome>
 			<to-view-id>/kursant/index.xhtml</to-view-id>
 			<redirect />
@@ -112,6 +117,16 @@
 		<navigation-case>
 			<from-outcome>indexAll</from-outcome>
 			<to-view-id>/all/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+		<display-name>/absolwent/wszystko</display-name>
+		<from-view-id>/absolwent/*</from-view-id>
+		<navigation-case>
+			<from-outcome>indexAll</from-outcome>
+			<to-view-id>/absolwent/index.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 </navigation-rule>

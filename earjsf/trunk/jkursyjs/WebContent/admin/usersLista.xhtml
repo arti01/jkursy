@@ -20,7 +20,7 @@
 			<h:commandButton value="dodaj nowy" action="#{adminUsersAc.formNew}" />
 			<br/>
 			<br/>
-			<h:panelGrid columns="5">
+			<h:panelGrid columns="3">
 				<a4j:commandButton value="admini" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="admin" />
 				</a4j:commandButton>
@@ -32,6 +32,9 @@
 				</a4j:commandButton>
 				<a4j:commandButton value="nieprzypisani" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="nieprzypisani" />
+				</a4j:commandButton>
+				<a4j:commandButton value="absolwenci" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="absolwent" />
 				</a4j:commandButton>
 				<a4j:commandButton value="wszyscy" action="#{adminUsersAc.listAll}" render="table">
 					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="" />

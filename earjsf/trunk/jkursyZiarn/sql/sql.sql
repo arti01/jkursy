@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
--- Started on 2011-02-07 05:42:34 CET
+-- Started on 2011-02-09 05:31:27 CET
 
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -18,7 +18,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 1558 (class 1259 OID 24836)
+-- TOC entry 1565 (class 1259 OID 24836)
 -- Dependencies: 6
 -- Name: _roles; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
@@ -32,7 +32,7 @@ CREATE TABLE _roles (
 ALTER TABLE public._roles OWNER TO slow;
 
 --
--- TOC entry 1569 (class 1259 OID 24933)
+-- TOC entry 1576 (class 1259 OID 24933)
 -- Dependencies: 6
 -- Name: _roles_rola_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
@@ -48,8 +48,8 @@ CREATE SEQUENCE _roles_rola_seq
 ALTER TABLE public._roles_rola_seq OWNER TO slow;
 
 --
--- TOC entry 2007 (class 0 OID 0)
--- Dependencies: 1569
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 1576
 -- Name: _roles_rola_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -57,7 +57,7 @@ SELECT pg_catalog.setval('_roles_rola_seq', 1, false);
 
 
 --
--- TOC entry 1559 (class 1259 OID 24842)
+-- TOC entry 1566 (class 1259 OID 24842)
 -- Dependencies: 6
 -- Name: _users__roles; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
@@ -72,8 +72,8 @@ CREATE TABLE _users__roles (
 ALTER TABLE public._users__roles OWNER TO slow;
 
 --
--- TOC entry 1560 (class 1259 OID 24845)
--- Dependencies: 6 1559
+-- TOC entry 1567 (class 1259 OID 24845)
+-- Dependencies: 1566 6
 -- Name: _user_roles_id_user_roles_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -88,8 +88,8 @@ CREATE SEQUENCE _user_roles_id_user_roles_seq
 ALTER TABLE public._user_roles_id_user_roles_seq OWNER TO slow;
 
 --
--- TOC entry 2008 (class 0 OID 0)
--- Dependencies: 1560
+-- TOC entry 2031 (class 0 OID 0)
+-- Dependencies: 1567
 -- Name: _user_roles_id_user_roles_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -97,17 +97,17 @@ ALTER SEQUENCE _user_roles_id_user_roles_seq OWNED BY _users__roles.id_user_role
 
 
 --
--- TOC entry 2009 (class 0 OID 0)
--- Dependencies: 1560
+-- TOC entry 2032 (class 0 OID 0)
+-- Dependencies: 1567
 -- Name: _user_roles_id_user_roles_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
-SELECT pg_catalog.setval('_user_roles_id_user_roles_seq', 127, true);
+SELECT pg_catalog.setval('_user_roles_id_user_roles_seq', 128, true);
 
 
 --
--- TOC entry 1561 (class 1259 OID 24847)
--- Dependencies: 1873 1874 1875 1876 1877 1878 1879 1880 6
+-- TOC entry 1568 (class 1259 OID 24847)
+-- Dependencies: 1884 1885 1886 1887 1888 1889 1890 1891 6
 -- Name: _users; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -129,7 +129,7 @@ CREATE TABLE _users (
 ALTER TABLE public._users OWNER TO slow;
 
 --
--- TOC entry 1570 (class 1259 OID 24935)
+-- TOC entry 1577 (class 1259 OID 24935)
 -- Dependencies: 6
 -- Name: _users_username_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
@@ -145,8 +145,8 @@ CREATE SEQUENCE _users_username_seq
 ALTER TABLE public._users_username_seq OWNER TO slow;
 
 --
--- TOC entry 2010 (class 0 OID 0)
--- Dependencies: 1570
+-- TOC entry 2033 (class 0 OID 0)
+-- Dependencies: 1577
 -- Name: _users_username_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -154,7 +154,108 @@ SELECT pg_catalog.setval('_users_username_seq', 1, false);
 
 
 --
--- TOC entry 1594 (class 1259 OID 90727)
+-- TOC entry 1605 (class 1259 OID 107132)
+-- Dependencies: 6
+-- Name: absolwforposty; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
+--
+
+CREATE TABLE absolwforposty (
+    idabsolwforposty integer NOT NULL,
+    datadodania timestamp with time zone NOT NULL,
+    username character varying(50) NOT NULL,
+    idabsolwforwatki integer NOT NULL,
+    tresc text NOT NULL
+);
+
+
+ALTER TABLE public.absolwforposty OWNER TO slow;
+
+--
+-- TOC entry 1604 (class 1259 OID 107130)
+-- Dependencies: 6 1605
+-- Name: absolwforposty_idabsolwforposty_seq; Type: SEQUENCE; Schema: public; Owner: slow
+--
+
+CREATE SEQUENCE absolwforposty_idabsolwforposty_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.absolwforposty_idabsolwforposty_seq OWNER TO slow;
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 1604
+-- Name: absolwforposty_idabsolwforposty_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
+--
+
+ALTER SEQUENCE absolwforposty_idabsolwforposty_seq OWNED BY absolwforposty.idabsolwforposty;
+
+
+--
+-- TOC entry 2035 (class 0 OID 0)
+-- Dependencies: 1604
+-- Name: absolwforposty_idabsolwforposty_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
+--
+
+SELECT pg_catalog.setval('absolwforposty_idabsolwforposty_seq', 1, false);
+
+
+--
+-- TOC entry 1603 (class 1259 OID 107118)
+-- Dependencies: 1923 6
+-- Name: absolwforwatki; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
+--
+
+CREATE TABLE absolwforwatki (
+    idabsolwforwatki integer NOT NULL,
+    datadodania timestamp with time zone DEFAULT now() NOT NULL,
+    tytul character varying(255) NOT NULL,
+    username character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.absolwforwatki OWNER TO slow;
+
+--
+-- TOC entry 1602 (class 1259 OID 107116)
+-- Dependencies: 1603 6
+-- Name: absolwforwatki_idabsolwforwatki_seq; Type: SEQUENCE; Schema: public; Owner: slow
+--
+
+CREATE SEQUENCE absolwforwatki_idabsolwforwatki_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MAXVALUE
+    NO MINVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.absolwforwatki_idabsolwforwatki_seq OWNER TO slow;
+
+--
+-- TOC entry 2036 (class 0 OID 0)
+-- Dependencies: 1602
+-- Name: absolwforwatki_idabsolwforwatki_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
+--
+
+ALTER SEQUENCE absolwforwatki_idabsolwforwatki_seq OWNED BY absolwforwatki.idabsolwforwatki;
+
+
+--
+-- TOC entry 2037 (class 0 OID 0)
+-- Dependencies: 1602
+-- Name: absolwforwatki_idabsolwforwatki_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
+--
+
+SELECT pg_catalog.setval('absolwforwatki_idabsolwforwatki_seq', 3, true);
+
+
+--
+-- TOC entry 1601 (class 1259 OID 90727)
 -- Dependencies: 6
 -- Name: boksy; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
@@ -171,8 +272,8 @@ CREATE TABLE boksy (
 ALTER TABLE public.boksy OWNER TO slow;
 
 --
--- TOC entry 1593 (class 1259 OID 90725)
--- Dependencies: 6 1594
+-- TOC entry 1600 (class 1259 OID 90725)
+-- Dependencies: 1601 6
 -- Name: boksy_idboksy_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -187,8 +288,8 @@ CREATE SEQUENCE boksy_idboksy_seq
 ALTER TABLE public.boksy_idboksy_seq OWNER TO slow;
 
 --
--- TOC entry 2011 (class 0 OID 0)
--- Dependencies: 1593
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 1600
 -- Name: boksy_idboksy_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -196,8 +297,8 @@ ALTER SEQUENCE boksy_idboksy_seq OWNED BY boksy.idboksy;
 
 
 --
--- TOC entry 2012 (class 0 OID 0)
--- Dependencies: 1593
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 1600
 -- Name: boksy_idboksy_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -205,8 +306,8 @@ SELECT pg_catalog.setval('boksy_idboksy_seq', 9, true);
 
 
 --
--- TOC entry 1592 (class 1259 OID 90717)
--- Dependencies: 1908 1909 6
+-- TOC entry 1599 (class 1259 OID 90717)
+-- Dependencies: 1919 1920 6
 -- Name: boksycfg; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -221,8 +322,8 @@ CREATE TABLE boksycfg (
 ALTER TABLE public.boksycfg OWNER TO slow;
 
 --
--- TOC entry 1591 (class 1259 OID 90715)
--- Dependencies: 1592 6
+-- TOC entry 1598 (class 1259 OID 90715)
+-- Dependencies: 1599 6
 -- Name: boksycfg_idboksycfg_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -237,8 +338,8 @@ CREATE SEQUENCE boksycfg_idboksycfg_seq
 ALTER TABLE public.boksycfg_idboksycfg_seq OWNER TO slow;
 
 --
--- TOC entry 2013 (class 0 OID 0)
--- Dependencies: 1591
+-- TOC entry 2040 (class 0 OID 0)
+-- Dependencies: 1598
 -- Name: boksycfg_idboksycfg_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -246,8 +347,8 @@ ALTER SEQUENCE boksycfg_idboksycfg_seq OWNED BY boksycfg.idboksycfg;
 
 
 --
--- TOC entry 2014 (class 0 OID 0)
--- Dependencies: 1591
+-- TOC entry 2041 (class 0 OID 0)
+-- Dependencies: 1598
 -- Name: boksycfg_idboksycfg_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -255,8 +356,8 @@ SELECT pg_catalog.setval('boksycfg_idboksycfg_seq', 1, true);
 
 
 --
--- TOC entry 1590 (class 1259 OID 82502)
--- Dependencies: 1906 6
+-- TOC entry 1597 (class 1259 OID 82502)
+-- Dependencies: 1917 6
 -- Name: fotykursantkoment; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -272,8 +373,8 @@ CREATE TABLE fotykursantkoment (
 ALTER TABLE public.fotykursantkoment OWNER TO slow;
 
 --
--- TOC entry 1589 (class 1259 OID 82500)
--- Dependencies: 6 1590
+-- TOC entry 1596 (class 1259 OID 82500)
+-- Dependencies: 6 1597
 -- Name: fotykursantkoment_idfotykursantkoment_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -288,8 +389,8 @@ CREATE SEQUENCE fotykursantkoment_idfotykursantkoment_seq
 ALTER TABLE public.fotykursantkoment_idfotykursantkoment_seq OWNER TO slow;
 
 --
--- TOC entry 2015 (class 0 OID 0)
--- Dependencies: 1589
+-- TOC entry 2042 (class 0 OID 0)
+-- Dependencies: 1596
 -- Name: fotykursantkoment_idfotykursantkoment_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -297,8 +398,8 @@ ALTER SEQUENCE fotykursantkoment_idfotykursantkoment_seq OWNED BY fotykursantkom
 
 
 --
--- TOC entry 2016 (class 0 OID 0)
--- Dependencies: 1589
+-- TOC entry 2043 (class 0 OID 0)
+-- Dependencies: 1596
 -- Name: fotykursantkoment_idfotykursantkoment_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -306,7 +407,7 @@ SELECT pg_catalog.setval('fotykursantkoment_idfotykursantkoment_seq', 11, true);
 
 
 --
--- TOC entry 1568 (class 1259 OID 24931)
+-- TOC entry 1575 (class 1259 OID 24931)
 -- Dependencies: 6
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: slow
 --
@@ -322,8 +423,8 @@ CREATE SEQUENCE hibernate_sequence
 ALTER TABLE public.hibernate_sequence OWNER TO slow;
 
 --
--- TOC entry 2017 (class 0 OID 0)
--- Dependencies: 1568
+-- TOC entry 2044 (class 0 OID 0)
+-- Dependencies: 1575
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -331,8 +432,8 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 
 
 --
--- TOC entry 1562 (class 1259 OID 24861)
--- Dependencies: 1882 1883 1884 6
+-- TOC entry 1569 (class 1259 OID 24861)
+-- Dependencies: 1893 1894 1895 6
 -- Name: kursy; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -353,8 +454,8 @@ CREATE TABLE kursy (
 ALTER TABLE public.kursy OWNER TO slow;
 
 --
--- TOC entry 1563 (class 1259 OID 24867)
--- Dependencies: 6 1562
+-- TOC entry 1570 (class 1259 OID 24867)
+-- Dependencies: 6 1569
 -- Name: kursy_idkursy_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -369,8 +470,8 @@ CREATE SEQUENCE kursy_idkursy_seq
 ALTER TABLE public.kursy_idkursy_seq OWNER TO slow;
 
 --
--- TOC entry 2018 (class 0 OID 0)
--- Dependencies: 1563
+-- TOC entry 2045 (class 0 OID 0)
+-- Dependencies: 1570
 -- Name: kursy_idkursy_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -378,8 +479,8 @@ ALTER SEQUENCE kursy_idkursy_seq OWNED BY kursy.idkursy;
 
 
 --
--- TOC entry 2019 (class 0 OID 0)
--- Dependencies: 1563
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 1570
 -- Name: kursy_idkursy_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -387,7 +488,7 @@ SELECT pg_catalog.setval('kursy_idkursy_seq', 8, true);
 
 
 --
--- TOC entry 1564 (class 1259 OID 24869)
+-- TOC entry 1571 (class 1259 OID 24869)
 -- Dependencies: 6
 -- Name: kursy_users; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
@@ -402,8 +503,8 @@ CREATE TABLE kursy_users (
 ALTER TABLE public.kursy_users OWNER TO slow;
 
 --
--- TOC entry 1565 (class 1259 OID 24872)
--- Dependencies: 6 1564
+-- TOC entry 1572 (class 1259 OID 24872)
+-- Dependencies: 6 1571
 -- Name: kursy_users_idkursyusers_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -418,8 +519,8 @@ CREATE SEQUENCE kursy_users_idkursyusers_seq
 ALTER TABLE public.kursy_users_idkursyusers_seq OWNER TO slow;
 
 --
--- TOC entry 2020 (class 0 OID 0)
--- Dependencies: 1565
+-- TOC entry 2047 (class 0 OID 0)
+-- Dependencies: 1572
 -- Name: kursy_users_idkursyusers_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -427,8 +528,8 @@ ALTER SEQUENCE kursy_users_idkursyusers_seq OWNED BY kursy_users.idkursyusers;
 
 
 --
--- TOC entry 2021 (class 0 OID 0)
--- Dependencies: 1565
+-- TOC entry 2048 (class 0 OID 0)
+-- Dependencies: 1572
 -- Name: kursy_users_idkursyusers_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -436,8 +537,8 @@ SELECT pg_catalog.setval('kursy_users_idkursyusers_seq', 47, true);
 
 
 --
--- TOC entry 1572 (class 1259 OID 49511)
--- Dependencies: 1888 6
+-- TOC entry 1579 (class 1259 OID 49511)
+-- Dependencies: 1899 6
 -- Name: lekcja; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -455,8 +556,8 @@ CREATE TABLE lekcja (
 ALTER TABLE public.lekcja OWNER TO slow;
 
 --
--- TOC entry 1571 (class 1259 OID 49509)
--- Dependencies: 1572 6
+-- TOC entry 1578 (class 1259 OID 49509)
+-- Dependencies: 6 1579
 -- Name: lekcja_idlekcja_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -471,8 +572,8 @@ CREATE SEQUENCE lekcja_idlekcja_seq
 ALTER TABLE public.lekcja_idlekcja_seq OWNER TO slow;
 
 --
--- TOC entry 2022 (class 0 OID 0)
--- Dependencies: 1571
+-- TOC entry 2049 (class 0 OID 0)
+-- Dependencies: 1578
 -- Name: lekcja_idlekcja_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -480,8 +581,8 @@ ALTER SEQUENCE lekcja_idlekcja_seq OWNED BY lekcja.idlekcja;
 
 
 --
--- TOC entry 2023 (class 0 OID 0)
--- Dependencies: 1571
+-- TOC entry 2050 (class 0 OID 0)
+-- Dependencies: 1578
 -- Name: lekcja_idlekcja_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -489,8 +590,8 @@ SELECT pg_catalog.setval('lekcja_idlekcja_seq', 20, true);
 
 
 --
--- TOC entry 1574 (class 1259 OID 49522)
--- Dependencies: 1890 6
+-- TOC entry 1581 (class 1259 OID 49522)
+-- Dependencies: 1901 6
 -- Name: lekcjafoty; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -509,8 +610,8 @@ CREATE TABLE lekcjafoty (
 ALTER TABLE public.lekcjafoty OWNER TO slow;
 
 --
--- TOC entry 1573 (class 1259 OID 49520)
--- Dependencies: 6 1574
+-- TOC entry 1580 (class 1259 OID 49520)
+-- Dependencies: 6 1581
 -- Name: lekcjafoty_idlekcjafoty_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -525,8 +626,8 @@ CREATE SEQUENCE lekcjafoty_idlekcjafoty_seq
 ALTER TABLE public.lekcjafoty_idlekcjafoty_seq OWNER TO slow;
 
 --
--- TOC entry 2024 (class 0 OID 0)
--- Dependencies: 1573
+-- TOC entry 2051 (class 0 OID 0)
+-- Dependencies: 1580
 -- Name: lekcjafoty_idlekcjafoty_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -534,8 +635,8 @@ ALTER SEQUENCE lekcjafoty_idlekcjafoty_seq OWNED BY lekcjafoty.idlekcjafoty;
 
 
 --
--- TOC entry 2025 (class 0 OID 0)
--- Dependencies: 1573
+-- TOC entry 2052 (class 0 OID 0)
+-- Dependencies: 1580
 -- Name: lekcjafoty_idlekcjafoty_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -543,8 +644,8 @@ SELECT pg_catalog.setval('lekcjafoty_idlekcjafoty_seq', 64, true);
 
 
 --
--- TOC entry 1584 (class 1259 OID 82389)
--- Dependencies: 1900 6
+-- TOC entry 1591 (class 1259 OID 82389)
+-- Dependencies: 1911 6
 -- Name: lekcjafotykursant; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -563,8 +664,8 @@ CREATE TABLE lekcjafotykursant (
 ALTER TABLE public.lekcjafotykursant OWNER TO slow;
 
 --
--- TOC entry 1583 (class 1259 OID 82387)
--- Dependencies: 6 1584
+-- TOC entry 1590 (class 1259 OID 82387)
+-- Dependencies: 1591 6
 -- Name: lekcjafotykursant_idlekcjafotykursant_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -579,8 +680,8 @@ CREATE SEQUENCE lekcjafotykursant_idlekcjafotykursant_seq
 ALTER TABLE public.lekcjafotykursant_idlekcjafotykursant_seq OWNER TO slow;
 
 --
--- TOC entry 2026 (class 0 OID 0)
--- Dependencies: 1583
+-- TOC entry 2053 (class 0 OID 0)
+-- Dependencies: 1590
 -- Name: lekcjafotykursant_idlekcjafotykursant_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -588,8 +689,8 @@ ALTER SEQUENCE lekcjafotykursant_idlekcjafotykursant_seq OWNED BY lekcjafotykurs
 
 
 --
--- TOC entry 2027 (class 0 OID 0)
--- Dependencies: 1583
+-- TOC entry 2054 (class 0 OID 0)
+-- Dependencies: 1590
 -- Name: lekcjafotykursant_idlekcjafotykursant_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -597,8 +698,8 @@ SELECT pg_catalog.setval('lekcjafotykursant_idlekcjafotykursant_seq', 6, true);
 
 
 --
--- TOC entry 1582 (class 1259 OID 82351)
--- Dependencies: 1898 6
+-- TOC entry 1589 (class 1259 OID 82351)
+-- Dependencies: 1909 6
 -- Name: lekcjakoment; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -614,8 +715,8 @@ CREATE TABLE lekcjakoment (
 ALTER TABLE public.lekcjakoment OWNER TO slow;
 
 --
--- TOC entry 1581 (class 1259 OID 82349)
--- Dependencies: 6 1582
+-- TOC entry 1588 (class 1259 OID 82349)
+-- Dependencies: 1589 6
 -- Name: lekcjakoment_idlekcjakoment_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -630,8 +731,8 @@ CREATE SEQUENCE lekcjakoment_idlekcjakoment_seq
 ALTER TABLE public.lekcjakoment_idlekcjakoment_seq OWNER TO slow;
 
 --
--- TOC entry 2028 (class 0 OID 0)
--- Dependencies: 1581
+-- TOC entry 2055 (class 0 OID 0)
+-- Dependencies: 1588
 -- Name: lekcjakoment_idlekcjakoment_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -639,8 +740,8 @@ ALTER SEQUENCE lekcjakoment_idlekcjakoment_seq OWNED BY lekcjakoment.idlekcjakom
 
 
 --
--- TOC entry 2029 (class 0 OID 0)
--- Dependencies: 1581
+-- TOC entry 2056 (class 0 OID 0)
+-- Dependencies: 1588
 -- Name: lekcjakoment_idlekcjakoment_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -648,8 +749,8 @@ SELECT pg_catalog.setval('lekcjakoment_idlekcjakoment_seq', 19, true);
 
 
 --
--- TOC entry 1576 (class 1259 OID 49538)
--- Dependencies: 1892 6
+-- TOC entry 1583 (class 1259 OID 49538)
+-- Dependencies: 1903 6
 -- Name: lekcjapliki; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -666,8 +767,8 @@ CREATE TABLE lekcjapliki (
 ALTER TABLE public.lekcjapliki OWNER TO slow;
 
 --
--- TOC entry 1575 (class 1259 OID 49536)
--- Dependencies: 6 1576
+-- TOC entry 1582 (class 1259 OID 49536)
+-- Dependencies: 1583 6
 -- Name: lekcjapliki_idlekcjapliki_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -682,8 +783,8 @@ CREATE SEQUENCE lekcjapliki_idlekcjapliki_seq
 ALTER TABLE public.lekcjapliki_idlekcjapliki_seq OWNER TO slow;
 
 --
--- TOC entry 2030 (class 0 OID 0)
--- Dependencies: 1575
+-- TOC entry 2057 (class 0 OID 0)
+-- Dependencies: 1582
 -- Name: lekcjapliki_idlekcjapliki_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -691,8 +792,8 @@ ALTER SEQUENCE lekcjapliki_idlekcjapliki_seq OWNED BY lekcjapliki.idlekcjapliki;
 
 
 --
--- TOC entry 2031 (class 0 OID 0)
--- Dependencies: 1575
+-- TOC entry 2058 (class 0 OID 0)
+-- Dependencies: 1582
 -- Name: lekcjapliki_idlekcjapliki_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -700,8 +801,8 @@ SELECT pg_catalog.setval('lekcjapliki_idlekcjapliki_seq', 37, true);
 
 
 --
--- TOC entry 1578 (class 1259 OID 66047)
--- Dependencies: 1894 6
+-- TOC entry 1585 (class 1259 OID 66047)
+-- Dependencies: 1905 6
 -- Name: newsy; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -716,8 +817,8 @@ CREATE TABLE newsy (
 ALTER TABLE public.newsy OWNER TO slow;
 
 --
--- TOC entry 1577 (class 1259 OID 66045)
--- Dependencies: 6 1578
+-- TOC entry 1584 (class 1259 OID 66045)
+-- Dependencies: 6 1585
 -- Name: newsy_idnewsy_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -732,8 +833,8 @@ CREATE SEQUENCE newsy_idnewsy_seq
 ALTER TABLE public.newsy_idnewsy_seq OWNER TO slow;
 
 --
--- TOC entry 2032 (class 0 OID 0)
--- Dependencies: 1577
+-- TOC entry 2059 (class 0 OID 0)
+-- Dependencies: 1584
 -- Name: newsy_idnewsy_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -741,8 +842,8 @@ ALTER SEQUENCE newsy_idnewsy_seq OWNED BY newsy.idnewsy;
 
 
 --
--- TOC entry 2033 (class 0 OID 0)
--- Dependencies: 1577
+-- TOC entry 2060 (class 0 OID 0)
+-- Dependencies: 1584
 -- Name: newsy_idnewsy_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -750,8 +851,8 @@ SELECT pg_catalog.setval('newsy_idnewsy_seq', 8, true);
 
 
 --
--- TOC entry 1580 (class 1259 OID 74151)
--- Dependencies: 1896 6
+-- TOC entry 1587 (class 1259 OID 74151)
+-- Dependencies: 1907 6
 -- Name: newsykursy; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -767,8 +868,8 @@ CREATE TABLE newsykursy (
 ALTER TABLE public.newsykursy OWNER TO slow;
 
 --
--- TOC entry 1579 (class 1259 OID 74149)
--- Dependencies: 1580 6
+-- TOC entry 1586 (class 1259 OID 74149)
+-- Dependencies: 6 1587
 -- Name: newsykursy_idnewsykursy_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -783,8 +884,8 @@ CREATE SEQUENCE newsykursy_idnewsykursy_seq
 ALTER TABLE public.newsykursy_idnewsykursy_seq OWNER TO slow;
 
 --
--- TOC entry 2034 (class 0 OID 0)
--- Dependencies: 1579
+-- TOC entry 2061 (class 0 OID 0)
+-- Dependencies: 1586
 -- Name: newsykursy_idnewsykursy_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -792,8 +893,8 @@ ALTER SEQUENCE newsykursy_idnewsykursy_seq OWNED BY newsykursy.idnewsykursy;
 
 
 --
--- TOC entry 2035 (class 0 OID 0)
--- Dependencies: 1579
+-- TOC entry 2062 (class 0 OID 0)
+-- Dependencies: 1586
 -- Name: newsykursy_idnewsykursy_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -801,8 +902,8 @@ SELECT pg_catalog.setval('newsykursy_idnewsykursy_seq', 9, true);
 
 
 --
--- TOC entry 1586 (class 1259 OID 82412)
--- Dependencies: 1902 6
+-- TOC entry 1593 (class 1259 OID 82412)
+-- Dependencies: 1913 6
 -- Name: poziomyzaawansowania; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -816,8 +917,8 @@ CREATE TABLE poziomyzaawansowania (
 ALTER TABLE public.poziomyzaawansowania OWNER TO slow;
 
 --
--- TOC entry 1585 (class 1259 OID 82410)
--- Dependencies: 6 1586
+-- TOC entry 1592 (class 1259 OID 82410)
+-- Dependencies: 1593 6
 -- Name: poziomyzaawansowania_idpoziomyzaawansowania_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -832,8 +933,8 @@ CREATE SEQUENCE poziomyzaawansowania_idpoziomyzaawansowania_seq
 ALTER TABLE public.poziomyzaawansowania_idpoziomyzaawansowania_seq OWNER TO slow;
 
 --
--- TOC entry 2036 (class 0 OID 0)
--- Dependencies: 1585
+-- TOC entry 2063 (class 0 OID 0)
+-- Dependencies: 1592
 -- Name: poziomyzaawansowania_idpoziomyzaawansowania_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -841,8 +942,8 @@ ALTER SEQUENCE poziomyzaawansowania_idpoziomyzaawansowania_seq OWNED BY poziomyz
 
 
 --
--- TOC entry 2037 (class 0 OID 0)
--- Dependencies: 1585
+-- TOC entry 2064 (class 0 OID 0)
+-- Dependencies: 1592
 -- Name: poziomyzaawansowania_idpoziomyzaawansowania_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -850,7 +951,7 @@ SELECT pg_catalog.setval('poziomyzaawansowania_idpoziomyzaawansowania_seq', 93, 
 
 
 --
--- TOC entry 1567 (class 1259 OID 24910)
+-- TOC entry 1574 (class 1259 OID 24910)
 -- Dependencies: 6
 -- Name: statyczne; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
@@ -868,8 +969,8 @@ CREATE TABLE statyczne (
 ALTER TABLE public.statyczne OWNER TO slow;
 
 --
--- TOC entry 1566 (class 1259 OID 24908)
--- Dependencies: 1567 6
+-- TOC entry 1573 (class 1259 OID 24908)
+-- Dependencies: 6 1574
 -- Name: statyczne_id_statyczne_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -884,8 +985,8 @@ CREATE SEQUENCE statyczne_id_statyczne_seq
 ALTER TABLE public.statyczne_id_statyczne_seq OWNER TO slow;
 
 --
--- TOC entry 2038 (class 0 OID 0)
--- Dependencies: 1566
+-- TOC entry 2065 (class 0 OID 0)
+-- Dependencies: 1573
 -- Name: statyczne_id_statyczne_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -893,8 +994,8 @@ ALTER SEQUENCE statyczne_id_statyczne_seq OWNED BY statyczne.id_statyczne;
 
 
 --
--- TOC entry 2039 (class 0 OID 0)
--- Dependencies: 1566
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 1573
 -- Name: statyczne_id_statyczne_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -902,8 +1003,8 @@ SELECT pg_catalog.setval('statyczne_id_statyczne_seq', 164, true);
 
 
 --
--- TOC entry 1588 (class 1259 OID 82454)
--- Dependencies: 1904 6
+-- TOC entry 1595 (class 1259 OID 82454)
+-- Dependencies: 1915 6
 -- Name: typykursu; Type: TABLE; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -917,8 +1018,8 @@ CREATE TABLE typykursu (
 ALTER TABLE public.typykursu OWNER TO slow;
 
 --
--- TOC entry 1587 (class 1259 OID 82452)
--- Dependencies: 1588 6
+-- TOC entry 1594 (class 1259 OID 82452)
+-- Dependencies: 1595 6
 -- Name: typykursu_idtypykursu_seq; Type: SEQUENCE; Schema: public; Owner: slow
 --
 
@@ -933,8 +1034,8 @@ CREATE SEQUENCE typykursu_idtypykursu_seq
 ALTER TABLE public.typykursu_idtypykursu_seq OWNER TO slow;
 
 --
--- TOC entry 2040 (class 0 OID 0)
--- Dependencies: 1587
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 1594
 -- Name: typykursu_idtypykursu_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: slow
 --
 
@@ -942,8 +1043,8 @@ ALTER SEQUENCE typykursu_idtypykursu_seq OWNED BY typykursu.idtypykursu;
 
 
 --
--- TOC entry 2041 (class 0 OID 0)
--- Dependencies: 1587
+-- TOC entry 2068 (class 0 OID 0)
+-- Dependencies: 1594
 -- Name: typykursu_idtypykursu_seq; Type: SEQUENCE SET; Schema: public; Owner: slow
 --
 
@@ -951,8 +1052,8 @@ SELECT pg_catalog.setval('typykursu_idtypykursu_seq', 37, true);
 
 
 --
--- TOC entry 1872 (class 2604 OID 24874)
--- Dependencies: 1560 1559
+-- TOC entry 1883 (class 2604 OID 24874)
+-- Dependencies: 1567 1566
 -- Name: id_user_roles; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -960,8 +1061,26 @@ ALTER TABLE _users__roles ALTER COLUMN id_user_roles SET DEFAULT nextval('_user_
 
 
 --
--- TOC entry 1910 (class 2604 OID 107099)
--- Dependencies: 1593 1594 1594
+-- TOC entry 1924 (class 2604 OID 107135)
+-- Dependencies: 1604 1605 1605
+-- Name: idabsolwforposty; Type: DEFAULT; Schema: public; Owner: slow
+--
+
+ALTER TABLE absolwforposty ALTER COLUMN idabsolwforposty SET DEFAULT nextval('absolwforposty_idabsolwforposty_seq'::regclass);
+
+
+--
+-- TOC entry 1922 (class 2604 OID 107121)
+-- Dependencies: 1602 1603 1603
+-- Name: idabsolwforwatki; Type: DEFAULT; Schema: public; Owner: slow
+--
+
+ALTER TABLE absolwforwatki ALTER COLUMN idabsolwforwatki SET DEFAULT nextval('absolwforwatki_idabsolwforwatki_seq'::regclass);
+
+
+--
+-- TOC entry 1921 (class 2604 OID 107099)
+-- Dependencies: 1600 1601 1601
 -- Name: idboksy; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -969,8 +1088,8 @@ ALTER TABLE boksy ALTER COLUMN idboksy SET DEFAULT nextval('boksy_idboksy_seq'::
 
 
 --
--- TOC entry 1907 (class 2604 OID 90720)
--- Dependencies: 1592 1591 1592
+-- TOC entry 1918 (class 2604 OID 90720)
+-- Dependencies: 1599 1598 1599
 -- Name: idboksycfg; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -978,8 +1097,8 @@ ALTER TABLE boksycfg ALTER COLUMN idboksycfg SET DEFAULT nextval('boksycfg_idbok
 
 
 --
--- TOC entry 1905 (class 2604 OID 82505)
--- Dependencies: 1589 1590 1590
+-- TOC entry 1916 (class 2604 OID 82505)
+-- Dependencies: 1596 1597 1597
 -- Name: idfotykursantkoment; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -987,8 +1106,8 @@ ALTER TABLE fotykursantkoment ALTER COLUMN idfotykursantkoment SET DEFAULT nextv
 
 
 --
--- TOC entry 1881 (class 2604 OID 24875)
--- Dependencies: 1563 1562
+-- TOC entry 1892 (class 2604 OID 24875)
+-- Dependencies: 1570 1569
 -- Name: idkursy; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -996,8 +1115,8 @@ ALTER TABLE kursy ALTER COLUMN idkursy SET DEFAULT nextval('kursy_idkursy_seq'::
 
 
 --
--- TOC entry 1885 (class 2604 OID 24876)
--- Dependencies: 1565 1564
+-- TOC entry 1896 (class 2604 OID 24876)
+-- Dependencies: 1572 1571
 -- Name: idkursyusers; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1005,8 +1124,8 @@ ALTER TABLE kursy_users ALTER COLUMN idkursyusers SET DEFAULT nextval('kursy_use
 
 
 --
--- TOC entry 1887 (class 2604 OID 49514)
--- Dependencies: 1571 1572 1572
+-- TOC entry 1898 (class 2604 OID 49514)
+-- Dependencies: 1579 1578 1579
 -- Name: idlekcja; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1014,8 +1133,8 @@ ALTER TABLE lekcja ALTER COLUMN idlekcja SET DEFAULT nextval('lekcja_idlekcja_se
 
 
 --
--- TOC entry 1889 (class 2604 OID 49525)
--- Dependencies: 1574 1573 1574
+-- TOC entry 1900 (class 2604 OID 49525)
+-- Dependencies: 1581 1580 1581
 -- Name: idlekcjafoty; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1023,8 +1142,8 @@ ALTER TABLE lekcjafoty ALTER COLUMN idlekcjafoty SET DEFAULT nextval('lekcjafoty
 
 
 --
--- TOC entry 1899 (class 2604 OID 82392)
--- Dependencies: 1584 1583 1584
+-- TOC entry 1910 (class 2604 OID 82392)
+-- Dependencies: 1591 1590 1591
 -- Name: idlekcjafotykursant; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1032,8 +1151,8 @@ ALTER TABLE lekcjafotykursant ALTER COLUMN idlekcjafotykursant SET DEFAULT nextv
 
 
 --
--- TOC entry 1897 (class 2604 OID 82354)
--- Dependencies: 1582 1581 1582
+-- TOC entry 1908 (class 2604 OID 82354)
+-- Dependencies: 1588 1589 1589
 -- Name: idlekcjakoment; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1041,8 +1160,8 @@ ALTER TABLE lekcjakoment ALTER COLUMN idlekcjakoment SET DEFAULT nextval('lekcja
 
 
 --
--- TOC entry 1891 (class 2604 OID 49541)
--- Dependencies: 1576 1575 1576
+-- TOC entry 1902 (class 2604 OID 49541)
+-- Dependencies: 1583 1582 1583
 -- Name: idlekcjapliki; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1050,8 +1169,8 @@ ALTER TABLE lekcjapliki ALTER COLUMN idlekcjapliki SET DEFAULT nextval('lekcjapl
 
 
 --
--- TOC entry 1893 (class 2604 OID 66050)
--- Dependencies: 1577 1578 1578
+-- TOC entry 1904 (class 2604 OID 66050)
+-- Dependencies: 1585 1584 1585
 -- Name: idnewsy; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1059,8 +1178,8 @@ ALTER TABLE newsy ALTER COLUMN idnewsy SET DEFAULT nextval('newsy_idnewsy_seq'::
 
 
 --
--- TOC entry 1895 (class 2604 OID 74154)
--- Dependencies: 1579 1580 1580
+-- TOC entry 1906 (class 2604 OID 74154)
+-- Dependencies: 1586 1587 1587
 -- Name: idnewsykursy; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1068,8 +1187,8 @@ ALTER TABLE newsykursy ALTER COLUMN idnewsykursy SET DEFAULT nextval('newsykursy
 
 
 --
--- TOC entry 1901 (class 2604 OID 82415)
--- Dependencies: 1586 1585 1586
+-- TOC entry 1912 (class 2604 OID 82415)
+-- Dependencies: 1592 1593 1593
 -- Name: idpoziomyzaawansowania; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1077,8 +1196,8 @@ ALTER TABLE poziomyzaawansowania ALTER COLUMN idpoziomyzaawansowania SET DEFAULT
 
 
 --
--- TOC entry 1886 (class 2604 OID 24913)
--- Dependencies: 1567 1566 1567
+-- TOC entry 1897 (class 2604 OID 24913)
+-- Dependencies: 1573 1574 1574
 -- Name: id_statyczne; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1086,8 +1205,8 @@ ALTER TABLE statyczne ALTER COLUMN id_statyczne SET DEFAULT nextval('statyczne_i
 
 
 --
--- TOC entry 1903 (class 2604 OID 82457)
--- Dependencies: 1588 1587 1588
+-- TOC entry 1914 (class 2604 OID 82457)
+-- Dependencies: 1595 1594 1595
 -- Name: idtypykursu; Type: DEFAULT; Schema: public; Owner: slow
 --
 
@@ -1095,8 +1214,8 @@ ALTER TABLE typykursu ALTER COLUMN idtypykursu SET DEFAULT nextval('typykursu_id
 
 
 --
--- TOC entry 1985 (class 0 OID 24836)
--- Dependencies: 1558
+-- TOC entry 2006 (class 0 OID 24836)
+-- Dependencies: 1565
 -- Data for Name: _roles; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1104,12 +1223,13 @@ COPY _roles (rola, opis) FROM stdin;
 kursant	Kursant
 admin	admin
 wykladowca	wykladowca
+absolwent	absolwent
 \.
 
 
 --
--- TOC entry 1987 (class 0 OID 24847)
--- Dependencies: 1561
+-- TOC entry 2008 (class 0 OID 24847)
+-- Dependencies: 1568
 -- Data for Name: _users; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1122,12 +1242,13 @@ www	www	ww@ww.ww	\N	2010-12-23 08:41:50.665+01	ww	ww	ww	ww	www3333
 zz	zz	kkkk@kk.kk	\N	2011-01-15 13:36:20.886+01	123		kkkkk	kkk	kkk	<p>sssssssssssssssssssssssssssssssss</p>
 qqqq	qqqq	qqqq@qqqq.qqqq	\N	2011-01-29 08:14:07.492+01	qqqq		qqqq	qqqq	qqqq	
 </td>	</td>	wwww@aa.pl	\N	2011-01-29 08:20:07.411+01	</td>		</td>	</td>	</td>	
+qq	qq	qqq@ss.ss	\N	2011-02-07 21:12:32.125+01	2222222222222222	qqq	qqq	qqq	qqq	
 \.
 
 
 --
--- TOC entry 1986 (class 0 OID 24842)
--- Dependencies: 1559
+-- TOC entry 2007 (class 0 OID 24842)
+-- Dependencies: 1566
 -- Data for Name: _users__roles; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1140,12 +1261,36 @@ www	wykladowca	119
 ww	kursant	120
 ww	wykladowca	121
 zz	kursant	123
+qq	absolwent	128
 \.
 
 
 --
--- TOC entry 2002 (class 0 OID 90727)
--- Dependencies: 1594
+-- TOC entry 2025 (class 0 OID 107132)
+-- Dependencies: 1605
+-- Data for Name: absolwforposty; Type: TABLE DATA; Schema: public; Owner: slow
+--
+
+COPY absolwforposty (idabsolwforposty, datadodania, username, idabsolwforwatki, tresc) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2024 (class 0 OID 107118)
+-- Dependencies: 1603
+-- Data for Name: absolwforwatki; Type: TABLE DATA; Schema: public; Owner: slow
+--
+
+COPY absolwforwatki (idabsolwforwatki, datadodania, tytul, username) FROM stdin;
+1	2011-02-08 00:00:00+01	zxczxczxc	qq
+2	2011-02-08 00:00:00+01	sdfsdf	qq
+3	2011-02-09 05:30:14.248+01	eeeeeeeeeee	qq
+\.
+
+
+--
+-- TOC entry 2023 (class 0 OID 90727)
+-- Dependencies: 1601
 -- Data for Name: boksy; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1158,8 +1303,8 @@ COPY boksy (idboksy, idboksycfg, naglowek, tresc, obraz) FROM stdin;
 
 
 --
--- TOC entry 2001 (class 0 OID 90717)
--- Dependencies: 1592
+-- TOC entry 2022 (class 0 OID 90717)
+-- Dependencies: 1599
 -- Data for Name: boksycfg; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1169,8 +1314,8 @@ COPY boksycfg (idboksycfg, nazwa, widoczny, iloscelementow) FROM stdin;
 
 
 --
--- TOC entry 2000 (class 0 OID 82502)
--- Dependencies: 1590
+-- TOC entry 2021 (class 0 OID 82502)
+-- Dependencies: 1597
 -- Data for Name: fotykursantkoment; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1182,8 +1327,8 @@ COPY fotykursantkoment (idfotykursantkoment, username, tresc, datadodania, idlek
 
 
 --
--- TOC entry 1988 (class 0 OID 24861)
--- Dependencies: 1562
+-- TOC entry 2009 (class 0 OID 24861)
+-- Dependencies: 1569
 -- Data for Name: kursy; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1196,8 +1341,8 @@ COPY kursy (idkursy, nazwa, opis, dataod, datado, opis_krotki, stacjonarny, idpo
 
 
 --
--- TOC entry 1989 (class 0 OID 24869)
--- Dependencies: 1564
+-- TOC entry 2010 (class 0 OID 24869)
+-- Dependencies: 1571
 -- Data for Name: kursy_users; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1215,8 +1360,8 @@ COPY kursy_users (idkursyusers, idkursy, username) FROM stdin;
 
 
 --
--- TOC entry 1991 (class 0 OID 49511)
--- Dependencies: 1572
+-- TOC entry 2012 (class 0 OID 49511)
+-- Dependencies: 1579
 -- Data for Name: lekcja; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1228,8 +1373,8 @@ COPY lekcja (idlekcja, tytul, tresc, datazmiany, idkursy, lp, widoczna) FROM std
 
 
 --
--- TOC entry 1992 (class 0 OID 49522)
--- Dependencies: 1574
+-- TOC entry 2013 (class 0 OID 49522)
+-- Dependencies: 1581
 -- Data for Name: lekcjafoty; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1239,8 +1384,8 @@ COPY lekcjafoty (idlekcjafoty, datadodania, opis, plikmini, plik, idlekcja, lp, 
 
 
 --
--- TOC entry 1997 (class 0 OID 82389)
--- Dependencies: 1584
+-- TOC entry 2018 (class 0 OID 82389)
+-- Dependencies: 1591
 -- Data for Name: lekcjafotykursant; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1251,8 +1396,8 @@ COPY lekcjafotykursant (idlekcjafotykursant, datadodania, opis, plikmini, plik, 
 
 
 --
--- TOC entry 1996 (class 0 OID 82351)
--- Dependencies: 1582
+-- TOC entry 2017 (class 0 OID 82351)
+-- Dependencies: 1589
 -- Data for Name: lekcjakoment; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1261,8 +1406,8 @@ COPY lekcjakoment (idlekcjakoment, idlekcja, username, tresc, datadodania) FROM 
 
 
 --
--- TOC entry 1993 (class 0 OID 49538)
--- Dependencies: 1576
+-- TOC entry 2014 (class 0 OID 49538)
+-- Dependencies: 1583
 -- Data for Name: lekcjapliki; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1271,8 +1416,8 @@ COPY lekcjapliki (idlekcjapliki, datadodania, opis, plik, idlekcja, nazwapliku) 
 
 
 --
--- TOC entry 1994 (class 0 OID 66047)
--- Dependencies: 1578
+-- TOC entry 2015 (class 0 OID 66047)
+-- Dependencies: 1585
 -- Data for Name: newsy; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1285,8 +1430,8 @@ COPY newsy (idnewsy, tytul, tresc, datadodania) FROM stdin;
 
 
 --
--- TOC entry 1995 (class 0 OID 74151)
--- Dependencies: 1580
+-- TOC entry 2016 (class 0 OID 74151)
+-- Dependencies: 1587
 -- Data for Name: newsykursy; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1298,8 +1443,8 @@ COPY newsykursy (idnewsykursy, tytul, tresc, datadodania, idkursy) FROM stdin;
 
 
 --
--- TOC entry 1998 (class 0 OID 82412)
--- Dependencies: 1586
+-- TOC entry 2019 (class 0 OID 82412)
+-- Dependencies: 1593
 -- Data for Name: poziomyzaawansowania; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1313,8 +1458,8 @@ COPY poziomyzaawansowania (idpoziomyzaawansowania, nazwa, opis) FROM stdin;
 
 
 --
--- TOC entry 1990 (class 0 OID 24910)
--- Dependencies: 1567
+-- TOC entry 2011 (class 0 OID 24910)
+-- Dependencies: 1574
 -- Data for Name: statyczne; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1328,8 +1473,8 @@ COPY statyczne (id_statyczne, tytul, opis, tresc, lp, rola) FROM stdin;
 
 
 --
--- TOC entry 1999 (class 0 OID 82454)
--- Dependencies: 1588
+-- TOC entry 2020 (class 0 OID 82454)
+-- Dependencies: 1595
 -- Data for Name: typykursu; Type: TABLE DATA; Schema: public; Owner: slow
 --
 
@@ -1341,8 +1486,8 @@ COPY typykursu (idtypykursu, nazwa, opis) FROM stdin;
 
 
 --
--- TOC entry 1912 (class 2606 OID 24878)
--- Dependencies: 1558 1558
+-- TOC entry 1926 (class 2606 OID 24878)
+-- Dependencies: 1565 1565
 -- Name: _roles_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1351,8 +1496,8 @@ ALTER TABLE ONLY _roles
 
 
 --
--- TOC entry 1914 (class 2606 OID 24880)
--- Dependencies: 1559 1559
+-- TOC entry 1928 (class 2606 OID 24880)
+-- Dependencies: 1566 1566
 -- Name: _user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1361,8 +1506,8 @@ ALTER TABLE ONLY _users__roles
 
 
 --
--- TOC entry 1916 (class 2606 OID 24882)
--- Dependencies: 1561 1561
+-- TOC entry 1930 (class 2606 OID 24882)
+-- Dependencies: 1568 1568
 -- Name: _users_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1371,8 +1516,28 @@ ALTER TABLE ONLY _users
 
 
 --
--- TOC entry 1965 (class 2606 OID 90735)
--- Dependencies: 1594 1594
+-- TOC entry 1984 (class 2606 OID 107140)
+-- Dependencies: 1605 1605
+-- Name: absolwforposty_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
+--
+
+ALTER TABLE ONLY absolwforposty
+    ADD CONSTRAINT absolwforposty_pkey PRIMARY KEY (idabsolwforposty);
+
+
+--
+-- TOC entry 1982 (class 2606 OID 107124)
+-- Dependencies: 1603 1603
+-- Name: absolwforwatki_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
+--
+
+ALTER TABLE ONLY absolwforwatki
+    ADD CONSTRAINT absolwforwatki_pkey PRIMARY KEY (idabsolwforwatki);
+
+
+--
+-- TOC entry 1979 (class 2606 OID 90735)
+-- Dependencies: 1601 1601
 -- Name: boksy_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1381,8 +1546,8 @@ ALTER TABLE ONLY boksy
 
 
 --
--- TOC entry 1963 (class 2606 OID 90724)
--- Dependencies: 1592 1592
+-- TOC entry 1977 (class 2606 OID 90724)
+-- Dependencies: 1599 1599
 -- Name: boksycfg_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1391,8 +1556,8 @@ ALTER TABLE ONLY boksycfg
 
 
 --
--- TOC entry 1961 (class 2606 OID 82511)
--- Dependencies: 1590 1590
+-- TOC entry 1975 (class 2606 OID 82511)
+-- Dependencies: 1597 1597
 -- Name: fotykursantkoment_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1401,8 +1566,8 @@ ALTER TABLE ONLY fotykursantkoment
 
 
 --
--- TOC entry 1920 (class 2606 OID 24884)
--- Dependencies: 1562 1562
+-- TOC entry 1934 (class 2606 OID 24884)
+-- Dependencies: 1569 1569
 -- Name: kursy_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1411,8 +1576,8 @@ ALTER TABLE ONLY kursy
 
 
 --
--- TOC entry 1922 (class 2606 OID 24886)
--- Dependencies: 1564 1564
+-- TOC entry 1936 (class 2606 OID 24886)
+-- Dependencies: 1571 1571
 -- Name: kursy_users_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1421,8 +1586,8 @@ ALTER TABLE ONLY kursy_users
 
 
 --
--- TOC entry 1932 (class 2606 OID 49559)
--- Dependencies: 1572 1572 1572
+-- TOC entry 1946 (class 2606 OID 49559)
+-- Dependencies: 1579 1579 1579
 -- Name: lekcja_lp_key; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1431,8 +1596,8 @@ ALTER TABLE ONLY lekcja
 
 
 --
--- TOC entry 1934 (class 2606 OID 49519)
--- Dependencies: 1572 1572
+-- TOC entry 1948 (class 2606 OID 49519)
+-- Dependencies: 1579 1579
 -- Name: lekcja_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1441,8 +1606,8 @@ ALTER TABLE ONLY lekcja
 
 
 --
--- TOC entry 1936 (class 2606 OID 57771)
--- Dependencies: 1574 1574 1574
+-- TOC entry 1950 (class 2606 OID 57771)
+-- Dependencies: 1581 1581 1581
 -- Name: lekcjafoty_lp_key; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1451,8 +1616,8 @@ ALTER TABLE ONLY lekcjafoty
 
 
 --
--- TOC entry 1938 (class 2606 OID 49530)
--- Dependencies: 1574 1574
+-- TOC entry 1952 (class 2606 OID 49530)
+-- Dependencies: 1581 1581
 -- Name: lekcjafoty_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1461,8 +1626,8 @@ ALTER TABLE ONLY lekcjafoty
 
 
 --
--- TOC entry 1953 (class 2606 OID 82397)
--- Dependencies: 1584 1584
+-- TOC entry 1967 (class 2606 OID 82397)
+-- Dependencies: 1591 1591
 -- Name: lekcjafotykursant_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1471,8 +1636,8 @@ ALTER TABLE ONLY lekcjafotykursant
 
 
 --
--- TOC entry 1949 (class 2606 OID 82356)
--- Dependencies: 1582 1582
+-- TOC entry 1963 (class 2606 OID 82356)
+-- Dependencies: 1589 1589
 -- Name: lekcjakoment_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1481,8 +1646,8 @@ ALTER TABLE ONLY lekcjakoment
 
 
 --
--- TOC entry 1940 (class 2606 OID 49546)
--- Dependencies: 1576 1576
+-- TOC entry 1954 (class 2606 OID 49546)
+-- Dependencies: 1583 1583
 -- Name: lekcjapliki_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1491,8 +1656,8 @@ ALTER TABLE ONLY lekcjapliki
 
 
 --
--- TOC entry 1942 (class 2606 OID 66056)
--- Dependencies: 1578 1578
+-- TOC entry 1956 (class 2606 OID 66056)
+-- Dependencies: 1585 1585
 -- Name: newsy_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1501,8 +1666,8 @@ ALTER TABLE ONLY newsy
 
 
 --
--- TOC entry 1945 (class 2606 OID 74160)
--- Dependencies: 1580 1580
+-- TOC entry 1959 (class 2606 OID 74160)
+-- Dependencies: 1587 1587
 -- Name: newsykursy_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1511,8 +1676,8 @@ ALTER TABLE ONLY newsykursy
 
 
 --
--- TOC entry 1955 (class 2606 OID 82417)
--- Dependencies: 1586 1586
+-- TOC entry 1969 (class 2606 OID 82417)
+-- Dependencies: 1593 1593
 -- Name: poziomyzaawansowania_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1521,8 +1686,8 @@ ALTER TABLE ONLY poziomyzaawansowania
 
 
 --
--- TOC entry 1925 (class 2606 OID 33126)
--- Dependencies: 1567 1567
+-- TOC entry 1939 (class 2606 OID 33126)
+-- Dependencies: 1574 1574
 -- Name: statyczne_lp_key; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1531,8 +1696,8 @@ ALTER TABLE ONLY statyczne
 
 
 --
--- TOC entry 1927 (class 2606 OID 24918)
--- Dependencies: 1567 1567
+-- TOC entry 1941 (class 2606 OID 24918)
+-- Dependencies: 1574 1574
 -- Name: statyczne_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1541,8 +1706,8 @@ ALTER TABLE ONLY statyczne
 
 
 --
--- TOC entry 1929 (class 2606 OID 24930)
--- Dependencies: 1567 1567
+-- TOC entry 1943 (class 2606 OID 24930)
+-- Dependencies: 1574 1574
 -- Name: statyczne_tytul_key; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1551,8 +1716,8 @@ ALTER TABLE ONLY statyczne
 
 
 --
--- TOC entry 1957 (class 2606 OID 82459)
--- Dependencies: 1588 1588
+-- TOC entry 1971 (class 2606 OID 82459)
+-- Dependencies: 1595 1595
 -- Name: typykursu_pkey; Type: CONSTRAINT; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1561,8 +1726,8 @@ ALTER TABLE ONLY typykursu
 
 
 --
--- TOC entry 1930 (class 1259 OID 49557)
--- Dependencies: 1572
+-- TOC entry 1944 (class 1259 OID 49557)
+-- Dependencies: 1579
 -- Name: fki_; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1570,8 +1735,8 @@ CREATE INDEX fki_ ON lekcja USING btree (idkursy);
 
 
 --
--- TOC entry 1966 (class 1259 OID 90746)
--- Dependencies: 1594
+-- TOC entry 1980 (class 1259 OID 90746)
+-- Dependencies: 1601
 -- Name: fki_boksy_idboksycfg_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1579,8 +1744,8 @@ CREATE INDEX fki_boksy_idboksycfg_fkey ON boksy USING btree (idboksycfg);
 
 
 --
--- TOC entry 1958 (class 1259 OID 82532)
--- Dependencies: 1590
+-- TOC entry 1972 (class 1259 OID 82532)
+-- Dependencies: 1597
 -- Name: fki_fotykursantkoment_idlekcjafotykursant_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1588,8 +1753,8 @@ CREATE INDEX fki_fotykursantkoment_idlekcjafotykursant_fkey ON fotykursantkoment
 
 
 --
--- TOC entry 1959 (class 1259 OID 82517)
--- Dependencies: 1590
+-- TOC entry 1973 (class 1259 OID 82517)
+-- Dependencies: 1597
 -- Name: fki_fotykursantkoment_username_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1597,8 +1762,8 @@ CREATE INDEX fki_fotykursantkoment_username_fkey ON fotykursantkoment USING btre
 
 
 --
--- TOC entry 1917 (class 1259 OID 82431)
--- Dependencies: 1562
+-- TOC entry 1931 (class 1259 OID 82431)
+-- Dependencies: 1569
 -- Name: fki_kursy_idpoziomyzaawansowania_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1606,8 +1771,8 @@ CREATE INDEX fki_kursy_idpoziomyzaawansowania_fkey ON kursy USING btree (idpozio
 
 
 --
--- TOC entry 1918 (class 1259 OID 82467)
--- Dependencies: 1562
+-- TOC entry 1932 (class 1259 OID 82467)
+-- Dependencies: 1569
 -- Name: fki_kursy_idtypykursu_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1615,8 +1780,8 @@ CREATE INDEX fki_kursy_idtypykursu_fkey ON kursy USING btree (idtypykursu);
 
 
 --
--- TOC entry 1950 (class 1259 OID 82409)
--- Dependencies: 1584
+-- TOC entry 1964 (class 1259 OID 82409)
+-- Dependencies: 1591
 -- Name: fki_lekcjafotykursant_idlekcja_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1624,8 +1789,8 @@ CREATE INDEX fki_lekcjafotykursant_idlekcja_fkey ON lekcjafotykursant USING btre
 
 
 --
--- TOC entry 1951 (class 1259 OID 82403)
--- Dependencies: 1584
+-- TOC entry 1965 (class 1259 OID 82403)
+-- Dependencies: 1591
 -- Name: fki_lekcjafotykursant_username_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1633,8 +1798,8 @@ CREATE INDEX fki_lekcjafotykursant_username_fkey ON lekcjafotykursant USING btre
 
 
 --
--- TOC entry 1946 (class 1259 OID 82375)
--- Dependencies: 1582
+-- TOC entry 1960 (class 1259 OID 82375)
+-- Dependencies: 1589
 -- Name: fki_lekcjakoment_idlekcja_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1642,8 +1807,8 @@ CREATE INDEX fki_lekcjakoment_idlekcja_fkey ON lekcjakoment USING btree (idlekcj
 
 
 --
--- TOC entry 1947 (class 1259 OID 82376)
--- Dependencies: 1582
+-- TOC entry 1961 (class 1259 OID 82376)
+-- Dependencies: 1589
 -- Name: fki_lekcjakoment_username_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1651,8 +1816,8 @@ CREATE INDEX fki_lekcjakoment_username_fkey ON lekcjakoment USING btree (usernam
 
 
 --
--- TOC entry 1943 (class 1259 OID 74171)
--- Dependencies: 1580
+-- TOC entry 1957 (class 1259 OID 74171)
+-- Dependencies: 1587
 -- Name: fki_newsykursy_idkursy_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1660,8 +1825,8 @@ CREATE INDEX fki_newsykursy_idkursy_fkey ON newsykursy USING btree (idkursy);
 
 
 --
--- TOC entry 1923 (class 1259 OID 65954)
--- Dependencies: 1567
+-- TOC entry 1937 (class 1259 OID 65954)
+-- Dependencies: 1574
 -- Name: fki_statyczne_rola_fkey; Type: INDEX; Schema: public; Owner: slow; Tablespace: 
 --
 
@@ -1669,8 +1834,8 @@ CREATE INDEX fki_statyczne_rola_fkey ON statyczne USING btree (rola);
 
 
 --
--- TOC entry 1967 (class 2606 OID 24887)
--- Dependencies: 1911 1558 1559
+-- TOC entry 1985 (class 2606 OID 24887)
+-- Dependencies: 1566 1925 1565
 -- Name: _user_roles_role_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1679,8 +1844,8 @@ ALTER TABLE ONLY _users__roles
 
 
 --
--- TOC entry 1968 (class 2606 OID 24892)
--- Dependencies: 1561 1559 1915
+-- TOC entry 1986 (class 2606 OID 24892)
+-- Dependencies: 1568 1566 1929
 -- Name: _user_roles_user_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1689,8 +1854,38 @@ ALTER TABLE ONLY _users__roles
 
 
 --
--- TOC entry 1984 (class 2606 OID 90741)
--- Dependencies: 1592 1962 1594
+-- TOC entry 2005 (class 2606 OID 107146)
+-- Dependencies: 1603 1605 1981
+-- Name: absolwforposty_idabsolwforwatki_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
+--
+
+ALTER TABLE ONLY absolwforposty
+    ADD CONSTRAINT absolwforposty_idabsolwforwatki_fkey FOREIGN KEY (idabsolwforwatki) REFERENCES absolwforwatki(idabsolwforwatki);
+
+
+--
+-- TOC entry 2004 (class 2606 OID 107141)
+-- Dependencies: 1929 1568 1605
+-- Name: absolwforposty_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
+--
+
+ALTER TABLE ONLY absolwforposty
+    ADD CONSTRAINT absolwforposty_username_fkey FOREIGN KEY (username) REFERENCES _users(username);
+
+
+--
+-- TOC entry 2003 (class 2606 OID 107125)
+-- Dependencies: 1929 1568 1603
+-- Name: absolwforwatki_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
+--
+
+ALTER TABLE ONLY absolwforwatki
+    ADD CONSTRAINT absolwforwatki_username_fkey FOREIGN KEY (username) REFERENCES _users(username);
+
+
+--
+-- TOC entry 2002 (class 2606 OID 90741)
+-- Dependencies: 1599 1601 1976
 -- Name: boksy_idboksycfg_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1699,8 +1894,8 @@ ALTER TABLE ONLY boksy
 
 
 --
--- TOC entry 1983 (class 2606 OID 82527)
--- Dependencies: 1584 1590 1952
+-- TOC entry 2001 (class 2606 OID 82527)
+-- Dependencies: 1966 1597 1591
 -- Name: fotykursantkoment_idlekcjafotykursant_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1709,8 +1904,8 @@ ALTER TABLE ONLY fotykursantkoment
 
 
 --
--- TOC entry 1982 (class 2606 OID 82512)
--- Dependencies: 1561 1915 1590
+-- TOC entry 2000 (class 2606 OID 82512)
+-- Dependencies: 1568 1597 1929
 -- Name: fotykursantkoment_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1719,8 +1914,8 @@ ALTER TABLE ONLY fotykursantkoment
 
 
 --
--- TOC entry 1969 (class 2606 OID 82426)
--- Dependencies: 1586 1954 1562
+-- TOC entry 1987 (class 2606 OID 82426)
+-- Dependencies: 1569 1593 1968
 -- Name: kursy_idpoziomyzaawansowania_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1729,8 +1924,8 @@ ALTER TABLE ONLY kursy
 
 
 --
--- TOC entry 1970 (class 2606 OID 82462)
--- Dependencies: 1562 1956 1588
+-- TOC entry 1988 (class 2606 OID 82462)
+-- Dependencies: 1970 1595 1569
 -- Name: kursy_idtypykursu_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1739,8 +1934,8 @@ ALTER TABLE ONLY kursy
 
 
 --
--- TOC entry 1971 (class 2606 OID 24897)
--- Dependencies: 1564 1919 1562
+-- TOC entry 1989 (class 2606 OID 24897)
+-- Dependencies: 1571 1569 1933
 -- Name: kursy_users_idkursy_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1749,8 +1944,8 @@ ALTER TABLE ONLY kursy_users
 
 
 --
--- TOC entry 1972 (class 2606 OID 24902)
--- Dependencies: 1561 1915 1564
+-- TOC entry 1990 (class 2606 OID 24902)
+-- Dependencies: 1571 1929 1568
 -- Name: kursy_users_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1759,8 +1954,8 @@ ALTER TABLE ONLY kursy_users
 
 
 --
--- TOC entry 1974 (class 2606 OID 49552)
--- Dependencies: 1919 1562 1572
+-- TOC entry 1992 (class 2606 OID 49552)
+-- Dependencies: 1569 1579 1933
 -- Name: lekcja_idkursy_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1769,8 +1964,8 @@ ALTER TABLE ONLY lekcja
 
 
 --
--- TOC entry 1975 (class 2606 OID 49531)
--- Dependencies: 1572 1933 1574
+-- TOC entry 1993 (class 2606 OID 49531)
+-- Dependencies: 1581 1947 1579
 -- Name: lekcjafoty_idlekcja_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1779,8 +1974,8 @@ ALTER TABLE ONLY lekcjafoty
 
 
 --
--- TOC entry 1981 (class 2606 OID 82404)
--- Dependencies: 1584 1572 1933
+-- TOC entry 1999 (class 2606 OID 82404)
+-- Dependencies: 1579 1947 1591
 -- Name: lekcjafotykursant_idlekcja_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1789,8 +1984,8 @@ ALTER TABLE ONLY lekcjafotykursant
 
 
 --
--- TOC entry 1980 (class 2606 OID 82398)
--- Dependencies: 1915 1561 1584
+-- TOC entry 1998 (class 2606 OID 82398)
+-- Dependencies: 1591 1929 1568
 -- Name: lekcjafotykursant_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1799,8 +1994,8 @@ ALTER TABLE ONLY lekcjafotykursant
 
 
 --
--- TOC entry 1979 (class 2606 OID 82370)
--- Dependencies: 1933 1572 1582
+-- TOC entry 1997 (class 2606 OID 82370)
+-- Dependencies: 1579 1589 1947
 -- Name: lekcjakoment_idlekcja_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1809,8 +2004,8 @@ ALTER TABLE ONLY lekcjakoment
 
 
 --
--- TOC entry 1978 (class 2606 OID 82365)
--- Dependencies: 1561 1582 1915
+-- TOC entry 1996 (class 2606 OID 82365)
+-- Dependencies: 1929 1568 1589
 -- Name: lekcjakoment_username_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1819,8 +2014,8 @@ ALTER TABLE ONLY lekcjakoment
 
 
 --
--- TOC entry 1976 (class 2606 OID 49547)
--- Dependencies: 1576 1572 1933
+-- TOC entry 1994 (class 2606 OID 49547)
+-- Dependencies: 1579 1947 1583
 -- Name: lekcjapliki_idlekcja_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1829,8 +2024,8 @@ ALTER TABLE ONLY lekcjapliki
 
 
 --
--- TOC entry 1977 (class 2606 OID 74166)
--- Dependencies: 1562 1580 1919
+-- TOC entry 1995 (class 2606 OID 74166)
+-- Dependencies: 1587 1569 1933
 -- Name: newsykursy_idkursy_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1839,8 +2034,8 @@ ALTER TABLE ONLY newsykursy
 
 
 --
--- TOC entry 1973 (class 2606 OID 65949)
--- Dependencies: 1558 1911 1567
+-- TOC entry 1991 (class 2606 OID 65949)
+-- Dependencies: 1565 1925 1574
 -- Name: statyczne_rola_fkey; Type: FK CONSTRAINT; Schema: public; Owner: slow
 --
 
@@ -1849,7 +2044,7 @@ ALTER TABLE ONLY statyczne
 
 
 --
--- TOC entry 2006 (class 0 OID 0)
+-- TOC entry 2029 (class 0 OID 0)
 -- Dependencies: 6
 -- Name: public; Type: ACL; Schema: -; Owner: slow
 --
@@ -1859,7 +2054,7 @@ REVOKE ALL ON SCHEMA public FROM slow;
 GRANT ALL ON SCHEMA public TO slow;
 
 
--- Completed on 2011-02-07 05:42:35 CET
+-- Completed on 2011-02-09 05:31:28 CET
 
 --
 -- PostgreSQL database dump complete
