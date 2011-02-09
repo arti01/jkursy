@@ -54,6 +54,7 @@ public class BoksyAc implements Serializable{
 		boks=allBoks.getRowData();
 		boks=boksImp.find(boks);
 		infoText="";
+		
 	}
 	
 	public void usunBoks(){
