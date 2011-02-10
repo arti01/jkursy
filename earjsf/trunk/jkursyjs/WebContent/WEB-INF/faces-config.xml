@@ -126,7 +126,7 @@
 		<from-view-id>/absolwent/*</from-view-id>
 		<navigation-case>
 			<from-outcome>indexAll</from-outcome>
-			<to-view-id>/absolwent/index.xhtml</to-view-id>
+			<to-view-id>/all/index.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 </navigation-rule>

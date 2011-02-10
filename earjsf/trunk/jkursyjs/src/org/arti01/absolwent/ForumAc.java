@@ -26,6 +26,7 @@ public class ForumAc implements Serializable{
 	@EJB AbsolwForumImp forumImp;
 	@ManagedProperty(value="#{login}") private Login loginBean;
 	private DataModel<Absolwforwatki> allWatki = new ListDataModel<Absolwforwatki>();
+	private DataModel<Absolwforposty> allPosty = new ListDataModel<Absolwforposty>();
 	
 	public void dodajWatek(){
 		watek.setDatadodania(new Date());
@@ -33,6 +34,27 @@ public class ForumAc implements Serializable{
 		forumImp.insertWatek(watek);
 		post.setDatadodania(new Date());
 		post.setUser(loginBean.getZalogowany());
+		post.setAbsolwforwatki(watek);
+		forumImp.insertPost(post);
+		watek=new Absolwforwatki();
+		post=new Absolwforposty();
+	}
+	
+	public String watek(){
+		logger.info("sdfsdfsdf");
+		watek=allWatki.getRowData();
+		allPosty.setWrappedData(watek.getAbsolwforposties());
+		return "watek";
+	}
+	
+	public void dodajPost(){
+		post.setDatadodania(new Date());
+		post.setUser(loginBean.getZalogowany());
+		post.setAbsolwforwatki(watek);
+		forumImp.insertPost(post);
+		post=new Absolwforposty();
+		watek=forumImp.findWatek(watek);
+		allPosty.setWrappedData(watek.getAbsolwforposties());
 	}
 	
 	public String index(){
@@ -72,6 +94,14 @@ public class ForumAc implements Serializable{
 
 	public void setAllWatki(DataModel<Absolwforwatki> allWatki) {
 		this.allWatki = allWatki;
+	}
+
+	public DataModel<Absolwforposty> getAllPosty() {
+		return allPosty;
+	}
+
+	public void setAllPosty(DataModel<Absolwforposty> allPosty) {
+		this.allPosty = allPosty;
 	}
 
 }

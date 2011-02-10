@@ -6,6 +6,16 @@
 <h:body>
 <h:form>
 <ul>
+		<h:panelGroup rendered="#{login.zalogowany.username==null}">
+		<li><h:commandLink value="zaloguj" action="/login.xhtml"/></li>
+		</h:panelGroup>
+		<h:panelGroup rendered="#{login.zalogowany.username!=null}">
+		<li>Jesteś zalogowany jako:<br/>
+		<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})"/>
+		<h:form>
+		<h:commandButton value="wyloguj" action="#{login.wyloguj}"/>
+		</h:form></li>
+		</h:panelGroup>
 	<li><h:commandLink value="kursy" action="#{kursyAc.list}"/></li>
 	<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}"/></li>
 	<li><h:commandLink value="dla absolwentów" action="indexAbsolw"/></li>

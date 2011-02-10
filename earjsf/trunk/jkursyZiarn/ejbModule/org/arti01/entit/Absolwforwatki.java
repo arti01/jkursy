@@ -6,6 +6,7 @@ import javax.persistence.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,7 +38,7 @@ public class Absolwforwatki implements Serializable {
 
 	//bi-directional many-to-one association to Absolwforposty
 	@OneToMany(mappedBy="absolwforwatki")
-	private Set<Absolwforposty> absolwforposties;
+	private List<Absolwforposty> absolwforposties;
 
     public Absolwforwatki() {
     }
@@ -57,14 +58,6 @@ public class Absolwforwatki implements Serializable {
 	public void setTytul(String tytul) {
 		this.tytul = tytul;
 	}
-	
-	public Set<Absolwforposty> getAbsolwforposties() {
-		return this.absolwforposties;
-	}
-
-	public void setAbsolwforposties(Set<Absolwforposty> absolwforposties) {
-		this.absolwforposties = absolwforposties;
-	}
 
 	public User getUser() {
 		return user;
@@ -80,6 +73,14 @@ public class Absolwforwatki implements Serializable {
 
 	public void setDatadodania(Date datadodania) {
 		this.datadodania = datadodania;
+	}
+
+	public List<Absolwforposty> getAbsolwforposties() {
+		return absolwforposties;
+	}
+
+	public void setAbsolwforposties(List<Absolwforposty> absolwforposties) {
+		this.absolwforposties = absolwforposties;
 	}
 	
 }
