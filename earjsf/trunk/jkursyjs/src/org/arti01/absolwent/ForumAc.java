@@ -31,11 +31,10 @@ public class ForumAc implements Serializable{
 	public void dodajWatek(){
 		watek.setDatadodania(new Date());
 		watek.setUser(loginBean.getZalogowany());
-		forumImp.insertWatek(watek);
 		post.setDatadodania(new Date());
 		post.setUser(loginBean.getZalogowany());
-		post.setAbsolwforwatki(watek);
-		forumImp.insertPost(post);
+		watek.getAbsolwforposties().add(post);
+		forumImp.insertWatek(watek);
 		watek=new Absolwforwatki();
 		post=new Absolwforposty();
 	}
@@ -50,10 +49,9 @@ public class ForumAc implements Serializable{
 	public void dodajPost(){
 		post.setDatadodania(new Date());
 		post.setUser(loginBean.getZalogowany());
-		post.setAbsolwforwatki(watek);
-		forumImp.insertPost(post);
+		watek.getAbsolwforposties().add(post);
+		forumImp.updateWatek(watek);
 		post=new Absolwforposty();
-		watek=forumImp.findWatek(watek);
 		allPosty.setWrappedData(watek.getAbsolwforposties());
 	}
 	
