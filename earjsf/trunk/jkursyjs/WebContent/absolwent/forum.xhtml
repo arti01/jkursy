@@ -9,36 +9,37 @@
 		<ui:define name="body">
 <h3>ciałko absolwenta</h3>
 
-<h:form>
-	<h:commandLink value="lista wątków" action="#{absolwForumAc.forum}"/>
-</h:form>
-			<h5>wątek</h5>
+			<h5>lista wątków</h5>
 			<h:form>
 				<h:panelGrid columns="3" id="wpis">
+					<h:message for="tytul" />
+					<h:outputLabel value="tytuł wątku" />
+					<h:inputText id="tytul" value="#{absolwForumAc.watek.tytul}" cols="100" />
 					<h:message for="tresc" />
 					<h:outputLabel value="treść" />
 					<h:inputTextarea id="tresc" value="#{absolwForumAc.post.tresc}" cols="100" />
 				</h:panelGrid>
-				<a4j:commandButton value="dodaj" action="#{absolwForumAc.dodajPost}" render="lista, wpis" />
+				<a4j:commandButton value="dodaj nowy wątek" action="#{absolwForumAc.dodajWatek}" render="lista, wpis" />
 			</h:form>
 			<hr size="2"/>
-			<br/>
-			temat:
-			<h:outputText value="#{watek.tytul}"/>
-			<hr/>
+			<h:form>
 			<h:panelGroup id="lista">
-				<ui:repeat var="post" value="#{absolwForumAc.allPosty}">
-					<h:outputText value="autor: #{post.user.imieNazwisko}, " />
+				<ui:repeat var="watek" value="#{absolwForumAc.allWatki}">
+					<h:outputText value="autor: #{watek.user.imieNazwisko}, " />
 					data dodania:
-					<h:outputText value="#{post.datadodania}">
+					<h:outputText value="#{watek.datadodania}">
 						<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 					</h:outputText>
 					<br/>
-					tresc:
-					<h:outputText value="#{post.tresc}"/>
+					temat:
+					<h:outputText value="#{watek.tytul}"/>
+					<br/>
+					<h:commandLink value="zobacz" action="#{absolwForumAc.watek}"/>
 					<hr/>
 				</ui:repeat>
 			</h:panelGroup>
+			</h:form>
+
 </ui:define>
 </ui:composition>
 </body>

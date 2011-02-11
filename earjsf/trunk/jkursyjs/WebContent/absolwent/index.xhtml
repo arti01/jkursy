@@ -1,5 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -11,35 +9,7 @@
 		<ui:define name="body">
 <h3>ciałko absolwenta</h3>
 
-			<h5>lista wątków</h5>
-			<h:form>
-				<h:panelGrid columns="3" id="wpis">
-					<h:message for="tytul" />
-					<h:outputLabel value="tytuł wątku" />
-					<h:inputText id="tytul" value="#{absolwForumAc.watek.tytul}" cols="100" />
-					<h:message for="tresc" />
-					<h:outputLabel value="treść" />
-					<h:inputTextarea id="tresc" value="#{absolwForumAc.post.tresc}" cols="100" />
-				</h:panelGrid>
-				<a4j:commandButton value="dodaj nowy wątek" action="#{absolwForumAc.dodajWatek}" render="lista, wpis" />
-			</h:form>
-			<hr size="2"/>
-			<h:panelGroup id="lista">
-			<h:form>
-				<ui:repeat var="watek" value="#{absolwForumAc.allWatki}">
-					<h:outputText value="autor: #{watek.user.imieNazwisko}, " />
-					data dodania:
-					<h:outputText value="#{watek.datadodania}">
-						<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
-					</h:outputText>
-					<br/>
-					temat:
-					<h:outputText value="#{watek.tytul}"/>
-					<h:commandLink value="zobacz" action="#{absolwForumAc.watek}"/>
-					<hr/>
-				</ui:repeat>
-				</h:form>
-			</h:panelGroup>
+		
 
 </ui:define>
 </ui:composition>

@@ -1,5 +1,6 @@
 package org.arti01.absolwent;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
@@ -31,17 +33,18 @@ public class ForumAc implements Serializable{
 	public void dodajWatek(){
 		watek.setDatadodania(new Date());
 		watek.setUser(loginBean.getZalogowany());
+		forumImp.insertWatek(watek);
 		post.setDatadodania(new Date());
 		post.setUser(loginBean.getZalogowany());
-		watek.getAbsolwforposties().add(post);
-		forumImp.insertWatek(watek);
+		post.setAbsolwforwatki(watek);
+		forumImp.insertPost(post);
 		watek=new Absolwforwatki();
 		post=new Absolwforposty();
+		allWatki.setWrappedData(forumImp.findAllWatki());
 	}
 	
 	public String watek(){
-		logger.info("sdfsdfsdf");
-		watek=allWatki.getRowData();
+		watek=forumImp.findWatek(allWatki.getRowData());
 		allPosty.setWrappedData(watek.getAbsolwforposties());
 		return "watek";
 	}
@@ -49,14 +52,18 @@ public class ForumAc implements Serializable{
 	public void dodajPost(){
 		post.setDatadodania(new Date());
 		post.setUser(loginBean.getZalogowany());
-		watek.getAbsolwforposties().add(post);
-		forumImp.updateWatek(watek);
+		post.setAbsolwforwatki(watek);
+		forumImp.insertPost(post);
 		post=new Absolwforposty();
+		watek=forumImp.findWatek(watek);
 		allPosty.setWrappedData(watek.getAbsolwforposties());
 	}
 	
-	public String index(){
-		return "index";
+	public String forum(){
+		watek=new Absolwforwatki();
+		post=new Absolwforposty();
+		allWatki.setWrappedData(forumImp.findAllWatki());
+		return "forum.xhtml";
 	}
 	
 	

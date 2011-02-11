@@ -37,7 +37,8 @@ public class Absolwforwatki implements Serializable {
 	private User user;
 
 	//bi-directional many-to-one association to Absolwforposty
-	@OneToMany(mappedBy="absolwforwatki")
+	@OneToMany(mappedBy="absolwforwatki", cascade={CascadeType.MERGE, CascadeType.PERSIST})
+	@OrderBy(value="datadodania DESC")
 	private List<Absolwforposty> absolwforposties;
 
     public Absolwforwatki() {

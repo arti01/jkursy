@@ -21,18 +21,20 @@ public class AbsolwForumImp {
 	
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAllWatki() {
-		//em.clear();
+		em.clear();
 		List<Kursy> wynik=em.createQuery("select w from Absolwforwatki w order by w.datadodania desc").getResultList();
 		return wynik;
 	}
 	
 	public Absolwforwatki findWatek(Absolwforwatki pz){
 		pz=em.find(Absolwforwatki.class, pz.getIdabsolwforwatki());
+		em.refresh(pz);
 		return pz;
 	}
 	
 	public Absolwforposty findPost(Absolwforposty pz){
 		pz=em.find(Absolwforposty.class, pz.getIdabsolwforposty());
+		em.refresh(pz);
 		return pz;
 	}
 	
