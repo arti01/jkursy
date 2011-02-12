@@ -36,6 +36,7 @@
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
 							</h:outputText>
+							<h:outputText value="komentarz wykładowcy: #{fota.komentWykl}"/>
 							<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
 								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							</h:commandLink>

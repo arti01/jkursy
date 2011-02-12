@@ -21,6 +21,14 @@
 			<f:convertDateTime pattern="dd-MM-yyyy"/>
 		</h:outputText>
 		</h:panelGrid>
+		<h:form>
+		<h:commandLink value="do zdjęć kursantów" action="#{kursantLekcjaAc.fotyForm}"/>
+		<br/>
+		<h:commandLink value="poprzednie" action="#{kursantLekcjaAc.prevFotaKursant}" rendered="#{kursantLekcjaAc.prev}"/>
+		<br/>
+		<h:commandLink value="następne" action="#{kursantLekcjaAc.nextFotaKursant}" rendered="#{kursantLekcjaAc.next}"/>
+		<br/>
+		</h:form>
 			<h:form>
 			<h5>dyskusja o focie</h5>
 			<h:form>
@@ -36,7 +44,8 @@
 			<h:panelGroup id="komentarze">
 				<ui:repeat var="koment"
 					value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
-					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, " />
+					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, "/>
+					<h:outputText value="(komentuje wykładowca) " rendered="#{koment.komentWykl}"/>
 					<h:outputText value="dodany: #{koment.datadodaniaS}" /></h5>
 					<h:outputText value="#{koment.tresc}" />
 					<hr />

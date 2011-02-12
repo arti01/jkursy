@@ -5,6 +5,9 @@
 	version="2.0">
 	<application>
 	<message-bundle>Messages</message-bundle>
+	<locale-config>
+		<default-locale>pl_PL</default-locale>
+	</locale-config>
 	</application>
 	
 	<managed-bean>

@@ -33,6 +33,11 @@ public class LekcjafotykursantImp {
 		return true;
 	}
 	
+	public boolean update(Lekcjafotykursant fota){
+		em.merge(fota);
+		return true;
+	}
+	
 	public void delete(Lekcjafoty lf) {
 		Integer lp=lf.getLp();
 		Lekcja lekcja=lf.getLekcja();

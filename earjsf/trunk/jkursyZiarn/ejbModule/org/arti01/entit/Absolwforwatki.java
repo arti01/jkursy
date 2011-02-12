@@ -2,12 +2,9 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import org.hibernate.validator.constraints.NotEmpty;
-
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 
 /**

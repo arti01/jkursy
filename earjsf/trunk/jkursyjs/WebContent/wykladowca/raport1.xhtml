@@ -9,32 +9,37 @@
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
 		
-	foty lekcji:
-	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
-			<br />
-			<h:form>
-			<h:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty">
-					<h:column>
-						<a4j:mediaOutput element="img"
-							createContent="#{kursantLekcjaAc.paintBazy}"
-							value="#{fota.idlekcjafotykursant}" cacheable="false">
-						</a4j:mediaOutput>
-						</h:column>
-						<h:column>
-							<h:panelGrid columns="1">
+	<ul>
+	<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
+		<li>
+		<hr size="3"/>
+		kurs:<h:outputText value="#{kurs.nazwa}"/>
+		<ul>
+			<ui:repeat var="lekcja" value="#{kurs.lekcjas}">
+				<li>
+				<hr size="-1"/>		
+				lekcja:<h:outputText value="#{lekcja.tytul}"/>
+				<h:form>
+				<ui:repeat var="fota" value="#{lekcja.lekcjafotykursant}">
+					<h:panelGrid columns="1">
 							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+							<h:outputText value="#{fota.komentWykl}"/>
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
 							</h:outputText>
-							<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}"/>
 							<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
 								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							</h:commandLink>
 							</h:panelGrid>
-						</h:column>
-			</h:dataTable>
-		</h:form>
+				</ui:repeat>
+				</h:form>	
+				</li>		
+			</ui:repeat>
+		</ul>
+		</li>	
+	</ui:repeat>
+	</ul>
+
 	</ui:define>
 </ui:composition>
-
 </html>

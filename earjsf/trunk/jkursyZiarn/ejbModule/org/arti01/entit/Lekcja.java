@@ -9,6 +9,7 @@ import org.arti01.sesBean.LekacjaImp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,6 +44,9 @@ public class Lekcja implements Serializable {
 
 	@Transient
 	private List<Integer> fotyLpAll;
+	
+	@Transient
+	private List<Lekcjafotykursant> fotyKursNieSkoment;
 	
 	//bi-directional many-to-one association to Kursy
     @ManyToOne
@@ -229,6 +233,18 @@ public class Lekcja implements Serializable {
 
 	public void setIloscKolmentFota(Integer iloscKolmentFota) {
 		this.iloscKolmentFota = iloscKolmentFota;
+	}
+
+	public List<Lekcjafotykursant> getFotyKursNieSkoment() {
+		fotyKursNieSkoment=new ArrayList<Lekcjafotykursant>();
+		for(Lekcjafotykursant lfk:getLekcjafotykursant()){
+			if(!lfk.isKomentWykl())fotyKursNieSkoment.add(lfk);
+		}
+		return fotyKursNieSkoment;
+	}
+
+	public void setFotyKursNieSkoment(List<Lekcjafotykursant> fotyKursNieSkoment) {
+		this.fotyKursNieSkoment = fotyKursNieSkoment;
 	}
 	
 }

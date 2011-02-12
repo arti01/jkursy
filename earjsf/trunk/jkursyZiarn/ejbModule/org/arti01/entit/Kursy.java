@@ -150,6 +150,15 @@ public class Kursy implements Serializable {
 	}
 
 	public List<User> getWykladowcy() {
+		List<User>wykladowcy1=new ArrayList<User>();
+		Role wyklad=new Role();
+		wyklad.setRola(Role.WYKLADOWCA);
+		for(User u:getUsers()){
+			for(Role r:u.getRoles()){
+				if(r.getRola().equals(wyklad.getRola())) wykladowcy1.add(u);
+			}
+		}
+		wykladowcy=wykladowcy1;
 		return wykladowcy;
 	}
 
@@ -158,6 +167,15 @@ public class Kursy implements Serializable {
 	}
 
 	public List<User> getKursanci() {
+		List<User>kursanci1=new ArrayList<User>();
+		Role kursant=new Role();
+		kursant.setRola(Role.KURSANT);
+		for(User u:getUsers()){
+			for(Role r:u.getRoles()){
+				if(r.getRola().equals(kursant.getRola())) kursanci1.add(u);
+			}
+		}
+		kursanci=kursanci1;
 		return kursanci;
 	}
 

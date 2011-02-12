@@ -33,7 +33,7 @@ public class Login implements Serializable {
 			e.printStackTrace();
 		}
 		//rozne.setInfoText("jesteś wylogowany");
-		return "indexAll";
+		return "/all/index.xhtml?faces-redirect=true";
 	}
 
 	public User getZalogowany() {

@@ -73,6 +73,9 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 	</h:commandLink>
 	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
 	<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}"/>
+	<h:commandLink value="zdjęc bez komentarza wykładowcy: #{lekcja.fotyKursNieSkoment.size()})" action="#{wykladKursyAc.fotyKursantowNieSkoment}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+	</h:commandLink>
 	</h:panelGrid>
 	</h:column>
 	

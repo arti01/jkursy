@@ -55,6 +55,9 @@ public class Lekcjafotykursant implements Serializable {
 	@Transient
 	private Fotykursantkoment lastKomentFota;
 	
+	@Transient
+	private boolean komentWykl=false;
+	
     public Lekcjafotykursant() {
     }
 
@@ -152,6 +155,22 @@ public class Lekcjafotykursant implements Serializable {
 
 	public void setLastKomentFota(Fotykursantkoment lastKomentFota) {
 		this.lastKomentFota = lastKomentFota;
+	}
+
+	public boolean isKomentWykl() {
+		System.out.println(komentWykl);
+		komentWykl=false;
+		List<User> wykladowcy=getLekcja().getKursy().getWykladowcy();
+		for(Fotykursantkoment fkk:getFotykursantkoment()){
+			System.out.println(fkk.getUser());
+			System.out.println(wykladowcy);
+			if(wykladowcy.contains(fkk.getUser())) komentWykl=true;
+		}
+		return komentWykl;
+	}
+
+	public void setKomentWykl(boolean komentWykl) {
+		this.komentWykl = komentWykl;
 	}
 
 }

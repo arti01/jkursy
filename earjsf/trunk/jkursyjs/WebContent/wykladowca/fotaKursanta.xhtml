@@ -20,7 +20,7 @@
 			<f:convertDateTime pattern="dd-MM-yyyy"/>
 		</h:outputText>
 		</h:panelGrid>
-			<h:form>
+
 			<h5>dyskusja o focie</h5>
 			<h:form>
 				<h:panelGrid columns="4" id="wpis">
@@ -32,12 +32,19 @@
 						render="komentarze, wpis" />
 				</h:panelGrid>
 			</h:form>
+			<h:form>
 			<h:panelGroup id="komentarze">
 				<ui:repeat var="koment"
 					value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
 					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, " />
 					<h:outputText value="dodany: #{koment.datadodaniaS}" /></h5>
 					<h:outputText value="#{koment.tresc}" />
+					<br/>
+					<a4j:commandButton value="usuń komentarz"
+						action="#{kursantLekcjaAc.usunKomentarzFota}"
+						render="komentarze">
+						<f:setPropertyActionListener target="#{kursantLekcjaAc.komentarzFota}" value="#{koment}"/>
+					</a4j:commandButton>
 					<hr />
 				</ui:repeat>
 			</h:panelGroup>

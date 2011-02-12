@@ -49,6 +49,8 @@ public class LekcjaAc implements Serializable{
 	@EJB LekcjafotykursantImp fotaKursantImp;
 	private Fotykursantkoment komentarzFota=new Fotykursantkoment();
 	@EJB FotykursantkomentImp fkki;
+	private boolean next;
+	private boolean prev;
 	
 	private static int DLUGOSC=600;
     private static int WYSOKOSC=400;
@@ -73,6 +75,29 @@ public class LekcjaAc implements Serializable{
 	}
 
 	public String fotaKursant(){
+		lekcja=fotaKursant.getLekcja();
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		else next=true;
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		else prev=true;
+		return "fotaKursanta";
+	}
+	
+	public String prevFotaKursant(){
+		fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1);
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		else next=true;
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		else prev=true;
+		return "fotaKursanta";
+	}
+	
+	public String nextFotaKursant(){
+		fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1);
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		else next=true;
+		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		else prev=true;
 		return "fotaKursanta";
 	}
 	
@@ -137,8 +162,19 @@ public class LekcjaAc implements Serializable{
 		komentarzFota.setDatadodania(new Timestamp(new Date().getTime()));
 		komentarzFota.setUser(loginBean.getZalogowany());
 		komentarzFota.setLekcjafotykursant(fotaKursant);
-		fkki.insert(komentarzFota);
-		fotaKursant=fotaKursantImp.find(fotaKursant);
+		fotaKursant.getFotykursantkoment().add(0, komentarzFota);
+		//fkki.insert(komentarzFota);
+		//fotaKursant=fotaKursantImp.find(fotaKursant);
+		fotaKursantImp.update(fotaKursant);
+		komentarzFota=new Fotykursantkoment();
+		return null;
+	}
+	
+	public String usunKomentarzFota(){
+		fotaKursant.getFotykursantkoment().remove(komentarzFota);
+		//fkki.insert(komentarzFota);
+		//fotaKursant=fotaKursantImp.find(fotaKursant);
+		fotaKursantImp.update(fotaKursant);
 		komentarzFota=new Fotykursantkoment();
 		return null;
 	}
@@ -193,6 +229,18 @@ public class LekcjaAc implements Serializable{
 	}
 	public void setKomentarzFota(Fotykursantkoment komentarzFota) {
 		this.komentarzFota = komentarzFota;
+	}
+	public boolean isNext() {
+		return next;
+	}
+	public void setNext(boolean next) {
+		this.next = next;
+	}
+	public boolean isPrev() {
+		return prev;
+	}
+	public void setPrev(boolean prev) {
+		this.prev = prev;
 	}
 
 }

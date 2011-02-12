@@ -9,10 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import org.arti01.entit.Kursy;
-import org.arti01.entit.Role;
-import org.arti01.entit.User;
 
 @Stateless
 @LocalBean
@@ -45,22 +42,6 @@ public class KursyImp {
 		if (kurs != null) {
 			kurs=em.find(Kursy.class, kurs.getIdkursy());
 			em.refresh(kurs);
-			List<User>kursanci=new ArrayList<User>();
-			List<User>wykladowcy=new ArrayList<User>();
-			Role wyklad=new Role();
-			wyklad.setRola(Role.WYKLADOWCA);
-			wyklad=roleImp.find(wyklad);
-			
-			Role kursant=new Role();
-			kursant.setRola(Role.KURSANT);
-			kursant=roleImp.find(kursant);
-			for(User u:kurs.getUsers()){
-				if(u.getRoles().contains(wyklad)) wykladowcy.add(u);
-				if(u.getRoles().contains(kursant)) kursanci.add(u);
-				//System.out.println(wykladowcy.size()+""+kursanci.size());
-			}
-			kurs.setKursanci(kursanci);
-			kurs.setWykladowcy(wykladowcy);
 			kurs.setLekcjeLpAll(getLpAll(kurs));
 		} else kurs = new Kursy();
 		return kurs;

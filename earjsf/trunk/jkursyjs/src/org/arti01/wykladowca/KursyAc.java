@@ -6,6 +6,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -49,6 +51,7 @@ public class KursyAc implements Serializable {
 	private Statyczne strona;
 	
 	private Lekcjafotykursant fotaKursant;
+	private List<Lekcjafotykursant> fotyKursantow=new ArrayList<Lekcjafotykursant>();
 	
 	public String kursForm(){
 		errorText="";
@@ -136,12 +139,19 @@ public class KursyAc implements Serializable {
 		return "lekcja.xhtml";
 	}
 	
-	public String fotyKursantow(){
+	public String fotaKursant(){
 		errorText="";
 		return "fotyKursantow.xhtml";
 	}
 	
-	public String fotaKursant(){
+	public String fotyKursantow(){
+		fotyKursantow=lekcja.getLekcjafotykursant();
+		errorText="";
+		return "fotyKursantow.xhtml";
+	}
+	
+	public String fotyKursantowNieSkoment(){
+		fotyKursantow=lekcja.getFotyKursNieSkoment();
 		errorText="";
 		return "fotyKursantow.xhtml";
 	}
@@ -256,6 +266,14 @@ public class KursyAc implements Serializable {
 
 	public void setFotaKursant(Lekcjafotykursant fotaKursant) {
 		this.fotaKursant = fotaKursant;
+	}
+
+	public List<Lekcjafotykursant> getFotyKursantow() {
+		return fotyKursantow;
+	}
+
+	public void setFotyKursantow(List<Lekcjafotykursant> fotyKursantow) {
+		this.fotyKursantow = fotyKursantow;
 	}
 
 }

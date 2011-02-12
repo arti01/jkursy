@@ -2,9 +2,11 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -39,6 +41,9 @@ public class Fotykursantkoment implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="username")
 	private User user;
+	
+	@Transient
+	private boolean komentWykl;
 	
     public Fotykursantkoment() {
     }
@@ -91,6 +96,18 @@ public class Fotykursantkoment implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isKomentWykl() {
+		//System.out.println(komentWykl+getDatadodaniaS());
+		komentWykl=false;
+		List<User> wykladowcy=getLekcjafotykursant().getLekcja().getKursy().getWykladowcy();
+		if(wykladowcy.contains(getUser())) komentWykl=true;
+		return komentWykl;
+	}
+
+	public void setKomentWykl(boolean komentWykl) {
+		this.komentWykl = komentWykl;
 	}
 
 }
