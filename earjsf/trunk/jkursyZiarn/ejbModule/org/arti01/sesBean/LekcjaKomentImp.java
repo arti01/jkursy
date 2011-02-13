@@ -12,11 +12,17 @@ public class LekcjaKomentImp {
 	@PersistenceContext
 	EntityManager em;
 	String errorText="";
-
-	
 	
 	public boolean insert(Lekcjakoment lk){
 			em.persist(lk);
 			return false;
-		}
+	}
+
+	public boolean delete(Lekcjakoment lk){
+		em.remove(em.merge(lk));
+		em.flush();
+		em.clear();
+		return false;
+	}
+	
 	}

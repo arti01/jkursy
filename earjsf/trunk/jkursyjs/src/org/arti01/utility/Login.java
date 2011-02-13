@@ -48,5 +48,8 @@ public class Login implements Serializable {
 		return zalogowany;
 		//return rozne.getZalogowany();
 	}
+	public void setZalogowany(User user) {
+		zalogowany=user;
+	}
 
 }

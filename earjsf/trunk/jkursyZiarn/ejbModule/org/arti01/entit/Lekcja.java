@@ -1,11 +1,8 @@
 package org.arti01.entit;
 
 import java.io.Serializable;
-
-import javax.ejb.EJB;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import org.arti01.sesBean.LekacjaImp;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import java.sql.Timestamp;
@@ -21,8 +18,8 @@ import java.util.List;
 public class Lekcja implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Transient
-	@EJB LekacjaImp li;
+	//@Transient
+	//@EJB LekacjaImp li;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -48,6 +45,9 @@ public class Lekcja implements Serializable {
 	@Transient
 	private List<Lekcjafotykursant> fotyKursNieSkoment;
 	
+	@Transient
+	private List<Lekcjakoment> dowykladowcy;
+	
 	//bi-directional many-to-one association to Kursy
     @ManyToOne
 	@JoinColumn(name="idkursy")
@@ -62,20 +62,12 @@ public class Lekcja implements Serializable {
 	@OrderBy("datadodania DESC")
 	private List<Lekcjafotykursant> lekcjafotykursant;
 
-	public List<Lekcjafotykursant> getLekcjafotykursant() {
-		return lekcjafotykursant;
-	}
-
-	public void setLekcjafotykursant(List<Lekcjafotykursant> lekcjafotykursant) {
-		this.lekcjafotykursant = lekcjafotykursant;
-	}
-
 	//bi-directional many-to-one association to Lekcjapliki
 	@OneToMany(mappedBy="lekcja")
 	@OrderBy("opis")
 	private List<Lekcjapliki> lekcjaplikis;
 	
-	@OneToMany(mappedBy="lekcja")
+	@OneToMany(mappedBy="lekcja", cascade=CascadeType.ALL, orphanRemoval=true)
 	@OrderBy("datadodania DESC")
 	private List<Lekcjakoment> lekcjakoments;
 	
@@ -246,5 +238,24 @@ public class Lekcja implements Serializable {
 	public void setFotyKursNieSkoment(List<Lekcjafotykursant> fotyKursNieSkoment) {
 		this.fotyKursNieSkoment = fotyKursNieSkoment;
 	}
+
+	public List<Lekcjakoment> getDowykladowcy() {
+		dowykladowcy=new ArrayList<Lekcjakoment>();
+		for(Lekcjakoment lk:getLekcjakoments()){
+			if(lk.isDowykladowcy()) dowykladowcy.add(lk) ;
+		}
+		return dowykladowcy;
+	}
 	
+	public void setDowykladowcy(List<Lekcjakoment> dowykladowcy) {
+		this.dowykladowcy = dowykladowcy;
+	}
+	
+	public List<Lekcjafotykursant> getLekcjafotykursant() {
+		return lekcjafotykursant;
+	}
+
+	public void setLekcjafotykursant(List<Lekcjafotykursant> lekcjafotykursant) {
+		this.lekcjafotykursant = lekcjafotykursant;
+	}
 }

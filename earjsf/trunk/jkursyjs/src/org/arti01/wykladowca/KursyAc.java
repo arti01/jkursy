@@ -49,6 +49,7 @@ public class KursyAc implements Serializable {
 	@EJB StatyczneImp statyczneImp;
 	private Role role=new Role();
 	private Statyczne strona;
+	private User user=new User();
 	
 	private Lekcjafotykursant fotaKursant;
 	private List<Lekcjafotykursant> fotyKursantow=new ArrayList<Lekcjafotykursant>();
@@ -147,6 +148,16 @@ public class KursyAc implements Serializable {
 	public String fotyKursantow(){
 		fotyKursantow=lekcja.getLekcjafotykursant();
 		errorText="";
+		return "fotyKursantow.xhtml";
+	}
+	
+	public String fotyKursantowSelect(){
+		fotyKursantow=new ArrayList<Lekcjafotykursant>();
+		for(Lekcja l:kurs.getLekcjas()){
+			for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
+				if(lfk.getUser().getUsername().equals(user.getUsername())) fotyKursantow.add(lfk);
+			}
+		}
 		return "fotyKursantow.xhtml";
 	}
 	
@@ -274,6 +285,14 @@ public class KursyAc implements Serializable {
 
 	public void setFotyKursantow(List<Lekcjafotykursant> fotyKursantow) {
 		this.fotyKursantow = fotyKursantow;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

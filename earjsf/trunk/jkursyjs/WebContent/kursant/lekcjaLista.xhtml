@@ -31,6 +31,14 @@
 			</ui:repeat>
 		</table>
 <br/>
+
+<h:form>
+	<h:selectOneMenu value="#{kursantKursyAc.user.username}" >
+		<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+	</h:selectOneMenu>
+	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantKursyAc.fotyKursantow}"/>
+</h:form>
+
 <div id="right">
 <h2>lista lekcji:)</h2>
 <h:form>
@@ -57,7 +65,7 @@
 		<h:panelGrid columns="2">
 			<h:outputText value="#{lekcja.lastFota.datadodaniaS} " rendered="#{lekcja.lastFota!=null}"/>
 			<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}"/>
-			<h:commandLink value="idź do zdjęć" action="#{kursantLekcjaAc.fotyForm}">
+			<h:commandLink value="idź do zdjęć kursantów" action="#{kursantLekcjaAc.fotyLekcji}">
 				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
 			</h:commandLink>
 		</h:panelGrid>
@@ -67,8 +75,9 @@
 		<h:panelGrid columns="2">
 			<h:outputText value="#{lekcja.lastKomentFota.datadodaniaS} " rendered="#{lekcja.lastKomentFota!=null}"/>
 			<h:outputText value="autor: #{lekcja.lastKomentFota.user.imieNazwisko}" rendered="#{lekcja.lastKomentFota!=null}"/>
-			<h:commandLink value="idż do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+			<h:commandLink value="idż do zdjęcia" action="#{kursantLekcjaAc.fotaKursantaLekcji}">
 				<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{lekcja.lastKomentFota.lekcjafotykursant}"/>
+				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
 			</h:commandLink>
 		</h:panelGrid>
 	</rich:column>

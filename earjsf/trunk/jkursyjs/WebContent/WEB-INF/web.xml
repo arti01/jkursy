@@ -129,7 +129,7 @@
 		<location>/err403.html</location>
 	</error-page>
 	<error-page>
-		<error-code>501</error-code>
+		<error-code>500</error-code>
 		<location>/err500.html</location>
 	</error-page>
 	

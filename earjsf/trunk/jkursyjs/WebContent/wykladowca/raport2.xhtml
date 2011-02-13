@@ -8,29 +8,33 @@
 
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
-
+<h3>Lista pytań do wykładowcy</h3>
 		<ul>
 			<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
 				<h:panelGroup rendered="#{kurs.lekcjas.size()!=0}">
 				<li>
 				<hr size="3" />
-				kurs:<h:outputText value="#{kurs.nazwa}" />
+				<h4>kurs:<h:outputText value="#{kurs.nazwa}" /></h4>
 				<ul>
 					<ui:repeat var="lekcja" value="#{kurs.lekcjas}">
-						<h:panelGroup rendered="#{lekcja.fotyKursNieSkoment.size()!=0}">
+						<h:panelGroup rendered="#{lekcja.dowykladowcy.size()!=0}">
 						<li>
 						<hr size="-1" />
-						lekcja:<h:outputText value="#{lekcja.tytul}" /> <h:form>
-							<ui:repeat var="fota" value="#{lekcja.fotyKursNieSkoment}">
+						<h:form>
+						<h:commandLink action="#{wykladKursyAc.lekcjaPodglad}">
+							lekcja:<h:outputText value="#{lekcja.tytul}" />
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+						</h:commandLink>
+							<ui:repeat var="koment" value="#{lekcja.dowykladowcy}">
 								<h:panelGrid columns="3">
-									<h:outputText value="autor: #{fota.user.imieNazwisko}" />
-									<h:outputText value="dodana: #{fota.datadodaniaS}">
-										<f:convertDateTime pattern="dd-MM-yyyy" />
+									<h:outputText value="autor: #{koment.user.imieNazwisko}" />
+									<h:outputText value="#{koment.datadodania}">
+										<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
 									</h:outputText>
-									<h:commandLink value="do zdjęcia"
-										action="#{kursantLekcjaAc.fotaKursant}">
+									<h:commandLink value="odpowiedz"
+										action="#{raportyAc.komentOdpowiedz}">
 										<f:setPropertyActionListener
-											target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}" />
+											target="#{raportyAc.lekcjaKoment}" value="#{koment}" />
 									</h:commandLink>
 								</h:panelGrid>
 							</ui:repeat>

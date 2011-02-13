@@ -21,10 +21,8 @@ public class LekcjafotykursantImp {
 	@EJB LekacjaImp lekcjaImp;
 	
 	public Lekcjafotykursant find(Lekcjafotykursant lf) {
-		if (lf != null) {
 			lf=em.find(Lekcjafotykursant.class, lf.getIdlekcjafotykursant());
 			em.refresh(lf);
-		} else lf = new Lekcjafotykursant();
 		return lf;
 	}
 	

@@ -2,9 +2,12 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -25,8 +28,14 @@ public class Lekcjakoment implements Serializable {
 	@Column(nullable=false)
 	private Date datadodania;
 	
+	@NotNull
+	private boolean dowykladowcy=false;
+	
 	@Transient
 	private String datadodaniaS;
+	
+	@Transient
+	private boolean komentWykl;
 
 	@Column(nullable=false, length=2147483647)
 	@NotEmpty
@@ -91,6 +100,26 @@ public class Lekcjakoment implements Serializable {
 
 	public void setDatadodaniaS(String datadodaniaS) {
 		this.datadodaniaS = datadodaniaS;
+	}
+
+	public boolean isDowykladowcy() {
+		return dowykladowcy;
+	}
+
+	public void setDowykladowcy(boolean dowykladowcy) {
+		this.dowykladowcy = dowykladowcy;
+	}
+	
+	public boolean isKomentWykl() {
+		//System.out.println(komentWykl+getDatadodaniaS());
+		komentWykl=false;
+		List<User> wykladowcy=getLekcja().getKursy().getWykladowcy();
+		if(wykladowcy.contains(getUser())) komentWykl=true;
+		return komentWykl;
+	}
+
+	public void setKomentWykl(boolean komentWykl) {
+		this.komentWykl = komentWykl;
 	}
 
 }

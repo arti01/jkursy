@@ -48,7 +48,7 @@ public class Lekcjafotykursant implements Serializable {
 	@JoinColumn(name="username")
 	private User user;
 
-	@OneToMany(mappedBy="lekcjafotykursant", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="lekcjafotykursant", cascade=CascadeType.ALL, fetch=FetchType.LAZY, orphanRemoval=true)
 	@OrderBy(value="datadodania DESC")
 	private List<Fotykursantkoment> fotykursantkoment;
 	
@@ -158,12 +158,9 @@ public class Lekcjafotykursant implements Serializable {
 	}
 
 	public boolean isKomentWykl() {
-		System.out.println(komentWykl);
 		komentWykl=false;
 		List<User> wykladowcy=getLekcja().getKursy().getWykladowcy();
 		for(Fotykursantkoment fkk:getFotykursantkoment()){
-			System.out.println(fkk.getUser());
-			System.out.println(wykladowcy);
 			if(wykladowcy.contains(fkk.getUser())) komentWykl=true;
 		}
 		return komentWykl;

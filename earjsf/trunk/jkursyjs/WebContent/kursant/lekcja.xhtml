@@ -29,14 +29,18 @@
 
 		<h:form>
 			<h:commandButton value="obsluga zdjec kursantów"
-				action="#{kursantLekcjaAc.fotyForm}" />
+				action="#{kursantLekcjaAc.fotyLekcji}" />
 		</h:form> <h:form>
 			<h5>dyskusja o lekcji</h5>
 			<h:form>
-				<h:panelGrid columns="4" id="wpis">
+				<h:panelGrid columns="3" id="wpis">
 					<h:message for="tresc" />
+					<h:outputLabel for="treść" value="treść"/>
 					<h:inputTextarea id="tresc"
 						value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
+					<h:message for="dowykladowcy" />
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy"/>
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarz.dowykladowcy}"/>
 					<a4j:commandButton value="dodaj komentarz"
 						action="#{kursantLekcjaAc.dodajKomentarz}"
 						render="komentarze, wpis" />
@@ -46,7 +50,9 @@
 				<ui:repeat var="koment"
 					value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
 					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, " />
-					<h:outputText value="dodany: #{koment.datadodaniaS}" /></h5>
+					<h:outputText value="dodany: #{koment.datadodaniaS}" /><br/>
+					<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}"/><br/>
+					<h:outputText value="to jest wypowiedź wykładowcy" rendered="#{koment.komentWykl}"/></h5>
 					<h:outputText value="#{koment.tresc}" />
 					<hr />
 				</ui:repeat>

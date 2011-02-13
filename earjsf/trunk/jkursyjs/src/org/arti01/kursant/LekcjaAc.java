@@ -45,6 +45,7 @@ public class LekcjaAc implements Serializable{
 	@EJB LekcjaKomentImp lekcjaKomentImp;
 	@EJB LekcjafotykursantImp lfki;
 	@ManagedProperty(value="#{login}") private Login loginBean;
+	@ManagedProperty(value="#{kursantKursyAc}") private KursyAc kursyAc;
 	private Lekcjafotykursant fotaKursant;
 	@EJB LekcjafotykursantImp fotaKursantImp;
 	private Fotykursantkoment komentarzFota=new Fotykursantkoment();
@@ -70,36 +71,54 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String fotyForm(){
-		logger.info(lekcja.getLekcjafotykursant());
+		//logger.info(lekcja.getLekcjafotykursant());
+		//kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+		return "fotyForm";
+	}
+	
+	public String fotyLekcji(){
+		//logger.info(lekcja.getLekcjafotykursant());
+		kursyAc.setListaFot(lekcja.getLekcjafotykursant());
 		return "fotyForm";
 	}
 
-	public String fotaKursant(){
+	public String fotaKursantaLekcji(){
 		lekcja=fotaKursant.getLekcja();
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
 		else next=true;
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		else prev=true;
+		return "fotaKursanta";
+	}
+	
+	public String fotaKursant(){
+		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
+		else next=true;
+		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String prevFotaKursant(){
-		fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1);
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		//fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1);
+		fotaKursant=kursyAc.getListaFot().get(kursyAc.getListaFot().indexOf(fotaKursant)-1);
+		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
 		else next=true;
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String nextFotaKursant(){
-		fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1);
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)+1>=lekcja.getLekcjafotykursant().size()) next=false;
+		fotaKursant=kursyAc.getListaFot().get(kursyAc.getListaFot().indexOf(fotaKursant)+1);
+		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
 		else next=true;
-		if(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1<0) prev=false;
+		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
+	
 	
 	public void listenerFoty(FileUploadEvent event) {
 		logger.info(lekcja.getLekcjafotykursant());
@@ -134,6 +153,7 @@ public class LekcjaAc implements Serializable{
         fota.setDatadodania(new Timestamp(new Date().getTime()));
         lfki.insert(fota);
         lekcja=lekcjaImp.find(lekcja);
+        kursyAc.setListaFot(lekcja.getLekcjafotykursant());
         //logger.info(lekcja.getLekcjafotykursant());
     }
 	
@@ -172,8 +192,6 @@ public class LekcjaAc implements Serializable{
 	
 	public String usunKomentarzFota(){
 		fotaKursant.getFotykursantkoment().remove(komentarzFota);
-		//fkki.insert(komentarzFota);
-		//fotaKursant=fotaKursantImp.find(fotaKursant);
 		fotaKursantImp.update(fotaKursant);
 		komentarzFota=new Fotykursantkoment();
 		return null;
@@ -241,6 +259,12 @@ public class LekcjaAc implements Serializable{
 	}
 	public void setPrev(boolean prev) {
 		this.prev = prev;
+	}
+	public KursyAc getKursyAc() {
+		return kursyAc;
+	}
+	public void setKursyAc(KursyAc kursyAc) {
+		this.kursyAc = kursyAc;
 	}
 
 }

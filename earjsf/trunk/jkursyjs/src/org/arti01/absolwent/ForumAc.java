@@ -1,14 +1,11 @@
 package org.arti01.absolwent;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 

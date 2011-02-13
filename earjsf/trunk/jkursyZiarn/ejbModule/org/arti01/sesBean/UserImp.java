@@ -40,6 +40,7 @@ public class UserImp {
 	public User find(User user) {
 		if (user.getUsername() != null) {
 			user = em.find(User.class, user.getUsername());
+			em.refresh(user);
 		} else
 			user = new User();
 		return user;

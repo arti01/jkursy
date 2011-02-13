@@ -34,7 +34,7 @@ public class Fotykursantkoment implements Serializable {
 	@NotEmpty
 	private String tresc;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="idlekcjafotykursant")
 	private Lekcjafotykursant lekcjafotykursant;
 
