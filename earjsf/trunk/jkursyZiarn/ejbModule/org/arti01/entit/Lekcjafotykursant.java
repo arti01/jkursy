@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class Lekcjafotykursant implements Serializable {
 	
 	@Transient
 	private String datadodaniaS;
+	
+	@Transient
+	private List<Fotykursantkoment> dowykladowcy;
 
 	@Column(length=2147483647)
 	private String exif;
@@ -168,6 +172,18 @@ public class Lekcjafotykursant implements Serializable {
 
 	public void setKomentWykl(boolean komentWykl) {
 		this.komentWykl = komentWykl;
+	}
+
+	public List<Fotykursantkoment> getDowykladowcy() {
+		dowykladowcy=new ArrayList<Fotykursantkoment>();
+		for(Fotykursantkoment fkk:getFotykursantkoment()){
+			if(fkk.isDowykladowcy()) dowykladowcy.add(fkk) ;
+		}
+		return dowykladowcy;
+	}
+
+	public void setDowykladowcy(List<Fotykursantkoment> dowykladowcy) {
+		this.dowykladowcy = dowykladowcy;
 	}
 
 }

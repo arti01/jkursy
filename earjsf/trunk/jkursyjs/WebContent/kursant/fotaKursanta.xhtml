@@ -32,10 +32,14 @@
 			<h:form>
 			<h5>dyskusja o focie</h5>
 			<h:form>
-				<h:panelGrid columns="4" id="wpis">
+				<h:panelGrid columns="3" id="wpis">
 					<h:message for="tresc" />
+					<h:outputLabel for="tresc" value="treść"/>
 					<h:inputTextarea id="tresc"
 						value="#{kursantLekcjaAc.komentarzFota.tresc}" cols="100" />
+					<h:message for="dowykladowcy" />
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy"/>
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarzFota.dowykladowcy}"/>
 					<a4j:commandButton value="dodaj komentarz"
 						action="#{kursantLekcjaAc.dodajKomentarzFota}"
 						render="komentarze, wpis" />
@@ -46,6 +50,7 @@
 					value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
 					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, "/>
 					<h:outputText value="(komentuje wykładowca) " rendered="#{koment.komentWykl}"/>
+					<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}"/><br/>
 					<h:outputText value="dodany: #{koment.datadodaniaS}" /></h5>
 					<h:outputText value="#{koment.tresc}" />
 					<hr />

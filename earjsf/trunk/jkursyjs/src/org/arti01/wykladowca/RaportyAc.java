@@ -8,9 +8,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjakoment;
 import org.arti01.sesBean.LekacjaImp;
+import org.arti01.sesBean.LekcjafotykursantImp;
 import org.arti01.utility.Login;
 
 @ManagedBean(name="raportyAc")
@@ -22,7 +25,10 @@ public class RaportyAc implements Serializable{
 	@ManagedProperty(value="#{login}") private Login login;
 	private Lekcjakoment lekcjaKoment;
 	private Lekcjakoment komentOdp=new Lekcjakoment();
+	private Fotykursantkoment fotaKoment=new Fotykursantkoment();
+	private Fotykursantkoment komentFotyOdp=new Fotykursantkoment(); 
 	@EJB LekacjaImp li;
+	@EJB LekcjafotykursantImp lfki;
 
 	public String raport1(){		
 		return "raport1";
@@ -32,9 +38,18 @@ public class RaportyAc implements Serializable{
 		return "raport2";
 	}
 	
+	public String raport3(){		
+		return "raport3";
+	}
+	
 	public String komentOdpowiedz(){
 		komentOdp=new Lekcjakoment();
 		return "komentOdpowiedz";
+	}
+	
+	public String komentFotyOdpowiedz(){
+		komentFotyOdp=new Fotykursantkoment();
+		return "komentFotyOdpowiedz";
 	}
 	
 	public String komentOdpowiedzZrob(){
@@ -51,6 +66,21 @@ public class RaportyAc implements Serializable{
 		l.getLekcjakoments().add(komentOdp);
 		li.update(l);
 		return "raport2";
+	}
+	
+	public String komentFotyOdpowiedzZrob(){
+		komentFotyOdp.setUser(login.getZalogowany());
+		komentFotyOdp.setDatadodania(new Date());
+		komentFotyOdp.setDowykladowcy(false);
+		komentFotyOdp.setLekcjafotykursant(fotaKoment.getLekcjafotykursant());
+		komentFotyOdp.setTresc("to jest odpowiedz na: =\""+fotaKoment.getTresc()+"\"= "+komentFotyOdp.getTresc());
+		Lekcjafotykursant lfk=komentFotyOdp.getLekcjafotykursant();
+		fotaKoment.setDowykladowcy(false);
+		lfk.getFotykursantkoment().remove(fotaKoment);
+		lfk.getFotykursantkoment().add(0,fotaKoment);
+		lfk.getFotykursantkoment().add(0,komentFotyOdp);
+		lfki.update(lfk);
+		return "raport3";
 	}
 
 	public Login getLogin() {
@@ -75,6 +105,22 @@ public class RaportyAc implements Serializable{
 
 	public void setKomentOdp(Lekcjakoment komentOdp) {
 		this.komentOdp = komentOdp;
+	}
+
+	public Fotykursantkoment getFotaKoment() {
+		return fotaKoment;
+	}
+
+	public void setFotaKoment(Fotykursantkoment fotaKoment) {
+		this.fotaKoment = fotaKoment;
+	}
+
+	public Fotykursantkoment getKomentFotyOdp() {
+		return komentFotyOdp;
+	}
+
+	public void setKomentFotyOdp(Fotykursantkoment komentFotyOdp) {
+		this.komentFotyOdp = komentFotyOdp;
 	}
 	
 }

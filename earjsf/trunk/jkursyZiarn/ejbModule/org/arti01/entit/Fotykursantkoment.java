@@ -2,6 +2,7 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import java.text.SimpleDateFormat;
@@ -44,6 +45,9 @@ public class Fotykursantkoment implements Serializable {
 	
 	@Transient
 	private boolean komentWykl;
+	
+	@NotNull
+	private boolean dowykladowcy;
 	
     public Fotykursantkoment() {
     }
@@ -108,6 +112,14 @@ public class Fotykursantkoment implements Serializable {
 
 	public void setKomentWykl(boolean komentWykl) {
 		this.komentWykl = komentWykl;
+	}
+
+	public boolean isDowykladowcy() {
+		return dowykladowcy;
+	}
+
+	public void setDowykladowcy(boolean dowykladowcy) {
+		this.dowykladowcy = dowykladowcy;
 	}
 
 }

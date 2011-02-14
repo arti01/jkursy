@@ -8,15 +8,12 @@
 
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
-<h3>Lista pytań do wykładowcy</h3>
-		<ul>
+<h3>Lista pytań do wykładowcy (zdjęcia kursantów)</h3>
 			<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
-				<li>
-				<ul>
 					<ui:repeat var="lekcja" value="#{kurs.lekcjas}">
-						<li>
-						<h:form>
-							<ui:repeat var="koment" value="#{lekcja.dowykladowcy}">
+							<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
+							<h:form>
+							<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
 							<h:panelGrid columns="4">
 								<h:commandLink action="#{wykladKursyAc.lekcjaPodglad}">
 									lekcja:<h:outputText value="#{lekcja.tytul}" />
@@ -27,18 +24,16 @@
 									<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
 								</h:outputText>
 								<h:commandLink value="odpowiedz"
-									action="#{raportyAc.komentOdpowiedz}">
+									action="#{raportyAc.komentFotyOdpowiedz}">
 									<f:setPropertyActionListener
-										target="#{raportyAc.lekcjaKoment}" value="#{koment}" />
+										target="#{raportyAc.fotaKoment}" value="#{koment}" />
 								</h:commandLink>
 							</h:panelGrid>
 							</ui:repeat>
-						</h:form></li>
+							</h:form>
+							</ui:repeat>
 					</ui:repeat>
-				</ul>
-				</li>
 			</ui:repeat>
-		</ul>
 	</ui:define>
 </ui:composition>
 </html>
