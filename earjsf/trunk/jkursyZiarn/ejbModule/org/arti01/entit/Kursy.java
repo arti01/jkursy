@@ -47,7 +47,15 @@ public class Kursy implements Serializable {
 	@NotNull
 	@DecimalMin(message="grupa nie może być mniejsza od 1", value="1")
 	private Integer wielkoscgrupy;
+	
+	@NotNull
+	@DecimalMin(message="zdjęć nie może być mniej niż 1", value="1")
+	private Integer fotperkursantmax;
 
+	@NotNull
+	@DecimalMin(message="zdjęć nie może być mniej niż od 1", value="1")
+	private Integer fotperkursantbezkoment;
+	
 	//bi-directional many-to-many association to User
 	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
 	private Set<User> users;
@@ -267,6 +275,22 @@ public class Kursy implements Serializable {
 
 	public void setTypykursu(Typykursu typykursu) {
 		this.typykursu = typykursu;
+	}
+
+	public Integer getFotperkursantmax() {
+		return fotperkursantmax;
+	}
+
+	public void setFotperkursantmax(Integer fotperkursantmax) {
+		this.fotperkursantmax = fotperkursantmax;
+	}
+
+	public Integer getFotperkursantbezkoment() {
+		return fotperkursantbezkoment;
+	}
+
+	public void setFotperkursantbezkoment(Integer fotperkursantbezkoment) {
+		this.fotperkursantbezkoment = fotperkursantbezkoment;
 	}
 
 }

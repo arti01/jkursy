@@ -17,6 +17,7 @@ import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjakoment;
+import org.arti01.entit.User;
 import org.arti01.sesBean.FotykursantkomentImp;
 import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.LekcjaKomentImp;
@@ -45,6 +46,7 @@ public class LekcjaAc implements Serializable{
 	@EJB LekcjaKomentImp lekcjaKomentImp;
 	@EJB LekcjafotykursantImp lfki;
 	@ManagedProperty(value="#{login}") private Login loginBean;
+	private User zalogowany;
 	@ManagedProperty(value="#{kursantKursyAc}") private KursyAc kursyAc;
 	private Lekcjafotykursant fotaKursant;
 	@EJB LekcjafotykursantImp fotaKursantImp;
@@ -73,12 +75,15 @@ public class LekcjaAc implements Serializable{
 	public String fotyForm(){
 		//logger.info(lekcja.getLekcjafotykursant());
 		//kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+		loginBean.getZalogowany().setKonkretnaLekcja(lekcja);
 		return "fotyForm";
 	}
 	
 	public String fotyLekcji(){
 		//logger.info(lekcja.getLekcjafotykursant());
 		kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+		zalogowany=loginBean.getZalogowany();
+		zalogowany.setKonkretnaLekcja(lekcja);
 		return "fotyForm";
 	}
 
@@ -265,6 +270,12 @@ public class LekcjaAc implements Serializable{
 	}
 	public void setKursyAc(KursyAc kursyAc) {
 		this.kursyAc = kursyAc;
+	}
+	public User getZalogowany() {
+		return zalogowany;
+	}
+	public void setZalogowany(User zalogowany) {
+		this.zalogowany = zalogowany;
 	}
 
 }

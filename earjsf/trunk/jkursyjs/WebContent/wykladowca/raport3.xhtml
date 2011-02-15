@@ -14,12 +14,12 @@
 							<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
 							<h:form>
 							<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
-							<h:panelGrid columns="4">
-								<h:commandLink action="#{wykladKursyAc.lekcjaPodglad}">
-									lekcja:<h:outputText value="#{lekcja.tytul}" />
-									<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+								<h:panelGrid columns="5">
+								<h:outputText value="lekcja: #{lekcja.tytul} "/>
+								<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+									<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{koment.lekcjafotykursant}"/>
 								</h:commandLink>
-								<h:outputText value="autor: #{koment.user.imieNazwisko}" />
+								<h:outputText value="autor: #{koment.user.imieNazwisko} " />
 								<h:outputText value="#{koment.datadodania}">
 									<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
 								</h:outputText>

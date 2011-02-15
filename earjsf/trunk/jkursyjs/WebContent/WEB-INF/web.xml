@@ -117,9 +117,36 @@
 		</form-login-config>
 	</login-config>
 	<security-role>
-		<description>role</description>
+		<description>rolea</description>
 		<role-name>admin</role-name>
 	</security-role>
+	<security-role>
+		<description>rolek</description>
+		<role-name>kursant</role-name>
+	</security-role>
+	<security-role>
+		<description>rolew</description>
+		<role-name>wykladowca</role-name>
+	</security-role>
+	<security-role>
+		<description>roleab</description>
+		<role-name>absolwent</role-name>
+	</security-role>
+	
+	<error-page>
+		<exception-type>javax.faces.webapp.FacesServlet.Exception</exception-type >
+		<location>/err500.html</location>
+	 </error-page>
+	
+	<error-page>
+    <exception-type>java.lang.Throwable</exception-type >
+    <location>/err500.html</location>
+	</error-page>
+	
+	<error-page>
+     <exception-type>java.lang.Exception</exception-type>
+     <location>/err500.html</location>
+   </error-page>
 	<error-page>
 		<error-code>404</error-code>
 		<location>/index.html</location>
@@ -132,11 +159,6 @@
 		<error-code>500</error-code>
 		<location>/err500.html</location>
 	</error-page>
-	
-	<error-page>
-     <exception-type>java.lang.Throwable1</exception-type>
-     <location>/err500.html</location>
-   </error-page>
 	
 	<mime-mapping>
 		<extension>ecss</extension>

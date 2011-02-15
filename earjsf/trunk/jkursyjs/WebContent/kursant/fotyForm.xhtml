@@ -21,6 +21,7 @@
 				</rich:fileUpload>
 			</h:panelGrid>
 			</h:form>
+			<h:outputText value="Twoich nieskomentowanych przez wykładowcę fot: #{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}"/>
 		<h:form>
 			<h:dataTable value="#{kursantKursyAc.listaFot}" var="fota" id="foty">
 					<h:column>

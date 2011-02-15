@@ -101,6 +101,24 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
 	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
+	<hr/>
+	<h4>pytania do wykładowcy:</h4>
+	<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
+		<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
+			<h:panelGrid columns="1">
+				<h:outputText value="autor: #{koment.user.imieNazwisko}" />
+				<h:outputText value="#{koment.datadodania}">
+					<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
+				</h:outputText>
+				<h:commandLink value="odpowiedz"
+					action="#{raportyAc.komentFotyOdpowiedz}">
+					<f:setPropertyActionListener
+						target="#{raportyAc.fotaKoment}" value="#{koment}" />
+				</h:commandLink>
+				<hr/>
+			</h:panelGrid>
+		</ui:repeat>
+		</ui:repeat>
 	</h:panelGrid>
 	</h:column>
 	

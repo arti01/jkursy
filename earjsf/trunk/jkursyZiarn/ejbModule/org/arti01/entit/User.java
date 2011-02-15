@@ -6,6 +6,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -67,6 +68,12 @@ public class User implements Serializable {
 
 	@Column(length=255)
 	private String wiadomosc;
+	
+	@Transient
+	private Lekcja konkretnaLekcja;
+	
+	@Transient
+	private List<Lekcjafotykursant> fotyBezkomentarza;
 
 	//bi-directional many-to-many association to Role
 	@ManyToMany(cascade={CascadeType.MERGE}, fetch=FetchType.EAGER)
@@ -248,6 +255,26 @@ public class User implements Serializable {
 
 	public void setAbsolwforposty(List<Absolwforposty> absolwforposty) {
 		this.absolwforposty = absolwforposty;
+	}
+
+	public List<Lekcjafotykursant> getFotyBezkomentarza() {
+		fotyBezkomentarza=new ArrayList<Lekcjafotykursant>();
+		for(Lekcjafotykursant l:getKonkretnaLekcja().getFotyKursNieSkoment()){
+			if(l.getUser().getUsername().equals(username)) fotyBezkomentarza.add(l);
+		}
+		return fotyBezkomentarza;
+	}
+
+	public void setFotyBezkomentarza(List<Lekcjafotykursant> fotyBezkomentarza) {
+		this.fotyBezkomentarza = fotyBezkomentarza;
+	}
+
+	public Lekcja getKonkretnaLekcja() {
+		return konkretnaLekcja;
+	}
+
+	public void setKonkretnaLekcja(Lekcja konkretnaLekcja) {
+		this.konkretnaLekcja = konkretnaLekcja;
 	}
 	
 }

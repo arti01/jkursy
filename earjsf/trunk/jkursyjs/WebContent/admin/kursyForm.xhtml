@@ -26,6 +26,14 @@
 				<f:selectItems value="#{adminKursyAc.allTk}" var="tk" itemLabel="#{tk.nazwa}" itemValue="#{tk.idtypykursu}"/>
 				</h:selectOneMenu>
 				
+				<h:message for="fotperkursantmax" styleClass="error" />
+				<h:outputLabel value="maksymalna ilość zdjęć kursanta per lekcja" />
+				<h:inputText id="fotperkursantmax" value="#{adminKursyAc.kurs.fotperkursantmax}" size="3"/>
+				
+				<h:message for="fotperkursantbezkoment" styleClass="error" />
+				<h:outputLabel value="ilość zdjęć kursanta bez komentarza wykładowcy do umieszczenia per lekcja" />
+				<h:inputText id="fotperkursantbezkoment" value="#{adminKursyAc.kurs.fotperkursantbezkoment}" size="3"/>
+				
 				<h:message for="poziom" styleClass="error" />
 				<h:outputLabel value="poziom zaawansowania" />
 				<h:selectOneMenu id="poziom" value="#{adminKursyAc.kurs.poziomyzaawansowania.idpoziomyzaawansowania}">
