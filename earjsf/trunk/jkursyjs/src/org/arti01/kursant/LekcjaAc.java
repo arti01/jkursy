@@ -159,6 +159,8 @@ public class LekcjaAc implements Serializable{
         lfki.insert(fota);
         lekcja=lekcjaImp.find(lekcja);
         kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+        zalogowany=loginBean.getZalogowany();
+        zalogowany.setKonkretnaLekcja(lekcja);
         //logger.info(lekcja.getLekcjafotykursant());
     }
 	

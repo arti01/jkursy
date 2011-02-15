@@ -74,7 +74,13 @@ public class User implements Serializable {
 	
 	@Transient
 	private List<Lekcjafotykursant> fotyBezkomentarza;
-
+	
+	@Transient
+	private List<Lekcjafotykursant> fotyDodaneDoLekcji;
+	
+	@Transient
+	private Integer fotDoDodania;
+	
 	//bi-directional many-to-many association to Role
 	@ManyToMany(cascade={CascadeType.MERGE}, fetch=FetchType.EAGER)
 	@JoinTable(
@@ -276,5 +282,28 @@ public class User implements Serializable {
 	public void setKonkretnaLekcja(Lekcja konkretnaLekcja) {
 		this.konkretnaLekcja = konkretnaLekcja;
 	}
-	
+
+	public List<Lekcjafotykursant> getFotyDodaneDoLekcji() {
+		fotyDodaneDoLekcji=new ArrayList<Lekcjafotykursant>();
+		for(Lekcjafotykursant l:getKonkretnaLekcja().getLekcjafotykursant()){
+			if(l.getUser().getUsername().equals(username)) fotyDodaneDoLekcji.add(l);
+		}
+		return fotyDodaneDoLekcji;
+	}
+
+	public void setFotyDodaneDoLekcji(List<Lekcjafotykursant> fotyDodaneDoLekcji) {
+		this.fotyDodaneDoLekcji = fotyDodaneDoLekcji;
+	}
+
+	public Integer getFotDoDodania() {
+		Integer wolneOgole=getKonkretnaLekcja().getKursy().getFotperkursantmax()-getFotyDodaneDoLekcji().size();
+		Integer woleBezKoment=getKonkretnaLekcja().getKursy().getFotperkursantbezkoment()-getFotyBezkomentarza().size();
+		if(wolneOgole<woleBezKoment) fotDoDodania=wolneOgole;
+		else fotDoDodania=woleBezKoment;
+		return fotDoDodania;
+	}
+
+	public void setFotDoDodania(Integer fotDoDodania) {
+		this.fotDoDodania = fotDoDodania;
+	}
 }

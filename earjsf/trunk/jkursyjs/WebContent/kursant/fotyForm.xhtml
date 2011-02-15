@@ -16,12 +16,24 @@
 			<h:panelGrid columns="2" id="uploadpg">
 				<rich:fileUpload
 					fileUploadListener="#{kursantLekcjaAc.listenerFoty}"
-					id="upload">
-					<a4j:ajax event="uploadcomplete" execute="@none" render="foty" />
+					id="upload" rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
+					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, info, uploadpg" />
 				</rich:fileUpload>
+				<h:outputText value="nie możesz dodać już więcej zdjęć" rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}"/>
 			</h:panelGrid>
 			</h:form>
-			<h:outputText value="Twoich nieskomentowanych przez wykładowcę fot: #{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}"/>
+			<h:panelGrid columns="2" id="info">
+				<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji"/>
+				<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}"/>
+				<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy"/>
+				<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}"/>
+				<h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: "/>
+				<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}"/>
+				<h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: "/>
+				<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}"/>
+				<h:outputText value="Możesz jeszcze dodać: "/>
+				<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}"/>
+			</h:panelGrid>
 		<h:form>
 			<h:dataTable value="#{kursantKursyAc.listaFot}" var="fota" id="foty">
 					<h:column>
