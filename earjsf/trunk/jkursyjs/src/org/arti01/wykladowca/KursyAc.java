@@ -154,8 +154,10 @@ public class KursyAc implements Serializable {
 	public String fotyKursantowSelect(){
 		fotyKursantow=new ArrayList<Lekcjafotykursant>();
 		for(Lekcja l:kurs.getLekcjas()){
-			for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
-				if(lfk.getUser().getUsername().equals(user.getUsername())) fotyKursantow.add(lfk);
+			if(lekcja==l||lekcja==null){
+				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
+					if(lfk.getUser().getUsername().equals(user.getUsername())) fotyKursantow.add(lfk);
+				}
 			}
 		}
 		return "fotyKursantow.xhtml";

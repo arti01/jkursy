@@ -13,15 +13,25 @@ nazwa:
 <h2><h:outputText value="#{wykladKursyAc.kurs.nazwa}"/></h2>
 krótki opis:
 <h3><h:outputText value="#{wykladKursyAc.kurs.opisKrotki}"/></h3>
-<p>
+
+<h:panelGrid columns="1">
 od:<h:outputText value="#{wykladKursyAc.kurs.dataod}"><f:convertDateTime type="date"/> </h:outputText>
 do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="date"/> </h:outputText>
-</p>
+</h:panelGrid>
 <h:form>
 	<h:commandButton value="dodaj nową lekcję" action="#{wykladKursyAc.lekcjaFormNew}"/>
 </h:form>
 <h2><h:outputText value="#{wykladKursyAc.errorText}"  styleClass="error"/></h2>
-<ul>
+<hr/>
+<h:form>
+	<h:selectOneMenu value="#{wykladKursyAc.user.username}" >
+		<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+	</h:selectOneMenu>
+	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}">
+		<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{null}"/>
+	</h:commandButton>
+</h:form>
+<hr/>
 <h:form>
 <h:dataTable var="lekcja" value="#{wykladKursyAc.lekcje}">
 <h:column>
@@ -49,7 +59,7 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 		<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
 	<hr/>
-	<h4>pytania do wykładowcy:</h4>
+	<h5>pytania do wykładowcy:</h5>
 		<ui:repeat var="koment" value="#{lekcja.dowykladowcy}">
 		<h:panelGrid columns="1">
 			<h:outputText value="autor: #{koment.user.imieNazwisko}" />
@@ -83,12 +93,24 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 		</h:commandLink>
 	</h:column>
 	<h:column>
+	<f:facet name="header"><h:outputText value="zdjęcia kursantów"/></f:facet>
 	<h:panelGrid columns="1">
-	<h:commandLink value="pokaż zdjęcia kursantów (ilość: #{lekcja.lekcjafotykursant.size()})" action="#{wykladKursyAc.fotyKursantow}">
+	<h:commandLink value="pokaż zdjęcia (ilość: #{lekcja.lekcjafotykursant.size()})" action="#{wykladKursyAc.fotyKursantow}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
+	<hr/>
+	<h:panelGrid columns="1">
+		<h:selectOneMenu value="#{wykladKursyAc.user.username}" >
+			<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+		</h:selectOneMenu>
+		<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}">
+			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
+		</h:commandButton>
+	</h:panelGrid>
+	<hr/>
 	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
 	<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}"/>
+	<hr/>
 	<h:commandLink value="zdjęc bez komentarza wykładowcy: #{lekcja.fotyKursNieSkoment.size()})" action="#{wykladKursyAc.fotyKursantowNieSkoment}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
@@ -96,13 +118,15 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 	</h:column>
 	
 	<h:column>
+	<f:facet name="header"><h:outputText value="komentarze do zdjęć kursantów"/></f:facet>
 	<h:panelGrid columns="1">
-	<h:commandLink value="komentarze do zdjęc kursantów (ilość: #{lekcja.iloscKolmentFota})" action="#{wykladKursyAc.fotyKursantow}">
+	<h:commandLink value="komentarzy: #{lekcja.iloscKolmentFota}" action="#{wykladKursyAc.fotyKursantow}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
-	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
 	<hr/>
-	<h4>pytania do wykładowcy:</h4>
+	<h:outputText value="ostatni z: #{lekcja.lastKomentFota.datadodaniaS}"/>
+	<hr/>
+	<h5>pytania do wykładowcy:</h5>
 	<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
 		<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
 			<h:panelGrid columns="1">
@@ -121,18 +145,9 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 		</ui:repeat>
 	</h:panelGrid>
 	</h:column>
-	
 </h:dataTable>
 </h:form>
-</ul>
 <hr/>
-
-<h:form>
-	<h:selectOneMenu value="#{wykladKursyAc.user.username}" >
-		<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
-	</h:selectOneMenu>
-	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}"/>
-</h:form>
 
 <h2>Newsy kursu</h2>
 <h:form>

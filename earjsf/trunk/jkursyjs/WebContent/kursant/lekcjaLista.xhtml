@@ -36,7 +36,9 @@
 	<h:selectOneMenu value="#{kursantLekcjaAc.user.username}" >
 		<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
 	</h:selectOneMenu>
-	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}"/>
+	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}">
+		<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{null}"/>
+	</h:commandButton>
 </h:form>
 
 <div id="right">
@@ -61,14 +63,23 @@
 		<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}" rendered="#{lekcja.lastKoment!=null}"/>
 	</rich:column>
 	<rich:column>
-		<f:facet name="header">ostatno dodane zdjęcie kursanta</f:facet>
-		<h:panelGrid columns="2">
+		<f:facet name="header">zdjęcia kursantów</f:facet>
+		<h:panelGrid columns="3">
+			Ostatnio dodane:
 			<h:outputText value="#{lekcja.lastFota.datadodaniaS} " rendered="#{lekcja.lastFota!=null}"/>
 			<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}"/>
+		</h:panelGrid>
+			<hr/>
 			<h:commandLink value="idź do zdjęć kursantów" action="#{kursantLekcjaAc.fotyLekcji}">
 				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
 			</h:commandLink>
-		</h:panelGrid>
+			<hr/>
+	<h:selectOneMenu value="#{kursantLekcjaAc.user.username}">
+		<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+	</h:selectOneMenu>
+	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}">
+		<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+	</h:commandButton>
 	</rich:column>
 	<rich:column>
 		<f:facet name="header">ostatno dodany komentarz do zdjęcia kursanta</f:facet>

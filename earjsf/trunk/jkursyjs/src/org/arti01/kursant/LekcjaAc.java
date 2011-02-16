@@ -84,11 +84,16 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String fotyKursantowFiltr(){
-		lekcja=null;
+		zalogowany=loginBean.getZalogowany();
+		if(lekcja!=null){
+			zalogowany.setKonkretnaLekcja(lekcja);
+		}
 		listaFot=new ArrayList<Lekcjafotykursant>();
 		for(Lekcja l:kursyAc.getKurs().getLekcjas()){
-			for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
-				if(lfk.getUser().getUsername().equals(user.getUsername())) listaFot.add(lfk);
+			if(lekcja==l||lekcja==null){
+				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
+					if(lfk.getUser().getUsername().equals(user.getUsername())) listaFot.add(lfk);
+				}
 			}
 		}
 		return "fotyForm";

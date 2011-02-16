@@ -15,7 +15,7 @@
 			<h:form>
 			<h:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty">
 					<h:column>
-						<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							<a4j:mediaOutput element="img"
 								createContent="#{kursantLekcjaAc.paintBazy}"

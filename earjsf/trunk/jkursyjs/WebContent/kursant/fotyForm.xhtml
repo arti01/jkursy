@@ -8,15 +8,12 @@
 
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
-		
-	foty lekcji:
-	<h:outputText value="#{kursantLekcjaAc.lekcja.tytul}" />
-	<br/>
-			<h:panelGroup id="uploadpg">
+	
+			<h:panelGroup id="uploadpg" rendered="#{kursantLekcjaAc.lekcja!=null}">
 			<h:form>
 				<rich:fileUpload
 					fileUploadListener="#{kursantLekcjaAc.listenerFoty}"
-					id="upload" rendered="#{(kursantLekcjaAc.zalogowany.fotDoDodania>0) and (kursantLekcjaAc.lekcja!=null)}">
+					id="upload" rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
 					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
 				</rich:fileUpload>
 				<h:outputText value="nie możesz dodać już więcej zdjęć" rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}"/>
@@ -50,6 +47,9 @@
 						</h:column>
 						<h:column>
 							<h:panelGrid columns="1">
+							<h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
+								<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}"/>
+							</h:commandLink>
 							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
