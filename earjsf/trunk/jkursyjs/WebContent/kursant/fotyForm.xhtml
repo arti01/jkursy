@@ -11,18 +11,19 @@
 		
 	foty lekcji:
 	<h:outputText value="#{kursantLekcjaAc.lekcja.tytul}" />
-			<br />
+	<br/>
+			<h:panelGroup id="uploadpg">
 			<h:form>
-			<h:panelGrid columns="2" id="uploadpg">
 				<rich:fileUpload
 					fileUploadListener="#{kursantLekcjaAc.listenerFoty}"
-					id="upload" rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
-					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, info, uploadpg" />
+					id="upload" rendered="#{(kursantLekcjaAc.zalogowany.fotDoDodania>0) and (kursantLekcjaAc.lekcja!=null)}">
+					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
 				</rich:fileUpload>
 				<h:outputText value="nie możesz dodać już więcej zdjęć" rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}"/>
-			</h:panelGrid>
 			</h:form>
-			<h:panelGrid columns="2" id="info">
+			</h:panelGroup>
+			<hr/>
+			<h:panelGrid columns="2" id="informacje" rendered="#{kursantLekcjaAc.lekcja!=null}">
 				<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji"/>
 				<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}"/>
 				<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy"/>
@@ -34,14 +35,18 @@
 				<h:outputText value="Możesz jeszcze dodać: "/>
 				<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}"/>
 			</h:panelGrid>
+			<hr size="1"/>
 		<h:form>
-			<h:dataTable value="#{kursantKursyAc.listaFot}" var="fota" id="foty">
+			<h:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="foty">
 					<h:column>
-						<a4j:mediaOutput element="img"
-							createContent="#{kursantLekcjaAc.paintBazy}"
-							value="#{fota.idlekcjafotykursant}" cacheable="false">
-							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
-						</a4j:mediaOutput>
+						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+							<a4j:mediaOutput element="img"
+								createContent="#{kursantLekcjaAc.paintBazy}"
+								value="#{fota.idlekcjafotykursant}" cacheable="false">
+								<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+							</a4j:mediaOutput>
+						</h:commandLink>
 						</h:column>
 						<h:column>
 							<h:panelGrid columns="1">

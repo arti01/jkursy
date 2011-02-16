@@ -33,10 +33,10 @@
 <br/>
 
 <h:form>
-	<h:selectOneMenu value="#{kursantKursyAc.user.username}" >
+	<h:selectOneMenu value="#{kursantLekcjaAc.user.username}" >
 		<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
 	</h:selectOneMenu>
-	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantKursyAc.fotyKursantow}"/>
+	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}"/>
 </h:form>
 
 <div id="right">

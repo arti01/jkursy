@@ -22,8 +22,6 @@
 					<h:inputTextarea id="tresc"
 						value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
 					<h:message for="dowykladowcy" />
-					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy"/>
-					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarz.dowykladowcy}"/>
 					<a4j:commandButton value="dodaj komentarz"
 						action="#{kursantLekcjaAc.dodajKomentarz}"
 						render="komentarze, wpis" />

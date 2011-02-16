@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -54,6 +56,8 @@ public class LekcjaAc implements Serializable{
 	@EJB FotykursantkomentImp fkki;
 	private boolean next;
 	private boolean prev;
+	private User user=new User();
+	private List<Lekcjafotykursant> listaFot=new ArrayList<Lekcjafotykursant>();
 	
 	private static int DLUGOSC=600;
     private static int WYSOKOSC=400;
@@ -79,9 +83,20 @@ public class LekcjaAc implements Serializable{
 		return "fotyForm";
 	}
 	
+	public String fotyKursantowFiltr(){
+		lekcja=null;
+		listaFot=new ArrayList<Lekcjafotykursant>();
+		for(Lekcja l:kursyAc.getKurs().getLekcjas()){
+			for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
+				if(lfk.getUser().getUsername().equals(user.getUsername())) listaFot.add(lfk);
+			}
+		}
+		return "fotyForm";
+	}
+	
 	public String fotyLekcji(){
 		//logger.info(lekcja.getLekcjafotykursant());
-		kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+		setListaFot(lekcja.getLekcjafotykursant());
 		zalogowany=loginBean.getZalogowany();
 		zalogowany.setKonkretnaLekcja(lekcja);
 		return "fotyForm";
@@ -89,37 +104,37 @@ public class LekcjaAc implements Serializable{
 
 	public String fotaKursantaLekcji(){
 		lekcja=fotaKursant.getLekcja();
-		kursyAc.setListaFot(lekcja.getLekcjafotykursant());
-		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
+		setListaFot(lekcja.getLekcjafotykursant());
+		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
-		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String fotaKursant(){
-		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
+		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
-		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String prevFotaKursant(){
 		//fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1);
-		fotaKursant=kursyAc.getListaFot().get(kursyAc.getListaFot().indexOf(fotaKursant)-1);
-		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
+		fotaKursant=getListaFot().get(getListaFot().indexOf(fotaKursant)-1);
+		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
-		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String nextFotaKursant(){
-		fotaKursant=kursyAc.getListaFot().get(kursyAc.getListaFot().indexOf(fotaKursant)+1);
-		if(kursyAc.getListaFot().indexOf(fotaKursant)+1>=kursyAc.getListaFot().size()) next=false;
+		fotaKursant=getListaFot().get(getListaFot().indexOf(fotaKursant)+1);
+		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
-		if(kursyAc.getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
 		else prev=true;
 		return "fotaKursanta";
 	}
@@ -158,7 +173,7 @@ public class LekcjaAc implements Serializable{
         fota.setDatadodania(new Timestamp(new Date().getTime()));
         lfki.insert(fota);
         lekcja=lekcjaImp.find(lekcja);
-        kursyAc.setListaFot(lekcja.getLekcjafotykursant());
+        setListaFot(lekcja.getLekcjafotykursant());
         zalogowany=loginBean.getZalogowany();
         zalogowany.setKonkretnaLekcja(lekcja);
         //logger.info(lekcja.getLekcjafotykursant());
@@ -278,6 +293,18 @@ public class LekcjaAc implements Serializable{
 	}
 	public void setZalogowany(User zalogowany) {
 		this.zalogowany = zalogowany;
+	}
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public List<Lekcjafotykursant> getListaFot() {
+		return listaFot;
+	}
+	public void setListaFot(List<Lekcjafotykursant> listaFot) {
+		this.listaFot = listaFot;
 	}
 
 }

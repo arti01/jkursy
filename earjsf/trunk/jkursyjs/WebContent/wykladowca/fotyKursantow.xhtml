@@ -15,23 +15,26 @@
 			<h:form>
 			<h:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty">
 					<h:column>
-						<a4j:mediaOutput element="img"
-							createContent="#{kursantLekcjaAc.paintBazy}"
-							value="#{fota.idlekcjafotykursant}" cacheable="false">
-						</a4j:mediaOutput>
-						</h:column>
-						<h:column>
-							<h:panelGrid columns="1">
-							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
-							<h:outputText value="dodana: #{fota.datadodaniaS}">
-								<f:convertDateTime pattern="dd-MM-yyyy"/>
-							</h:outputText>
-							<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}"/>
-							<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
-								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
-							</h:commandLink>
-							</h:panelGrid>
-						</h:column>
+						<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+							<a4j:mediaOutput element="img"
+								createContent="#{kursantLekcjaAc.paintBazy}"
+								value="#{fota.idlekcjafotykursant}" cacheable="false">
+							</a4j:mediaOutput>
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<h:panelGrid columns="1">
+						<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+						<h:outputText value="dodana: #{fota.datadodaniaS}">
+							<f:convertDateTime pattern="dd-MM-yyyy"/>
+						</h:outputText>
+						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}"/>
+						<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+						</h:commandLink>
+						</h:panelGrid>
+					</h:column>
 			</h:dataTable>
 		</h:form>
 	</ui:define>
