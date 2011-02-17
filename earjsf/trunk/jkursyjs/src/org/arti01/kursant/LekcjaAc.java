@@ -14,6 +14,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
+
 import org.apache.log4j.Logger;
 import org.arti01.entit.Fotykursantkoment;
 import org.arti01.entit.Lekcja;
@@ -58,6 +60,7 @@ public class LekcjaAc implements Serializable{
 	private boolean prev;
 	private User user=new User();
 	private List<Lekcjafotykursant> listaFot=new ArrayList<Lekcjafotykursant>();
+	private String nrstrony;
 	
 	private static int DLUGOSC=600;
     private static int WYSOKOSC=400;
@@ -83,12 +86,19 @@ public class LekcjaAc implements Serializable{
 		return "fotyForm";
 	}
 	
+	public void zmienUser(ValueChangeEvent event){
+		logger.info(event);
+		
+	}
+	
 	public String fotyKursantowFiltr(){
+		logger.info(user.getUsername());
 		zalogowany=loginBean.getZalogowany();
 		if(lekcja!=null){
 			zalogowany.setKonkretnaLekcja(lekcja);
 		}
 		listaFot=new ArrayList<Lekcjafotykursant>();
+		logger.info(user.getUsername());
 		for(Lekcja l:kursyAc.getKurs().getLekcjas()){
 			if(lekcja==l||lekcja==null){
 				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
@@ -303,6 +313,7 @@ public class LekcjaAc implements Serializable{
 		return user;
 	}
 	public void setUser(User user) {
+		logger.info(user.getUsername());
 		this.user = user;
 	}
 	public List<Lekcjafotykursant> getListaFot() {
@@ -311,5 +322,12 @@ public class LekcjaAc implements Serializable{
 	public void setListaFot(List<Lekcjafotykursant> listaFot) {
 		this.listaFot = listaFot;
 	}
+	public String getNrstrony() {
+		return nrstrony;
+	}
+	public void setNrstrony(String nrstrony) {
+		this.nrstrony = nrstrony;
+	}
+	
 
 }

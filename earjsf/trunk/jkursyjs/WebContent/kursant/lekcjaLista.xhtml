@@ -74,12 +74,6 @@
 				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
 			</h:commandLink>
 			<hr/>
-	<h:selectOneMenu value="#{kursantLekcjaAc.user.username}">
-		<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
-	</h:selectOneMenu>
-	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}">
-		<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
-	</h:commandButton>
 	</rich:column>
 	<rich:column>
 		<f:facet name="header">ostatno dodany komentarz do zdjęcia kursanta</f:facet>

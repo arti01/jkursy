@@ -32,6 +32,7 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 	</h:commandButton>
 </h:form>
 <hr/>
+
 <h:form>
 <h:dataTable var="lekcja" value="#{wykladKursyAc.lekcje}">
 <h:column>
@@ -98,15 +99,6 @@ do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="d
 	<h:commandLink value="pokaż zdjęcia (ilość: #{lekcja.lekcjafotykursant.size()})" action="#{wykladKursyAc.fotyKursantow}">
 			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
 	</h:commandLink>
-	<hr/>
-	<h:panelGrid columns="1">
-		<h:selectOneMenu value="#{wykladKursyAc.user.username}" >
-			<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
-		</h:selectOneMenu>
-		<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-		</h:commandButton>
-	</h:panelGrid>
 	<hr/>
 	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
 	<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}"/>

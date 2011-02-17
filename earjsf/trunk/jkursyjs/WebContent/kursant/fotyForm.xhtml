@@ -34,8 +34,8 @@
 			</h:panelGrid>
 			<hr size="1"/>
 		<h:form>
-			<h:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="foty">
-					<h:column>
+			<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="foty">
+					<rich:column>
 						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							<a4j:mediaOutput element="img"
@@ -44,13 +44,12 @@
 								<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 							</a4j:mediaOutput>
 						</h:commandLink>
-						</h:column>
+						</rich:column>
 						<h:column>
 							<h:panelGrid columns="1">
 							<h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
 								<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}"/>
 							</h:commandLink>
-							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
 							</h:outputText>
@@ -60,7 +59,19 @@
 							</h:commandLink>
 							</h:panelGrid>
 						</h:column>
-			</h:dataTable>
+						<rich:column filterValue="#{kursantLekcjaAc.user.imieNazwisko}" filterExpression="#{kursantLekcjaAc.user.imieNazwisko}" >
+						<f:facet name="header">
+                    <h:panelGroup>
+                        <h:outputText value="autor" />
+                        <h:selectOneMenu value="#{kursantLekcjaAc.user.imieNazwisko}" valueChangeListener="#{kursantLekcjaAc.zmienUser}">
+                            <f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.imieNazwisko}"/>
+                            <a4j:ajax render="foty" execute="@this" event="blur" />
+                        </h:selectOneMenu>
+                    </h:panelGroup>
+                </f:facet>
+							<h:outputText value="#{fota.user.imieNazwisko}"/>
+						</rich:column>
+			</rich:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

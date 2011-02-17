@@ -29,6 +29,7 @@ import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.LekacjaImp;
 import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.StatyczneImp;
+import org.arti01.sesBean.UserImp;
 
 @ManagedBean(name="wykladKursyAc")
 @SessionScoped
@@ -47,6 +48,7 @@ public class KursyAc implements Serializable {
 	@ManagedProperty(value="#{wykladNewsyAc}")private NewsyAc wn;
 	@EJB RoleImp roleImp;
 	@EJB StatyczneImp statyczneImp;
+	@EJB UserImp userImp;
 	private Role role=new Role();
 	private Statyczne strona;
 	private User user=new User();
@@ -152,6 +154,7 @@ public class KursyAc implements Serializable {
 	}
 	
 	public String fotyKursantowSelect(){
+		logger.info(user.getUsername());
 		fotyKursantow=new ArrayList<Lekcjafotykursant>();
 		for(Lekcja l:kurs.getLekcjas()){
 			if(lekcja==l||lekcja==null){
@@ -162,6 +165,7 @@ public class KursyAc implements Serializable {
 		}
 		return "fotyKursantow.xhtml";
 	}
+	
 	
 	public String fotyKursantowNieSkoment(){
 		fotyKursantow=lekcja.getFotyKursNieSkoment();

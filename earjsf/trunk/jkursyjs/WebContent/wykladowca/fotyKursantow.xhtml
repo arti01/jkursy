@@ -13,9 +13,10 @@
 	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
 			<br />
 			<h:form>
-			<h:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty">
+			<rich:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty" rowKeyVar="nrstrony">
 					<h:column>
 						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							<a4j:mediaOutput element="img"
 								createContent="#{kursantLekcjaAc.paintBazy}"
@@ -30,12 +31,9 @@
 							<f:convertDateTime pattern="dd-MM-yyyy"/>
 						</h:outputText>
 						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}"/>
-						<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
-							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
-						</h:commandLink>
 						</h:panelGrid>
 					</h:column>
-			</h:dataTable>
+			</rich:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>
