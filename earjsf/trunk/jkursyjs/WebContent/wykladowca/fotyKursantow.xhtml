@@ -13,6 +13,17 @@
 	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
 			<br />
 			<h:form>
+			<h:panelGroup>
+              <h:outputText value="autor" />
+                <h:selectOneMenu value="#{wykladKursyAc.user.username}" valueChangeListener="#{wykladKursyAc.zmienUser}" hideNoSelectionOption="false" >
+             	  	<f:selectItem itemLabel="wszyscy" itemValue=""/>
+                	<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+                  <a4j:ajax render="foty" execute="@this" event="change" />
+                </h:selectOneMenu>
+             </h:panelGroup>
+			</h:form>
+			
+			<h:form>
 			<rich:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty" rowKeyVar="nrstrony">
 					<h:column>
 						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">

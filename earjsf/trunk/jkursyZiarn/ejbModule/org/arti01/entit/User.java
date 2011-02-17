@@ -123,6 +123,10 @@ public class User implements Serializable {
 	@OrderBy("datadodania")
 	private List<Absolwforposty> absolwforposty;
     
+    @OneToMany(mappedBy="user")
+	@OrderBy("lp")
+	private List<Userfoty> userfoty;
+    
     public User() {
     }
 
@@ -259,7 +263,7 @@ public class User implements Serializable {
 		return absolwforposty;
 	}
 
-	public void setAbsolwforposty(List<Absolwforposty> absolwforposty) {
+	public void sewtAbsolwforposty(List<Absolwforposty> absolwforposty) {
 		this.absolwforposty = absolwforposty;
 	}
 
@@ -305,5 +309,13 @@ public class User implements Serializable {
 
 	public void setFotDoDodania(Integer fotDoDodania) {
 		this.fotDoDodania = fotDoDodania;
+	}
+
+	public List<Userfoty> getUserfoty() {
+		return userfoty;
+	}
+
+	public void setUserfoty(List<Userfoty> userfoty) {
+		this.userfoty = userfoty;
 	}
 }

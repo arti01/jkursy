@@ -20,6 +20,7 @@
 		<class>org.arti01.entit.Boksy</class>
 		<class>org.arti01.entit.Absolwforposty</class>
 		<class>org.arti01.entit.Absolwforwatki</class>
+		<class>org.arti01.entit.Userfoty</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>

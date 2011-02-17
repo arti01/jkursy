@@ -153,13 +153,19 @@ public class KursyAc implements Serializable {
 		return "fotyKursantow.xhtml";
 	}
 	
+	public void zmienUser(ValueChangeEvent event){
+		logger.info((String)event.getNewValue());
+		user.setUsername((String)event.getNewValue());
+		fotyKursantowSelect();
+	}
+	
 	public String fotyKursantowSelect(){
 		logger.info(user.getUsername());
 		fotyKursantow=new ArrayList<Lekcjafotykursant>();
 		for(Lekcja l:kurs.getLekcjas()){
 			if(lekcja==l||lekcja==null){
 				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
-					if(lfk.getUser().getUsername().equals(user.getUsername())) fotyKursantow.add(lfk);
+					if(lfk.getUser().getUsername().equals(user.getUsername())||user.getUsername()==null) fotyKursantow.add(lfk);
 				}
 			}
 		}
