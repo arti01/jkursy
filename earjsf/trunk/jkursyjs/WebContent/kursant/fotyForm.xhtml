@@ -33,6 +33,16 @@
 				<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}"/>
 			</h:panelGrid>
 			<hr size="1"/>
+			<h:form>
+			<h:panelGroup>
+              <h:outputText value="autor" />
+                <h:selectOneMenu value="#{kursantLekcjaAc.user.username}" valueChangeListener="#{kursantLekcjaAc.zmienUser}" hideNoSelectionOption="false" >
+             	  	<f:selectItem itemLabel="wszyscy" itemValue=""/>
+                	<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+                  <a4j:ajax render="foty" execute="@this" event="change" />
+                </h:selectOneMenu>
+             </h:panelGroup>
+			</h:form>
 		<h:form>
 			<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="foty">
 					<rich:column>
@@ -45,11 +55,12 @@
 							</a4j:mediaOutput>
 						</h:commandLink>
 						</rich:column>
-						<h:column>
+						<rich:column>
 							<h:panelGrid columns="1">
 							<h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
 								<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}"/>
 							</h:commandLink>
+							<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
 							<h:outputText value="dodana: #{fota.datadodaniaS}">
 								<f:convertDateTime pattern="dd-MM-yyyy"/>
 							</h:outputText>
@@ -58,18 +69,6 @@
 								<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
 							</h:commandLink>
 							</h:panelGrid>
-						</h:column>
-						<rich:column filterValue="#{kursantLekcjaAc.user.imieNazwisko}" filterExpression="#{kursantLekcjaAc.user.imieNazwisko}" >
-						<f:facet name="header">
-                    <h:panelGroup>
-                        <h:outputText value="autor" />
-                        <h:selectOneMenu value="#{kursantLekcjaAc.user.imieNazwisko}" valueChangeListener="#{kursantLekcjaAc.zmienUser}">
-                            <f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.imieNazwisko}"/>
-                            <a4j:ajax render="foty" execute="@this" event="blur" />
-                        </h:selectOneMenu>
-                    </h:panelGroup>
-                </f:facet>
-							<h:outputText value="#{fota.user.imieNazwisko}"/>
 						</rich:column>
 			</rich:dataTable>
 		</h:form>

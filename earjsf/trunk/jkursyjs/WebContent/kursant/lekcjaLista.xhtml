@@ -72,6 +72,7 @@
 			<hr/>
 			<h:commandLink value="idź do zdjęć kursantów" action="#{kursantLekcjaAc.fotyLekcji}">
 				<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
+				<f:setPropertyActionListener target="#{kursantLekcjaAc.user.username}" value=""/>
 			</h:commandLink>
 			<hr/>
 	</rich:column>

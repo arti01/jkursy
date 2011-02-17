@@ -87,8 +87,9 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public void zmienUser(ValueChangeEvent event){
-		logger.info(event);
-		
+		logger.info((String)event.getNewValue());
+		user.setUsername((String)event.getNewValue());
+		fotyKursantowFiltr();
 	}
 	
 	public String fotyKursantowFiltr(){
@@ -102,7 +103,10 @@ public class LekcjaAc implements Serializable{
 		for(Lekcja l:kursyAc.getKurs().getLekcjas()){
 			if(lekcja==l||lekcja==null){
 				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
-					if(lfk.getUser().getUsername().equals(user.getUsername())) listaFot.add(lfk);
+					logger.info(lfk.getDatadodania());
+					logger.info(lfk.getUser().getUsername()+user.getUsername());
+					if(lfk.getUser().getUsername().equals(user.getUsername())||user.getUsername()==null) listaFot.add(lfk);
+					logger.info(listaFot.size());
 				}
 			}
 		}
@@ -118,6 +122,7 @@ public class LekcjaAc implements Serializable{
 	}
 
 	public String fotaKursantaLekcji(){
+		logger.info(listaFot.size());
 		lekcja=fotaKursant.getLekcja();
 		setListaFot(lekcja.getLekcjafotykursant());
 		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
@@ -128,6 +133,7 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String fotaKursant(){
+		logger.info(listaFot.size());
 		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
 		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
@@ -146,6 +152,7 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String nextFotaKursant(){
+		logger.info(listaFot.size());
 		fotaKursant=getListaFot().get(getListaFot().indexOf(fotaKursant)+1);
 		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
 		else next=true;
