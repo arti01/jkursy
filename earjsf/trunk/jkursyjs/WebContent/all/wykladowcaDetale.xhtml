@@ -1,24 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<body>
-	<ui:composition template="/templates/template.xhtml">
-		<ui:define name="body">
-<h3>wykladowca</h3>
-
-<h:panelGrid columns="2">
-<h:outputLabel value="imię i nazwisko"/>
-<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}"/>
-<h:outputLabel value="o wykładowcy:"/>
-<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false"/>
-</h:panelGrid>
-
-
-</ui:define>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<h3>wykladowca</h3>
+<h:form>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="imię i nazwisko" />
+			<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" />
+			<h:commandLink action="#{kursyAc.userGaleria}">
+				<h:outputText value="galeria wykładowcy" />
+				<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{kursyAc.wykladowca}" />
+			</h:commandLink>
+			<h:outputLabel value="o wykładowcy:" />
+			<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false" />
+		</h:panelGrid>
+</h:form>
+	</ui:define>
 </ui:composition>
 </body>
 </html>

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
+import org.arti01.entit.Userfoty;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.UserImp;
@@ -31,6 +32,8 @@ public class KursyAc implements Serializable{
 	@EJB KursyImp kursyImp;
 	@EJB UserImp userImp;
 	@EJB RoleImp roleImp;
+	private Integer nrstrony;
+	private Userfoty uf=new Userfoty();
 	
 	public KursyAc() {
 		kurs=new Kursy();
@@ -43,8 +46,13 @@ public class KursyAc implements Serializable{
 		return "kursyLista";
 	}
 	
+public String userGaleriaDetale(){
+		nrstrony=(wykladowca.getUserfotyakcept().indexOf(uf))+1;
+		//logger.info("jestemmmm");
+		return "userGaleriaDetale";
+	}
+	
 	public String listA() {
-		logger.info("jestemmmm");
 		kursy=kursyImp.findAll();
 		allKursy.setWrappedData(kursy);
 		return null;
@@ -76,6 +84,11 @@ public class KursyAc implements Serializable{
 		if(username!=null)wykladowca.setUsername(username);
 		wykladowca=userImp.find(wykladowca);
 		return "wykladowcaDetale";
+	}
+	
+	public String userGaleria(){
+		wykladowca=userImp.find(wykladowca);
+		return "userGaleria";
 	}
 
 	public List<Kursy> getKursy() {
@@ -117,6 +130,22 @@ public class KursyAc implements Serializable{
 
 	public void setAllWykladowcy(ListDataModel<User> allWykladowcy) {
 		this.allWykladowcy = allWykladowcy;
+	}
+
+	public Integer getNrstrony() {
+		return nrstrony;
+	}
+
+	public void setNrstrony(Integer nrstrony) {
+		this.nrstrony = nrstrony;
+	}
+
+	public Userfoty getUf() {
+		return uf;
+	}
+
+	public void setUf(Userfoty uf) {
+		this.uf = uf;
 	}
 	
 	

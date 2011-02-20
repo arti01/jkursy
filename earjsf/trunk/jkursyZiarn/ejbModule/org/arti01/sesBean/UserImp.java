@@ -38,6 +38,7 @@ public class UserImp {
 	}
 	
 	public User find(User user) {
+		em.clear();
 		if (user.getUsername() != null) {
 			user = em.find(User.class, user.getUsername());
 			em.refresh(user);

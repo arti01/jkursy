@@ -1,0 +1,36 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+	Galeria Użytkownika
+	<h:panelGroup id="foty">
+	<h:form>
+			<a4j:repeat var="wykladowca" value="#{adminAkceptWyklAc.wykladowcy}">
+			<rich:panel rendered="#{wykladowca.userfotyakceptBez.size()!=0}">
+			<h:outputLabel for="wykladowca" value="wykładowca:"/>
+				<h:outputText value="#{wykladowca.imieNazwisko}" id="wykladowca"/>
+				<h:commandButton value="akceptuj wszystkie tego wykładowcy" action="#{adminAkceptWyklAc.akceptAll}">
+					<f:setPropertyActionListener target="#{adminAkceptWyklAc.wykladowca}" value="#{wykladowca}" />
+				</h:commandButton>
+					<a4j:repeat var="fota" value="#{wykladowca.userfotyakceptBez}">
+						<h:panelGrid columns="1">
+							<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
+								cacheable="false">
+							</a4j:mediaOutput>
+							<h:outputText value="#{fota.opis}" />
+							<h:outputText value="#{fota.datadodania}" />
+						</h:panelGrid>
+						<a4j:commandLink value="akceptuj" action="#{adminAkceptWyklAc.akcept}" render="foty">
+							<f:setPropertyActionListener target="#{adminAkceptWyklAc.fota}" value="#{fota}" />
+						</a4j:commandLink>
+					</a4j:repeat>
+				<hr/>
+				</rich:panel>
+			</a4j:repeat>
+		</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

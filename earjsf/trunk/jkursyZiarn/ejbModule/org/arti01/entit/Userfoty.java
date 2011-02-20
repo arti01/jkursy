@@ -31,13 +31,15 @@ public class Userfoty implements Serializable {
 	@Column(length=2147483647)
 	private String opis;
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name="username")
 	private User user;
 
 	private byte[] plik;
 
 	private byte[] plikmini;
+	
+	private boolean akcept;
 
     public Userfoty() {
     }
@@ -104,6 +106,14 @@ public class Userfoty implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isAkcept() {
+		return akcept;
+	}
+
+	public void setAkcept(boolean akcept) {
+		this.akcept = akcept;
 	}
 
 }

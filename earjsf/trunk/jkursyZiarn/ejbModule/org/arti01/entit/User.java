@@ -127,6 +127,12 @@ public class User implements Serializable {
 	@OrderBy("lp")
 	private List<Userfoty> userfoty;
     
+    @Transient
+    private List<Userfoty> userfotyakcept;
+    
+    @Transient
+    private List<Userfoty> userfotyakceptBez;
+    
     public User() {
     }
 
@@ -317,5 +323,21 @@ public class User implements Serializable {
 
 	public void setUserfoty(List<Userfoty> userfoty) {
 		this.userfoty = userfoty;
+	}
+
+	public List<Userfoty> getUserfotyakcept() {
+		userfotyakcept=new ArrayList<Userfoty>();
+		for(Userfoty f:getUserfoty()){
+			if(f.isAkcept()) userfotyakcept.add(f);
+		}
+		return userfotyakcept;
+	}
+
+	public List<Userfoty> getUserfotyakceptBez() {
+		userfotyakceptBez=new ArrayList<Userfoty>();
+		for(Userfoty f:getUserfoty()){
+			if(!f.isAkcept()) userfotyakceptBez.add(f);
+		}
+		return userfotyakceptBez;
 	}
 }
