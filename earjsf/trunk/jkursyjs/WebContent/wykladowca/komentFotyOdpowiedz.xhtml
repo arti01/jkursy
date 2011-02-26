@@ -1,31 +1,38 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
 		<body>
-			odpowiedz na pytanie:
-			<h:panelGrid columns="4">
-				<h:outputLabel for="autor" value="autor:"/>
-				<h:outputText id="autor" value="#{raportyAc.fotaKoment.user.imieNazwisko}"/>
-				<h:outputLabel for="datadodania" value="data dodania:"/>
-				<h:outputText id="datadodania" value="#{raportyAc.fotaKoment.datadodania}">
-					<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
-				</h:outputText>
-				<h:outputLabel for="kurs" value="kurs:"/>
-				<h:outputText id="kurs" value="#{raportyAc.fotaKoment.lekcjafotykursant.lekcja.kursy.nazwa}"/>
-				<h:outputLabel for="lekcja" value="lekcja:"/>
-				<h:outputText id="lekcja" value="#{raportyAc.fotaKoment.lekcjafotykursant.lekcja.tytul}"/>
-				<h:outputLabel for="tresc" value="treść pytania:"/>
-				<h:outputText id="tresc" value="#{raportyAc.fotaKoment.tresc}"/>
-			</h:panelGrid>
+		odpowiedz na pytanie:
+		<h:panelGrid columns="4">
+			<h:outputLabel for="autor" value="autor:" />
+			<h:outputText id="autor" value="#{raportyAc.fotaKoment.user.imieNazwisko}" />
+			<h:outputLabel for="datadodania" value="data dodania:" />
+			<h:outputText id="datadodania" value="#{raportyAc.fotaKoment.datadodania}">
+				<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET" />
+			</h:outputText>
+			<h:outputLabel for="kurs" value="kurs:" />
+			<h:outputText id="kurs" value="#{raportyAc.fotaKoment.lekcjafotykursant.lekcja.kursy.nazwa}" />
+			<h:outputLabel for="lekcja" value="lekcja:" />
+			<h:outputText id="lekcja" value="#{raportyAc.fotaKoment.lekcjafotykursant.lekcja.tytul}" />
+		</h:panelGrid>
+		<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintDuza}"
+			value="#{raportyAc.fotaKoment.lekcjafotykursant.idlekcjafotykursant}" cacheable="false">
+		</a4j:mediaOutput>
 		<h:form>
-			<h:inputTextarea value="#{raportyAc.komentFotyOdp.tresc}" cols="100" rows="10"/>
-			<br/>
-			<h:commandButton value="wyslij" action="#{raportyAc.komentFotyOdpowiedzZrob}"/>
+			<br />
+			<hr />
+			<h:outputLabel for="tresc" value="treść pytania:" />
+			<br />
+			<h:inputTextarea id="tresc" value="#{raportyAc.fotaKoment.tresc}" cols="100" rows="10" readonly="true" />
+			<br />
+			<hr />
+			<h:inputTextarea value="#{raportyAc.komentFotyOdp.tresc}" cols="100" rows="10" />
+			<br />
+			<h:commandButton value="wyslij" action="#{raportyAc.komentFotyOdpowiedzZrob}" />
 		</h:form>
 		</body>
 	</ui:define>

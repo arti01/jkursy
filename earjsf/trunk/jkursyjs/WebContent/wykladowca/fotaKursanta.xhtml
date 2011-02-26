@@ -23,6 +23,7 @@
 		<h:outputText value="dodana: #{fota.datadodaniaS}">
 			<f:convertDateTime pattern="dd-MM-yyyy"/>
 		</h:outputText>
+		<h:outputText value="opis: #{fota.opis}"/>
 		</h:panelGrid>
        </h:column>
     </rich:dataTable>
@@ -30,7 +31,7 @@
 	
 			<h5>dyskusja o focie</h5>
 			<h:form>
-				<h:panelGrid columns="4" id="wpis">
+				<h:panelGrid columns="2" id="wpis">
 					<h:message for="tresc" />
 					<h:inputTextarea id="tresc"
 						value="#{kursantLekcjaAc.komentarzFota.tresc}" cols="100" />

@@ -16,7 +16,7 @@ public class ResizeJpg {
    Logger logger = Logger.getLogger(ResizeJpg.class);
 
    
-   public byte[] zrobB(int var1, int var2, byte[] lf) {
+   public byte[] zTlem(int var1, int var2, byte[] lf) {
 	   int dlugosc=0;
 	   int wysokosc=0;
       try {
@@ -72,6 +72,55 @@ public class ResizeJpg {
       return null;
       }
    
+      
+   public byte[] zrobB(int var1, int var2, byte[] lf) {
+	   int dlugosc=0;
+	   int wysokosc=0;
+      try {
+    	  ByteArrayInputStream bain = new ByteArrayInputStream(lf);
+    	  BufferedInputStream buffin = new BufferedInputStream(bain);
+    	  BufferedImage var5 = ImageIO.read(buffin);
+         //BufferedImage var5 = ImageIO.read(new File(var3));
+         BufferedImage var10 = new BufferedImage(var1, var2, 1);
+         Graphics2D var11 = var10.createGraphics();
+         BufferedImage varD;
+         
+        	wysokosc=var2;
+        	 if (var2<var5.getHeight()){
+        		 dlugosc = var5.getWidth()*wysokosc/var5.getHeight();
+        		 wysokosc=0;
+        	 }
+        		 
+        	 else {
+        		 dlugosc = var5.getWidth();
+        		 wysokosc=(var2-var5.getHeight())/2;
+        	 }
+            logger.info("waskie"+dlugosc+"--"  + var5.getWidth()+"--" + wysokosc+"--"+var5.getHeight());
+            AffineTransform var14=AffineTransform.getTranslateInstance((var1-dlugosc)/2,wysokosc);
+            var11.setTransform(var14);
+            logger.info(dlugosc+"++"+var2);
+            if (var2<var5.getHeight()) varD = new BufferedImage(dlugosc,var2, 1);
+            else varD = new BufferedImage(var5.getWidth(), var5.getHeight(), 1);
+            logger.info(varD.getWidth()+ varD.getHeight());
+         
+ 
+         AffineTransform var12=AffineTransform.getScaleInstance((double)dlugosc/(double)var5.getWidth(),(double)dlugosc/(double)var5.getWidth());
+         var11.drawRenderedImage(var5, var12);
+         Graphics2D varD1 = varD.createGraphics();
+         varD1.drawRenderedImage(var5, var12);
+         ByteArrayOutputStream baout = new ByteArrayOutputStream();
+         BufferedOutputStream buffout = new BufferedOutputStream(baout);
+         logger.info(varD.getWidth()+ varD.getHeight());
+         ImageIO.write(varD, "jpg", buffout );
+         //lf.setPlikmini();
+         //ImageIO.write(var10, "JPG", new File(var4));
+         var11.dispose();
+         return baout.toByteArray();
+      } catch (Throwable var13) {
+         logger.error(var13);
+         }
+      return null;
+      }
 
    public void zrob(int var1, int var2, String var3, String var4) {
 	   int dlugosc=0;

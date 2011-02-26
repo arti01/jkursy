@@ -41,7 +41,8 @@
 						<h:outputText value="dodana: #{fota.datadodaniaS}">
 							<f:convertDateTime pattern="dd-MM-yyyy"/>
 						</h:outputText>
-						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}"/>
+						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}" styleClass="error"/>
+						<h:outputText value="lekcja: #{fota.lekcja.tytul}"/>
 						</h:panelGrid>
 					</h:column>
 			</rich:dataTable>

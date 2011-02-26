@@ -31,7 +31,7 @@ import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.StatyczneImp;
 import org.arti01.sesBean.UserImp;
 
-@ManagedBean(name="wykladKursyAc")
+@ManagedBean(name = "wykladKursyAc")
 @SessionScoped
 public class KursyAc implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -39,168 +39,185 @@ public class KursyAc implements Serializable {
 	private User zalogowany;
 	private Kursy kurs;
 	private Lekcja lekcja;
-	private DataModel<Lekcja> lekcje=new ListDataModel<Lekcja>();
-	@EJB LekacjaImp lekcjaImp;
-	@EJB KursyImp kursyImp;
-	private String errorText="";
-	@ManagedProperty(value="#{wykladImageUploadBean}") private ImageUploadBean iub;
-	@ManagedProperty(value="#{wykladPlikUploadBean}")private PlikUploadBean pub;
-	@ManagedProperty(value="#{wykladNewsyAc}")private NewsyAc wn;
-	@EJB RoleImp roleImp;
-	@EJB StatyczneImp statyczneImp;
-	@EJB UserImp userImp;
-	private Role role=new Role();
+	private DataModel<Lekcja> lekcje = new ListDataModel<Lekcja>();
+	@EJB
+	LekacjaImp lekcjaImp;
+	@EJB
+	KursyImp kursyImp;
+	private String errorText = "";
+	@ManagedProperty(value = "#{wykladImageUploadBean}")
+	private ImageUploadBean iub;
+	@ManagedProperty(value = "#{wykladPlikUploadBean}")
+	private PlikUploadBean pub;
+	@ManagedProperty(value = "#{wykladNewsyAc}")
+	private NewsyAc wn;
+	@EJB
+	RoleImp roleImp;
+	@EJB
+	StatyczneImp statyczneImp;
+	@EJB
+	UserImp userImp;
+	private Role role = new Role();
 	private Statyczne strona;
-	private User user=new User();
-	
+	private User user = new User();
+
 	private Lekcjafotykursant fotaKursant;
-	private List<Lekcjafotykursant> fotyKursantow=new ArrayList<Lekcjafotykursant>();
-	
-	public String kursForm(){
-		errorText="";
-		kurs=kursyImp.find(kurs);
+	private List<Lekcjafotykursant> fotyKursantow = new ArrayList<Lekcjafotykursant>();
+
+	public String kursForm() {
+		errorText = "";
+		kurs = kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
 		wn.setKurs(kurs);
-		//logger.info(kurs.getNazwa());
-		//logger.info(kurs.getLekcjeLpAll());
+		// logger.info(kurs.getNazwa());
+		// logger.info(kurs.getLekcjeLpAll());
 		return "kursyForm";
 	}
-	
-	public String lekcjaFormNew(){
-		errorText="";
-		lekcja=new Lekcja();
+
+	public String lekcjaObsluga() {
+		return "lekcjaObsluga";
+	}
+
+	public String lekcjaFormNew() {
+		errorText = "";
+		lekcja = new Lekcja();
 		return "lekcjaForm";
 	}
-	
-	public String statyczna(){
-		errorText="";
+
+	public String statyczna() {
+		errorText = "";
 		logger.info(strona.getTytul());
-		strona =statyczneImp.find(strona);
+		strona = statyczneImp.find(strona);
 		logger.info(strona.getTytul());
 		return "/wykladowca/statyczneDetale.xhtml";
 	}
-	
-	public String lekcjaForm(){
-		errorText="";
+
+	public String lekcjaForm() {
+		errorText = "";
 		logger.info(lekcja.getTytul());
 		return "lekcjaForm";
 	}
-	
-	public String lekcjaDodaj(){
-		errorText="";
+
+	public String lekcjaDodaj() {
+		errorText = "";
 		logger.info("lekcjaDodaj");
 		lekcja.setKursy(kurs);
 		lekcja.setDatazmiany(new Timestamp(new Date().getTime()));
-		if (lekcja.getIdlekcja()!=null) {// edycja
+		if (lekcja.getIdlekcja() != null) {// edycja
 			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
 			lekcjaImp.update(lekcja);
+		} else {
+			// logger.info(lekcjaImp.getLpAll(kurs));
+			if (kurs.getLekcjeLpAll().size() == 0)
+				lekcja.setLp(1);
+			else
+				lekcja.setLp(Collections.max(kurs.getLekcjeLpAll()) + 1);
+			lekcjaImp.insert(lekcja);
 		}
-		else{
-			//logger.info(lekcjaImp.getLpAll(kurs));
-			if(kurs.getLekcjeLpAll().size()==0) lekcja.setLp(1);
-			else lekcja.setLp(Collections.max(kurs.getLekcjeLpAll())+1);
-			lekcjaImp.insert(lekcja);			
-		}
-		kurs=kursyImp.find(kurs);
+		kurs = kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
 		return "kursyForm";
 	}
-	
-	public String foty(){
-		errorText="";
+
+	public String foty() {
+		errorText = "";
 		logger.info("obsluga zdjec");
-		//logger.info(lekcja.getFotyLpAll());
+		// logger.info(lekcja.getFotyLpAll());
 		iub.setLekcja(lekcjaImp.find(lekcja));
 		iub.setFoty(new ArrayList<Lekcjafoty>(lekcja.getLekcjafoties()));
 		return "fotyForm";
 	}
-	
-	public String pliki(){
-		errorText="";
+
+	public String pliki() {
+		errorText = "";
 		logger.info("obsluga plikow");
 		pub.setLekcja(lekcjaImp.find(lekcja));
 		pub.setPliki(new ArrayList<Lekcjapliki>(lekcja.getLekcjaplikis()));
-		//logger.info(lekcja.getLekcjaplikis().size());
+		// logger.info(lekcja.getLekcjaplikis().size());
 		return "plikiForm.xhtml";
 	}
-	
-	public String lekcjaUsun(){
-		errorText="";
-			try {
-				lekcjaImp.delete(lekcja);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				errorText="nieudane usunięcie - lekcja zawiera zdjęcia, komentarze, foty kursantów - należy je usunąć";
-			}
-			kurs=kursyImp.find(kurs);
-			lekcje.setWrappedData(kurs.getLekcjas());
+
+	public String lekcjaUsun() {
+		errorText = "";
+		try {
+			lekcjaImp.delete(lekcja);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorText = "nieudane usunięcie - lekcja zawiera zdjęcia, komentarze, foty kursantów - należy je usunąć";
+		}
+		kurs = kursyImp.find(kurs);
+		lekcje.setWrappedData(kurs.getLekcjas());
 		return "kursyForm";
 	}
-	
-	public String lekcjaPodglad(){
-		errorText="";
+
+	public String lekcjaPodglad() {
+		errorText = "";
 		return "lekcja.xhtml";
 	}
-	
-	public String fotaKursant(){
-		errorText="";
+
+	public String fotaKursant() {
+		errorText = "";
 		return "fotyKursantow.xhtml";
 	}
-	
-	public String fotyKursantow(){
-		fotyKursantow=lekcja.getLekcjafotykursant();
-		errorText="";
+
+	public String fotyKursantow() {
+		fotyKursantow = lekcja.getLekcjafotykursant();
+		errorText = "";
 		return "fotyKursantow.xhtml";
 	}
-	
-	public void zmienUser(ValueChangeEvent event){
-		logger.info((String)event.getNewValue());
-		user.setUsername((String)event.getNewValue());
+
+	public void zmienUser(ValueChangeEvent event) {
+		logger.info((String) event.getNewValue());
+		user = new User();
+		user.setUsername((String) event.getNewValue());
 		fotyKursantowSelect();
 	}
-	
-	public String fotyKursantowSelect(){
+
+	public String fotyKursantowSelect() {
 		logger.info(user.getUsername());
-		fotyKursantow=new ArrayList<Lekcjafotykursant>();
-		for(Lekcja l:kurs.getLekcjas()){
-			if(lekcja==l||lekcja==null){
-				for(Lekcjafotykursant lfk:l.getLekcjafotykursant()){
-					if(lfk.getUser().getUsername().equals(user.getUsername())||user.getUsername()==null) fotyKursantow.add(lfk);
+		fotyKursantow = new ArrayList<Lekcjafotykursant>();
+		for (Lekcja l : kurs.getLekcjas()) {
+			if (lekcja == l || lekcja == null) {
+				for (Lekcjafotykursant lfk : l.getLekcjafotykursant()) {
+					if (lfk.getUser().getUsername().equals(user.getUsername()) || user.getUsername() == null)
+						fotyKursantow.add(lfk);
 				}
 			}
 		}
 		return "fotyKursantow.xhtml";
 	}
-	
-	
-	public String fotyKursantowNieSkoment(){
-		fotyKursantow=lekcja.getFotyKursNieSkoment();
-		errorText="";
+
+	public String fotyKursantowNieSkoment() {
+		fotyKursantow = lekcja.getFotyKursNieSkoment();
+		errorText = "";
 		return "fotyKursantow.xhtml";
 	}
-	
-	public void zmienLekcjaLp(ValueChangeEvent event) throws IOException{
-		errorText="";
+
+	public void zmienLekcjaLp(ValueChangeEvent event) throws IOException {
+		errorText = "";
 		logger.info(event.getNewValue());
 		logger.info(event.getOldValue());
-		lekcja=lekcje.getRowData();
+		lekcja = lekcje.getRowData();
 		logger.info(lekcja);
 		logger.info(lekcja.getTytul());
-		lekcjaImp.update(lekcja, (Integer)event.getNewValue());
-		kurs=kursyImp.find(kurs);
+		lekcjaImp.update(lekcja, (Integer) event.getNewValue());
+		kurs = kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
 		FacesContext.getCurrentInstance().getExternalContext().redirect("kursyForm.xhtml");
 	}
-	
+
 	public User getZalogowany() {
 		return zalogowany;
 	}
+
 	public void setZalogowany(User zalogowany) {
 		this.zalogowany = zalogowany;
 	}
+
 	public Kursy getKurs() {
 		return kurs;
 	}
+
 	public void setKurs(Kursy kurs) {
 		this.kurs = kurs;
 	}
@@ -243,7 +260,7 @@ public class KursyAc implements Serializable {
 
 	public Role getRole() {
 		role.setRola(Role.WYKLADOWCA);
-		role=roleImp.find(role);
+		role = roleImp.find(role);
 		return role;
 	}
 

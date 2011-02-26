@@ -1,175 +1,153 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	<ui:composition template="/templates/templatewyklad.xhtml">
-		<ui:define name="body">
-<h:body>
-kursy detale:)
-<br/>
-nazwa:
-<h2><h:outputText value="#{wykladKursyAc.kurs.nazwa}"/></h2>
-krótki opis:
-<h3><h:outputText value="#{wykladKursyAc.kurs.opisKrotki}"/></h3>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/templatewyklad.xhtml">
+	<ui:define name="body">
+		<h:body>
+			<h2>nazwa kursu:<h:outputText value="#{wykladKursyAc.kurs.nazwa}" /></h2>
 
-<h:panelGrid columns="1">
-od:<h:outputText value="#{wykladKursyAc.kurs.dataod}"><f:convertDateTime type="date"/> </h:outputText>
-do:<h:outputText value="#{wykladKursyAc.kurs.datado}"><f:convertDateTime type="date"/> </h:outputText>
-</h:panelGrid>
-<h:form>
-	<h:commandButton value="dodaj nową lekcję" action="#{wykladKursyAc.lekcjaFormNew}"/>
-</h:form>
-<h2><h:outputText value="#{wykladKursyAc.errorText}"  styleClass="error"/></h2>
-<hr/>
-<h:form>
-	<h:selectOneMenu value="#{wykladKursyAc.user.username}" >
-		<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
-	</h:selectOneMenu>
-	<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}">
-		<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{null}"/>
-	</h:commandButton>
-</h:form>
-<hr/>
+			<h3>krótki opis:<h:outputText value="#{wykladKursyAc.kurs.opisKrotki}" /></h3>
 
-<h:form>
-<h:dataTable var="lekcja" value="#{wykladKursyAc.lekcje}">
-<h:column>
-<f:facet name="header"><h:outputText value="lp"/></f:facet>
-	<h:selectOneMenu value="#{lekcja.lp}" onchange="submit();" valueChangeListener="#{wykladKursyAc.zmienLekcjaLp}">
-		<f:selectItems value="#{wykladKursyAc.kurs.lekcjeLpAll}"/>
-	</h:selectOneMenu>
-	<h:commandButton value="usuń lekcję" action="#{wykladKursyAc.lekcjaUsun}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-	</h:commandButton>
-</h:column>
-
-<h:column>
-<f:facet name="header"><h:outputText value="widoczna"/></f:facet>
-<h:outputText value="Tak" rendered="#{lekcja.widoczna}"/>
-<h:outputText value="Nie" rendered="#{!lekcja.widoczna}"/>
-</h:column>
-
-<h:column>
-<f:facet name="header"><h:outputText value="tytuł (data zmiany)"/></f:facet>
-	<h:commandLink action="#{wykladKursyAc.lekcjaForm}">
-		<h:outputText value="#{lekcja.tytul} (#{lekcja.datazmiany})">
-			<f:convertDateTime pattern="yyyy-MM-dd HH:mm"/>
-		</h:outputText>
-		<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-	</h:commandLink>
-	<hr/>
-	<h5>pytania do wykładowcy:</h5>
-		<ui:repeat var="koment" value="#{lekcja.dowykladowcy}">
-		<h:panelGrid columns="1">
-			<h:outputText value="autor: #{koment.user.imieNazwisko}" />
-			<h:outputText value="#{koment.datadodania}">
-				<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
-			</h:outputText>
-			<h:commandLink value="odpowiedz"
-				action="#{raportyAc.komentOdpowiedz}">
-				<f:setPropertyActionListener
-					target="#{raportyAc.lekcjaKoment}" value="#{koment}" />
-			</h:commandLink>
-			<hr/>
-		</h:panelGrid>
-		</ui:repeat> 
-	</h:column>
-	<h:column>
-		<h:commandLink value="obsługa zdjęć (ilość: #{lekcja.lekcjafoties.size()})" action="#{wykladKursyAc.foty}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-			<f:setPropertyActionListener target="#{wykladImageUploadBean.upload}" value="false"/>
-		</h:commandLink>
-	</h:column>
-	<h:column>
-		<h:commandLink value="obsługa załączników (plików: #{lekcja.lekcjaplikis.size()})" action="#{wykladKursyAc.pliki}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-			<f:setPropertyActionListener target="#{wykladPlikUploadBean.upload}" value="false"/>
-		</h:commandLink>
-	</h:column>
-	<h:column>
-		<h:commandLink value="podgląd lekcji" action="#{wykladKursyAc.lekcjaPodglad}">
-			<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}"/>
-		</h:commandLink>
-	</h:column>
-	<h:column>
-	<f:facet name="header"><h:outputText value="zdjęcia kursantów"/></f:facet>
-	<h:panelGrid columns="1">
-	<h:commandLink value="pokaż zdjęcia (ilość: #{lekcja.lekcjafotykursant.size()})" action="#{wykladKursyAc.fotyKursantow}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-	</h:commandLink>
-	<hr/>
-	<h:outputText value="ostatnie z: #{lekcja.lastFota.datadodaniaS}"/>
-	<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}"/>
-	<hr/>
-	<h:commandLink value="zdjęc bez komentarza wykładowcy: #{lekcja.fotyKursNieSkoment.size()})" action="#{wykladKursyAc.fotyKursantowNieSkoment}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-	</h:commandLink>
-	</h:panelGrid>
-	</h:column>
-	
-	<h:column>
-	<f:facet name="header"><h:outputText value="komentarze do zdjęć kursantów"/></f:facet>
-	<h:panelGrid columns="1">
-	<h:commandLink value="komentarzy: #{lekcja.iloscKolmentFota}" action="#{wykladKursyAc.fotyKursantow}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}"/>
-	</h:commandLink>
-	<hr/>
-	<h:outputText value="ostatni z: #{lekcja.lastKomentFota.datadodaniaS}"/>
-	<hr/>
-	<h5>pytania do wykładowcy:</h5>
-	<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
-		<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
-			<h:panelGrid columns="1">
-				<h:outputText value="autor: #{koment.user.imieNazwisko}" />
-				<h:outputText value="#{koment.datadodania}">
-					<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
+			<h:panelGrid columns="2">
+od:<h:outputText value="#{wykladKursyAc.kurs.dataod}">
+					<f:convertDateTime type="date" />
 				</h:outputText>
-				<h:commandLink value="odpowiedz"
-					action="#{raportyAc.komentFotyOdpowiedz}">
-					<f:setPropertyActionListener
-						target="#{raportyAc.fotaKoment}" value="#{koment}" />
-				</h:commandLink>
-				<hr/>
+do:<h:outputText value="#{wykladKursyAc.kurs.datado}">
+					<f:convertDateTime type="date" />
+				</h:outputText>
 			</h:panelGrid>
-		</ui:repeat>
-		</ui:repeat>
-	</h:panelGrid>
-	</h:column>
-</h:dataTable>
-</h:form>
-<hr/>
 
-<h2>Newsy kursu</h2>
-<h:form>
-	<h:commandButton value="dodaj nowy news" action="#{wykladNewsyAc.formNew}"/>
-</h:form>
+			<h2><h:outputText value="#{wykladKursyAc.errorText}" styleClass="error" /></h2>
+			<hr />
+			<h2>Wszystkie zdjęcia kursantów tego kursu</h2>
+			<h:form>
+				<h:selectOneMenu value="#{wykladKursyAc.user.username}">
+					<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}"
+						itemValue="#{kursant.username}" />
+				</h:selectOneMenu>
+				<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{wykladKursyAc.fotyKursantowSelect}">
+					<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{null}" />
+				</h:commandButton>
+			</h:form>
+			<hr />
 
-<h:form>
-<h:dataTable var="news" value="#{wykladKursyAc.wn.allNewsy}">
-<h:column>
-<f:facet name="header">tytuł</f:facet>
-<h:commandLink action="#{wykladKursyAc.wn.form}">
-	<h:outputText value="#{news.tytul}"/>
-	<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}"/>
-</h:commandLink>
-</h:column>
-<h:column>
-<f:facet name="header">data dodania</f:facet>
-<h:outputText value="#{news.datadodania}">
-	<f:convertDateTime pattern="yyyy-MM-dd"/>
-</h:outputText>
-</h:column>
-<h:column>
-		<h:commandLink value="usuń news" action="#{wykladKursyAc.wn.usun}">
-			<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}"/>
-		</h:commandLink>
-	</h:column>
-</h:dataTable>
-</h:form>
+			<h2>Newsy kursu</h2>
+			<h:form>
+				<h:commandButton value="dodaj nowy news" action="#{wykladNewsyAc.formNew}" />
+			</h:form>
+<br/>
+			<h:form>
+				<h:dataTable var="news" value="#{wykladKursyAc.wn.allNewsy}">
+					<h:column>
+						<f:facet name="header">tytuł</f:facet>
+						<h:commandLink action="#{wykladKursyAc.wn.form}">
+							<h:outputText value="#{news.tytul}" />
+							<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header">data dodania</f:facet>
+						<h:outputText value="#{news.datadodania}">
+							<f:convertDateTime pattern="yyyy-MM-dd" />
+						</h:outputText>
+					</h:column>
+					<h:column>
+						<h:commandLink value="usuń news" action="#{wykladKursyAc.wn.usun}">
+							<f:setPropertyActionListener target="#{wykladKursyAc.wn.news}" value="#{news}" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+			<hr />
+			<br/>
+			<h:form>
+				<h:commandButton value="dodaj nową lekcję" action="#{wykladKursyAc.lekcjaFormNew}" />
+			</h:form>
+			<hr />
+			<h:form>
+				<h:dataTable var="lekcja" value="#{wykladKursyAc.lekcje}">
+					<f:facet name="header">
+							zarządzanie lekcjami
+						</f:facet>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="lp" />
+						</f:facet>
+						<h:selectOneMenu value="#{lekcja.lp}" onchange="submit();"
+							valueChangeListener="#{wykladKursyAc.zmienLekcjaLp}">
+							<f:selectItems value="#{wykladKursyAc.kurs.lekcjeLpAll}" />
+						</h:selectOneMenu>
+						<h:commandButton value="usuń lekcję" action="#{wykladKursyAc.lekcjaUsun}">
+							<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}" />
+						</h:commandButton>
+					</h:column>
 
-</h:body>
-</ui:define>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="widoczna" />
+						</f:facet>
+						<h:outputText value="Tak" rendered="#{lekcja.widoczna}" />
+						<h:outputText value="Nie" rendered="#{!lekcja.widoczna}" />
+					</h:column>
+
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="tytuł (data zmiany)" />
+						</f:facet>
+						<h:outputText value="#{lekcja.tytul}" />
+						<br />
+						<h:outputText value="#{lekcja.datazmiany}">
+							<f:convertDateTime pattern="yyyy-MM-dd HH:mm" />
+						</h:outputText>
+						<br />
+						<h:commandLink action="#{wykladKursyAc.lekcjaForm}" value="edytuj lekcję">
+							<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="informacje" />
+						</f:facet>
+						<h:commandLink action="#{wykladKursyAc.lekcjaObsluga}" value="obsługa lekcji">
+							<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}" />
+						</h:commandLink>
+						<hr />
+						<h:outputText value="są pytania do wykładowcy dotyczące lekcji (#{lekcja.dowykladowcy.size()})"
+							rendered="#{lekcja.dowykladowcy.size()!=0}" />
+						<hr />
+						<h:outputText
+							value="są zdjęcia kursantów bez komentarza wykładowcy (#{lekcja.fotyKursNieSkoment.size()})"
+							rendered="#{lekcja.fotyKursNieSkoment.size()!=0}" />
+						<hr />
+						<h:outputText value="są pytania do wykładowcy dotyczące zdjęć (#{lekcja.komentDoFotBezOdp.size()})"
+							rendered="#{lekcja.komentDoFotBezOdp.size()!=0}" />
+						<hr />
+					</h:column>
+					<h:column>
+						<h:commandLink value="obsługa zdjęć (ilość: #{lekcja.lekcjafoties.size()})"
+							action="#{wykladKursyAc.foty}">
+							<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}" />
+							<f:setPropertyActionListener target="#{wykladImageUploadBean.upload}" value="false" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<h:commandLink value="obsługa załączników (plików: #{lekcja.lekcjaplikis.size()})"
+							action="#{wykladKursyAc.pliki}">
+							<f:setPropertyActionListener target="#{wykladKursyAc.lekcja}" value="#{lekcja}" />
+							<f:setPropertyActionListener target="#{wykladPlikUploadBean.upload}" value="false" />
+						</h:commandLink>
+					</h:column>
+					<h:column>
+						<h:commandLink value="podgląd lekcji" action="#{wykladKursyAc.lekcjaPodglad}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
+						</h:commandLink>
+					</h:column>
+				</h:dataTable>
+			</h:form>
+			<hr />
+
+		</h:body>
+	</ui:define>
 </ui:composition>
 </html>
