@@ -54,7 +54,7 @@ public class Lekcja implements Serializable {
 	private Kursy kursy;
 
 	//bi-directional many-to-one association to Lekcjafoty
-	@OneToMany(mappedBy="lekcja")
+	@OneToMany(mappedBy="lekcja", cascade=CascadeType.PERSIST)
 	@OrderBy("lp")
 	private List<Lekcjafoty> lekcjafoties;
 	
@@ -63,7 +63,7 @@ public class Lekcja implements Serializable {
 	private List<Lekcjafotykursant> lekcjafotykursant;
 
 	//bi-directional many-to-one association to Lekcjapliki
-	@OneToMany(mappedBy="lekcja")
+	@OneToMany(mappedBy="lekcja", cascade=CascadeType.ALL)
 	@OrderBy("opis")
 	private List<Lekcjapliki> lekcjaplikis;
 	
@@ -82,6 +82,9 @@ public class Lekcja implements Serializable {
 	
 	@Transient
 	private Integer iloscKolmentFota=0;
+	
+	@Transient
+	private List<Fotykursantkoment> komentDoFotBezOdp;
 	
 	public Integer getIdlekcja() {
 		return this.idlekcja;
@@ -257,5 +260,17 @@ public class Lekcja implements Serializable {
 
 	public void setLekcjafotykursant(List<Lekcjafotykursant> lekcjafotykursant) {
 		this.lekcjafotykursant = lekcjafotykursant;
+	}
+
+	public List<Fotykursantkoment> getKomentDoFotBezOdp() {
+		komentDoFotBezOdp=new ArrayList<Fotykursantkoment>();
+		for(Lekcjafotykursant lfk:lekcjafotykursant){
+			komentDoFotBezOdp.addAll(lfk.getDowykladowcy());
+		}
+		return komentDoFotBezOdp;
+	}
+
+	public void setKomentDoFotBezOdp(List<Fotykursantkoment> komentDoFotBezOdp) {
+		this.komentDoFotBezOdp = komentDoFotBezOdp;
 	}
 }

@@ -45,17 +45,17 @@
 
 <context-param>
 <param-name>org.richfaces.enableControlSkinning</param-name>
-<param-value>false</param-value>
+<param-value>true</param-value>
 </context-param>
 
 <context-param>
 <param-name>org.richfaces.enableControlSkinningClasses</param-name>
-<param-value>false</param-value>
+<param-value>true</param-value>
 </context-param>
 
 <context-param>
 <param-name>org.richfaces.skin</param-name>
-<param-value>plain</param-value>
+<param-value>classic</param-value>
 </context-param>
 
 

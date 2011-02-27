@@ -3,6 +3,8 @@ package org.arti01.sesBean;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -10,6 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
+import org.arti01.entit.Lekcjafoty;
 
 @Stateless
 @LocalBean
@@ -18,6 +21,7 @@ public class LekacjaImp implements Serializable{
 	@PersistenceContext
 	EntityManager em;
 	Lekcja lekcja;
+	@EJB KursyImp ki;
 	
 	@SuppressWarnings("unchecked")
 	public List<Lekcja> getFindAll() {
@@ -46,11 +50,13 @@ public class LekacjaImp implements Serializable{
 		return fkk; 
 	}*/
 	
+	
 	public void insert(Lekcja lekcja) {
-		Kursy kursy=lekcja.getKursy();
+		Kursy kursy=ki.find(lekcja.getKursy());
 		if(kursy.getLekcjeLpAll().size()==0) lekcja.setLp(1);
 		else lekcja.setLp(Collections.max(kursy.getLekcjeLpAll())+1);
 		em.persist(lekcja);
+		em.flush();
 	}
 	
 	@SuppressWarnings("unchecked")

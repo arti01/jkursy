@@ -1,5 +1,4 @@
 package org.arti01.entit;
-
 import java.io.Serializable;
 import javax.persistence.*;
 import org.hibernate.validator.constraints.NotEmpty;

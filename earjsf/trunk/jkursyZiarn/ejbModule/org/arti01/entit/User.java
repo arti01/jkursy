@@ -133,6 +133,9 @@ public class User implements Serializable {
     @Transient
     private List<Userfoty> userfotyakceptBez;
     
+    @Transient
+    private Userfoty pierwsza;
+    
     public User() {
     }
 
@@ -339,5 +342,16 @@ public class User implements Serializable {
 			if(!f.isAkcept()) userfotyakceptBez.add(f);
 		}
 		return userfotyakceptBez;
+	}
+
+	public Userfoty getPierwsza() {
+		for(Userfoty f:getUserfotyakcept()){
+			if(f.getLp()==1) pierwsza=f;
+		}
+		return pierwsza;
+	}
+
+	public void setPierwsza(Userfoty pierwsza) {
+		this.pierwsza = pierwsza;
 	}
 }
