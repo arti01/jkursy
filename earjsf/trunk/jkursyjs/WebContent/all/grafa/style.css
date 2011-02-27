@@ -1,12 +1,18 @@
 /* Set styles for body and head */
+
+
+
 body
 {
 	margin: 0 auto;
 	padding: 0;
 	font-size: 76%;
+	font-size: 13px;
 	font-family: "georgia", serif;
 	background-color: #ffffff;
+	
 }
+
 
 #container
 {
@@ -163,9 +169,9 @@ body
 #main
 {
 	float: left;
-        margin: 0 0 10px 0;
+    margin: 0 0 10px 0;
 	padding: 0;
-        width: 750px;
+    width: 750px;
 	color: #0F0F0C;
 	font-size: 1.1em;
 	line-height: 1.3em;
@@ -222,7 +228,7 @@ body
 	color: #0F0F0C;
 	margin: 0;
 	padding: 0 0 10px 0;
-	font-size: 1,1em;
+	font-size: 1.1em;
         font-style: italic;
 	text-align: left;
 	

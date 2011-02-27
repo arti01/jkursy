@@ -3,29 +3,44 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 <body>
-<ui:composition template="/templates/template.xhtml">
-	<ui:define name="body">
-<h3>Wykładowca:</h3>
-<div>
-<h:form>
-			<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintDuza}" value="#{kursyAc.wykladowca.pierwsza.iduserfoty}"
-						cacheable="false"  rendered="#{kursyAc.wykladowca.pierwsza.iduserfoty!=null}" style="width:160px;">
+	<ui:composition template="/templates/template.xhtml">
+		<ui:define name="body">
+			<h3>Wykładowca:</h3>
+			<div>
+				<h:form>
+					<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintDuza}"
+						value="#{kursyAc.wykladowca.pierwsza.iduserfoty}" cacheable="false"
+						rendered="#{kursyAc.wykladowca.pierwsza.iduserfoty!=null}" style="width:160px;">
 					</a4j:mediaOutput>
-					<h3><h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" /></h3>
+					<h3>
+						<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" />
+					</h3>
 					<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false" />
-			<div id="galeria">
-			<h:commandLink action="#{kursyAc.userGaleria}">
+					<div id="galeria">
+						<h:commandLink action="#{kursyAc.userGaleria}">
 				Galeria Wykładowcy &#8594;
 				<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{kursyAc.wykladowca}" />
-			</h:commandLink>
+						</h:commandLink>
+					</div>
+				</h:form>
 			</div>
-</h:form>
-</div>
-	</ui:define>
-</ui:composition>
+			to poniżej to jeden z wariantów, drugi to galeria na oddzielnej stronie
+			<h:form>
+			<div id="miniatury">
+				<ui:repeat var="fota" value="#{kursyAc.wykladowca.userfotyakcept}">
+					<h:commandLink action="#{kursyAc.userGaleriaDetale}">
+						<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
+							cacheable="false">
+						</a4j:mediaOutput>
+						<f:setPropertyActionListener target="#{kursyAc.uf}" value="#{fota}" />
+					</h:commandLink>
+				</ui:repeat>
+			</div>
+		</h:form>
+		</ui:define>
+	</ui:composition>
 </body>
 </html>
 
