@@ -29,6 +29,7 @@
 						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.listaFot}" value="#{wykladKursyAc.fotyKursantow}"/>
 							<a4j:mediaOutput element="img"
 								createContent="#{kursantLekcjaAc.paintBazy}"
 								value="#{fota.idlekcjafotykursant}" cacheable="false">

@@ -1,39 +1,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
-<h3>Lista pytań do wykładowcy (zdjęcia kursantów)</h3>
-			<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
-					<ui:repeat var="lekcja" value="#{kurs.lekcjas}">
-							<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}">
-							<h:form>
-							<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
-								<h:panelGrid columns="5">
-								<h:outputText value="lekcja: #{lekcja.tytul} "/>
-								<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
-									<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{koment.lekcjafotykursant}"/>
-								</h:commandLink>
-								<h:outputText value="autor: #{koment.user.imieNazwisko} " />
+		<h3>Lista pytań do wykładowcy (zdjęcia kursantów)</h3>
+		<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
+			<ui:repeat var="lekcja" value="#{kurs.lekcjas}">
+			<br/>
+				<h4><h:outputText value="lekcja: #{lekcja.tytul}" rendered="#{lekcja.lekcjafotykursant.size()!=0}"/></h4>
+				<ui:repeat var="lekcjafotykursant" value="#{lekcja.lekcjafotykursant}"  rendered="#{lekcja.lekcjafotykursant.size()!=0}">
+					<h:form>
+						<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
+							<h:panelGrid columns="1">
+								<h:outputText value="autor: #{koment.user.imieNazwisko}" />
 								<h:outputText value="#{koment.datadodania}">
-									<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET"/>
+									<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET" />
 								</h:outputText>
-								<h:commandLink value="odpowiedz"
-									action="#{raportyAc.komentFotyOdpowiedz}">
-									<f:setPropertyActionListener
-										target="#{raportyAc.fotaKoment}" value="#{koment}" />
+								<h:commandLink value="odpowiedz" action="#{raportyAc.komentFotyOdpowiedz}">
+									<f:setPropertyActionListener target="#{raportyAc.fotaKoment}" value="#{koment}" />
 								</h:commandLink>
+								<hr />
 							</h:panelGrid>
-							</ui:repeat>
-							</h:form>
-							</ui:repeat>
-					</ui:repeat>
+						</ui:repeat>
+					</h:form>
+				</ui:repeat>
 			</ui:repeat>
+		</ui:repeat>
 	</ui:define>
 </ui:composition>
 </html>

@@ -43,8 +43,7 @@ public class User implements Serializable {
 	@Size(min=3, max=255)
 	private String imieNazwisko;
 
-	@Column(nullable=false, length=2147483647)
-	@Size(min=2, max=255)
+	@Column(nullable=true, length=2147483647)
 	private String miasto;
 
 	@Column(nullable=true, length=2147483647)
@@ -54,15 +53,13 @@ public class User implements Serializable {
 	@Column(length=2147483647)
 	private String opis;
 
-	@Column(nullable=false, length=2147483647)
-	@Size(min=2, max=255)
+	@Column(nullable=true, length=2147483647)
 	private String tel1;
 
-	@Column(nullable=false, length=2147483647)
-	@Size(min=2, max=255)
+	@Column(nullable=true, length=2147483647)
 	private String ulica;
 
-	@Column(nullable=false, length=50)
+	@Column(nullable=true, length=50)
 	@Size(min=2, max=15)
 	private String userpass;
 
@@ -106,6 +103,18 @@ public class User implements Serializable {
 			}
 		)
 	private List<Kursy> kursies;
+    
+    @ManyToMany(cascade={CascadeType.MERGE})
+	@JoinTable(
+		name="kursy_rezerwacje"
+		, joinColumns={
+			@JoinColumn(name="username", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="idkursy", nullable=false)
+			}
+		)
+	private List<Kursy> rezerwacje;
     
     @OneToMany(mappedBy="user")
 	@OrderBy("datadodania")
@@ -353,5 +362,13 @@ public class User implements Serializable {
 
 	public void setPierwsza(Userfoty pierwsza) {
 		this.pierwsza = pierwsza;
+	}
+
+	public List<Kursy> getRezerwacje() {
+		return rezerwacje;
+	}
+
+	public void setRezerwacje(List<Kursy> rezerwacje) {
+		this.rezerwacje = rezerwacje;
 	}
 }

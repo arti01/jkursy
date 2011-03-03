@@ -56,8 +56,8 @@ public class LekcjaAc implements Serializable{
 	@EJB LekcjafotykursantImp fotaKursantImp;
 	private Fotykursantkoment komentarzFota=new Fotykursantkoment();
 	@EJB FotykursantkomentImp fkki;
-	private boolean next;
-	private boolean prev;
+	private boolean next=true;
+	private boolean prev=true;
 	private User user=new User();
 	private List<Lekcjafotykursant> listaFot=new ArrayList<Lekcjafotykursant>();
 	private String nrstrony;
@@ -133,31 +133,39 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String fotaKursant(){
-		logger.info(listaFot.size());
-		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
-		else next=true;
-		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		Integer in= new Integer(nrstrony);
+		if(in<2)prev=false;
 		else prev=true;
+		if(in>=listaFot.size())next=false;
+		else next=true;
 		return "fotaKursanta";
 	}
 	
 	public String prevFotaKursant(){
-		//fotaKursant=lekcja.getLekcjafotykursant().get(lekcja.getLekcjafotykursant().indexOf(fotaKursant)-1);
-		fotaKursant=getListaFot().get(getListaFot().indexOf(fotaKursant)-1);
-		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
-		else next=true;
-		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		Integer in= new Integer(nrstrony)-1;
+		nrstrony=in.toString();
+		fotaKursant=listaFot.get(in-1);
+		//if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
+		if(in<2)prev=false;
 		else prev=true;
+		if(in>=listaFot.size())next=false;
+		else next=true;
+		//if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		//else prev=true;
 		return "fotaKursanta";
 	}
 	
 	public String nextFotaKursant(){
-		logger.info(listaFot.size());
-		fotaKursant=getListaFot().get(getListaFot().indexOf(fotaKursant)+1);
-		if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
-		else next=true;
-		if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		Integer in= new Integer(nrstrony)+1;
+		nrstrony=in.toString();
+		fotaKursant=listaFot.get(in-1);
+		//if(getListaFot().indexOf(fotaKursant)+1>=getListaFot().size()) next=false;
+		if(in<2)prev=false;
 		else prev=true;
+		if(in>=listaFot.size())next=false;
+		else next=true;
+		//if(getListaFot().indexOf(fotaKursant)-1<0) prev=false;
+		//else prev=true;
 		return "fotaKursanta";
 	}
 	
@@ -235,11 +243,17 @@ public class LekcjaAc implements Serializable{
 	}
 	
 	public String usunKomentarzFota(){
+		logger.info(komentarzFota);
 		fotaKursant.getFotykursantkoment().remove(komentarzFota);
 		fotaKursantImp.update(fotaKursant);
 		komentarzFota=new Fotykursantkoment();
 		return null;
 	}
+	
+	public void scrolListener(){
+		logger.info("dddddddddddddddddd");
+	}
+	
 	
 	public Lekcja getLekcja() {
 		return lekcja;

@@ -13,6 +13,7 @@ body
 	
 }
 
+.error {color: red; font-weight: bold; width: 50px}
 
 #container
 {
