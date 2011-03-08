@@ -45,6 +45,10 @@ public class User implements Serializable {
 
 	@Column(nullable=true, length=2147483647)
 	private String miasto;
+	
+	@Column(length=10)
+	@Size(min=0, max=6)
+	private String kodpocztowy;
 
 	@Column(nullable=true, length=2147483647)
 	//@Pattern(regexp="[0-9][0-9][0-9]-[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]")
@@ -114,7 +118,7 @@ public class User implements Serializable {
 			@JoinColumn(name="idkursy", nullable=false)
 			}
 		)
-	private List<Kursy> rezerwacje;
+	private List<Kursy> kursyZarezerwowane;
     
     @OneToMany(mappedBy="user")
 	@OrderBy("datadodania")
@@ -135,6 +139,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy="user")
 	@OrderBy("lp")
 	private List<Userfoty> userfoty;
+    
+    @OneToMany(mappedBy="user")
+	@OrderBy("idkursyrezerwacje DESC")
+	private List<KursyRezerwacje> rezerwacje;
     
     @Transient
     private List<Userfoty> userfotyakcept;
@@ -364,11 +372,28 @@ public class User implements Serializable {
 		this.pierwsza = pierwsza;
 	}
 
-	public List<Kursy> getRezerwacje() {
+
+	public String getKodpocztowy() {
+		return kodpocztowy;
+	}
+
+	public void setKodpocztowy(String kodpocztowy) {
+		this.kodpocztowy = kodpocztowy;
+	}
+
+	public List<Kursy> getKursyZarezerwowane() {
+		return kursyZarezerwowane;
+	}
+
+	public void setKursyZarezerwowane(List<Kursy> kursyZarezerwowane) {
+		this.kursyZarezerwowane = kursyZarezerwowane;
+	}
+
+	public List<KursyRezerwacje> getRezerwacje() {
 		return rezerwacje;
 	}
 
-	public void setRezerwacje(List<Kursy> rezerwacje) {
+	public void setRezerwacje(List<KursyRezerwacje> rezerwacje) {
 		this.rezerwacje = rezerwacje;
 	}
 }

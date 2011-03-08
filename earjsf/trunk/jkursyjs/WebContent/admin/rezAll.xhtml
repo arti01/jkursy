@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<ui:repeat var="kurs" value="#{adminRezerwacjeAc.kursyAll}">
+			<h:form>
+			<h:dataTable var="rez" value="#{kurs.rezerwacje}" rendered="#{kurs.rezerwacje.size()>0}">
+				<f:facet name="header">
+					<h:outputText value="nazwa kursu: #{kurs.nazwa}, id:#{kurs.idkursy}" />
+					<br />wykładowcy:
+					<ui:repeat var="wykl" value="#{kurs.wykladowcy}">
+						<h:outputText value="#{wykl.imieNazwisko}, " />
+					</ui:repeat>
+				</f:facet>
+				<h:column>
+					<f:facet name="header">rezerwacja</f:facet>
+					<h:outputText value="#{rez.user.imieNazwisko}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">data rezerwacji</f:facet>
+					<h:outputText value="#{rez.datarezerwacji}">
+						<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET"/>
+					</h:outputText>
+				</h:column>
+				<h:column>
+						<f:facet name="header">status</f:facet>
+						<h:outputText value="zaakceptowana" rendered="#{rez.wykonana and rez.aktywna}" />
+						<h:outputText value="czeka na akceptacje" rendered="#{!rez.wykonana and rez.aktywna}" />
+						<h:outputText value="zrezygnował" rendered="#{!rez.aktywna}" />
+					</h:column>
+				<h:column>
+					<f:facet name="header" style="width: 300px;">rachunek</f:facet>
+					<h:panelGrid columns="2" rendered="#{rez.rachunki!=null}">
+						<h:outputLabel value="imie i nazwisko" />
+						<h:outputText id="imieNazwisko" value="#{rez.rachunki.imienazwisko}" />
+
+						<h:outputLabel value="miasto" />
+						<h:outputText id="miasto" value="#{rez.rachunki.miasto}"/>
+
+						<h:outputLabel value="kod pocztowy" />
+						<h:outputText id="kodpocztowy" value="#{rez.rachunki.kodpocztowy}"/>
+
+						<h:outputLabel value="ulica, nr domu/mieszkanie" />
+						<h:outputText id="ulica" value="#{rez.rachunki.ulica}"/>
+
+						<h:outputLabel value="nip" />
+						<h:outputText id="nip" value="#{rez.rachunki.nip}"/>
+
+						<h:outputLabel value="adres do korespondencji" />
+						<h:outputText id="adreskoresp" value="#{rez.rachunki.adreskoresp}"/>
+					</h:panelGrid>
+				</h:column>
+			</h:dataTable>
+			</h:form>
+			<hr /><br/>
+		</ui:repeat>
+	</ui:define>
+</ui:composition>
+</html>

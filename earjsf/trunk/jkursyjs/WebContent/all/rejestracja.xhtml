@@ -4,6 +4,7 @@
 	<ui:define name="body">
 		<h:form>
 			<h:panelGroup>
+			Pola oznaczone (*) są wymagane
 				<h:panelGrid columns="4">
 					<h:outputLabel for="bledy" />
 					<h:outputLabel for="bledy" />
@@ -14,31 +15,36 @@
 					<h:outputLabel value="login" />
 					<h:inputText id="username" value="#{userAc.user.username}" size="50"
 						readonly="#{userAc.user.username!=null}" immediate="true" />
-					<h:outputLabel value="wymagane" />
+					<h:outputLabel value="*"/>
 
 					<h:message for="userpass" styleClass="error" />
 					<h:outputLabel value="hasło" />
 					<h:inputText id="userpass" value="#{userAc.user.userpass}" immediate="true" size="50" />
-					<h:outputLabel value="wymagane" />
+					<h:outputLabel value="*"/>
 
 					<h:message for="userpass1" styleClass="error" />
 					<h:outputLabel value="hasło ponownie" />
 					<h:inputText id="userpass1" value="#{userAc.userpass1}" immediate="true" size="50" />
-					<h:outputLabel value="wymagane" />
+					<h:outputLabel value="*"/>
 
 					<h:message for="imieNazwisko" styleClass="error" />
 					<h:outputLabel value="imie i nazwisko" />
 					<h:inputText id="imieNazwisko" value="#{userAc.user.imieNazwisko}" immediate="true" size="50" />
-					<h:outputLabel value="wymagane" />
+					<h:outputLabel value="*"/>
 
 					<h:message for="email" styleClass="error" />
 					<h:outputLabel value="email" />
 					<h:inputText id="email" value="#{userAc.user.email}" immediate="true" size="50" />
-					<h:outputLabel value="wymagane" />
+					<h:outputLabel value="*"/>
 
 					<h:message for="miasto" styleClass="error" />
 					<h:outputLabel value="miasto" />
 					<h:inputText id="miasto" value="#{userAc.user.miasto}" immediate="true" size="50" />
+					<h:outputLabel value="" />
+					
+					<h:message for="kodpocztowy" styleClass="error" />
+					<h:outputLabel value="kod pocztowy" />
+					<h:inputText id="kodpocztowy" value="#{userAc.user.kodpocztowy}" immediate="true" size="10" />
 					<h:outputLabel value="" />
 
 					<h:message for="ulica" styleClass="error" />

@@ -10,6 +10,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.arti01.entit.Kursy;
+import org.arti01.entit.KursyRezerwacje;
+import org.arti01.entit.Rachunki;
 
 @Stateless
 @LocalBean
@@ -23,7 +25,7 @@ public class KursyImp {
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAll() {
 		//em.clear();
-		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.dataod desc").getResultList();
+		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.idkursy desc").getResultList();
 		List<Kursy> ret=new ArrayList<Kursy>();
 		for(Kursy k :wynik){
 			k=find(k);
@@ -85,6 +87,24 @@ public class KursyImp {
 			return false;
 		}
 		else return true;
+	}
+	
+	public void rezerwuj(KursyRezerwacje kr){
+		if(kr.getDatarezerwacji()==null)kr.setDatarezerwacji(new Date());
+		Rachunki r=kr.getRachunki();
+		kr.setRachunki(null);
+		em.persist(kr);
+		em.flush();
+		em.refresh(kr);
+		if(r!=null) {
+			r.setKursyRezerwacje(kr);
+			kr.setRachunki(r);
+			em.merge(kr);
+		}
+	}
+	
+	public void updateRezerwacje(KursyRezerwacje kr){
+		em.merge(kr);
 	}
 	
 	@SuppressWarnings("unchecked")

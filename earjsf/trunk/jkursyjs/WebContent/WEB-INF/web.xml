@@ -10,15 +10,6 @@
 		<res-ref-name>jsf/ProjectStage</res-ref-name>
 		<res-type>java.lang.String</res-type>
 	</resource-ref>
-	
-	<filter>
-		<filter-name>JsfCachingFilter</filter-name>
-		<filter-class>com.znet.filter.JsfCachingFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>JsfCachingFilter</filter-name>
-		<servlet-name>FacesServlet</servlet-name>
-	</filter-mapping>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

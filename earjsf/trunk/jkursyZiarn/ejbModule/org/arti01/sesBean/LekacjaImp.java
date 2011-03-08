@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
-import org.arti01.entit.Lekcjafoty;
+
 
 @Stateless
 @LocalBean

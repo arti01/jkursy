@@ -2,11 +2,14 @@ package org.arti01.all;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.UserImp;
 
@@ -23,6 +26,20 @@ public class UserAc implements Serializable {
 	
 	public String dodaj() {
 		user.setDataZmiany(new Date());
+		Set<Role> role=new HashSet<Role>();
+		Role r=new Role();
+		r.setRola(Role.KURSANT);
+		role.add(r);
+		user.setRoles(role);
+		try {
+			if(!ui.insert(user)) errorText="nieudana rejestracja";
+			else errorText="udana rejestracja - możesz się zalogować";
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			errorText="nieudane - taki login już istnieje - spróbuj jeszcze raz";
+			e.printStackTrace();
+		}
+		user=new User();
 		return "info";
 	}
 	

@@ -21,6 +21,8 @@
 		<class>org.arti01.entit.Absolwforposty</class>
 		<class>org.arti01.entit.Absolwforwatki</class>
 		<class>org.arti01.entit.Userfoty</class>
+		<class>org.arti01.entit.KursyRezerwacje</class>
+		<class>org.arti01.entit.Rachunki</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="INFO"/>
 		</properties>

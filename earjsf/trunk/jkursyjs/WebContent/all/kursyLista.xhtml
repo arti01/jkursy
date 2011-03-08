@@ -8,7 +8,8 @@
 	xmlns:a4j="http://richfaces.org/a4j">
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
-	kursy<h:form id="form1">	
+	<h3>Zaloguj się aby rezerwować kursy</h3>
+	<h:form id="form1">	
 			<rich:dataTable value="#{kursyAc.allKursy}" var="kurs"
 				id="table">	
 				<rich:column sortBy="#{kurs.nazwa}" id="nazwa"
@@ -22,6 +23,10 @@
 						<h3><h:outputText value="#{kurs.nazwa}" /></h3>
 					</h:commandLink>
 					</li></ul>
+					<h:commandButton value="rezerwuj kurs" action="#{kursantKursyAc.rezerwacja}" rendered="#{login.zalogowany.username!=null}">
+						<f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}"/>
+					</h:commandButton>
+					<hr/>
 					<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
 					<br/>
 					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />

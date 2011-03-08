@@ -22,6 +22,7 @@
 	</h:commandLink>
 	</li>
 </ui:repeat>
+<li><h:commandLink value="Twoje rezerwacje" action="#{kursantKursyAc.rezerwacjeLista}"/></li>
 <li><h:outputText value="pomoc i informacje dla kursantów"/></li>
 <ui:repeat var="strona" value="#{kursantIndexAc.role.statyczne}">
 	<li><h:commandLink action="#{kursantIndexAc.statyczna}">

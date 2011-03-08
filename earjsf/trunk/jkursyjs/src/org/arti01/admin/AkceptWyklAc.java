@@ -1,7 +1,5 @@
 package org.arti01.admin;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,23 +7,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
-import org.arti01.entit.Boksy;
-import org.arti01.entit.Boksycfg;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.entit.Userfoty;
-import org.arti01.sesBean.BoksyImp;
-import org.arti01.sesBean.BoksycfgImp;
 import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.UserImp;
 import org.arti01.sesBean.UserfotyImp;
-import org.arti01.utility.ResizeJpg;
-import org.richfaces.event.FileUploadEvent;
-import org.richfaces.model.UploadedFile;
 
 @ManagedBean(name="adminAkceptWyklAc")
 @SessionScoped

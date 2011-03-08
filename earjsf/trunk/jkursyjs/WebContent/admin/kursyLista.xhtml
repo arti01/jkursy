@@ -33,9 +33,11 @@
 						<h:outputText value="#{kurs.nazwa}" />
 					</h:commandLink>
 					<br/>
-					<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+					<h:outputText value="liczebność grupy:#{kurs.wielkoscgrupy}" />
 					<br/>
-					<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
+					<h:outputText value="(zaakceptowanych kursantów:#{kurs.kursanci.size()})" />
+					<br/>
+					<h:outputText value="(niezaakceptowanych rezerwacji:#{kurs.rezerwacjeNowe.size()})" />
 				</rich:column>
 				
 				<rich:column sortBy="#{kurs.typykursu.nazwa}" id="typykursu"

@@ -1,6 +1,5 @@
 package org.arti01.sesBean;
 
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -8,10 +7,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import org.arti01.entit.Lekcja;
 import org.arti01.entit.Userfoty;
 import org.arti01.entit.User;
-import org.arti01.entit.Userfoty;
 
 @Stateless
 @LocalBean

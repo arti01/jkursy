@@ -57,15 +57,18 @@ public class Kursy implements Serializable {
 	private Integer fotperkursantbezkoment;
 	
 	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	private Set<User> users;
 	
+	@ManyToMany(mappedBy="kursyZarezerwowane", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	private Set<User> rezerwujacy;
+	
 	//bi-directional many-to-one association to Lekcja
-	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@OrderBy(value="lp")
 	private List<Lekcja> lekcjas;
 	
-	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	@OrderBy(value="datadodania")
 	private List<Newsykursy> newsykursy;
 	
@@ -76,6 +79,10 @@ public class Kursy implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="idtypykursu")
 	private Typykursu typykursu;
+	
+	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@OrderBy(value="idkursyrezerwacje")
+	private List<KursyRezerwacje> rezerwacje;
 	
 	@NotNull
 	private boolean stacjonarny;
@@ -97,6 +104,9 @@ public class Kursy implements Serializable {
 	
 	@Transient
 	private Integer wolnychMiejsc;
+	
+	@Transient
+	private List<KursyRezerwacje> rezerwacjeNowe;
 	
     public Kursy() {
     }
@@ -261,7 +271,7 @@ public class Kursy implements Serializable {
 		this.wielkoscgrupy = wielkoscgrupy;
 	}
 	public Integer getWolnychMiejsc() {
-		wolnychMiejsc=getWielkoscgrupy()-getKursanci().size();
+		wolnychMiejsc=getWielkoscgrupy()-getKursanci().size()-getRezerwacjeNowe().size();
 		return wolnychMiejsc;
 	}
 
@@ -291,6 +301,30 @@ public class Kursy implements Serializable {
 
 	public void setFotperkursantbezkoment(Integer fotperkursantbezkoment) {
 		this.fotperkursantbezkoment = fotperkursantbezkoment;
+	}
+
+	public Set<User> getRezerwujacy() {
+		return rezerwujacy;
+	}
+
+	public void setRezerwujacy(Set<User> rezerwujacy) {
+		this.rezerwujacy = rezerwujacy;
+	}
+
+	public List<KursyRezerwacje> getRezerwacje() {
+		return rezerwacje;
+	}
+
+	public void setRezerwacje(List<KursyRezerwacje> rezerwacje) {
+		this.rezerwacje = rezerwacje;
+	}
+
+	public List<KursyRezerwacje> getRezerwacjeNowe() {
+		rezerwacjeNowe=new ArrayList<KursyRezerwacje>();
+		for(KursyRezerwacje kr:getRezerwacje()){
+			if(kr.getAktywna()&&!kr.getWykonana()) rezerwacjeNowe.add(kr);
+		}
+		return rezerwacjeNowe;
 	}
 
 }

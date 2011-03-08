@@ -28,6 +28,8 @@
        </h:column>
     </rich:dataTable>
     <h:form id="sterowanie">
+    <h:link value="powrót do zdjęć" outcome="/wykladowca/fotyKursantow.xhtml" />
+	<br/>
     <a4j:commandLink value="poprzedna" action="#{kursantLekcjaAc.prevFotaKursant}" render="table, komentarze, sterowanie" rendered="#{kursantLekcjaAc.prev}">
     	<f:setPropertyActionListener target="#{kursantLekcjaAc.listaFot}" value="#{wykladKursyAc.fotyKursantow}"/>
     </a4j:commandLink>
