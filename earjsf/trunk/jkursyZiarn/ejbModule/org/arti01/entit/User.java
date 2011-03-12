@@ -153,6 +153,9 @@ public class User implements Serializable {
     @Transient
     private Userfoty pierwsza;
     
+    @Transient
+    private List<KursyRezerwacje> rezerwacjeOdwolane;
+    
     public User() {
     }
 
@@ -395,5 +398,12 @@ public class User implements Serializable {
 
 	public void setRezerwacje(List<KursyRezerwacje> rezerwacje) {
 		this.rezerwacje = rezerwacje;
+	}
+
+	public List<KursyRezerwacje> getRezerwacjeOdwolane() {
+		for(KursyRezerwacje kr:getRezerwacje()){
+			if(!kr.getAktywna()) rezerwacjeOdwolane.add(kr);
+		}
+		return rezerwacjeOdwolane;
 	}
 }

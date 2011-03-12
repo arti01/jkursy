@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.KursyRezerwacje;
 import org.arti01.entit.Rachunki;
+import org.arti01.entit.User;
 
 @Stateless
 @LocalBean
@@ -105,6 +106,11 @@ public class KursyImp {
 	
 	public void updateRezerwacje(KursyRezerwacje kr){
 		em.merge(kr);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User>czarnaLista(){
+		return em.createQuery("select distinct u from KursyRezerwacje kr join kr.user u where kr.aktywna=false").getResultList();
 	}
 	
 	@SuppressWarnings("unchecked")
