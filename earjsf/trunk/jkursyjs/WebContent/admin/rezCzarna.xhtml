@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<h:dataTable var="user" value="#{adminRezerwacjeAc.userLista}">
+			<h:column>
+				<h:outputText value="#{user.imieNazwisko}" />
+			</h:column>
+			<h:column>
+				<h:dataTable var="kr" value="#{user.rezerwacjeOdwolane}">
+					<h:column>
+						<h:outputText value="#{kr.kurs.nazwa}" />
+					</h:column>
+				</h:dataTable>
+			</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+</html>

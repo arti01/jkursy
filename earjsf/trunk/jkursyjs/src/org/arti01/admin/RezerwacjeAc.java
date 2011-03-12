@@ -25,6 +25,8 @@ public class RezerwacjeAc implements Serializable {
 	@EJB
 	UserImp ui;
 	private KursyRezerwacje rezerwacja;
+	private List<KursyRezerwacje> rezLista=new ArrayList<KursyRezerwacje>();
+	private List<User> userLista=new ArrayList<User>();
 
 	public String listDoAkceptu() {
 		kursyAll = kursyImp.findAll();
@@ -63,6 +65,11 @@ public class RezerwacjeAc implements Serializable {
 		kursyImp.updateRezerwacje(rezerwacja);
 		return "rezDoAkceptu";
 	}
+	
+	public String czarnaLista(){
+		userLista=kursyImp.czarnaLista();
+		return "rezCzarna";	
+	}
 
 	public List<Kursy> getKursyAll() {
 		return kursyAll;
@@ -78,6 +85,22 @@ public class RezerwacjeAc implements Serializable {
 
 	public void setRezerwacja(KursyRezerwacje rezerwacja) {
 		this.rezerwacja = rezerwacja;
+	}
+
+	public List<KursyRezerwacje> getRezLista() {
+		return rezLista;
+	}
+
+	public void setRezLista(List<KursyRezerwacje> rezLista) {
+		this.rezLista = rezLista;
+	}
+
+	public List<User> getUserLista() {
+		return userLista;
+	}
+
+	public void setUserLista(List<User> userLista) {
+		this.userLista = userLista;
 	}
 
 }
