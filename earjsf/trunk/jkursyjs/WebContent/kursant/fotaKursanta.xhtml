@@ -6,7 +6,7 @@
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
 		<div id="right">
-
+<h:form>
 			<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
 				first="#{kursantLekcjaAc.nrstrony-1}">
 				<h:column>
@@ -14,7 +14,9 @@
 						<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintDuza}"
 							value="#{fota.idlekcjafotykursant}" cacheable="false">
 						</a4j:mediaOutput>
-						<h:outputText value="autor: #{fota.user.imieNazwisko}" />
+						<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+							<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
+						</h:commandLink>
 						<h:outputText value="dodana: #{fota.datadodaniaS}">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
 						</h:outputText>
@@ -22,6 +24,7 @@
 					</h:panelGrid>
 				</h:column>
 			</rich:dataTable>
+			</h:form>
 			<h:form id="sterowanie">
 				<h:commandLink value="powrót do zdjęć" action="#{kursantLekcjaAc.fotyForm}" />
 				<br />
@@ -34,7 +37,6 @@
 					render="table, komentarze, sterowanie" rendered="#{kursantLekcjaAc.next}">
 				</a4j:commandLink>
 			</h:form>
-			<h:form>
 				<h5>dyskusja o focie</h5>
 				<h:form>
 					<h:panelGrid columns="3" id="wpis">
@@ -48,10 +50,13 @@
 							render="komentarze, wpis" />
 					</h:panelGrid>
 				</h:form>
+				<h:form>
 				<h:panelGroup id="komentarze">
 					<ui:repeat var="koment" value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
 						<h5>
-							<h:outputText value="autor: #{koment.user.imieNazwisko}, " />
+							<h:commandLink value="autor: #{koment.user.imieNazwisko}, " action="#{kursantKursyAc.pokazKursanta}">
+								<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{koment.user}" />
+							</h:commandLink>
 							<h:outputText value="(komentuje wykładowca) " rendered="#{koment.komentWykl}" />
 							<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}" />
 							<br />
@@ -61,7 +66,7 @@
 						<hr />
 					</ui:repeat>
 				</h:panelGroup>
-			</h:form>
+				</h:form>
 		</div>
 	</ui:define>
 </ui:composition>

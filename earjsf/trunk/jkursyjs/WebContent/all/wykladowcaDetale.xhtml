@@ -18,27 +18,20 @@
 						<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" />
 					</h3>
 					<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false" />
-					<div id="galeria">
-						<h:commandLink action="#{kursyAc.userGaleria}">
-				Galeria Wykładowcy &#8594;
-				<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{kursyAc.wykladowca}" />
-						</h:commandLink>
-					</div>
 				</h:form>
 			</div>
-			to poniżej to jeden z wariantów, drugi to galeria na oddzielnej stronie
-			<h:form>
-			<div id="miniatury">
-				<ui:repeat var="fota" value="#{kursyAc.wykladowca.userfotyakcept}">
-					<h:commandLink action="#{kursyAc.userGaleriaDetale}">
-						<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
-							cacheable="false">
-						</a4j:mediaOutput>
-						<f:setPropertyActionListener target="#{kursyAc.uf}" value="#{fota}" />
-					</h:commandLink>
-				</ui:repeat>
-			</div>
-		</h:form>
+			<h:form rendered="#{kursyAc.wykladowca.userfotyakcept.size()>0}">
+				<div id="miniatury">
+					<ui:repeat var="fota" value="#{kursyAc.wykladowca.userfotyakcept}">
+						<h:commandLink action="#{kursyAc.userGaleriaDetale}">
+							<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
+								cacheable="false">
+							</a4j:mediaOutput>
+							<f:setPropertyActionListener target="#{kursyAc.uf}" value="#{fota}" />
+						</h:commandLink>
+					</ui:repeat>
+				</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </body>

@@ -23,12 +23,9 @@ public class UsersAc {
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(UsersAc.class);
 	User user;
-	@EJB
-	UserImp userImp;
-	@EJB
-	RoleImp roleImp;
-	@EJB
-	KursyImp kursyImp;
+	@EJB UserImp userImp;
+	@EJB RoleImp roleImp;
+	@EJB KursyImp kursyImp;
 
 	private SortOrder usernameOrder = SortOrder.unsorted;
 	private SortOrder imieNazwiskoOrder = SortOrder.unsorted;

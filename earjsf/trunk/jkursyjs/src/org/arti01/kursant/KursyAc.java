@@ -13,6 +13,7 @@ import org.arti01.entit.KursyRezerwacje;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Newsykursy;
 import org.arti01.entit.Rachunki;
+import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.utility.Login;
 
@@ -31,6 +32,7 @@ public class KursyAc implements Serializable {
 	@ManagedProperty(value = "#{login}") private Login loginBean;
 	private Rachunki rachunek = new Rachunki();
 	private String errorText;
+	private User kursant;
 
 	public String rezerwacja() {
 		rachunek.setImienazwisko(loginBean.getZalogowany().getImieNazwisko());
@@ -61,6 +63,10 @@ public class KursyAc implements Serializable {
 
 	public String rezerwacjeLista() {
 		return "rezerwacjeLista";
+	}
+
+	public String pokazKursanta(){
+		return "pokazKursanta";
 	}
 	
 	public String kasujRezerwacje(){
@@ -155,6 +161,14 @@ public class KursyAc implements Serializable {
 
 	public void setKurRez(DataModel<KursyRezerwacje> kurRez) {
 		this.kurRez = kurRez;
+	}
+
+	public User getKursant() {
+		return kursant;
+	}
+
+	public void setKursant(User kursant) {
+		this.kursant = kursant;
 	}
 
 }

@@ -59,7 +59,9 @@
 						<h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}" />
 						</h:commandLink>
-						<h:outputText value="autor: #{fota.user.imieNazwisko}" />
+						<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+							<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
+						</h:commandLink>
 						<h:outputText value="dodana: #{fota.datadodaniaS}">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
 						</h:outputText>

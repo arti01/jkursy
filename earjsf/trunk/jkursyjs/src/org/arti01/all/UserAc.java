@@ -25,6 +25,10 @@ public class UserAc implements Serializable {
 	String userpass1;
 	
 	public String dodaj() {
+		if(!user.getUserpass().equals(userpass1)){
+			errorText="różne hasła";
+			return "rejestracja";	
+		}
 		user.setDataZmiany(new Date());
 		Set<Role> role=new HashSet<Role>();
 		Role r=new Role();

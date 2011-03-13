@@ -13,6 +13,7 @@
 <h:form>
 <ul>
 <li><h:commandLink value="do strony głównej" action="indexAll"/></li>
+<li><h:commandLink value="edytuj swój profil" action="#{kursantIndexAc.profil}"/></li>
 <li><h:outputText value="Twoje kursy"/></li>
 <ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
 	<li>

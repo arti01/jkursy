@@ -16,10 +16,6 @@
 						<h5><h:outputText value="#{wyklad.imieNazwisko}" /></h5>
 						<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
 					</h:commandLink>
-					<h:commandLink action="#{kursyAc.userGaleria}">
-						<h:outputText value="galeria wykładowcy" />
-						<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
-					</h:commandLink>
 				</h:column>
 				<h:column id="kursy">
 					<f:facet name="header">

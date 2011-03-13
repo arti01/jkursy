@@ -60,12 +60,6 @@ public class IndexAc implements Serializable {
 	}
 	
 	public String statyczna() throws Exception{
-		/*logger.info(this.getStatyczneModel().getRowCount()+"count");
-		logger.info(this.getStatyczneModel().getRowIndex()+"indeks");
-		logger.info(this.getStatyczneModel().isRowAvailable()+"dostepny");
-		logger.info(this.getStatyczneModel().getWrappedData().getClass()+"clasa");
-		logger.info(this.getStatyczneModel().getRowData().getTytul());
-		strona=statyczneImp.find(this.getStatyczneModel().getRowData());*/
 		strona=this.getStatyczneModel().getRowData();
 		//logger.info(strona.getTytul());
 		return "statyczneDetale";
