@@ -401,6 +401,7 @@ public class User implements Serializable {
 	}
 
 	public List<KursyRezerwacje> getRezerwacjeOdwolane() {
+		rezerwacjeOdwolane=new ArrayList<KursyRezerwacje>();
 		for(KursyRezerwacje kr:getRezerwacje()){
 			if(!kr.getAktywna()) rezerwacjeOdwolane.add(kr);
 		}

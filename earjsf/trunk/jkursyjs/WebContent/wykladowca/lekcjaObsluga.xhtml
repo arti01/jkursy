@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templatewyklad.xhtml">
+	<ui:define name="body">
+		<div id="right">
+		<h2>Obsługa lekcji <h:outputText value="#{wykladKursyAc.lekcja.tytul}" /></h2>
+		<hr size="5" />
+		<h3>pytania do wykładowcy dotyczące lekcji</h3>
+		<h:form>
+			<ui:repeat var="koment" value="#{wykladKursyAc.lekcja.dowykladowcy}">
+				<h:panelGrid columns="1">
+					<h:outputText value="autor: #{koment.user.imieNazwisko}" />
+					<h:outputText value="#{koment.datadodania}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET" />
+					</h:outputText>
+					<h:commandLink value="odpowiedz" action="#{raportyAc.komentOdpowiedz}">
+						<f:setPropertyActionListener target="#{raportyAc.lekcjaKoment}" value="#{koment}" />
+					</h:commandLink>
+					<hr />
+				</h:panelGrid>
+			</ui:repeat>
+		</h:form>
+		<hr size="3" />
+
+		<h3>Zdjęcia kursantów</h3>
+		<h:form>
+			<h:commandLink value="pokaż zdjęcia wszystkich (ilość: #{wykladKursyAc.lekcja.lekcjafotykursant.size()})"
+				action="#{wykladKursyAc.fotyKursantow}" />
+			<hr />
+			<h4>wybierz zdjęcia kursanta:</h4>
+			
+			<ui:repeat var="kursant" value="#{wykladKursyAc.lekcja.kursy.kursanci}">
+			<h:panelGrid columns="1">
+				<h:commandLink value="#{kursant.imieNazwisko}" action="#{wykladKursyAc.fotyKursantowSelect}">
+				<f:setPropertyActionListener target="#{wykladKursyAc.user}" value="#{kursant}" />
+				</h:commandLink>
+			</h:panelGrid>
+			</ui:repeat>
+			
+			<h4>Zdjęcia kursantów bez komentarza wykładowcy</h4>
+			<rich:dataTable value="#{wykladKursyAc.lekcja.fotyKursNieSkoment}" var="fota" id="foty" rowKeyVar="nrstrony">
+				<h:column>
+					<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
+						<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}" />
+						<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}" />
+						<f:setPropertyActionListener target="#{wykladKursyAc.fotyKursantow}"
+							value="#{wykladKursyAc.lekcja.fotyKursNieSkoment}" />
+						<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintBazy}"
+							value="#{fota.idlekcjafotykursant}" cacheable="false">
+						</a4j:mediaOutput>
+					</h:commandLink>
+				</h:column>
+				<h:column>
+					<h:panelGrid columns="1">
+						<h:outputText value="autor: #{fota.user.imieNazwisko}" />
+						<h:outputText value="dodana: #{fota.datadodaniaS}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}" />
+					</h:panelGrid>
+				</h:column>
+			</rich:dataTable>
+		</h:form>
+		<hr size="3" />
+
+		<h3>Komentarze do zdjęć kursantów</h3>
+		<h:form>
+			<h4>pytania do wykładowcy:</h4>
+			<ui:repeat var="lekcjafotykursant" value="#{wykladKursyAc.lekcja.lekcjafotykursant}">
+				<ui:repeat var="koment" value="#{lekcjafotykursant.dowykladowcy}">
+					<h:panelGrid columns="1">
+						<h:outputText value="autor: #{koment.user.imieNazwisko}" />
+						<h:outputText value="#{koment.datadodania}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" timeZone="CET" />
+						</h:outputText>
+						<h:commandLink value="odpowiedz" action="#{raportyAc.komentFotyOdpowiedz}">
+							<f:setPropertyActionListener target="#{raportyAc.fotaKoment}" value="#{koment}" />
+						</h:commandLink>
+						<hr />
+					</h:panelGrid>
+				</ui:repeat>
+			</ui:repeat>
+		</h:form>
+		<hr size="3" />
+
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

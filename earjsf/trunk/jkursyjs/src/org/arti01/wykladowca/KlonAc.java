@@ -10,17 +10,13 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
 import org.arti01.entit.Lekcjapliki;
-import org.arti01.entit.Newsykursy;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.LekacjaImp;
-import org.arti01.sesBean.NewsykursyImp;
 import org.arti01.utility.Login;
 
 @ManagedBean(name="wykladKlonAc")

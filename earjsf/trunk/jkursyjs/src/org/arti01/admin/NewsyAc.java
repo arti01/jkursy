@@ -1,8 +1,12 @@
 package org.arti01.admin;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -13,6 +17,15 @@ import org.apache.log4j.Logger;
 import org.arti01.entit.Newsy;
 import org.arti01.sesBean.NewsyImp;
 import org.arti01.sesBean.RoleImp;
+import org.arti01.utility.ResizeJpg;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
+
+import com.drew.imaging.jpeg.JpegMetadataReader;
+import com.drew.imaging.jpeg.JpegProcessingException;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.Tag;
 
 @ManagedBean(name="adminNewsyAc")
 @SessionScoped
@@ -27,6 +40,9 @@ public class NewsyAc implements Serializable{
 	@EJB RoleImp roleImp;
 	private List<String> rolesName=new ArrayList<String>();
 	private String rola;
+	
+	private static int DLUGOSC=300;
+    private static int WYSOKOSC=200;
 	
 	public String form(){
 		news=allNewsy.getRowData();
@@ -62,6 +78,43 @@ public class NewsyAc implements Serializable{
 		return "newsyLista";
 	}
 
+	public void listenerFoty(FileUploadEvent event) {
+        UploadedFile item = event.getUploadedFile();
+        String exif ="";
+        try {
+			Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(item.getData()));
+			Iterator<?> directories = metadata.getDirectoryIterator();
+			while (directories.hasNext()) {
+			    Directory directory = (Directory)directories.next();
+			    // iterate through tags and print to System.out
+			    Iterator<?> tags = directory.getTagIterator();
+			    while (tags.hasNext()) {
+			        Tag tag = (Tag)tags.next();
+			        if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"<br/>";
+			    }
+			}
+		} catch (JpegProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		news.setFota(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
+        newsyImp.update(news);
+    }
+	
+	public void paintFota(OutputStream stream, Object object) throws IOException {
+		logger.info(object);
+		news=new Newsy();
+		news.setIdnewsy((Integer) object);
+		news=newsyImp.find(news);
+    	stream.write(news.getFota());
+    }
+	
+	public String usunFote(){
+		news.setFota(null);
+		newsyImp.update(news);
+		return "newsyForm";
+	}
+	
 	public RoleImp getRoleImp() {
 		return roleImp;
 	}

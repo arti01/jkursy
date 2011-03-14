@@ -23,12 +23,10 @@ public class Kursy implements Serializable {
 
     @Temporal( TemporalType.DATE)
 	@Column(nullable=false)
-	@NotNull
 	private Date datado;
 
     @Temporal( TemporalType.DATE)
 	@Column(nullable=false)
-	@NotNull
 	private Date dataod;
 
 	@Column(nullable=false, length=255)
@@ -39,6 +37,10 @@ public class Kursy implements Serializable {
 	@Size(min=1)
 	private String opis;
 
+	@Column(nullable=false)
+	@NotNull
+	private Integer lp;
+	
 	@Column(name="opis_krotki", length=2147483647)
 	@Size(min=1)
 	@NotNull(message="problem")
@@ -271,6 +273,7 @@ public class Kursy implements Serializable {
 		this.wielkoscgrupy = wielkoscgrupy;
 	}
 	public Integer getWolnychMiejsc() {
+		if(idkursy==null) return 0;
 		wolnychMiejsc=getWielkoscgrupy()-getKursanci().size()-getRezerwacjeNowe().size();
 		return wolnychMiejsc;
 	}
@@ -325,6 +328,14 @@ public class Kursy implements Serializable {
 			if(kr.getAktywna()&&!kr.getWykonana()) rezerwacjeNowe.add(kr);
 		}
 		return rezerwacjeNowe;
+	}
+
+	public Integer getLp() {
+		return lp;
+	}
+
+	public void setLp(Integer lp) {
+		this.lp = lp;
 	}
 
 }

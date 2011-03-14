@@ -2,7 +2,10 @@ package org.arti01.admin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
@@ -36,6 +39,7 @@ public class KursyAc implements Serializable{
 	
 	private DataModel<User> wykladowcy = new ListDataModel<User>();
 	private DataModel<User> kursanci = new ListDataModel<User>();
+	private List<Integer>lpAll=new ArrayList<Integer>();
 
 	private SortOrder nazwaOrder = SortOrder.unsorted;
 	private SortOrder stacjonarnyTNOrder = SortOrder.unsorted;
@@ -43,6 +47,7 @@ public class KursyAc implements Serializable{
 	private SortOrder datadoOrder = SortOrder.unsorted;
 	private SortOrder poziomyzaawansowaniaOrder = SortOrder.unsorted;
 	private SortOrder typykursuOrder = SortOrder.unsorted;
+	private SortOrder lpOrder = SortOrder.ascending;
 
 	public void sortBynazwa() {
 		setDatadoOrder(SortOrder.unsorted);
@@ -50,6 +55,7 @@ public class KursyAc implements Serializable{
 		setStacjonarnyTNOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (nazwaOrder.equals(SortOrder.ascending)) {
 			setNazwaOrder(SortOrder.descending);
 		} else {
@@ -63,6 +69,7 @@ public class KursyAc implements Serializable{
 		setNazwaOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (stacjonarnyTNOrder.equals(SortOrder.ascending)) {
 			setStacjonarnyTNOrder(SortOrder.descending);
 		} else {
@@ -76,6 +83,7 @@ public class KursyAc implements Serializable{
 		setStacjonarnyTNOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (dataodOrder.equals(SortOrder.ascending)) {
 			setDataodOrder(SortOrder.descending);
 		} else {
@@ -89,6 +97,7 @@ public class KursyAc implements Serializable{
 		setStacjonarnyTNOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (datadoOrder.equals(SortOrder.ascending)) {
 			setDatadoOrder(SortOrder.descending);
 		} else {
@@ -102,6 +111,7 @@ public class KursyAc implements Serializable{
 		setStacjonarnyTNOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (poziomyzaawansowaniaOrder.equals(SortOrder.ascending)) {
 			setPoziomyzaawansowaniaOrder(SortOrder.descending);
 		} else {
@@ -115,10 +125,25 @@ public class KursyAc implements Serializable{
 		setStacjonarnyTNOrder(SortOrder.unsorted);
 		setNazwaOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
 		if (typykursuOrder.equals(SortOrder.ascending)) {
 			setTypykursuOrder(SortOrder.descending);
 		} else {
 			setTypykursuOrder(SortOrder.ascending);
+		}
+	}
+	
+	public void sortBylp() {
+		setDatadoOrder(SortOrder.unsorted);
+		setDataodOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
+		setTypykursuOrder(SortOrder.unsorted);
+		if (lpOrder.equals(SortOrder.ascending)) {
+			setLpOrder(SortOrder.descending);
+		} else {
+			setLpOrder(SortOrder.ascending);
 		}
 	}
 	
@@ -194,6 +219,14 @@ public class KursyAc implements Serializable{
 		errorText = kursyImp.getErrorText();
 		return "kursyForm";// bo nie udala się zmiana
 	}
+	
+		public void zmienLp(ValueChangeEvent event){
+			//logger.info((Integer)event.getNewValue());
+			kurs=allKursy.getRowData();
+			kursyImp.update(kurs, (Integer)event.getNewValue());
+			allKursy = new ListDataModel<Kursy>();
+			allKursy.setWrappedData(kursyImp.findAll());
+		}
 
 	public DataModel<Kursy> getAllKursy() {
 		return allKursy;
@@ -305,6 +338,28 @@ public class KursyAc implements Serializable{
 
 	public void setTypykursuOrder(SortOrder typykursuOrder) {
 		this.typykursuOrder = typykursuOrder;
+	}
+
+	public SortOrder getLpOrder() {
+		return lpOrder;
+	}
+
+	public void setLpOrder(SortOrder lpOrder) {
+		this.lpOrder = lpOrder;
+	}
+
+	public List<Integer> getLpAll() {
+		Integer licz=0;
+		lpAll.clear();
+		for(@SuppressWarnings("unused") Kursy k:allKursy){
+			licz++;
+			lpAll.add(licz);
+		}
+		return lpAll;
+	}
+
+	public void setLpAll(List<Integer> lpAll) {
+		this.lpAll = lpAll;
 	}
 
 }

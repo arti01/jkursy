@@ -2,9 +2,7 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -31,7 +29,8 @@ public class Role implements Serializable {
 
 	//bi-directional many-to-many association to User
 	@ManyToMany(cascade=CascadeType.ALL, mappedBy="roles")
-	private Set<User> users;
+	@OrderBy(value="imieNazwisko")
+	private List<User> users;
 
 	@OneToMany(mappedBy="role")
 	@OrderBy("lp")
@@ -55,14 +54,6 @@ public class Role implements Serializable {
 	public void setOpis(String opis) {
 		this.opis = opis;
 	}
-	@ManyToMany(mappedBy="roles", cascade=CascadeType.ALL)
-	public Set<User> getUsers() {
-		return this.users;
-	}
-	@ManyToMany(mappedBy="roles", cascade=CascadeType.ALL)
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
 
 	public List<Statyczne> getStatyczne() {
 		return statyczne;
@@ -70,6 +61,14 @@ public class Role implements Serializable {
 
 	public void setStatyczne(List<Statyczne> statyczne) {
 		this.statyczne = statyczne;
+	}
+
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}
 	
 }

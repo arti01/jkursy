@@ -44,6 +44,8 @@ public class Newsy implements Serializable {
 	@NotEmpty
 	private String tytul;
 	
+	private byte[] fota;
+	
 	@Transient
 	private String skrot;
 
@@ -107,6 +109,14 @@ public class Newsy implements Serializable {
 
 	public void setSkrot(String skrot) {
 		this.skrot = skrot;
+	}
+
+	public byte[] getFota() {
+		return fota;
+	}
+
+	public void setFota(byte[] fota) {
+		this.fota = fota;
 	}
 
 }

@@ -26,7 +26,7 @@ public class KursyImp {
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findAll() {
 		//em.clear();
-		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.idkursy desc").getResultList();
+		List<Kursy> wynik=em.createQuery("select k from Kursy k order by k.lp").getResultList();
 		List<Kursy> ret=new ArrayList<Kursy>();
 		for(Kursy k :wynik){
 			k=find(k);
@@ -34,6 +34,8 @@ public class KursyImp {
 		}
 		return ret;
 	}
+	
+	
 	
 	@SuppressWarnings("unchecked")
 	public List<Kursy> findNiezakonczone() {
@@ -61,6 +63,44 @@ public class KursyImp {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
+	public void update(Kursy kurs, Integer newLp) {
+		Integer oldLp=new Integer(kurs.getLp());
+		kurs.setLp(-1);
+		em.merge(kurs);
+		//System.out.println(lekcja+"statOld");
+		//System.out.println(oldLp+"new"+newLp);
+		if (newLp < oldLp) {//idziemy w góre
+			//System.out.println("upupup");
+			Query select=em.createQuery("select k from Kursy k where k.lp<:oldLp and k.lp>=:newLp order by k.lp desc");
+			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
+			List<Kursy> sl=select.getResultList();
+			for (Kursy s:sl){
+				//System.out.println(lekcja.getLp());
+				//System.out.println(s.getTytul());
+				//System.out.println(s.getLp()+1);
+				s.setLp(s.getLp()+1);
+				em.merge(s);
+				em.flush();
+			}
+			kurs.setLp(newLp);
+			em.merge(kurs);
+		} else if (newLp > oldLp) {//idziemy w dół
+			Query select=em.createQuery("select k from Kursy k where k.lp>:oldLp and k.lp<=:newLp order by k.lp asc");
+			select.setParameter("oldLp", oldLp);
+			select.setParameter("newLp", newLp);
+			List<Kursy> sl=select.getResultList();
+			for (Kursy s:sl){
+				s.setLp(s.getLp()-1);
+				em.merge(s);
+				em.flush();
+			}
+			kurs.setLp(newLp);
+			em.merge(kurs);
+		}else update(kurs);
+	}
+	
 	public boolean insert(Kursy kursy){
 		if(validInsert(kursy)){
 			em.persist(kursy);
@@ -70,11 +110,22 @@ public class KursyImp {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void delete(Kursy kurs) {
+		Integer lp=kurs.getLp();
 		em.remove(em.merge(kurs));
+		em.flush();
+		
+		Query qt=em.createQuery("select k from Kursy k where k.lp>:lp order by k.lp");
+		qt.setParameter("lp", lp);
+		for(Kursy k: (List<Kursy>)qt.getResultList()){
+			k.setLp(k.getLp()-1);
+			em.merge(k);
+		}
 	}
 	
 	public boolean validUpdate(Kursy kurs){
+		if(kurs.getDataod()==null||kurs.getDatado()==null) return true;
 		if(kurs.getDataod().after(kurs.getDatado())){
 			errorText="Daty bez sensu ('data do' < 'data od')";
 			return false;
@@ -83,6 +134,7 @@ public class KursyImp {
 	}
 	
 	public boolean validInsert(Kursy kurs){
+		if(kurs.getDataod()==null||kurs.getDatado()==null) return true;
 		if(kurs.getDataod().after(kurs.getDatado())||kurs.getDatado().before(new Date())){
 			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
 			return false;

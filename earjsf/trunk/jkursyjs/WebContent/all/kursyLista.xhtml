@@ -90,9 +90,10 @@
 					</f:facet>
 					<ul><li>
 					<h:commandLink action="#{kursyAc.detale}">
-						<h:outputText value="#{kurs.dataod}">
+						<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
 							<f:convertDateTime pattern="yyyy-MM-dd"/>
 						</h:outputText>
+						<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}"/>
 					</h:commandLink>
 					</li></ul>
 				</rich:column>
