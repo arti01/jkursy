@@ -2,9 +2,10 @@ package org.arti01.entit;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.jsoup.Jsoup;
+//import org.jsoup.Jsoup;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -46,7 +47,9 @@ public class Newsy implements Serializable {
 	
 	private byte[] fota;
 	
-	@Transient
+	//@Transient
+	@NotNull
+	@NotEmpty
 	private String skrot;
 
     public Newsy() {
@@ -94,7 +97,7 @@ public class Newsy implements Serializable {
 		this.datadodaniaS = datadodaniaS;
 	}
 
-	public String getSkrot() {
+	/*public String getSkrot() {
 		int maxDlugosc=300;
 		if(tresc.length()<maxDlugosc) skrot=tresc;
 		else {
@@ -104,6 +107,10 @@ public class Newsy implements Serializable {
 		//skrot=skrot.substring(0, skrot.lastIndexOf(" "));
 		//System.out.println(skrot);
 		if(skrot.lastIndexOf(" ")!=-1)skrot=skrot.substring(0, skrot.lastIndexOf(" "));
+		return skrot;
+	}*/
+	
+	public String getSkrot() {
 		return skrot;
 	}
 

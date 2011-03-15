@@ -6,24 +6,36 @@
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
 		<div id="right">
-<h:form>
-			<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
-				first="#{kursantLekcjaAc.nrstrony-1}">
-				<h:column>
-					<h:panelGrid columns="1">
-						<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintDuza}"
-							value="#{fota.idlekcjafotykursant}" cacheable="false">
-						</a4j:mediaOutput>
-						<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
-							<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
-						</h:commandLink>
-						<h:outputText value="dodana: #{fota.datadodaniaS}">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-						<h:outputText value="opis: #{fota.opis}" />
-					</h:panelGrid>
-				</h:column>
-			</rich:dataTable>
+			<h:form>
+				<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
+					first="#{kursantLekcjaAc.nrstrony-1}">
+					<h:column>
+						<h:panelGrid columns="2">
+							<h:panelGrid columns="1">
+								<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintDuza}"
+									value="#{fota.idlekcjafotykursant}" cacheable="false">
+								</a4j:mediaOutput>
+								<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+									<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
+								</h:commandLink>
+								<h:outputText value="dodana: #{fota.datadodaniaS}">
+									<f:convertDateTime pattern="dd-MM-yyyy" />
+								</h:outputText>
+								<h:outputText value="opis: #{fota.opis}" />
+							</h:panelGrid>
+							<h:panelGroup id="exif">
+								<a4j:commandLink value="EXIF" action="#{kursantLekcjaAc.exifPokazZmien}" render="exif"
+									rendered="#{!(kursantLekcjaAc.exifPokaz)}" />
+								<br />
+								<a4j:commandLink action="#{kursantLekcjaAc.exifPokazZmien}" render="exif"
+									rendered="#{kursantLekcjaAc.exifPokaz}">
+									<h:outputText value="#{fota.exif}" escape="false" rendered="#{kursantLekcjaAc.exifPokaz}" />
+									<h:outputText value="zwiń" />
+								</a4j:commandLink>
+							</h:panelGroup>
+						</h:panelGrid>
+					</h:column>
+				</rich:dataTable>
 			</h:form>
 			<h:form id="sterowanie">
 				<h:commandLink value="powrót do zdjęć" action="#{kursantLekcjaAc.fotyForm}" />
@@ -37,20 +49,20 @@
 					render="table, komentarze, sterowanie" rendered="#{kursantLekcjaAc.next}">
 				</a4j:commandLink>
 			</h:form>
-				<h5>dyskusja o focie</h5>
-				<h:form>
-					<h:panelGrid columns="3" id="wpis">
-						<h:message for="tresc" />
-						<h:outputLabel for="tresc" value="treść" />
-						<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarzFota.tresc}" cols="100" />
-						<h:message for="dowykladowcy" />
-						<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
-						<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarzFota.dowykladowcy}" />
-						<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarzFota}"
-							render="komentarze, wpis" />
-					</h:panelGrid>
-				</h:form>
-				<h:form>
+			<h5>dyskusja o focie</h5>
+			<h:form>
+				<h:panelGrid columns="3" id="wpis">
+					<h:message for="tresc" />
+					<h:outputLabel for="tresc" value="treść" />
+					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarzFota.tresc}" cols="100" />
+					<h:message for="dowykladowcy" />
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarzFota.dowykladowcy}" />
+					<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarzFota}"
+						render="komentarze, wpis" />
+				</h:panelGrid>
+			</h:form>
+			<h:form>
 				<h:panelGroup id="komentarze">
 					<ui:repeat var="koment" value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
 						<h5>
@@ -66,7 +78,7 @@
 						<hr />
 					</ui:repeat>
 				</h:panelGroup>
-				</h:form>
+			</h:form>
 		</div>
 	</ui:define>
 </ui:composition>

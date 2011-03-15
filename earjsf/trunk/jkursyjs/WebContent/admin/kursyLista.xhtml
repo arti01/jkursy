@@ -24,7 +24,7 @@
 					<rich:column sortBy="#{kurs.lp}" id="lp" sortOrder="#{adminKursyAc.lpOrder}">
 						<f:facet name="header">
 							<a4j:commandLink value="sortowanie lp" render="table" action="#{adminKursyAc.sortBylp}" />
-						</f:facet>
+						</f:facet> 
 						<h:selectOneMenu value="#{kurs.lp}" valueChangeListener="#{adminKursyAc.zmienLp}" id="lpSel">
 							<f:selectItems value="#{adminKursyAc.lpAll}" />
 							<a4j:ajax render="table" execute="lpSel" event="change" />

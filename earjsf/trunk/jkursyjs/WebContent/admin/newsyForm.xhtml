@@ -23,14 +23,20 @@
 					<h:message for="tytul" styleClass="error" />
 					<h:outputLabel value="tytul" />
 					<h:inputText id="tytul" value="#{adminNewsyAc.news.tytul}" size="100" />
+					
+					<h:message for="skrot" styleClass="error" />
+					<h:outputLabel value="skrót newsa" />
+					<h:inputTextarea id="skrot" value="#{adminNewsyAc.news.skrot}" immediate="true"  cols="100"/>
+					
 					<h:message for="tresc" styleClass="error" />
 					<h:outputLabel value="tresc" />
-					<h:inputTextarea id="tresc" value="#{adminNewsyAc.news.tresc}" immediate="true" />
+					<h:inputTextarea id="tresc" value="#{adminNewsyAc.news.tresc}" immediate="true" styleClass="mceEditor"/>
 					<script type="text/javascript">
 						tinyMCE
 								.init({
 									// General options
-									mode : "textareas",
+									mode : "specific_textareas",
+        							editor_selector : "mceEditor",
 									theme : "advanced",
 									plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
