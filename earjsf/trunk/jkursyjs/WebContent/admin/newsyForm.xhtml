@@ -9,7 +9,7 @@
 			<h:panelGroup id="uploadpg" rendered="#{adminNewsyAc.news.tytul!=null}">
 				<h:form>
 					<rich:fileUpload fileUploadListener="#{adminNewsyAc.listenerFoty}" id="upload">
-						<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, form" />
+						<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, form"/>
 					</rich:fileUpload>
 				</h:form>
 			</h:panelGroup>

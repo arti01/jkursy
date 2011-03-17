@@ -70,6 +70,8 @@ public class User implements Serializable {
 	@Column(length=255)
 	private String wiadomosc;
 	
+	private byte[] fota;
+	
 	@Transient
 	private Lekcja konkretnaLekcja;
 	
@@ -406,5 +408,13 @@ public class User implements Serializable {
 			if(!kr.getAktywna()) rezerwacjeOdwolane.add(kr);
 		}
 		return rezerwacjeOdwolane;
+	}
+
+	public byte[] getFota() {
+		return fota;
+	}
+
+	public void setFota(byte[] fota) {
+		this.fota = fota;
 	}
 }

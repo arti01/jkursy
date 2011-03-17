@@ -5,41 +5,37 @@
 	<h:form>
 		<ul>
 			<h:panelGroup rendered="#{login.zalogowany.username==null}">
-				<li><h:link value="zaloguj" outcome="/all/login.xhtml" />
-				</li>
-				<li><h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" />
-				</li>
+				<li><h:link value="zaloguj" outcome="/all/login.xhtml" /></li>
+				<li><h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" /></li>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{login.zalogowany.username!=null}">
 				<li>Jesteś zalogowany jako:<br /> <h:outputText
-						value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" /> <h:commandButton
-						value="wyloguj" action="#{login.wyloguj}" /></li>
+						value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
+						<br/>
+						<h:commandButton value="wyloguj" action="#{login.wyloguj}" />
+						<br/>
+						<h:commandLink value="edytuj swój profil" action="#{kursantIndexAc.profil}" />
+				</li>
 			</h:panelGroup>
-			<li><h:commandLink value="kursy" action="#{kursyAc.list}" />
-			</li>
-			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" />
-			</li>
-			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" />
-			</li>
+			<li><h:commandLink value="kursy" action="#{kursyAc.list}" /></li>
+			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" /></li>
+			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" /></li>
 			<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 				<li><h:commandLink action="#{indexAc.statyczna}">
 						<h:outputText value="#{strona.tytul}" />
-					</h:commandLink>
-				</li>
+					</h:commandLink></li>
 			</ui:repeat>
 			<ui:repeat var="pz" value="#{indexAc.pzModel}">
 				<li><h:commandLink action="#{indexAc.pz}">
 						<f:setPropertyActionListener target="#{indexAc.pz}" value="#{pz}" />
 						<h:outputText value="poziom #{pz.nazwa}" />
-					</h:commandLink>
-				</li>
+					</h:commandLink></li>
 			</ui:repeat>
 			<ui:repeat var="tk" value="#{indexAc.tkModel}">
 				<li><h:commandLink action="#{indexAc.tk}">
 						<f:setPropertyActionListener target="#{indexAc.tk}" value="#{tk}" />
 						<h:outputText value="typy kursów: #{tk.nazwa}" />
-					</h:commandLink>
-				</li>
+					</h:commandLink></li>
 			</ui:repeat>
 		</ul>
 	</h:form>

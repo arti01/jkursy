@@ -1,5 +1,7 @@
 package org.arti01.all;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -7,11 +9,17 @@ import java.util.Set;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
+import org.arti01.entit.Newsy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.UserImp;
+import org.arti01.utility.Login;
+import org.arti01.utility.ResizeJpg;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 @ManagedBean(name="userAc")
 @SessionScoped
@@ -23,6 +31,11 @@ public class UserAc implements Serializable {
 	@EJB UserImp ui;
 	String errorText;
 	String userpass1;
+	
+	@ManagedProperty(value = "#{login}") private Login loginBean;
+	
+	private static int DLUGOSC=300;
+    private static int WYSOKOSC=200;
 	
 	public String dodaj() {
 		if(!user.getUserpass().equals(userpass1)){
@@ -47,6 +60,35 @@ public class UserAc implements Serializable {
 		return "info";
 	}
 	
+	public void listenerFoty(FileUploadEvent event) {
+        UploadedFile item = event.getUploadedFile();
+        User user=loginBean.getZalogowany();
+		user.setFota(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
+        try {
+			ui.update(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+	
+	public void paintFota(OutputStream stream, Object object) throws IOException {
+		logger.info(object);
+		logger.info("sssssssssss");
+    	stream.write(loginBean.getZalogowany().getFota());
+    }
+	
+	public void usunFote(){
+		User user=loginBean.getZalogowany();
+		user.setFota(null);
+		try {
+			ui.update(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -69,6 +111,14 @@ public class UserAc implements Serializable {
 
 	public void setUserpass1(String userpass1) {
 		this.userpass1 = userpass1;
+	}
+
+	public Login getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(Login loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

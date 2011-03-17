@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.apache.log4j.Logger;
+import org.arti01.all.UserAc;
 import org.arti01.entit.Role;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
@@ -28,7 +29,7 @@ public class IndexAc implements Serializable{
 	private User user;
 	private String userpass1;
 	@ManagedProperty(value = "#{login}") private Login loginBean;
-	@ManagedProperty(value = "#{kursantKursyAc}") private KursyAc kursyAc;
+	@ManagedProperty(value = "#{userAc}") private UserAc userAc;
 	private boolean takNie=false;
 	
 	public Role getRole() {
@@ -38,21 +39,21 @@ public class IndexAc implements Serializable{
 	}
 	
 	public String profil(){
-		kursyAc.setErrorText("");
+		userAc.setErrorText("");
 		user=loginBean.getZalogowany();
 		return "profil";
 	}
 	
 	public String edytujProfil(){
 		if(!user.getUserpass().equals(userpass1)&&takNie){
-			kursyAc.setErrorText("różne hasła");
+			userAc.setErrorText("różne hasła");
 			return "profil";	
 		}
 		try {
 			ui.update(user);
-			kursyAc.setErrorText("profil zmieniony");
+			userAc.setErrorText("profil zmieniony");
 		} catch (Exception e) {
-			kursyAc.setErrorText("coś nie teges ze zmianą");
+			userAc.setErrorText("coś nie teges ze zmianą");
 			e.printStackTrace();
 		}
 		return "info";
@@ -114,12 +115,12 @@ public class IndexAc implements Serializable{
 		this.takNie = takNie;
 	}
 
-	public KursyAc getKursyAc() {
-		return kursyAc;
+	public UserAc getUserAc() {
+		return userAc;
 	}
 
-	public void setKursyAc(KursyAc kursyAc) {
-		this.kursyAc = kursyAc;
+	public void setUserAc(UserAc userAc) {
+		this.userAc = userAc;
 	}
 
 }
