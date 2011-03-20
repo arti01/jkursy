@@ -5,44 +5,48 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-
 /**
  * The persistent class for the kursy_rezerwacje database table.
  * 
  */
 @Entity
-@Table(name="kursy_rezerwacje")
+@Table(name = "kursy_rezerwacje")
 public class KursyRezerwacje implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
 	private Integer idkursyrezerwacje;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Boolean aktywna;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Boolean wykonana;
-	
+
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Date datarezerwacji;
-	
+
+	private double wplata;
+
+	@Temporal(TemporalType.DATE)
+	private Date datawplaty;
+
 	@ManyToOne
-	@JoinColumn(name="idkursy")
+	@JoinColumn(name = "idkursy")
 	private Kursy kursy;
-	
+
 	@ManyToOne
-	@JoinColumn(name="username")
+	@JoinColumn(name = "username")
 	private User user;
-	
-	@OneToOne(cascade=CascadeType.ALL, mappedBy="kursyRezerwacje")
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "kursyRezerwacje")
 	private Rachunki rachunki;
 
-    public KursyRezerwacje() {
-    }
+	public KursyRezerwacje() {
+	}
 
 	public Integer getIdkursyrezerwacje() {
 		return this.idkursyrezerwacje;
@@ -98,6 +102,22 @@ public class KursyRezerwacje implements Serializable {
 
 	public void setDatarezerwacji(Date datarezerwacji) {
 		this.datarezerwacji = datarezerwacji;
+	}
+
+	public double getWplata() {
+		return wplata;
+	}
+
+	public void setWplata(double wplata) {
+		this.wplata = wplata;
+	}
+
+	public Date getDatawplaty() {
+		return datawplaty;
+	}
+
+	public void setDatawplaty(Date datawplaty) {
+		this.datawplaty = datawplaty;
 	}
 
 }

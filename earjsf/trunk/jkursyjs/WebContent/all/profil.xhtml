@@ -3,25 +3,25 @@
 	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-	<div>
-	<h:panelGroup id="uploadpg" rendered="#{adminNewsyAc.news.tytul!=null}">
-				<h:form>
-					<rich:fileUpload fileUploadListener="#{userAc.listenerFoty}" id="upload" style="height: 100px; weight: 170px;">
-						<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, fota" />
-					</rich:fileUpload>
-				</h:form>
-	</h:panelGroup>
-	<h:panelGroup id="fota">
-	<h:outputText value="#{userAc.loginBean.zalogowany.fota}"/>
-	<h:form>
-	<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}" value="#{userAc.loginBean.zalogowany.username}"
-						cacheable="false" rendered="#{userAc.loginBean.zalogowany.fota!=null}"/>
-	<h:commandLink value="usuń fotę" action="#{userAc.usunFote}"/>
-	</h:form>
-	</h:panelGroup>
-	</div>
-	<hr/>
-	<br/>
+
+<h:form>
+		<h:panelGrid columns="3" rendered="#{adminNewsyAc.news.tytul!=null}" id="uploadpg">
+				<rich:fileUpload fileUploadListener="#{userAc.listenerFoty}" id="upload"
+					style="height: 100px; width: 240px;">
+					<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, fota" />
+				</rich:fileUpload>
+				<h:panelGroup id="fota">
+					<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}"
+						value="#{userAc.loginBean.zalogowany.username}" cacheable="false"
+						rendered="#{userAc.loginBean.zalogowany.fota!=null}">
+						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+					</a4j:mediaOutput>
+					<h:commandLink value="usuń fotę" action="#{userAc.usunFote}" />
+				</h:panelGroup>
+		</h:panelGrid>
+</h:form>
+		<hr />
+		<br />
 		<h:form>
 			<h:panelGroup>
 			Pola oznaczone (*) są wymagane
@@ -92,12 +92,12 @@
 					<h:inputText id="tel1" value="#{kursantIndexAc.user.tel1}" immediate="true" size="50" />
 					<h:outputLabel value="" />
 				</h:panelGrid>
-				
+
 				<h:message for="opis" styleClass="error" />
 				<h:outputLabel value="o mnie" />
 				<h:inputTextarea id="opis" value="#{kursantIndexAc.user.opis}" immediate="true" cols="48" />
 				<h:outputLabel value="" />
-					
+
 				<h:commandButton value="wyślij" action="#{kursantIndexAc.edytujProfil}" />
 			</h:panelGroup>
 		</h:form>

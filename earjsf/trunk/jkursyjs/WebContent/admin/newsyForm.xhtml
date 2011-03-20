@@ -9,34 +9,37 @@
 			<h:panelGroup id="uploadpg" rendered="#{adminNewsyAc.news.tytul!=null}">
 				<h:form>
 					<rich:fileUpload fileUploadListener="#{adminNewsyAc.listenerFoty}" id="upload">
-						<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, form"/>
+						<a4j:ajax event="uploadcomplete" execute="@none" render="uploadpg, form" />
 					</rich:fileUpload>
 				</h:form>
 			</h:panelGroup>
-<h2>Dodawanie zdjęć tylko do istniejących newsów</h2>
+			<h2>Dodawanie zdjęć tylko do istniejących newsów</h2>
 			<h:form id="form">
-			<a4j:mediaOutput element="img" createContent="#{adminNewsyAc.paintFota}" value="#{adminNewsyAc.news.idnewsy}"
-						cacheable="false" rendered="#{adminNewsyAc.news.fota!=null}"/>
-			<br/>
-			<h:commandLink value="usuń fotę" action="#{adminNewsyAc.usunFote}" rendered="#{adminNewsyAc.news.fota!=null}"/>
+				<a4j:mediaOutput element="img" createContent="#{adminNewsyAc.paintFota}"
+					value="#{adminNewsyAc.news.idnewsy}" cacheable="false" rendered="#{adminNewsyAc.news.fota!=null}">
+					<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+				</a4j:mediaOutput>
+				<br />
+				<h:commandLink value="usuń fotę" action="#{adminNewsyAc.usunFote}"
+					rendered="#{adminNewsyAc.news.fota!=null}" />
 				<h:panelGrid columns="3">
 					<h:message for="tytul" styleClass="error" />
 					<h:outputLabel value="tytul" />
 					<h:inputText id="tytul" value="#{adminNewsyAc.news.tytul}" size="100" />
-					
+
 					<h:message for="skrot" styleClass="error" />
 					<h:outputLabel value="skrót newsa" />
-					<h:inputTextarea id="skrot" value="#{adminNewsyAc.news.skrot}" immediate="true"  cols="100"/>
-					
+					<h:inputTextarea id="skrot" value="#{adminNewsyAc.news.skrot}" immediate="true" cols="100" />
+
 					<h:message for="tresc" styleClass="error" />
 					<h:outputLabel value="tresc" />
-					<h:inputTextarea id="tresc" value="#{adminNewsyAc.news.tresc}" immediate="true" styleClass="mceEditor"/>
+					<h:inputTextarea id="tresc" value="#{adminNewsyAc.news.tresc}" immediate="true" styleClass="mceEditor" />
 					<script type="text/javascript">
 						tinyMCE
 								.init({
 									// General options
 									mode : "specific_textareas",
-        							editor_selector : "mceEditor",
+									editor_selector : "mceEditor",
 									theme : "advanced",
 									plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 

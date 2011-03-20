@@ -9,8 +9,14 @@
 		<ui:define name="body">
 			<h3>Kursant:</h3>
 			<div>
-				<h3><h:outputText value="#{kursantKursyAc.kursant.imieNazwisko}" /></h3>
+				<h3>
+					<h:outputText value="#{kursantKursyAc.kursant.imieNazwisko}" />
+				</h3>
 				<h:outputText value="#{kursantKursyAc.kursant.opis}" escape="false" />
+				<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}"
+					value="#{kursantKursyAc.kursant.username}" cacheable="false"
+					rendered="#{kursantKursyAc.kursant.fota!=null}">
+				</a4j:mediaOutput>
 			</div>
 		</ui:define>
 	</ui:composition>

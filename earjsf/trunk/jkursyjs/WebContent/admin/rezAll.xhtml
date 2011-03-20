@@ -54,6 +54,17 @@
 						<h:outputText id="adreskoresp" value="#{rez.rachunki.adreskoresp}"/>
 					</h:panelGrid>
 				</h:column>
+				<h:column>
+				<f:facet name="header">szczegóły wpłaty</f:facet>
+				<h:panelGrid columns="2">
+				<h:outputLabel value="wpłata: " />
+				<h:outputText value="#{rez.wplata}"/>
+				<h:outputLabel value="data wpłaty:" />
+				<h:outputText value="#{rez.datawplaty}">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:outputText>
+				</h:panelGrid>
+				</h:column>
 			</h:dataTable>
 			</h:form>
 			<hr /><br/>

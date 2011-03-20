@@ -103,6 +103,7 @@ public class KursyImp {
 	
 	public boolean insert(Kursy kursy){
 		if(validInsert(kursy)){
+			kursy.setLp(findAll().size()+1);
 			em.persist(kursy);
 			return true;
 		}else {
@@ -158,6 +159,10 @@ public class KursyImp {
 	
 	public void updateRezerwacje(KursyRezerwacje kr){
 		em.merge(kr);
+	}
+	
+	public KursyRezerwacje findRezerwacje(KursyRezerwacje kr){
+		return em.find(KursyRezerwacje.class, kr.getIdkursyrezerwacje());
 	}
 	
 	@SuppressWarnings("unchecked")

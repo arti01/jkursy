@@ -41,6 +41,8 @@ public class Kursy implements Serializable {
 	@NotNull
 	private Integer lp;
 	
+	private double cena;
+	
 	@Column(name="opis_krotki", length=2147483647)
 	@Size(min=1)
 	@NotNull(message="problem")
@@ -88,6 +90,9 @@ public class Kursy implements Serializable {
 	
 	@NotNull
 	private boolean stacjonarny;
+	
+	@NotNull
+	private boolean rezerwacjaDostepna;
 	
 	@Transient
 	private List<User> wykladowcy;
@@ -336,6 +341,22 @@ public class Kursy implements Serializable {
 
 	public void setLp(Integer lp) {
 		this.lp = lp;
+	}
+
+	public boolean isRezerwacjaDostepna() {
+		return rezerwacjaDostepna;
+	}
+
+	public void setRezerwacjaDostepna(boolean rezerwacjaDostepna) {
+		this.rezerwacjaDostepna = rezerwacjaDostepna;
+	}
+
+	public double getCena() {
+		return cena;
+	}
+
+	public void setCena(double cena) {
+		this.cena = cena;
 	}
 
 }

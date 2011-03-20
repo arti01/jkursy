@@ -6,6 +6,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
+
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
 import org.arti01.entit.KursyRezerwacje;
@@ -24,12 +27,17 @@ public class RezerwacjeAc implements Serializable {
 	KursyImp kursyImp;
 	@EJB
 	UserImp ui;
-	private KursyRezerwacje rezerwacja;
-	private List<KursyRezerwacje> rezLista=new ArrayList<KursyRezerwacje>();
+	private KursyRezerwacje rezerwacja=new KursyRezerwacje();
+	private DataModel<KursyRezerwacje> rezLista=new ListDataModel<KursyRezerwacje>();
 	private List<User> userLista=new ArrayList<User>();
 
 	public String listDoAkceptu() {
-		kursyAll = kursyImp.findAll();
+		rezLista=new ListDataModel<KursyRezerwacje>();
+		List<KursyRezerwacje> rl=new ArrayList<KursyRezerwacje>();
+		for(Kursy k:kursyImp.findAll()){
+			rl.addAll(k.getRezerwacjeNowe());
+		}
+		rezLista.setWrappedData(rl);
 		return "rezDoAkceptu";
 	}
 
@@ -38,32 +46,21 @@ public class RezerwacjeAc implements Serializable {
 		return "rezAll";
 	}
 	
-	public String akceptuj() {
+	public void akceptuj() {
+		rezerwacja=rezLista.getRowData();
+		logger.info(rezerwacja.getDatawplaty()+"--"+rezerwacja.getWplata());
 		rezerwacja.setWykonana(true);
-		// logger.info(rezerwacja);
-		kursyImp.updateRezerwacje(rezerwacja);
-		User u = rezerwacja.getUser();
-		boolean flaga = true;
-		for (Kursy k : u.getKursies()) {
-			if(k.getIdkursy()==rezerwacja.getKursy().getIdkursy()) flaga=false;
-		}
-		if (flaga) {
-			u.getKursies().add(rezerwacja.getKursy());
-			try {
-				ui.update(u);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return "rezDoAkceptu";
+		kursyImp.updateRezerwacje(rezerwacja);		
+		listDoAkceptu();
+		logger.info(rezLista.getRowCount());
 	}
 	
-	public String kasujRezerwacje(){
+	public void kasujRezerwacje(){
+		rezerwacja=rezLista.getRowData();
 		rezerwacja.setAktywna(false);
 		//logger.info(rezerwacja);
 		kursyImp.updateRezerwacje(rezerwacja);
-		return "rezDoAkceptu";
+		listDoAkceptu();
 	}
 	
 	public String czarnaLista(){
@@ -87,20 +84,20 @@ public class RezerwacjeAc implements Serializable {
 		this.rezerwacja = rezerwacja;
 	}
 
-	public List<KursyRezerwacje> getRezLista() {
-		return rezLista;
-	}
-
-	public void setRezLista(List<KursyRezerwacje> rezLista) {
-		this.rezLista = rezLista;
-	}
-
 	public List<User> getUserLista() {
 		return userLista;
 	}
 
 	public void setUserLista(List<User> userLista) {
 		this.userLista = userLista;
+	}
+
+	public DataModel<KursyRezerwacje> getRezLista() {
+		return rezLista;
+	}
+
+	public void setRezLista(DataModel<KursyRezerwacje> rezLista) {
+		this.rezLista = rezLista;
 	}
 
 }

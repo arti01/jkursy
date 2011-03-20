@@ -19,7 +19,7 @@ import org.arti01.sesBean.TypyKursuImp;
 import org.arti01.sesBean.UserImp;
 import org.richfaces.component.SortOrder;
 
-public class KursyAc implements Serializable{
+public class KursyAc implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	Logger logger = Logger.getLogger(KursyAc.class);
@@ -31,15 +31,17 @@ public class KursyAc implements Serializable{
 	KursyImp kursyImp;
 	@EJB
 	UserImp userImp;
-	@EJB PoziomyZaawansowaniaImp pzi;
-	private ArrayList<Poziomyzaawansowania> allPz=new ArrayList<Poziomyzaawansowania>();
-	
-	@EJB TypyKursuImp tki;
-	private ArrayList<Typykursu> allTk=new ArrayList<Typykursu>();
-	
+	@EJB
+	PoziomyZaawansowaniaImp pzi;
+	private ArrayList<Poziomyzaawansowania> allPz = new ArrayList<Poziomyzaawansowania>();
+
+	@EJB
+	TypyKursuImp tki;
+	private ArrayList<Typykursu> allTk = new ArrayList<Typykursu>();
+
 	private DataModel<User> wykladowcy = new ListDataModel<User>();
 	private DataModel<User> kursanci = new ListDataModel<User>();
-	private List<Integer>lpAll=new ArrayList<Integer>();
+	private List<Integer> lpAll = new ArrayList<Integer>();
 
 	private SortOrder nazwaOrder = SortOrder.unsorted;
 	private SortOrder stacjonarnyTNOrder = SortOrder.unsorted;
@@ -48,6 +50,7 @@ public class KursyAc implements Serializable{
 	private SortOrder poziomyzaawansowaniaOrder = SortOrder.unsorted;
 	private SortOrder typykursuOrder = SortOrder.unsorted;
 	private SortOrder lpOrder = SortOrder.ascending;
+	private SortOrder cenaOrder = SortOrder.ascending;
 
 	public void sortBynazwa() {
 		setDatadoOrder(SortOrder.unsorted);
@@ -56,13 +59,14 @@ public class KursyAc implements Serializable{
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (nazwaOrder.equals(SortOrder.ascending)) {
 			setNazwaOrder(SortOrder.descending);
 		} else {
 			setNazwaOrder(SortOrder.ascending);
 		}
 	}
-	
+
 	public void sortBystacjonarnyTN() {
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
@@ -70,6 +74,7 @@ public class KursyAc implements Serializable{
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (stacjonarnyTNOrder.equals(SortOrder.ascending)) {
 			setStacjonarnyTNOrder(SortOrder.descending);
 		} else {
@@ -84,6 +89,7 @@ public class KursyAc implements Serializable{
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (dataodOrder.equals(SortOrder.ascending)) {
 			setDataodOrder(SortOrder.descending);
 		} else {
@@ -98,6 +104,7 @@ public class KursyAc implements Serializable{
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (datadoOrder.equals(SortOrder.ascending)) {
 			setDatadoOrder(SortOrder.descending);
 		} else {
@@ -112,13 +119,14 @@ public class KursyAc implements Serializable{
 		setNazwaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (poziomyzaawansowaniaOrder.equals(SortOrder.ascending)) {
 			setPoziomyzaawansowaniaOrder(SortOrder.descending);
 		} else {
 			setPoziomyzaawansowaniaOrder(SortOrder.ascending);
 		}
 	}
-	
+
 	public void sortBytypykursu() {
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
@@ -126,13 +134,14 @@ public class KursyAc implements Serializable{
 		setNazwaOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setLpOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (typykursuOrder.equals(SortOrder.ascending)) {
 			setTypykursuOrder(SortOrder.descending);
 		} else {
 			setTypykursuOrder(SortOrder.ascending);
 		}
 	}
-	
+
 	public void sortBylp() {
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
@@ -140,6 +149,7 @@ public class KursyAc implements Serializable{
 		setNazwaOrder(SortOrder.unsorted);
 		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
 		setTypykursuOrder(SortOrder.unsorted);
+		setCenaOrder(SortOrder.unsorted);
 		if (lpOrder.equals(SortOrder.ascending)) {
 			setLpOrder(SortOrder.descending);
 		} else {
@@ -147,6 +157,21 @@ public class KursyAc implements Serializable{
 		}
 	}
 	
+	public void sortBycena() {
+		setDatadoOrder(SortOrder.unsorted);
+		setDataodOrder(SortOrder.unsorted);
+		setStacjonarnyTNOrder(SortOrder.unsorted);
+		setNazwaOrder(SortOrder.unsorted);
+		setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
+		setTypykursuOrder(SortOrder.unsorted);
+		setLpOrder(SortOrder.unsorted);
+		if (cenaOrder.equals(SortOrder.ascending)) {
+			setCenaOrder(SortOrder.descending);
+		} else {
+			setCenaOrder(SortOrder.ascending);
+		}
+	}
+
 	public String kursyLista() throws Exception {
 		allKursy.setWrappedData(kursyImp.findAll());
 		return "kursyLista";
@@ -162,8 +187,8 @@ public class KursyAc implements Serializable{
 	public String form() {
 		errorText = "";
 		kurs = allKursy.getRowData();
-		allPz=new ArrayList<Poziomyzaawansowania>(pzi.getAll());
-		allTk=new ArrayList<Typykursu>(tki.getAll());
+		allPz = new ArrayList<Poziomyzaawansowania>(pzi.getAll());
+		allTk = new ArrayList<Typykursu>(tki.getAll());
 		return "kursyForm";
 	}
 
@@ -171,15 +196,18 @@ public class KursyAc implements Serializable{
 		errorText = "";
 		kurs = new Kursy();
 		kurs.setPoziomyzaawansowania(new Poziomyzaawansowania());
-		allPz=new ArrayList<Poziomyzaawansowania>(pzi.getAll());
-		allTk=new ArrayList<Typykursu>(tki.getAll());
+		kurs.setTypykursu(new Typykursu());
+		allPz = new ArrayList<Poziomyzaawansowania>(pzi.getAll());
+		allTk = new ArrayList<Typykursu>(tki.getAll());
 		return "kursyForm";
 	}
 
 	public String usun() throws Exception {
 		kurs = allKursy.getRowData();
 		kursyImp.delete(kurs);
-		return "kursyusersLista";
+		allKursy = new ListDataModel<Kursy>();
+		allKursy.setWrappedData(kursyImp.findAll());
+		return "kursyLista";
 	}
 
 	public String usunZkursu() {
@@ -195,8 +223,7 @@ public class KursyAc implements Serializable{
 			userImp.update(user);
 			kurs.getKursanci().remove(user);
 			kurs.getWykladowcy().remove(user);
-			wykladowcy
-					.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
+			wykladowcy.setWrappedData(new ArrayList<User>(kurs.getWykladowcy()));
 			kursanci.setWrappedData(new ArrayList<User>(kurs.getKursanci()));
 		} catch (Exception e) {
 			logger.info(e);
@@ -213,20 +240,22 @@ public class KursyAc implements Serializable{
 			}
 		} else {
 			if (kursyImp.insert(kurs)) {
+				allKursy = new ListDataModel<Kursy>();
+				allKursy.setWrappedData(kursyImp.findAll());
 				return "kursyLista";
 			}
 		}
 		errorText = kursyImp.getErrorText();
 		return "kursyForm";// bo nie udala się zmiana
 	}
-	
-		public void zmienLp(ValueChangeEvent event){
-			//logger.info((Integer)event.getNewValue());
-			kurs=allKursy.getRowData();
-			kursyImp.update(kurs, (Integer)event.getNewValue());
-			allKursy = new ListDataModel<Kursy>();
-			allKursy.setWrappedData(kursyImp.findAll());
-		}
+
+	public void zmienLp(ValueChangeEvent event) {
+		// logger.info((Integer)event.getNewValue());
+		kurs = allKursy.getRowData();
+		kursyImp.update(kurs, (Integer) event.getNewValue());
+		allKursy = new ListDataModel<Kursy>();
+		allKursy.setWrappedData(kursyImp.findAll());
+	}
 
 	public DataModel<Kursy> getAllKursy() {
 		return allKursy;
@@ -349,9 +378,10 @@ public class KursyAc implements Serializable{
 	}
 
 	public List<Integer> getLpAll() {
-		Integer licz=0;
+		Integer licz = 0;
 		lpAll.clear();
-		for(@SuppressWarnings("unused") Kursy k:allKursy){
+		for (@SuppressWarnings("unused")
+		Kursy k : allKursy) {
 			licz++;
 			lpAll.add(licz);
 		}
@@ -360,6 +390,14 @@ public class KursyAc implements Serializable{
 
 	public void setLpAll(List<Integer> lpAll) {
 		this.lpAll = lpAll;
+	}
+
+	public SortOrder getCenaOrder() {
+		return cenaOrder;
+	}
+
+	public void setCenaOrder(SortOrder cenaOrder) {
+		this.cenaOrder = cenaOrder;
 	}
 
 }

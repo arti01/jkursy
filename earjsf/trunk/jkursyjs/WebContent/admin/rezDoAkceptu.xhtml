@@ -6,61 +6,69 @@
 
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
-		<ui:repeat var="kurs" value="#{adminRezerwacjeAc.kursyAll}">
-			<h:form>
-			<h:dataTable var="rez" value="#{kurs.rezerwacjeNowe}" rendered="#{kurs.rezerwacjeNowe.size()>0}">
-				<f:facet name="header">
-					<h:outputText value="nazwa kursu: #{kurs.nazwa}, id:#{kurs.idkursy}" />
-					<br />wykładowcy:
-					<ui:repeat var="wykl" value="#{kurs.wykladowcy}">
-						<h:outputText value="#{wykl.imieNazwisko}, " />
-					</ui:repeat>
-				</f:facet>
+	<h:panelGroup  id="tabela">
+		<h:form>
+			<h:dataTable var="rez" value="#{adminRezerwacjeAc.rezLista}">
 				<h:column>
 					<f:facet name="header">rezerwacja</f:facet>
-					<h:outputText value="#{rez.user.imieNazwisko}" />
+					<h:outputText value="rezerwujący: #{rez.user.imieNazwisko}" />
+					<hr />
+					<br />
+					<h:outputText value="nazwa kursu: #{rez.kursy.nazwa}, id:#{rez.kursy.idkursy}" />
+					<br />
+					<br />wykładowcy:<br />
+					<ui:repeat var="wykl" value="#{rez.kursy.wykladowcy}">
+						<h:outputText value="#{wykl.imieNazwisko}, " />
+					</ui:repeat>
 				</h:column>
 				<h:column>
 					<f:facet name="header">data rezerwacji</f:facet>
 					<h:outputText value="#{rez.datarezerwacji}">
-						<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET"/>
+						<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET" />
 					</h:outputText>
 				</h:column>
 				<h:column>
 					<f:facet name="header">rachunek</f:facet>
 					<h:panelGrid columns="2" rendered="#{rez.rachunki!=null}">
 						<h:outputLabel value="imie i nazwisko" />
-						<h:outputText id="imieNazwisko" value="#{rez.rachunki.imienazwisko}" style="width: 100px;"/>
+						<h:outputText id="imieNazwisko" value="#{rez.rachunki.imienazwisko}" style="width: 100px;" />
 
 						<h:outputLabel value="miasto" />
-						<h:outputText id="miasto" value="#{rez.rachunki.miasto}"/>
+						<h:outputText id="miasto" value="#{rez.rachunki.miasto}" />
 
 						<h:outputLabel value="kod pocztowy" />
-						<h:outputText id="kodpocztowy" value="#{rez.rachunki.kodpocztowy}"/>
+						<h:outputText id="kodpocztowy" value="#{rez.rachunki.kodpocztowy}" />
 
 						<h:outputLabel value="ulica, nr domu/mieszkanie" />
-						<h:outputText id="ulica" value="#{rez.rachunki.ulica}"/>
+						<h:outputText id="ulica" value="#{rez.rachunki.ulica}" />
 
 						<h:outputLabel value="nip" />
-						<h:outputText id="nip" value="#{rez.rachunki.nip}"/>
+						<h:outputText id="nip" value="#{rez.rachunki.nip}" />
 
 						<h:outputLabel value="adres do korespondencji" />
-						<h:outputText id="adreskoresp" value="#{rez.rachunki.adreskoresp}"/>
+						<h:outputText id="adreskoresp" value="#{rez.rachunki.adreskoresp}" />
 					</h:panelGrid>
 				</h:column>
 				<h:column>
-					<h:commandLink value=" akceptuj " action="#{adminRezerwacjeAc.akceptuj}">
-						<f:setPropertyActionListener target="#{adminRezerwacjeAc.rezerwacja}" value="#{rez}"/>
-					</h:commandLink>
-					<hr/>
-					<h:commandLink value=" kasuj rezerwacje " action="#{adminRezerwacjeAc.kasujRezerwacje}">
-						<f:setPropertyActionListener target="#{adminRezerwacjeAc.rezerwacja}" value="#{rez}"/>
-					</h:commandLink>
+				<f:facet name="header">szczegóły wpłaty</f:facet>
+					<h:panelGrid columns="1">
+						<h:outputLabel value="wpłacono:" />
+						<h:message for="wplata" styleClass="error" />
+						<h:inputText id="wplata" value="#{rez.wplata}">
+							<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" minFractionDigits="2"
+								type="currency" />
+						</h:inputText>
+						<h:outputLabel value="data wpłaty:" />
+						<rich:calendar value="#{rez.datawplaty}" popup="false" locale="PL" datePattern="dd-MM-yyyy" />
+					</h:panelGrid>
+					<a4j:commandLink value=" akceptuj " action="#{adminRezerwacjeAc.akceptuj}" render="tabela" />
+				</h:column>
+				<h:column>
+					<a4j:commandLink value=" kasuj rezerwacje " action="#{adminRezerwacjeAc.kasujRezerwacje}" render="tabela" />
 				</h:column>
 			</h:dataTable>
-			</h:form>
-			<hr /><br/>
-		</ui:repeat>
+		</h:form>
+		</h:panelGroup>
 	</ui:define>
 </ui:composition>
 </html>

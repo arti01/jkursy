@@ -52,6 +52,10 @@ public class Newsy implements Serializable {
 	@NotEmpty
 	private String skrot;
 
+	@Column(nullable=false)
+	@NotNull
+	private Integer lp;
+	
     public Newsy() {
     }
 
@@ -124,6 +128,14 @@ public class Newsy implements Serializable {
 
 	public void setFota(byte[] fota) {
 		this.fota = fota;
+	}
+
+	public Integer getLp() {
+		return lp;
+	}
+
+	public void setLp(Integer lp) {
+		this.lp = lp;
 	}
 
 }

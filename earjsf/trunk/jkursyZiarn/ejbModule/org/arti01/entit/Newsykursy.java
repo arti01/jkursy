@@ -80,7 +80,7 @@ public class Newsykursy implements Serializable {
 	}
 
 	public String getDatadodaniaS() {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM-yyyy");
 		datadodaniaS=sdf.format(datadodania);
 		return datadodaniaS;
 	}

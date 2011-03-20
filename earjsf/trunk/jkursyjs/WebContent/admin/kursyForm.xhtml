@@ -12,19 +12,30 @@
 				<h:outputLabel for="bledy" />
 				<h:outputText id="bledy" value="#{adminKursyAc.errorText}" styleClass="error"/>
 				<h:outputLabel for="bledy" />
+				
 				<h:message for="nazwa" styleClass="error" />
 				<h:outputLabel value="nazwa" />
 				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}"/>
 				
 				<h:message for="opisKrotki" styleClass="error" />
 				<h:outputLabel value="krótki opis" />
-				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" immediate="true"/>
+				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}"/>
+				
+				<h:message for="rezerwacjaDostepna" styleClass="error" />
+				<h:outputLabel value="rezerwacja dostepna" />
+				<h:selectBooleanCheckbox id="rezerwacjaDostepna" value="#{adminKursyAc.kurs.rezerwacjaDostepna}"/>
 				
 				<h:message for="typ" styleClass="error" />
 				<h:outputLabel value="typ kursu" />
 				<h:selectOneMenu id="typ" value="#{adminKursyAc.kurs.typykursu.idtypykursu}">
 				<f:selectItems value="#{adminKursyAc.allTk}" var="tk" itemLabel="#{tk.nazwa}" itemValue="#{tk.idtypykursu}"/>
 				</h:selectOneMenu>
+				
+				<h:message for="cena" styleClass="error" />
+				<h:outputLabel value="cena kursu" />
+				<h:inputText id="cena" value="#{adminKursyAc.kurs.cena}" size="10">
+					<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" minFractionDigits="2" type="currency"/>
+				</h:inputText>
 				
 				<h:message for="fotperkursantmax" styleClass="error" />
 				<h:outputLabel value="maksymalna ilość zdjęć kursanta per lekcja" />
@@ -48,14 +59,14 @@
 				<h:outputLabel value="stacjonarny (Tak/Nie)" />
 				<h:selectBooleanCheckbox id="stacjonarny" value="#{adminKursyAc.kurs.stacjonarny}"/>
 				<h:message for="dataod" styleClass="error" />
-				<h:outputLabel value="data od" />
+				<h:outputLabel value="data rozpoczęcia" />
 				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}" immediate="true">
-					<f:convertDateTime pattern="yyyy-MM-dd" />
+					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:inputText>
 				<h:message for="datado" styleClass="error"/>
-				<h:outputLabel value="data do" />
+				<h:outputLabel value="data zakończenia" />
 				<h:inputText id="datado" value="#{adminKursyAc.kurs.datado}" immediate="true">
-					<f:convertDateTime pattern="yyyy-MM-dd" />
+					<f:convertDateTime pattern="dd-MM-yyyy" />
 				</h:inputText>
 				<h:message for="opis" styleClass="error" />
 				<h:outputLabel value="opis" />

@@ -62,7 +62,7 @@
 									<h:outputLabel value="data zmiany" />
 									<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}" immediate="true" readonly="true"
 										size="19">
-										<f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" />
+										<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
 									</h:inputText>
 
 									<h:message for="opis" styleClass="error" />
@@ -97,19 +97,19 @@
 
 											<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
 												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data od" render="tabled" action="#{adminKursyAc.sortBydataod}" />
+													<a4j:commandLink value="sortowanie data rozpoczęcia" render="tabled" action="#{adminKursyAc.sortBydataod}" />
 												</f:facet>
 												<h:outputText value="#{kurs.dataod}">
-													<f:convertDateTime pattern="yyyy-MM-dd" />
+													<f:convertDateTime pattern="dd-MM-yyyy" />
 												</h:outputText>
 											</rich:column>
 
 											<rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
 												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data do" render="tabled" action="#{adminKursyAc.sortBydatado}" />
+													<a4j:commandLink value="sortowanie data zakończenia" render="tabled" action="#{adminKursyAc.sortBydatado}" />
 												</f:facet>
 												<h:outputText value="#{kurs.datado}">
-													<f:convertDateTime pattern="yyyy-MM-dd" />
+													<f:convertDateTime pattern="dd-MM-yyyy" />
 												</h:outputText>
 											</rich:column>
 
@@ -139,19 +139,19 @@
 
 											<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
 												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data od" render="table" action="#{adminKursyAc.sortBydataod}" />
+													<a4j:commandLink value="sortowanie data rozpoczęcia" render="table" action="#{adminKursyAc.sortBydataod}" />
 												</f:facet>
 												<h:outputText value="#{kurs.dataod}">
-													<f:convertDateTime pattern="yyyy-MM-dd" />
+													<f:convertDateTime pattern="dd-MM-yyyy" />
 												</h:outputText>
 											</rich:column>
 
 											<rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
 												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data do" render="table" action="#{adminKursyAc.sortBydatado}" />
+													<a4j:commandLink value="sortowanie data zakończenia" render="table" action="#{adminKursyAc.sortBydatado}" />
 												</f:facet>
 												<h:outputText value="#{kurs.datado}">
-													<f:convertDateTime pattern="yyyy-MM-dd" />
+													<f:convertDateTime pattern="dd-MM-yyyy" />
 												</h:outputText>
 											</rich:column>
 										</rich:dataTable>

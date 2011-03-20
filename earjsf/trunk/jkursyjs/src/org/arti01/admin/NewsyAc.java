@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
@@ -40,6 +41,7 @@ public class NewsyAc implements Serializable{
 	@EJB RoleImp roleImp;
 	private List<String> rolesName=new ArrayList<String>();
 	private String rola;
+	private List<Integer>lpAll=new ArrayList<Integer>();
 	
 	private static int DLUGOSC=300;
     private static int WYSOKOSC=200;
@@ -115,6 +117,14 @@ public class NewsyAc implements Serializable{
 		return "newsyForm";
 	}
 	
+	public void zmienLp(ValueChangeEvent event){
+		//logger.info((Integer)event.getNewValue());
+		news=allNewsy.getRowData();
+		newsyImp.update(news, (Integer)event.getNewValue());
+		allNewsy = new ListDataModel<Newsy>();
+		allNewsy.setWrappedData(newsyImp.getAll());
+	}
+	
 	public RoleImp getRoleImp() {
 		return roleImp;
 	}
@@ -165,5 +175,19 @@ public class NewsyAc implements Serializable{
 
 	public void setNews(Newsy news) {
 		this.news = news;
+	}
+
+	public List<Integer> getLpAll() {
+		Integer licz=0;
+		lpAll.clear();
+		for(@SuppressWarnings("unused") Newsy n:allNewsy){
+			licz++;
+			lpAll.add(licz);
+		}
+		return lpAll;
+	}
+
+	public void setLpAll(List<Integer> lpAll) {
+		this.lpAll = lpAll;
 	}
 }

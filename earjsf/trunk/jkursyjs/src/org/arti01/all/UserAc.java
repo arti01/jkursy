@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;
-import org.arti01.entit.Newsy;
 import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.UserImp;
@@ -75,7 +74,9 @@ public class UserAc implements Serializable {
 	public void paintFota(OutputStream stream, Object object) throws IOException {
 		logger.info(object);
 		logger.info("sssssssssss");
-    	stream.write(loginBean.getZalogowany().getFota());
+		User u=new User();
+		u.setUsername(object.toString());
+    	stream.write(ui.find(u).getFota());
     }
 	
 	public void usunFote(){
