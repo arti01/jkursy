@@ -10,7 +10,7 @@
 	<ui:define name="body">
 		<body>
 		<h:form>
-		<h:panelGroup id="form">
+			<h:panelGroup id="form">
 				<h:message for="nazwa" styleClass="error" />
 				<h:panelGrid columns="2">
 					<h:outputLabel value="nazwa" />
@@ -18,36 +18,40 @@
 						size="50" />
 					<h:outputLabel value="opis" />
 					<h:inputTextarea id="opis" value="#{adminPoziomyZaaAc.pz.opis}"
-					cols="70" rows="15"/>
+						cols="70" rows="15" />
 				</h:panelGrid>
 				<a4j:commandButton value="wyślij"
 					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
-		</h:panelGroup>
+			</h:panelGroup>
 		</h:form>
-		<hr/>
-		<br/>
+		<hr />
+		<br />
 		<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
-		<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun"/>
+		<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun" />
 		<h:form>
-					<rich:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1" id="tabled">
-						<rich:column>
-							<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="form, tabled, infoTextUsun" value="usuń"/>
-						</rich:column>
-						
-						<rich:column>
-							<a4j:commandLink action="#{adminPoziomyZaaAc.zmien}" render="form, tabled, infoTextUsun" value="edytuj"/>
-						</rich:column>
-						
-						<rich:column>
-						<h:message for="tekst" styleClass="error" />
-								<h:inputText id="tekst" value="#{pz1.nazwa}">
-									<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText" immediate="true"/>
-								</h:inputText>
-								<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText"/>
-						</rich:column>
-					</rich:dataTable>
+			<h:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1"
+				id="tabled">
+				<h:column>
+					<a4j:commandLink action="#{adminPoziomyZaaAc.usun}"
+						render="form, tabled, infoTextUsun" value="usuń" />
+</h:column>
+
+				<h:column>
+					<a4j:commandLink action="#{adminPoziomyZaaAc.zmien}"
+						render="form, tabled, infoTextUsun" value="edytuj" />
+				</h:column>
+
+				<h:column>
+					<h:message for="tekst" styleClass="error" />
+					<br/>
+					<h:inputText id="tekst" value="#{pz1.nazwa}">
+						<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText"/>
+					</h:inputText>
+					<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText" />
+				</h:column>
+</h:dataTable>
 		</h:form>
-</body>
+		</body>
 	</ui:define>
 </ui:composition>
 </html>
