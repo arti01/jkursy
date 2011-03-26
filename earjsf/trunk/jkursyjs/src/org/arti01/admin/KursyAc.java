@@ -256,6 +256,12 @@ public class KursyAc implements Serializable {
 		allKursy = new ListDataModel<Kursy>();
 		allKursy.setWrappedData(kursyImp.findAll());
 	}
+	
+	public String raport(){
+		allKursy = new ListDataModel<Kursy>();
+		allKursy.setWrappedData(kursyImp.findAll());
+		return "raport";
+	}
 
 	public DataModel<Kursy> getAllKursy() {
 		return allKursy;
