@@ -5,8 +5,9 @@
 
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
-		<div id="right">
+		<div id="main2">
 			<h:form>
+		<div id="fota">	
 				<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
 					first="#{kursantLekcjaAc.nrstrony-1}">
 					<h:column>
@@ -36,6 +37,7 @@
 						</h:panelGrid>
 					</h:column>
 				</rich:dataTable>
+				</div>
 			</h:form>
 			<h:form id="sterowanie">
 				<h:commandLink value="powrót do zdjęć" action="#{kursantLekcjaAc.fotyForm}" />

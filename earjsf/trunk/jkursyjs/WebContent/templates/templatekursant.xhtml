@@ -11,24 +11,16 @@
 </h:head>
 
 <body>
-<table>
-<tr>
-<td valign="top">
-<h3>menu</h3>
-<ui:insert name="menu" />
+<div id="container">
+<ui:include src="/kursant/menuG.xhtml"/>
+<div id="leftcol">
 <ui:include src="/kursant/menu.xhtml" />
-</td><td>
-<p>
-body
+</div>
+<div id="main">
 <ui:insert name="body" />
-</p>
-</td><td valign="top">
-<ui:insert name="menuP" />
-</td>
-</tr>
-</table>
-footer
-<ui:insert name="footer" />
+</div>
+<ui:include src="/all/footer.xhtml"/>
+</div>
 </body>
 </html>
 

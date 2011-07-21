@@ -4,16 +4,16 @@
 	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-		<body>
-		wykladowcy
+	<body>
+<div id="tabela">
 		<h:form id="form1">
-			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="table">
+			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="wyklad">
 				<h:column id="nazwa">
 					<f:facet name="header">
 						<h:outputText value="Imie Nazwisko" />
 					</f:facet>
 					<h:commandLink action="#{kursyAc.wykladDetale}">
-						<h5><h:outputText value="#{wyklad.imieNazwisko}" /></h5>
+						<h:outputText value="#{wyklad.imieNazwisko}" />
 						<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
 					</h:commandLink>
 				</h:column>
@@ -32,6 +32,7 @@
 				</h:column>
 			</h:dataTable>
 		</h:form>
+		</div>
 		</body>
 	</ui:define>
 </ui:composition>
