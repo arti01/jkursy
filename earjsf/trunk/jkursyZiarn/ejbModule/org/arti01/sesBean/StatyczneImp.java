@@ -47,14 +47,22 @@ public class StatyczneImp {
 		em.persist(statyczne);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void delete(Statyczne statyczne) {
 		Integer lp=statyczne.getLp();
 		statyczne=em.find(statyczne.getClass(), statyczne.getIdStatyczne());
 		em.remove(statyczne);
 		em.flush();
-		Query query=em.createQuery("update Statyczne s set s.lp=s.lp-1 where s.lp>:lp");
-		query.setParameter("lp", lp);
-		query.executeUpdate();
+		System.out.println(lp+"fffffffffffffff");
+		Query select=em.createQuery("select s from Statyczne s where s.lp>:lp order by s.lp");
+		select.setParameter("lp", lp);
+		List<Statyczne> sl=select.getResultList();
+		for (Statyczne s:sl){
+			System.out.println(s.getLp());
+			s.setLp(s.getLp()-1);
+			em.merge(s);
+			em.flush();
+		}
 	}
 
 	public Statyczne getStrona() {
@@ -82,7 +90,7 @@ public class StatyczneImp {
 		em.merge(statyczne);
 		//System.out.println(statyczne+"statOld");
 		//System.out.println(oldLp+"new"+newLp);
-		if (newLp < oldLp) {//idziemy w góre
+		if (newLp < oldLp) {//idziemy w g��re
 			//System.out.println("upupup");
 			Query select=em.createQuery("select s from Statyczne s where s.lp<:oldLp and s.lp>=:newLp order by s.lp desc");
 			select.setParameter("oldLp", oldLp);
@@ -98,7 +106,7 @@ public class StatyczneImp {
 			}
 			statyczne.setLp(newLp);
 			em.merge(statyczne);
-		} else if (newLp > oldLp) {//idziemy w dół
+		} else if (newLp > oldLp) {//idziemy w d����
 			Query select=em.createQuery("select s from Statyczne s where s.lp>:oldLp and s.lp<=:newLp order by s.lp asc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);

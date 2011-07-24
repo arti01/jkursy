@@ -1,42 +1,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
-
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 <h:body>
 	<h:form>
 		<ul>
 			<h:panelGroup rendered="#{login.zalogowany.username==null}">
-				<li><h:link value="zaloguj" outcome="/all/login.xhtml" /></li>
-				<li><h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" /></li>
+				<li><h:link value="zaloguj" outcome="/all/login.xhtml" />
+				</li>
+				<li><h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" />
+				</li>
 			</h:panelGroup>
 			<h:panelGroup rendered="#{login.zalogowany.username!=null}">
 				<li>Jesteś zalogowany jako:<br /> <h:outputText
-						value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
-						<br/>
-						<h:commandButton value="wyloguj" action="#{login.wyloguj}" />
-						<br/>
-						<h:commandLink value="edytuj swój profil" action="#{kursantIndexAc.profil}" />
-				</li>
+						value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" /> <br /> <h:commandButton
+						value="wyloguj" action="#{login.wyloguj}" /> <br /> <h:commandLink value="edytuj swój profil"
+						action="#{kursantIndexAc.profil}" /></li>
 			</h:panelGroup>
-			<li><h:commandLink value="kursy" action="#{kursyAc.list}" /></li>
-			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" /></li>
-			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" /></li>
+			<li><h:commandLink value="kursy" action="#{kursyAc.list}" />
+			</li>
+			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" />
+			</li>
+			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" />
+			</li>
 			<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 				<li><h:commandLink action="#{indexAc.statyczna}">
-						<h:outputText value="#{strona.tytul}" />
-					</h:commandLink></li>
+						<h:outputText value="#{strona.tytul}" id="link" />
+					</h:commandLink> 
+					<rich:tooltip id="tt1" layout="block" target="link">
+						<h:outputText value="#{strona.opis}" />
+					</rich:tooltip></li>
 			</ui:repeat>
-			<ui:repeat var="pz" value="#{indexAc.pzModel}">
-				<li><h:commandLink action="#{indexAc.pz}">
-						<f:setPropertyActionListener target="#{indexAc.pz}" value="#{pz}" />
-						<h:outputText value="poziom #{pz.nazwa}" />
-					</h:commandLink></li>
-			</ui:repeat>
-			<ui:repeat var="tk" value="#{indexAc.tkModel}">
-				<li><h:commandLink action="#{indexAc.tk}">
-						<f:setPropertyActionListener target="#{indexAc.tk}" value="#{tk}" />
-						<h:outputText value="typy kursów: #{tk.nazwa}" />
-					</h:commandLink></li>
-			</ui:repeat>
+			<li><h:link value="Poziomy zaawansowania" outcome="/all/pzLista.xhtml" />
+			</li>
+			<li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
+			</li>
 		</ul>
 	</h:form>
 </h:body>

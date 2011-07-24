@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -29,6 +30,10 @@ public class Typykursu implements Serializable {
 	@NotEmpty
 	@Column(nullable=false)
 	private String opis;
+	
+	@Column(length=7)
+	@Size(max=7)
+	private String kolor;
 	
 	@OneToMany(mappedBy="typykursu", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	private List<Kursy> kursy;
@@ -66,6 +71,14 @@ public class Typykursu implements Serializable {
 
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	public String getKolor() {
+		return kolor;
+	}
+
+	public void setKolor(String kolor) {
+		this.kolor = kolor;
 	}
 
 }

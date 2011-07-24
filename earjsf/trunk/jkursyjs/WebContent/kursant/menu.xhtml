@@ -23,7 +23,7 @@
 	</li>
 </ui:repeat>
 <li><h:commandLink value="Twoje rezerwacje" action="#{kursantKursyAc.rezerwacjeLista}"/></li>
-<li><h:outputText value="pomoc i informacje dla kursantów"/></li>
+<li><h:outputText value="pomoc i informacje dla studentów"/></li>
 <ui:repeat var="strona" value="#{kursantIndexAc.role.statyczne}">
 	<li><h:commandLink action="#{kursantIndexAc.statyczna}">
 				<h:outputText value="#{strona.tytul}" />
@@ -36,5 +36,3 @@
 </div>
 </body>
 </html>
-
-

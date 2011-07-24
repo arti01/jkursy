@@ -61,6 +61,11 @@
 					<h:outputLabel value="telefon" />
 					<h:inputText id="tel1" value="#{userAc.user.tel1}" immediate="true" size="50" />
 					<h:outputLabel value="" />
+					
+					<h:message for="polecajacy" styleClass="error" />
+					<h:outputLabel value="polecający" />
+					<h:inputText id="polecajacy" value="#{userAc.user.polecajacy}" immediate="true" size="50"/>
+					<h:outputLabel value="" />
 				</h:panelGrid>
 				<h:commandButton value="wyślij" action="#{userAc.dodaj}" />
 			</h:panelGroup>

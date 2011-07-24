@@ -7,7 +7,7 @@
 	<ui:define name="body">
 		<h:body>
 
-			<h2>Kursanci</h2>
+			<h2>Studenci</h2>
 			<h:form>
 				<ui:repeat var="kursant" value="#{kursantKursyAc.kurs.kursanci}">
 					<h:commandLink value="#{kursant.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
@@ -17,7 +17,7 @@
 				</ui:repeat>
 			</h:form>
 			<hr />
-			<h2>newys kursu</h2>
+			<h2>Ogłoszenia kursu</h2>
 			<table>
 				<ui:repeat var="news" value="#{kursantKursyAc.kurs.newsykursy}">
 					<tr>
@@ -38,7 +38,8 @@
 		czytaj więcej...
 		</h:commandLink>
 								</h:form>
-							</div></td>
+							</div>
+						</td>
 					</tr>
 				</ui:repeat>
 			</table>
@@ -49,63 +50,59 @@
 					<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}"
 						itemValue="#{kursant.username}" />
 				</h:selectOneMenu>
-				<h:commandButton value="pokaż zdjęcia wybranego kursanta" action="#{kursantLekcjaAc.fotyKursantowFiltr}">
+				<h:commandButton value="pokaż zdjęcia wybranego studenta" action="#{kursantLekcjaAc.fotyKursantowFiltr}">
 					<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{null}" />
 				</h:commandButton>
 			</h:form>
 
 			<div id="right">
-				<h2>lista lekcji:)</h2>
+				<h2>lista lekcji</h2>
 				<div id="tabela">
-				<h:form>
-					<h:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
-						<h:column>
-							<f:facet name="header">tytuł lekcji</f:facet>
-							<h:outputText value="#{lekcja.lp}" />.
+					<h:form>
+						<h:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
+							<h:column>
+								<f:facet name="header">tytuł lekcji</f:facet>
+								<h:outputText value="#{lekcja.lp}" />.
 		<h:commandLink action="#{kursantLekcjaAc.pokaz}">
-								<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
-								<h:outputText value="#{lekcja.tytul}" />
-							</h:commandLink>
-						</h:column>
-						<h:column>
-							<f:facet name="header">data modyfikacji lekcji</f:facet>
-							<h:outputText value="#{lekcja.datazmiany}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">ostatni komentarz do lekcji</f:facet>
-							<h:outputText value="#{lekcja.lastKoment.datadodaniaS} " rendered="#{lekcja.lastKoment!=null}" />
-							<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}"
-								rendered="#{lekcja.lastKoment!=null}" />
-						</h:column>
-						<h:column>
-							<f:facet name="header">zdjęcia kursantów</f:facet>
-							<h:panelGrid columns="3">
+									<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
+									<h:outputText value="#{lekcja.tytul}" />
+								</h:commandLink>
+							</h:column>
+							<h:column>
+								<f:facet name="header">ostatni komentarz do lekcji</f:facet>
+								<h:outputText value="#{lekcja.lastKoment.datadodaniaS} " rendered="#{lekcja.lastKoment!=null}" />
+								<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}"
+									rendered="#{lekcja.lastKoment!=null}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">zdjęcia studentów</f:facet>
+								<h:panelGrid columns="3">
 			Ostatnio dodane:
 			<h:outputText value="#{lekcja.lastFota.datadodaniaS} " rendered="#{lekcja.lastFota!=null}" />
-								<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}" />
-							</h:panelGrid>
-							<hr />
-							<h:commandLink value="idź do zdjęć kursantów" action="#{kursantLekcjaAc.fotyLekcji}">
-								<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
-								<f:setPropertyActionListener target="#{kursantLekcjaAc.user.username}" value="" />
-							</h:commandLink>
-							<hr />
-						</h:column>
-						<h:column>
-							<f:facet name="header">ostatno dodany komentarz do zdjęcia kursanta</f:facet>
-							<h:panelGrid columns="2">
-								<h:outputText value="#{lekcja.lastKomentFota.datadodaniaS} " rendered="#{lekcja.lastKomentFota!=null}" />
-								<h:outputText value="autor: #{lekcja.lastKomentFota.user.imieNazwisko}"
-									rendered="#{lekcja.lastKomentFota!=null}" />
-								<h:commandLink value="idż do zdjęcia" action="#{kursantLekcjaAc.fotaKursantaLekcji}">
-									<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}"
-										value="#{lekcja.lastKomentFota.lekcjafotykursant}" />
+									<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}" />
+								</h:panelGrid>
+								<hr />
+								<h:commandLink value="idź do zdjęć studentów" action="#{kursantLekcjaAc.fotyLekcji}">
 									<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
+									<f:setPropertyActionListener target="#{kursantLekcjaAc.user.username}" value="" />
 								</h:commandLink>
-							</h:panelGrid>
-						</h:column>
-					</h:dataTable>
-				</h:form>
+								<hr />
+							</h:column>
+							<h:column>
+								<f:facet name="header">ostatno dodany komentarz do zdjęcia studenta</f:facet>
+								<h:panelGrid columns="2">
+									<h:outputText value="#{lekcja.lastKomentFota.datadodaniaS} " rendered="#{lekcja.lastKomentFota!=null}" />
+									<h:outputText value="autor: #{lekcja.lastKomentFota.user.imieNazwisko}"
+										rendered="#{lekcja.lastKomentFota!=null}" />
+									<h:commandLink value="idż do zdjęcia" action="#{kursantLekcjaAc.fotaKursantaLekcji}">
+										<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}"
+											value="#{lekcja.lastKomentFota.lekcjafotykursant}" />
+										<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
+									</h:commandLink>
+								</h:panelGrid>
+							</h:column>
+						</h:dataTable>
+					</h:form>
 				</div>
 			</div>
 			<br />

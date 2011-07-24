@@ -70,6 +70,10 @@ public class User implements Serializable {
 	@Column(length=255)
 	private String wiadomosc;
 	
+	@Column(nullable = true)
+	@Size(max=255)
+	private String polecajacy;
+	
 	private byte[] fota;
 	
 	@Transient
@@ -416,5 +420,13 @@ public class User implements Serializable {
 
 	public void setFota(byte[] fota) {
 		this.fota = fota;
+	}
+
+	public String getPolecajacy() {
+		return polecajacy;
+	}
+
+	public void setPolecajacy(String polecajacy) {
+		this.polecajacy = polecajacy;
 	}
 }

@@ -69,7 +69,7 @@ public class StatyczneAc {
 				setInfoText("strona.dodany");
 			} catch (Exception e) {
 				logger.info("ssssssss", e);
-				addActionError("nie udało się stworzyć strony, sprawdz, czy juz taka nie istnieje");
+				addActionError("nie uda��o si�� stworzy�� strony, sprawdz, czy juz taka nie istnieje");
 				return "info";
 			}*/
 		}
@@ -101,6 +101,7 @@ public class StatyczneAc {
 	
 	public String usun() throws Exception {
 		statyczne=allStatyczne.getRowData();
+		logger.info(statyczne.getTytul());
 		statImp.delete(statyczne);
 		return "statyczneLista";
 	}

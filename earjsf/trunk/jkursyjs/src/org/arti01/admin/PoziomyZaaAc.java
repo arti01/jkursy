@@ -1,6 +1,8 @@
 package org.arti01.admin;
 
+
 import java.io.Serializable;
+
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -10,6 +12,8 @@ import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Poziomyzaawansowania;
 import org.arti01.sesBean.PoziomyZaawansowaniaImp;
+import org.richfaces.event.FileUploadEvent;
+import org.richfaces.model.UploadedFile;
 
 @ManagedBean(name="adminPoziomyZaaAc")
 @SessionScoped
@@ -63,13 +67,22 @@ public class PoziomyZaaAc implements Serializable{
 			pzImp.delete(all.getRowData());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			logger.error("usunięcie nieudane");
-			infoTextUsun="usunięcie nieudane - istnieją kursy z tym poziomem";
+			logger.error("usuni��cie nieudane");
+			infoTextUsun="usuni��cie nieudane - istniej�� kursy z tym poziomem";
 		}
 		all.setWrappedData(pzImp.getAll());
 		pz=new Poziomyzaawansowania();
 		return null;
 	}
+	
+	public void listenerFoty(FileUploadEvent event) {
+        UploadedFile item = event.getUploadedFile();
+        logger.info(item.getName());
+        //pz=all.getRowData();
+        pz.setPlik(item.getData());
+        pzImp.update(pz);
+        logger.info(pz.getNazwa());
+    }
 
 	public Poziomyzaawansowania getPz() {
 		return pz;

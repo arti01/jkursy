@@ -30,6 +30,8 @@ public class Poziomyzaawansowania implements Serializable {
 	@Column(nullable=false)
 	private String opis;
 	
+	private byte[] plik;
+	
 	@OneToMany(mappedBy="poziomyzaawansowania", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
 	private List<Kursy> kursy;
 
@@ -66,6 +68,14 @@ public class Poziomyzaawansowania implements Serializable {
 
 	public void setOpis(String opis) {
 		this.opis = opis;
+	}
+
+	public byte[] getPlik() {
+		return plik;
+	}
+
+	public void setPlik(byte[] plik) {
+		this.plik = plik;
 	}
 
 }

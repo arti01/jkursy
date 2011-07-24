@@ -1,5 +1,7 @@
 package org.arti01.all;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +87,13 @@ public String userGaleriaDetale(){
 		wykladowca=userImp.find(wykladowca);
 		return "wykladowcaDetale";
 	}
+	
+	public void paintFota(OutputStream stream, Object object) throws IOException {
+		//User u=new User();
+		//u.setUsername(object.toString());
+		//kurs.getPoziomyzaawansowania().
+    	stream.write((byte[])object);
+    }
 	
 	public String userGaleria(){
 		wykladowca=userImp.find(wykladowca);
