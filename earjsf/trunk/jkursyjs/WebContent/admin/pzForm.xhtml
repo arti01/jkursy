@@ -1,56 +1,49 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich"
-	xmlns:a4j="http://richfaces.org/a4j">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
-		<h:form>
-			<h:panelGroup id="form">
-				<h:message for="nazwa" styleClass="error" />
-				<h:panelGrid columns="2">
-					<h:outputLabel value="nazwa" />
-					<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}"
-						size="50" />
-					<h:outputLabel value="opis" />
-					<h:inputTextarea id="opis" value="#{adminPoziomyZaaAc.pz.opis}"
-						cols="70" rows="15" />
-				</h:panelGrid>
-				<a4j:commandButton value="wyślij"
-					action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
-			</h:panelGroup>
-		</h:form>
-		<hr />
-		<br />
-		<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
-		<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun" />
-		<h:form>
-			<h:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1"
-				id="tabled">
-				<h:column>
-					<a4j:commandLink action="#{adminPoziomyZaaAc.usun}"
-						render="form, tabled, infoTextUsun" value="usuń" />
-</h:column>
+			<h:form>
+				<h:panelGroup id="form">
+					<h:message for="nazwa" styleClass="error" />
+					<h:panelGrid columns="2">
+						<h:outputLabel value="nazwa" />
+						<h:inputText id="nazwa" value="#{adminPoziomyZaaAc.pz.nazwa}" size="50" />
+						<h:outputLabel value="opis" />
+						<h:inputTextarea id="opis" value="#{adminPoziomyZaaAc.pz.opis}" cols="70" rows="15" />
+					</h:panelGrid>
+					<a4j:commandButton value="wyślij" action="#{adminPoziomyZaaAc.dodaj}" render="form, lista, tabled" />
+				<rich:fileUpload fileUploadListener="#{adminPoziomyZaaAc.listenerFoty}" 
+				rendered="#{adminPoziomyZaaAc.pz.nazwa!=null}" style="height: 100px" id="upload" 
+				addLabel="wybierz ikonkę" doneLabel="zrobione" uploadLabel="dodaj ikonę"/>
+				</h:panelGroup>
+			</h:form>
+			<hr />
+			<br />
+			<h4>naciśnij enter w polu aby zaakceptowac zmianę</h4>
+			<h:outputText value="#{adminPoziomyZaaAc.infoTextUsun}" id="infoTextUsun" />
+			<h:form>
+				<rich:dataTable value="#{adminPoziomyZaaAc.all}" var="pz1" id="tabled">
+					<rich:column>
+						<a4j:commandLink action="#{adminPoziomyZaaAc.usun}" render="form, tabled, infoTextUsun" value="usuń" />
+					</rich:column>
 
-				<h:column>
-					<a4j:commandLink action="#{adminPoziomyZaaAc.zmien}"
-						render="form, tabled, infoTextUsun" value="edytuj" />
-				</h:column>
+					<rich:column>
+						<a4j:commandLink action="#{adminPoziomyZaaAc.zmien}" render="form, tabled, infoTextUsun, upload" value="edytuj" />
+					</rich:column>
 
-				<h:column>
-					<h:message for="tekst" styleClass="error" />
-					<br/>
-					<h:inputText id="tekst" value="#{pz1.nazwa}">
-						<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText"/>
-					</h:inputText>
-					<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText" />
-				</h:column>
-</h:dataTable>
-		</h:form>
+					<rich:column>
+						<h:message for="tekst" styleClass="error" />
+						<h:inputText id="tekst" value="#{pz1.nazwa}">
+							<a4j:ajax listener="#{adminPoziomyZaaAc.zmien}" render="infoText" immediate="true" />
+						</h:inputText>
+						<h:outputText value="#{adminPoziomyZaaAc.infoText}" id="infoText" />
+					</rich:column>
+				</rich:dataTable>
+			</h:form>
 		</body>
 	</ui:define>
 </ui:composition>
