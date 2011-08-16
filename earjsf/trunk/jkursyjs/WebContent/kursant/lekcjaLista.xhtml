@@ -6,8 +6,15 @@
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
 		<h:body>
-
-			<h2>Studenci</h2>
+			<h2>
+				Jesteś w kursie <strong><h:outputText value="#{kursantKursyAc.kurs.nazwa}" />
+				</strong>
+			</h2>
+			<h4>
+				<h:outputText value=" (#{kursantKursyAc.kurs.opisKrotki})" />
+			</h4>
+			<hr />
+			<h3>Studenci</h3>
 			<h:form>
 				<ui:repeat var="kursant" value="#{kursantKursyAc.kurs.kursanci}">
 					<h:commandLink value="#{kursant.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
@@ -17,15 +24,13 @@
 				</ui:repeat>
 			</h:form>
 			<hr />
-			<h2>Ogłoszenia kursu</h2>
+			<h3>Ogłoszenia kursu</h3>
 			<table>
 				<ui:repeat var="news" value="#{kursantKursyAc.kurs.newsykursy}">
 					<tr>
 						<td>
-							<h3>
-								<h:outputText value="#{news.tytul} " />
-							</h3>
 							<h4>
+								<h:outputText value="#{news.tytul} " />
 								<h:outputText value="(#{news.datadodaniaS})" />
 							</h4>
 							<div class="copy">
@@ -38,8 +43,7 @@
 		czytaj więcej...
 		</h:commandLink>
 								</h:form>
-							</div>
-						</td>
+							</div></td>
 					</tr>
 				</ui:repeat>
 			</table>
@@ -56,12 +60,12 @@
 			</h:form>
 
 			<div id="right">
-				<h2>lista lekcji</h2>
+				<h3>lista etapów</h3>
 				<div id="tabela">
 					<h:form>
 						<h:dataTable value="#{kursantKursyAc.lekcje}" var="lekcja">
 							<h:column>
-								<f:facet name="header">tytuł lekcji</f:facet>
+								<f:facet name="header">temat etapu</f:facet>
 								<h:outputText value="#{lekcja.lp}" />.
 		<h:commandLink action="#{kursantLekcjaAc.pokaz}">
 									<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
@@ -69,8 +73,9 @@
 								</h:commandLink>
 							</h:column>
 							<h:column>
-								<f:facet name="header">ostatni komentarz do lekcji</f:facet>
+								<f:facet name="header">ostatni komentarz do etapu</f:facet>
 								<h:outputText value="#{lekcja.lastKoment.datadodaniaS} " rendered="#{lekcja.lastKoment!=null}" />
+								<br/>
 								<h:outputText value="autor: #{lekcja.lastKoment.user.imieNazwisko}"
 									rendered="#{lekcja.lastKoment!=null}" />
 							</h:column>
@@ -82,7 +87,7 @@
 									<h:outputText value="autor: #{lekcja.lastFota.user.imieNazwisko}" rendered="#{lekcja.lastFota!=null}" />
 								</h:panelGrid>
 								<hr />
-								<h:commandLink value="idź do zdjęć studentów" action="#{kursantLekcjaAc.fotyLekcji}">
+								<h:commandLink value="idź do zdjęć" action="#{kursantLekcjaAc.fotyLekcji}">
 									<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
 									<f:setPropertyActionListener target="#{kursantLekcjaAc.user.username}" value="" />
 								</h:commandLink>

@@ -77,14 +77,6 @@
 			</ul>
 		</h:form>
 		<hr />
-		tematy lekcji:
-		<br />
-		<ul>
-			<ui:repeat var="lekcja" value="#{kursyAc.kurs.lekcjas}">
-				<li><h:outputText value="#{lekcja.lp}. #{lekcja.tytul}" /></li>
-			</ui:repeat>
-		</ul>
-		<hr />
 		opis:
 		<br />
 		<h:outputText value="#{kursyAc.kurs.opis}" escape="false" />

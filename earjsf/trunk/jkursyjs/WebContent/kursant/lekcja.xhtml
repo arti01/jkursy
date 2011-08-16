@@ -6,18 +6,16 @@
 <ui:composition template="/templates/templatekursant.xhtml">
 	<ui:define name="body">
 		<div id="right">
-			<h3>
-				<h:outputText value="#{kursantLekcjaAc.lekcja.tytul}" />
-			</h3>
-			<h4>
-				numer kolejny lekcji:
-				<h:outputText value="#{kursantLekcjaAc.lekcja.lp}" />
-			</h4>
+			<h2>
+				<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.nazwa}: "/>
+				etap<h:outputText value=" #{kursantLekcjaAc.lekcja.lp}," />
+				<h:outputText value=" #{kursantLekcjaAc.lekcja.tytul}" />
+			</h2>
 
-			Inne lekcje:<br />
+			Inne etapy kursu:<br />
 			<h:form>
 				<ui:repeat var="lekcja" value="#{kursantLekcjaAc.lekcja.kursy.lekcjeWidoczne}">
-					<h:commandButton action="#{kursantLekcjaAc.pokaz}" value="#{lekcja.lp}.#{lekcja.tytul}"
+					<h:commandButton action="#{kursantLekcjaAc.pokaz}" value="etap: #{lekcja.lp}, #{lekcja.tytul}"
 						rendered="#{lekcja!=kursantLekcjaAc.lekcja}">
 						<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
 					</h:commandButton>
@@ -26,39 +24,9 @@
 			<hr size="-1" />
 
 			<h:form>
-				<h:commandButton value="obsluga zdjec kursantów" action="#{kursantLekcjaAc.fotyLekcji}" />
+				<h:commandButton value="obsługa zdjęć" action="#{kursantLekcjaAc.fotyLekcji}" />
 			</h:form>
-			<h5>dyskusja o lekcji</h5>
-			<h:form>
-				<h:panelGrid columns="3" id="wpis">
-					<h:message for="tresc" />
-					<h:outputLabel for="tresc" value="treść" />
-					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
-					<h:message for="dowykladowcy" />
-					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
-					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarz.dowykladowcy}" />
-					<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarz}"
-						render="komentarze, wpis" />
-				</h:panelGrid>
-			</h:form>
-			<h:form>
-				<h:panelGroup id="komentarze">
-					<ui:repeat var="koment" value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
-						<h5>
-							<h:commandLink value="autor: #{koment.user.imieNazwisko}, " action="#{kursantKursyAc.pokazKursanta}">
-								<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{koment.user}" />
-							</h:commandLink>
-							<h:outputText value="dodany: #{koment.datadodaniaS}" />
-							<br />
-							<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}" />
-							<br />
-							<h:outputText value="to jest wypowiedź wykładowcy" rendered="#{koment.komentWykl}" />
-						</h5>
-						<h:outputText value="#{koment.tresc}" />
-						<hr />
-					</ui:repeat>
-				</h:panelGroup>
-			</h:form>
+			
 			<h:form>
 				<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjaplikis}" var="plik">
 					<h:panelGrid columns="2">
@@ -99,6 +67,38 @@
 						</h:panelGroup>
 					</h:panelGrid>
 				</ui:repeat>
+			</h:form>
+			
+			<h5>dyskusja w ramach etapu</h5>
+			<h:form>
+				<h:panelGrid columns="3" id="wpis">
+					<h:message for="tresc" />
+					<h:outputLabel for="tresc" value="treść" />
+					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
+					<h:message for="dowykladowcy" />
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarz.dowykladowcy}" />
+					<h:message for="dowykladowcy" />
+					<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarz}"
+						render="komentarze, wpis" />
+				</h:panelGrid>
+			</h:form>
+			<h:form>
+				<h:panelGroup id="komentarze">
+					<ui:repeat var="koment" value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
+						<h5>
+							<h:commandLink value="autor: #{koment.user.imieNazwisko}, " action="#{kursantKursyAc.pokazKursanta}">
+								<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{koment.user}" />
+							</h:commandLink>
+							<h:outputText value="dodany: #{koment.datadodaniaS}" />
+							<br />
+							<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}" />
+							<h:outputText value="to jest wypowiedź wykładowcy" rendered="#{koment.komentWykl}" />
+						</h5>
+						<h:outputText value="#{koment.tresc}" escape="false"/>
+						<hr />
+					</ui:repeat>
+				</h:panelGroup>
 			</h:form>
 		</div>
 	</ui:define>

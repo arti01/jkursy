@@ -10,7 +10,7 @@
 			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="wyklad">
 				<h:column id="nazwa">
 					<f:facet name="header">
-						<h:outputText value="Imie Nazwisko" />
+						<h:outputText value="Imię Nazwisko" />
 					</f:facet>
 					<h:commandLink action="#{kursyAc.wykladDetale}">
 						<h:outputText value="#{wyklad.imieNazwisko}" />

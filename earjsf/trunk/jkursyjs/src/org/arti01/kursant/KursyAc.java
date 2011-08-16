@@ -33,6 +33,7 @@ public class KursyAc implements Serializable {
 	private Rachunki rachunek = new Rachunki();
 	private String errorText;
 	private User kursant;
+	private String polecajacy;
 
 	public String rezerwacja() {
 		rachunek.setImienazwisko(loginBean.getZalogowany().getImieNazwisko());
@@ -45,6 +46,7 @@ public class KursyAc implements Serializable {
 
 	public String rezerwuj() {
 		KursyRezerwacje kr = new KursyRezerwacje();
+		kr.setPolecajacy(polecajacy);
 		kr.setAktywna(true);
 		kr.setWykonana(false);
 		kr.setKursy(kurs);
@@ -52,7 +54,7 @@ public class KursyAc implements Serializable {
 		if(rachTak)kr.setRachunki(rachunek);
 		for (Kursy k : loginBean.getZalogowany().getKursyZarezerwowane()) {
 			if (k.getIdkursy() == kurs.getIdkursy()) {
-				errorText = "Masz już rezerwację na ten kurs";
+				errorText = "Masz ju�� rezerwacj�� na ten kurs";
 				return "info";
 			}
 		}
@@ -169,6 +171,14 @@ public class KursyAc implements Serializable {
 
 	public void setKursant(User kursant) {
 		this.kursant = kursant;
+	}
+
+	public String getPolecajacy() {
+		return polecajacy;
+	}
+
+	public void setPolecajacy(String polecajacy) {
+		this.polecajacy = polecajacy;
 	}
 
 }

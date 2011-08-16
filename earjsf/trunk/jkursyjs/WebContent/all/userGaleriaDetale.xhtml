@@ -5,6 +5,7 @@
 
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
+	<div id="slider">
 		<rich:dataTable value="#{kursyAc.wykladowca.userfotyakcept}" var="fota" id="table" rows="1">
 			<h:column>
 				<h:panelGrid columns="1">
@@ -19,12 +20,17 @@
 				</h:panelGrid>
 			</h:column>
 		</rich:dataTable>
-		<rich:dataScroller for="table" maxPages="10" page="#{kursyAc.nrstrony}"/>
+		<div id="zakladki">
+		<rich:dataScroller for="table" maxPages="10" page="#{kursyAc.nrstrony}" />
+		</div>
 		<h:form>
+		<div id="galeria">
 		<h:commandLink action="#{kursyAc.userGaleria}" >
-			<h:outputText value="do galerii" />
+			<h:outputText value="&#8592;powrót do miniatur" />
 		</h:commandLink>
+		</div>
 		</h:form>
+		</div>
 	</ui:define>
 </ui:composition>
 </html>

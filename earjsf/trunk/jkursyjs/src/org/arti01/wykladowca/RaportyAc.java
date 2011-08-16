@@ -57,7 +57,7 @@ public class RaportyAc implements Serializable{
 		komentOdp.setDatadodania(new Date());
 		komentOdp.setDowykladowcy(false);
 		komentOdp.setLekcja(lekcjaKoment.getLekcja());
-		komentOdp.setTresc("to jest odpowiedz na:=============\""+lekcjaKoment.getTresc()+"\"================"+komentOdp.getTresc());
+		komentOdp.setTresc("to jest odpowiedz na:<p style=\"font-style: italic;\">\""+lekcjaKoment.getTresc()+"\"</p>"+komentOdp.getTresc());
 		Lekcja l=komentOdp.getLekcja();
 		//l.getLekcjakoments().remove(lekcjaKoment);
 		lekcjaKoment.setDowykladowcy(false);

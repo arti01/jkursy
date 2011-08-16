@@ -74,6 +74,7 @@ public class ResizeJpg {
    
       
    public byte[] zrobB(int var1, int var2, byte[] lf) {
+	   
 	   int dlugosc=0;
 	   int wysokosc=0;
       try {
@@ -84,6 +85,9 @@ public class ResizeJpg {
          BufferedImage var10 = new BufferedImage(var1, var2, 1);
          Graphics2D var11 = var10.createGraphics();
          BufferedImage varD;
+       
+       //jesli rozmiar foty mniejszy niż skalowanie, to nie powiekszamy
+  	   if(var2>var5.getHeight()||var1>var5.getWidth()) return lf;
          
         	wysokosc=var2;
         	 if (var2<var5.getHeight()){

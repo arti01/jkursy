@@ -10,6 +10,12 @@
 			<h3>Wykładowca:</h3>
 			<div>
 				<h:form>
+				<h:selectOneMenu value="#{kursyAc.wykladowca.username}">
+					<f:selectItems value="#{kursyAc.allWykladowcy}" var="wykladowca" itemLabel="#{wykladowca.imieNazwisko}"
+						itemValue="#{wykladowca.username}" />
+				</h:selectOneMenu>
+				<h:commandButton value="wybierz innego wykładowcę" action="#{kursyAc.wykladDetale}"/>
+				</h:form>
 					<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}"
 						value="#{kursyAc.wykladowca.username}" cacheable="false"
 						rendered="#{kursyAc.wykladowca.fota!=null}" style="width:160px;">
@@ -18,7 +24,6 @@
 						<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" />
 					</h3>
 					<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false" />
-				</h:form>
 			</div>
 			<h:form rendered="#{kursyAc.wykladowca.userfotyakcept.size()>0}">
 				<div id="miniatury">

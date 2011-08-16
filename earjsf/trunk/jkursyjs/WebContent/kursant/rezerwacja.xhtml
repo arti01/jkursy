@@ -14,7 +14,10 @@
 			<h:selectBooleanCheckbox value="#{kursantKursyAc.rachTak}" id="rachTak">
 				<a4j:ajax event="change" execute="@this" render="formatka, form" />
 			</h:selectBooleanCheckbox>
-
+			<br/>
+			<h:outputLabel value="polecający:"/>
+<h:inputText value="#{kursantKursyAc.polecajacy}"/>
+<hr/>
 			<h:panelGrid id="formatka" columns="3" rendered="#{kursantKursyAc.rachTak}">
 				<h3>
 					<h:outputText value="w razie potrzeby zmień dane" />

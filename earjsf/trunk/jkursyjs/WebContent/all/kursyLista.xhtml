@@ -5,80 +5,95 @@
 	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
-	<body>
-		<div id="tabela">
-			<h:form id="form1">
-				<rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
-					<rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}" style="background-color: #{kurs.typykursu.kolor}">
-						<f:facet name="header">
-							<a4j:commandLink value="kurs" render="tabkursy" action="#{adminKursyAc.sortBynazwa}" />
-						</f:facet>
-						<h:commandLink action="#{kursyAc.detale}">
-							<h:outputText value="#{kurs.nazwa}" styleClass="tytul" />
-						</h:commandLink>
-						<br/><h:outputText value="#{kurs.opisKrotki}"/>
-						<hr />
-						<p>
-							<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+		<body>
+			<div id="tabela">
+				<h:form id="form1">
+					<rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
+						<rich:column id="nazwa" style="background-color: #{kurs.typykursu.kolor}">
+							<f:facet name="header">
+								<h:outputText value="kurs"/>
+							</f:facet>
+							<h:commandLink action="#{kursyAc.detale}">
+								<h:outputText value="#{kurs.nazwa}" styleClass="tytul" />
+							</h:commandLink>
 							<br />
-							<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
-						</p>
-					</rich:column>
-					<rich:column style="background-color: #{kurs.typykursu.kolor}">
-						<f:facet name="header">
-						</f:facet>
-						<ul>
-						<li>
-							<h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" /></li>
-						<li><h:commandLink action="#{indexAc.tk}">
-							<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
-							<h:outputText value="typ: #{kurs.typykursu.nazwa}" />
-						</h:commandLink></li>
-						<li><h:commandLink action="#{indexAc.pz}">
-							<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
-						<a4j:mediaOutput id="poziomimg" element="img" createContent="#{kursyAc.paintFota}" value="#{kurs.poziomyzaawansowania.plik}"/>
-						</h:commandLink>
-						<rich:tooltip id="tt1" layout="block" target="poziomimg">
-							<h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
-						</rich:tooltip>
-					</li>
-						</ul>
-					</rich:column>
-					<rich:column sortBy="#{kurs.cena}" id="cena" sortOrder="#{adminKursyAc.cenaOrder}" style="background-color: #{kurs.typykursu.kolor}">
-						<f:facet name="header">
-							<a4j:commandLink value="cena" render="tabkursy" action="#{adminKursyAc.sortBycena}" />
-						</f:facet>
-						<h:outputText value="#{kurs.cena}">
-							<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
-						</h:outputText>
-					</rich:column>
-					<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}" style="background-color: #{kurs.typykursu.kolor}">
-						<f:facet name="header">
-							<a4j:commandLink value="rozpoczęcie" render="tabkursy" action="#{adminKursyAc.sortBydataod}" />
-						</f:facet>
-						<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-						<h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false"/>
-						<h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-						<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
-					</rich:column>
-					<rich:column style="background-color: #{kurs.typykursu.kolor}">
-						<f:facet name="header">
-							<a4j:commandLink value="rezerwacja" render="tabkursy" />
-						</f:facet>
-						<h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwacja}"
-							rendered="#{(login.zalogowany.username!=null)and(kurs.rezerwacjaDostepna)}">
-							<f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
-						</h:commandButton>
-						<h:outputText value="zaloguj się aby rezerwować" rendered="#{(login.zalogowany.username==null)}" />
-					</rich:column>
-				</rich:dataTable>
-			</h:form>
-		</div>
-	</body>
+							<h:outputText value="#{kurs.opisKrotki}" />
+							<ul>
+							<a4j:repeat var="wyklad" value="#{kurs.wykladowcy}">
+							<li><h:commandLink action="#{kursyAc.wykladDetale}">
+									<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
+									<h:outputText value="#{wyklad.imieNazwisko}" />
+								</h:commandLink>
+							</li>
+							</a4j:repeat>
+					</ul>
+							<hr />
+							<p>
+								<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+								<br />
+								<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
+							</p>
+						</rich:column>
+						<rich:column style="background-color: #{kurs.typykursu.kolor}">
+							<f:facet name="header">
+							</f:facet>
+							<ul>
+								<li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" />
+								</li>
+								<li><h:commandLink action="#{indexAc.tk}">
+										<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
+										<h:outputText value="typ: #{kurs.typykursu.nazwa}" />
+									</h:commandLink>
+								</li>
+								<li><h:commandLink action="#{indexAc.pz}">
+										<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
+										<a4j:mediaOutput id="poziomimg" element="img" createContent="#{kursyAc.paintFota}"
+											value="#{kurs.poziomyzaawansowania.plik}" />
+									</h:commandLink> <rich:tooltip id="tt1" layout="block" target="poziomimg">
+										<h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
+									</rich:tooltip></li>
+							</ul>
+						</rich:column>
+						<rich:column sortBy="#{kurs.cena}" id="cena" sortOrder="#{adminKursyAc.cenaOrder}"
+							style="background-color: #{kurs.typykursu.kolor}">
+							<f:facet name="header">
+								<a4j:commandLink value="cena" render="tabkursy" action="#{adminKursyAc.sortBycena}" />
+							</f:facet>
+							<h:outputText value="#{kurs.cena}">
+								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+						</rich:column>
+						<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}"
+							style="background-color: #{kurs.typykursu.kolor}">
+							<f:facet name="header">
+								<a4j:commandLink value="rozpoczęcie" render="tabkursy" action="#{adminKursyAc.sortBydataod}" />
+							</f:facet>
+							<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+							<h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
+							<h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+							<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
+						</rich:column>
+						<rich:column style="background-color: #{kurs.typykursu.kolor}">
+							<f:facet name="header">
+								<a4j:commandLink value="rezerwacja" render="tabkursy" />
+							</f:facet>
+							<h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwacja}"
+								rendered="#{(login.zalogowany.username!=null)and(kurs.rezerwacjaDostepna)}">
+								<f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
+							</h:commandButton>
+							<h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" rendered="#{(login.zalogowany.username==null)}"/>
+							<h:outputText value=" lub " rendered="#{(login.zalogowany.username==null)}" />
+							<h:link value="zaloguj" outcome="/all/login.xhtml" rendered="#{(login.zalogowany.username==null)}"/>
+							<h:outputText value="aby rezerwować" rendered="#{(login.zalogowany.username==null)}" />
+						</rich:column>
+					</rich:dataTable>
+				</h:form>
+			</div>
+		</body>
 	</ui:define>
 </ui:composition>
 </html>

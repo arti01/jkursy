@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 /**
  * The persistent class for the kursy_rezerwacje database table.
@@ -30,6 +31,9 @@ public class KursyRezerwacje implements Serializable {
 	private Date datarezerwacji;
 
 	private double wplata;
+	
+	@Size(max=250)
+	private String polecajacy;
 
 	@Temporal(TemporalType.DATE)
 	private Date datawplaty;
@@ -118,6 +122,14 @@ public class KursyRezerwacje implements Serializable {
 
 	public void setDatawplaty(Date datawplaty) {
 		this.datawplaty = datawplaty;
+	}
+
+	public String getPolecajacy() {
+		return polecajacy;
+	}
+
+	public void setPolecajacy(String polecajacy) {
+		this.polecajacy = polecajacy;
 	}
 
 }

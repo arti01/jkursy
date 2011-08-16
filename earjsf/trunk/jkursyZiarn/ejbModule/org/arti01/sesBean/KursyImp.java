@@ -70,7 +70,7 @@ public class KursyImp {
 		em.merge(kurs);
 		//System.out.println(lekcja+"statOld");
 		//System.out.println(oldLp+"new"+newLp);
-		if (newLp < oldLp) {//idziemy w góre
+		if (newLp < oldLp) {//idziemy w g��re
 			//System.out.println("upupup");
 			Query select=em.createQuery("select k from Kursy k where k.lp<:oldLp and k.lp>=:newLp order by k.lp desc");
 			select.setParameter("oldLp", oldLp);
@@ -86,7 +86,7 @@ public class KursyImp {
 			}
 			kurs.setLp(newLp);
 			em.merge(kurs);
-		} else if (newLp > oldLp) {//idziemy w dół
+		} else if (newLp > oldLp) {//idziemy w d����
 			Query select=em.createQuery("select k from Kursy k where k.lp>:oldLp and k.lp<=:newLp order by k.lp asc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);
@@ -137,7 +137,7 @@ public class KursyImp {
 	public boolean validInsert(Kursy kurs){
 		if(kurs.getDataod()==null||kurs.getDatado()==null) return true;
 		if(kurs.getDataod().after(kurs.getDatado())||kurs.getDatado().before(new Date())){
-			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżącej)";
+			errorText="Daty bez sensu ('data do' < 'data od' lub 'data do' < bieżcej)";
 			return false;
 		}
 		else return true;

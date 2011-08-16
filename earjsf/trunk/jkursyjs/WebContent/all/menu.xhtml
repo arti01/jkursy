@@ -20,6 +20,10 @@
 			</li>
 			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" />
 			</li>
+			<li><h:link value="Poziomy zaawansowania" outcome="/all/pzLista.xhtml" />
+			</li>
+			<li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
+			</li>
 			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" />
 			</li>
 			<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
@@ -30,10 +34,6 @@
 						<h:outputText value="#{strona.opis}" />
 					</rich:tooltip></li>
 			</ui:repeat>
-			<li><h:link value="Poziomy zaawansowania" outcome="/all/pzLista.xhtml" />
-			</li>
-			<li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
-			</li>
 		</ul>
 	</h:form>
 </h:body>

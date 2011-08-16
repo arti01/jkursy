@@ -62,8 +62,8 @@ public class LekcjaAc implements Serializable{
 	private List<Lekcjafotykursant> listaFot=new ArrayList<Lekcjafotykursant>();
 	private String nrstrony;
 	
-	private static int DLUGOSC=600;
-    private static int WYSOKOSC=400;
+	private static int DLUGOSC=800;
+    private static int WYSOKOSC=800;
     private static int DLUGOSCmin=150;
     private static int WYSOKOSCmin=100;
 	
