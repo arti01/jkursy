@@ -4,18 +4,6 @@
 <h:body>
 	<h:form>
 		<ul>
-			<h:panelGroup rendered="#{login.zalogowany.username==null}">
-				<li><h:link value="zaloguj" outcome="/all/login.xhtml" />
-				</li>
-				<li><h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml" />
-				</li>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{login.zalogowany.username!=null}">
-				<li>Jesteś zalogowany jako:<br /> <h:outputText
-						value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" /> <br /> <h:commandButton
-						value="wyloguj" action="#{login.wyloguj}" /> <br /> <h:commandLink value="edytuj swój profil"
-						action="#{kursantIndexAc.profil}" /></li>
-			</h:panelGroup>
 			<li><h:commandLink value="kursy" action="#{kursyAc.list}" />
 			</li>
 			<li><h:commandLink value="wykladowcy" action="#{kursyAc.wykladList}" />
@@ -23,8 +11,6 @@
 			<li><h:link value="Poziomy zaawansowania" outcome="/all/pzLista.xhtml" />
 			</li>
 			<li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
-			</li>
-			<li><h:commandLink value="dla absolwentów" action="indexAbsolw" />
 			</li>
 			<ui:repeat var="strona" value="#{indexAc.statyczneModel}">
 				<li><h:commandLink action="#{indexAc.statyczna}">

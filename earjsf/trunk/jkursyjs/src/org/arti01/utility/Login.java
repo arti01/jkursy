@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.arti01.entit.Role;
 import org.arti01.entit.User;
 import org.arti01.sesBean.UserImp;
 
@@ -32,7 +33,7 @@ public class Login implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//rozne.setInfoText("jesteś wylogowany");
+		//rozne.setInfoText("jeste�� wylogowany");
 		return "/all/index.xhtml?faces-redirect=true";
 	}
 
@@ -44,7 +45,7 @@ public class Login implements Serializable {
 		zalogowany=userImp.find(z);
 		//logger.info("imie nazwisko"+zalogowany.getImieNazwisko());
 		//rozne.ustaw(z);
-		//rozne.setInfoText("jesteś zalogowany");
+		//rozne.setInfoText("jeste�� zalogowany");
 		return zalogowany;
 		//return rozne.getZalogowany();
 	}

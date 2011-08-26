@@ -12,9 +12,35 @@
 
 <body>
 <div id="container">
-<ui:include src="/kursant/menuG.xhtml"/>
+<ui:include src="/kursant/menuG.xhtml" />
+<div id="left">
+<div id="menu">
+<h:form>
+<ul>
+<li>
+<h:graphicImage value="../all/grafa/student.png"/>strefa studenta<hr/>
+</li>
+<li><h:commandLink action="indexAll">
+    	<h:graphicImage value="../all/grafa/home.png"/>
+    	strona główna
+    </h:commandLink>
+</li>
+<li>
+	Jesteś zalogowany jako:<br />
+	<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
+	<h:commandButton value="wyloguj" action="#{login.wyloguj}" />
+</li>
+<li>
+	<h:commandLink action="#{kursantIndexAc.profil}">
+		<h:graphicImage value="../all/grafa/edit.png" />edytuj swój profil
+	</h:commandLink>
+</li>
+</ul>
+</h:form>
+</div>
 <div id="leftcol">
 <ui:include src="/kursant/menu.xhtml" />
+</div>
 </div>
 <div id="main2">
 <ui:insert name="body" />

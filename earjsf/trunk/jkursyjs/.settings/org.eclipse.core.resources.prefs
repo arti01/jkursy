@@ -1,10 +1,13 @@
-#Mon Aug 15 10:07:27 CEST 2011
+#Mon Aug 22 20:15:22 CEST 2011
 eclipse.preferences.version=1
-encoding//WebContent/zagi/kadra.html=UTF-8
-encoding//WebContent/zagi/kursy.html=UTF-8
+encoding//WebContent/err403.html=UTF-8
+encoding//WebContent/err500.html=UTF-8
 encoding//src/org/arti01/admin/KursyAc.java=UTF-8
 encoding//src/org/arti01/admin/PoziomyZaaAc.java=UTF-8
 encoding//src/org/arti01/admin/StatyczneAc.java=UTF-8
+encoding//src/org/arti01/admin/UsersAc.java=UTF-8
 encoding//src/org/arti01/all/UserAc.java=UTF-8
+encoding//src/org/arti01/kursant/IndexAc.java=UTF-8
 encoding//src/org/arti01/kursant/KursyAc.java=UTF-8
+encoding//src/org/arti01/utility/Login.java=UTF-8
 encoding//src/org/arti01/utility/ResizeJpg.java=UTF-8

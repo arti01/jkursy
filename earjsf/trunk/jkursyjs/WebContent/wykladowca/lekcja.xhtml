@@ -8,81 +8,80 @@
 
 <ui:composition template="/templates/templatewyklad.xhtml">
 	<ui:define name="body">
-		<div id="right">
-		<h3><h:outputText value="#{kursantLekcjaAc.lekcja.tytul}" /></h3>
-		<h4>numer kolejny lekcji:<h:outputText
-			value="#{kursantLekcjaAc.lekcja.lp}" /></h4>
- 
+	<div id="right">
+		<h2>
+				<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.nazwa}: " />
+				etap
+				<h:outputText value=" #{kursantLekcjaAc.lekcja.lp}," />
+				<h:outputText value=" #{kursantLekcjaAc.lekcja.tytul}" />
+			</h2>
+	
 		<h:form>
-			<h5>dyskusja o lekcji</h5>
+				<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjaplikis}" var="plik">
+					<h:panelGrid columns="2">
+						<h:outputText value="#{plik.opis}" />
+						<h:commandButton value="pobierz plik" action="#{wykladPlikUploadBean.download}">
+							<f:setPropertyActionListener target="#{wykladPlikUploadBean.plik}" value="#{plik}" />
+						</h:commandButton>
+					</h:panelGrid>
+				</ui:repeat>
+			</h:form>
+		<br />
+</div>
+		<div id="content">
+			<br />
+			<h:outputText value="#{kursantLekcjaAc.lekcja.tresc}" escape="false" />
+			<br />
+			<h:form>
+				<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjafoties}" var="fota">
+					<a4j:mediaOutput element="img" createContent="#{wykladImageUploadBean.paintBazyDuze}"
+						value="#{fota.idlekcjafoty}" cacheable="false">
+						<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+					</a4j:mediaOutput>
+					<br />
+					<h:outputText value="#{fota.opis}" />
+					<br />
+					<h:outputText value="pokaż exif" id="exlink" />
+					<rich:tooltip id="tt1" layout="block" target="exlink">
+						<h:outputText value="#{fota.exif}" escape="false"/>
+					</rich:tooltip>
+					<hr />
+				</ui:repeat>
+			</h:form>
+			
+			<h5>dyskusja w ramach etapu</h5>
 			<h:form>
 				<h:panelGrid columns="3" id="wpis">
 					<h:message for="tresc" />
-					<h:outputLabel for="treść" value="treść"/>
-					<h:inputTextarea id="tresc"
-						value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
+					<h:outputLabel for="tresc" value="treść" />
+					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarz.tresc}" cols="100" />
 					<h:message for="dowykladowcy" />
-					<a4j:commandButton value="dodaj komentarz"
-						action="#{kursantLekcjaAc.dodajKomentarz}"
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarz.dowykladowcy}" />
+					<h:message for="dowykladowcy" />
+					<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarz}"
 						render="komentarze, wpis" />
 				</h:panelGrid>
 			</h:form>
-			<h:panelGroup id="komentarze">
-				<ui:repeat var="koment"
-					value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
-					<h5><h:outputText value="autor: #{koment.user.imieNazwisko}, " />
-					<h:outputText value="dodany: #{koment.datadodaniaS}" /><br/>
-					<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}"/><br/>
-					<h:outputText value="to jest wypowiedź wykładowcy" rendered="#{koment.komentWykl}"/></h5>
-					<h:outputText value="#{koment.tresc}" />
-					<hr />
-				</ui:repeat>
-			</h:panelGroup>
-
-			<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjaplikis}" var="plik">
-				<h:panelGrid columns="2">
-					<h:outputText value="#{plik.opis}" />
-					<h:commandButton value="pobierz plik"
-						action="#{wykladPlikUploadBean.download}">
-						<f:setPropertyActionListener target="#{wykladPlikUploadBean.plik}"
-							value="#{plik}" />
-					</h:commandButton>
-				</h:panelGrid>
-			</ui:repeat>
-		</h:form></div>
-		<br />
-		<div id="content"><br />
-		<h:outputText value="#{kursantLekcjaAc.lekcja.tresc}" escape="false" />
-		<br />
-
-		<h:form>
-			<ui:repeat value="#{kursantLekcjaAc.lekcja.lekcjafoties}" var="fota">
-				<h:panelGrid columns="2">
-					<h:panelGroup id="fota">
-						<a4j:mediaOutput element="img"
-							createContent="#{wykladImageUploadBean.paintBazyDuze}"
-							value="#{fota.idlekcjafoty}" cacheable="false">
-							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
-						</a4j:mediaOutput>
-						<br />
-						<h:outputText value="#{fota.opis}" />
-					</h:panelGroup>
-					<h:panelGroup id="exif">
-						<a4j:commandLink value="EXIF"
-							action="#{kursantLekcjaAc.exifPokazZmien}" render="exif"
-							rendered="#{!(kursantLekcjaAc.exifPokaz)}" />
-						<br />
-						<a4j:commandLink action="#{kursantLekcjaAc.exifPokazZmien}"
-							render="exif" rendered="#{kursantLekcjaAc.exifPokaz}">
-							<h:outputText value="#{fota.exif}" escape="false"
-								rendered="#{kursantLekcjaAc.exifPokaz}" />
-							<h:outputText value="zwiń" />
-						</a4j:commandLink>
-					</h:panelGroup>
-				</h:panelGrid>
-			</ui:repeat>
-		</h:form></div>
-		<hr size="3"/>
+			<h:form>
+				<h:panelGroup id="komentarze">
+					<ui:repeat var="koment" value="#{kursantLekcjaAc.lekcja.lekcjakoments}">
+						<h5>
+							<h:commandLink value="autor: #{koment.user.imieNazwisko}, " action="#{kursantKursyAc.pokazKursanta}">
+								<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{koment.user}" />
+							</h:commandLink>
+							<h:outputText value="dodany: #{koment.datadodaniaS}" />
+							<br />
+							<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}" />
+							<h:outputText value="to jest wypowiedź wykładowcy" rendered="#{koment.komentWykl}" />
+						</h5>
+						<h:outputText value="#{koment.tresc}" escape="false" />
+						<hr />
+					</ui:repeat>
+				</h:panelGroup>
+			</h:form>
+			
+			</div>
 	</ui:define>
 </ui:composition>
 </html>

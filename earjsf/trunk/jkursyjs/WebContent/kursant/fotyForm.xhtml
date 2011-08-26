@@ -8,6 +8,7 @@
 		<h:panelGroup id="uploadpg" rendered="#{kursantLekcjaAc.lekcja!=null}">
 			<h:form>
 				<rich:fileUpload fileUploadListener="#{kursantLekcjaAc.listenerFoty}" id="upload"
+				style="height: 200px;"
 					rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
 					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
 				</rich:fileUpload>
@@ -16,18 +17,20 @@
 			</h:form>
 		</h:panelGroup>
 		<hr />
-		<h:panelGrid columns="2" id="informacje" rendered="#{kursantLekcjaAc.lekcja!=null}">
-			<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji" />
-			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}" />
-			<h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy" />
-			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" />
-			<h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: " />
-			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}" />
-			<h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " />
-			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" />
-			<h:outputText value="Możesz jeszcze dodać: " />
-			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}" />
-		</h:panelGrid>
+		<h:panelGroup id="informacje" rendered="#{kursantLekcjaAc.lekcja!=null}">
+		<ul>
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji" />
+			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}" /></li>
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy" />
+			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" /></li>
+			<li><h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: " />
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}" /></li>
+			<li><h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " />
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" /></li>
+			<li><h:outputText value="Możesz jeszcze dodać: " />
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}" /></li>
+			</ul>
+		</h:panelGroup>
 		<hr size="1" />
 		<h:form>
 			<h:panelGroup>
@@ -54,23 +57,23 @@
 					</h:commandLink>
 				</rich:column>
 				<rich:column>
-					<h:panelGrid columns="1">
-						<h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
+					<ul>
+						<li><h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}" />
-						</h:commandLink>
-						<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+						</h:commandLink></li>
+						<li><h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
 							<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
-						</h:commandLink>
-						<h:outputText value="dodana: #{fota.datadodaniaS}">
+						</h:commandLink></li>
+						<li><h:outputText value="dodana: #{fota.datadodaniaS}">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-						<h:outputText value="komentarz wykładowcy: dodano" rendered="#{fota.komentWykl}"/>
-						<h:outputText value="komentarz wykładowcy: brak" rendered="#{!fota.komentWykl}"/>
-						<h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+						</h:outputText></li>
+						<li><h:outputText value="komentarz wykładowcy: dodano" rendered="#{fota.komentWykl}"/>
+						<h:outputText value="komentarz wykładowcy: brak" rendered="#{!fota.komentWykl}"/></li>
+						<li><h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
 							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
-						</h:commandLink>
-					</h:panelGrid>
+						</h:commandLink></li>
+					</ul>
 				</rich:column>
 			</rich:dataTable>
 		</h:form>

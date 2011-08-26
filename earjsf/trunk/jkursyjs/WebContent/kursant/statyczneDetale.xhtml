@@ -7,12 +7,10 @@
 	<ui:composition template="/templates/templatekursant.xhtml">
 		<ui:define name="body">
 	<body>
-<h2>Strony statyczne wyklad</h2>
-<h3>tytuł:<h:outputText value="#{kursantIndexAc.strona.tytul}"/></h3> 
-wstęp:<br/><h:outputText value="#{kursantIndexAc.strona.opis}"/>
-<br/><br/>
-Treść:<br/><h:outputText value="#{kursantIndexAc.strona.tresc}" escape="false"/>
-<br/>
+<h3><h:outputText value="#{kursantIndexAc.strona.tytul}"/></h3> 
+<h4><h:outputText value="#{kursantIndexAc.strona.opis}"/></h4>
+<hr/><br/>
+<h:outputText value="#{kursantIndexAc.strona.tresc}" escape="false"/>
 </body>
 </ui:define>
 </ui:composition>

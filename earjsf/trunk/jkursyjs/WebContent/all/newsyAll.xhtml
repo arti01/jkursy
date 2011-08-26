@@ -5,7 +5,7 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
 		<table>
-			<ui:repeat var="news" value="#{adminNewsyAc.allNewsy}" size="4">
+			<ui:repeat var="news" value="#{adminNewsyAc.allNewsy}">
 				<tr>
 					<td>
 						<h3>
@@ -31,7 +31,7 @@
 				</tr>
 			</ui:repeat>
 		</table>
-		<h:link value="Przeczytaj wszystkie newsy" outcome="/all/newsyAll.xhtml" />
+
 	</ui:define>
 </ui:composition>
 </html>

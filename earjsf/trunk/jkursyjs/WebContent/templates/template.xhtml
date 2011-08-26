@@ -1,31 +1,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-	
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
 <h:head>
-  <title><ui:insert name="title">jKursy</ui:insert></title>
-  <link rel="stylesheet" type="text/css" href="../all/grafa/style.css" media="screen,projection" />
-  <script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
+	<title><ui:insert name="title">jKursy</ui:insert></title>
+	<link rel="stylesheet" type="text/css" href="../all/grafa/style.css" media="screen,projection" />
+	<script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
 </h:head>
 
 <h:body>
-<div id="container">
-<ui:include src="/all/menuG.xhtml"/>
-<div id="leftcol">
-<ui:include src="/all/menu.xhtml" />
-</div>
-<div id="baner"><img src="../all/grafa/baner.png" alt="baner"/></div>
-<div id="main">
-<ui:insert name="body" />
-</div>
+	<div id="container">
+		<ui:include src="/all/menuG.xhtml" />
+		<div id="left">
+			<div id="menu">
+				<ui:include src="/all/menuL1.xhtml" />
+			</div>
+			<div id="leftcol">
+				<ui:include src="/all/menuL2.xhtml" />
+			</div>
+			<div id="vbaner">
+				<img src="../all/grafa/banerpion.jpg" alt="" width="190" height="400" />
+			</div>
+		</div>
+		<div id="baner">
+			<img src="../all/grafa/baner.png" alt="baner" />
+		</div>
+		<div id="main">
+			<ui:insert name="body" />
+		</div>
 
-<ui:include src="/all/3warstwa.xhtml"/>
+		<ui:include src="/all/3warstwa.xhtml" />
 
-<ui:include src="/all/footer.xhtml"/>
-</div>
+		<ui:include src="/all/footer.xhtml" />
+	</div>
 </h:body>
 </html>
 

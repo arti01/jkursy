@@ -8,57 +8,37 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
 		<body>
-		nazwa kursu:
 		<h2><h:outputText value="#{kursyAc.kurs.nazwa}" /></h2>
 		<hr />
-		krótki opis:
 		<h3><h:outputText value="#{kursyAc.kurs.opisKrotki}" /></h3>
 		<hr />
 		Rodzaj kursu:
 		<h3><h:outputText value="#{kursyAc.kurs.stacjonarnyTN}" /></h3>
 		<hr />
 		typ kursu:
-		<h3><h:outputText value="#{kursyAc.kurs.typykursu.nazwa}" /></h3>
-		<h:outputText value="moge to zrobić tak, ale cała strona ładuje się wolniej:"/>
 		<h:form>
-			<h:outputText value="(klik)"/>
-			<rich:tooltip mode="ajax" showEvent="click">
+			<h3><h:outputText value="#{kursyAc.kurs.typykursu.nazwa}"/></h3>
+			<h:outputText value=" (pokaż więcej)"/>
+			<rich:tooltip mode="client">
 				<h:outputText value="#{kursyAc.kurs.typykursu.opis}" />
 			</rich:tooltip>
 			</h:form>
-			<h:outputText value="lub tak, wtedy będzie szybciej:"/>
-			<h:form>
-			<h:commandLink action="#{indexAc.tk}">
-				<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kursyAc.kurs.typykursu}"/>
-				<h:outputText value="(klik)"/>
-			</h:commandLink>
-			</h:form>
 		<hr />
 		poziom zaawansowania kursu:
-		<h3><h:outputText
-			value="#{kursyAc.kurs.poziomyzaawansowania.nazwa}"/>
-			</h3>
-			<h:outputText value="moge to zrobić tak, ale cała strona ładuje się wolniej:"/>
 			<h:form>
-			<h:outputText value="(klik)"/>
-			<rich:tooltip id="popup" mode="ajax" showEvent="click">
+			<h3><h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.nazwa}"/></h3>
+			<h:outputText value=" (pokaż więcej)"/>
+			<rich:tooltip id="popup" mode="client">
 				<h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.opis}" />
 			</rich:tooltip>
-			</h:form>
-			<h:outputText value="lub tak, wtedy będzie szybciej:"/>
-			<h:form>
-			<h:commandLink action="#{indexAc.pz}">
-				<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kursyAc.kurs.poziomyzaawansowania}"/>
-				<h:outputText value="(klik)"/>
-			</h:commandLink>
 			</h:form>
 		<hr />
 		od:
 		<h:outputText value="#{kursyAc.kurs.dataod}">
 			<f:convertDateTime type="date" />
 		</h:outputText>
-		<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}"/>
-		do:
+		<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kursyAc.kurs.dataod==null}"/>
+		<h:outputText value=" do: " rendered="#{kursyAc.kurs.dataod!=null}"/>
 		<h:outputText value="#{kursyAc.kurs.datado}">
 			<f:convertDateTime type="date" />
 		</h:outputText>

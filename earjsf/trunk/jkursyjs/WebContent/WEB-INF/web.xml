@@ -19,7 +19,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
 	<context-param>
 		<description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
 		<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
@@ -34,10 +34,14 @@
 		<param-value>/WEB-INF/app-tags.taglib.xml</param-value>
 	</context-param>
 
-<context-param>
-<param-name>org.richfaces.skin</param-name>
-<param-value>plain</param-value>
-</context-param>
+	<context-param>
+		<param-name>org.richfaces.skin</param-name>
+		<param-value>plain</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.richfaces.enableControlSkinning</param-name>
+		<param-value>false</param-value>
+	</context-param>
 
 
 	<listener>
@@ -128,21 +132,21 @@
 		<description>roleab</description>
 		<role-name>absolwent</role-name>
 	</security-role>
-	
+
 	<error-page>
-		<exception-type>javax.faces.webapp.FacesServlet.Exception</exception-type >
+		<exception-type>javax.faces.webapp.FacesServlet.Exception</exception-type>
 		<location>/err500.html</location>
-	 </error-page>
-	
-	<error-page>
-    <exception-type>java.lang.Throwable</exception-type >
-    <location>/err500.html</location>
 	</error-page>
-	
+
 	<error-page>
-     <exception-type>java.lang.Exception</exception-type>
-     <location>/err500.html</location>
-   </error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/err500.html</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/err500.html</location>
+	</error-page>
 	<error-page>
 		<error-code>404</error-code>
 		<location>/index.html</location>
@@ -155,7 +159,7 @@
 		<error-code>500</error-code>
 		<location>/err500.html</location>
 	</error-page>
-	
+
 	<mime-mapping>
 		<extension>ecss</extension>
 		<mime-type>text/css</mime-type>

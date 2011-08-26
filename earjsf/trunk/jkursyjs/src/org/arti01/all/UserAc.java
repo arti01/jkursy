@@ -3,8 +3,10 @@ package org.arti01.all;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.EJB;
@@ -42,7 +44,7 @@ public class UserAc implements Serializable {
 			return "rejestracja";	
 		}
 		user.setDataZmiany(new Date());
-		Set<Role> role=new HashSet<Role>();
+		List<Role> role=new ArrayList<Role>();
 		Role r=new Role();
 		r.setRola(Role.KURSANT);
 		role.add(r);

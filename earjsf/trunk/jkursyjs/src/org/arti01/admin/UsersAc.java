@@ -134,12 +134,12 @@ public class UsersAc {
 	public String dodaj() {
 		pokazTabele=true;
 		if(!user.getUserpass().equals(userpass1)){
-			errorText="różne hasła";
+			errorText="r����ne has��a";
 			return "usersForm";	
 		}
 		user.setDataZmiany(new Date());
 		//if (userImp.find(user)!=null)user.getRoles().clear();
-		Set<Role> role=new HashSet<Role>(); 
+		List<Role> role=new ArrayList<Role>(); 
 		for (String name : rolesName) {
 			Role r = new Role();
 			r.setRola(name);
@@ -160,7 +160,7 @@ public class UsersAc {
 				user.getUsername();
 				if (userImp.insert(user)) {
 					listAll();
-					errorText="Użytkownik dodany - przypisz go do kursów";
+					errorText="U��ytkownik dodany - przypisz go do kurs��w";
 					return "usersForm";
 				}
 			}
@@ -168,7 +168,7 @@ public class UsersAc {
 			logger.error(e);
 		}
 		// errorText=kursyImp.getErrorText();
-		return "usersForm";// bo nie udala się zmiana
+		return "usersForm";// bo nie udala si�� zmiana
 	}
 
 	public String listAll() {

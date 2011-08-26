@@ -7,7 +7,6 @@
 <body>
 	<ui:composition template="/templates/template.xhtml">
 		<ui:define name="body">
-			<h3>Wykładowca:</h3>
 			<div>
 				<h:form>
 				<h:selectOneMenu value="#{kursyAc.wykladowca.username}">
@@ -16,6 +15,7 @@
 				</h:selectOneMenu>
 				<h:commandButton value="wybierz innego wykładowcę" action="#{kursyAc.wykladDetale}"/>
 				</h:form>
+<hr/>
 					<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}"
 						value="#{kursyAc.wykladowca.username}" cacheable="false"
 						rendered="#{kursyAc.wykladowca.fota!=null}" style="width:160px;">

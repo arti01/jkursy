@@ -6,6 +6,12 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
 		<body>
+		<h:form>
+		Sortowanie:<h:commandButton value="przywróć sortowanie domyślne" action="#{kursyAc.list}" />
+		<a4j:commandButton value="cena" action="#{adminKursyAc.sortBycena}" render="tabkursy"/>
+		<a4j:commandButton value="rozpoczęcie" action="#{adminKursyAc.sortBydataod}" render="tabkursy"/>
+		<a4j:commandButton value="poziom zaawansowania" action="#{adminKursyAc.sortBypoziomyzaawansowania}" render="tabkursy"/>
+		</h:form>
 			<div id="tabela">
 				<h:form id="form1">
 					<rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
@@ -34,7 +40,7 @@
 								<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
 							</p>
 						</rich:column>
-						<rich:column style="background-color: #{kurs.typykursu.kolor}">
+						<rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.poziomyzaawansowania.nazwa}" sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
 							<f:facet name="header">
 							</f:facet>
 							<ul>
@@ -54,20 +60,33 @@
 									</rich:tooltip></li>
 							</ul>
 						</rich:column>
-						<rich:column sortBy="#{kurs.cena}" id="cena" sortOrder="#{adminKursyAc.cenaOrder}"
-							style="background-color: #{kurs.typykursu.kolor}">
+						<rich:column id="cena" sortBy="#{kurs.cena}" sortOrder="#{adminKursyAc.cenaOrder}"
+							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder!='unsorted'}">												
 							<f:facet name="header">
-								<a4j:commandLink value="cena" render="tabkursy" action="#{adminKursyAc.sortBycena}" />
+								cena<hr/>rozpoczęcie
 							</f:facet>
 							<h:outputText value="#{kurs.cena}">
 								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
 							</h:outputText>
+							<hr/>
+							<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+							<h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
+							<h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+							<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
 						</rich:column>
-						<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}"
-							style="background-color: #{kurs.typykursu.kolor}">
+						<rich:column sortBy="#{kurs.dataod}" id="rozpoczecie" sortOrder="#{adminKursyAc.dataodOrder}"
+							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder=='unsorted'}">												
 							<f:facet name="header">
-								<a4j:commandLink value="rozpoczęcie" render="tabkursy" action="#{adminKursyAc.sortBydataod}" />
+								cena<hr/>rozpoczęcie
 							</f:facet>
+							<h:outputText value="#{kurs.cena}">
+								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
+							</h:outputText>
+							<hr/>
 							<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
@@ -79,7 +98,7 @@
 						</rich:column>
 						<rich:column style="background-color: #{kurs.typykursu.kolor}">
 							<f:facet name="header">
-								<a4j:commandLink value="rezerwacja" render="tabkursy" />
+								rezerwacja
 							</f:facet>
 							<h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwacja}"
 								rendered="#{(login.zalogowany.username!=null)and(kurs.rezerwacjaDostepna)}">

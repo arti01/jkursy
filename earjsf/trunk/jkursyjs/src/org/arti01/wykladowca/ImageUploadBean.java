@@ -131,6 +131,7 @@ public class ImageUploadBean implements Serializable {
 				        // use Tag.toString()
 				        //tag.toString().c
 				        if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"<br/>";
+				        //if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"\r\n";
 				    }
 				}
 			} catch (JpegProcessingException e) {

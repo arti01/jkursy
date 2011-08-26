@@ -19,9 +19,9 @@ body
 #header
 {
 	margin:0;
-	padding: 0;
+	padding: 0 0 5px 0;
 	width: 100%;
-	border: 0px solid #aaaaaa;
+	border-bottom: 2px solid #888888;
 
 }
 
@@ -58,32 +58,84 @@ body
 	letter-spacing: -1px;
 	
 }
+#left
+{
 
+	float: left;
+	width: 200px;
+        padding: 0;
+	margin: 10px;       
+}
 #menu
 {
-	margin:0 0 10px 0;
-	padding: 10px;
+	
+	font-size: 1em;
+        color: #9999FF;
+	line-height: 1.3em;
+	padding: 4px;
 	width: 100%;
-        clear: both;
-        text-align: center;
-        border-top: 2px solid #888888;
-
+	background-color: #ffffff;
+	border: 3px solid #888888;
+        margin: 0 0 10px 0;
 }
-#menu > img
+#menu hr
 {
-        float: right;
-        margin: 0 10px 0 0px
+        color: #000000;
+        size: 1px;
+}
+
+#menu a
+{
+	color: #000000;
+	text-decoration: none;
+        font-style: italic;
+        font-weight: bold;
+}
+#menu a img
+{
+	padding: 2px 1px 0;
+}
+
+#menu a:hover
+{
+	color: #9999FF;
+        font-weight: bold;
+        text-shadow: 0px 0px 2px #FFFFFF;
+}
+
+#menu a:hover img
+{
+        background-color: none;
+        border-radius: 5px;
+        
+}
+#menu ul
+{
+	margin: 0;
+	padding: 5px 10px 5px 5px;
+	list-style: none;
+}
+#menu li
+{
+	margin: 0;
+	padding: 5px 10px 10px 5px;
+        font-weight: bold;
+}
+
+#menu img
+{
+	margin: 0 10px 0 0;
+	
 }
 
 #leftcol
 {
-	float: left;
+	
 	font-size: 1.1em;
 	line-height: 1.3em;
-	color: #0F0F0C;
-	margin: 0 10px 10px 10px;
+	color: #FF6633;
 	padding: 4px;
-	width: 200px;
+	width: 100%;
 	background-color: #ffffff;
 	border: 3px solid #888888;
 }
@@ -156,15 +208,16 @@ body
 #leftcol li a
 {
 	color: #0F0F0C;
-	font-style: italic;
+	font-style: normal;
 	text-decoration: none;
         font-weight: normal;
 }
 
 #leftcol li a:hover
 {
-	color: #CC6600;
+	color: #FF6633;
 	text-decoration: none;
+        text-shadow: 0px 0px 2px #FFFFFF;
 }
 
 #leftcol img
@@ -175,6 +228,20 @@ body
 	padding: 2px;
 	margin: 0 5px 5px 0;
 }
+#vbaner
+{
+        float:left;
+        width: 100%;
+        margin: 10px 0;
+        padding 0;
+        text-align: right;
+        background-color: none;
+}
+
+
+
+
+
 
 #baner
 {
@@ -188,7 +255,7 @@ body
 #main
 {
 	float: left;
-        margin: 0 0 10px 0;
+        margin: 0 0 10px 10px;
 	padding: 0;
         width: 750px;
 	color: #0F0F0C;
@@ -214,7 +281,7 @@ body
 	background-color: none;
 	border: none;
 	padding: 0;
-	margin: 0 5px 0 0;
+	margin: 10px 5px 0 0;
 }
 
 #main .copy
@@ -351,12 +418,12 @@ body
 #info a
 {
        text-decoration: none;
-       color: #CC6600;
+       color: #000080;
        font-style: normal;
 }
 #info a:hover
 {
-       color: #000000;
+       color: #6699FF;
 }
 #info hr
 {
@@ -391,7 +458,7 @@ body
 {
 	width: 900px;
         float: left;
-        margin: 0 0 0 0;
+        margin: 0 0 10px 20px;
 	padding: 0;
 	color: #0F0F0C;
 	font-size: 1.1em;
@@ -451,7 +518,8 @@ body
 	font-size: 1.1em;
         line-height: 120%;
 }
-#main2 ul  {
+#main2 ul  
+{
 	display: block;
 	margin: 0;
 	padding: 5px;
@@ -459,18 +527,16 @@ body
 }
 
 #main2 li {
-	display: inline;
-	white-space: nowrap;
+	display: block;
+	white-space: normal;
         
 }
-
-
 
 #main2 table
 {
         align: center;
-        padding: 20px;
-        margin: 10px;
+        padding: 5px;
+        margin: 5px;
         font-style: italic;
         font-size: 0.9em;
 }
@@ -480,18 +546,50 @@ body
        text-align: left;
        padding: 20px 10px 10px;
 }
-.telko
+
+#main2 form table
 {
-         background-color: #FBF7E8;
-         padding: 10px
-         
+       border: none;
+       max-width: 900px;
 }
+#main2 form td
+{
+       border: none;
+       padding: 2px;
+
+}
+
+
+#fota
+{
+       width: 100%;
+       border: 0px solid #000000;
+       text-align: center;
+}
+
+#fota img
+{
+        clear: right;
+        float: left;
+	background-color: #FFFFFF;
+	border-color: #888888;
+        border-style: solid;
+        border-width: 30px 50px;
+	padding: 5px;
+}
+#fota ul
+{
+        display: block;
+        background-color: #FFFFFF;
+        list-style: disc;
+}
+
 
 #tabela table
 {
         width: 100%;
         table-layout: auto;
-        font-size: 0.8em;
+        font-size: 0.9em;
         font-style: normal;
         line-height: 1.3em;
         text-align: left;
@@ -513,6 +611,7 @@ body
       text-align: left;
       padding: 10px 20px;
       border-right: 3px solid #FFFFFF;
+      border-bottom: 3px solid #FFFFFF;
 }
 
 #tabela th a
@@ -527,8 +626,9 @@ body
 #tabela table td
 {
         max-width: 250px;
-        padding: 20px 10px;
+        padding: 20px 5px;
         border-right: 3px solid #FFFFFF;
+        border-bottom: 3px solid #FFFFFF;
 }
 #tabela table td table
 {       
@@ -542,16 +642,28 @@ body
 }
 #tabela a
 {
+
+        display: block;
+        padding: 10px 0;
         font-size: 1.1em;
+        clear: one;
         text-decoration: none;
         margin: 5px;
 }
 #tabela li a
 {
-        color: #000000;
+        display: block;
+        clear: none;
         text-decoration: none;
+        margin: 0;
+        padding: 0;
+        color: #000000;
 }
-
+#tabela li img
+{
+        margin: 0;
+        padding: 0;
+}
 
 #tabela tr:nth-child(even)
 {
@@ -645,4 +757,3 @@ body
        background-color: #FFFFFF;
        border-width: 0px;
 }
-

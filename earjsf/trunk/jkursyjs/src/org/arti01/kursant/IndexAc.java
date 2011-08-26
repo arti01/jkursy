@@ -41,19 +41,19 @@ public class IndexAc implements Serializable{
 	public String profil(){
 		userAc.setErrorText("");
 		user=loginBean.getZalogowany();
-		return "profil";
+		return "/all/profil.xhtml";
 	}
 	
 	public String edytujProfil(){
 		if(!user.getUserpass().equals(userpass1)&&takNie){
-			userAc.setErrorText("różne hasła");
+			userAc.setErrorText("r����ne has��a");
 			return "profil";	
 		}
 		try {
 			ui.update(user);
 			userAc.setErrorText("profil zmieniony");
 		} catch (Exception e) {
-			userAc.setErrorText("coś nie teges ze zmianą");
+			userAc.setErrorText("co�� nie teges ze zmian��");
 			e.printStackTrace();
 		}
 		return "info";
