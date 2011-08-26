@@ -11,21 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-
-/**
-CREATE TABLE newsy
-(
-  idnewsy serial NOT NULL,
-  tytul character varying(255) NOT NULL,
-  tresc text,
-  datadodania date NOT NULL DEFAULT now(),
-  CONSTRAINT newsy_pkey PRIMARY KEY (idnewsy)
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE newsy OWNER TO slow;
- */
 @Entity
 public class Newsy implements Serializable {
 	private static final long serialVersionUID = 1L;

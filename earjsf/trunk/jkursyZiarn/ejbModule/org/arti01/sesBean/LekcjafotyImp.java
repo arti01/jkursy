@@ -40,7 +40,7 @@ public class LekcjafotyImp {
 		em.merge(lf);
 		//System.out.println(lekcja+"statOld");
 		//System.out.println(oldLp+"new"+newLp);
-		if (newLp < oldLp) {//idziemy w góre
+		if (newLp < oldLp) {//idziemy w g��re
 			//System.out.println("upupup");
 			Query select=em.createQuery("select lf from Lekcjafoty lf where lf.lp<:oldLp and lf.lp>=:newLp and lf.lekcja=:lekcja order by lf.lp desc");
 			select.setParameter("oldLp", oldLp);
@@ -54,7 +54,7 @@ public class LekcjafotyImp {
 			}
 			lf.setLp(newLp);
 			em.merge(lf);
-		} else if (newLp > oldLp) {//idziemy w dół
+		} else if (newLp > oldLp) {//idziemy w d����
 			Query select=em.createQuery("select lf from Lekcjafoty lf where lf.lp>:oldLp and lf.lp<=:newLp and lf.lekcja=:lekcja order by lf.lp asc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);
@@ -91,8 +91,11 @@ public class LekcjafotyImp {
 		qt.setParameter("lp", lp);
 		qt.setParameter("lekcja", lekcja);
 		for(Lekcjafoty lf1: (List<Lekcjafoty>)qt.getResultList()){
+			//System.out.println(lf1.getLp());
 			lf1.setLp(lf1.getLp()-1);
-			em.merge(lf1);
+			//System.out.println(lf1.getLp());
+			//em.merge(lf1);
+			em.flush();
 		}
 	}
 	

@@ -46,6 +46,7 @@ public class NewsyImp {
 		for(Newsy n: (List<Newsy>)qt.getResultList()){
 			n.setLp(n.getLp()-1);
 			em.merge(n);
+			em.flush();
 		}
 	}
 	
@@ -56,7 +57,7 @@ public class NewsyImp {
 		em.merge(news);
 		//System.out.println(lekcja+"statOld");
 		//System.out.println(oldLp+"new"+newLp);
-		if (newLp < oldLp) {//idziemy w góre
+		if (newLp < oldLp) {//idziemy w g��re
 			//System.out.println("upupup");
 			Query select=em.createQuery("select n from Newsy n where n.lp<:oldLp and n.lp>=:newLp order by n.lp desc");
 			select.setParameter("oldLp", oldLp);
@@ -72,7 +73,7 @@ public class NewsyImp {
 			}
 			news.setLp(newLp);
 			em.merge(news);
-		} else if (newLp > oldLp) {//idziemy w dół
+		} else if (newLp > oldLp) {//idziemy w d����
 			Query select=em.createQuery("select n from Newsy n where n.lp>:oldLp and n.lp<=:newLp order by n.lp asc");
 			select.setParameter("oldLp", oldLp);
 			select.setParameter("newLp", newLp);

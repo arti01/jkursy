@@ -12,9 +12,10 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames={"lp", "idlekcja"}))
 public class Lekcjafoty implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer idlekcjafoty;

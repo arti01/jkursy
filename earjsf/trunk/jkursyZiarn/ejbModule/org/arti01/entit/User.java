@@ -99,7 +99,7 @@ public class User implements Serializable {
 			@JoinColumn(name="roles_rola", nullable=false)
 			}
 		)
-	private Set<Role> roles;
+	private List<Role> roles;
 
 	//bi-directional many-to-many association to Kursy
     @ManyToMany(cascade={CascadeType.MERGE})
@@ -246,11 +246,11 @@ public class User implements Serializable {
 		this.wiadomosc = wiadomosc;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return this.roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 	

@@ -1,4 +1,6 @@
-#Mon Aug 15 10:28:48 CEST 2011
+#Tue Aug 23 18:20:11 CEST 2011
 eclipse.preferences.version=1
 encoding//ejbModule/org/arti01/sesBean/KursyImp.java=UTF-8
+encoding//ejbModule/org/arti01/sesBean/LekcjafotyImp.java=UTF-8
+encoding//ejbModule/org/arti01/sesBean/NewsyImp.java=UTF-8
 encoding//ejbModule/org/arti01/sesBean/StatyczneImp.java=UTF-8
