@@ -1,0 +1,38 @@
+#tabela-a{
+	width: 900px;
+	}
+#tabela-aut-marka{
+	float: left;
+	width: 100px;
+	}
+#tabela-aut{
+	float: left;
+	width: 300px;
+	}
+#tabela-aut-opis{
+	margin-left:5px;
+	float: left;
+	width: 200px;
+	background-color: #cccccc;
+	}
+#adm {
+	float:left;
+	width: 1200px;
+	padding-left:  10px;
+	padding-top: 10px;
+	padding-right:  10px;
+	}
+#adm-menu {
+	padding-left:  10px;
+	padding-right:  10px;
+	float:left;
+	width: 200px;
+	background-color: white;
+	}
+#adm-body {
+	padding-left:  10px;
+	padding-right:  10px;
+	float:left;
+	width: 900px;
+	background-color: white;
+	}

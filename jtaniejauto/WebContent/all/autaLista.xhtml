@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+	
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+		<div class="art-content-layout">
+		<div class="art-content-layout-row">
+		<div class="art-layout-cell art-content">
+
+
+
+		<div class="art-post post-5 page type-page status-publish hentry"
+			id="post-5">
+
+		<div class="art-post-body">
+		<div class="art-post-inner art-article">
+		<div class="art-postcontent"><!-- article-content -->
+		<p><img src="../all/grafa/mdsc07187.jpg" /></p>
+		<div class="container-left-wide">
+		<p>
+		<span class="tekst-pomaranczowy">Lista aut</span></p>
+
+<div id="tabela-a">
+<h:form id="form1">
+
+<div id="tabela-aut-marka">
+<rich:dataTable value="#{autaAc.markaAll}" var="marka" id="marki">
+	<rich:column id="marka">
+			<a4j:commandLink value="#{marka.marka}" render="table" action="#{autaAc.filtrBymarka}" />
+	</rich:column>
+</rich:dataTable>
+<a4j:commandLink value="wszystkie" render="table">
+	<f:setPropertyActionListener target="#{autaAc.markaFiltr}" value=""/>
+</a4j:commandLink>
+</div>
+
+<div id="tabela-aut">
+	<rich:dataTable value="#{autaAc.autaAll}" var="auto" id="table">
+		<rich:column id="marka" sortOrder="#{autaAc.markaOrder}" sortBy="#{auto.marka.marka}" 
+		filterExpression="#{auto.marka.marka.equals(autaAc.markaFiltr)||autaAc.markaFiltr.equals('')}"
+		style="text-align: center;">
+			<f:facet name="header">
+				<a4j:commandLink value="sortowanie marka" render="table" action="#{autaAc.sortBymarka}" />
+			</f:facet>
+			<h:outputText value="#{auto.marka.marka}"/>
+		</rich:column>
+		<rich:column id="typ" sortOrder="#{autaAc.typOrder}" sortBy="#{auto.typ}" style="text-align: center;">
+			<f:facet name="header">
+				<a4j:commandLink value="sortowanie typ" render="table" action="#{autaAc.sortBytyp}" />
+			</f:facet>
+			<h:outputText value="#{auto.typ}"/>
+		</rich:column>
+		<rich:column id="cena" sortOrder="#{autaAc.cenaOrder}" sortBy="#{auto.cena}" style="text-align: right;">
+			<f:facet name="header">
+				<a4j:commandLink value="sortowanie cena" render="table" action="#{autaAc.sortBycena}" />
+			</f:facet>
+			<h:outputText value="#{auto.cena}"/>
+		</rich:column>
+		<rich:column id="pokaz">
+			<a4j:commandLink value="opis" render="opis" action="#{autaAc.pokazAuto}" />
+		</rich:column>
+	</rich:dataTable>
+</div>
+<div id="tabela-aut-opis">
+	<h:outputText value="#{autaAc.auto.opis}" escape="false" id="opis"/>
+</div>
+</h:form>
+</div>
+</div></div></div></div></div></div></div></div>
+</ui:define>
+</ui:composition>
+</html>
+

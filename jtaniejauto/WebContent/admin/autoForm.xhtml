@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:message for="marka" />
+				<h:outputLabel for="marka" value="marka" />
+				<h:selectOneMenu id="marka" value="#{adminAutaAc.auto.marka.idmarka}">
+					<f:selectItems value="#{adminAutaAc.markaAll}" var="marka" 
+						itemLabel="#{marka.marka}"
+						itemValue="#{marka.idmarka}" />
+				</h:selectOneMenu>
+				
+				<h:message for="typ" />
+				<h:outputLabel for="typ" value="typ" />
+				<h:inputText id="typ" value="#{adminAutaAc.auto.typ}" />
+
+				<h:message for="cena" />
+				<h:outputLabel for="cena" value="cena" />
+				<h:inputText id="cena" value="#{adminAutaAc.auto.cena}" />
+				
+				<h:commandButton value="zapisz" action="#{adminAutaAc.zapisz}"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
