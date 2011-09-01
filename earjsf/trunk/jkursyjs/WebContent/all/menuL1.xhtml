@@ -24,12 +24,12 @@
 				<ui:repeat var="r" value="#{login.zalogowany.roles}">
 					<h:panelGroup rendered="#{r.rola=='wykladowca'}">
 						<li><h:link outcome="/wykladowca/index.xhtml">
-							<h:graphicImage value="../all/grafa/w.png" />strefa wykładowcy
+							<h:graphicImage value="../all/grafa/wykladowca.png" />strefa wykładowcy
      					</h:link></li>
 					</h:panelGroup>
 					<h:panelGroup rendered="#{r.rola=='admin'}">
 						<li><h:link outcome="/admin/index.xhtml">
-							<h:graphicImage value="../all/grafa/a.png" />strefa administratora
+							<h:graphicImage value="../all/grafa/admin.png" />strefa admina
      					</h:link></li>
 					</h:panelGroup>
 					<h:panelGroup rendered="#{r.rola=='kursant'}">

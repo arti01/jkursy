@@ -53,8 +53,8 @@ public class GaleriaAc implements Serializable{
 	
 	private static int DLUGOSC=600;
     private static int WYSOKOSC=400;
-    private static int DLUGOSCmin=150;
-    private static int WYSOKOSCmin=100;
+    private static int DLUGOSCmin=240;
+    private static int WYSOKOSCmin=240;
 	
 	public String lista(){
 		//logger.info("==============");

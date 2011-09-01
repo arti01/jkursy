@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.ListDataModel;
 import org.apache.log4j.Logger;
 import org.arti01.entit.Kursy;
@@ -39,6 +40,14 @@ public class KursyAc implements Serializable{
 	@ManagedProperty(value="#{adminKursyAc}") org.arti01.admin.KursyAc adminKursyAc;
 	private Integer nrstrony;
 	private Userfoty uf=new Userfoty();
+	String[] listaSort=new String[]{"cena", "poziom zaawansowania"};
+	String sort="";
+	
+	public void zmienSort(ValueChangeEvent e){
+		sort=e.getNewValue().toString();
+		logger.info(sort);
+		if(sort.equals("cena")) adminKursyAc.sortBycena();
+	}
 	
 	public KursyAc() {
 		kurs=new Kursy();
@@ -177,6 +186,22 @@ public String userGaleriaDetale(){
 
 	public void setAdminKursyAc(org.arti01.admin.KursyAc adminKursyAc) {
 		this.adminKursyAc = adminKursyAc;
+	}
+
+	public String[] getListaSort() {
+		return listaSort;
+	}
+
+	public void setListaSort(String[] listaSort) {
+		this.listaSort = listaSort;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 	
 	

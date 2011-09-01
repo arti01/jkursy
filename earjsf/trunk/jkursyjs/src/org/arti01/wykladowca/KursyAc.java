@@ -143,7 +143,7 @@ public class KursyAc implements Serializable {
 			lekcjaImp.delete(lekcja);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			errorText = "nieudane usunięcie - lekcja zawiera zdjęcia, komentarze, foty kursantów - należy je usunąć";
+			errorText = "nieudane usuni��cie - lekcja zawiera zdj��cia, komentarze, foty kursant��w - nale��y je usun����";
 		}
 		kurs = kursyImp.find(kurs);
 		lekcje.setWrappedData(kurs.getLekcjas());
@@ -194,6 +194,10 @@ public class KursyAc implements Serializable {
 	}
 
 	public void zmienLekcjaLp(ValueChangeEvent event) throws IOException {
+		if((Integer)event.getOldValue()==0||(Integer)event.getNewValue()==0){
+			FacesContext.getCurrentInstance().getExternalContext().redirect("kursyForm.xhtml");
+			return;
+		}
 		errorText = "";
 		logger.info(event.getNewValue());
 		logger.info(event.getOldValue());

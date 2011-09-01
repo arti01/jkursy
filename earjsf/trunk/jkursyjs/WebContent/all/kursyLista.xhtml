@@ -6,18 +6,16 @@
 <ui:composition template="/templates/template.xhtml">
 	<ui:define name="body">
 		<body>
-		<h:form>
-		Sortowanie:<h:commandButton value="przywróć sortowanie domyślne" action="#{kursyAc.list}" />
-		<a4j:commandButton value="cena" action="#{adminKursyAc.sortBycena}" render="tabkursy"/>
-		<a4j:commandButton value="rozpoczęcie" action="#{adminKursyAc.sortBydataod}" render="tabkursy"/>
-		<a4j:commandButton value="poziom zaawansowania" action="#{adminKursyAc.sortBypoziomyzaawansowania}" render="tabkursy"/>
-		</h:form>
-			<div id="tabela">
+			<div id="tabela2">
 				<h:form id="form1">
+				<h:selectOneMenu value="#{kursyAc.sort}" valueChangeListener="#{kursyAc.zmienSort}">
+					<f:selectItems value="#{kursyAc.listaSort}"/>
+					<a4j:ajax event="change" render="tabela2"/>
+				</h:selectOneMenu>
 					<rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
 						<rich:column id="nazwa" style="background-color: #{kurs.typykursu.kolor}">
 							<f:facet name="header">
-								<h:outputText value="kurs"/>
+								<h:commandButton value="sortowanie domyślne" action="#{kursyAc.list}" />
 							</f:facet>
 							<h:commandLink action="#{kursyAc.detale}">
 								<h:outputText value="#{kurs.nazwa}" styleClass="tytul" />
@@ -40,8 +38,12 @@
 								<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
 							</p>
 						</rich:column>
-						<rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.poziomyzaawansowania.nazwa}" sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
+						<rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.poziomyzaawansowania.nazwa}" 
+							sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}" rendered="#{adminKursyAc.poziomyzaawansowaniaOrder!='unsorted'}">
 							<f:facet name="header">
+								<a4j:commandButton value="poziom zaawansowania" action="#{adminKursyAc.sortBypoziomyzaawansowania}" render="tabkursy"/>
+								<hr/>
+								<a4j:commandButton value="rodzaj" action="#{adminKursyAc.sortBystacjonarnyTN}" render="tabkursy"/>
 							</f:facet>
 							<ul>
 								<li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" />
@@ -60,10 +62,36 @@
 									</rich:tooltip></li>
 							</ul>
 						</rich:column>
+						<rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.stacjonarnyTN}" 
+							sortOrder="#{adminKursyAc.stacjonarnyTNOrder}" rendered="#{adminKursyAc.poziomyzaawansowaniaOrder=='unsorted'}">
+							<f:facet name="header">
+								<a4j:commandButton value="poziom zaawansowania" action="#{adminKursyAc.sortBypoziomyzaawansowania}" render="tabkursy"/>
+								<hr/>
+								<a4j:commandButton value="rodzaj" action="#{adminKursyAc.sortBystacjonarnyTN}" render="tabkursy"/>
+							</f:facet>
+							<ul>
+								<li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" />
+								</li>
+								<li><h:commandLink action="#{indexAc.tk}">
+										<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
+										<h:outputText value="typ: #{kurs.typykursu.nazwa}" />
+									</h:commandLink>
+								</li>
+								<li><h:commandLink action="#{indexAc.pz}">
+										<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
+										<a4j:mediaOutput id="poziomimg1" element="img" createContent="#{kursyAc.paintFota}"
+											value="#{kurs.poziomyzaawansowania.plik}" />
+									</h:commandLink> <rich:tooltip id="tt11" layout="block" target="poziomimg1">
+										<h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
+									</rich:tooltip></li>
+							</ul>
+						</rich:column>
 						<rich:column id="cena" sortBy="#{kurs.cena}" sortOrder="#{adminKursyAc.cenaOrder}"
 							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder!='unsorted'}">												
 							<f:facet name="header">
-								cena<hr/>rozpoczęcie
+								<a4j:commandButton value="cena" action="#{adminKursyAc.sortBycena}" render="tabkursy"/>
+								<hr/>
+								<a4j:commandButton value="rozpoczęcie" action="#{adminKursyAc.sortBydataod}" render="tabkursy"/>
 							</f:facet>
 							<h:outputText value="#{kurs.cena}">
 								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
@@ -81,7 +109,9 @@
 						<rich:column sortBy="#{kurs.dataod}" id="rozpoczecie" sortOrder="#{adminKursyAc.dataodOrder}"
 							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder=='unsorted'}">												
 							<f:facet name="header">
-								cena<hr/>rozpoczęcie
+								<a4j:commandButton value="cena" action="#{adminKursyAc.sortBycena}" render="tabkursy"/>
+								<hr/>
+								<a4j:commandButton value="rozpoczęcie" action="#{adminKursyAc.sortBydataod}" render="tabkursy"/>
 							</f:facet>
 							<h:outputText value="#{kurs.cena}">
 								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />

@@ -158,6 +158,7 @@ public class KursyAc implements Serializable {
 	}
 
 	public void sortBycena() {
+		logger.info(cenaOrder);
 		setDatadoOrder(SortOrder.unsorted);
 		setDataodOrder(SortOrder.unsorted);
 		setStacjonarnyTNOrder(SortOrder.unsorted);

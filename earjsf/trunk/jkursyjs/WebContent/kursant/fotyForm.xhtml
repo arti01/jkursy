@@ -19,14 +19,18 @@
 		<hr />
 		<h:panelGroup id="informacje" rendered="#{kursantLekcjaAc.lekcja!=null}">
 		<ul>
-			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji" />
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji: " />
 			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}" /></li>
-			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy" />
-			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" /></li>
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy: " 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
 			<li><h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: " />
 			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}" /></li>
-			<li><h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " />
-			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" /></li>
+			<li><h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
 			<li><h:outputText value="Możesz jeszcze dodać: " />
 			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}" /></li>
 			</ul>

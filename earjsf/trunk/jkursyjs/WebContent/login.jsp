@@ -4,12 +4,11 @@
 <title>Login Page</title>
 </head>
 <body>
-<h1>Logowanie</h1>
-<p>podaj login i hasło</p>
-<form method="Post" action="j_security_check">login : <input
-	type="text" size="15" maxlength="25" name="j_username"><br>
+<h3>Logowanie - podaj login i hasło</h3>
+<form method="Post" action="j_security_check">
+login: <input type="text" size="15" maxlength="25" name="j_username"><br>
 <br>
-hasło : <input type="password" size="15" maxlength="25"
+hasło: <input type="password" size="15" maxlength="25"
 	name="j_password"><br>
 <br>
 <input value="Login" type="submit">

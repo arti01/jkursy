@@ -9,8 +9,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-
 
 /**
  * The persistent class for the _users database table.
@@ -339,6 +337,7 @@ public class User implements Serializable {
 		Integer woleBezKoment=getKonkretnaLekcja().getKursy().getFotperkursantbezkoment()-getFotyBezkomentarza().size();
 		if(wolneOgole<woleBezKoment) fotDoDodania=wolneOgole;
 		else fotDoDodania=woleBezKoment;
+		if(getKonkretnaLekcja().getLp()==0)fotDoDodania=wolneOgole;
 		return fotDoDodania;
 	}
 

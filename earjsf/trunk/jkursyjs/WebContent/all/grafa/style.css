@@ -37,7 +37,7 @@ body
 	
 #header-a:hover
 {
-	color: #9FBA0F;
+	color: #6699FF;
 }
 
 #sitename
@@ -94,11 +94,12 @@ body
 #menu a img
 {
 	padding: 2px 1px 0;
+        border: 0;
 }
 
 #menu a:hover
 {
-	color: #9999FF;
+	color: #6699FF;
         font-weight: bold;
         text-shadow: 0px 0px 2px #FFFFFF;
 }
@@ -179,13 +180,13 @@ body
 
 #leftcol a
 {
-	color: #EEEEEE;
+	color: #000000;
 	text-decoration: underline;
 }
 
 #leftcol a:hover
 {
-	color: #EEEEEE;
+	color: #6699FF;
 }
 
 #leftcol ul
@@ -207,7 +208,7 @@ body
 
 #leftcol li a
 {
-	color: #0F0F0C;
+	color: #000000;
 	font-style: normal;
 	text-decoration: none;
         font-weight: normal;
@@ -215,7 +216,7 @@ body
 
 #leftcol li a:hover
 {
-	color: #FF6633;
+	color: #6699FF;
 	text-decoration: none;
         text-shadow: 0px 0px 2px #FFFFFF;
 }
@@ -238,6 +239,10 @@ body
         background-color: none;
 }
 
+#vbaner a img
+{
+        border: 0;
+}
 
 
 
@@ -250,6 +255,10 @@ body
         margin: 0 0 10px 0;
         padding: 5px;
         text-align: center;
+}
+#baner a img
+{
+        border: 0;
 }
 
 #main
@@ -266,13 +275,13 @@ body
 
 #main a
 {
-	color: #DF3400;
-	text-decoration: underline;
+	color: #000080;
+	text-decoration: none;
 }
 
 #main a:hover
 {
-	color: #4C6F0F;
+	color: #6699FF;
 }
 
 #main img
@@ -326,7 +335,7 @@ body
 }
 #wiecej a:hover
 {
-	color: #CC6600;
+	color: #6699FF;
 	text-decoration: none;
 }
 
@@ -345,12 +354,12 @@ body
 
 #galeria a
 {
-	color: #CC6600;
+	color: #000080;
 	text-decoration: none;
 }
 #galeria a:hover
 {
-	color: #000000;
+	color: #6699FF;
 	text-decoration: none;
 }
 
@@ -425,6 +434,10 @@ body
 {
        color: #6699FF;
 }
+#info a img
+{
+       border: 0;
+}
 #info hr
 {
         size: 1px;
@@ -446,13 +459,13 @@ body
 
 #footer a
 {
-	color: #a0a0a0;
+	color: #000080;
 	text-decoration: none;
 }
 
 #footer a:hover
 {
-	color: #606060;
+	color: #6699FF;
 }
 #main2
 {
@@ -470,13 +483,13 @@ body
 
 #main2 a
 {
-	color: #CC6600;
+	color: #000080;
 	text-decoration: none;
 }
 
 #main2 a:hover
 {
-	color: #0F0F0C;
+	color: #6699FF;
 }
 
 #main2 img
@@ -595,6 +608,12 @@ body
         text-align: left;
         padding: 10px;
 }
+
+#tabela table tr > td:first child
+{
+        width: 350px;
+
+}
 #tabela hr
 {
         size: 1px;
@@ -620,12 +639,12 @@ body
 }
 #tabela th a:hover
 {
-        color: #CC6600;
+        color: #6699FF;
 }
 
 #tabela table td
 {
-        max-width: 250px;
+        max-width: 800px;
         padding: 20px 5px;
         border-right: 3px solid #FFFFFF;
         border-bottom: 3px solid #FFFFFF;
@@ -649,6 +668,12 @@ body
         clear: one;
         text-decoration: none;
         margin: 5px;
+        color: #000080;
+}
+#tabela a:hover
+{
+        color: #6699FF;
+        text-shadow: 0px 0px 2px #FFFFFF;
 }
 #tabela li a
 {
@@ -698,7 +723,7 @@ body
         border-style: solid;
         border-width: 30px 50px;
 	padding: 5px;
-        width: 600px;
+        max-width: 600px;
 	
 }
 #slider table
@@ -714,7 +739,7 @@ body
 }
 #slider a:hover
 {
-	color: #CC6600;
+	color: #6699FF;
 }
 #miniatury
 {
@@ -756,4 +781,87 @@ body
 {
        background-color: #FFFFFF;
        border-width: 0px;
+}
+
+
+#tabela2 table
+{
+        width: 100%;
+        table-layout: auto;
+        font-size: 0.9em;
+        font-style: normal;
+        line-height: 1.3em;
+        text-align: left;
+        padding: 10px;
+}
+#tabela2 hr
+{
+        size: 1px;
+        width: 100%;
+        color: #000000;
+}
+
+
+
+#tabela2 th
+{
+      font-size: 1.1em;
+      background-color: #EEEEEE;  
+      text-align: left;
+      padding: 10px 20px;
+      border-right: 3px solid #FFFFFF;
+      border-bottom: 3px solid #FFFFFF;
+}
+
+#tabela2 th a
+{
+      color: #000000;
+}
+#tabela2 th a:hover
+{
+        color: #6699FF;
+}
+
+#tabela2 table td
+{
+        padding: 20px 5px;
+        border-right: 3px solid #FFFFFF;
+        border-bottom: 3px solid #FFFFFF;
+}
+#tabela2 table tr > td:first child
+{
+        width: 350px;
+
+}
+#tabela2 a
+{
+
+        display: block;
+        padding: 10px 0;
+        font-size: 1.1em;
+        clear: one;
+        text-decoration: none;
+        margin: 5px;
+}
+#tabela2 li a
+{
+        display: block;
+        clear: none;
+        text-decoration: none;
+        margin: 0;
+        padding: 0;
+        color: #000000;
+}
+#tabela2 li img
+{
+        margin: 0;
+        padding: 0;
+}
+
+
+        
+#tabela2 tbody p
+{
+        font-size:0.9em ;
+        font-style: italic;
 }
