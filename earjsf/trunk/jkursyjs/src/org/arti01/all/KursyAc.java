@@ -40,13 +40,53 @@ public class KursyAc implements Serializable{
 	@ManagedProperty(value="#{adminKursyAc}") org.arti01.admin.KursyAc adminKursyAc;
 	private Integer nrstrony;
 	private Userfoty uf=new Userfoty();
-	String[] listaSort=new String[]{"cena", "poziom zaawansowania"};
+	String[] listaSort=new String[]{"domyślne","cena", "poziom zaawansowania", "rodzaj","rozpoczęcie"};
 	String sort="";
+	String ascdesc="";
 	
-	public void zmienSort(ValueChangeEvent e){
+	public void zmienSort(ValueChangeEvent e) throws IOException{
 		sort=e.getNewValue().toString();
 		logger.info(sort);
-		if(sort.equals("cena")) adminKursyAc.sortBycena();
+		if(sort.equals("domyślne")){
+			this.list();
+			ascdesc="";
+		}
+		if(sort.equals("cena")){
+			adminKursyAc.sortBycena();
+			ascdesc=adminKursyAc.getCenaOrder().toString();
+			logger.info(ascdesc);
+		}
+		if(sort.equals("poziom zaawansowania")) {
+			adminKursyAc.sortBypoziomyzaawansowania();
+			ascdesc=adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
+		}
+		if(sort.equals("rodzaj")) {
+			adminKursyAc.sortBystacjonarnyTN();
+			ascdesc=adminKursyAc.getStacjonarnyTNOrder().toString();
+		}
+		if(sort.equals("rozpoczęcie")) {
+			adminKursyAc.sortBydataod();
+			ascdesc=adminKursyAc.getDataodOrder().toString();
+		}
+	}
+	
+	public void zmienSortDesc(){
+		if(sort.equals("cena")){
+			adminKursyAc.sortBycena();
+			ascdesc=adminKursyAc.getCenaOrder().toString();
+		}
+		if(sort.equals("poziom zaawansowania")) {
+			adminKursyAc.sortBypoziomyzaawansowania();
+			ascdesc=adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
+		}
+		if(sort.equals("rodzaj")) {
+			adminKursyAc.sortBystacjonarnyTN();
+			ascdesc=adminKursyAc.getStacjonarnyTNOrder().toString();
+		}
+		if(sort.equals("rozpoczęcie")) {
+			adminKursyAc.sortBydataod();
+			ascdesc=adminKursyAc.getDataodOrder().toString();
+		}
 	}
 	
 	public KursyAc() {
@@ -202,6 +242,14 @@ public String userGaleriaDetale(){
 
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+
+	public String getAscdesc() {
+		return ascdesc;
+	}
+
+	public void setAscdesc(String ascdesc) {
+		this.ascdesc = ascdesc;
 	}
 	
 	

@@ -1,4 +1,4 @@
-#Wed Aug 31 09:15:57 CEST 2011
+#Thu Sep 01 23:18:14 CEST 2011
 eclipse.preferences.version=1
 encoding//WebContent/err403.html=UTF-8
 encoding//WebContent/err500.html=UTF-8
@@ -6,6 +6,7 @@ encoding//src/org/arti01/admin/KursyAc.java=UTF-8
 encoding//src/org/arti01/admin/PoziomyZaaAc.java=UTF-8
 encoding//src/org/arti01/admin/StatyczneAc.java=UTF-8
 encoding//src/org/arti01/admin/UsersAc.java=UTF-8
+encoding//src/org/arti01/all/KursyAc.java=UTF-8
 encoding//src/org/arti01/all/UserAc.java=UTF-8
 encoding//src/org/arti01/kursant/IndexAc.java=UTF-8
 encoding//src/org/arti01/kursant/KursyAc.java=UTF-8
