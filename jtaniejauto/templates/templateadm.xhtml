@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+  <title><ui:insert name="title">Default title</ui:insert></title>
+  <script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="http://www.taniejauto.pl/wp-content/themes/taniejauto_01/style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" type="text/css" href="../all/grafa/style.css"/> 
+</h:head>
+
+<body>
+<div id="adm">
+<div id="adm-menu">
+	<ui:include src="/admin/menu.xhtml" />
+</div>
+<div id="adm-body">
+<ui:insert name="body" />
+</div>
+</div>
+</body>
+</html>
+
