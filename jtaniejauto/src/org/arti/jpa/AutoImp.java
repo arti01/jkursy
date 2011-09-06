@@ -30,6 +30,10 @@ public class AutoImp {
 		em.merge(auto);
 	}
 	
+	public void delete(Auto auto){
+		em.remove(em.merge(auto));
+	}
+	
 	public void setAll(List<Auto> all) {
 		this.all = all;
 	}

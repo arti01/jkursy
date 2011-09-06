@@ -46,6 +46,12 @@ public class AutaAc implements Serializable {
 		return "autaLista";
 	}
 	
+	public String usun(){
+		auto=autaAll.getRowData();
+		aimp.delete(auto);
+		return "autaLista";
+	}
+	
 	public AutoImp getAimp() {
 		return aimp;
 	}
