@@ -10,11 +10,13 @@
 	<a4j:repeat rows="#{indexAc.boxCfg.iloscelementow}" var="boks" value="#{indexAc.allBoks}">
 		<h:outputText value="#{boks.naglowek}"/>
 		<br/>
+		<h:outputLink  value="#{boks.link}">
 		<a4j:mediaOutput element="img"
 			createContent="#{indexAc.paintBazy}"
 			value="#{boks.idboksy}" cacheable="false" rendered="#{boks.obraz!=null}">
 			<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 		</a4j:mediaOutput>
+		</h:outputLink>
 		<br/>
 		<h:outputText value="#{boks.tresc}" escape="false"/>
 		<hr/>

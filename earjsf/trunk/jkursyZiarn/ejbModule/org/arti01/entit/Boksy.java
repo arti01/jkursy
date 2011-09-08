@@ -29,7 +29,10 @@ public class Boksy implements Serializable {
 	@Column(length=2147483647)
 	private String tresc;
 	
-	@ManyToOne
+	@Column
+	private String link;
+	
+	@ManyToOne()
 	@JoinColumn(name="idboksycfg")
 	private Boksycfg boksycfg;
 
@@ -74,6 +77,14 @@ public class Boksy implements Serializable {
 
 	public void setBoksycfg(Boksycfg boksycfg) {
 		this.boksycfg = boksycfg;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
 	}
 
 }

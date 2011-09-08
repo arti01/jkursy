@@ -28,6 +28,7 @@ public class BoksycfgImp {
 	}
 	public void update(Boksycfg pz){
 		em.merge(pz);
+		
 	}
 	
 	

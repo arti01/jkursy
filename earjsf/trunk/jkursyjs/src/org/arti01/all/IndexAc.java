@@ -38,6 +38,8 @@ public class IndexAc implements Serializable {
 	private Boksycfg boxCfg=new Boksycfg();
 	@EJB BoksycfgImp boxcfgImp;
 	private Boksy boks;
+	private Boksy baner;
+	private Boksy vbaner;
 	
 	private ListDataModel<Statyczne> statyczneModel=new ListDataModel<Statyczne>() ;
 	@EJB StatyczneImp statyczneImp;
@@ -171,7 +173,7 @@ public class IndexAc implements Serializable {
 	}
 
 	public DataModel<Boksy> getAllBoks() {
-		if(allBoks.getRowIndex()==-1) allBoks.setWrappedData(boksImp.getAll());
+		if(allBoks.getRowIndex()==-1) allBoks.setWrappedData(getBoxCfg().getBoksy());
 		return allBoks;
 	}
 
@@ -195,5 +197,29 @@ public class IndexAc implements Serializable {
 
 	public void setBoks(Boksy boks) {
 		this.boks = boks;
+	}
+
+	public Boksy getBaner() {
+		Boksycfg banerCfg=new Boksycfg();
+		banerCfg.setIdboksycfg(2);
+		banerCfg=boxcfgImp.find(banerCfg);
+		baner=banerCfg.getBoksy().iterator().next();
+		return baner;
+	}
+
+	public void setBaner(Boksy baner) {
+		this.baner = baner;
+	}
+
+	public Boksy getVbaner() {
+		Boksycfg banerCfg=new Boksycfg();
+		banerCfg.setIdboksycfg(3);
+		banerCfg=boxcfgImp.find(banerCfg);
+		vbaner=banerCfg.getBoksy().iterator().next();
+		return vbaner;
+	}
+
+	public void setVbaner(Boksy vbaner) {
+		this.vbaner = vbaner;
 	}
 }

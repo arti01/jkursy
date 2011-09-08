@@ -9,6 +9,14 @@
 <ui:composition template="/templates/templateadm.xhtml">
 	<ui:define name="body">
 		<body>
+		<h4>
+		UWAGA: Proszę wrzucać obrazki w doceloym rozmiarze, system ich nie skaluje (a raczej przeskaluje samo
+		wyświetlanie ale bardziej na zasadzie ograniczeń maksymalnych rozmiarów niż zachowania proporcji, więc
+		nie ma co się na to zdawać tylko trzeba pamiętać, aby obrazki były dodane  takim rozmiarze w jakim mają się
+		wyświetlać)
+		Uwaga: dla baner górny i baner pion może być (na razie, potem zrobię cykliczne wyświetlanie z kolejnością) 
+		tylko jeden wpis
+		</h4>
 		<h:form>
 		<h:panelGroup id="form">
 		<h:panelGroup id="form1" rendered="#{adminBoksyAc.boxCfg.idboksycfg!=null}">

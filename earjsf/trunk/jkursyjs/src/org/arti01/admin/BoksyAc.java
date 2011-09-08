@@ -50,24 +50,29 @@ public class BoksyAc implements Serializable{
 		infoText="";
 	}
 	
-	public void edytujBoksForm(){
+	public String edytujBoksForm(){
 		boks=allBoks.getRowData();
 		boks=boksImp.find(boks);
 		infoText="";
-		
+		return "boksyForm";
 	}
 	
-	public void usunBoks(){
+	public String usunBoks(){
 		boks=allBoks.getRowData();
+		logger.info("usuanie");
 		try {
-			boksImp.delete(boks);
+			//boksImp.delete(boks);
+			logger.info(boxCfg.getBoksy().indexOf(boks));
+			boxCfg.getBoksy().remove(boks);
+			boxcfgImp.update(boxCfg);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		allBoks.setWrappedData(boksImp.getAll());
+		allBoks.setWrappedData(boxCfg.getBoksy());
 		boks=new Boksy();
 		infoText="";
+		return "boksyForm";
 	}
 	
 	public void zmien() {
@@ -77,39 +82,44 @@ public class BoksyAc implements Serializable{
 		all.setWrappedData(boxcfgImp.getAll());
 	}
 	
-	public void usunFote() {
-		logger.info("-----------------");
-		logger.info(item);
+	public String usunFote() {
 		if(boks.getIdboksy()!=null){
 			boks.setObraz(null);
 			boksImp.update(boks);
 			logger.info("ssssssssss");
+			boxCfg=boxcfgImp.find(boxCfg);
 		}
 		logger.info(item);
 		item=null;
+		return "boksyForm";
 	}
 	
-	public void dodajBoks() {
-		logger.info(boks.getTresc());
+	public String dodajBoks() {
+		logger.info(boks.getNaglowek());
 		boks.setBoksycfg(boxCfg);
 		if(boks.getIdboksy()==null){
 			//logger.info("dodanie--"+tk.getNazwa()+"--"+tk.getOpis());
-			boksImp.insert(boks);
+			//boksImp.insert(boks);
+			boxCfg.getBoksy().add(boks);
+			boxcfgImp.update(boxCfg);
 		}
 		else {
-			//logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
-			boksImp.update(boks); 
+			logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
+			boksImp.update(boks);
+			logger.info(boks.getBoksycfg().getIdboksycfg());
+			boxCfg=boxcfgImp.find(boxCfg);
 		}
 		boks=new Boksy();
-		allBoks.setWrappedData(boksImp.getAll());
+		allBoks.setWrappedData(boxCfg.getBoksy());
 		infoText="";
 		item=null;
+		return "boksyForm";
 	}
 
 	public String listaZawartosci(){
 		boxCfg=all.getRowData();
 		boks=new Boksy();
-		allBoks.setWrappedData(boksImp.getAll());
+		allBoks.setWrappedData(boxCfg.getBoksy());
 		infoText="";
 		return "boksyForm";
 	}
@@ -117,16 +127,17 @@ public class BoksyAc implements Serializable{
 	public void listenerFoty(FileUploadEvent event) {
         item = event.getUploadedFile();
         //logger.info(item.getName());
-        boks.setObraz(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
+        //boks.setObraz(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
+        boks.setObraz(item.getData());
         logger.info(boks.getObraz().length);
         if(boks.getIdboksy()!=null)boksImp.update(boks);
         
     }
 	
 	public void paintBazy(OutputStream stream, Object object) throws IOException {
-		logger.info(object);
-		logger.info((Integer)object);
-		logger.info(item);
+		//logger.info(object);
+		//logger.info((Integer)object);
+		//logger.info(item);
 		if(object!=null){
 			boks.setIdboksy((Integer) object);
 			boks=boksImp.find(boks);

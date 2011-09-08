@@ -1,7 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
           "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
 
 <h:head>
 	<title><ui:insert name="title">jKursy</ui:insert></title>
@@ -20,12 +22,23 @@
 				<ui:include src="/all/menuL2.xhtml" />
 			</div>
 			<div id="vbaner">
-				<img src="../all/grafa/banerpion.jpg" alt="" width="190" height="400" />
+			<h:outputLink  value="#{indexAc.vbaner.link}">
+		<a4j:mediaOutput element="img"
+			createContent="#{indexAc.paintBazy}"
+			value="#{indexAc.vbaner.idboksy}" cacheable="false" style="width:190px; height:400px;"
+			rendered="#{indexAc.vbaner.obraz!=null}">
+			<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+		</a4j:mediaOutput>
+		</h:outputLink>
 			</div>
 		</div>
 		<div id="baner">
-		<h:outputLink  value="http://fotosklepik.pl/index.php?products=product&amp;prod_id=206">
-			<img src="../all/grafa/mojacyfrowkaija.jpg" alt="baner" />
+		<h:outputLink  value="#{indexAc.baner.link}">
+		<a4j:mediaOutput element="img"
+			createContent="#{indexAc.paintBazy}"
+			value="#{indexAc.baner.idboksy}" cacheable="false">
+			<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+		</a4j:mediaOutput>
 		</h:outputLink>
 		</div>
 		<div id="main">

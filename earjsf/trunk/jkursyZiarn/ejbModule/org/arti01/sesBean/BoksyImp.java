@@ -25,17 +25,22 @@ public class BoksyImp {
 		return pz;
 	}
 	public void update(Boksy pz){
+		System.out.println(pz.getIdboksy());
 		em.merge(pz);
+		System.out.println(pz.getNaglowek());
+		pz=em.find(Boksy.class, pz.getIdboksy());
+		System.out.println(pz.getNaglowek());
 	}
 	
 	public void insert(Boksy pz) {
 		em.persist(pz);
+		//em.refresh(pz.getBoksycfg());
 	}
 	
 	public void delete(Boksy pz) throws Exception {
 		pz=em.find(Boksy.class, pz.getIdboksy());
 		em.remove(pz);
-		em.flush();
+		//em.refresh(pz.getBoksycfg());
 	}
 	
 	

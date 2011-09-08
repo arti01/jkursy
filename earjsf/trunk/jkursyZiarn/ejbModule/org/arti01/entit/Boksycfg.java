@@ -33,7 +33,7 @@ public class Boksycfg implements Serializable {
 	@Column(nullable=false)
 	private Boolean widoczny;
 	
-	@OneToMany(mappedBy="boksycfg", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="boksycfg", cascade={CascadeType.MERGE}, fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Boksy> boksy;
 
     public Boksycfg() {
