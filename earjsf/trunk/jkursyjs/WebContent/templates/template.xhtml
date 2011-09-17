@@ -22,10 +22,10 @@
 				<ui:include src="/all/menuL2.xhtml" />
 			</div>
 			<div id="vbaner">
-			<h:outputLink  value="#{indexAc.vbaner.link}">
+			<h:outputLink  value="#{indexAc.vbaner.link}" rendered="#{indexAc.vbaner.link!=null}">
 		<a4j:mediaOutput element="img"
 			createContent="#{indexAc.paintBazy}"
-			value="#{indexAc.vbaner.idboksy}" cacheable="false" style="width:190px; height:400px;"
+			value="#{indexAc.vbaner.idboksy}" cacheable="false"
 			rendered="#{indexAc.vbaner.obraz!=null}">
 			<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
 		</a4j:mediaOutput>

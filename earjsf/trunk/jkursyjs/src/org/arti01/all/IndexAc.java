@@ -203,7 +203,13 @@ public class IndexAc implements Serializable {
 		Boksycfg banerCfg=new Boksycfg();
 		banerCfg.setIdboksycfg(2);
 		banerCfg=boxcfgImp.find(banerCfg);
-		baner=banerCfg.getBoksy().iterator().next();
+		try {
+			baner=banerCfg.getBoksy().iterator().next();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return baner;
+		}
 		return baner;
 	}
 
@@ -215,7 +221,12 @@ public class IndexAc implements Serializable {
 		Boksycfg banerCfg=new Boksycfg();
 		banerCfg.setIdboksycfg(3);
 		banerCfg=boxcfgImp.find(banerCfg);
-		vbaner=banerCfg.getBoksy().iterator().next();
+		try {
+			vbaner = banerCfg.getBoksy().iterator().next();
+		} catch (Exception e) {
+			// TODO: handle exception
+			return vbaner;
+		}
 		return vbaner;
 	}
 
