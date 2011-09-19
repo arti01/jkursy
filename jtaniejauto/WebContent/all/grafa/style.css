@@ -1,9 +1,10 @@
 #tabela-a{
 	width: 900px;
+	min-height: 350px
 	}
 #tabela-aut-marka{
 	float: left;
-	width: 100px;
+	width: 130px;
 	}
 #tabela-aut{
 	float: left;

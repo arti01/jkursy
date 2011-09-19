@@ -8,8 +8,6 @@
 		<div class="art-content-layout-row">
 		<div class="art-layout-cell art-content">
 
-
-
 		<div class="art-post post-5 page type-page status-publish hentry"
 			id="post-5">
 
@@ -26,13 +24,16 @@
 
 <div id="tabela-aut-marka">
 <rich:dataTable value="#{autaAc.markaAll}" var="marka" id="marki">
-	<rich:column id="marka">
+<f:facet name="header">
+	wybierz markę<br/>
+	<a4j:commandButton value="pokaż wszystkie" render="table">
+		<f:setPropertyActionListener target="#{autaAc.markaFiltr}" value=""/>
+	</a4j:commandButton>
+</f:facet>
+	<rich:column id="marka" style="text-align: center;">
 			<a4j:commandLink value="#{marka.marka}" render="table" action="#{autaAc.filtrBymarka}" />
 	</rich:column>
 </rich:dataTable>
-<a4j:commandLink value="wszystkie" render="table">
-	<f:setPropertyActionListener target="#{autaAc.markaFiltr}" value=""/>
-</a4j:commandLink>
 </div>
 
 <div id="tabela-aut">
