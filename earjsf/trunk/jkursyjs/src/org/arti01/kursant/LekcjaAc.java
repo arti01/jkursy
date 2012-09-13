@@ -178,11 +178,13 @@ public class LekcjaAc implements Serializable{
         String exif ="";
         try {
 			Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(item.getData()));
-			Iterator<?> directories = metadata.getDirectoryIterator();
-			while (directories.hasNext()) {
-			    Directory directory = (Directory)directories.next();
-			    // iterate through tags and print to System.out
-			    Iterator<?> tags = directory.getTagIterator();
+			Iterable<?> directories1 = metadata.getDirectories();
+            Iterator directories = directories1.iterator();
+            while (directories.hasNext()) {
+                Directory directory = (Directory) directories.next();
+                // iterate through tags and print to System.out
+                Iterable<?> tags1 = directory.getTags();
+                Iterator tags = tags1.iterator();
 			    while (tags.hasNext()) {
 			        Tag tag = (Tag)tags.next();
 			        //System.out.println(tag.getTagName());
