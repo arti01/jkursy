@@ -38,80 +38,84 @@ import com.drew.metadata.Directory;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.Tag;
 
-@ManagedBean(name="wykladGaleriaAc")
+@ManagedBean(name = "wykladGaleriaAc")
 @SessionScoped
-public class GaleriaAc implements Serializable{
+public class GaleriaAc implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(GaleriaAc.class);
-	private DataModel<Userfoty> fotyAll=new ListDataModel<Userfoty>();
-	@ManagedProperty(value="#{login}") private Login loginBean;
-	private Userfoty fota=new Userfoty();
-	@EJB UserfotyImp ufi;
-	@EJB UserImp ui;
-	List<Integer> allLp=new ArrayList<Integer>();
-	
-	private static int DLUGOSC=600;
-    private static int WYSOKOSC=400;
-    private static int DLUGOSCmin=240;
-    private static int WYSOKOSCmin=240;
-	
-	public String lista(){
-		//logger.info("==============");
-		allLp=new ArrayList<Integer>();
-		User user=loginBean.getZalogowany();
-		for(Userfoty uf:ui.find(user).getUserfoty()){
-			allLp.add(uf.getLp());
-		}
-		fotyAll.setWrappedData(ui.find(user).getUserfoty());
-		return "galeria";
-	}
+    private static final long serialVersionUID = 1L;
+    Logger logger = Logger.getLogger(GaleriaAc.class);
+    private DataModel<Userfoty> fotyAll = new ListDataModel<Userfoty>();
+    @ManagedProperty(value = "#{login}")
+    private Login loginBean;
+    private Userfoty fota = new Userfoty();
+    @EJB
+    UserfotyImp ufi;
+    @EJB
+    UserImp ui;
+    List<Integer> allLp = new ArrayList<Integer>();
+    private static int DLUGOSC = 600;
+    private static int WYSOKOSC = 400;
+    private static int DLUGOSCmin = 240;
+    private static int WYSOKOSCmin = 240;
 
-	public void zmien(){
-		//logger.info("==============");
-		fota=fotyAll.getRowData();
-		ufi.update(fota);
-		logger.info(fota.getOpis());
-	}
-	
-	public void zmienLp(ValueChangeEvent event) throws IOException{
-		fota=fotyAll.getRowData();
-		ufi.update(fota, (Integer)event.getNewValue());
-		fotyAll=new ListDataModel<Userfoty>();
-		User user=loginBean.getZalogowany();
-		fotyAll.setWrappedData(ui.find(user).getUserfoty());
-		//FacesContext.getCurrentInstance().getExternalContext().redirect("galeria.xhtml");
-	}
-	
-	public void usunFote(){
-		fota=fotyAll.getRowData();
-		ufi.delete(fota);
-		User user=loginBean.getZalogowany();
-		fotyAll.setWrappedData(ui.find(user).getUserfoty());
-	}
-	
-	public void listenerFoty(FileUploadEvent event) {
-		//logger.info("==============");
+    public String lista() {
+        //logger.info("==============");
+        allLp = new ArrayList<Integer>();
+        User user = loginBean.getZalogowany();
+        for (Userfoty uf : ui.find(user).getUserfoty()) {
+            allLp.add(uf.getLp());
+        }
+        fotyAll.setWrappedData(ui.find(user).getUserfoty());
+        return "galeria";
+    }
+
+    public void zmien() {
+        //logger.info("==============");
+        fota = fotyAll.getRowData();
+        ufi.update(fota);
+        logger.info(fota.getOpis());
+    }
+
+    public void zmienLp(ValueChangeEvent event) throws IOException {
+        fota = fotyAll.getRowData();
+        ufi.update(fota, (Integer) event.getNewValue());
+        fotyAll = new ListDataModel<Userfoty>();
+        User user = loginBean.getZalogowany();
+        fotyAll.setWrappedData(ui.find(user).getUserfoty());
+        //FacesContext.getCurrentInstance().getExternalContext().redirect("galeria.xhtml");
+    }
+
+    public void usunFote() {
+        fota = fotyAll.getRowData();
+        ufi.delete(fota);
+        User user = loginBean.getZalogowany();
+        fotyAll.setWrappedData(ui.find(user).getUserfoty());
+    }
+
+    public void listenerFoty(FileUploadEvent event) {
+        //logger.info("==============");
         UploadedFile item = event.getUploadedFile();
-        String exif ="";
+        String exif = "";
         try {
-			Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(item.getData()));
-			Iterable<?> directories1 = metadata.getDirectories();
+            Metadata metadata = JpegMetadataReader.readMetadata(new ByteArrayInputStream(item.getData()));
+            Iterable<?> directories1 = metadata.getDirectories();
             Iterator directories = directories1.iterator();
             while (directories.hasNext()) {
                 Directory directory = (Directory) directories.next();
                 // iterate through tags and print to System.out
                 Iterable<?> tags1 = directory.getTags();
                 Iterator tags = tags1.iterator();
-			    while (tags.hasNext()) {
-			        Tag tag = (Tag)tags.next();
-			        if ((tag.toString().contains("[Exif]"))&&(!tag.toString().contains("Unknown tag"))) exif+=tag+"<br/>";
-			    }
-			}
-		} catch (JpegProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+                while (tags.hasNext()) {
+                    Tag tag = (Tag) tags.next();
+                    if ((tag.toString().contains("[Exif]")) && (!tag.toString().contains("Unknown tag"))) {
+                        exif += tag + "<br/>";
+                    }
+                }
+            }
+        } catch (JpegProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         fota.setExif(exif);
         fota.setPlik(new ResizeJpg().zrobB(DLUGOSC, WYSOKOSC, item.getData()));
         fota.setPlikmini(new ResizeJpg().zrobB(DLUGOSCmin, WYSOKOSCmin, item.getData()));
@@ -120,56 +124,56 @@ public class GaleriaAc implements Serializable{
         fota.setAkcept(false);
         fota.setOpis(null);
         ufi.insert(fota);
-        allLp=new ArrayList<Integer>();
-		User user=loginBean.getZalogowany();
-		for(Userfoty uf:ui.find(user).getUserfoty()){
-			allLp.add(uf.getLp());
-		}
+        allLp = new ArrayList<Integer>();
+        User user = loginBean.getZalogowany();
+        for (Userfoty uf : ui.find(user).getUserfoty()) {
+            allLp.add(uf.getLp());
+        }
         fotyAll.setWrappedData(loginBean.getZalogowany().getUserfoty());
         //logger.info(lekcja.getLekcjafotykursant());
     }
-	
-	public void paintMini(OutputStream stream, Object object) throws IOException {
-		Userfoty uf=new Userfoty();
-		uf.setIduserfoty((Integer) object);
-    	stream.write(ufi.find(uf).getPlikmini());
+
+    public void paintMini(OutputStream stream, Object object) throws IOException {
+        Userfoty uf = new Userfoty();
+        uf.setIduserfoty((Integer) object);
+        stream.write(ufi.find(uf).getPlikmini());
     }
-	
-	public void paintDuza(OutputStream stream, Object object) throws IOException {
-		Userfoty uf=new Userfoty();
-		uf.setIduserfoty((Integer) object);
-    	stream.write(ufi.find(uf).getPlik());
+
+    public void paintDuza(OutputStream stream, Object object) throws IOException {
+        Userfoty uf = new Userfoty();
+        uf.setIduserfoty((Integer) object);
+        stream.write(ufi.find(uf).getPlik());
     }
-	
-	public DataModel<Userfoty> getFotyAll() {
-		return fotyAll;
-	}
 
-	public void setFotyAll(DataModel<Userfoty> fotyAll) {
-		this.fotyAll = fotyAll;
-	}
+    public DataModel<Userfoty> getFotyAll() {
+        return fotyAll;
+    }
 
-	public Login getLoginBean() {
-		return loginBean;
-	}
+    public void setFotyAll(DataModel<Userfoty> fotyAll) {
+        this.fotyAll = fotyAll;
+    }
 
-	public void setLoginBean(Login loginBean) {
-		this.loginBean = loginBean;
-	}
+    public Login getLoginBean() {
+        return loginBean;
+    }
 
-	public Userfoty getFota() {
-		return fota;
-	}
+    public void setLoginBean(Login loginBean) {
+        this.loginBean = loginBean;
+    }
 
-	public void setFota(Userfoty fota) {
-		this.fota = fota;
-	}
+    public Userfoty getFota() {
+        return fota;
+    }
 
-	public List<Integer> getAllLp() {
-		return allLp;
-	}
+    public void setFota(Userfoty fota) {
+        this.fota = fota;
+    }
 
-	public void setAllLp(List<Integer> allLp) {
-		this.allLp = allLp;
-	}
+    public List<Integer> getAllLp() {
+        return allLp;
+    }
+
+    public void setAllLp(List<Integer> allLp) {
+        this.allLp = allLp;
+    }
 }
