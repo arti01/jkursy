@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<script type="text/javascript">
+	function takNie() {
+		return confirm('czy jestes pewien, ze chcesz tego?');
+	};
+</script>
+		<h2>Users</h2>
+		<h:panelGroup>
+		<h:form>
+			<h:commandButton value="dodaj nowy" action="#{adminUsersAc.formNew}" />
+			<br/>
+			<br/>
+			<h:panelGrid columns="3">
+				<a4j:commandButton value="admini" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="admin" />
+				</a4j:commandButton>
+				<a4j:commandButton value="wykladowcy" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="wykladowca" />
+				</a4j:commandButton>
+				<a4j:commandButton value="kursanci" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="kursant" />
+				</a4j:commandButton>
+				<a4j:commandButton value="nieprzypisani" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="nieprzypisani" />
+				</a4j:commandButton>
+				<a4j:commandButton value="absolwenci" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="absolwent" />
+				</a4j:commandButton>
+				<a4j:commandButton value="wszyscy" action="#{adminUsersAc.listAll}" render="table">
+					<f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="" />
+				</a4j:commandButton>
+			</h:panelGrid>
+		</h:form>
+		</h:panelGroup>
+		<h:form>
+			<rich:dataTable value="#{adminUsersAc.allUsers}" var="user"
+				id="table">
+				<rich:column sortBy="#{user.username}" id="username"
+					sortOrder="#{adminUsersAc.usernameOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie login" render="table"
+							action="#{adminUsersAc.sortByUsername}"/>
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.username}"/>
+					</h:commandLink>
+				</rich:column>
+				
+				<rich:column sortBy="#{user.imieNazwisko}" id="imieNazwisko"
+					sortOrder="#{adminUsersAc.imieNazwiskoOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie imie nazwisko" render="table"
+							action="#{adminUsersAc.sortByImieNazwisko}" />
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.imieNazwisko}" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column sortBy="#{user.dataZmiany}" id="dataZmiany"
+					sortOrder="#{adminUsersAc.dataZmianyOrder}">
+					<f:facet name="header">
+						<a4j:commandLink value="sortowanie data zmiany" render="table"
+							action="#{adminUsersAc.sortByDataZmiany}" />
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.form}">
+						<h:outputText value="#{user.dataZmiany}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+						</h:outputText>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminUsersAc.usun}" onclick="return takNie();">
+						<h:outputText value="usuń" rendered="#{login.zalogowany.username!=user.username}"/>
+					</h:commandLink>
+				</rich:column>
+			</rich:dataTable>
+		</h:form>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+	<h:body>
+	<h:panelGroup rendered="#{indexAc.boxCfg.widoczny}">
+	<div id="info">
+	<a4j:repeat rows="#{indexAc.boxCfg.iloscelementow}" var="boks" value="#{indexAc.allBoks}">
+		<h:outputText value="#{boks.naglowek}"/>
+		<br/>
+		<h:outputLink  value="#{boks.link}">
+		<a4j:mediaOutput element="img"
+			createContent="#{indexAc.paintBazy}"
+			value="#{boks.idboksy}" cacheable="false" rendered="#{boks.obraz!=null}">
+			<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+		</a4j:mediaOutput>
+		</h:outputLink>
+		<br/>
+		<h:outputText value="#{boks.tresc}" escape="false"/>
+		<hr/>
+	</a4j:repeat>
+	</div>
+	</h:panelGroup>
+</h:body>
+</html>

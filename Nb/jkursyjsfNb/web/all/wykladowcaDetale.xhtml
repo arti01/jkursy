@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+<body>
+	<ui:composition template="/templates/template.xhtml">
+		<ui:define name="body">
+			<div>
+				<h:form>
+				<h:selectOneMenu value="#{kursyAc.wykladowca.username}">
+					<f:selectItems value="#{kursyAc.allWykladowcy}" var="wykladowca" itemLabel="#{wykladowca.imieNazwisko}"
+						itemValue="#{wykladowca.username}" />
+				</h:selectOneMenu>
+				<h:commandButton value="wybierz innego wykładowcę" action="#{kursyAc.wykladDetale}"/>
+				</h:form>
+<hr/>
+					<a4j:mediaOutput element="img" createContent="#{userAc.paintFota}"
+						value="#{kursyAc.wykladowca.username}" cacheable="false"
+						rendered="#{kursyAc.wykladowca.fota!=null}" style="width:160px;">
+					</a4j:mediaOutput>
+					<h3>
+						<h:outputText value="#{kursyAc.wykladowca.imieNazwisko}" />
+					</h3>
+					<h:outputText value="#{kursyAc.wykladowca.opis}" escape="false" />
+			</div>
+			<h:form rendered="#{kursyAc.wykladowca.userfotyakcept.size()>0}">
+				<div id="miniatury">
+					<ui:repeat var="fota" value="#{kursyAc.wykladowca.userfotyakcept}">
+						<h:commandLink action="#{kursyAc.userGaleriaDetale}">
+							<a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
+								cacheable="false">
+							</a4j:mediaOutput>
+							<f:setPropertyActionListener target="#{kursyAc.uf}" value="#{fota}" />
+						</h:commandLink>
+					</ui:repeat>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</body>
+</html>
+
+
+

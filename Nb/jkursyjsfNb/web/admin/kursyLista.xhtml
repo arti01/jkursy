@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+			<script type="text/javascript">
+				function takNie() {
+					return confirm('czy jestes pewien, ze chcesz tego?');
+				};
+			</script>
+			<h2>Kursy</h2>
+			<h:form>
+				<h:commandButton value="dodaj nowy" action="#{adminKursyAc.formNew}" />
+			</h:form>
+			<br />
+			<br />
+			<h:panelGroup id="table">
+			<h:form >
+				<rich:dataTable value="#{adminKursyAc.allKursy}" var="kurs">
+
+					<rich:column sortBy="#{kurs.lp}" id="lp" sortOrder="#{adminKursyAc.lpOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie lp" render="table" action="#{adminKursyAc.sortBylp}" />
+						</f:facet> 
+						<h:selectOneMenu value="#{kurs.lp}" valueChangeListener="#{adminKursyAc.zmienLp}" id="lpSel">
+							<f:selectItems value="#{adminKursyAc.lpAll}" />
+							<a4j:ajax render="table" execute="lpSel" event="change" />
+						</h:selectOneMenu>
+					</rich:column>
+
+
+					<rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie nazwa" render="table" action="#{adminKursyAc.sortBynazwa}" />
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.form}">
+							<h:outputText value="#{kurs.nazwa}" />
+							<br/>id kursu:<h:outputText value="#{kurs.idkursy}"/>
+						</h:commandLink>
+						<br />
+						<h:outputText value="liczebność grupy:#{kurs.wielkoscgrupy}" />
+						<br />
+						<h:outputText value="(zaakceptowanych kursantów:#{kurs.kursanci.size()})" />
+						<br />
+						<h:outputText value="(niezaakceptowanych rezerwacji:#{kurs.rezerwacjeNowe.size()})" />
+					</rich:column>
+
+					<rich:column sortBy="#{kurs.typykursu.nazwa}" id="typykursu" sortOrder="#{adminKursyAc.typykursuOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie typy kursu" render="table" action="#{adminKursyAc.sortBytypykursu}" />
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.form}">
+							<h:outputText value="#{kurs.typykursu.nazwa}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column sortBy="#{kurs.poziomyzaawansowania.nazwa}" id="poziomyzaawansowania"
+						sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie poziom zaawansowania" render="table"
+								action="#{adminKursyAc.sortBypoziomyzaawansowania}" />
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.form}">
+							<h:outputText value="#{kurs.poziomyzaawansowania.nazwa}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie data rozpoczęcia" render="table" action="#{adminKursyAc.sortBydataod}" />
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.form}">
+							<h:outputText value="#{kurs.dataod}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
+						<f:facet name="header">
+							<a4j:commandLink value="sortowanie data zakończenia" render="table" action="#{adminKursyAc.sortBydatado}" />
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.form}">
+							<h:outputText value="#{kurs.datado}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</h:commandLink>
+					</rich:column>
+					<rich:column id="rezerwacja">
+						<f:facet name="header">
+							rezerwacja dostepna
+						</f:facet>
+							<h:outputText value="#{kurs.rezerwacjaDostepna}"/>
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.usersLista}">
+							<h:outputText value="pokaż uczestników" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column>
+						<f:facet name="header">
+						</f:facet>
+						<h:commandLink action="#{adminKursyAc.usun}" onclick="return takNie();">
+							<h:outputText value="usuń" />
+						</h:commandLink>
+					</rich:column>
+				</rich:dataTable>
+			</h:form>
+			</h:panelGroup>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

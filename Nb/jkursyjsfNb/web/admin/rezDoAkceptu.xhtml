@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+	<h:panelGroup  id="tabela">
+		<h:form>
+			<h:dataTable var="rez" value="#{adminRezerwacjeAc.rezLista}">
+				<h:column>
+					<f:facet name="header">rezerwacja</f:facet>
+					<h:outputText value="rezerwujący: #{rez.user.imieNazwisko}" />
+					<hr />
+					<br />
+					<h:outputText value="nazwa kursu: #{rez.kursy.nazwa}, id:#{rez.kursy.idkursy}" />
+					<br />
+					<br />wykładowcy:<br />
+					<ui:repeat var="wykl" value="#{rez.kursy.wykladowcy}">
+						<h:outputText value="#{wykl.imieNazwisko}, " />
+					</ui:repeat>
+				</h:column>
+				<h:column>
+					<f:facet name="header">data rezerwacji</f:facet>
+					<h:outputText value="#{rez.datarezerwacji}">
+						<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET" />
+					</h:outputText>
+				</h:column>
+				<h:column>
+					<f:facet name="header">rachunek</f:facet>
+					<h:panelGrid columns="2" rendered="#{rez.rachunki!=null}">
+						<h:outputLabel value="imie i nazwisko" />
+						<h:outputText id="imieNazwisko" value="#{rez.rachunki.imienazwisko}" style="width: 100px;" />
+
+						<h:outputLabel value="miasto" />
+						<h:outputText id="miasto" value="#{rez.rachunki.miasto}" />
+
+						<h:outputLabel value="kod pocztowy" />
+						<h:outputText id="kodpocztowy" value="#{rez.rachunki.kodpocztowy}" />
+
+						<h:outputLabel value="ulica, nr domu/mieszkanie" />
+						<h:outputText id="ulica" value="#{rez.rachunki.ulica}" />
+
+						<h:outputLabel value="nip" />
+						<h:outputText id="nip" value="#{rez.rachunki.nip}" />
+
+						<h:outputLabel value="adres do korespondencji" />
+						<h:outputText id="adreskoresp" value="#{rez.rachunki.adreskoresp}" />
+					</h:panelGrid>
+				</h:column>
+				<h:column>
+				<f:facet name="header">szczegóły wpłaty</f:facet>
+					<h:panelGrid columns="1">
+						<h:outputLabel value="wpłacono:" />
+						<h:message for="wplata" styleClass="error" />
+						<h:inputText id="wplata" value="#{rez.wplata}">
+							<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" minFractionDigits="2"
+								type="currency" />
+						</h:inputText>
+						<h:outputLabel value="data wpłaty:" />
+						<rich:calendar value="#{rez.datawplaty}" popup="false" locale="PL" datePattern="dd-MM-yyyy" />
+					</h:panelGrid>
+					<a4j:commandLink value=" akceptuj " action="#{adminRezerwacjeAc.akceptuj}" render="tabela" />
+				</h:column>
+				<h:column>
+					<a4j:commandLink value=" kasuj rezerwacje " action="#{adminRezerwacjeAc.kasujRezerwacje}" render="tabela" />
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</h:panelGroup>
+	</ui:define>
+</ui:composition>
+</html>

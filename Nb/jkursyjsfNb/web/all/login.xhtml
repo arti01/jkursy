@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+<h2>Logowanie - podaj login i hasło</h2>
+<form method="post" action="j_security_check">
+login : 
+<input type="text" size="15" maxlength="25" name="j_username"/>
+<br/>
+hasło :
+<input type="password" size="15" maxlength="25"	name="j_password"/>
+<br/><br/>
+<input value="Login" type="submit"/>
+
+<input type="reset" onclick="history.go(-1)" value="wyjdz"/>
+<h:button value="nie masz konta - zarejestruj się" outcome="/all/rejestracja.xhtml" />
+</form>
+<br/>
+</ui:define>
+</ui:composition>
+</html>

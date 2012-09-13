@@ -1,0 +1,709 @@
+/* Set styles for body and head */
+body
+{
+	margin: 0 auto;
+	padding: 0;
+	font-size: 76%;
+	font-family: "georgia", serif;
+	background-color: #ffffff;
+}
+
+#container
+{
+	margin: 0px auto;
+	width: 1200px;
+	background-color: #ffffff;
+	text-align: left;
+}
+
+#header
+{
+	margin:0;
+	padding: 0 0 5px 0;
+	width: 100%;
+	border-bottom: 2px solid #888888;
+
+}
+
+#header-a
+{
+	display: block;
+	margin: 0 5px 0 5px;
+	float: right;
+	font-size: 1em;
+	font-weight: bold;
+	color: #000000;
+}
+	
+#header-a:hover
+{
+	color: #9FBA0F;
+}
+
+#sitename
+{
+	float: right;
+	clear: right;
+	color: #000000;
+	font-size: 40px;
+	letter-spacing: -1px;
+	margin: 50px 10px 0 0;
+}
+#sitename p
+{
+       
+	text-align: right;
+	color:#999999;
+	font-size: 20px;
+	letter-spacing: -1px;
+	
+}
+#left
+{
+
+	float: left;
+	width: 200px;
+        padding: 0;
+	margin: 10px;       
+}
+#menu
+{
+	
+	font-size: 1.1em;
+	line-height: 1.3em;
+	color: #0F0F0C;
+	padding: 4px;
+	width: 100%;
+	background-color: #ffffff;
+	border: 3px solid #888888;
+        margin: 0 0 10px 0;
+}
+#menu a
+{
+	color: #000000;
+	text-decoration: none;
+        font-style: italic;
+        font-weight: bold;
+}
+#menu a img
+{
+	padding: 2px;
+}
+
+#menu a:hover
+{
+	color: #9999FF;
+        font-weight: bold;
+        text-shadow: 0px 0px 2px #000000;
+}
+
+#menu a:hover img
+{
+        background-color: none;
+        border-radius: 5px;
+        
+}
+#menu ul
+{
+	margin: 0;
+	padding: 5px 10px 5px 5px;
+	list-style: none;
+}
+#menu li
+{
+	margin: 0;
+	padding: 5px 10px 10px 5px;
+        font-weight: bold;
+}
+
+#menu img
+{
+	margin: 0 10px 0 0;
+	
+}
+
+#leftcol
+{
+	
+	font-size: 1.1em;
+	line-height: 1.3em;
+	color: #0F0F0C;
+	padding: 4px;
+	width: 100%;
+	background-color: #ffffff;
+	border: 3px solid #888888;
+}
+
+#leftcol h1
+{
+	font-size: 1.3em;
+	line-height: 1.3em;
+	font-weight: bold;
+	margin: 0;
+	padding: 10px 10px 0 10px;
+	background-color: #EEEEEE;
+}
+
+#leftcol h2
+{
+	font-size: 1.2em;
+	line-height: 1.2em;
+	font-weight: bold;
+	margin: 0;
+	padding: 0 10px 0 10px;
+	background-color: #EEEEEE;
+}
+
+#leftcol h5
+{
+	font-size: 0.9em;
+	line-height: 1.2em;
+	font-weight: bold;
+	padding: 0 10px 0 15px;
+	background-color: #FFFFFF;
+}
+
+.text
+{
+	margin: 0;
+	padding: 10px 10px 10px 10px;
+	background-color: #EEEEEE;
+
+}
+
+#leftcol a
+{
+	color: #EEEEEE;
+	text-decoration: underline;
+}
+
+#leftcol a:hover
+{
+	color: #EEEEEE;
+}
+
+#leftcol ul
+{
+	margin: 0;
+	padding: 5px 10px 5px 10px;
+	list-style: none;
+	background-color: #EEEEEE;
+}
+
+
+#leftcol li
+{
+	margin: 0;
+	padding: 5px 10px 5px 10px;
+	border-bottom: 1px dotted #888888;
+        font-weight: bold;
+}
+
+#leftcol li a
+{
+	color: #0F0F0C;
+	font-style: normal;
+	text-decoration: none;
+        font-weight: normal;
+}
+
+#leftcol li a:hover
+{
+	color: #FF6633;
+	text-decoration: none;
+        text-shadow: 0px 0px 2px #000000;
+}
+
+#leftcol img
+{
+	float: left;
+	background-color: #ffffff;
+	border: 1px solid #4C6F0F;
+	padding: 2px;
+	margin: 0 5px 5px 0;
+}
+#vbaner
+{
+        float:left;
+        width: 100%;
+        margin: 10px 0;
+        padding 0;
+        text-align: right;
+        background-color: none;
+}
+
+
+
+
+
+
+#baner
+{
+        float: right;
+        width: 900px;
+        margin: 0 0 10px 0;
+        padding: 5px;
+        text-align: center;
+}
+
+#main
+{
+	float: left;
+        margin: 0 0 10px 10px;
+	padding: 0;
+        width: 750px;
+	color: #0F0F0C;
+	font-size: 1.1em;
+	line-height: 1.3em;
+	text-align: justify;
+}
+
+#main a
+{
+	color: #DF3400;
+	text-decoration: underline;
+}
+
+#main a:hover
+{
+	color: #4C6F0F;
+}
+
+#main img
+{
+	float: left;
+	background-color: none;
+	border: none;
+	padding: 0;
+	margin: 0 5px 0 0;
+}
+
+#main .copy
+{
+	margin: 0 0 10px 0;
+}
+#main .copy img
+{
+        padding: 10px 10px 10px 0;
+}
+
+#dateline
+{
+	color: #0F0F0C;
+	margin: 0;
+	padding: 0 0 10px 0;
+	font-size: 1,1em;
+        font-style: italic;
+	text-align: left;
+	
+}
+
+#wiecej
+{
+	color: #0F0F0C;
+	margin: 0 0 30px 0;
+	padding: 10px 5px 3px 0;
+	background-color: #ffffff;
+        font-style: italic;
+	font-size: 15px;
+	font-weight: normal;
+	text-align: left;
+	border-bottom: 2px solid #AAAAAA;
+        clear: left;
+
+}
+
+#wiecej a
+{
+	color: #000000;
+	text-decoration: none;
+}
+#wiecej a:hover
+{
+	color: #CC6600;
+	text-decoration: none;
+}
+
+#galeria
+{
+	color: #0F0F0C;
+	margin: 0 0 30px 0;
+	padding: 20px 5px 3px 0;
+	background-color: #ffffff;
+	font-size: 1.2em;
+        font-weight: bold;
+	text-align: left;
+	border-bottom: 2px solid #AAAAAA;
+
+}
+
+#galeria a
+{
+	color: #CC6600;
+	text-decoration: none;
+}
+#galeria a:hover
+{
+	color: #000000;
+	text-decoration: none;
+}
+
+#quote
+{
+	margin: 10px 50px 10px 50px;
+	padding: 12px;
+	background-color: #DAF29F;
+	font-size: 1.1em;
+	font-style: italic;
+	line-height: 1.3em;
+	font-weight: normal;
+	text-align: right;
+	border: 0px solid #9FBA0F;
+}
+
+#quote img
+{
+	float: left;
+	margin-right: 5px;
+	padding: 0;
+	border: 0;
+}
+
+#main h1
+{
+	font-size: 2em;
+        line-height: 120%;
+}
+
+#main h2
+{
+	font-size: 1.7em;
+        line-height: 120%;
+}
+
+#main h3
+{
+	font-size: 1.5em;
+        line-height: 120%;
+}
+#main h4
+{
+        font-size: 1.1em;
+        line-height: 120%;
+}
+
+
+#info
+{
+	float: right;
+	font-size: 1em;
+	line-height: 1.1em;
+	color: #0F0F0C;
+	margin: 0 0 10px 0;
+	padding: 10px;
+	width: 180px;
+	background-color: #eeeeee;        
+}
+#info img
+{
+        max-width: 160px;
+        margin: 5px;
+}
+#info a
+{
+       text-decoration: none;
+       color: #CC6600;
+       font-style: normal;
+}
+#info a:hover
+{
+       color: #000000;
+}
+#info hr
+{
+        size: 1px;
+        width: 140px;
+        align: left;
+        color: #888888;
+}
+
+#footer
+{
+        border-top: 2px solid #888888;
+	margin: 0 0 50px 0;
+        padding: 10px;
+	clear: both;
+	color: #a0a0a0;
+	font-size: 1em;
+	text-align: center;
+}
+
+#footer a
+{
+	color: #a0a0a0;
+	text-decoration: none;
+}
+
+#footer a:hover
+{
+	color: #606060;
+}
+#main2
+{
+	width: 900px;
+        float: left;
+        margin: 0 0 0 0;
+	padding: 0;
+	color: #0F0F0C;
+	font-size: 1.1em;
+	line-height: 1.3em;
+	text-align: left;
+        table-align: center
+        overflow: scroll;
+}
+
+#main2 a
+{
+	color: #CC6600;
+	text-decoration: none;
+}
+
+#main2 a:hover
+{
+	color: #0F0F0C;
+}
+
+#main2 img
+{
+	align: right;
+		
+	padding: 10px;
+	margin: 10px;
+}
+
+#main2 .copy
+{
+	margin: 5px;
+}
+
+
+
+#main2 h1
+{
+	font-size: 2em;
+        line-height: 120%;
+}
+
+#main2 h2
+{
+	font-size: 1.7em;
+        line-height: 120%;
+}
+
+#main2 h3
+{
+	font-size: 1.5em;
+        line-height: 120%;
+}
+
+
+#main2 h4
+{
+	font-size: 1.1em;
+        line-height: 120%;
+}
+#main2 ul  {
+	display: block;
+	margin: 0;
+	padding: 5px;
+        list-style-type: none;
+}
+
+#main2 li {
+	display: inline;
+	white-space: nowrap;
+        
+}
+
+
+
+#main2 table
+{
+        align: center;
+        padding: 20px;
+        margin: 10px;
+        font-style: italic;
+        font-size: 0.9em;
+}
+
+#main2 table td
+{
+       text-align: left;
+       padding: 20px 10px 10px;
+}
+.telko
+{
+         background-color: #FBF7E8;
+         padding: 10px
+         
+}
+
+#tabela table
+{
+        width: 100%;
+        table-layout: auto;
+        font-size: 0.8em;
+        font-style: normal;
+        line-height: 1.3em;
+        text-align: left;
+        padding: 10px;
+}
+#tabela hr
+{
+        size: 1px;
+        width: 100%;
+        color: #000000;
+}
+
+
+
+#tabela th
+{
+      font-size: 1.1em;
+      background-color: #EEEEEE;  
+      text-align: left;
+      padding: 10px 20px;
+      border-right: 3px solid #FFFFFF;
+}
+
+#tabela th a
+{
+      color: #000000;
+}
+#tabela th a:hover
+{
+        color: #CC6600;
+}
+
+#tabela table td
+{
+        max-width: 250px;
+        padding: 20px 10px;
+        border-right: 3px solid #FFFFFF;
+}
+#tabela table td table
+{       
+        table-layout: auto;
+        width: auto;
+        padding: 0px;
+        background-color: #FFFFFF;
+        margin: none;
+        border: 3px solid #CCCCCC;
+        font-size: 0.9em;
+}
+#tabela a
+{
+        font-size: 1.1em;
+        text-decoration: none;
+        margin: 5px;
+}
+#tabela li a
+{
+        color: #000000;
+        text-decoration: none;
+}
+
+
+#tabela tr:nth-child(even)
+{
+        background-color:#EEEEEE;
+        
+}
+#tabela tbody p
+{
+        font-size:0.9em ;
+        font-style: italic;
+}
+
+.tytul
+{
+        font-weight: bold;
+        font-size: 0.9em;
+}
+#slider
+{
+	float: left;
+	border: none;
+	padding: 0 30px;
+        
+	
+}
+
+#slider img
+{
+	float: left;
+	background-color: #FFFFFF;
+	border-color: #888888;
+        border-style: solid;
+        border-width: 30px 50px;
+	padding: 5px;
+        width: 600px;
+	
+}
+#slider table
+{
+        align: center;
+        font-style: italic;
+        font-size: 1em;
+}
+#slider a
+{
+	color: #000000;
+	text-decoration: none;
+}
+#slider a:hover
+{
+	color: #CC6600;
+}
+#miniatury
+{
+        float: left;
+        
+        margin: 0 0 10px 0;
+	padding: 10px 10px 10px 80px;
+        background-color: #888888;
+        
+}
+
+
+#miniatury img
+{     
+       float: left;
+       margin: 10px;
+       padding: 5px;
+       background-color: #ffffff;
+       border: none;
+       width: 130px
+      
+       
+}
+#zakladki
+{
+       font-size: 1.1em;
+       word-spacing: 0.9em;
+       margin-left: 50px;
+}
+#zakladki a
+{
+       border-width: 0px;
+}
+#zakladki a:hover
+{
+       background-color: #CCCCCC;
+}
+#zakladki span
+{
+       background-color: #FFFFFF;
+       border-width: 0px;
+}
+

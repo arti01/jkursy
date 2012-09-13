@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<script type="text/javascript">
+	function takNie() {
+		return confirm('czy jestes pewien, ze chcesz tego?');
+	};
+</script>
+		<h2>Użytkownicy kursu</h2>
+		<h2><h:outputText value="#{adminKursyAc.kurs.nazwa}"/></h2>
+<br/>
+<h:panelGrid columns="2">
+		<h:form>
+			<h:dataTable value="#{adminKursyAc.wykladowcy}" var="user"
+				id="tablew">
+				<f:facet name="header">
+						<h:outputText value="wykladowcy"/>
+					</f:facet>
+				<h:column id="username">
+					<f:facet name="header">
+						<h:outputText value="login" render="table"/>
+					</f:facet>
+						<h:outputText value="#{user.username}"/>
+				</h:column>
+				
+				<h:column id="imieNazwisko">
+					<f:facet name="header">
+						<h:outputText value="imie nazwisko" render="table"/>
+					</f:facet>
+						<h:outputText value="#{user.imieNazwisko}" />
+				</h:column>
+				<h:column id="usun">
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.usunZkursu}">
+						<h:outputText value="usuń z kursu"/>
+					</h:commandLink>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		<h:form>
+			<h:dataTable value="#{adminKursyAc.kursanci}" var="user"
+				id="tablek">
+				<f:facet name="header">
+						<h:outputText value="kursanci"/>
+					</f:facet>
+				<h:column id="username">
+					<f:facet name="header">
+						<h:outputText value="login" render="table"/>
+					</f:facet>
+						<h:outputText value="#{user.username}"/>
+				</h:column>
+				
+				<h:column id="imieNazwisko">
+					<f:facet name="header">
+						<h:outputText value="imie nazwisko" render="table"/>
+					</f:facet>
+						<h:outputText value="#{user.imieNazwisko}" />
+				</h:column>
+				<h:column id="usun">
+					<f:facet name="header">
+					</f:facet>
+					<h:commandLink action="#{adminKursyAc.usunZkursu}">
+						<h:outputText value="usuń z kursu"/>
+					</h:commandLink>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</h:panelGrid>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,52 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+        <h5>
+            Jesteś zalogowany jako:<br />
+            <h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
+            <h:form>
+                <h:commandButton value="wyloguj" action="#{login.wyloguj}" />
+            </h:form>
+        </h5>
+        <div id="left">
+            <h:form>
+                <ul>
+                    <li><h:link value="do strony głównej" outcome="/all/newsyAll.xhtml"/>
+                    </li>
+                    <li><h:commandLink value="użytkownicy" action="#{adminUsersAc.listAll}">
+                            <f:setPropertyActionListener target="#{adminUsersAc.prawo}" value="" />
+                        </h:commandLink></li>
+                    <li><h:commandLink value="kursy" action="#{adminKursyAc.kursyLista}" />
+                    </li>
+                    <li>rezerwacje</li>
+                    <li><h:commandLink value="lista do akceptu" action="#{adminRezerwacjeAc.listDoAkceptu}" />
+                    </li>
+                    <li><h:commandLink value="wszystkie" action="#{adminRezerwacjeAc.listAll}" />
+                    </li>
+                    <li><h:commandLink value="czarna lista" action="#{adminRezerwacjeAc.czarnaLista}" />
+                    </li>
+                    <li><hr />
+                    </li>
+                    <li><h:commandLink value="raport z kursów" action="#{adminKursyAc.raport}" />
+                    </li>
+                    <li><hr />
+                    </li>
+                    <li><h:commandLink value="strony statyczne" action="#{adminStatyczneAc.listStatyczne}" />
+                    </li>
+                    <li><h:commandLink value="newsy" action="#{adminNewsyAc.listNewsy}" />
+                    </li>
+                    <li><h:commandLink value="poziomy zaawansowania" action="#{adminPoziomyZaaAc.list}" />
+                    </li>
+                    <li><h:commandLink value="typy kursu" action="#{adminTypyKursuAc.list}" />
+                    </li>
+                    <li><h:commandLink value="konfiguracja boksów" action="#{adminBoksyAc.list}" />
+                    </li>
+                    <li><h:commandLink value="akceptacja fot wykladowcow" action="#{adminAkceptWyklAc.list}" />
+                    </li>
+                </ul>
+            </h:form>
+        </div>
+    </body>
+</html>
+
+

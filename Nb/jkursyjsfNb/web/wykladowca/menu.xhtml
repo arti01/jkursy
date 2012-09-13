@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<body>
+<h5>Jesteś zalogowany jako:<br/>
+<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})"/>
+<h:form>
+<h:commandButton value="wyloguj" action="#{login.wyloguj}"/>
+</h:form>
+</h5>
+<div id="left">
+<h:form>
+<ul>
+<li><h:link value="do strony głównej" outcome="/all/newsyAll.xhtml"/></li>
+<li><h:commandLink value="Zdjęcia bez komentarza wykładowcy" action="#{raportyAc.raport1}"/></li>
+<li><h:commandLink value="Pytania do wykładowcy" action="#{raportyAc.raport2}"/></li>
+<li><h:commandLink value="Pytania do wykładowcy (zdjęcia kursantów)" action="#{raportyAc.raport3}"/></li>
+<li><h:outputText value="Twoje kursy"/></li>
+<ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
+	<li>
+	<h:commandLink action="#{wykladKursyAc.kursForm}">
+		<f:setPropertyActionListener target="#{wykladKursyAc.kurs}" value="#{kurs}"/>
+		<h:outputText value="#{kurs.nazwa}"/>
+		<br/>id kursu:<h:outputText value="#{kurs.idkursy}"/>
+	</h:commandLink>
+	</li>
+</ui:repeat>
+<li><h:outputText value="pomoc i informacje dla wykładowców"/></li>
+<ui:repeat var="strona" value="#{wykladKursyAc.role.statyczne}">
+	<li><h:commandLink action="#{wykladKursyAc.statyczna}">
+				<h:outputText value="#{strona.tytul}" />
+				<f:setPropertyActionListener target="#{wykladKursyAc.strona}" value="#{strona}"/>
+			</h:commandLink></li>
+</ui:repeat>
+<li><h:commandLink value="Twoja Galeria" action="#{wykladGaleriaAc.lista}"/></li>
+<li><h:commandLink value="Klonowanie lekcji" action="#{wykladKlonAc.wybierz}"/></li>
+</ul>
+</h:form>
+</div>
+</body>
+</html>
+
+

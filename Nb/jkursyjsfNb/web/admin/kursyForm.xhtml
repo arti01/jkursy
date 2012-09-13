@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<h:form>
+			<h:panelGrid columns="3">
+				<h:outputLabel for="bledy" />
+				<h:outputText id="bledy" value="#{adminKursyAc.errorText}" styleClass="error"/>
+				<h:outputLabel for="bledy" />
+				
+				<h:message for="nazwa" styleClass="error" />
+				<h:outputLabel value="nazwa" />
+				<h:inputText id="nazwa" value="#{adminKursyAc.kurs.nazwa}" size="70"/>
+				
+				<h:message for="opisKrotki" styleClass="error" />
+				<h:outputLabel value="krótki opis"/>
+				<h:inputText id="opisKrotki" value="#{adminKursyAc.kurs.opisKrotki}" size="110"/>
+				
+				<h:message for="rezerwacjaDostepna" styleClass="error" />
+				<h:outputLabel value="rezerwacja dostepna" />
+				<h:selectBooleanCheckbox id="rezerwacjaDostepna" value="#{adminKursyAc.kurs.rezerwacjaDostepna}"/>
+				
+				<h:message for="typ" styleClass="error" />
+				<h:outputLabel value="typ kursu" />
+				<h:selectOneMenu id="typ" value="#{adminKursyAc.kurs.typykursu.idtypykursu}">
+				<f:selectItems value="#{adminKursyAc.allTk}" var="tk" itemLabel="#{tk.nazwa}" itemValue="#{tk.idtypykursu}"/>
+				</h:selectOneMenu>
+				
+				<h:message for="cena" styleClass="error" />
+				<h:outputLabel value="cena kursu" />
+				<h:inputText id="cena" value="#{adminKursyAc.kurs.cena}" size="10">
+					<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" minFractionDigits="2" type="currency"/>
+				</h:inputText>
+				
+				<h:message for="fotperkursantmax" styleClass="error" />
+				<h:outputLabel value="maksymalna ilość zdjęć kursanta per lekcja" />
+				<h:inputText id="fotperkursantmax" value="#{adminKursyAc.kurs.fotperkursantmax}" size="3"/>
+				
+				<h:message for="fotperkursantbezkoment" styleClass="error" />
+				<h:outputLabel value="ilość zdjęć kursanta bez komentarza wykładowcy do umieszczenia per lekcja" />
+				<h:inputText id="fotperkursantbezkoment" value="#{adminKursyAc.kurs.fotperkursantbezkoment}" size="3"/>
+				
+				<h:message for="poziom" styleClass="error" />
+				<h:outputLabel value="poziom zaawansowania" />
+				<h:selectOneMenu id="poziom" value="#{adminKursyAc.kurs.poziomyzaawansowania.idpoziomyzaawansowania}">
+				<f:selectItems value="#{adminKursyAc.allPz}" var="pz" itemLabel="#{pz.nazwa}" itemValue="#{pz.idpoziomyzaawansowania}"/>
+				</h:selectOneMenu>
+				
+				<h:message for="wielkoscgrupy" styleClass="error" />
+				<h:outputLabel value="liczebnosc grupy (wolnych miejsc #{adminKursyAc.kurs.wolnychMiejsc})" />
+				<h:inputText id="wielkoscgrupy" value="#{adminKursyAc.kurs.wielkoscgrupy}" size="3"/>
+				
+				<h:message for="stacjonarny" styleClass="error" />
+				<h:outputLabel value="stacjonarny (Tak/Nie)" />
+				<h:selectBooleanCheckbox id="stacjonarny" value="#{adminKursyAc.kurs.stacjonarny}"/>
+				<h:message for="dataod" styleClass="error" />
+				<h:outputLabel value="data rozpoczęcia" />
+				<h:inputText id="dataod" value="#{adminKursyAc.kurs.dataod}" immediate="true">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:inputText>
+				<h:message for="datado" styleClass="error"/>
+				<h:outputLabel value="data zakończenia" />
+				<h:inputText id="datado" value="#{adminKursyAc.kurs.datado}" immediate="true">
+					<f:convertDateTime pattern="dd-MM-yyyy" />
+				</h:inputText>
+				<h:message for="opis" styleClass="error" />
+				<h:outputLabel value="opis" />
+				<h:inputTextarea id="opis" value="#{adminKursyAc.kurs.opis}"/>
+				<script type="text/javascript">
+	tinyMCE
+			.init({
+				// General options
+				mode : "textareas",
+				theme : "advanced",
+				plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+
+				// Theme options
+				theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+				theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+				theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+				theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+				theme_advanced_toolbar_location : "top",
+				theme_advanced_toolbar_align : "left",
+				theme_advanced_statusbar_location : "bottom",
+				theme_advanced_resizing : true,
+
+				// Example content CSS (should be your site CSS)
+				content_css : "../burned/default.css",
+
+				// Drop lists for link/image/media/template dialogs
+				template_external_list_url : "js/template_list.js",
+				external_link_list_url : "js/link_list.js",
+				external_image_list_url : "js/image_list.js",
+				media_external_list_url : "js/media_list.js",
+
+				// Replace values for the template plugin
+				template_replace_values : {
+					username : "Some User",
+					staffid : "991234"
+				}
+			});
+</script>
+			</h:panelGrid>
+			<h:commandButton value="wyślij" action="#{adminKursyAc.dodaj}" />
+		</h:form>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

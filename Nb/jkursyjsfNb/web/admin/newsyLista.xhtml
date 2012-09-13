@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<body>
+		<script type="text/javascript">
+	function takNie() {
+		return confirm('czy jestes pewien, ze chcesz tego?');
+	};
+</script>
+		<h2>Newsy</h2>
+		<h:form>
+			<h:commandButton value="dodaj nowy" action="#{adminNewsyAc.formNew}" />
+		</h:form>
+
+		<h:form id="table">
+				<h:dataTable var="news" value="#{adminNewsyAc.allNewsy}" title="Newsy">
+					<h:column>
+					<h:selectOneMenu value="#{news.lp}"
+						valueChangeListener="#{adminNewsyAc.zmienLp}" id="lpSel">
+						<f:selectItems value="#{adminNewsyAc.lpAll}" />
+						<a4j:ajax render="table" execute="lpSel" event="change" />
+					</h:selectOneMenu>
+					</h:column>
+					<h:column> 
+	<h:commandLink action="#{adminNewsyAc.form}">
+	<h:outputText value="#{news.tytul}" />
+		(<h:outputText value="#{news.datadodania}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>)
+	</h:commandLink> 
+	</h:column>
+	<h:column>
+	<h:commandButton action="#{adminNewsyAc.usun}" value="usuń" />
+	</h:column>
+</h:dataTable>
+		</h:form>
+		</body>
+	</ui:define>
+</ui:composition>
+</html>

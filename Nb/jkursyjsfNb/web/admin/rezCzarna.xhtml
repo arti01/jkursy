@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+
+<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+		<h:dataTable var="user" value="#{adminRezerwacjeAc.userLista}">
+		<f:facet name="header">czarna lista rezygnujących</f:facet>
+			<h:column>
+			<f:facet name="header">imię i nazwisko kursanta</f:facet>
+				<h:outputText value="#{user.imieNazwisko}" />
+			</h:column>
+			<h:column>
+			<f:facet name="header">szczegóły rezerwacji</f:facet>
+				<h:dataTable var="kr" value="#{user.rezerwacjeOdwolane}">
+					<h:column>
+						<f:facet name="header">id kursu</f:facet>
+						<h:outputText value="#{kr.kursy.idkursy}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">nazwa kursu</f:facet>
+						<h:outputText value="#{kr.kursy.nazwa}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">data rezerwacji</f:facet>
+						<h:outputText value="#{kr.datarezerwacji}">
+							<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET"/>
+						</h:outputText>
+					</h:column>
+				</h:dataTable>
+			</h:column>
+		</h:dataTable>
+	</ui:define>
+</ui:composition>
+</html>

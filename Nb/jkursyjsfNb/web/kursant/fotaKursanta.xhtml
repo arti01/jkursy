@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templatekursant.xhtml">
+	<ui:define name="body">
+			<h:form>
+		<div id="fota">	
+				<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
+					first="#{kursantLekcjaAc.nrstrony-1}">
+					<h:column>
+								<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintDuza}"
+									value="#{fota.idlekcjafotykursant}" cacheable="false">
+								</a4j:mediaOutput>
+								<ul>
+								<li>
+									<h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+										<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
+									</h:commandLink>
+								</li>
+								<li>
+									<h:outputText value="dodana: #{fota.datadodaniaS}">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
+								</li>
+								<li>
+									<h:outputText value="opis: #{fota.opis}" />
+								</li>	
+									<li><h:outputText value="pokaż exif" id="exlink"/></li>
+								<li>	
+									<rich:tooltip id="tt1" layout="block" target="exlink">
+										<h:outputText value="#{fota.exif}" escape="false"/>
+									</rich:tooltip>
+								</li>
+								</ul>
+					</h:column>
+				</rich:dataTable>
+				</div>
+			</h:form>
+			<h:form id="sterowanie">
+				<h:commandLink value=" powrót do zdjęć " action="#{kursantLekcjaAc.fotyForm}" />
+				<br />
+				<a4j:commandLink value=" poprzedna " action="#{kursantLekcjaAc.prevFotaKursant}"
+					render="table, komentarze, sterowanie" rendered="#{kursantLekcjaAc.prev}">
+				</a4j:commandLink>
+				<h:outputText value="#{kursantLekcjaAc.nrstrony}" />/<h:outputText
+					value="#{kursantLekcjaAc.listaFot.size()}" />
+				<a4j:commandLink value=" nastepna " action="#{kursantLekcjaAc.nextFotaKursant}"
+					render="table, komentarze, sterowanie" rendered="#{kursantLekcjaAc.next}">
+				</a4j:commandLink>
+			</h:form>
+			<h5>dyskusja o zdjęciu</h5>
+			<h:form>
+				<h:panelGroup id="wpis">
+				<table>
+				<tr><td>
+					<h:message for="tresc" />
+					<h:outputLabel for="tresc" value="treść" />
+					</td><td>
+					<h:inputTextarea id="tresc" value="#{kursantLekcjaAc.komentarzFota.tresc}" cols="90" rows="9"/>
+					</td>
+				</tr>
+				<tr><td>
+					<h:outputLabel for="dowykladowcy" value="wyślij do wykładowcy" />
+					</td><td>
+					<h:selectBooleanCheckbox id="dowykladowcy" value="#{kursantLekcjaAc.komentarzFota.dowykladowcy}" />
+					</td>
+					</tr><tr><td>
+					<a4j:commandButton value="dodaj komentarz" action="#{kursantLekcjaAc.dodajKomentarzFota}"
+						render="komentarze, wpis" />
+					</td></tr>
+					</table>
+				</h:panelGroup>
+			</h:form>
+			<h:form>
+				<h:panelGroup id="komentarze">
+					<ui:repeat var="koment" value="#{kursantLekcjaAc.fotaKursant.fotykursantkoment}">
+						<h5>
+							<h:commandLink value="autor: #{koment.user.imieNazwisko}, " action="#{kursantKursyAc.pokazKursanta}">
+								<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{koment.user}" />
+							</h:commandLink>
+							<h:outputText value="(komentuje wykładowca) " rendered="#{koment.komentWykl}" />
+							<h:outputText value="to pytanie czeka na odpowiedź wykładowcy" rendered="#{koment.dowykladowcy}" />
+							<br />
+							<h:outputText value="dodany: #{koment.datadodaniaS}" />
+						</h5>
+						<h:outputText value="#{koment.tresc}" />
+						<hr />
+					</ui:repeat>
+				</h:panelGroup>
+			</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="body">
+<div id="tabela">
+		<h:form id="form1">
+			<h:dataTable value="#{kursyAc.allWykladowcy}" var="wyklad" id="wyklad">
+				<h:column id="nazwa">
+					<f:facet name="header">
+						<h:outputText value="Imię Nazwisko" />
+					</f:facet>
+					<h:commandLink action="#{kursyAc.wykladDetale}">
+						<h:outputText value="#{wyklad.imieNazwisko}" />
+						<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
+					</h:commandLink>
+				</h:column>
+				<h:column id="kursy">
+					<f:facet name="header">
+						<h:outputText value="prowadzone kursy" />
+					</f:facet>
+					<ul>
+						<ui:repeat var="kurs" value="#{wyklad.kursies}">
+							<li><h:commandLink action="#{kursyAc.detale}">
+								<f:param name="idkursy" value="#{kurs.idkursy}" />
+								<h:outputText value="#{kurs.nazwa}" />
+							</h:commandLink></li>
+						</ui:repeat>
+					</ul>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>

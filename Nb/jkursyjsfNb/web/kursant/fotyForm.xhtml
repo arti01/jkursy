@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+
+<ui:composition template="/templates/templatekursant.xhtml">
+	<ui:define name="body">
+		<h:panelGroup id="uploadpg" rendered="#{kursantLekcjaAc.lekcja!=null}">
+			<h:form>
+				<rich:fileUpload fileUploadListener="#{kursantLekcjaAc.listenerFoty}" id="upload"
+				style="height: 200px;"
+					rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
+					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
+				</rich:fileUpload>
+				<h:outputText value="nie możesz dodać już więcej zdjęć"
+					rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}" />
+			</h:form>
+		</h:panelGroup>
+		<hr />
+		<h:panelGroup id="informacje" rendered="#{kursantLekcjaAc.lekcja!=null}">
+		<ul>
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji: " />
+			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}" /></li>
+			<li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy: " 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+			<h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
+			<li><h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: " />
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}" /></li>
+			<li><h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" 
+				rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
+			<li><h:outputText value="Możesz jeszcze dodać: " />
+			<h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}" /></li>
+			</ul>
+		</h:panelGroup>
+		<hr size="1" />
+		<h:form>
+			<h:panelGroup>
+				<h:outputText value="autor" />
+				<h:selectOneMenu value="#{kursantLekcjaAc.user.username}"
+					valueChangeListener="#{kursantLekcjaAc.zmienUser}" hideNoSelectionOption="false">
+					<f:selectItem itemLabel="wszyscy" itemValue="" />
+					<f:selectItems value="#{kursantKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}"
+						itemValue="#{kursant.username}" />
+					<a4j:ajax render="foty" execute="@this" event="change" />
+				</h:selectOneMenu>
+			</h:panelGroup>
+		</h:form>
+		<h:form>
+			<rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="foty" rowKeyVar="nrstrony">
+				<rich:column>
+					<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
+						<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
+						<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+						<a4j:mediaOutput element="img" createContent="#{kursantLekcjaAc.paintBazy}"
+							value="#{fota.idlekcjafotykursant}" cacheable="false">
+							<f:param value="#{wykladImageUploadBean.timeStamp}" name="time" />
+						</a4j:mediaOutput>
+					</h:commandLink>
+				</rich:column>
+				<rich:column>
+					<ul>
+						<li><h:commandLink value="lekcja: #{fota.lekcja.tytul}" action="#{kursantLekcjaAc.pokaz}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{fota.lekcja}" />
+						</h:commandLink></li>
+						<li><h:commandLink value="autor: #{fota.user.imieNazwisko}" action="#{kursantKursyAc.pokazKursanta}">
+							<f:setPropertyActionListener target="#{kursantKursyAc.kursant}" value="#{fota.user}" />
+						</h:commandLink></li>
+						<li><h:outputText value="dodana: #{fota.datadodaniaS}">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText></li>
+						<li><h:outputText value="komentarz wykładowcy: dodano" rendered="#{fota.komentWykl}"/>
+						<h:outputText value="komentarz wykładowcy: brak" rendered="#{!fota.komentWykl}"/></li>
+						<li><h:commandLink value="do zdjęcia" action="#{kursantLekcjaAc.fotaKursant}">
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
+							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+						</h:commandLink></li>
+					</ul>
+				</rich:column>
+			</rich:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

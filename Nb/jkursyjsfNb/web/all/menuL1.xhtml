@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <h:body>
+        <h:form>
+            <ul>
+                <li><h:commandLink action="#{indexAc.index}">
+                        <h:graphicImage value="../all/grafa/home.png" />Strona główna
+                    </h:commandLink>
+                </li>
+                <h:panelGroup rendered="#{login.zalogowany.username==null}">
+                    <li><h:link outcome="/all/login.xhtml">
+                            <h:graphicImage value="../all/grafa/login.png" />Zaloguj/Zarejestruj
+                        </h:link></li>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{login.zalogowany.username!=null}">
+                    <li>Jesteś zalogowany jako:<br /> <h:outputText
+                            value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" /> 
+                        <h:commandButton value="Wyloguj" action="#{login.wyloguj}" />
+                    </li>
+                    <li><h:commandLink action="#{kursantIndexAc.profil}">
+                            <h:graphicImage value="../all/grafa/edit.png" />Edytuj swój profil
+                        </h:commandLink></li>
+                    <ui:repeat var="r" value="#{login.zalogowany.roles}">
+                        <h:panelGroup rendered="#{r.rola=='wykladowca'}">
+                            <li><h:link outcome="/wykladowca/index.xhtml">
+                                    <h:graphicImage value="../all/grafa/wykladowca.png" />Strefa wykładowcy
+                                </h:link></li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{r.rola=='admin'}">
+                            <li><h:link outcome="/admin/index.xhtml">
+                                    <h:graphicImage value="../all/grafa/admin.png" />Strefa admina
+                                </h:link></li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{r.rola=='kursant'}">
+                            <li><h:commandLink action="indexKursant">
+                                    <h:graphicImage value="../all/grafa/student.png" />Strefa studenta
+                                </h:commandLink></li>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{r.rola=='absolwent'}">
+                            <li><h:commandLink action="indexAbsolw">
+                                    <h:graphicImage value="../all/grafa/absolwent.png" />Strefa absolwenta
+                                </h:commandLink></li>
+                        </h:panelGroup>
+                    </ui:repeat>
+                </h:panelGroup>
+            </ul>
+        </h:form>
+    </h:body>
+</html>
+
+
+

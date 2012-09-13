@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/templates/templateadm.xhtml">
+	<ui:define name="body">
+	<body>
+	<script type="text/javascript">
+function takNie(){
+	   return confirm('czy jestes pewien, ze chcesz tego?');
+};
+</script>
+<h2>Strony statyczne</h2>
+Pojawiają się jako pozycje w menu. W przypadku ustawienia ich widoczności na "wszyscy" mogą być traktowane jako dodatkowe informacje
+pojawiające się na stronie głównej, jeśli ustawi się widoczność na uprawnienie, pojawią sie w menu wykładowców lub kursantów - wtedy mogą zawierać np. porady.
+<h:form>
+<h:commandButton value="dodaj nowa" action="#{adminStatyczneAc.formNew}"/>
+</h:form>
+
+<h:form>
+<h:dataTable var="statyczna" value="#{adminStatyczneAc.allStatyczne}" border="0" width="100%" id="kolejnosc">
+	<h:column>
+	<f:facet name="header">kolejnosc</f:facet>
+	<h:selectOneMenu value="#{statyczna.lp}" onchange="submit();" valueChangeListener="#{adminStatyczneAc.zmienEe}">
+		<f:selectItems value="#{adminStatyczneAc.statImp.lpAll}"/>
+	</h:selectOneMenu>
+	</h:column>
+	<h:column>
+	<f:facet name="header">tytul strony</f:facet>
+	<h:commandLink action="#{adminStatyczneAc.form}">
+		<h:outputText value="#{statyczna.tytul}"/>
+	</h:commandLink>
+	</h:column>
+	<h:column>
+	<f:facet name="header">dotyczy menu</f:facet>
+		<h:outputText value="strona główna" rendered="#{statyczna.role==null}"/>
+		<h:outputText value="#{statyczna.role.rola}" rendered="#{statyczna.role!=null}"/>
+	</h:column>
+	<h:column>
+	<h:commandLink action="#{adminStatyczneAc.usun}" onclick="return takNie();">
+		<h:outputText value="usun"/><br/>
+	</h:commandLink>
+	</h:column>
+</h:dataTable>
+</h:form>
+	 
+</body>
+</ui:define>
+</ui:composition>
+</html>

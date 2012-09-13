@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <h:body>
+        <h:form>
+            <ul>
+                <li><h:commandLink value="Kursy" action="#{kursyAc.list}" />
+                </li>
+                <li><h:commandLink value="Wykladowcy" action="#{kursyAc.wykladList}" />
+                </li>
+                <li><h:link value="Poziomy zaawansowania" outcome="/all/pzLista.xhtml" />
+                </li>
+                <li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
+                </li>
+                <ui:repeat var="strona" value="#{indexAc.statyczneModel}">
+                    <li><h:commandLink action="#{indexAc.statyczna}">
+                            <h:outputText value="#{strona.tytul}" id="link" />
+                        </h:commandLink> 
+                        <rich:tooltip id="tt1" layout="block" target="link">
+                            <h:outputText value="#{strona.opis}" />
+                        </rich:tooltip></li>
+                </ui:repeat>
+            </ul>
+        </h:form>
+    </h:body>
+</html>
+
+
+
