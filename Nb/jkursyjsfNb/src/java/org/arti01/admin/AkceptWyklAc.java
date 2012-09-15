@@ -16,72 +16,76 @@ import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.UserImp;
 import org.arti01.sesBean.UserfotyImp;
 
-@ManagedBean(name="adminAkceptWyklAc")
+@ManagedBean(name = "adminAkceptWyklAc")
 @SessionScoped
-public class AkceptWyklAc implements Serializable{
+public class AkceptWyklAc implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(AkceptWyklAc.class);
-	List<User>wykladowcy=new ArrayList<User>();
-	User wykladowca=new User();
-	@EJB UserImp ui;
-	@EJB RoleImp roleImp;
-	@EJB UserfotyImp ufi;
-	Userfoty fota;
-	
+    private static final long serialVersionUID = 1L;
+    Logger logger = Logger.getLogger(AkceptWyklAc.class);
+    List<User> wykladowcy = new ArrayList<User>();
+    User wykladowca = new User();
+    @EJB
+    UserImp ui;
+    @EJB
+    RoleImp roleImp;
+    @EJB
+    UserfotyImp ufi;
+    Userfoty fota;
 
-	public String list(){
-		Role rola = new Role();
-		rola.setRola(Role.WYKLADOWCA);
-		wykladowcy=new ArrayList<User>(roleImp.find(rola).getUsers());
-		return "userGaleria";
-	}
+    public String list() {
+        Role rola = new Role();
+        rola.setRola(Role.WYKLADOWCA);
+        wykladowcy = new ArrayList<User>(roleImp.find(rola).getUsers());
+        return "userGaleria";
+    }
 
-	public void akcept(){
-		//logger.info(fota.getDatadodania());
-		fota.setAkcept(true);
-		ufi.update(fota);
-		Role rola = new Role();
-		rola.setRola(Role.WYKLADOWCA);
-		wykladowcy=new ArrayList<User>(roleImp.find(rola).getUsers());
-	}
-	
-	public void akceptAll(){
-		for(Userfoty f:wykladowca.getUserfotyakceptBez()){
-			f.setAkcept(true);
-			ufi.update(f);
-		}
-		Role rola = new Role();
-		rola.setRola(Role.WYKLADOWCA);
-		wykladowcy=new ArrayList<User>(roleImp.find(rola).getUsers());
-	}
+    public void akcept() {
+        //logger.info(fota.getDatadodania());
+        fota.setAkcept(true);
+        ufi.update(fota);
+        Role rola = new Role();
+        rola.setRola(Role.WYKLADOWCA);
+        wykladowcy = new ArrayList<User>(roleImp.find(rola).getUsers());
+        logger.info(wykladowcy.size());
+        for(User wyk:wykladowcy){
+            logger.info(wyk.getUserfotyakceptBez().size());
+        }
+    }
 
-	public List<User> getWykladowcy() {
-		return wykladowcy;
-	}
+    public void akceptAll() {
+        for (Userfoty f : wykladowca.getUserfotyakceptBez()) {
+            f.setAkcept(true);
+            ufi.update(f);
+        }
+        Role rola = new Role();
+        rola.setRola(Role.WYKLADOWCA);
+        wykladowcy = new ArrayList<User>(roleImp.find(rola).getUsers());
+    }
 
-	public void setWykladowcy(List<User> wykladowcy) {
-		this.wykladowcy = wykladowcy;
-	}
+    public List<User> getWykladowcy() {
+        for(User wyk:wykladowcy){
+            logger.info(wyk.getUserfotyakceptBez().size()+"get");
+        }
+        return wykladowcy;
+    }
 
+    public void setWykladowcy(List<User> wykladowcy) {
+        this.wykladowcy = wykladowcy;
+    }
 
-	public Userfoty getFota() {
-		return fota;
-	}
+    public Userfoty getFota() {
+        return fota;
+    }
 
+    public void setFota(Userfoty fota) {
+        this.fota = fota;
+    }
 
-	public void setFota(Userfoty fota) {
-		this.fota = fota;
-	}
+    public User getWykladowca() {
+        return wykladowca;
+    }
 
-	public User getWykladowca() {
-		return wykladowca;
-	}
-
-	public void setWykladowca(User wykladowca) {
-		this.wykladowca = wykladowca;
-	}
-	
-	
-
+    public void setWykladowca(User wykladowca) {
+        this.wykladowca = wykladowca;
+    }
 }

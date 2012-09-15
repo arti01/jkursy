@@ -33,14 +33,14 @@
                                 </h:link></li>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{r.rola=='kursant'}">
-                            <li><h:commandLink action="indexKursant">
+                            <li><h:link outcome="/kursant/index.xhtml">
                                     <h:graphicImage value="../all/grafa/student.png" />Strefa studenta
-                                </h:commandLink></li>
+                                </h:link></li>
                         </h:panelGroup>
                         <h:panelGroup rendered="#{r.rola=='absolwent'}">
-                            <li><h:commandLink action="indexAbsolw">
+                            <li><h:link outcome="/absolwent/index.xhtml">
                                     <h:graphicImage value="../all/grafa/absolwent.png" />Strefa absolwenta
-                                </h:commandLink></li>
+                                </h:link></li>
                         </h:panelGroup>
                     </ui:repeat>
                 </h:panelGroup>

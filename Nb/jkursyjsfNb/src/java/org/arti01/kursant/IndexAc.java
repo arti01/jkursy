@@ -46,7 +46,7 @@ public class IndexAc implements Serializable{
 	
 	public String edytujProfil(){
 		if(!user.getUserpass().equals(userpass1)&&takNie){
-			userAc.setErrorText("r����ne has��a");
+			userAc.setErrorText("różne hasła");
 			return "profil";	
 		}
 		try {

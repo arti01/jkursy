@@ -8,7 +8,7 @@
 
             <h:panelGroup id="uploadpg">
                 <h:form>
-                    <rich:fileUpload fileUploadListener="#{wykladGaleriaAc.listenerFoty}" id="upload">
+                    <rich:fileUpload fileUploadListener="#{wykladGaleriaAc.listenerFoty}" id="upload" addLabel="wybierz plik" uploadLabel="wyślij" clearAllLabel="wyczyść" clearLabel="usuń">
                         <a4j:ajax event="uploadcomplete" execute="@none" render="foty, upload" />
                     </rich:fileUpload>
                 </h:form>

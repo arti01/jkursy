@@ -1,66 +1,66 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich">
-<ui:composition template="/templates/template.xhtml">
-	<ui:define name="body">
-		<body>
-		<h2><h:outputText value="#{kursyAc.kurs.nazwa}" /></h2>
-		<hr />
-		<h3><h:outputText value="#{kursyAc.kurs.opisKrotki}" /></h3>
-		<hr />
-		Rodzaj kursu:
-		<h3><h:outputText value="#{kursyAc.kurs.stacjonarnyTN}" /></h3>
-		<hr />
-		typ kursu:
-		<h:form>
-			<h3><h:outputText value="#{kursyAc.kurs.typykursu.nazwa}"/></h3>
-			<h:outputText value=" (pokaż więcej)"/>
-			<rich:tooltip mode="client">
-				<h:outputText value="#{kursyAc.kurs.typykursu.opis}" />
-			</rich:tooltip>
-			</h:form>
-		<hr />
-		poziom zaawansowania kursu:
-			<h:form>
-			<h3><h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.nazwa}"/></h3>
-			<h:outputText value=" (pokaż więcej)"/>
-			<rich:tooltip id="popup" mode="client">
-				<h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.opis}" />
-			</rich:tooltip>
-			</h:form>
-		<hr />
-		od:
-		<h:outputText value="#{kursyAc.kurs.dataod}">
-			<f:convertDateTime type="date" />
-		</h:outputText>
-		<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kursyAc.kurs.dataod==null}"/>
-		<h:outputText value=" do: " rendered="#{kursyAc.kurs.dataod!=null}"/>
-		<h:outputText value="#{kursyAc.kurs.datado}">
-			<f:convertDateTime type="date" />
-		</h:outputText>
-		<hr />
-		wykładowcy:
-		<br />
-		<h:form>
-			<ul>
-				<ui:repeat var="wyklad" value="#{kursyAc.kurs.wykladowcy}">
-					<li><h:commandLink action="#{kursyAc.wykladDetale}">
-						<h:outputText value="#{wyklad.imieNazwisko}" />
-						<f:setPropertyActionListener target="#{kursyAc.wykladowca}"
-							value="#{wyklad}" />
-					</h:commandLink></li>
-				</ui:repeat>
-			</ul>
-		</h:form>
-		<hr />
-		opis:
-		<br />
-		<h:outputText value="#{kursyAc.kurs.opis}" escape="false" />
-		</body>
-	</ui:define>
-</ui:composition>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="body">
+            <h:body>
+                <h2><h:outputText value="#{kursyAc.kurs.nazwa}" /></h2>
+                <hr />
+                <h3><h:outputText value="#{kursyAc.kurs.opisKrotki}" /></h3>
+                <hr />
+                Rodzaj kursu:
+                <h3><h:outputText value="#{kursyAc.kurs.stacjonarnyTN}" /></h3>
+                <hr />
+                typ kursu:
+                <h:form>
+                    <h3><h:outputText value="#{kursyAc.kurs.typykursu.nazwa}"/></h3>
+                    <h:outputText value=" (pokaż więcej)"/>
+                    <rich:tooltip mode="client">
+                        <h:outputText value="#{kursyAc.kurs.typykursu.opis}" />
+                    </rich:tooltip>
+                </h:form>
+                <hr />
+                poziom zaawansowania kursu:
+                <h:form>
+                    <h3><h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.nazwa}"/></h3>
+                    <h:outputText value=" (pokaż więcej)"/>
+                    <rich:tooltip id="popup" mode="client">
+                        <h:outputText value="#{kursyAc.kurs.poziomyzaawansowania.opis}" />
+                    </rich:tooltip>
+                </h:form>
+                <hr />
+                od:
+                <h:outputText value="#{kursyAc.kurs.dataod}">
+                    <f:convertDateTime type="date" />
+                </h:outputText>
+                <h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kursyAc.kurs.dataod==null}"/>
+                <h:outputText value=" do: " rendered="#{kursyAc.kurs.dataod!=null}"/>
+                <h:outputText value="#{kursyAc.kurs.datado}">
+                    <f:convertDateTime type="date" />
+                </h:outputText>
+                <hr />
+                wykładowcy:
+                <br />
+                <h:form>
+                    <ul>
+                        <ui:repeat var="wyklad" value="#{kursyAc.kurs.wykladowcy}">
+                            <li><h:commandLink action="#{kursyAc.wykladDetale}">
+                                    <h:outputText value="#{wyklad.imieNazwisko}" />
+                                    <f:setPropertyActionListener target="#{kursyAc.wykladowca}"
+                                                                 value="#{wyklad}" />
+                                </h:commandLink></li>
+                        </ui:repeat>
+                    </ul>
+                </h:form>
+                <hr />
+                opis:
+                <br />
+                <h:outputText value="#{kursyAc.kurs.opis}" escape="false" />
+            </h:body>
+        </ui:define>
+    </ui:composition>
 </html>

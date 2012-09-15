@@ -1,52 +1,51 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
-<h:head>
-  <title><ui:insert name="title">Strefa studenta</ui:insert></title>
-  <script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
-   <link rel="stylesheet" type="text/css" href="../all/grafa/style.css" media="screen,projection" />
-</h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title><ui:insert name="title">Strefa studenta</ui:insert></title>
+        <script type="text/javascript" src="../tiny/tiny_mce.js" charset="utf-8"></script>
+        <link rel="stylesheet" type="text/css" href="../all/grafa/style.css" media="screen,projection" />
+    </h:head>
 
-<body>
-<div id="container">
-<ui:include src="/kursant/menuG.xhtml" />
-<div id="left">
-<div id="menu">
-<h:form>
-<ul>
-<li>
-<h:graphicImage value="../all/grafa/student.png"/>strefa studenta<hr/>
-</li>
-<li><h:commandLink action="indexAll">
-    	<h:graphicImage value="../all/grafa/home.png"/>
-    	strona główna
-    </h:commandLink>
-</li>
-<li>
-	Jesteś zalogowany jako:<br />
-	<h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
-	<h:commandButton value="wyloguj" action="#{login.wyloguj}" />
-</li>
-<li>
-	<h:commandLink action="#{kursantIndexAc.profil}">
-		<h:graphicImage value="../all/grafa/edit.png" />edytuj swój profil
-	</h:commandLink>
-</li>
-</ul>
-</h:form>
-</div>
-<div id="leftcol">
-<ui:include src="/kursant/menu.xhtml" />
-</div>
-</div>
-<div id="main2">
-<ui:insert name="body" />
-</div>
-<ui:include src="/all/footer.xhtml"/>
-</div>
-</body>
+    <h:body>
+        <div id="container">
+            <ui:include src="/kursant/menuG.xhtml" />
+            <div id="left">
+                <div id="menu">
+                    <h:form>
+                        <ul>
+                            <li>
+                                <h:graphicImage value="../all/grafa/student.png"/>strefa studenta<hr/>
+                            </li>
+                            <li><h:link outcome="/all/newsyAll.xhtml">
+                                    <h:graphicImage value="../all/grafa/home.png"/>strona główna
+                                </h:link>
+                            </li>
+                            <li>
+                                Jesteś zalogowany jako:<br />
+                                <h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
+                                <h:commandButton value="wyloguj" action="#{login.wyloguj}" />
+                            </li>
+                            <li>
+                                <h:commandLink action="#{kursantIndexAc.profil}">
+                                    <h:graphicImage value="../all/grafa/edit.png" />edytuj swój profil
+                                </h:commandLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+                <div id="leftcol">
+                    <ui:include src="/kursant/menu.xhtml" />
+                </div>
+            </div>
+            <div id="main2">
+                <ui:insert name="body" />
+            </div>
+            <ui:include src="/all/footer.xhtml"/>
+        </div>
+    </h:body>
 </html>
 

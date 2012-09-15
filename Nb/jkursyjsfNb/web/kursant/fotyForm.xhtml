@@ -9,7 +9,7 @@
 			<h:form>
 				<rich:fileUpload fileUploadListener="#{kursantLekcjaAc.listenerFoty}" id="upload"
 				style="height: 200px;"
-					rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}">
+					rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}" addLabel="wybierz plik" uploadLabel="wyślij" clearAllLabel="wyczyść" clearLabel="usuń">
 					<a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
 				</rich:fileUpload>
 				<h:outputText value="nie możesz dodać już więcej zdjęć"
