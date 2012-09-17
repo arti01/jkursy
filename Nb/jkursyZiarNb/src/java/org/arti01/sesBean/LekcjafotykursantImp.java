@@ -38,16 +38,10 @@ public class LekcjafotykursantImp {
         return true;
     }
 
-    public void delete(Lekcjafoty lf) {
-        Integer lp = lf.getLp();
-        Lekcja lekcja = lf.getLekcja();
-        lf = em.find(lf.getClass(), lf.getIdlekcjafoty());
-        em.remove(lf);
+    public void delete(Lekcjafotykursant fota) {
+        fota=em.merge(fota);
+        em.remove(fota);
         em.flush();
-        Query query = em.createQuery("update Lekcjafoty lf set lf.lp=lf.lp-1 where lf.lp>:lp and lf.lekcja=:lekcja");
-        query.setParameter("lp", lp);
-        query.setParameter("lekcja", lekcja);
-        query.executeUpdate();
     }
 
     public String getErrorText() {

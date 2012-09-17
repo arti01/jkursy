@@ -177,7 +177,7 @@ public class KursyImp {
 		lekcjeLpAll=query.getResultList();
 		return lekcjeLpAll;
 	}
-
+        
 	public String getErrorText() {
 		return errorText;
 	}

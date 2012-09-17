@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlTransient;
+import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  * The persistent class for the _users database table.
@@ -87,14 +88,15 @@ public class User implements Serializable {
         @JoinColumn(name = "idkursy", nullable = false)
     })
     private List<Kursy> kursies;
+    
     @ManyToMany(cascade = {CascadeType.MERGE})
-    @JoinTable(
-		name = "kursy_rezerwacje", joinColumns = {
-        @JoinColumn(name = "username", nullable = false)
+    @JoinTable(name = "kursy_rezerwacje", joinColumns = {
+        @JoinColumn(name = "username", nullable = false),
     }, inverseJoinColumns = {
         @JoinColumn(name = "idkursy", nullable = false)
     })
     private List<Kursy> kursyZarezerwowane;
+    
     @OneToMany(mappedBy = "user")
     @OrderBy("datadodania")
     private List<Lekcjakoment> lekcjakoments;
@@ -110,9 +112,36 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @OrderBy("lp")
     private List<Userfoty> userfoty;
+    
     @OneToMany(mappedBy = "user")
     @OrderBy("idkursyrezerwacje DESC")
     private List<KursyRezerwacje> rezerwacje;
+    
+    @Transient
+    private List<KursyRezerwacje> rezerwacjeZaakceptowane;
+
+    public List<KursyRezerwacje> getRezerwacjeZaakceptowane() {
+        rezerwacjeZaakceptowane=new ArrayList<KursyRezerwacje>();
+        for(KursyRezerwacje kr:getRezerwacje()){
+            if(kr.getWykonana()) {
+                rezerwacjeZaakceptowane.add(kr);
+            }
+        }
+        return rezerwacjeZaakceptowane;
+    }
+    
+    @Transient
+    private List<Kursy>kursyZaakceptowane;
+
+    public List<Kursy> getKursyZaakceptowane() {
+        kursyZaakceptowane=new ArrayList<Kursy>();
+        for(KursyRezerwacje kr:getRezerwacjeZaakceptowane()){
+            kursyZaakceptowane.add(kr.getKursy());
+        }
+        return kursyZaakceptowane;
+    }
+    
+    
     @Transient
     private List<Userfoty> userfotyakcept;
     @Transient
@@ -292,15 +321,15 @@ public class User implements Serializable {
 
     public List<Lekcjafotykursant> getFotyDodaneDoLekcji() {
         fotyDodaneDoLekcji = new ArrayList<Lekcjafotykursant>();
-try{
-        for (Lekcjafotykursant l : getKonkretnaLekcja().getLekcjafotykursant()) {
-            if (l.getUser().getUsername().equals(username)) {
-                fotyDodaneDoLekcji.add(l);
+        try {
+            for (Lekcjafotykursant l : getKonkretnaLekcja().getLekcjafotykursant()) {
+                if (l.getUser().getUsername().equals(username)) {
+                    fotyDodaneDoLekcji.add(l);
+                }
             }
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
         }
-}catch(NullPointerException npe){
-    npe.printStackTrace();
-}
         return fotyDodaneDoLekcji;
     }
 
