@@ -5,7 +5,6 @@
         <ui:composition template="/templates/templatekursant.xhtml">
             <ui:define name="body">
                 <h:body>
-                sdffffffffffffffffffffffffffffff
                 <h:form>
                     <div id="fota">	
                         <rich:dataTable value="#{kursantLekcjaAc.listaFot}" var="fota" id="table" rows="1"
@@ -33,6 +32,11 @@
                                         <rich:tooltip id="tt1" layout="block" target="exlink">
                                             <h:outputText value="#{fota.exif}" escape="false"/>
                                         </rich:tooltip>
+                                    </li>
+                                    <li>
+                                        <h:commandButton value="usuń zdjęcie" action="#{kursantLekcjaAc.usunFote()}" rendered="#{login.zalogowany.username.equals(fota.user.username) and !fota.komentWykl}">
+                                            <f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}" />
+                                        </h:commandButton>
                                     </li>
                                 </ul>
                             </h:column>

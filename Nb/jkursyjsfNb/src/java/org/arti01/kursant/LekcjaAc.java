@@ -291,6 +291,18 @@ public class LekcjaAc implements Serializable {
         return null;
     }
 
+    public String usunFote(){
+        logger.info(fotaKursant.getIdlekcjafotykursant());
+        logger.info(fotaKursant.getDatadodaniaS());
+        logger.info(listaFot.size());
+        listaFot.remove(fotaKursant);
+        logger.info(lekcja.getLekcjafotykursant().size());
+        lekcja.getLekcjafotykursant().remove(fotaKursant);
+        logger.info(lekcja.getLekcjafotykursant().size());
+        lekcjaImp.update(lekcja);
+        return "fotyForm";
+    }
+    
     public void scrolListener() {
         logger.info("dddddddddddddddddd");
     }

@@ -18,20 +18,20 @@
                     <h:form>
                         <ul>
                             <li>
-                                <h:graphicImage value="../all/grafa/student.png"/>strefa studenta<hr/>
+                                <h:graphicImage value="../all/grafa/student.png"/>Strefa studenta<hr/>
                             </li>
                             <li><h:link outcome="/all/newsyAll.xhtml">
-                                    <h:graphicImage value="../all/grafa/home.png"/>strona główna
+                                    <h:graphicImage value="../all/grafa/home.png"/>Strona główna
                                 </h:link>
                             </li>
                             <li>
                                 Jesteś zalogowany jako:<br />
                                 <h:outputText value="#{login.zalogowany.imieNazwisko} (#{login.zalogowany.username})" />
-                                <h:commandButton value="wyloguj" action="#{login.wyloguj}" />
+                                <h:commandButton value="Wyloguj" action="#{login.wyloguj}" />
                             </li>
                             <li>
                                 <h:commandLink action="#{kursantIndexAc.profil}">
-                                    <h:graphicImage value="../all/grafa/edit.png" />edytuj swój profil
+                                    <h:graphicImage value="../all/grafa/edit.png" />Edytuj swój profil
                                 </h:commandLink>
                             </li>
                         </ul>

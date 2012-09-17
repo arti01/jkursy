@@ -2,9 +2,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
-    <body>
+    <h:body>
         <h:form>
             <ul>
+                <li><h:outputText value="Twoje kursy - z poprawką"/></li>
+                <ui:repeat var="kurs" value="#{login.zalogowany.kursyZaakceptowane}">
+                    <li>
+                        <h:commandLink action="#{kursantKursyAc.lekcjaLista}">
+                            <f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}"/>
+                            <h:outputText value="#{kurs.nazwa}"/>
+                        </h:commandLink>
+                    </li>
+                </ui:repeat>
                 <li><h:outputText value="Twoje kursy"/></li>
                 <ui:repeat var="kurs" value="#{login.zalogowany.kursies}">
                     <li>
@@ -15,7 +24,7 @@
                     </li>
                 </ui:repeat>
                 <li><h:commandLink value="Twoje rezerwacje" action="#{kursantKursyAc.rezerwacjeLista}"/></li>
-                <li><h:outputText value="pomoc i informacje dla studentów"/></li>
+                <li><h:outputText value="Pomoc i informacje dla studentów"/></li>
                 <ui:repeat var="strona" value="#{kursantIndexAc.role.statyczne}">
                     <li><h:commandLink action="#{kursantIndexAc.statyczna}">
                             <h:outputText value="#{strona.tytul}" />
@@ -25,5 +34,5 @@
 
             </ul>
         </h:form>
-    </body>
+    </h:body>
 </html>

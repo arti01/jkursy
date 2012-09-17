@@ -1,39 +1,39 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-<ui:composition template="/templates/templatekursant.xhtml">
-	<ui:define name="body">
-		<h:body>
-			<h2>Twoje rezerwacje</h2>
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="/templates/templatekursant.xhtml">
+        <ui:define name="body">
+            <h:body>
+                <h2>Twoje rezerwacje</h2>
 
-			<h:form>
-				<h:dataTable var="kr" value="#{kursantKursyAc.kurRez}">
-					<h:column>
-						<f:facet name="header">nazwa kursu</f:facet>
-						<h:outputText value="#{kr.kursy.nazwa}" />
-					</h:column>
-					<h:column>
-						<f:facet name="header">data rezerwacji</f:facet>
-						<h:outputText value="#{kr.datarezerwacji}">
-							<f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET"/>
-						</h:outputText>
-					</h:column>
-					<h:column>
-						<f:facet name="header">status</f:facet>
-						<h:outputText value="zaakceptowana" rendered="#{kr.wykonana and kr.aktywna}" />
-						<h:outputText value="czeka na akceptacje" rendered="#{!kr.wykonana and kr.aktywna}" />
-						<h:outputText value="zrezygnowałeś" rendered="#{!kr.aktywna}" />
-					</h:column>
-					<h:column>
-						<h:commandButton value="rezygnuj" action="#{kursantKursyAc.kasujRezerwacje}"
-							rendered="#{!kr.wykonana and kr.aktywna}" />
-					</h:column>
-				</h:dataTable>
-			</h:form>
+                <h:form>
+                    <h:dataTable var="kr" value="#{kursantKursyAc.kurRez}">
+                        <h:column>
+                            <f:facet name="header">nazwa kursu</f:facet>
+                            <h:outputText value="#{kr.kursy.nazwa}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">data rezerwacji</f:facet>
+                            <h:outputText value="#{kr.datarezerwacji}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" timeZone="CET"/>
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">status</f:facet>
+                            <h:outputText value="zaakceptowana" rendered="#{kr.wykonana and kr.aktywna}" />
+                            <h:outputText value="czeka na akceptacje" rendered="#{!kr.wykonana and kr.aktywna}" />
+                            <h:outputText value="zrezygnowałeś" rendered="#{!kr.aktywna}" />
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="rezygnuj" action="#{kursantKursyAc.kasujRezerwacje}"
+                                             rendered="#{!kr.wykonana and kr.aktywna}" />
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
 
-		</h:body>
-	</ui:define>
-</ui:composition>
+            </h:body>
+        </ui:define>
+    </ui:composition>
 </html>
