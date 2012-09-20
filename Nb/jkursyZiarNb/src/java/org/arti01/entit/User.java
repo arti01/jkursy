@@ -109,7 +109,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @OrderBy("datadodania")
     private List<Absolwforposty> absolwforposty;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", orphanRemoval=true)
     @OrderBy("lp")
     private List<Userfoty> userfoty;
     

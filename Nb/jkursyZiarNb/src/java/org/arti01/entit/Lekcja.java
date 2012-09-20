@@ -48,7 +48,7 @@ public class Lekcja implements Serializable {
     @OneToMany(mappedBy = "lekcja", cascade = CascadeType.PERSIST)
     @OrderBy("lp")
     private List<Lekcjafoty> lekcjafoties;
-    @OneToMany(mappedBy = "lekcja")
+    @OneToMany(mappedBy = "lekcja", orphanRemoval = true, cascade= CascadeType.ALL)
     @OrderBy("datadodania DESC")
     private List<Lekcjafotykursant> lekcjafotykursant;
     //bi-directional many-to-one association to Lekcjapliki
@@ -68,6 +68,20 @@ public class Lekcja implements Serializable {
     private Integer iloscKolmentFota = 0;
     @Transient
     private List<Fotykursantkoment> komentDoFotBezOdp;
+    @Transient
+    private List<Lekcjafotykursant> fotDoUsun;
+
+    public List<Lekcjafotykursant> getFotDoUsun() {
+        fotDoUsun=new ArrayList<Lekcjafotykursant>();
+        for(Lekcjafotykursant lfk:getLekcjafotykursant()){
+            if(lfk.isDousuniecia()) fotDoUsun.add(lfk);
+        }
+        return fotDoUsun;
+    }
+
+    public void setFotDoUsun(List<Lekcjafotykursant> fotDoUsun) {
+        this.fotDoUsun = fotDoUsun;
+    }
 
     public Integer getIdlekcja() {
         return this.idlekcja;

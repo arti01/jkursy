@@ -45,6 +45,16 @@ public class Lekcjafotykursant implements Serializable {
     @OneToMany(mappedBy = "lekcjafotykursant", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy(value = "datadodania DESC")
     private List<Fotykursantkoment> fotykursantkoment;
+
+    private boolean dousuniecia;
+
+    public boolean isDousuniecia() {
+        return dousuniecia;
+    }
+
+    public void setDousuniecia(boolean dousuniecia) {
+        this.dousuniecia = dousuniecia;
+    }
     @Transient
     private Fotykursantkoment lastKomentFota;
     @Transient
