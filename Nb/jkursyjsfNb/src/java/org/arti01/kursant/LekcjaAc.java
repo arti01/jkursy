@@ -138,6 +138,12 @@ public class LekcjaAc implements Serializable {
         logger.info(fotaKursant.getIdlekcjafotykursant());
         lekcja = fotaKursant.getLekcja();
         setListaFot(lekcja.getLekcjafotykursant());
+        logger.info(listaFot.size());
+        logger.info(nrstrony);
+        if(nrstrony==null){
+            nrstrony=new Integer(getListaFot().indexOf(fotaKursant)).toString();
+            logger.info(nrstrony);
+        }
         if (getListaFot().indexOf(fotaKursant) + 1 >= getListaFot().size()) {
             next = false;
         } else {

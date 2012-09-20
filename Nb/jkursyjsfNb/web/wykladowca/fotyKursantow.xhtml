@@ -1,54 +1,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 
-<ui:composition template="/templates/templatewyklad.xhtml">
-	<ui:define name="body">
-		
-	foty lekcji:
-	<h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
-			<br />
-			<h:form>
-			<h:panelGroup>
-              <h:outputText value="autor" />
-                <h:selectOneMenu value="#{wykladKursyAc.user.username}" valueChangeListener="#{wykladKursyAc.zmienUser}" hideNoSelectionOption="false" >
-             	  	<f:selectItem itemLabel="wszyscy" itemValue=""/>
-                	<f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
-                  <a4j:ajax render="foty" execute="@this" event="change" />
-                </h:selectOneMenu>
-             </h:panelGroup>
-			</h:form>
-			
-			<h:form>
-			<rich:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty" rowKeyVar="nrstrony">
-					<h:column>
-						<h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
-							<f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
-							<f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
-							<f:setPropertyActionListener target="#{kursantLekcjaAc.listaFot}" value="#{wykladKursyAc.fotyKursantow}"/>
-							<a4j:mediaOutput element="img"
-								createContent="#{kursantLekcjaAc.paintBazy}"
-								value="#{fota.idlekcjafotykursant}" cacheable="false">
-							</a4j:mediaOutput>
-						</h:commandLink>
-					</h:column>
-					<h:column>
-						<h:panelGrid columns="1">
-						<h:outputText value="autor: #{fota.user.imieNazwisko}"/>
-						<h:outputText value="dodana: #{fota.datadodaniaS}">
-							<f:convertDateTime pattern="dd-MM-yyyy"/>
-						</h:outputText>
-						<h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}" styleClass="error"/>
-						<h:outputText value="lekcja: #{fota.lekcja.tytul}"/>
-						</h:panelGrid>
-					</h:column>
-			</rich:dataTable>
-		</h:form>
-	</ui:define>
-</ui:composition>
+    <ui:composition template="/templates/templatewyklad.xhtml">
+        <ui:define name="body">
+
+            foty lekcji:
+            <h:outputText value="#{wykladKursyAc.lekcja.tytul}" />
+            <br />
+            <h:form>
+                <h:panelGroup>
+                    <h:outputText value="autor" />
+                    <h:selectOneMenu value="#{wykladKursyAc.user.username}" valueChangeListener="#{wykladKursyAc.zmienUser}" hideNoSelectionOption="false" >
+                        <f:selectItem itemLabel="wszyscy" itemValue=""/>
+                        <f:selectItems value="#{wykladKursyAc.kurs.kursanci}" var="kursant" itemLabel="#{kursant.imieNazwisko}" itemValue="#{kursant.username}"/>
+                        <a4j:ajax render="foty" execute="@this" event="change" />
+                    </h:selectOneMenu>
+                </h:panelGroup>
+            </h:form>
+
+            <h:form>
+                <rich:dataTable value="#{wykladKursyAc.fotyKursantow}" var="fota" id="foty" rowKeyVar="nrstrony">
+                    <h:column>
+                        <h:commandLink action="#{kursantLekcjaAc.fotaKursant}">
+                            <f:setPropertyActionListener target="#{kursantLekcjaAc.nrstrony}" value="#{nrstrony+1}"/>
+                            <f:setPropertyActionListener target="#{kursantLekcjaAc.fotaKursant}" value="#{fota}"/>
+                            <f:setPropertyActionListener target="#{kursantLekcjaAc.listaFot}" value="#{wykladKursyAc.fotyKursantow}"/>
+                            <a4j:mediaOutput element="img"
+                                             createContent="#{kursantLekcjaAc.paintBazy}"
+                                             value="#{fota.idlekcjafotykursant}" cacheable="false">
+                            </a4j:mediaOutput>
+                        </h:commandLink>
+                    </h:column>
+                    <h:column>
+                        <h:panelGrid columns="1">
+                            <h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+                            <h:outputText value="dodana: #{fota.datadodaniaS}">
+                                <f:convertDateTime pattern="dd-MM-yyyy"/>
+                            </h:outputText>
+                            <h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}" styleClass="error"/>
+                            <h:outputText value="lekcja: #{fota.lekcja.tytul}"/>
+                            <a4j:commandLink value="Poproś o usunięcie" rendered="#{!fota.dousuniecia}" action="#{wykladKursyAc.zaznaczDoUsuniecia}" render="foty">
+                                    <f:setPropertyActionListener target="#{wykladKursyAc.fotaKursant}" value="#{fota}"/>
+                            </a4j:commandLink>
+                            <a4j:commandLink value="Cofnij prośbę o usunięcie" rendered="#{fota.dousuniecia}" action="#{wykladKursyAc.zaznaczDoUsuniecia}" render="foty">
+                                    <f:setPropertyActionListener target="#{wykladKursyAc.fotaKursant}" value="#{fota}"/>
+                            </a4j:commandLink>
+                        </h:panelGrid>
+                    </h:column>
+                </rich:dataTable>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 
 </html>

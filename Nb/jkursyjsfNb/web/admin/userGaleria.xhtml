@@ -5,30 +5,33 @@
     <ui:composition template="/templates/templateadm.xhtml">
         <ui:define name="body">
             Galeria Użytkownika
-                <h:form>
-                    <a4j:repeat var="wykladowca" value="#{adminAkceptWyklAc.wykladowcy}">
-                        <rich:panel rendered="#{wykladowca.userfotyakceptBez.size()!=0}" id="foty">
-                            <h:outputLabel for="wykladowca" value="wykładowca:"/>
-                            <h:outputText value="#{wykladowca.imieNazwisko}" id="wykladowca"/>
-                            <h:commandButton value="akceptuj wszystkie tego wykładowcy" action="#{adminAkceptWyklAc.akceptAll}">
-                                <f:setPropertyActionListener target="#{adminAkceptWyklAc.wykladowca}" value="#{wykladowca}" />
-                            </h:commandButton>
-                            <a4j:repeat var="fota" value="#{wykladowca.userfotyakceptBez}">
-                                <h:panelGrid columns="1">
-                                    <a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
-                                                     cacheable="false">
-                                    </a4j:mediaOutput>
-                                    <h:outputText value="#{fota.opis}" />
-                                    <h:outputText value="#{fota.datadodania}" />
-                                </h:panelGrid>
-                                <a4j:commandLink value="akceptuj" action="#{adminAkceptWyklAc.akcept}" render="foty">
-                                    <f:setPropertyActionListener target="#{adminAkceptWyklAc.fota}" value="#{fota}" />
-                                </a4j:commandLink>
-                            </a4j:repeat>
-                            <hr/>
-                        </rich:panel>
-                    </a4j:repeat>
-                </h:form>
+            <h:form id="wyklad">
+                <a4j:repeat var="wykladowca" value="#{adminAkceptWyklAc.wykladowcy}" >
+                    <rich:panel rendered="#{wykladowca.userfotyakceptBez.size()!=0}" id="foty">
+                        <h:outputLabel for="wykladowca" value="wykładowca:"/>
+                        <h:outputText value="#{wykladowca.imieNazwisko}" id="wykladowca"/>
+                        <h:commandButton value="akceptuj wszystkie tego wykładowcy" action="#{adminAkceptWyklAc.akceptAll}">
+                            <f:setPropertyActionListener target="#{adminAkceptWyklAc.wykladowca}" value="#{wykladowca}" />
+                        </h:commandButton>
+                        <a4j:repeat var="fota" value="#{wykladowca.userfotyakceptBez}">
+                            <h:panelGrid columns="1">
+                                <a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintMini}" value="#{fota.iduserfoty}"
+                                                 cacheable="false">
+                                </a4j:mediaOutput>
+                                <h:outputText value="#{fota.opis}" />
+                                <h:outputText value="#{fota.datadodania}" />
+                            </h:panelGrid>
+                            <a4j:commandLink value="akceptuj " action="#{adminAkceptWyklAc.akcept}" render="wyklad">
+                                <f:setPropertyActionListener target="#{adminAkceptWyklAc.fota}" value="#{fota}" />
+                            </a4j:commandLink>
+                            <a4j:commandLink value=" usuń" action="#{adminAkceptWyklAc.usun}" render="wyklad">
+                                <f:setPropertyActionListener target="#{adminAkceptWyklAc.fota}" value="#{fota}" />
+                            </a4j:commandLink>
+                        </a4j:repeat>
+                        <hr/>
+                    </rich:panel>
+                </a4j:repeat>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>

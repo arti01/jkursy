@@ -3,6 +3,7 @@ package org.arti01.admin;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -51,6 +52,18 @@ public class AkceptWyklAc implements Serializable {
             logger.info(wyk.getUserfotyakceptBez().size());
         }
     }
+    
+    public void usun()  {
+        try {
+            User us=fota.getUser();
+            us.getUserfoty().remove(fota);
+            ui.update(us);
+            wykladowcy.remove(us);
+            wykladowcy.add(us);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(AkceptWyklAc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public void akceptAll() {
         for (Userfoty f : wykladowca.getUserfotyakceptBez()) {
@@ -64,7 +77,8 @@ public class AkceptWyklAc implements Serializable {
 
     public List<User> getWykladowcy() {
         for(User wyk:wykladowcy){
-            logger.info(wyk.getUserfotyakceptBez().size()+"get");
+            //wyk.getUserfotyakceptBez().size();
+            //logger.info(wyk.getUserfotyakceptBez().size()+"get");
         }
         return wykladowcy;
     }

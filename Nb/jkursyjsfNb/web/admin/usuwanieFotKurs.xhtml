@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="/templates/templateadm.xhtml">
+        <ui:define name="body">
+            <h:body>
+                <h4>Usuwanie fot kursantow</h4>
+                <h:form >
+                    <rich:dataTable value="#{adminUsuwanieFotKursantowAc.lekcje}" var="lekcja" id="lekcje">
+                        <rich:column  id="lekcja">
+                            <rich:dataTable value="#{lekcja.lekcjafotykursant}" var="fota">
+                                <rich:column  id="id" filterExpression="#{fota.dousuniecia}">
+                                    <h:panelGrid columns="1">
+                                        <a4j:mediaOutput element="img"
+                                                         createContent="#{kursantLekcjaAc.paintBazy}"
+                                                         value="#{fota.idlekcjafotykursant}" cacheable="false">
+                                        </a4j:mediaOutput>
+                                        <h:outputText value="autor: #{fota.user.imieNazwisko}"/>
+                                        <h:outputText value="dodana: #{fota.datadodaniaS}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                        </h:outputText>
+                                        <h:outputText value="BRAK KOMENTARZA WYKŁADOWCY" rendered="#{!fota.komentWykl}" styleClass="error"/>
+                                        <a4j:commandButton value="usun" action="#{adminUsuwanieFotKursantowAc.usun}" render="lekcje">
+                                            <f:setPropertyActionListener target="#{adminUsuwanieFotKursantowAc.fota}" value="#{fota}"/>
+                                        </a4j:commandButton>
+                                        <hr/>
+                                    </h:panelGrid>
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:column>
+                    </rich:dataTable>
+                </h:form>
+            </h:body>
+        </ui:define>
+    </ui:composition>
+</html>
