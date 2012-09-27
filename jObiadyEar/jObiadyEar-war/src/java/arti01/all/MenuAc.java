@@ -6,20 +6,22 @@ package arti01.all;
 
 import arti01.jobiady.encje.Menu;
 import arti01.jobiady.encje.MenuFacade;
-import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.bean.ManagedBean;
 
 /**
  *
  * @author 103039
  */
-@Named(value = "allMenuAc")
+//@Named(value = "allMenuAc")
+@ManagedBean(name = "allMenuAc")
 @SessionScoped
 public class MenuAc implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @EJB
     MenuFacade mf;
     List<Menu> menuAll;
@@ -28,6 +30,8 @@ public class MenuAc implements Serializable {
         menuAll = mf.findAll();
         return "menuKnajpy";
     }
+
+  
 
     public MenuFacade getMf() {
         return mf;

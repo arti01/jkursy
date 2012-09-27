@@ -10,7 +10,7 @@
                     <file>${reference.jObiadyEar-ejb.dist}</file>
                 </library>
                 <library dirs="200">
-                    <file>${libs.rf.classpath}</file>
+                    <file>${libs.richfaces4.2.classpath}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
