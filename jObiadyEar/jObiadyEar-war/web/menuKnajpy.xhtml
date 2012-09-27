@@ -1,10 +1,39 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" xmlns="http://www.w3.org/1999/xhtml"
-                template="./templates/template.xhtml">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="./templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
 
     <ui:define name="content">
-        content
+        <div id="tabela">
+            <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
+                <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                    <f:facet name="header">
+                        <h:outputText value="nazwa"/>
+                    </f:facet> 
+                    <h:outputText value="#{menu.nazwa}"/>
+                </rich:column>
+                <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
+                    <f:facet name="header">
+                        <h:outputText value="cena"/>
+                    </f:facet> 
+                    <h:outputText value="#{menu.cena}"/>
+                </rich:column>
+                <rich:column sortBy="#{kurs.ce}" id="dniTyg" sortOrder="#{adminKursyAc.nazwaOrder}">
+                    <f:facet name="header">
+                        <h:outputText value="występuje w"/>
+                    </f:facet> 
+                        <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
+                                <h:outputText value="#{dniTyg.nazwa}; "/>
+                        </a4j:repeat>
+                </rich:column>
+            </rich:dataTable>
+        </div>
     </ui:define>
 
 </ui:composition>
