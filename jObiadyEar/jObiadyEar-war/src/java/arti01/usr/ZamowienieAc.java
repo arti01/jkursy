@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package arti01.all;
+package arti01.usr;
 
 import arti01.jobiady.beany.Menu;
 import arti01.jobiady.beany.MenuFacade;
@@ -13,33 +13,23 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
+
 /**
  *
  * @author 103039
  */
-//@Named(value = "allMenuAc")
-@ManagedBean(name = "allMenuAc")
+@ManagedBean(name = "usrZamowienieAc")
 @SessionScoped
-public class MenuAc implements Serializable {
-
+public class ZamowienieAc implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EJB
-    MenuFacade mf;
-    DataModel<Menu> menuAll=new ListDataModel<Menu>();
-
-    public String lista() {
-        menuAll.setWrappedData(mf.findAll());
-        return "menuKnajpy";
-    }
-
-  
-
-    public MenuFacade getMf() {
-        return mf;
-    }
-
-    public void setMf(MenuFacade mf) {
-        this.mf = mf;
+    
+       @EJB
+   private MenuFacade mf;
+   private DataModel<Menu> menuAll=new ListDataModel<Menu>();
+    
+     public String lista() {
+         menuAll.setWrappedData(mf.findAll());
+        return "zamowienia";
     }
 
     public DataModel<Menu> getMenuAll() {
@@ -49,4 +39,5 @@ public class MenuAc implements Serializable {
     public void setMenuAll(DataModel<Menu> menuAll) {
         this.menuAll = menuAll;
     }
+    
 }

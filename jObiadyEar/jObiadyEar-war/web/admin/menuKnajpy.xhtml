@@ -11,40 +11,53 @@
 
     <ui:define name="content">
 
-        <h:form id="form">
-            <rich:panel rendered="#{admMenuAc.dodaj}">
+        <h:form >
+            <rich:panel id="formularz">
+                <h:message for="itnazwa" styleClass="error" />
                 <h:outputLabel for="itnazwa" value="nazwa"/>
                 <h:inputText id="itnazwa" value="#{admMenuAc.menu.nazwa}"/>
+                <h:message for="itcena" styleClass="error" />
                 <h:outputLabel for="itcena" value="cena"/>
                 <h:inputText id="itcena" value="#{admMenuAc.menu.cena}"/>
+                <br/><br/>
+                <h:message for="dniTyg" styleClass="error" />
+                <h:outputLabel for="dniTyg" value="dni tygodnia"/>
+                <h:selectManyCheckbox id="dniTyg" value="#{admMenuAc.menu.dniTyg}"  converter="#{dniTygConv}">
+                    <f:selectItems value="#{admMenuAc.alldniTyg}" var="dzien" itemValue="#{dzien}" itemLabel="#{dzien.nazwa}"/>
+                </h:selectManyCheckbox>
             </rich:panel>
-            <a4j:commandButton id="zapisz" value="zapisz" action="#{admMenuAc.zapisz}" render="form"/>
-            <a4j:commandButton id="dodaj" value="dodaj pozycję w menu" action="#{admMenuAc.dodaj}" rendered="#{!admMenuAc.dodaj}" render="form"/>
+            <a4j:commandButton id="dodaj" value="zapisz" action="#{admMenuAc.zapisz()}" render="formularz, table"/>
         </h:form>
-
+        <br/>
         <div id="tabela">
-            <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
-                <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="nazwa"/>
-                    </f:facet> 
-                    <h:outputText value="#{menu.nazwa}"/>
-                </rich:column>
-                <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="cena"/>
-                    </f:facet> 
-                    <h:outputText value="#{menu.cena}"/>
-                </rich:column>
-                <rich:column sortBy="#{kurs.ce}" id="dniTyg" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="występuje w"/>
-                    </f:facet> 
-                    <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
-                        <h:outputText value="#{dniTyg.nazwa}; "/>
-                    </a4j:repeat>
-                </rich:column>
-            </rich:dataTable>
+            <h:form>
+                <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
+                    <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="nazwa"/>
+                        </f:facet> 
+                        <h:outputText value="#{menu.nazwa}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="cena"/>
+                        </f:facet> 
+                        <h:outputText value="#{menu.cena}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{kurs.ce}" id="dniTyg" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="występuje w"/>
+                        </f:facet> 
+                        <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
+                            <h:outputText value="#{dniTyg.nazwa}; "/>
+                        </a4j:repeat>
+                    </rich:column>
+                    <rich:column sortBy="#{kurs.ce}" id="edit" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <a4j:commandButton value="edytuj" action="#{admMenuAc.edytuj}" render="formularz"/>
+                        <a4j:commandButton value="usuń" action="#{admMenuAc.usun}" render="table"/>
+                    </rich:column>
+                </rich:dataTable>
+            </h:form>
         </div>
     </ui:define>
 

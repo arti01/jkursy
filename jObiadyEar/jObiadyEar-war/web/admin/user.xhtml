@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/templateadm.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:define name="content">
+
+        <h:form >
+            <rich:panel id="formularz">
+                <h:message for="itusername" styleClass="error" id="itusernamemess"/>
+                <h:outputLabel for="itusername" value="username" rendered="#{!admUserAc.edit}"/>
+                <h:outputLabel for="itusernameed" value="modyfikacja dla:" rendered="#{admUserAc.edit}"/>
+                <h:inputText id="itusername" value="#{admUserAc.uzytkownik.username}" binding="#{admUserAc.itusername}" rendered="#{!admUserAc.edit}"/>
+                <h:outputText id="itusernameed" value="#{admUserAc.uzytkownik.username}" rendered="#{admUserAc.edit}"/>
+                
+                <h:message for="ituserpass" styleClass="error" id="ituserpassmess"/>
+                <h:outputLabel for="ituserpass" value="userpass"/>
+                <h:inputSecret id="ituserpass" value="#{admUserAc.uzytkownik.userpass}"/>
+                
+                <h:message for="itimieNazwisko" styleClass="error" />
+                <h:outputLabel for="itimieNazwisko" value="imieNazwisko"/>
+                <h:inputText id="itimieNazwisko" value="#{admUserAc.uzytkownik.imieNazwisko}"/>
+                
+                <h:message for="itemail" styleClass="error" />
+                <h:outputLabel for="itemail" value="email"/>
+                <h:inputText id="itemail" value="#{admUserAc.uzytkownik.email}"/>
+                
+                <h:message for="ittel1" styleClass="error" />
+                <h:outputLabel for="ittel1" value="telefon"/>
+                <h:inputText id="ittel1" value="#{admUserAc.uzytkownik.tel1}"/>
+                <br/><br/>
+                <h:message for="role" styleClass="error" />
+                <h:outputLabel for="role" value="role"/>
+                <h:selectManyCheckbox id="role" value="#{admUserAc.uzytkownik.roles}"  converter="#{dniTygConv}">
+                    <f:selectItems value="#{admUserAc.allRole}" var="rola" itemValue="#{rola}" itemLabel="#{rola.rola}"/>
+                </h:selectManyCheckbox>
+            </rich:panel>
+            <a4j:commandButton id="dodaj" value="zapisz" action="#{admUserAc.zapisz}" render="formularz, table"/>
+        </h:form>
+        <br/>
+        <div id="tabela">
+            <h:form>
+                <rich:dataTable value="#{admUserAc.userAll}" var="uzytkownik" id="table">
+                    
+                    <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="username"/>
+                        </f:facet> 
+                        <h:outputText value="#{uzytkownik.username}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{kurs.nazwa}" id="imieNazwisko" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="imieNazwisko"/>
+                        </f:facet> 
+                        <h:outputText value="#{uzytkownik.imieNazwisko}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="email"/>
+                        </f:facet> 
+                        <h:outputText value="#{uzytkownik.email}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{kurs.ce}" id="telefon" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="telefon"/>
+                        </f:facet> 
+                        <h:outputText value="#{uzytkownik.tel1}"/>
+                    </rich:column>
+                    
+                    <rich:column sortBy="#{kurs.ce}" id="dniTyg" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="role"/>
+                        </f:facet> 
+                        <a4j:repeat value="#{uzytkownik.roles}" var="rol">
+                            <h:outputText value="#{rol.rola}"/>
+                        </a4j:repeat>
+                    </rich:column>
+                    <rich:column sortBy="#{kurs.ce}" id="edit" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <a4j:commandButton value="edytuj" action="#{admUserAc.edytuj}" render="formularz"/>
+                        <a4j:commandButton value="usuń" action="#{admUserAc.usun}" render="table"/>
+                    </rich:column>
+                </rich:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>
