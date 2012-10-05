@@ -20,7 +20,7 @@
     background-color: #ece3a5;
     padding: 5px;
     width: 200px;
-    min-height: 500px;
+    min-height: 1000px;
 }
 #left ul
 {
@@ -61,7 +61,25 @@
 }
 
 #content {
-   
+   float: bottom;
+}
+
+#contentLewy {
+    float: left;
+    background-color: #c2dfef;
+    padding: 5px;
+    width: 500px;
+    min-height: 500px;
+    margin: 5px;
+}
+
+#contentPrawy {
+    float: left;
+    background-color: #90b4bd;
+    padding: 5px;
+    width: 500px;
+    min-height: 500px;
+    margin: 5px;
 }
 
 

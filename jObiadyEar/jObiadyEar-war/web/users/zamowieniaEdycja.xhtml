@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/templateusr.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:define name="content">
+        <h:panelGroup id="naglowek">
+            <h3>Data zamówienia: #{usrZamowienieAc.zamowienie.dataZamowienia}, Status zamówienia: #{usrZamowienieAc.zamowienie.statusZamowienia}, Wartość: #{usrZamowienieAc.zamowienie.suma}
+            </h3>
+        </h:panelGroup>
+
+        <div id="contentLewy">
+            <div id="tabela">
+                <h:form >
+                    <h:panelGroup id="formMenu">
+                        <rich:dataTable value="#{usrZamowienieAc.dostepneMenu}" var="menu" id="tabelaMenu">
+                            <f:facet name="header">
+                                Dostępne Menu
+                            </f:facet> 
+                            <rich:column sortOrder="ascending" sortBy="#{menu.nazwa}">
+                                <f:facet name="header">
+                                    <h:outputText value="nazwa"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.nazwa}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="cena"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.cena}"/>
+                            </rich:column >
+
+                            <rich:column filterExpression="#{menu.dniTyg.contains(admMenuAc.dzienFilter) or admMenuAc.dzienFilter==null}" >
+                                <f:facet name="header">
+                                    <h:selectOneMenu value="#{admMenuAc.dzienFilter}" converter="#{dniTygConv}">
+                                        <f:selectItem itemValue="#{null}" itemLabel="wszystkie"/>
+                                        <f:selectItems value="#{admMenuAc.alldniTyg}" var="dzien" itemLabel="#{dzien.nazwa}" itemValue="#{dzien}" />
+                                        <a4j:ajax render="formMenu" execute="@this" event="change" />
+                                    </h:selectOneMenu>
+                                </f:facet> 
+                                <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
+                                    <h:outputText value="#{dniTyg.nazwa}; "/>
+                                </a4j:repeat>
+                            </rich:column >
+
+                            <rich:column >
+                                <a4j:commandButton value="zamów" action="#{usrZamowienieAc.zamow}" render="formMenu, formZam, naglowek">
+                                    <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.menu}"/>
+                                </a4j:commandButton>
+                            </rich:column >
+                        </rich:dataTable>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+
+        <div id="contentPrawy">
+            <div id="tabela">
+                <h:form >
+                    <h:panelGroup id="formZam">
+                        <rich:dataTable value="#{usrZamowienieAc.zamowienie.potrawy}" var="menu" id="tabelaZam">
+                            <f:facet name="header">
+                                Zamówienie
+                            </f:facet> 
+                            <rich:column sortOrder="ascending" sortBy="#{menu.nazwa}">
+                                <f:facet name="header">
+                                    <h:outputText value="nazwa"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.nazwa}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="cena"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.cena}"/>
+                            </rich:column >
+
+                            <rich:column  >
+                                <f:facet name="header">
+                                    <h:outputText value="występuje w"/>
+                                </f:facet> 
+                                <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
+                                    <h:outputText value="#{dniTyg.nazwa}; "/>
+                                </a4j:repeat>
+                            </rich:column >
+
+                            <rich:column >
+                                <a4j:commandButton value="zrezygnuj" action="#{usrZamowienieAc.usunZzam}" render="formMenu, formZam, naglowek">
+                                    <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.menu}"/>
+                                </a4j:commandButton>
+                            </rich:column >
+                        </rich:dataTable>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

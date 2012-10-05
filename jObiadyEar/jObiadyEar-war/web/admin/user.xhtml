@@ -37,7 +37,7 @@
                 <br/><br/>
                 <h:message for="role" styleClass="error" />
                 <h:outputLabel for="role" value="role"/>
-                <h:selectManyCheckbox id="role" value="#{admUserAc.uzytkownik.roles}"  converter="#{dniTygConv}">
+                <h:selectManyCheckbox id="role" value="#{admUserAc.uzytkownik.roles}" converter="#{roleConv}">
                     <f:selectItems value="#{admUserAc.allRole}" var="rola" itemValue="#{rola}" itemLabel="#{rola.rola}"/>
                 </h:selectManyCheckbox>
             </rich:panel>

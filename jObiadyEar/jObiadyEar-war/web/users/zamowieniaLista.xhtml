@@ -3,17 +3,63 @@
 
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/templates/templateusr.xhtml"
-                xmlns:a4j="http://richfaces.org/a4j">
+                template="/templates/templateusr.xhtml">
 
     <ui:define name="content">
-            
+
         <div id="tabela">
             <h:form>
-                
+                <h:dataTable value="#{usrZamowienieAc.login.zalogowany.zamowienia}" var="zamowienie">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="data zamowienia"/>
+                        </f:facet> 
+                        <h:outputText value="#{zamowienie.dataZamowienia}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="status zamowienia"/>
+                        </f:facet> 
+                        <h:outputText value="#{zamowienie.statusZamowienia}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="wartość zł"/>
+                        </f:facet> 
+                        <h:outputText value="#{zamowienie.suma}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="wpłacono zł"/>
+                        </f:facet> 
+                        <h:outputText value="#{zamowienie.wplacono}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="nadpłata/niedopłata"/>
+                        </f:facet> 
+                        <h:outputText value="#{zamowienie.roznica}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:commandButton value="dodaj nowe" action="#{usrZamowienieAc.dodaj}"/>
+                        </f:facet> 
+                        <h:commandButton value="edycja" action="#{usrZamowienieAc.edycjaForm}">
+                            <f:setPropertyActionListener value="#{zamowienie}" target="#{usrZamowienieAc.zamowienie}"/>
+                        </h:commandButton>
+                        <br/>
+                        <h:commandButton value="usuń" action="#{usrZamowienieAc.usun}">
+                            <f:setPropertyActionListener value="#{zamowienie}" target="#{usrZamowienieAc.zamowienie}"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
             </h:form>
         </div>
     </ui:define>

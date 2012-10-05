@@ -4,7 +4,6 @@
  */
 package arti01.adm;
 
-import arti01.jobiady.beany.Menu;
 import arti01.jobiady.beany.Role;
 import arti01.jobiady.beany.Uzytkownik;
 import arti01.jobiady.beany.UzytkownikFacade;
@@ -93,6 +92,13 @@ public class UserAc implements Serializable {
     }
 
     public List<Role> getAllRole() {
+        allRole = new ArrayList<Role>();
+        Role r=new Role();
+        r.setRola("admin");
+        Role r1=new Role();
+        r1.setRola("user");
+        allRole.add(r);
+        allRole.add(r1);
         return allRole;
     }
 

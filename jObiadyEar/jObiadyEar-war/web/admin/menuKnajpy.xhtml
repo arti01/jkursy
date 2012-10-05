@@ -32,7 +32,7 @@
         <div id="tabela">
             <h:form>
                 <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
-                    <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                    <rich:column sortOrder="ascending" sortBy="#{menu.nazwa}">
                         <f:facet name="header">
                             <h:outputText value="nazwa"/>
                         </f:facet> 

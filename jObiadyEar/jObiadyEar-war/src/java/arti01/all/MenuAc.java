@@ -9,6 +9,7 @@ import arti01.jobiady.beany.MenuFacade;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -26,7 +27,7 @@ public class MenuAc implements Serializable {
     @EJB
     MenuFacade mf;
     DataModel<Menu> menuAll=new ListDataModel<Menu>();
-
+    
     public String lista() {
         menuAll.setWrappedData(mf.findAll());
         return "menuKnajpy";

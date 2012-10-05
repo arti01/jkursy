@@ -11,28 +11,34 @@
 
     <ui:define name="content">
         <div id="tabela">
-            <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
-                <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="nazwa"/>
-                    </f:facet> 
-                    <h:outputText value="#{menu.nazwa}"/>
-                </rich:column>
-                <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="cena"/>
-                    </f:facet> 
-                    <h:outputText value="#{menu.cena}"/>
-                </rich:column>
-                <rich:column sortBy="#{kurs.ce}" id="dniTyg" sortOrder="#{adminKursyAc.nazwaOrder}">
-                    <f:facet name="header">
-                        <h:outputText value="występuje w"/>
-                    </f:facet> 
+            <h:form >
+                <rich:dataTable value="#{allMenuAc.menuAll}" var="menu" id="table">
+                    <rich:column sortOrder="ascending" sortBy="#{menu.nazwa}">
+                        <f:facet name="header">
+                            <h:outputText value="nazwa"/>
+                        </f:facet> 
+                        <h:outputText value="#{menu.nazwa}"/>
+                    </rich:column>
+                    <rich:column sortBy="#{kurs.ce}" id="cena" sortOrder="#{adminKursyAc.nazwaOrder}">
+                        <f:facet name="header">
+                            <h:outputText value="cena"/>
+                        </f:facet> 
+                        <h:outputText value="#{menu.cena}"/>
+                    </rich:column>
+                    <rich:column filterExpression="#{menu.dniTyg.contains(admMenuAc.dzienFilter) or admMenuAc.dzienFilter==null}">
+                        <f:facet name="header">
+                            <h:selectOneMenu value="#{admMenuAc.dzienFilter}" converter="#{dniTygConv}">
+                                <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
+                                <f:selectItems value="#{admMenuAc.alldniTyg}" var="dzien" itemLabel="#{dzien.nazwa}" itemValue="#{dzien}" />
+                                <a4j:ajax render="table" execute="@this" event="change" />
+                            </h:selectOneMenu>
+                        </f:facet> 
                         <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
-                                <h:outputText value="#{dniTyg.nazwa}; "/>
+                            <h:outputText value="#{dniTyg.nazwa}; "/>
                         </a4j:repeat>
-                </rich:column>
-            </rich:dataTable>
+                    </rich:column>
+                </rich:dataTable>
+            </h:form>
         </div>
     </ui:define>
 
