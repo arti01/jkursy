@@ -28,35 +28,30 @@ public class Uzytkownik implements Serializable {
     @Column(length = 50)
     @Size(min = 2, max = 50)
     private String username;
-    
     @Column(nullable = true, length = 100)
     @Email
     private String email;
-    
     @Column(name = "imie_nazwisko", nullable = false)
     @Size(min = 3, max = 255)
     private String imieNazwisko;
-
     @Column(nullable = true)
     private String tel1;
-    
     @Column(nullable = true, length = 50)
     @Size(min = 2, max = 15)
     private String userpass;
-    
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(
-		name = "users_roles", joinColumns = {
+    @JoinTable(name = "users_roles", joinColumns = {
         @JoinColumn(name = "username", nullable = false)
     }, inverseJoinColumns = {
         @JoinColumn(name = "roles_rola", nullable = false)
     })
     private List<Role> roles;
     
-    @OneToMany(mappedBy = "username")
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @OrderBy("idzamowienie DESC")
+    @JoinColumn(name = "username")
     private List<Zamowienie> zamowienia;
- 
+
     public String getUsername() {
         return username;
     }
@@ -112,5 +107,4 @@ public class Uzytkownik implements Serializable {
     public void setZamowienia(List<Zamowienie> zamowienia) {
         this.zamowienia = zamowienia;
     }
-    
 }

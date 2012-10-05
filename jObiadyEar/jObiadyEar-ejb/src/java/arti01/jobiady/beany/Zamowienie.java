@@ -5,12 +5,15 @@
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -18,7 +21,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OrderBy;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,25 +35,41 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "ZAMOWIENIE")
-@NamedQueries({
-    @NamedQuery(name = "Zamowienie.findAll", query = "SELECT z FROM Zamowienie z"),
-    @NamedQuery(name = "Zamowienie.findByIdzamowienie", query = "SELECT z FROM Zamowienie z WHERE z.idzamowienie = :idzamowienie"),
-    @NamedQuery(name = "Zamowienie.findByUsername", query = "SELECT z FROM Zamowienie z WHERE z.username = :username"),
-    @NamedQuery(name = "Zamowienie.findByData", query = "SELECT z FROM Zamowienie z WHERE z.data = :data")})
 public class Zamowienie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "IDZAMOWIENIE", nullable = false)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQZAM")
+    @SequenceGenerator(name="SEQZAM", sequenceName="SEQZAM")
     private Integer idzamowienie;
     
     @Column(name = "DATAZAMOWIENIA")
-    private Character dataZamowienia;
+    private Timestamp dataZamowienia;
     
     @ManyToOne
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username",  nullable=false)
     private Uzytkownik uzytkownik;
+    
+    private String statusZamowienia;
+    
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(name = "ZamowienieMenu",
+    joinColumns = {
+        @JoinColumn(name = "idzamowienie", nullable = false)},
+    inverseJoinColumns = {
+        @JoinColumn(name = "idmenu", nullable = false)})
+    private List<Menu>potrawy;
+    
+    
+    @ManyToOne
+    private Kurs kurs;
+    
+    private double wplacono;
+    
+    @Transient
+    private double suma;
+    
+    @Transient
+    private double roznica;
     
     public Zamowienie() {
     }
@@ -64,11 +86,11 @@ public class Zamowienie implements Serializable {
         this.idzamowienie = idzamowienie;
     }
 
-    public Character getDataZamowienia() {
+    public Timestamp getDataZamowienia() {
         return dataZamowienia;
     }
 
-    public void setDataZamowienia(Character dataZamowienia) {
+    public void setDataZamowienia(Timestamp dataZamowienia) {
         this.dataZamowienia = dataZamowienia;
     }
 
@@ -80,6 +102,58 @@ public class Zamowienie implements Serializable {
         this.uzytkownik = uzytkownik;
     }
 
+    public String getStatusZamowienia() {
+        return statusZamowienia;
+    }
+
+    public void setStatusZamowienia(String statusZamowienia) {
+        this.statusZamowienia = statusZamowienia;
+    }
+
+    public List<Menu> getPotrawy() {
+        return potrawy;
+    }
+
+    public void setPotrawy(List<Menu> potrawy) {
+        this.potrawy = potrawy;
+    }
+
+    public double getSuma() {
+        suma=0;
+        for(Menu m:getPotrawy()){
+            suma+=m.getCena();
+        }
+        return suma;
+    }
+
+    public void setSuma(double suma) {
+        this.suma = suma;
+    }
+
+    public double getWplacono() {
+        return wplacono;
+    }
+
+    public void setWplacono(double wplacono) {
+        this.wplacono = wplacono;
+    }
+
+    public double getRoznica() {
+        roznica=wplacono-suma;
+        return roznica;
+    }
+
+    public void setRoznica(double roznica) {
+        this.roznica = roznica;
+    }
+
+    public Kurs getKurs() {
+        return kurs;
+    }
+
+    public void setKurs(Kurs kurs) {
+        this.kurs = kurs;
+    }
     
     
     @Override

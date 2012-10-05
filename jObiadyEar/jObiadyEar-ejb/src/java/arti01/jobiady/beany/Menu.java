@@ -82,4 +82,17 @@ public class Menu implements Serializable {
     public void setCena(double cena) {
         this.cena = cena;
     }
+    
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Menu)) {
+            return false;
+        }
+        Menu other = (Menu) object;
+        if ((this.idmenu == 0 && other.idmenu != 0) || (this.idmenu != 0 && !(this.idmenu==other.idmenu))) {
+            return false;
+        }
+        return true;
+    }
 }
