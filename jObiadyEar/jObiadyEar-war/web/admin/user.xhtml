@@ -81,7 +81,7 @@
                             <h:outputText value="role"/>
                         </f:facet> 
                         <a4j:repeat value="#{uzytkownik.roles}" var="rol">
-                            <h:outputText value="#{rol.rola}"/>
+                            <h:outputText value="#{rol.rola}; "/>
                         </a4j:repeat>
                     </rich:column>
                     <rich:column sortBy="#{kurs.ce}" id="edit" sortOrder="#{adminKursyAc.nazwaOrder}">

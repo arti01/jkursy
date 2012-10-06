@@ -41,11 +41,16 @@ public class UserAc implements Serializable {
 
     public String lista() {
         userAll.setWrappedData(uf.findAll());
+        Role r=new Role();
+        r.setRola(Role.USER);
+        uzytkownik.setRoles(new ArrayList<Role>());
+        uzytkownik.getRoles().add(r);
+        System.out.println(uzytkownik.getRoles().get(0).getRola());
         return "user";
     }
 
     public void zapisz() {
-        System.out.println(uf);
+        //System.out.println(uf);
         try {
             if (uf.find(uzytkownik.getUsername()) != null) {
                 uf.edit(uzytkownik);
