@@ -14,10 +14,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 /**
  *
@@ -31,14 +33,18 @@ public class Kurs implements Serializable {
     @SequenceGenerator(name="SEQKURS", sequenceName="SEQKURS")
     private Long id;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST}, orphanRemoval = false)
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = false)
     @OrderBy("idzamowienie DESC")
     private List<Zamowienie> zamowienia;
     
     private Timestamp dataKursu;
     
-    @OneToOne
+    @ManyToOne
     private Uzytkownik tragarz;
+    
+    @Transient
+    private double suma;
+    
 
     public Long getId() {
         return id;
@@ -71,6 +77,18 @@ public class Kurs implements Serializable {
     public void setTragarz(Uzytkownik tragarz) {
         this.tragarz = tragarz;
     }
+
+    public double getSuma() {
+        for(Zamowienie z:zamowienia){
+            suma+=z.getSuma();
+        }
+        return suma;
+    }
+
+    public void setSuma(double suma) {
+        this.suma = suma;
+    }
+    
     
     
 
@@ -92,11 +110,6 @@ public class Kurs implements Serializable {
             return false;
         }
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "arti01.jobiady.beany.NewEntity[ id=" + id + " ]";
     }
     
 }

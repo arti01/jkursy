@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String ADMIN ="admin" ;
-	public static final String WYKLADOWCA ="User" ;
+	public static final String USER ="user" ;
 
 	@Id
 	private String rola;
@@ -51,5 +51,17 @@ public class Role implements Serializable {
     public void setUsers(List<Uzytkownik> users) {
         this.users = users;
     }
-
+    
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Role)) {
+            return false;
+        }
+        Role other = (Role) object;
+        if ((this.rola == null && other.rola != null) || (this.rola != null && !this.rola.equals(other.rola))) {
+            return false;
+        }
+        return true;
+    }
 }

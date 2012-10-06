@@ -51,6 +51,11 @@ public class Uzytkownik implements Serializable {
     @OrderBy("idzamowienie DESC")
     @JoinColumn(name = "username")
     private List<Zamowienie> zamowienia;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
+    @OrderBy("id DESC")
+    @JoinColumn(name = "tragarz_username")
+    private List<Kurs> kursy;
 
     public String getUsername() {
         return username;
@@ -107,4 +112,14 @@ public class Uzytkownik implements Serializable {
     public void setZamowienia(List<Zamowienie> zamowienia) {
         this.zamowienia = zamowienia;
     }
+
+    public List<Kurs> getKursy() {
+        return kursy;
+    }
+
+    public void setKursy(List<Kurs> kursy) {
+        this.kursy = kursy;
+    }
+    
+    
 }
