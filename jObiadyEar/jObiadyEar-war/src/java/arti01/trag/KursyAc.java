@@ -82,6 +82,10 @@ public class KursyAc implements Serializable {
         kf.edit(kurs);
     }
     
+    public String kursZestawienie() {
+        return "kursZestawienie";
+    }
+    
      public void valueChanged(ValueChangeEvent event) {
          
         if (null != event.getNewValue()) {

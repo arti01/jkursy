@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/templatetrag.xhtml">
+
+    <ui:define name="content">
+        <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
+
+        <div id="tabela">
+            <h:dataTable value="#{tragKursyAc.kurs.zestawienie}" var="zest">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="pozycja w menu"/>
+                        </f:facet> 
+                        <h:outputText value="#{zest.key.nazwa}"/>
+                    </h:column>
+                <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ilość"/>
+                        </f:facet> 
+                        <h:outputText value="#{zest.value}"/>
+                 </h:column>    
+                <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="wartość pozycji"/>
+                        </f:facet> 
+                        <h:outputText value="#{zest.key.cena*zest.value}"/>
+                 </h:column>    
+                </h:dataTable>
+        </div>
+    </ui:define>
+
+</ui:composition>

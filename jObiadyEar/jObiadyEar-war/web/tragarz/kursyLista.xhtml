@@ -28,6 +28,13 @@
                     
                     <h:column>
                         <f:facet name="header">
+                            <h:outputText value="suma wpłat zł"/>
+                        </f:facet> 
+                        <h:outputText value="#{kurs.sumaWplat}"/>
+                    </h:column>
+                    
+                    <h:column>
+                        <f:facet name="header">
                             <h:commandButton value="nowy kurs" action="#{tragKursyAc.dodaj}"/>
                         </f:facet> 
                         <h:commandButton value="edycja" action="#{tragKursyAc.kursEdycja}">
@@ -35,6 +42,14 @@
                         </h:commandButton>
                         <br/>
                         <h:commandButton value="usuń" action="#{tragKursyAc.usun}">
+                            <f:setPropertyActionListener value="#{kurs}" target="#{tragKursyAc.kurs}"/>
+                        </h:commandButton>
+                    </h:column>
+                     <h:column>
+                        <f:facet name="header">
+                            
+                        </f:facet> 
+                        <h:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}">
                             <f:setPropertyActionListener value="#{kurs}" target="#{tragKursyAc.kurs}"/>
                         </h:commandButton>
                     </h:column>

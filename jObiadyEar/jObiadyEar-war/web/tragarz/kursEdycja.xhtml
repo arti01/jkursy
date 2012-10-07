@@ -11,7 +11,10 @@
 
     <ui:define name="content">
         <h:panelGroup id="naglowek">
-            <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}</h3>
+            <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
+            <h:form>
+                <h:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}"/>
+            </h:form>
         </h:panelGroup>
 
         <div id="contentLewy">
@@ -27,11 +30,11 @@
                                     data zamówienia
                                 </f:facet> 
                                 <h:outputText value="#{zam.dataZamowienia}" id="dataZam"/>
-                                    <rich:tooltip id="tt1" layout="block" target="dataZam">
+                                <rich:tooltip id="tt1" layout="block" target="dataZam">
                                     <a4j:repeat value="#{zam.potrawy}" var="potrawa">
                                         <h:outputText value="#{potrawa.nazwa}" /><br/>
-                                        </a4j:repeat>
-                                    </rich:tooltip>
+                                    </a4j:repeat>
+                                </rich:tooltip>
                             </rich:column >
                             <rich:column >
                                 <f:facet name="header">
@@ -69,11 +72,11 @@
                                     data zamówienia
                                 </f:facet> 
                                 <h:outputText value="#{zam.dataZamowienia}" id="dataZam"/>
-                                    <rich:tooltip id="tt1" layout="block" target="dataZam">
+                                <rich:tooltip id="tt1" layout="block" target="dataZam">
                                     <a4j:repeat value="#{zam.potrawy}" var="potrawa">
                                         <h:outputText value="#{potrawa.nazwa}" /><br/>
-                                        </a4j:repeat>
-                                    </rich:tooltip>
+                                    </a4j:repeat>
+                                </rich:tooltip>
                                 <br/>
                                 <h:outputText value="#{zam.statusZamowienia}"/>
                             </rich:column >
@@ -89,7 +92,7 @@
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
                             </rich:column >
-                            
+
                             <rich:column >
                                 <f:facet name="header">
                                     <h:outputText value="wpłacił"/>
@@ -97,10 +100,10 @@
                                 <a4j:commandLink id="zmienWpl">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
                                     <h:inputText value="#{zam.wplacono}" valueChangeListener="#{tragKursyAc.valueChanged}" size="6">
-                                    <a4j:ajax render="formZam" execute="zmienWpl" event="change" >
-                                    </a4j:ajax>
-                                </h:inputText>
-                                    </a4j:commandLink>
+                                        <a4j:ajax render="formZam" execute="zmienWpl" event="change" >
+                                        </a4j:ajax>
+                                    </h:inputText>
+                                </a4j:commandLink>
                             </rich:column >
 
                             <rich:column >
