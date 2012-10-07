@@ -12,6 +12,7 @@ import java.util.List;
  *
  * @author arti01
  */
+@Deprecated
 public class KursZestawienie {
     private Menu menu;
     private String cos;
