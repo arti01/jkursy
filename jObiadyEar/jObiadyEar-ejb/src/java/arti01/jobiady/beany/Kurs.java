@@ -6,7 +6,13 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -46,6 +52,12 @@ public class Kurs implements Serializable {
     
     @Transient
     private double suma;
+    
+    @Transient
+    private double sumaWplat;
+    
+    @Transient
+    private List<Entry<Menu, Integer>> zestawienie;
     
 
     public Long getId() {
@@ -92,10 +104,33 @@ public class Kurs implements Serializable {
         this.suma = suma;
     }
     
-    public void addZamowienie(Zamowienie zam) {
-        zamowienia.add(0, zam);
+
+    public double getSumaWplat() {
+        sumaWplat=0;
+        for(Zamowienie z:zamowienia){
+            sumaWplat+=z.getWplacono();
+        }
+        return sumaWplat;
     }
-    
+
+    public void setSumaWplat(double sumaWplat) {
+        this.sumaWplat = sumaWplat;
+    }
+
+    public List getZestawienie() {
+        Map<Menu, Integer> zestMap=new HashMap<Menu, Integer>();
+            for(Zamowienie zam:zamowienia){
+                for(Menu m:zam.getPotrawy()){
+                    Integer ilosc=0;
+                    if(zestMap.get(m)!=null) ilosc=zestMap.get(m)+1;
+                    else ilosc=1;
+                    //System.out.println(m.getNazwa()+ilosc);
+                    zestMap.put(m, ilosc);
+                }
+            }
+            zestawienie=new ArrayList<Entry<Menu, Integer>>( zestMap.entrySet());
+        return zestawienie;
+    }
 
     @Override
     public int hashCode() {
