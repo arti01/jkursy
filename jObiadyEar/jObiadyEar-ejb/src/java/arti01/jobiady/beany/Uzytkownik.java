@@ -2,6 +2,7 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,7 +47,6 @@ public class Uzytkownik implements Serializable {
         @JoinColumn(name = "roles_rola", nullable = false)
     })
     private List<Role> roles;
-    
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @OrderBy("idzamowienie DESC")
     @JoinColumn(name = "username")
@@ -120,6 +120,22 @@ public class Uzytkownik implements Serializable {
     public void setKursy(List<Kurs> kursy) {
         this.kursy = kursy;
     }
-    
-    
+
+    public void addZamowienie(Zamowienie zam) {
+        zam.setUzytkownik(this);
+        this.zamowienia.add(0, zam);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Uzytkownik)) {
+            return false;
+        }
+        Uzytkownik other = (Uzytkownik) object;
+        if ((this.username == null && other.username != null) || (this.username != null && !this.username.equals(other.username))) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -54,7 +54,7 @@ SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
         //System.out.println(zamPoczatkowe);
         return zamPoczatkowe;
     }
-
+        
     public ZamowienieFacade() {
         super(Zamowienie.class);
     }

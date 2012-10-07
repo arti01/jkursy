@@ -6,8 +6,9 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,15 +20,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -51,16 +46,18 @@ public class Zamowienie implements Serializable {
     
     private String statusZamowienia;
     
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(name = "ZamowienieMenu",
     joinColumns = {
         @JoinColumn(name = "idzamowienie", nullable = false)},
     inverseJoinColumns = {
         @JoinColumn(name = "idmenu", nullable = false)})
-    private List<Menu>potrawy;
+    private List<Menu>potrawy=new ArrayList<Menu>();
+   //  private List<Menu>potrawy;
     
     
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name="kurs_id")
     private Kurs kurs;
     
     private double wplacono;
@@ -120,6 +117,7 @@ public class Zamowienie implements Serializable {
 
     public double getSuma() {
         suma=0;
+        System.out.println(getPotrawy());
         for(Menu m:getPotrawy()){
             suma+=m.getCena();
         }
@@ -170,6 +168,7 @@ public class Zamowienie implements Serializable {
             return false;
         }
         Zamowienie other = (Zamowienie) object;
+        Zamowienie toZam = this;
         if ((this.idzamowienie == null && other.idzamowienie != null) || (this.idzamowienie != null && !this.idzamowienie.equals(other.idzamowienie))) {
             return false;
         }

@@ -7,6 +7,7 @@ package arti01.jobiady.beany;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,8 +34,9 @@ public class Kurs implements Serializable {
     @SequenceGenerator(name="SEQKURS", sequenceName="SEQKURS")
     private Long id;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = false)
+    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false)
     @OrderBy("idzamowienie DESC")
+    @JoinColumn(name="kurs_id")
     private List<Zamowienie> zamowienia;
     
     private Timestamp dataKursu;
@@ -79,6 +81,7 @@ public class Kurs implements Serializable {
     }
 
     public double getSuma() {
+        suma=0;
         for(Zamowienie z:zamowienia){
             suma+=z.getSuma();
         }
@@ -89,7 +92,9 @@ public class Kurs implements Serializable {
         this.suma = suma;
     }
     
-    
+    public void addZamowienie(Zamowienie zam) {
+        zamowienia.add(0, zam);
+    }
     
 
     @Override
