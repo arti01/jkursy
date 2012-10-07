@@ -3,8 +3,8 @@ body
     margin: 0 auto;
     padding: 0px;
     font-size: 100%;
-    font-family: Verdana,Arial,sans-serif;
-    background-color: #ffffff;
+    font-family: tahoma,verdana,helvetica,sans-serif;
+    background-color: #e4e4e4
 }
 
 a:link, a:visited {
@@ -16,7 +16,7 @@ a:link, a:visited {
 a:link:hover, a:visited:hover  {
   color: #045491;
   font-weight : bold;
-  text-decoration : underline;
+  text-decoration : none;
 }
 
 .error{
