@@ -74,6 +74,8 @@
                                         <h:outputText value="#{potrawa.nazwa}" /><br/>
                                         </a4j:repeat>
                                     </rich:tooltip>
+                                <br/>
+                                <h:outputText value="#{zam.statusZamowienia}"/>
                             </rich:column >
                             <rich:column >
                                 <f:facet name="header">
@@ -86,6 +88,19 @@
                                     <h:outputText value="wartość"/>
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
+                            </rich:column >
+                            
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="wpłacił"/>
+                                </f:facet> 
+                                <a4j:commandLink id="zmienWpl">
+                                    <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
+                                    <h:inputText value="#{zam.wplacono}" valueChangeListener="#{tragKursyAc.valueChanged}" size="6">
+                                    <a4j:ajax render="formZam" execute="zmienWpl" event="change" >
+                                    </a4j:ajax>
+                                </h:inputText>
+                                    </a4j:commandLink>
                             </rich:column >
 
                             <rich:column >

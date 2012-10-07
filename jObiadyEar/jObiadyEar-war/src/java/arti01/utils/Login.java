@@ -40,10 +40,12 @@ public class Login implements Serializable {
         z.setUsername(r.getRemoteUser());
         //zalogowany = userImp.find(z);
         //stub
-        zalogowany = userImp.find("zzz");
-        //logger.info("imie nazwisko"+zalogowany.getImieNazwisko());
-        //rozne.ustaw(z);
-        //rozne.setInfoText("jeste�� zalogowany");
+        zalogowany= userImp.find("zzz");
+        /*if(zalogowany==null){
+            zalogowany= userImp.find("zzz");
+            //System.out.println(zalogowany+"find");
+        }*/
+        
         return zalogowany;
         //return rozne.getZalogowany();
     }

@@ -11,6 +11,7 @@ import arti01.jobiady.beany.Uzytkownik;
 import arti01.jobiady.beany.UzytkownikFacade;
 import arti01.jobiady.beany.Zamowienie;
 import arti01.jobiady.beany.ZamowienieFacade;
+import arti01.trag.KursyAc;
 import arti01.utils.Login;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -20,8 +21,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
 
 /**
  *
@@ -38,6 +37,9 @@ public class ZamowienieAc implements Serializable {
     
     @ManagedProperty(value = "#{login}")
     private arti01.utils.Login login;
+    @ManagedProperty(value = "#{tragKursyAc}")
+    KursyAc kursyAc;
+    
     
     @EJB
     UzytkownikFacade uf;
@@ -55,15 +57,13 @@ public class ZamowienieAc implements Serializable {
     }
 
     public String dodaj() {
+        Uzytkownik u=login.getZalogowany();
         zamowienie = new Zamowienie();
         Timestamp ts = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         zamowienie.setDataZamowienia(ts);
         zamowienie.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        Uzytkownik u=login.getZalogowany();
-        //System.out.println(login.getZalogowany().getZamowienia().size());
-        u.getZamowienia().add(0,zamowienie);
+        u.addZamowienie(zamowienie);
         zf.create(zamowienie);
-        //System.out.println(u.getZamowienia().size());
         uf.edit(u);
         return "zamowieniaEdycja";
     }
@@ -73,27 +73,28 @@ public class ZamowienieAc implements Serializable {
     }
     
     public String usun() {
+        if(zamowienie.getKurs()!=null){
+        kursyAc.setKurs(zamowienie.getKurs());
+        kursyAc.setZam(zamowienie);
+        kursyAc.wycofaj();
+        }
+        zf.remove(zamowienie);
         Uzytkownik u=login.getZalogowany();
-        //System.out.println(login.getZalogowany().getZamowienia().size());
         u.getZamowienia().remove(zamowienie);
-        //System.out.println(u.getZamowienia().size());
         uf.edit(u);
         return "zamowieniaLista";
     }
     
     public void zamow() {
-        zamowienie.getPotrawy().add(menu);
         Uzytkownik u=login.getZalogowany();
-        /*System.out.println(u.getZamowienia().size()+"zamow");
-        System.out.println(u.getZamowienia());
-        System.out.println(zamowienie);*/
+        zamowienie.getPotrawy().add(menu);
         u.getZamowienia().set(u.getZamowienia().indexOf(zamowienie), zamowienie);
         uf.edit(u);
     }
     
     public void usunZzam() {
-        zamowienie.getPotrawy().remove(menu);
         Uzytkownik u=login.getZalogowany();
+        zamowienie.getPotrawy().remove(menu);
         u.getZamowienia().set(u.getZamowienia().indexOf(zamowienie), zamowienie);
         uf.edit(u);
     }
@@ -116,11 +117,7 @@ public class ZamowienieAc implements Serializable {
 
     public List<Menu> getDostepneMenu() {
         dostepneMenu=mf.findAll();
-        //System.out.println("getter");
-        //System.out.println(zamowienie.getPotrawy());
-        //System.out.println(dostepneMenu);
         dostepneMenu.removeAll(zamowienie.getPotrawy());
-        //System.out.println(dostepneMenu);
         return dostepneMenu;
     }
 
@@ -134,6 +131,14 @@ public class ZamowienieAc implements Serializable {
 
     public void setMenu(Menu menu) {
         this.menu = menu;
+    }
+
+    public KursyAc getKursyAc() {
+        return kursyAc;
+    }
+
+    public void setKursyAc(KursyAc kursyAc) {
+        this.kursyAc = kursyAc;
     }
     
     

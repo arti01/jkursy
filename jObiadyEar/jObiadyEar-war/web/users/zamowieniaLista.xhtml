@@ -24,8 +24,7 @@
                             <h:outputText value="status zamowienia"/>
                         </f:facet> 
                         <h:outputText value="#{zamowienie.statusZamowienia}"/>
-                        <h:outputText value="#{zamowienie.kurs}"/>
-                        <h:outputText value=" tragarz: #{zamowienie.kurs.tragarz.imieNazwisko}" rendered="#{zamowienie.kurs!=null}"/>
+                        <h:outputText value=", tragarz: #{zamowienie.kurs.tragarz.imieNazwisko}" rendered="#{zamowienie.kurs!=null}"/>
                     </h:column>
                     
                     <h:column>
