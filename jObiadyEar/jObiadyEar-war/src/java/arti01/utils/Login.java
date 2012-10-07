@@ -3,7 +3,10 @@ package arti01.utils;
 import arti01.jobiady.beany.Uzytkownik;
 import arti01.jobiady.beany.UzytkownikFacade;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -18,39 +21,69 @@ public class Login implements Serializable {
     Uzytkownik zalogowany;
     @EJB
     UzytkownikFacade userImp;
+    String username;
+    String password;
 
     public String wyloguj() {
-        HttpServletRequest r = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        //logger.info(r.getRemoteUser()+"wwwwwwwwwwwwwww");
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
-            r.logout();
-            zalogowany = null;
-        } catch (ServletException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            request.logout();
+            zalogowany=null;
+        } catch (ServletException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //rozne.setInfoText("jeste�� wylogowany");
         return "/all/index.xhtml?faces-redirect=true";
     }
 
     public Uzytkownik getZalogowany() {
-        HttpServletRequest r = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        //logger.info(r.getRemoteUser());
-        Uzytkownik z = new Uzytkownik();
-        z.setUsername(r.getRemoteUser());
-        //zalogowany = userImp.find(z);
         //stub
-        zalogowany= userImp.find("zzz");
-        /*if(zalogowany==null){
-            zalogowany= userImp.find("zzz");
-            //System.out.println(zalogowany+"find");
-        }*/
+        //zalogowany= userImp.find("zzz");
         
         return zalogowany;
-        //return rozne.getZalogowany();
     }
 
+    public String login() {
+    FacesContext context = FacesContext.getCurrentInstance();
+    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+    try {
+        request.login(username, password);
+        zalogowany = userImp.find(username);
+    } catch (ServletException e) {
+            try {
+                // Handle unknown username/password in request.login().
+                //context.addMessage(null, new FacesMessage("błąd logowania"));
+                request.logout();
+                return "/all/loginerr";
+            } catch (ServletException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                return "/all/loginerr";
+            }
+    }
+    return "/all/index";
+}
+
+    
     public void setZalogowany(Uzytkownik user) {
         zalogowany = user;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
+    
 }

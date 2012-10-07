@@ -8,6 +8,11 @@
             <li><h:link value="Strefa Żarłaczy" outcome="/users/index.xhtml" /></li>
             <li><h:link value="Strefa Tragarza" outcome="/tragarz/index.xhtml" /></li>
             <li><h:link value="Strefa Admina" outcome="/admin/index.xhtml" /></li>
+            <li><h:link value="Zaloguj" outcome="/all/login.xhtml" rendered="#{login.zalogowany.username==null}"/></li>
+            <h:panelGroup rendered="#{login.zalogowany.username!=null}">
+                <li>jesteś zalogowany jako: #{login.zalogowany.imieNazwisko} <br/>(#{login.zalogowany.username})</li>
+            <li><h:commandLink value="Wyloguj" action="#{login.wyloguj}"/></li>
+            </h:panelGroup>
         </ul>
     </h:form>
 </html>
