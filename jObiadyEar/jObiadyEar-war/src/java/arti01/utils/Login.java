@@ -38,7 +38,7 @@ public class Login implements Serializable {
 
     public Uzytkownik getZalogowany() {
         //stub
-        //zalogowany= userImp.find("zzz");
+        if(zalogowany!=null) zalogowany= userImp.find(zalogowany.getUsername());
         
         return zalogowany;
     }

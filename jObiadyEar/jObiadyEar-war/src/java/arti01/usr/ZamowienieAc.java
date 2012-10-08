@@ -17,6 +17,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -59,7 +60,7 @@ public class ZamowienieAc implements Serializable {
     public String dodaj() {
         Uzytkownik u=login.getZalogowany();
         zamowienie = new Zamowienie();
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
         zamowienie.setDataZamowienia(ts);
         zamowienie.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
         u.addZamowienie(zamowienie);

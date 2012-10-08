@@ -10,13 +10,12 @@
                 xmlns:a4j="http://richfaces.org/a4j">
 
     <ui:define name="content">
-        <h:panelGroup id="naglowek">
-            <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
-            <h:form>
-                <h:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}"/>
-            </h:form>
-        </h:panelGroup>
-
+        <h:form>
+            <h:panelGroup id="naglowek">
+                <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
+                <a4j:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}" immediate="true"/>
+            </h:panelGroup>
+        </h:form>
         <div id="contentLewy">
             <div id="tabela">
                 <h:form >

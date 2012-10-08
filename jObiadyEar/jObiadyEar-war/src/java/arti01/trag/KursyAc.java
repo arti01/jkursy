@@ -69,17 +69,11 @@ public class KursyAc implements Serializable {
     }
     
     public void przyjmij() {
-        zam.setStatusZamowienia(StatusZamowienia.WREALIZACJI);
-        zam.setKurs(kurs);
-        kurs.getZamowienia().add(0, zam);
-        kf.edit(kurs);        
+        kf.przyjmijZamowienie(zam, kurs);
     }
     
     public void wycofaj() {
-        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        zf.edit(zam);
-        kurs.getZamowienia().remove(zam);
-        kf.edit(kurs);
+        kf.wycofajZamowienie(zam);
     }
     
     public String kursZestawienie() {
@@ -95,7 +89,7 @@ public class KursyAc implements Serializable {
     }
     
      public void test(){
-         System.out.println(zam);
+         System.out.println(zam+"sssssssss");
      }
      
     public Kurs getKurs() {
