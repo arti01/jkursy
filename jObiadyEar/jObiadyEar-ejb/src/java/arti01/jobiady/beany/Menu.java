@@ -82,6 +82,19 @@ public class Menu implements Serializable {
     public void setCena(double cena) {
         this.cena = cena;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.idmenu;
+        hash = 97 * hash + (this.nazwa != null ? this.nazwa.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "Menu{" + "idmenu=" + idmenu + '}';
+    }
     
     @Override
     public boolean equals(Object object) {

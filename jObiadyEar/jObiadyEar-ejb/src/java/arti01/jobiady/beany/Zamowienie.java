@@ -117,7 +117,6 @@ public class Zamowienie implements Serializable {
 
     public double getSuma() {
         suma=0;
-        System.out.println(getPotrawy());
         for(Menu m:getPotrawy()){
             suma+=m.getCena();
         }
@@ -152,15 +151,16 @@ public class Zamowienie implements Serializable {
     public void setKurs(Kurs kurs) {
         this.kurs = kurs;
     }
-    
-    
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idzamowienie != null ? idzamowienie.hashCode() : 0);
+        int hash = 3;
+        hash = 59 * hash + (this.idzamowienie != null ? this.idzamowienie.hashCode() : 0);
+        hash = 59 * hash + (this.uzytkownik != null ? this.uzytkownik.hashCode() : 0);
+        hash = 59 * hash + (this.kurs != null ? this.kurs.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

@@ -121,13 +121,12 @@ public class Kurs implements Serializable {
             for(Zamowienie zam:zamowienia){
                 for(Menu m:zam.getPotrawy()){
                     Integer ilosc=0;
-                    System.out.println(zestMap.get(m)+"get");
+                    //Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName()+m);
                     if(zestMap.get(m)!=null){
-                        System.out.println(m.getIdmenu()+m.getNazwa()+"if");
+                        
                         ilosc=zestMap.get(m)+1;
                     }
                     else ilosc=1;
-                    //System.out.println(m.getNazwa()+ilosc);
                     zestMap.put(m, ilosc);
                 }
             }
@@ -137,10 +136,12 @@ public class Kurs implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
+
+ 
 
     @Override
     public boolean equals(Object object) {
