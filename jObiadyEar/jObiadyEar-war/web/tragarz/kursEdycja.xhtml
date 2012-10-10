@@ -91,16 +91,22 @@
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
                             </rich:column >
+                            
+                            <rich:column>
+                                <f:facet name="header">
+                                    <h:outputText value="saldo (ujemne oznacza, że tragarz przyjął gotówkę a nie kupił obiadu)"/>
+                                </f:facet> 
+                                <h:outputText value="#{zam.saldo}"/>
+                            </rich:column>
 
                             <rich:column >
                                 <f:facet name="header">
-                                    <h:outputText value="wpłacił"/>
+                                    <h:outputText value="przyjmij wpłatę"/>
                                 </f:facet> 
                                 <a4j:commandLink id="zmienWpl">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                    <h:inputText value="#{zam.wplacono}" valueChangeListener="#{tragKursyAc.valueChanged}" size="6">
-                                        <a4j:ajax render="formZam" execute="zmienWpl" event="change" >
-                                        </a4j:ajax>
+                                    <h:inputText valueChangeListener="#{tragKursyAc.przyjmijWplate}" size="6">
+                                        <a4j:ajax render="formZam" execute="zmienWpl" event="change" />
                                     </h:inputText>
                                 </a4j:commandLink>
                             </rich:column >

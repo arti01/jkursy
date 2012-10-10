@@ -41,6 +41,8 @@ public class KursyAc implements Serializable {
     ZamowienieFacade zf;
     private Zamowienie zam;
     
+    
+    
     public String dodaj() {
         Uzytkownik u=login.getZalogowany();
         kurs = new Kurs();
@@ -80,11 +82,10 @@ public class KursyAc implements Serializable {
         return "kursZestawienie";
     }
     
-     public void valueChanged(ValueChangeEvent event) {
+     public void przyjmijWplate(ValueChangeEvent event) {
          
         if (null != event.getNewValue()) {
-            zam.setWplacono(new Double(event.getNewValue().toString()));
-            zf.edit(zam);
+            zf.przyjmijWplate(zam, new Double(event.getNewValue().toString()));
         }
     }
     
