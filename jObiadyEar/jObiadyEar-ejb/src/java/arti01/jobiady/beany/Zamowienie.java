@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +19,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,14 +54,19 @@ public class Zamowienie implements Serializable {
     inverseJoinColumns = {
         @JoinColumn(name = "idmenu", nullable = false)})
     private List<Menu>potrawy=new ArrayList<Menu>();
-   //  private List<Menu>potrawy;
     
     
     @ManyToOne()
     @JoinColumn(name="kurs_id")
     private Kurs kurs;
     
-    private double wplacono;
+    @Transient
+    private double saldo;
+    
+    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false)
+    @OrderBy("idTransakcjezamowienia DESC")
+    @JoinColumn(name="idzamowienie")
+    private List<Transakcjezamowienia> transakcjezamowienia;
     
     @Transient
     private double suma;
@@ -127,16 +133,20 @@ public class Zamowienie implements Serializable {
         this.suma = suma;
     }
 
-    public double getWplacono() {
-        return wplacono;
+    public double getSaldo() {
+        saldo=0;
+        for(Transakcjezamowienia trZam:getTransakcjezamowienia()){
+            saldo+=trZam.getKwota();
+        }
+        return saldo;
     }
 
-    public void setWplacono(double wplacono) {
-        this.wplacono = wplacono;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
     }
 
     public double getRoznica() {
-        roznica=wplacono-suma;
+        roznica=saldo-suma;
         return roznica;
     }
 
@@ -150,6 +160,14 @@ public class Zamowienie implements Serializable {
 
     public void setKurs(Kurs kurs) {
         this.kurs = kurs;
+    }
+
+    public List<Transakcjezamowienia> getTransakcjezamowienia() {
+        return transakcjezamowienia;
+    }
+
+    public void setTransakcjezamowienia(List<Transakcjezamowienia> transakcjezamowienia) {
+        this.transakcjezamowienia = transakcjezamowienia;
     }
 
     @Override

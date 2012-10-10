@@ -107,7 +107,7 @@ public class Kurs implements Serializable {
     public double getSumaWplat() {
         sumaWplat=0;
         for(Zamowienie z:zamowienia){
-            sumaWplat+=z.getWplacono();
+            sumaWplat+=z.getSaldo();
         }
         return sumaWplat;
     }
