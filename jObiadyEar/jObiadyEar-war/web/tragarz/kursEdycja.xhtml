@@ -48,9 +48,9 @@
                                 <h:outputText value="#{zam.suma}"/>
                             </rich:column >
                             <rich:column >
-                                <a4j:commandButton value="Przyjmij" action="#{tragKursyAc.przyjmij}" render="formMenu, formZam, naglowek">
+                                <a4j:commandLink value="Przyjmij" action="#{tragKursyAc.przyjmij}" render="formMenu, formZam, naglowek">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                </a4j:commandButton>
+                                </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>
@@ -90,6 +90,9 @@
                                     <h:outputText value="wartość"/>
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
+                                <h:commandLink value=" historia transakcji" action="#{tragKursyAc.transHist}">
+                                    <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
+                                </h:commandLink>
                             </rich:column >
                             
                             <rich:column>
@@ -105,16 +108,17 @@
                                 </f:facet> 
                                 <a4j:commandLink id="zmienWpl">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                    <h:inputText valueChangeListener="#{tragKursyAc.przyjmijWplate}" size="6">
-                                        <a4j:ajax render="formZam" execute="zmienWpl" event="change" />
+                                    <h:inputText value="#{tragKursyAc.zero}" valueChangeListener="#{tragKursyAc.przyjmijWplate}" size="6" >
+                                        <a4j:ajax render="formZam" execute="zmienWpl" event="blur" />
+                                        <f:convertNumber pattern="#,###,##0.00"/>
                                     </h:inputText>
                                 </a4j:commandLink>
                             </rich:column >
 
                             <rich:column >
-                                <a4j:commandButton value="Wycofaj" action="#{tragKursyAc.wycofaj}" render="formMenu, formZam, naglowek">
+                                <a4j:commandLink value="Wycofaj zamówienie" action="#{tragKursyAc.wycofaj}" render="formMenu, formZam, naglowek">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                </a4j:commandButton>
+                                </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>

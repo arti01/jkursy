@@ -18,21 +18,21 @@
                         </f:facet> 
                         <h:outputText value="#{kurs.dataKursu}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="wartość zł"/>
                         </f:facet> 
                         <h:outputText value="#{kurs.suma}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="suma wpłat zł"/>
                         </f:facet> 
                         <h:outputText value="#{kurs.sumaWplat}"/>
                     </h:column>
-                    
+
                     <h:column>
                         <f:facet name="header">
                             <h:commandButton value="nowy kurs" action="#{tragKursyAc.dodaj}"/>
@@ -45,13 +45,14 @@
                             <f:setPropertyActionListener value="#{kurs}" target="#{tragKursyAc.kurs}"/>
                         </h:commandButton>
                     </h:column>
-                     <h:column>
+                    <h:column>
                         <f:facet name="header">
-                            
+
                         </f:facet> 
-                        <h:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}">
+                        <h:commandLink value="zestawienie" action="#{tragKursyAc.kursZestawienie}">
                             <f:setPropertyActionListener value="#{kurs}" target="#{tragKursyAc.kurs}"/>
-                        </h:commandButton>
+                        </h:commandLink>
+                        <br/>
                     </h:column>
                 </h:dataTable>
             </h:form>

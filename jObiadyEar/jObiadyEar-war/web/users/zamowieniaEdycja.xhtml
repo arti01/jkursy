@@ -50,9 +50,9 @@
                             </rich:column >
 
                             <rich:column >
-                                <a4j:commandButton value="zamów" action="#{usrZamowienieAc.zamow}" render="formMenu, formZam, naglowek">
+                                <a4j:commandLink value="zamów" action="#{usrZamowienieAc.zamow}" render="formMenu, formZam, naglowek">
                                     <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.menu}"/>
-                                </a4j:commandButton>
+                                </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>
@@ -91,9 +91,9 @@
                             </rich:column >
 
                             <rich:column >
-                                <a4j:commandButton value="zrezygnuj" action="#{usrZamowienieAc.usunZzam}" render="formMenu, formZam, naglowek">
+                                <a4j:commandLink value="zrezygnuj" action="#{usrZamowienieAc.usunZzam}" render="formMenu, formZam, naglowek">
                                     <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.menu}"/>
-                                </a4j:commandButton>
+                                </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>

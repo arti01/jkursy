@@ -12,25 +12,25 @@
 
         <div id="tabela">
             <h:dataTable value="#{tragKursyAc.kurs.zestawienie}" var="zest">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="pozycja w menu"/>
-                        </f:facet> 
-                        <h:outputText value="#{zest.key.nazwa}"/>
-                    </h:column>
                 <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="ilość"/>
-                        </f:facet> 
-                        <h:outputText value="#{zest.value}"/>
-                 </h:column>    
+                    <f:facet name="header">
+                        <h:outputText value="pozycja w menu"/>
+                    </f:facet> 
+                    <h:outputText value="#{zest.key.nazwa}"/>
+                </h:column>
                 <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="wartość pozycji"/>
-                        </f:facet> 
-                        <h:outputText value="#{zest.key.cena*zest.value}"/>
-                 </h:column>    
-                </h:dataTable>
+                    <f:facet name="header">
+                        <h:outputText value="ilość"/>
+                    </f:facet> 
+                    <h:outputText value="#{zest.value}"/>
+                </h:column>    
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="wartość pozycji"/>
+                    </f:facet> 
+                    <h:outputText value="#{zest.key.cena*zest.value}"/>
+                </h:column>    
+            </h:dataTable>
         </div>
     </ui:define>
 

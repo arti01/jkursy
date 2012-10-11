@@ -15,6 +15,8 @@ import arti01.utils.Login;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -40,6 +42,8 @@ public class KursyAc implements Serializable {
     @EJB
     ZamowienieFacade zf;
     private Zamowienie zam;
+    private double zero=0.00;
+    
     
     
     
@@ -66,6 +70,10 @@ public class KursyAc implements Serializable {
         return "kursyLista";
     }
     
+    public String transHist() {
+        return "transHist";
+    }
+    
     public String kursEdycja() {
         return "kursEdycja";
     }
@@ -83,9 +91,9 @@ public class KursyAc implements Serializable {
     }
     
      public void przyjmijWplate(ValueChangeEvent event) {
-         
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, event.getNewValue().toString());
         if (null != event.getNewValue()) {
-            zf.przyjmijWplate(zam, new Double(event.getNewValue().toString()));
+            zf.przyjmijWplate(zam, new Double(event.getNewValue().toString()), "przyjęcie kasy za zamówienie");
         }
     }
     
@@ -123,6 +131,15 @@ public class KursyAc implements Serializable {
 
     public void setZam(Zamowienie zam) {
         this.zam = zam;
+    }
+
+    public double getZero() {
+        zero=0.00;
+        return zero;        
+    }
+
+    public void setZero(double zero) {
+        this.zero = zero;
     }
     
     
