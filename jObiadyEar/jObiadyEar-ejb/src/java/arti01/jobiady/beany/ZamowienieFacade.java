@@ -43,21 +43,20 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Timestamp dataod;
         dataod = new java.sql.Timestamp(cal.getTime().getTime());
-        //System.out.println(sdf.format(dataod));
         query.setParameter("dataod", dataod);
         Timestamp datado;
         cal.add(Calendar.DATE, 1);
         datado = new java.sql.Timestamp(cal.getTime().getTime());
-        //System.out.println(sdf.format(datado));
         query.setParameter("datado", datado);
         zamPoczatkowe = query.getResultList();
-        //System.out.println(zamPoczatkowe);
         return zamPoczatkowe;
     }
     
-    public void przyjmijWplate(Zamowienie zam, double kwota){
+    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem){
+        if(kwota==0) return;
          Transakcjezamowienia trZam=new Transakcjezamowienia();
             trZam.setKwota(kwota);
+            trZam.setTytulem(tytulem);
             zam.getTransakcjezamowienia().add(trZam);
             this.edit(zam);
     }
