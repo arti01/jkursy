@@ -10,11 +10,13 @@
                 xmlns:a4j="http://richfaces.org/a4j">
 
     <ui:define name="content">
-        <h:form>
+        
             <h:panelGroup id="naglowek">
                 <h4>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h4>
                 <h3>Zamówienie #{tragKursyAc.zam.uzytkownik.imieNazwisko}, #{tragKursyAc.zam.dataZamowienia}, saldo z żarłaczem: #{tragKursyAc.zam.saldo}</h3>
             </h:panelGroup>
+        <h:form>
+            <h:commandButton value="wróc" action="#{tragKursyAc.kursEdycja}"/>
         </h:form>
         <div id="contentLewy">
             <h:dataTable value="#{tragKursyAc.zam.transakcjezamowienia}" var="trZam">
@@ -31,6 +33,7 @@
                     <h:outputText value="#{trZam.tytulem}"/>
                 </h:column>
             </h:dataTable>
+            
         </div>
     </ui:define>
 

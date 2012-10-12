@@ -71,6 +71,7 @@ public class KursyAc implements Serializable {
     }
     
     public String transHist() {
+        zero=0;
         return "transHist";
     }
     
@@ -89,11 +90,15 @@ public class KursyAc implements Serializable {
     public String kursZestawienie() {
         return "kursZestawienie";
     }
+
     
      public void przyjmijWplate(ValueChangeEvent event) {
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, event.getNewValue().toString());
-        if (null != event.getNewValue()) {
-            zf.przyjmijWplate(zam, new Double(event.getNewValue().toString()), "przyjęcie kasy za zamówienie");
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        if (null != event.getNewValue()&&new Double(event.getNewValue().toString())!=0) {
+            zero= new Double(event.getNewValue().toString());
+            zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
+            zero=0;
         }
     }
     
