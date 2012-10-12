@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     private String tytulem;
     
     @ManyToOne
-    @JoinColumn(name = "idzamowienie",  nullable=false)
+    @JoinColumn(name = "idzamowienie")
     private Zamowienie zamowienie;
 
     public Transakcjezamowienia() {

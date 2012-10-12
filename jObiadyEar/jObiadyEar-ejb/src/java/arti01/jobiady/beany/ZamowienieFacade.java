@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,6 +60,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
             trZam.setKwota(kwota);
             trZam.setTytulem(tytulem);
             zam.getTransakcjezamowienia().add(trZam);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
             this.edit(zam);
     }
     

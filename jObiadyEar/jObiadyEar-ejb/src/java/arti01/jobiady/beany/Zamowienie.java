@@ -63,7 +63,7 @@ public class Zamowienie implements Serializable {
     @Transient
     private double saldo;
     
-    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false)
+    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy("idTransakcjezamowienia DESC")
     @JoinColumn(name="idzamowienie")
     private List<Transakcjezamowienia> transakcjezamowienia;
