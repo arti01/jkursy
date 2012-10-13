@@ -21,7 +21,11 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
+
 
 /**
  *
@@ -42,6 +46,7 @@ public class KursyAc implements Serializable {
     @EJB
     ZamowienieFacade zf;
     private Zamowienie zam;
+    private DataModel<Zamowienie> zamowienia=new ListDataModel<Zamowienie>();
     private double zero=0.00;
     
     
@@ -91,13 +96,29 @@ public class KursyAc implements Serializable {
         return "kursZestawienie";
     }
 
-    
-     public void przyjmijWplate(ValueChangeEvent event) {
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, event.getNewValue().toString());
+    public void akcjalist(ActionEvent ae){
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zero));
+        zam=zamowienia.getRowData();
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
-        if (null != event.getNewValue()&&new Double(event.getNewValue().toString())!=0) {
-            zero= new Double(event.getNewValue().toString());
-            zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ae.toString());
+        if (zero!=0) {
+            //zero= new Double(event.getNewValue().toString());
+            if(zero>0)zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
+            if(zero<0)zf.przyjmijWplate(zam, zero, "zwrot kasy z zamowienia");
+            zero=0;
+        }
+    }
+    
+    public void zmiana(ValueChangeEvent ev){
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(ev));
+        zam=zamowienia.getRowData();
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        if(ev.getNewValue()==null) return;
+        zero = new Double(ev.getNewValue().toString());
+        if (zero!=0) {
+            //zero= new Double(event.getNewValue().toString());
+            if(zero>0)zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
+            if(zero<0)zf.przyjmijWplate(zam, zero, "zwrot kasy z zamowienia");
             zero=0;
         }
     }
@@ -146,6 +167,14 @@ public class KursyAc implements Serializable {
     public void setZero(double zero) {
         this.zero = zero;
     }
-    
+
+    public DataModel<Zamowienie> getZamowienia() {
+        zamowienia.setWrappedData(kurs.getZamowienia());
+        return zamowienia;
+    }
+
+    public void setZamowienia(DataModel<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
+    }
     
 }

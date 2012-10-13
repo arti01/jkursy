@@ -62,7 +62,7 @@
             <div id="tabela">
                 <h:form >
                     <h:panelGroup id="formZam">
-                        <rich:dataTable value="#{tragKursyAc.kurs.zamowienia}" var="zam" id="tabelaZam">
+                        <rich:dataTable value="#{tragKursyAc.zamowienia}" var="zam" id="tabelaZam">
                             <f:facet name="header">
                                 Przyjęte zamówienia
                             </f:facet> 
@@ -94,7 +94,7 @@
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
                                 </h:commandLink>
                             </rich:column >
-                            
+
                             <rich:column>
                                 <f:facet name="header">
                                     <h:outputText value="saldo (ujemne oznacza, że tragarz przyjął gotówkę a nie kupił obiadu)"/>
@@ -102,17 +102,16 @@
                                 <h:outputText value="#{zam.saldo}"/>
                             </rich:column>
 
-                            <rich:column >
+                            <rich:column id="przyjWpl">
                                 <f:facet name="header">
                                     <h:outputText value="przyjmij wpłatę"/>
-                                </f:facet> 
-                                <a4j:commandLink id="zmienWpl">
-                                    <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                    <h:inputText value="#{tragKursyAc.zero}" valueChangeListener="#{tragKursyAc.przyjmijWplate}" size="6" >
-                                        <a4j:ajax render="formZam" execute="zmienWpl" event="change"  />
-                                        <f:convertNumber pattern="#,###,##.00"/>
-                                    </h:inputText>
-                                </a4j:commandLink>
+                                </f:facet>
+                                
+                                <h:inputText id="inputV" value="#{tragKursyAc.zero}" size="6" valueChangeListener="#{tragKursyAc.zmiana}">
+                                    <f:convertNumber pattern="#,###,##.00"/>
+                                    <a4j:ajax event="change" execute="inputV" render="formZam"/>
+                                </h:inputText>
+                                #{tragKursyAc.zero}
                             </rich:column >
 
                             <rich:column >
