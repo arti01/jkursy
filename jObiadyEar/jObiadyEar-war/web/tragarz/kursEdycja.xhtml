@@ -90,9 +90,9 @@
                                     <h:outputText value="wartość"/>
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
-                                <h:commandLink value=" historia transakcji" action="#{tragKursyAc.transHist}" immediate="true">
+                                <a4j:commandLink value=" historia transakcji" action="#{tragKursyAc.transHist}">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                </h:commandLink>
+                                </a4j:commandLink>
                             </rich:column >
 
                             <rich:column>
@@ -109,7 +109,7 @@
                                 
                                 <h:inputText id="inputV" value="#{tragKursyAc.zero}" size="6" valueChangeListener="#{tragKursyAc.zmiana}">
                                     <f:convertNumber pattern="#,###,##.00"/>
-                                    <a4j:ajax event="change" execute="inputV" render="formZam"/>
+                                    <a4j:ajax event="change" execute="inputV" render="formZam" />
                                 </h:inputText>
                                 #{tragKursyAc.zero}
                             </rich:column >

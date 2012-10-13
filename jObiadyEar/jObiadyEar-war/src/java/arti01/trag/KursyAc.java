@@ -21,6 +21,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIInput;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -110,9 +111,9 @@ public class KursyAc implements Serializable {
     }
     
     public void zmiana(ValueChangeEvent ev){
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(ev));
+        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(ev));
         zam=zamowienia.getRowData();
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
         if(ev.getNewValue()==null) return;
         zero = new Double(ev.getNewValue().toString());
         if (zero!=0) {
