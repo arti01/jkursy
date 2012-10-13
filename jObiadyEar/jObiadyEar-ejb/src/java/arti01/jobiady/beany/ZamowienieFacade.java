@@ -59,7 +59,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
          Transakcjezamowienia trZam=new Transakcjezamowienia();
             trZam.setKwota(kwota);
             trZam.setTytulem(tytulem);
-            zam.getTransakcjezamowienia().add(trZam);
+            zam.getTransakcjezamowienia().add(0, trZam);
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
             this.edit(zam);
     }
