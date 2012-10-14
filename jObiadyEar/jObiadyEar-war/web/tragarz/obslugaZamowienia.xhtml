@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/templatetrag.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:define name="content">
+        <h:panelGroup id="naglowek">
+            <h3>Żarłacz:#{tragKursyAc.zam.uzytkownik.imieNazwisko} , Data zamówienia: #{tragKursyAc.zam.dataZamowienia}, Status zamówienia: #{tragKursyAc.zam.statusZamowienia}, Wartość: #{tragKursyAc.zam.suma}, Wpłacono: #{tragKursyAc.zam.saldo}
+            </h3>
+        </h:panelGroup>
+
+        
+        <div id="contentPrawy">
+            <div id="tabela">
+                <h:form >
+                    <h:panelGroup id="formZam">
+                        <rich:dataTable value="#{tragKursyAc.zam.potrawy}" var="menu" id="tabelaZam">
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="nazwa"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.nazwa}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="cena"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.cena}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="zrealizowane"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.cena}"/>
+                            </rich:column >
+                        </rich:dataTable>
+                    </h:panelGroup>
+                    
+                    <h:panelGroup id="formZamNew">
+                        <rich:dataTable value="#{tragKursyAc.zam.zamowieniemenu}" var="menu" id="tabelaZamNew">
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="nazwa"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.menu.nazwa}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="cena"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.menu.cena}"/>
+                            </rich:column >
+                            <rich:column >
+                                <f:facet name="header">
+                                    <h:outputText value="zrealizowane"/>
+                                </f:facet> 
+                                <h:outputText value="#{menu.zrealizowano}"/>
+                                <h:selectBooleanCheckbox value="#{menu.zrealizowano}" label="zrealizowane"/>
+                            </rich:column >
+                        </rich:dataTable>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

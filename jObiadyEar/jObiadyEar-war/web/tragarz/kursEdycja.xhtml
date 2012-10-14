@@ -13,7 +13,7 @@
         <h:form>
             <h:panelGroup id="naglowek">
                 <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
-                <a4j:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}" immediate="true"/>
+                <a4j:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}"/>
             </h:panelGroup>
         </h:form>
         <div id="contentLewy">
@@ -67,6 +67,11 @@
                                 Przyjęte zamówienia
                             </f:facet> 
                             <rich:column >
+                                <a4j:commandLink value="Wycofaj zamówienie" action="#{tragKursyAc.wycofaj}" render="formMenu, formZam, naglowek">
+                                    <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
+                                </a4j:commandLink>
+                            </rich:column >
+                            <rich:column >
                                 <f:facet name="header">
                                     data zamówienia
                                 </f:facet> 
@@ -87,7 +92,7 @@
                             </rich:column >
                             <rich:column >
                                 <f:facet name="header">
-                                    <h:outputText value="wartość"/>
+                                    <h:outputText value="wartość początkowa"/>
                                 </f:facet> 
                                 <h:outputText value="#{zam.suma}"/>
                                 <a4j:commandLink value=" historia transakcji" action="#{tragKursyAc.transHist}">
@@ -97,9 +102,9 @@
 
                             <rich:column>
                                 <f:facet name="header">
-                                    <h:outputText value="saldo (ujemne oznacza, że tragarz przyjął gotówkę a nie kupił obiadu)"/>
+                                    <h:outputText style="font-size: 77%;" value="saldo (ujemne oznacza, że tragarz przyjął gotówkę a nie kupił obiadu)"/>
                                 </f:facet> 
-                                <h:outputText value="#{zam.saldo}"/>
+                                <h:outputText value="#{-zam.saldo}"/>
                             </rich:column>
 
                             <rich:column id="przyjWpl">
@@ -111,13 +116,11 @@
                                     <f:convertNumber pattern="#,###,##.00"/>
                                     <a4j:ajax event="change" execute="inputV" render="formZam" />
                                 </h:inputText>
-                                #{tragKursyAc.zero}
                             </rich:column >
-
                             <rich:column >
-                                <a4j:commandLink value="Wycofaj zamówienie" action="#{tragKursyAc.wycofaj}" render="formMenu, formZam, naglowek">
+                                <h:commandLink value="Obsługa zamówienia" action="#{tragKursyAc.obslugaZamowienia}">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
-                                </a4j:commandLink>
+                                </h:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>
@@ -125,5 +128,4 @@
             </div>
         </div>
     </ui:define>
-
 </ui:composition>

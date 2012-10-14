@@ -21,7 +21,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIInput;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -79,6 +78,10 @@ public class KursyAc implements Serializable {
     public String transHist() {
         zero=0;
         return "transHist";
+    }
+    
+    public String obslugaZamowienia(){
+        return "obslugaZamowienia";
     }
     
     public String kursEdycja() {
