@@ -59,6 +59,19 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
          Transakcjezamowienia trZam=new Transakcjezamowienia();
             trZam.setKwota(kwota);
             trZam.setTytulem(tytulem);
+            Calendar cal = Calendar.getInstance();    
+            trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
+            zam.getTransakcjezamowienia().add(0, trZam);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+            this.edit(zam);
+    }
+    
+    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem, Timestamp dataoperacji){
+        if(kwota==0) return;
+         Transakcjezamowienia trZam=new Transakcjezamowienia();
+            trZam.setKwota(kwota);
+            trZam.setTytulem(tytulem);
+            trZam.setDataoperacji(dataoperacji);
             zam.getTransakcjezamowienia().add(0, trZam);
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
             this.edit(zam);

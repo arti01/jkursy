@@ -5,6 +5,7 @@
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,6 +45,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @ManyToOne
     @JoinColumn(name = "idzamowienie")
     private Zamowienie zamowienie;
+    
+    private Timestamp dataoperacji;
 
     public Transakcjezamowienia() {
     }
@@ -78,6 +81,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
     public void setZamowienie(Zamowienie zamowienie) {
         this.zamowienie = zamowienie;
+    }
+
+    public Timestamp getDataoperacji() {
+        return dataoperacji;
+    }
+
+    public void setDataoperacji(Timestamp dataoperacji) {
+        this.dataoperacji = dataoperacji;
     }
 
     @Override

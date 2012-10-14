@@ -40,6 +40,7 @@ public class Uzytkownik implements Serializable {
     @Column(nullable = true, length = 50)
     @Size(min = 2, max = 15)
     private String userpass;
+    
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {
         @JoinColumn(name = "username", nullable = false)
@@ -47,6 +48,7 @@ public class Uzytkownik implements Serializable {
         @JoinColumn(name = "roles_rola", nullable = false)
     })
     private List<Role> roles;
+    
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
     @OrderBy("idzamowienie DESC")
     @JoinColumn(name = "username")

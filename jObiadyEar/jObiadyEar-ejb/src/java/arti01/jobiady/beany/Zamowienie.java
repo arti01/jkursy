@@ -56,6 +56,10 @@ public class Zamowienie implements Serializable {
     private List<Menu>potrawy=new ArrayList<Menu>();
     
     
+    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name="idzamowienie")
+    private List<Zamowieniemenu> zamowieniemenu;
+    
     @ManyToOne()
     @JoinColumn(name="kurs_id")
     private Kurs kurs;
@@ -168,6 +172,14 @@ public class Zamowienie implements Serializable {
 
     public void setTransakcjezamowienia(List<Transakcjezamowienia> transakcjezamowienia) {
         this.transakcjezamowienia = transakcjezamowienia;
+    }
+
+    public List<Zamowieniemenu> getZamowieniemenu() {
+        return zamowieniemenu;
+    }
+
+    public void setZamowieniemenu(List<Zamowieniemenu> zamowieniemenu) {
+        this.zamowieniemenu = zamowieniemenu;
     }
 
     @Override
