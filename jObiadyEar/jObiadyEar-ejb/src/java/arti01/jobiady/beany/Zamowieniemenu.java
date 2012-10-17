@@ -33,7 +33,7 @@ public class Zamowieniemenu implements Serializable {
     protected ZamowieniemenuPK zamowieniemenuPK;
     
     @Column(name = "ZREALIZOWANO")
-    private Short zrealizowano;
+    private boolean zrealizowano;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="idmenu")
@@ -58,11 +58,11 @@ public class Zamowieniemenu implements Serializable {
         this.zamowieniemenuPK = zamowieniemenuPK;
     }
 
-    public Short getZrealizowano() {
+    public boolean isZrealizowano() {
         return zrealizowano;
     }
 
-    public void setZrealizowano(Short zrealizowano) {
+    public void setZrealizowano(boolean zrealizowano) {
         this.zrealizowano = zrealizowano;
     }
 
