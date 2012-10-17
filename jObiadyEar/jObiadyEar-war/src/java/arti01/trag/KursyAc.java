@@ -11,10 +11,12 @@ import arti01.jobiady.beany.Uzytkownik;
 import arti01.jobiady.beany.UzytkownikFacade;
 import arti01.jobiady.beany.Zamowienie;
 import arti01.jobiady.beany.ZamowienieFacade;
+import arti01.jobiady.beany.Zamowieniemenu;
 import arti01.utils.Login;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -46,6 +48,7 @@ public class KursyAc implements Serializable {
     @EJB
     ZamowienieFacade zf;
     private Zamowienie zam;
+    private List<Zamowieniemenu> zamOldValue;
     private DataModel<Zamowienie> zamowienia=new ListDataModel<Zamowienie>();
     private double zero=0.00;
     
@@ -81,6 +84,21 @@ public class KursyAc implements Serializable {
     }
     
     public String obslugaZamowienia(){
+     //   zamOldValue=new Zamowienie();
+        zamOldValue=zam.getZamowieniemenu();
+        return "obslugaZamowienia";
+    }
+    
+    public String akceptujZamowienia(){
+        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        
+        for(Zamowieniemenu zamMen:zam.getZamowieniemenu()){
+            int index =zamOldValue.indexOf(zamMen);
+            Zamowieniemenu zamMenOld=zamOldValue.get(index);
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.isZrealizowano()));
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.isZrealizowano()));
+        }
+        zf.edit(zam);
         return "obslugaZamowienia";
     }
     
@@ -98,19 +116,6 @@ public class KursyAc implements Serializable {
     
     public String kursZestawienie() {
         return "kursZestawienie";
-    }
-
-    public void akcjalist(ActionEvent ae){
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zero));
-        zam=zamowienia.getRowData();
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, ae.toString());
-        if (zero!=0) {
-            //zero= new Double(event.getNewValue().toString());
-            if(zero>0)zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
-            if(zero<0)zf.przyjmijWplate(zam, zero, "zwrot kasy z zamowienia");
-            zero=0;
-        }
     }
     
     public void zmiana(ValueChangeEvent ev){
