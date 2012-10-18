@@ -12,7 +12,7 @@
     <ui:define name="content">
         <h:form>
             <h:panelGroup id="naglowek">
-                <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
+                <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Saldo dla kursu: #{-tragKursyAc.kurs.sumaWplat}</h3>
                 <a4j:commandButton value="zestawienie" action="#{tragKursyAc.kursZestawienie}"/>
             </h:panelGroup>
         </h:form>
@@ -118,9 +118,14 @@
                                 </h:inputText>
                             </rich:column >
                             <rich:column >
-                                <h:commandLink value="Obsługa zamówienia" action="#{tragKursyAc.obslugaZamowienia}">
+                                <h:commandLink value="Realizacja detali zamówienia" action="#{tragKursyAc.obslugaZamowienia}">
                                     <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
                                 </h:commandLink>
+                            </rich:column >
+                            <rich:column >
+                                <a4j:commandLink value="Zrealizowane w całości" action="#{tragKursyAc.zrealizowaneWcalosci}" render="formZam">
+                                    <f:setPropertyActionListener value="#{zam}" target="#{tragKursyAc.zam}"/>
+                                </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>

@@ -13,7 +13,7 @@
 
         <h:panelGroup id="naglowek">
             <h4>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h4>
-            <h3>Zamówienie #{tragKursyAc.zam.uzytkownik.imieNazwisko}, #{tragKursyAc.zam.dataZamowienia}, saldo z żarłaczem: #{tragKursyAc.zam.saldo}</h3>
+            <h3>Zamówienie #{tragKursyAc.zam.uzytkownik.imieNazwisko}, #{tragKursyAc.zam.dataZamowienia}, saldo z żarłaczem: #{-tragKursyAc.zam.saldo}</h3>
         </h:panelGroup>
         <h:form>
             <h:button value="wróc" outcome="kursEdycja.xhtml"/>

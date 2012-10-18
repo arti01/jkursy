@@ -15,6 +15,7 @@ import arti01.jobiady.beany.Zamowieniemenu;
 import arti01.utils.Login;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -84,22 +85,16 @@ public class KursyAc implements Serializable {
     }
     
     public String obslugaZamowienia(){
-     //   zamOldValue=new Zamowienie();
-        zamOldValue=zam.getZamowieniemenu();
         return "obslugaZamowienia";
     }
     
-    public String akceptujZamowienia(){
-        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
-        
-        for(Zamowieniemenu zamMen:zam.getZamowieniemenu()){
-            int index =zamOldValue.indexOf(zamMen);
-            Zamowieniemenu zamMenOld=zamOldValue.get(index);
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.isZrealizowano()));
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.isZrealizowano()));
-        }
-        zf.edit(zam);
-        return "obslugaZamowienia";
+    public String realizujZamowienie(){
+        zf.akceptujElementZamówienia(zam);
+        return "kursEdycja";
+    }
+    
+    public void zrealizowaneWcalosci(){
+        zf.zrealizowaneWcalosci(zam);
     }
     
     public String kursEdycja() {
@@ -108,6 +103,10 @@ public class KursyAc implements Serializable {
     
     public void przyjmij() {
         kf.przyjmijZamowienie(zam, kurs);
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu().size()));
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu()));
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getPotrawy().size()));
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getPotrawy()));
     }
     
     public void wycofaj() {

@@ -19,28 +19,6 @@
         <div id="contentPrawy">
             <div id="tabela">
                 <h:form >
-                    <h:panelGroup id="formZam">
-                        <rich:dataTable value="#{tragKursyAc.zam.potrawy}" var="menu" id="tabelaZam">
-                            <rich:column >
-                                <f:facet name="header">
-                                    <h:outputText value="nazwa"/>
-                                </f:facet> 
-                                <h:outputText value="#{menu.nazwa}"/>
-                            </rich:column >
-                            <rich:column >
-                                <f:facet name="header">
-                                    <h:outputText value="cena"/>
-                                </f:facet> 
-                                <h:outputText value="#{menu.cena}"/>
-                            </rich:column >
-                            <rich:column >
-                                <f:facet name="header">
-                                    <h:outputText value="zrealizowane"/>
-                                </f:facet> 
-                                <h:outputText value="#{menu.cena}"/>
-                            </rich:column >
-                        </rich:dataTable>
-                    </h:panelGroup>
                     
                     <h:panelGroup id="formZamNew">
                         <rich:dataTable value="#{tragKursyAc.zam.zamowieniemenu}" var="menu" id="tabelaZamNew">
@@ -65,7 +43,7 @@
                             </rich:column >
                         </rich:dataTable>
                     </h:panelGroup>
-                    <h:commandButton value="zaakceptuj" action="#{tragKursyAc.akceptujZamowienia}"/>
+                    <h:commandButton value="zaakceptuj" action="#{tragKursyAc.realizujZamowienie}"/>
                 </h:form>
             </div>
         </div>
