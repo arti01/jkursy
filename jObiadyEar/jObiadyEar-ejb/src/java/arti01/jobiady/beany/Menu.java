@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Min;
@@ -50,6 +51,10 @@ public class Menu implements Serializable {
         @JoinColumn(name = "iddnityg", nullable = false)})
     @OrderBy("iddnityg")
     private List<DniTyg> dniTyg;
+    
+    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name="idzamowienie")
+    private List<Zamowieniemenu> zamowieniemenu;
 
     public int getIdmenu() {
         return idmenu;
@@ -83,6 +88,16 @@ public class Menu implements Serializable {
         this.cena = cena;
     }
 
+    public List<Zamowieniemenu> getZamowieniemenu() {
+        return zamowieniemenu;
+    }
+
+    public void setZamowieniemenu(List<Zamowieniemenu> zamowieniemenu) {
+        this.zamowieniemenu = zamowieniemenu;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

@@ -38,6 +38,10 @@ public class Zamowieniemenu implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="idmenu")
     private Menu menu;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="idzamowienie")
+    private Zamowienie zamowienie;
 
     public Zamowieniemenu() {
     }
@@ -74,6 +78,15 @@ public class Zamowieniemenu implements Serializable {
         this.menu = menu;
     }
 
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
+    }
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;

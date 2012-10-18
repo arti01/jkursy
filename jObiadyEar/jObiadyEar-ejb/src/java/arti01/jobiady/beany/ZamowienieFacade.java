@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,10 +27,17 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
     private List<Zamowienie> zamPoczatkowe = new ArrayList<Zamowienie>();
+    //@EJB MenuFacade mf;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    @Override
+    public void edit(Zamowienie entity) {
+        getEntityManager().merge(entity);
+        getEntityManager().refresh(entity);
     }
 
     @SuppressWarnings("unchecked")
@@ -53,30 +61,86 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         zamPoczatkowe = query.getResultList();
         return zamPoczatkowe;
     }
-    
-    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem){
-        if(kwota==0) return;
-         Transakcjezamowienia trZam=new Transakcjezamowienia();
-            trZam.setKwota(kwota);
-            trZam.setTytulem(tytulem);
-            Calendar cal = Calendar.getInstance();    
-            trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
-            zam.getTransakcjezamowienia().add(0, trZam);
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
-            this.edit(zam);
+
+    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem) {
+        if (kwota == 0) {
+            return;
+        }
+        Transakcjezamowienia trZam = new Transakcjezamowienia();
+        trZam.setKwota(kwota);
+        trZam.setTytulem(tytulem);
+        Calendar cal = Calendar.getInstance();
+        trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
+        zam.getTransakcjezamowienia().add(0, trZam);
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        this.edit(zam);
+    }
+
+    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem, Timestamp dataoperacji) {
+        if (kwota == 0) {
+            return;
+        }
+        Transakcjezamowienia trZam = new Transakcjezamowienia();
+        trZam.setKwota(kwota);
+        trZam.setTytulem(tytulem);
+        trZam.setDataoperacji(dataoperacji);
+        zam.getTransakcjezamowienia().add(0, trZam);
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        this.edit(zam);
+    }
+
+    public void akceptujElementZamówienia(Zamowienie zam) {
+        Zamowienie zamOldValue = find(zam.getIdzamowienie());
+        boolean zrealizowaneWcalosci = true;
+        boolean nieZrealizowaneWcalosci = true;
+        for (Zamowieniemenu zamMen : zam.getZamowieniemenu()) {
+            int index = zamOldValue.getZamowieniemenu().indexOf(zamMen);
+            Zamowieniemenu zamMenOld = zamOldValue.getZamowieniemenu().get(index);
+            //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.isZrealizowano()) + "-------------");
+            //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.isZrealizowano()));
+            if (!zamMen.isZrealizowano()) {
+                zrealizowaneWcalosci = false;
+                if (zamMenOld.isZrealizowano()) {
+                    Transakcjezamowienia trZam = new Transakcjezamowienia();
+                    trZam.setKwota(zamMen.getMenu().getCena());
+                    trZam.setTytulem("Korekta dla zakupu " + zamMen.getMenu().getNazwa());
+                    Calendar cal = Calendar.getInstance();
+                    trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
+                    zam.getTransakcjezamowienia().add(0, trZam);
+                }
+            }
+            if (zamMen.isZrealizowano()) {
+                nieZrealizowaneWcalosci = false;
+                if (!zamMenOld.isZrealizowano()) {
+                    Transakcjezamowienia trZam = new Transakcjezamowienia();
+                    trZam.setKwota(-zamMen.getMenu().getCena());
+                    trZam.setTytulem("Kupiono " + zamMen.getMenu().getNazwa());
+                    Calendar cal = Calendar.getInstance();
+                    trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
+                    zam.getTransakcjezamowienia().add(0, trZam);
+                }
+            }
+        }
+        if (zrealizowaneWcalosci) {
+            zam.setStatusZamowienia("Zrealizowane w całości");
+        } else if (nieZrealizowaneWcalosci) {
+            zam.setStatusZamowienia("W całości NIE zrealizowane");
+        } else {
+            zam.setStatusZamowienia("Zrealizowane częsciowo");
+        }
+        edit(zam);
     }
     
-    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem, Timestamp dataoperacji){
-        if(kwota==0) return;
-         Transakcjezamowienia trZam=new Transakcjezamowienia();
-            trZam.setKwota(kwota);
-            trZam.setTytulem(tytulem);
-            trZam.setDataoperacji(dataoperacji);
-            zam.getTransakcjezamowienia().add(0, trZam);
-            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
-            this.edit(zam);
+    public void zrealizowaneWcalosci(Zamowienie zam){
+        List<Zamowieniemenu> zamList=new ArrayList<Zamowieniemenu>();
+        for(Zamowieniemenu zamMen:zam.getZamowieniemenu()){
+            zamMen.setZrealizowano(true);
+            zamList.add(zamMen);
+        }
+        zam.setZamowieniemenu(zamList);
+        akceptujElementZamówienia(zam);
     }
-    
+
     public ZamowienieFacade() {
         super(Zamowienie.class);
     }

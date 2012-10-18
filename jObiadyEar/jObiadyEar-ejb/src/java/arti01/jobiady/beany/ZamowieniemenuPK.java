@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 public class ZamowieniemenuPK implements Serializable {
     @Basic(optional = false)
     @NotNull
-    @Column(name = "IDZAMOWIENIE")
+    @Column(name = "IDZAMOWIENIE", insertable=false, updatable=false)
     private int idzamowienie;
     @Basic(optional = false)
     @NotNull
