@@ -6,10 +6,8 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.AbstractList;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,10 +29,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -127,7 +121,7 @@ public class Kurs implements Serializable {
             for (Zamowieniemenu zm : zam.getZamowieniemenu()) {
                 Menu m = zm.getMenu();
                 Integer ilosc = 0;
-                Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName() + m);
+                //Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName() + m);
                 if (zestMap.get(m) != null) {
 
                     ilosc = zestMap.get(m) + 1;
@@ -145,18 +139,41 @@ public class Kurs implements Serializable {
         Map<Uzytkownik, List<Zamowienie>> userZam = new HashMap<Uzytkownik, List<Zamowienie>>();
         for (Zamowienie zam : getZamowienia()) {
             Uzytkownik u = zam.getUzytkownik();
-            List<Zamowienie>zamNew=new ArrayList<Zamowienie>();
-            if(userZam.get(u)!=null){
-                Logger.getGlobal().log(Level.SEVERE, "jest user"+userZam.get(u));
-                zamNew=userZam.get(u);
+            List<Zamowienie> zamNew = new ArrayList<Zamowienie>();
+            if (userZam.get(u) != null) {
+                Logger.getGlobal().log(Level.SEVERE, "jest user" + userZam.get(u));
+                zamNew = userZam.get(u);
             }
             zamNew.add(zam);
             userZam.put(u, zamNew);
-                Logger.getGlobal().log(Level.SEVERE, "po akcji"+userZam.get(u));
+            Logger.getGlobal().log(Level.SEVERE, "po akcji" + userZam.get(u));
         }
-        Entry<Menu, Integer> zestMen = null;
+        List<Entry<Uzytkownik, List<Zamowienie>>> userZamArr = new ArrayList<Entry<Uzytkownik, List<Zamowienie>>>(userZam.entrySet());
+        //teraz liczenie dla userów
+        Map<Uzytkownik, List<Entry<Menu, Integer>>> wynUserMap=new HashMap<Uzytkownik, List<Entry<Menu, Integer>>>();
+        for (Entry<Uzytkownik, List<Zamowienie>> mapZam : userZamArr) {
+            Map<Menu, Integer> zestMap = new HashMap<Menu, Integer>();
+            for (Zamowienie zam : zamowienia) {
+                for (Zamowieniemenu zm : zam.getZamowieniemenu()) {
+                    Menu m = zm.getMenu();
+                    Integer ilosc = 0;
+                    if (zestMap.get(m) != null) {
 
-        return zestawieniePerUser;
+                        ilosc = zestMap.get(m) + 1;
+                    } else {
+                        ilosc = 1;
+                    }
+                    zestMap.put(m, ilosc);
+                }
+            }
+            //wynUserList=new AbstractMap.SimpleEntry<Uzytkownik, Map<Menu, Integer>>(mapZam.getKey(), zestMap);
+            wynUserMap.put(mapZam.getKey(), new ArrayList(zestMap.entrySet()));
+        }
+Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName() + wynUserMap+"wynikList");                
+List<Entry<Uzytkownik, List<Entry<Menu, Integer>>>> wynik;
+                
+wynik=new ArrayList<Entry<Uzytkownik, List<Entry<Menu, Integer>>>>(wynUserMap.entrySet());
+        return wynik;
     }
 
     @Override
