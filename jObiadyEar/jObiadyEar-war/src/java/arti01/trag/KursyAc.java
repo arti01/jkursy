@@ -107,6 +107,7 @@ public class KursyAc implements Serializable {
     }
     
     public String kursZestawienie() {
+        kurs.getZestawieniePerUser();
         return "kursZestawienie";
     }
     
