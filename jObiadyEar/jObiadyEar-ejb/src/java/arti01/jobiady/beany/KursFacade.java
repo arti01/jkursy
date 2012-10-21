@@ -4,7 +4,10 @@
  */
 package arti01.jobiady.beany;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,7 +16,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author arti01
  */
-@Stateless
+@Stateful
 public class KursFacade extends AbstractFacade<Kurs> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
@@ -23,21 +26,23 @@ public class KursFacade extends AbstractFacade<Kurs> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    public void przyjmijZamowienie(Zamowienie zam, Kurs kurs){
+    
+   public Kurs przyjmijZamowienie(Zamowienie zam, Kurs kurs){
+        zam=getEntityManager().find(Zamowienie.class, zam.getIdzamowienie());
+        getEntityManager().refresh(zam);
         zam.setStatusZamowienia(StatusZamowienia.WREALIZACJI);
         zam.setKurs(kurs);
         kurs.getZamowienia().add(0, zam);
-        edit(kurs);
+        return edit(kurs);
     }
     
-    public void wycofajZamowienie(Zamowienie zam){
+    public Kurs wycofajZamowienie(Zamowienie zam){
         Kurs kurs=zam.getKurs();
         zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
         zam.setKurs(null);
         kurs.getZamowienia().remove(zam);
         zf.edit(zam);
-        edit(kurs);
+        return edit(kurs);
     }
     
     public KursFacade() {

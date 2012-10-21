@@ -4,8 +4,10 @@
  */
 package arti01.jobiady.beany;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.TimeZone;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -25,6 +27,39 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
 
     public UzytkownikFacade() {
         super(Uzytkownik.class);
+    }
+    
+    public Kurs dodajKurs(Uzytkownik u){
+        Kurs kurs = new Kurs();
+        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
+        kurs.setDataKursu(ts);
+        kurs.setTragarz(u);
+        u.getKursy().add(0, kurs);
+        u=getEntityManager().merge(u);
+        return u.getKursy().get(0);
+    }
+    
+    public Zamowienie dodajZam(Uzytkownik u){
+        Zamowienie zam = new Zamowienie();
+        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
+        zam.setDataZamowienia(ts);
+        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
+        zam.setUzytkownik(u);
+        u.getZamowienia().add(0, zam);
+        u=getEntityManager().merge(u);
+        return u.getZamowienia().get(0);
+    }
+    
+    @Deprecated
+    public Uzytkownik findRefresh(String uO){
+        Uzytkownik u=find(uO);
+         //getEntityManager().flush();
+         /*Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getZamowieniemenu().size()));
+         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getZamowieniemenu()));
+         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getPotrawy()));
+         */
+        getEntityManager().refresh(u);
+         return u;
     }
     
 }

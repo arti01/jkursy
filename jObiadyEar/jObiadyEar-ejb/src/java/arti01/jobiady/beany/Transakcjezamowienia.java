@@ -5,58 +5,77 @@
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author 103039
+ * @author arti01
  */
 @Entity
-@Table(name = "TRANSAKCJEZAMOWIENIA")
-@XmlRootElement
-
-   public class Transakcjezamowienia implements Serializable {
+@Table(name = "transakcjezamowienia")
+@NamedQueries({
+    @NamedQuery(name = "Transakcjezamowienia.findAll", query = "SELECT t FROM Transakcjezamowienia t")})
+public class Transakcjezamowienia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQTRANSZAM")
-    @SequenceGenerator(name="SEQTRANSZAM", sequenceName="SEQTRANSZAM")
-    @Column(nullable = false)
-    private int idTransakcjezamowienia;
-
+    @Basic(optional = false)
     @NotNull
-    @Column(name = "KWOTA", nullable = false)
+    @Column(name = "idtransakcjezamowienia")
+    private Integer idtransakcjezamowienia;
+    @Column(name = "dataoperacji")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataoperacji;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "kwota")
     private double kwota;
     @Size(max = 255)
-    @Column(name = "TYTULEM", length = 255)
+    @Column(name = "tytulem")
     private String tytulem;
-    
-    @ManyToOne
-    @JoinColumn(name = "idzamowienie")
-    private Zamowienie zamowienie;
-    
-    private Timestamp dataoperacji;
+    @JoinColumn(name = "idzamowienie", referencedColumnName = "idzamowienie")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Zamowienie idzamowienie;
 
     public Transakcjezamowienia() {
     }
-    
-    public int getIdTransakcjezamowienia() {
-        return idTransakcjezamowienia;
+
+    public Transakcjezamowienia(Integer idtransakcjezamowienia) {
+        this.idtransakcjezamowienia = idtransakcjezamowienia;
     }
 
-    public void setIdTransakcjezamowienia(int idTransakcjezamowienia) {
-        this.idTransakcjezamowienia = idTransakcjezamowienia;
+    public Transakcjezamowienia(Integer idtransakcjezamowienia, double kwota) {
+        this.idtransakcjezamowienia = idtransakcjezamowienia;
+        this.kwota = kwota;
+    }
+
+    public Integer getIdtransakcjezamowienia() {
+        return idtransakcjezamowienia;
+    }
+
+    public void setIdtransakcjezamowienia(Integer idtransakcjezamowienia) {
+        this.idtransakcjezamowienia = idtransakcjezamowienia;
+    }
+
+    public Date getDataoperacji() {
+        return dataoperacji;
+    }
+
+    public void setDataoperacji(Date dataoperacji) {
+        this.dataoperacji = dataoperacji;
     }
 
     public double getKwota() {
@@ -75,43 +94,37 @@ import javax.xml.bind.annotation.XmlRootElement;
         this.tytulem = tytulem;
     }
 
-    public Zamowienie getZamowienie() {
-        return zamowienie;
+    public Zamowienie getIdzamowienie() {
+        return idzamowienie;
     }
 
-    public void setZamowienie(Zamowienie zamowienie) {
-        this.zamowienie = zamowienie;
-    }
-
-    public Timestamp getDataoperacji() {
-        return dataoperacji;
-    }
-
-    public void setDataoperacji(Timestamp dataoperacji) {
-        this.dataoperacji = dataoperacji;
+    public void setIdzamowienie(Zamowienie idzamowienie) {
+        this.idzamowienie = idzamowienie;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.idTransakcjezamowienia;
+        int hash = 0;
+        hash += (idtransakcjezamowienia != null ? idtransakcjezamowienia.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Transakcjezamowienia)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Transakcjezamowienia other = (Transakcjezamowienia) obj;
-        if (this.idTransakcjezamowienia != other.idTransakcjezamowienia) {
+        Transakcjezamowienia other = (Transakcjezamowienia) object;
+        if ((this.idtransakcjezamowienia == null && other.idtransakcjezamowienia != null) || (this.idtransakcjezamowienia != null && !this.idtransakcjezamowienia.equals(other.idtransakcjezamowienia))) {
             return false;
         }
         return true;
     }
-    
+
+    @Override
+    public String toString() {
+        return "arti01.jobiady.beany.Transakcjezamowienia[ idtransakcjezamowienia=" + idtransakcjezamowienia + " ]";
+    }
     
 }

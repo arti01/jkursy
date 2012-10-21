@@ -5,69 +5,74 @@
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author 103039
+ * @author arti01
  */
 @Entity
-@Table(name = "ZAMOWIENIEMENU")
+@Table(name = "zamowieniemenu")
 @NamedQueries({
     @NamedQuery(name = "Zamowieniemenu.findAll", query = "SELECT z FROM Zamowieniemenu z")})
 public class Zamowieniemenu implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ZamowieniemenuPK zamowieniemenuPK;
-    
-    @Column(name = "ZREALIZOWANO")
-    private boolean zrealizowano;
-    
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQZAMMEN")
+    @SequenceGenerator(name="SEQZAMMEN", sequenceName="SEQZAMMEN")
+    private Long id;
+    @Column(name = "zrealizowano")
+    private Boolean zrealizowano;
+
+    @JoinColumn(name = "idzamowienie", referencedColumnName = "idzamowienie")    
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="idmenu")
-    private Menu menu;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="idzamowienie")
     private Zamowienie zamowienie;
+    @JoinColumn(name = "idmenu", referencedColumnName = "idmenu")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Menu menu;
 
     public Zamowieniemenu() {
     }
 
-    public Zamowieniemenu(ZamowieniemenuPK zamowieniemenuPK) {
-        this.zamowieniemenuPK = zamowieniemenuPK;
+    public Zamowieniemenu(Long id) {
+        this.id = id;
     }
 
-    public Zamowieniemenu(int idzamowienie, int idmenu) {
-        this.zamowieniemenuPK = new ZamowieniemenuPK(idzamowienie, idmenu);
+    public Long getId() {
+        return id;
     }
 
-    public ZamowieniemenuPK getZamowieniemenuPK() {
-        return zamowieniemenuPK;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setZamowieniemenuPK(ZamowieniemenuPK zamowieniemenuPK) {
-        this.zamowieniemenuPK = zamowieniemenuPK;
-    }
-
-    public boolean isZrealizowano() {
+    public Boolean isZrealizowano() {
         return zrealizowano;
     }
 
-    public void setZrealizowano(boolean zrealizowano) {
+    public void setZrealizowano(Boolean zrealizowano) {
         this.zrealizowano = zrealizowano;
+    }
+
+    public Zamowienie getZamowienie() {
+        return zamowienie;
+    }
+
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
     }
 
     public Menu getMenu() {
@@ -78,19 +83,12 @@ public class Zamowieniemenu implements Serializable {
         this.menu = menu;
     }
 
-    public Zamowienie getZamowienie() {
-        return zamowienie;
-    }
-
-    public void setZamowienie(Zamowienie zamowienie) {
-        this.zamowienie = zamowienie;
-    }
     
     
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (zamowieniemenuPK != null ? zamowieniemenuPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -101,7 +99,7 @@ public class Zamowieniemenu implements Serializable {
             return false;
         }
         Zamowieniemenu other = (Zamowieniemenu) object;
-        if ((this.zamowieniemenuPK == null && other.zamowieniemenuPK != null) || (this.zamowieniemenuPK != null && !this.zamowieniemenuPK.equals(other.zamowieniemenuPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -109,7 +107,7 @@ public class Zamowieniemenu implements Serializable {
 
     @Override
     public String toString() {
-        return "arti01.jobiady.beany.Zamowieniemenu[ zamowieniemenuPK=" + zamowieniemenuPK + " ]";
+        return "arti01.jobiady.beany.Zamowieniemenu[ id=" + id + " ]";
     }
     
 }

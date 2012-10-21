@@ -6,6 +6,7 @@ package arti01.jobiady.beany;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolationException;
 
 /**
  *
@@ -24,9 +25,14 @@ public abstract class AbstractFacade<T> {
         getEntityManager().persist(entity);
     }
 
-    public void edit(T entity) {
-        getEntityManager().merge(entity);
-        getEntityManager().flush();
+    public T edit(T entity) {
+        try{
+            T entityNew=getEntityManager().merge(entity);
+            return entityNew;
+        }catch(ConstraintViolationException cve){
+            System.out.println(cve.getConstraintViolations()+cve.getMessage());
+            return entity;
+        }
     }
 
     public void remove(T entity) {

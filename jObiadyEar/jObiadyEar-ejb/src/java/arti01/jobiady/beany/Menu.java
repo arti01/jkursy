@@ -6,7 +6,10 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,34 +18,39 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
-import javax.validation.constraints.Min;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author 103039
+ * @author arti01
  */
 @Entity
+@Table(name = "menu")
+@NamedQueries({
+    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m")})
 public class Menu implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQMYCLASSID")
     @SequenceGenerator(name="SEQMYCLASSID", sequenceName="SEQMYCLASSID")
-    private int idmenu;
-    
-    @NotNull
-    @NotEmpty
+    @Column(name = "idmenu")
+    private Integer idmenu;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "cena")
+    private Double cena;
+    @Size(max = 255)
+    @Column(name = "nazwa")
     private String nazwa;
-    
-    @NotNull
-    @Min(1)
-    private double cena;
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "menu", fetch = FetchType.LAZY)
+    private List<Zamowieniemenu> zamowieniemenuList;
+
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "MenuDniTyg",
     joinColumns = {
@@ -51,17 +59,21 @@ public class Menu implements Serializable {
         @JoinColumn(name = "iddnityg", nullable = false)})
     @OrderBy("iddnityg")
     private List<DniTyg> dniTyg;
-    
-    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name="idzamowienie")
-    private List<Zamowieniemenu> zamowieniemenu;
 
-    public int getIdmenu() {
+    public Integer getIdmenu() {
         return idmenu;
     }
 
-    public void setIdmenu(int idmenu) {
+    public void setIdmenu(Integer idmenu) {
         this.idmenu = idmenu;
+    }
+
+    public Double getCena() {
+        return cena;
+    }
+
+    public void setCena(Double cena) {
+        this.cena = cena;
     }
 
     public String getNazwa() {
@@ -72,6 +84,14 @@ public class Menu implements Serializable {
         this.nazwa = nazwa;
     }
 
+    public List<Zamowieniemenu> getZamowieniemenuList() {
+        return zamowieniemenuList;
+    }
+
+    public void setZamowieniemenuList(List<Zamowieniemenu> zamowieniemenuList) {
+        this.zamowieniemenuList = zamowieniemenuList;
+    }
+
     public List<DniTyg> getDniTyg() {
         return dniTyg;
     }
@@ -80,37 +100,15 @@ public class Menu implements Serializable {
         this.dniTyg = dniTyg;
     }
 
-    public double getCena() {
-        return cena;
-    }
-
-    public void setCena(double cena) {
-        this.cena = cena;
-    }
-
-    public List<Zamowieniemenu> getZamowieniemenu() {
-        return zamowieniemenu;
-    }
-
-    public void setZamowieniemenu(List<Zamowieniemenu> zamowieniemenu) {
-        this.zamowieniemenu = zamowieniemenu;
-    }
-
     
     
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + this.idmenu;
-        hash = 97 * hash + (this.nazwa != null ? this.nazwa.hashCode() : 0);
+        int hash = 0;
+        hash += (idmenu != null ? idmenu.hashCode() : 0);
         return hash;
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" + "idmenu=" + idmenu + '}';
-    }
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -118,9 +116,15 @@ public class Menu implements Serializable {
             return false;
         }
         Menu other = (Menu) object;
-        if ((this.idmenu == 0 && other.idmenu != 0) || (this.idmenu != 0 && !(this.idmenu==other.idmenu))) {
+        if ((this.idmenu == null && other.idmenu != null) || (this.idmenu != null && !this.idmenu.equals(other.idmenu))) {
             return false;
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "arti01.jobiady.beany.Menu[ idmenu=" + idmenu + " ]";
+    }
+    
 }

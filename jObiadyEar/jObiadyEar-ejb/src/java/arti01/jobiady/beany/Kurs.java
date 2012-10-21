@@ -7,13 +7,15 @@ package arti01.jobiady.beany;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,42 +23,48 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author arti01
  */
 @Entity
+@Table(name = "kurs")
+@NamedQueries({
+    @NamedQuery(name = "Kurs.findAll", query = "SELECT k FROM Kurs k")})
 public class Kurs implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQKURS")
     @SequenceGenerator(name="SEQKURS", sequenceName="SEQKURS")
     private Long id;
-    
-    @OneToMany( cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = false)
-    @OrderBy("idzamowienie DESC")
+    @Column(name = "datakursu")
+
+    private Timestamp dataKursu;
+    @JoinColumn(name = "tragarz_username", referencedColumnName = "username")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Uzytkownik tragarz;
+    @OneToMany(cascade= CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name="kurs_id")
     private List<Zamowienie> zamowienia;
-    
-    private Timestamp dataKursu;
-    
-    @ManyToOne
-    private Uzytkownik tragarz;
-    
+
     @Transient
     private double suma;
-    
+
     @Transient
     private double sumaWplat;
-    
+
     @Transient
-    private List<Entry<Menu, Integer>> zestawienie;
+    private List<Entry<Zamowieniemenu, Integer>> zestawienie;
     
 
     public Long getId() {
@@ -67,15 +75,7 @@ public class Kurs implements Serializable {
         this.id = id;
     }
 
-    public List<Zamowienie> getZamowienia() {
-        return zamowienia;
-    }
-
-    public void setZamowienia(List<Zamowienie> zamowienia) {
-        this.zamowienia = zamowienia;
-    }
-
-    public Timestamp getDataKursu() {
+    public Date getDataKursu() {
         return dataKursu;
     }
 
@@ -95,14 +95,18 @@ public class Kurs implements Serializable {
         suma=0;
         for(Zamowienie z:zamowienia){
             suma+=z.getSuma();
-        }
+    }
         return suma;
     }
 
-    public void setSuma(double suma) {
-        this.suma = suma;
+    public void setZamowienia(List<Zamowienie> zamowienia) {
+        this.zamowienia = zamowienia;
     }
-    
+
+    public List<Zamowienie> getZamowienia() {
+        return zamowienia;
+    }
+
 
     public double getSumaWplat() {
         sumaWplat=0;
@@ -117,31 +121,29 @@ public class Kurs implements Serializable {
     }
 
     public List getZestawienie() {
-        Map<Menu, Integer> zestMap=new HashMap<Menu, Integer>();
+        Map<Zamowieniemenu, Integer> zestMap=new HashMap<Zamowieniemenu, Integer>();
             for(Zamowienie zam:zamowienia){
-                for(Menu m:zam.getPotrawy()){
+                for(Zamowieniemenu zm:zam.getZamowieniemenu()){
                     Integer ilosc=0;
                     //Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName()+m);
-                    if(zestMap.get(m)!=null){
+                    if(zestMap.get(zm)!=null){
                         
-                        ilosc=zestMap.get(m)+1;
+                        ilosc=zestMap.get(zm)+1;
                     }
                     else ilosc=1;
-                    zestMap.put(m, ilosc);
+                    zestMap.put(zm, ilosc);
                 }
             }
-            zestawienie=new ArrayList<Entry<Menu, Integer>>( zestMap.entrySet());
+            zestawienie=new ArrayList<Entry<Zamowieniemenu, Integer>>( zestMap.entrySet());
         return zestawienie;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
- 
 
     @Override
     public boolean equals(Object object) {
@@ -154,6 +156,11 @@ public class Kurs implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "arti01.jobiady.beany.Kurs[ id=" + id + " ]";
     }
     
 }

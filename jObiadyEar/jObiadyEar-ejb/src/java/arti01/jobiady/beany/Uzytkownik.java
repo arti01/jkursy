@@ -1,8 +1,13 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
-import javax.persistence.Cacheable;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,36 +16,52 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
- * The persistent class for the _users database table.
  *
+ * @author arti01
  */
 @Entity
+@Table(name = "uzytkownik")
+@NamedQueries({
+    @NamedQuery(name = "Uzytkownik.findAll", query = "SELECT u FROM Uzytkownik u")})
 public class Uzytkownik implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(length = 50)
-    @Size(min = 2, max = 50)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "username")
     private String username;
-    @Column(nullable = true, length = 100)
-    @Email
-    private String email;
-    @Column(name = "imie_nazwisko", nullable = false)
-    @Size(min = 3, max = 255)
-    private String imieNazwisko;
-    @Column(nullable = true)
-    private String tel1;
-    @Column(nullable = true, length = 50)
-    @Size(min = 2, max = 15)
-    private String userpass;
     
+    @Size(max = 100)
+    @Column(name = "email")
+    private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "imie_nazwisko")
+    private String imieNazwisko;
+    @Size(max = 255)
+    @Column(name = "tel1")
+    private String tel1;
+    @Size(max = 50)
+    @Column(name = "userpass")
+    private String userpass;
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="tragarz", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OrderBy("id DESC")
+    private List<Kurs> kursy;
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="uzytkownik", fetch = FetchType.LAZY, orphanRemoval=true)
+    @OrderBy("idzamowienie DESC")
+    private List<Zamowienie> zamowienia;
+
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {
         @JoinColumn(name = "username", nullable = false)
@@ -48,16 +69,18 @@ public class Uzytkownik implements Serializable {
         @JoinColumn(name = "roles_rola", nullable = false)
     })
     private List<Role> roles;
-    
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @OrderBy("idzamowienie DESC")
-    @JoinColumn(name = "username")
-    private List<Zamowienie> zamowienia;
-    
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL}, orphanRemoval = true)
-    @OrderBy("id DESC")
-    @JoinColumn(name = "tragarz_username")
-    private List<Kurs> kursy;
+
+    public Uzytkownik() {
+    }
+
+    public Uzytkownik(String username) {
+        this.username = username;
+    }
+
+    public Uzytkownik(String username, String imieNazwisko) {
+        this.username = username;
+        this.imieNazwisko = imieNazwisko;
+    }
 
     public String getUsername() {
         return username;
@@ -99,12 +122,12 @@ public class Uzytkownik implements Serializable {
         this.userpass = userpass;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Kurs> getKursy() {
+        return kursy;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setKursy(List<Kurs> kursy) {
+        this.kursy = kursy;
     }
 
     public List<Zamowienie> getZamowienia() {
@@ -115,28 +138,21 @@ public class Uzytkownik implements Serializable {
         this.zamowienia = zamowienia;
     }
 
-    public List<Kurs> getKursy() {
-        return kursy;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public void setKursy(List<Kurs> kursy) {
-        this.kursy = kursy;
-    }
-
-    public void addZamowienie(Zamowienie zam) {
-        zam.setUzytkownik(this);
-        this.zamowienia.add(0, zam);
-    }
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }    
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + (this.username != null ? this.username.hashCode() : 0);
+        int hash = 0;
+        hash += (username != null ? username.hashCode() : 0);
         return hash;
     }
 
-    
-    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -149,4 +165,10 @@ public class Uzytkownik implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "arti01.jobiady.beany.Uzytkownik[ username=" + username + " ]";
+    }
+    
 }

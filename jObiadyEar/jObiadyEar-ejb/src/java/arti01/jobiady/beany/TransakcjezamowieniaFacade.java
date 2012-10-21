@@ -4,6 +4,7 @@
  */
 package arti01.jobiady.beany;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +13,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author 103039
  */
-@Stateless
+@Stateful
 public class TransakcjezamowieniaFacade extends AbstractFacade<Transakcjezamowienia> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;

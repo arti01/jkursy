@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,7 +22,7 @@ import javax.persistence.Query;
  *
  * @author arti01
  */
-@Stateless
+@Stateful
 public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
 
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
@@ -33,19 +34,12 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    @Override
-    public void edit(Zamowienie entity) {
-        getEntityManager().merge(entity);
-        getEntityManager().refresh(entity);
-    }
 
     @SuppressWarnings("unchecked")
     public List<Zamowienie> getZamPoczatkowe() {
         Query query = getEntityManager().createQuery("select z from Zamowienie z where z.statusZamowienia=:status and z.dataZamowienia between :dataod and :datado");
         query.setParameter("status", StatusZamowienia.POCZATKOWY);
         Calendar cal = Calendar.getInstance();
-
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
@@ -59,6 +53,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         datado = new java.sql.Timestamp(cal.getTime().getTime());
         query.setParameter("datado", datado);
         zamPoczatkowe = query.getResultList();
+        //Logger.getGlobal().log(Level.SEVERE, zamPoczatkowe+"");
         return zamPoczatkowe;
     }
 
@@ -71,7 +66,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         trZam.setTytulem(tytulem);
         Calendar cal = Calendar.getInstance();
         trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
-        zam.getTransakcjezamowienia().add(0, trZam);
+        //zam.getTransakcjezamowienia().add(0, trZam);
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
         this.edit(zam);
     }
@@ -84,7 +79,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         trZam.setKwota(kwota);
         trZam.setTytulem(tytulem);
         trZam.setDataoperacji(dataoperacji);
-        zam.getTransakcjezamowienia().add(0, trZam);
+        //zam.getTransakcjezamowienia().add(0, trZam);
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
         this.edit(zam);
     }
@@ -106,7 +101,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
                     trZam.setTytulem("Korekta dla zakupu " + zamMen.getMenu().getNazwa());
                     Calendar cal = Calendar.getInstance();
                     trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
-                    zam.getTransakcjezamowienia().add(0, trZam);
+                    //zam.getTransakcjezamowienia().add(0, trZam);
                 }
             }
             if (zamMen.isZrealizowano()) {
@@ -117,7 +112,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
                     trZam.setTytulem("Kupiono " + zamMen.getMenu().getNazwa());
                     Calendar cal = Calendar.getInstance();
                     trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
-                    zam.getTransakcjezamowienia().add(0, trZam);
+                    //zam.getTransakcjezamowienia().add(0, trZam);
                 }
             }
         }
