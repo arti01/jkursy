@@ -31,6 +31,34 @@
                     <h:outputText value="#{zest.key.cena*zest.value}"/>
                 </h:column>    
             </h:dataTable>
+
+            <h:dataTable value="#{tragKursyAc.kurs.zestawieniePerUser}" var="zestPerUser">
+                <h:column>
+                    #{zestPerUser.key.imieNazwisko}
+                    <ui:repeat value="#{zestPerUser.value}" var="var">#{var}cos<hr/></ui:repeat>
+                <h:dataTable value="#{zestPerUser}" var="zest1">
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="pozycja w menu"/>
+                        </f:facet> 
+                        
+                        <h:outputText value="#{zest1.key}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="ilość"/>
+                        </f:facet> 
+                        <h:outputText value="#{zest1.value}"/>
+                    </h:column>    
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="wartość pozycji"/>
+                        </f:facet> 
+                        <h:outputText value="#{zest1}"/>
+                    </h:column>    
+                </h:dataTable>
+                    </h:column>
+            </h:dataTable>
         </div>
     </ui:define>
 
