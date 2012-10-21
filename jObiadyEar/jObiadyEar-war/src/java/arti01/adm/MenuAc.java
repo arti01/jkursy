@@ -63,7 +63,7 @@ public class MenuAc implements Serializable {
     }
        
         public void zapisz() {
-            if(menu.getIdmenu()>0)mf.edit(menu);
+            if(menu!=null)mf.edit(menu);
             else mf.create(menu);
             allMenuAc.lista();
             menu=new Menu();

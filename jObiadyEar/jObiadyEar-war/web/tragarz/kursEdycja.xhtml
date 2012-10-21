@@ -30,8 +30,8 @@
                                 </f:facet> 
                                 <h:outputText value="#{zam.dataZamowienia}" id="dataZam"/>
                                 <rich:tooltip id="tt1" layout="block" target="dataZam">
-                                    <a4j:repeat value="#{zam.potrawy}" var="potrawa">
-                                        <h:outputText value="#{potrawa.nazwa}" /><br/>
+                                    <a4j:repeat value="#{zam.zamowieniemenu}" var="zammenu">
+                                        <h:outputText value="#{zammenu.menu.nazwa}" /><br/>
                                     </a4j:repeat>
                                 </rich:tooltip>
                             </rich:column >
@@ -77,8 +77,8 @@
                                 </f:facet> 
                                 <h:outputText value="#{zam.dataZamowienia}" id="dataZam"/>
                                 <rich:tooltip id="tt1" layout="block" target="dataZam">
-                                    <a4j:repeat value="#{zam.potrawy}" var="potrawa">
-                                        <h:outputText value="#{potrawa.nazwa}" /><br/>
+                                    <a4j:repeat value="#{zam.zamowieniemenu}" var="zammenu">
+                                        <h:outputText value="#{zammenu.menu.nazwa}" /><br/>
                                     </a4j:repeat>
                                 </rich:tooltip>
                                 <br/>

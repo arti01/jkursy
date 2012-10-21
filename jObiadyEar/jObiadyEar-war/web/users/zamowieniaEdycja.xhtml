@@ -11,7 +11,7 @@
 
     <ui:define name="content">
         <h:panelGroup id="naglowek">
-            <h3>Data zamówienia: #{usrZamowienieAc.zamowienie.dataZamowienia}, Status zamówienia: #{usrZamowienieAc.zamowienie.statusZamowienia}, Wartość: #{usrZamowienieAc.zamowienie.suma}, Wpłacono: #{usrZamowienieAc.zamowienie.saldo}
+            <h3>#{usrZamowienieAc.zamowienie.idzamowienie} Data zamówienia: #{usrZamowienieAc.zamowienie.dataZamowienia}, Status zamówienia: #{usrZamowienieAc.zamowienie.statusZamowienia}, Wartość: #{usrZamowienieAc.zamowienie.suma}, Wpłacono: #{usrZamowienieAc.zamowienie.saldo}
             </h3>
         </h:panelGroup>
 
@@ -64,35 +64,35 @@
             <div id="tabela">
                 <h:form >
                     <h:panelGroup id="formZam">
-                        <rich:dataTable value="#{usrZamowienieAc.zamowienie.potrawy}" var="menu" id="tabelaZam">
+                        <rich:dataTable value="#{usrZamowienieAc.zamowienie.zamowieniemenu}" var="menu" id="tabelaZam">
                             <f:facet name="header">
                                 Zamówienie
                             </f:facet> 
-                            <rich:column sortOrder="ascending" sortBy="#{menu.nazwa}">
+                            <rich:column sortOrder="ascending" sortBy="#{menu.menu.nazwa}">
                                 <f:facet name="header">
                                     <h:outputText value="nazwa"/>
                                 </f:facet> 
-                                <h:outputText value="#{menu.nazwa}"/>
+                                <h:outputText value="#{menu.menu.nazwa}"/>
                             </rich:column >
                             <rich:column >
                                 <f:facet name="header">
                                     <h:outputText value="cena"/>
                                 </f:facet> 
-                                <h:outputText value="#{menu.cena}"/>
+                                <h:outputText value="#{menu.menu.cena}"/>
                             </rich:column >
 
                             <rich:column  >
                                 <f:facet name="header">
                                     <h:outputText value="występuje w"/>
                                 </f:facet> 
-                                <a4j:repeat value="#{menu.dniTyg}" var="dniTyg">
+                                <a4j:repeat value="#{menu.menu.dniTyg}" var="dniTyg">
                                     <h:outputText value="#{dniTyg.nazwa}; "/>
                                 </a4j:repeat>
                             </rich:column >
 
                             <rich:column >
                                 <a4j:commandLink value="zrezygnuj" action="#{usrZamowienieAc.usunZzam}" render="formMenu, formZam, naglowek">
-                                    <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.menu}"/>
+                                    <f:setPropertyActionListener value="#{menu}" target="#{usrZamowienieAc.zamMenu}"/>
                                 </a4j:commandLink>
                             </rich:column >
                         </rich:dataTable>

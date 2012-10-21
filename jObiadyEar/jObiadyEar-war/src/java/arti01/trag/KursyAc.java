@@ -53,18 +53,9 @@ public class KursyAc implements Serializable {
     private DataModel<Zamowienie> zamowienia=new ListDataModel<Zamowienie>();
     private double zero=0.00;
     
-    
-    
-    
     public String dodaj() {
         Uzytkownik u=login.getZalogowany();
-        kurs = new Kurs();
-        kurs.setTragarz(login.getZalogowany());
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        kurs.setDataKursu(ts);
-        kf.create(kurs);
-        u.getKursy().add(0,kurs);
-        uf.edit(u);
+        kurs=uf.dodajKurs(u);
         return "kursEdycja";
     }
     
@@ -72,6 +63,7 @@ public class KursyAc implements Serializable {
         Uzytkownik u=login.getZalogowany();
         for(Zamowienie zamF:kurs.getZamowienia()){
             zamF.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
+            zamF.setKurs(null);
             zf.edit(zamF);
         }
         u.getKursy().remove(kurs);
@@ -98,19 +90,20 @@ public class KursyAc implements Serializable {
     }
     
     public String kursEdycja() {
+        for(Zamowienie zam:zf.getZamPoczatkowe()){
+            Logger.getGlobal().log(Level.SEVERE, zam.getUzytkownik()+"");
+        }
         return "kursEdycja";
     }
     
     public void przyjmij() {
-        kf.przyjmijZamowienie(zam, kurs);
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu().size()));
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu()));
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getPotrawy().size()));
-        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getPotrawy()));
+        kurs=kf.przyjmijZamowienie(zam, kurs);
+        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu().size()));
+        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zam.getZamowieniemenu()));
     }
     
     public void wycofaj() {
-        kf.wycofajZamowienie(zam);
+        kurs=kf.wycofajZamowienie(zam);
     }
     
     public String kursZestawienie() {

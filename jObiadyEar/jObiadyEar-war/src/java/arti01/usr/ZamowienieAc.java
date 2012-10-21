@@ -11,6 +11,7 @@ import arti01.jobiady.beany.Uzytkownik;
 import arti01.jobiady.beany.UzytkownikFacade;
 import arti01.jobiady.beany.Zamowienie;
 import arti01.jobiady.beany.ZamowienieFacade;
+import arti01.jobiady.beany.Zamowieniemenu;
 import arti01.trag.KursyAc;
 import arti01.utils.Login;
 import java.io.Serializable;
@@ -18,6 +19,8 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -52,6 +55,8 @@ public class ZamowienieAc implements Serializable {
     private List<Menu> dostepneMenu;
     
     private Menu menu;
+    
+    private Zamowieniemenu zamMenu;
 
     public String lista() {
         return "zamowieniaLista";
@@ -59,13 +64,7 @@ public class ZamowienieAc implements Serializable {
 
     public String dodaj() {
         Uzytkownik u=login.getZalogowany();
-        zamowienie = new Zamowienie();
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
-        zamowienie.setDataZamowienia(ts);
-        zamowienie.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        u.addZamowienie(zamowienie);
-        zf.create(zamowienie);
-        uf.edit(u);
+        zamowienie=uf.dodajZam(u);
         return "zamowieniaEdycja";
     }
     
@@ -88,14 +87,19 @@ public class ZamowienieAc implements Serializable {
     
     public void zamow() {
         Uzytkownik u=login.getZalogowany();
-        zamowienie.getPotrawy().add(menu);
+        Zamowieniemenu zm=new Zamowieniemenu();
+        zm.setMenu(menu);
+        //zm.setZamowienie(zamowienie);
+        zamowienie.getZamowieniemenu().add(0,zm);
+        //Logger.getLogger("zamienienie menu").log(Level.SEVERE, u.getZamowienia().indexOf(zamowienie)+"");
+        //Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
         u.getZamowienia().set(u.getZamowienia().indexOf(zamowienie), zamowienie);
         uf.edit(u);
     }
     
     public void usunZzam() {
         Uzytkownik u=login.getZalogowany();
-        zamowienie.getPotrawy().remove(menu);
+        zamowienie.getZamowieniemenu().remove(zamMenu);
         u.getZamowienia().set(u.getZamowienia().indexOf(zamowienie), zamowienie);
         uf.edit(u);
     }
@@ -118,7 +122,7 @@ public class ZamowienieAc implements Serializable {
 
     public List<Menu> getDostepneMenu() {
         dostepneMenu=mf.findAll();
-        dostepneMenu.removeAll(zamowienie.getPotrawy());
+        dostepneMenu.removeAll(zamowienie.getZamowieniemenu());
         return dostepneMenu;
     }
 
@@ -140,6 +144,14 @@ public class ZamowienieAc implements Serializable {
 
     public void setKursyAc(KursyAc kursyAc) {
         this.kursyAc = kursyAc;
+    }
+
+    public Zamowieniemenu getZamMenu() {
+        return zamMenu;
+    }
+
+    public void setZamMenu(Zamowieniemenu zamMenu) {
+        this.zamMenu = zamMenu;
     }
     
     
