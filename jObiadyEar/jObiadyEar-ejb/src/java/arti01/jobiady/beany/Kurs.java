@@ -6,6 +6,8 @@ package arti01.jobiady.beany;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.AbstractList;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -13,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -42,30 +46,28 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Kurs.findAll", query = "SELECT k FROM Kurs k")})
 public class Kurs implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQKURS")
-    @SequenceGenerator(name="SEQKURS", sequenceName="SEQKURS")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQKURS")
+    @SequenceGenerator(name = "SEQKURS", sequenceName = "SEQKURS")
     private Long id;
     @Column(name = "datakursu")
-
     private Timestamp dataKursu;
     @JoinColumn(name = "tragarz_username", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
     private Uzytkownik tragarz;
-    @OneToMany(cascade= CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name="kurs_id")
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @JoinColumn(name = "kurs_id")
     private List<Zamowienie> zamowienia;
-
     @Transient
     private double suma;
-
     @Transient
     private double sumaWplat;
-
     @Transient
-    private List<Entry<Zamowieniemenu, Integer>> zestawienie;
-    
+    private List<Entry<Menu, Integer>> zestawienie;
+    @Transient
+    private List<Entry<Uzytkownik, Entry<Menu, Integer>>> zestawieniePerUser;
 
     public Long getId() {
         return id;
@@ -92,10 +94,10 @@ public class Kurs implements Serializable {
     }
 
     public double getSuma() {
-        suma=0;
-        for(Zamowienie z:zamowienia){
-            suma+=z.getSuma();
-    }
+        suma = 0;
+        for (Zamowienie z : zamowienia) {
+            suma += z.getSuma();
+        }
         return suma;
     }
 
@@ -107,11 +109,10 @@ public class Kurs implements Serializable {
         return zamowienia;
     }
 
-
     public double getSumaWplat() {
-        sumaWplat=0;
-        for(Zamowienie z:zamowienia){
-            sumaWplat+=z.getSaldo();
+        sumaWplat = 0;
+        for (Zamowienie z : zamowienia) {
+            sumaWplat += z.getSaldo();
         }
         return sumaWplat;
     }
@@ -121,21 +122,41 @@ public class Kurs implements Serializable {
     }
 
     public List getZestawienie() {
-        Map<Zamowieniemenu, Integer> zestMap=new HashMap<Zamowieniemenu, Integer>();
-            for(Zamowienie zam:zamowienia){
-                for(Zamowieniemenu zm:zam.getZamowieniemenu()){
-                    Integer ilosc=0;
-                    //Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName()+m);
-                    if(zestMap.get(zm)!=null){
-                        
-                        ilosc=zestMap.get(zm)+1;
-                    }
-                    else ilosc=1;
-                    zestMap.put(zm, ilosc);
+        Map<Menu, Integer> zestMap = new HashMap<Menu, Integer>();
+        for (Zamowienie zam : zamowienia) {
+            for (Zamowieniemenu zm : zam.getZamowieniemenu()) {
+                Menu m = zm.getMenu();
+                Integer ilosc = 0;
+                Logger.getLogger(this.getClass().getName()).log(Level.INFO, this.getClass().getName() + m);
+                if (zestMap.get(m) != null) {
+
+                    ilosc = zestMap.get(m) + 1;
+                } else {
+                    ilosc = 1;
                 }
+                zestMap.put(m, ilosc);
             }
-            zestawienie=new ArrayList<Entry<Zamowieniemenu, Integer>>( zestMap.entrySet());
+        }
+        zestawienie = new ArrayList<Entry<Menu, Integer>>(zestMap.entrySet());
         return zestawienie;
+    }
+
+    public List getZestawieniePerUser() {
+        Map<Uzytkownik, List<Zamowienie>> userZam = new HashMap<Uzytkownik, List<Zamowienie>>();
+        for (Zamowienie zam : getZamowienia()) {
+            Uzytkownik u = zam.getUzytkownik();
+            List<Zamowienie>zamNew=new ArrayList<Zamowienie>();
+            if(userZam.get(u)!=null){
+                Logger.getGlobal().log(Level.SEVERE, "jest user"+userZam.get(u));
+                zamNew=userZam.get(u);
+            }
+            zamNew.add(zam);
+            userZam.put(u, zamNew);
+                Logger.getGlobal().log(Level.SEVERE, "po akcji"+userZam.get(u));
+        }
+        Entry<Menu, Integer> zestMen = null;
+
+        return zestawieniePerUser;
     }
 
     @Override
@@ -162,5 +183,4 @@ public class Kurs implements Serializable {
     public String toString() {
         return "arti01.jobiady.beany.Kurs[ id=" + id + " ]";
     }
-    
 }
