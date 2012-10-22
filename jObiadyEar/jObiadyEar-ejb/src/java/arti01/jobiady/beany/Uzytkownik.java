@@ -5,7 +5,6 @@
 package arti01.jobiady.beany;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -61,6 +60,9 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade= CascadeType.ALL, mappedBy="uzytkownik", fetch = FetchType.LAZY, orphanRemoval=true)
     @OrderBy("idzamowienie DESC")
     private List<Zamowienie> zamowienia;
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="tragarz", fetch = FetchType.LAZY)
+    @OrderBy("idtransakcjezamowienia DESC")
+    private List<Transakcjezamowienia> transakcjezamowienia;
 
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = {

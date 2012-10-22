@@ -7,9 +7,6 @@ package arti01.jobiady.beany;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,13 +19,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -42,37 +35,32 @@ import javax.validation.constraints.Size;
 public class Zamowienie implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SEQZAM")
-    @SequenceGenerator(name="SEQZAM", sequenceName="SEQZAM")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQZAM")
+    @SequenceGenerator(name = "SEQZAM", sequenceName = "SEQZAM")
     private Integer idzamowienie;
     @Column(name = "datazamowienia")
-
     private Timestamp dataZamowienia;
     @Size(max = 255)
     @Column(name = "statuszamowienia")
     private String statusZamowienia;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
-    @JoinColumn(name="idzamowienie")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "idzamowienie")
     private List<Zamowieniemenu> zamowieniemenu;
-    @OneToMany(mappedBy = "idzamowienie", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowienie", fetch = FetchType.LAZY)
     private List<Transakcjezamowienia> transakcjezamowienia;
-    
     @JoinColumn(name = "username", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
     private Uzytkownik uzytkownik;
     @JoinColumn(name = "kurs_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Kurs kurs;
-
     @Transient
     private double saldo;
-    
     @Transient
     private double suma;
-    
     @Transient
     private double roznica;
-    
+
     public Zamowienie() {
     }
 
@@ -113,10 +101,10 @@ public class Zamowienie implements Serializable {
     }
 
     public double getSuma() {
-        suma=0;
-        for(Zamowieniemenu zm:getZamowieniemenu()){
-            suma+=zm.getMenu().getCena();
-    }
+        suma = 0;
+        for (Zamowieniemenu zm : getZamowieniemenu()) {
+            suma += zm.getMenu().getCena();
+        }
         return suma;
     }
 
@@ -131,26 +119,24 @@ public class Zamowienie implements Serializable {
     public List<Transakcjezamowienia> getTransakcjezamowienia() {
         return transakcjezamowienia;
     }
-    
-    
 
     public double getSaldo() {
-        saldo=0;
-        for(Transakcjezamowienia trZam:getTransakcjezamowienia()){
-            saldo+=trZam.getKwota();
-    }
+        saldo = 0;
+        for (Transakcjezamowienia trZam : getTransakcjezamowienia()) {
+            saldo += trZam.getKwota();
+        }
         return saldo;
     }
 
-        public void setSaldo(double saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
     public double getRoznica() {
-        roznica=saldo-suma;
+        roznica = saldo - suma;
         return roznica;
     }
-    
+
     public void setUzytkownik(Uzytkownik uzytkownik) {
         this.uzytkownik = uzytkownik;
     }
@@ -191,5 +177,4 @@ public class Zamowienie implements Serializable {
     public String toString() {
         return "arti01.jobiady.beany.Zamowienie[ idzamowienie=" + idzamowienie + " ]";
     }
-    
 }

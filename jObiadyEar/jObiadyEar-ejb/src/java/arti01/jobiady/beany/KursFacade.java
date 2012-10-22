@@ -29,7 +29,7 @@ public class KursFacade extends AbstractFacade<Kurs> {
     
    public Kurs przyjmijZamowienie(Zamowienie zam, Kurs kurs){
         zam=getEntityManager().find(Zamowienie.class, zam.getIdzamowienie());
-        getEntityManager().refresh(zam);
+        //getEntityManager().refresh(zam);
         zam.setStatusZamowienia(StatusZamowienia.WREALIZACJI);
         zam.setKurs(kurs);
         kurs.getZamowienia().add(0, zam);

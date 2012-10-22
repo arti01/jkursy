@@ -10,11 +10,14 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +35,8 @@ import javax.validation.constraints.Size;
 public class Transakcjezamowienia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQTRANSZAM")
+    @SequenceGenerator(name = "SEQTRANSZAM", sequenceName = "SEQTRANSZAM")
     @NotNull
     @Column(name = "idtransakcjezamowienia")
     private Integer idtransakcjezamowienia;
@@ -48,7 +52,9 @@ public class Transakcjezamowienia implements Serializable {
     private String tytulem;
     @JoinColumn(name = "idzamowienie", referencedColumnName = "idzamowienie")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Zamowienie idzamowienie;
+    private Zamowienie zamowienie;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Uzytkownik tragarz;
 
     public Transakcjezamowienia() {
     }
@@ -94,14 +100,22 @@ public class Transakcjezamowienia implements Serializable {
         this.tytulem = tytulem;
     }
 
-    public Zamowienie getIdzamowienie() {
-        return idzamowienie;
+    public Zamowienie getZamowienie() {
+        return zamowienie;
     }
 
-    public void setIdzamowienie(Zamowienie idzamowienie) {
-        this.idzamowienie = idzamowienie;
+    public void setZamowienie(Zamowienie zamowienie) {
+        this.zamowienie = zamowienie;
     }
 
+    public Uzytkownik getTragarz() {
+        return tragarz;
+    }
+
+    public void setTragarz(Uzytkownik tragarz) {
+        this.tragarz = tragarz;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

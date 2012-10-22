@@ -11,9 +11,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -57,7 +55,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         return zamPoczatkowe;
     }
 
-    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem) {
+    public void przyjmijWplate(Zamowienie zam, double kwota, String tytulem, Uzytkownik tragarz) {
         if (kwota == 0) {
             return;
         }
@@ -66,7 +64,9 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         trZam.setTytulem(tytulem);
         Calendar cal = Calendar.getInstance();
         trZam.setDataoperacji(new java.sql.Timestamp(cal.getTime().getTime()));
-        //zam.getTransakcjezamowienia().add(0, trZam);
+        trZam.setZamowienie(zam);
+        trZam.setTragarz(tragarz);
+        zam.getTransakcjezamowienia().add(0, trZam);
         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
         this.edit(zam);
     }
@@ -91,11 +91,13 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         for (Zamowieniemenu zamMen : zam.getZamowieniemenu()) {
             int index = zamOldValue.getZamowieniemenu().indexOf(zamMen);
             Zamowieniemenu zamMenOld = zamOldValue.getZamowieniemenu().get(index);
-            //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.isZrealizowano()) + "-------------");
-            //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.isZrealizowano()));
-            if (!zamMen.isZrealizowano()) {
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.getZrealizowano()) + "-------------");
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld) + "-------------");
+            Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.getZrealizowano()));
+            if(zamMenOld.getZrealizowano()==null)zamMenOld.setZrealizowano(false);
+            if (!zamMen.getZrealizowano()) {
                 zrealizowaneWcalosci = false;
-                if (zamMenOld.isZrealizowano()) {
+                if (zamMenOld.getZrealizowano()) {
                     Transakcjezamowienia trZam = new Transakcjezamowienia();
                     trZam.setKwota(zamMen.getMenu().getCena());
                     trZam.setTytulem("Korekta dla zakupu " + zamMen.getMenu().getNazwa());
@@ -104,9 +106,9 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
                     //zam.getTransakcjezamowienia().add(0, trZam);
                 }
             }
-            if (zamMen.isZrealizowano()) {
+            if (zamMen.getZrealizowano()) {
                 nieZrealizowaneWcalosci = false;
-                if (!zamMenOld.isZrealizowano()) {
+                if (!zamMenOld.getZrealizowano()) {
                     Transakcjezamowienia trZam = new Transakcjezamowienia();
                     trZam.setKwota(-zamMen.getMenu().getCena());
                     trZam.setTytulem("Kupiono " + zamMen.getMenu().getNazwa());
