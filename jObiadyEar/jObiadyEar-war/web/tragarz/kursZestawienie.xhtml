@@ -8,7 +8,7 @@
                 template="/templates/templatetrag.xhtml">
 
     <ui:define name="content">
-        <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Suma wpłat: #{tragKursyAc.kurs.sumaWplat}</h3>
+        <h3>Data Kursu: #{tragKursyAc.kurs.dataKursu}, Wartość: #{tragKursyAc.kurs.suma}, Łącznie gotówk: #{tragKursyAc.kurs.sumaWplat}</h3>
 
         <div id="tabela">
             <h:dataTable value="#{tragKursyAc.kurs.zestawienie}" var="zest">
@@ -31,18 +31,20 @@
                     <h:outputText value="#{zest.key.cena*zest.value}"/>
                 </h:column>    
             </h:dataTable>
-
+        </div>
+        <hr/>
+        <div id="tabela">
             <h:dataTable value="#{tragKursyAc.kurs.zestawieniePerUser}" var="zestPerUser">
                 <h:column>
-                    #{zestPerUser.key.imieNazwisko}
-                    <ui:repeat value="#{zestPerUser.value}" var="var">#{var}cos<hr/></ui:repeat>
-                <h:dataTable value="#{zestPerUser}" var="zest1">
+                <h:dataTable value="#{zestPerUser.value}" var="zest1">
+                    <f:facet name="header">
+                        Żarłacz: #{zestPerUser.key.imieNazwisko}
+                    </f:facet>
                     <h:column>
                         <f:facet name="header">
                             <h:outputText value="pozycja w menu"/>
                         </f:facet> 
-                        
-                        <h:outputText value="#{zest1.key}"/>
+                        <h:outputText value="#{zest1.key.nazwa}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">
@@ -54,7 +56,7 @@
                         <f:facet name="header">
                             <h:outputText value="wartość pozycji"/>
                         </f:facet> 
-                        <h:outputText value="#{zest1}"/>
+                        <h:outputText value="#{zest1.key.cena*zest1.value}"/>
                     </h:column>    
                 </h:dataTable>
                     </h:column>

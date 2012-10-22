@@ -14,9 +14,6 @@ import arti01.jobiady.beany.ZamowienieFacade;
 import arti01.jobiady.beany.Zamowieniemenu;
 import arti01.utils.Login;
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +21,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -91,7 +87,7 @@ public class KursyAc implements Serializable {
     
     public String kursEdycja() {
         for(Zamowienie zam:zf.getZamPoczatkowe()){
-            Logger.getGlobal().log(Level.SEVERE, zam.getUzytkownik()+"");
+            Logger.getLogger("arti").log(Level.SEVERE, zam.getUzytkownik()+"");
         }
         return "kursEdycja";
     }
@@ -111,16 +107,16 @@ public class KursyAc implements Serializable {
         return "kursZestawienie";
     }
     
-    public void zmiana(ValueChangeEvent ev){
-        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(ev));
+    public void przyjmijWplate(ValueChangeEvent ev){
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(ev));
         zam=zamowienia.getRowData();
-        //Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
+        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, zam.toString());
         if(ev.getNewValue()==null) return;
         zero = new Double(ev.getNewValue().toString());
         if (zero!=0) {
             //zero= new Double(event.getNewValue().toString());
-            if(zero>0)zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie");
-            if(zero<0)zf.przyjmijWplate(zam, zero, "zwrot kasy z zamowienia");
+            if(zero>0)zf.przyjmijWplate(zam, zero, "przyjęcie kasy za zamówienie", login.getZalogowany());
+            if(zero<0)zf.przyjmijWplate(zam, zero, "zwrot kasy z zamowienia", login.getZalogowany());
             zero=0;
         }
     }
