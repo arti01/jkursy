@@ -49,7 +49,7 @@ public class Zamowienie implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowienie", fetch = FetchType.LAZY)
     private List<Transakcjezamowienia> transakcjezamowienia;
     @JoinColumn(name = "username", referencedColumnName = "username")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
     private Uzytkownik uzytkownik;
     @JoinColumn(name = "kurs_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)

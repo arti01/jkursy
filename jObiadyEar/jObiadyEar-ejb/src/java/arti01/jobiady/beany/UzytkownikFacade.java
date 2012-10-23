@@ -7,6 +7,7 @@ package arti01.jobiady.beany;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.TimeZone;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +20,7 @@ import javax.persistence.PersistenceContext;
 public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
+    @EJB ZamowienieFacade zf;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -39,7 +41,7 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         return u.getKursy().get(0);
     }
     
-    public Zamowienie dodajZam(Uzytkownik u){
+    public Zamowienie dodajZamOld(Uzytkownik u){
         Zamowienie zam = new Zamowienie();
         Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
         zam.setDataZamowienia(ts);
@@ -48,6 +50,19 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         u.getZamowienia().add(0, zam);
         u=getEntityManager().merge(u);
         return u.getZamowienia().get(0);
+    }
+    
+    public Zamowienie dodajZam(Uzytkownik u){
+        Zamowienie zam = new Zamowienie();
+        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
+        zam.setDataZamowienia(ts);
+        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
+        zam.setUzytkownik(u);
+        zf.create(zam);
+        zf.getEntityManager().refresh(zam);
+        return zam;
+        //u.getZamowienia().add(0, zam);
+        //u=getEntityManager().merge(u);
     }
     
     @Deprecated
