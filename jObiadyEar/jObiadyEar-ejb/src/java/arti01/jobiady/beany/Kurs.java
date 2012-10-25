@@ -46,14 +46,17 @@ public class Kurs implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQKURS")
     @SequenceGenerator(name = "SEQKURS", sequenceName = "SEQKURS")
     private Long id;
+    
     @Column(name = "datakursu")
     private Timestamp dataKursu;
+    
     @JoinColumn(name = "tragarz_username", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
     private Uzytkownik tragarz;
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinColumn(name = "kurs_id")
+    
+    @OneToMany(mappedBy="kurs", cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Zamowienie> zamowienia;
+    
     @Transient
     private double suma;
     @Transient

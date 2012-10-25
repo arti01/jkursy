@@ -46,14 +46,18 @@ public class Zamowienie implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "idzamowienie")
     private List<Zamowieniemenu> zamowieniemenu;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowienie", fetch = FetchType.LAZY)
     private List<Transakcjezamowienia> transakcjezamowienia;
+    
     @JoinColumn(name = "username", referencedColumnName = "username")
-    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
-    private Uzytkownik uzytkownik;
-    @JoinColumn(name = "kurs_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
+    private Uzytkownik uzytkownik;
+    
+    @JoinColumn(name = "kurs_id", referencedColumnName = "id")
+    @ManyToOne( fetch = FetchType.LAZY)
     private Kurs kurs;
+    
     @Transient
     private double saldo;
     @Transient

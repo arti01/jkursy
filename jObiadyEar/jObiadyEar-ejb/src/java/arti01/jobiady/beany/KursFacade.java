@@ -28,12 +28,18 @@ public class KursFacade extends AbstractFacade<Kurs> {
     }
     
    public Kurs przyjmijZamowienie(Zamowienie zam, Kurs kurs){
-        zam=getEntityManager().find(Zamowienie.class, zam.getIdzamowienie());
+        //zam=getEntityManager().find(Zamowienie.class, zam.getIdzamowienie());
         //getEntityManager().refresh(zam);
         zam.setStatusZamowienia(StatusZamowienia.WREALIZACJI);
         zam.setKurs(kurs);
         kurs.getZamowienia().add(0, zam);
-        return edit(kurs);
+        kurs=edit(kurs);
+        /*Logger.getAnonymousLogger().log(Level.OFF, zam.getKurs()+"");
+        Logger.getAnonymousLogger().log(Level.OFF, zam+"");
+        Logger.getAnonymousLogger().log(Level.OFF, zam.getStatusZamowienia());
+        Logger.getAnonymousLogger().log(Level.OFF, kurs.getZamowienia()+""+kurs.getZamowienia().get(0).getKurs());
+        Logger.getAnonymousLogger().log(Level.OFF, kurs.getZamowienia()+""+kurs.getZamowienia().get(0).getStatusZamowienia());*/
+        return kurs;
     }
     
     public Kurs wycofajZamowienie(Zamowienie zam){

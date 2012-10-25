@@ -50,9 +50,12 @@ public class Transakcjezamowienia implements Serializable {
     @Size(max = 255)
     @Column(name = "tytulem")
     private String tytulem;
+    
     @JoinColumn(name = "idzamowienie", referencedColumnName = "idzamowienie")
     @ManyToOne(fetch = FetchType.LAZY)
     private Zamowienie zamowienie;
+  
+    @JoinColumn(name = "tragarz", referencedColumnName = "username")
     @ManyToOne(fetch = FetchType.LAZY)
     private Uzytkownik tragarz;
 

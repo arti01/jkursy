@@ -21,7 +21,8 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
     @EJB ZamowienieFacade zf;
-
+    @EJB KursFacade kf;
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;

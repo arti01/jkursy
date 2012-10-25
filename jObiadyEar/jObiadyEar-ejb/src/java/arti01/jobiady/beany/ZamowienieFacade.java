@@ -33,6 +33,15 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         return em;
     }
 
+    public void dodajMenu(Zamowienie zam, Menu menu) {
+        //Zamowieniemenu zm = new Zamowieniemenu();
+        //zm.setMenu(menu);
+        //zam.getZamowieniemenu().add(0, zm);
+        Logger.getAnonymousLogger().log(Level.OFF, getEntityManager().contains(zam)+"");
+        edit(zam);
+
+    }
+
     @SuppressWarnings("unchecked")
     public List<Zamowienie> getZamPoczatkowe() {
         Query query = getEntityManager().createQuery("select z from Zamowienie z where z.statusZamowienia=:status and z.dataZamowienia between :dataod and :datado");
@@ -94,7 +103,9 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.getZrealizowano()) + "-------------");
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld) + "-------------");
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.getZrealizowano()));
-            if(zamMenOld.getZrealizowano()==null)zamMenOld.setZrealizowano(false);
+            if (zamMenOld.getZrealizowano() == null) {
+                zamMenOld.setZrealizowano(false);
+            }
             if (!zamMen.getZrealizowano()) {
                 zrealizowaneWcalosci = false;
                 if (zamMenOld.getZrealizowano()) {
@@ -127,10 +138,10 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         }
         edit(zam);
     }
-    
-    public void zrealizowaneWcalosci(Zamowienie zam){
-        List<Zamowieniemenu> zamList=new ArrayList<Zamowieniemenu>();
-        for(Zamowieniemenu zamMen:zam.getZamowieniemenu()){
+
+    public void zrealizowaneWcalosci(Zamowienie zam) {
+        List<Zamowieniemenu> zamList = new ArrayList<Zamowieniemenu>();
+        for (Zamowieniemenu zamMen : zam.getZamowieniemenu()) {
             zamMen.setZrealizowano(true);
             zamList.add(zamMen);
         }
