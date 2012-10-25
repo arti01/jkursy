@@ -15,6 +15,8 @@ import arti01.trag.KursyAc;
 import arti01.utils.Login;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -59,6 +61,7 @@ public class ZamowienieAc implements Serializable {
     public String dodaj() {
         Uzytkownik u=login.getZalogowany();
         zamowienie=uf.dodajZam(u);
+        Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
         return "zamowieniaEdycja";
     }
     
@@ -80,15 +83,19 @@ public class ZamowienieAc implements Serializable {
     }
     
     public void zamow() {
-        Uzytkownik u=login.getZalogowany();
-        Zamowieniemenu zm=new Zamowieniemenu();
+        
+        //zf.edit(zamowienie);
+        Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
+        zamowienie=zf.find(zamowienie.getIdzamowienie());
+        zf.dodajMenu(zamowienie, menu);
+        /*Zamowieniemenu zm=new Zamowieniemenu();
         zm.setMenu(menu);
         //zm.setZamowienie(zamowienie);
         zamowienie.getZamowieniemenu().add(0,zm);
         //Logger.getLogger("zamienienie menu").log(Level.SEVERE, u.getZamowienia().indexOf(zamowienie)+"");
         //Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
-        u.getZamowienia().set(u.getZamowienia().indexOf(zamowienie), zamowienie);
-        uf.edit(u);
+        login.getZalogowany().getZamowienia().set(login.getZalogowany().getZamowienia().indexOf(zamowienie), zamowienie);
+        uf.edit(login.getZalogowany());*/
     }
     
     public void usunZzam() {
