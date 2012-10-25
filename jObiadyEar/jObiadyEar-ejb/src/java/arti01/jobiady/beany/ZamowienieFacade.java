@@ -9,10 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,21 +26,11 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
     private List<Zamowienie> zamPoczatkowe = new ArrayList<Zamowienie>();
-    //@EJB UzytkownikFacade uf;
+    //@EJB MenuFacade mf;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-
-    public Zamowienie dodajZam(Uzytkownik u) {
-        Zamowienie zam = new Zamowienie();
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
-        create(zam);
-        zam.setUzytkownik(u);
-        zam.setDataZamowienia(ts);
-        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        return zam;
     }
 
     @SuppressWarnings("unchecked")
@@ -106,9 +94,7 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld.getZrealizowano()) + "-------------");
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMenOld) + "-------------");
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(zamMen.getZrealizowano()));
-            if (zamMenOld.getZrealizowano() == null) {
-                zamMenOld.setZrealizowano(false);
-            }
+            if(zamMenOld.getZrealizowano()==null)zamMenOld.setZrealizowano(false);
             if (!zamMen.getZrealizowano()) {
                 zrealizowaneWcalosci = false;
                 if (zamMenOld.getZrealizowano()) {
@@ -141,10 +127,10 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
         }
         edit(zam);
     }
-
-    public void zrealizowaneWcalosci(Zamowienie zam) {
-        List<Zamowieniemenu> zamList = new ArrayList<Zamowieniemenu>();
-        for (Zamowieniemenu zamMen : zam.getZamowieniemenu()) {
+    
+    public void zrealizowaneWcalosci(Zamowienie zam){
+        List<Zamowieniemenu> zamList=new ArrayList<Zamowieniemenu>();
+        for(Zamowieniemenu zamMen:zam.getZamowieniemenu()){
             zamMen.setZrealizowano(true);
             zamList.add(zamMen);
         }

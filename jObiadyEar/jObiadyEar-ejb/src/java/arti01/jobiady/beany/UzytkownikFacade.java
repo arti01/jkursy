@@ -41,7 +41,8 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         return u.getKursy().get(0);
     }
     
-    public Zamowienie dodajZam(Uzytkownik u){
+    @Deprecated
+    public Zamowienie dodajZamOld(Uzytkownik u){
         Zamowienie zam = new Zamowienie();
         Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
         zam.setDataZamowienia(ts);
@@ -50,6 +51,17 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         u.getZamowienia().add(0, zam);
         u=getEntityManager().merge(u);
         return u.getZamowienia().get(0);
+    }
+    
+    public Zamowienie dodajZam(Uzytkownik u){
+        Zamowienie zam = new Zamowienie();
+        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
+        zam.setDataZamowienia(ts);
+        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
+        zam.setUzytkownik(u);
+        u.getZamowienia().add(zam);
+        edit(u);
+        return zam;
     }
     
     @Deprecated

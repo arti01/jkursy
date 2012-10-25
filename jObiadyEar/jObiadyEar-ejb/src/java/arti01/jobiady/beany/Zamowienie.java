@@ -7,8 +7,6 @@ package arti01.jobiady.beany;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,9 +48,8 @@ public class Zamowienie implements Serializable {
     private List<Zamowieniemenu> zamowieniemenu;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zamowienie", fetch = FetchType.LAZY)
     private List<Transakcjezamowienia> transakcjezamowienia;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", referencedColumnName = "username")
+    @ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
     private Uzytkownik uzytkownik;
     @JoinColumn(name = "kurs_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -142,10 +139,6 @@ public class Zamowienie implements Serializable {
 
     public void setUzytkownik(Uzytkownik uzytkownik) {
         this.uzytkownik = uzytkownik;
-        if (!uzytkownik.getZamowienia().contains(this)) {
-            uzytkownik.getZamowienia().add(0,this);
-            Logger.getAnonymousLogger().log(Level.SEVERE, uzytkownik.getZamowienia()+"");
-        }
     }
 
     public Uzytkownik getUzytkownik() {

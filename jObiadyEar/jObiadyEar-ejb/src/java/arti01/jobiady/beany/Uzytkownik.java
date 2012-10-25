@@ -57,11 +57,9 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade= CascadeType.ALL, mappedBy="tragarz", fetch = FetchType.LAZY, orphanRemoval=true)
     @OrderBy("id DESC")
     private List<Kurs> kursy;
-    
-    @OneToMany(mappedBy="uzytkownik", cascade= CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
+    @OneToMany(cascade= CascadeType.ALL, mappedBy="uzytkownik", fetch = FetchType.LAZY, orphanRemoval=true)
     @OrderBy("idzamowienie DESC")
     private List<Zamowienie> zamowienia;
-    
     @OneToMany(cascade= CascadeType.ALL, mappedBy="tragarz", fetch = FetchType.LAZY)
     @OrderBy("idtransakcjezamowienia DESC")
     private List<Transakcjezamowienia> transakcjezamowienia;
