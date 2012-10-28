@@ -20,14 +20,14 @@ import javax.persistence.PersistenceContext;
 public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
-    @EJB ZamowienieFacade zf;
+    //@EJB ZamowienieFacade zf;
     @EJB KursFacade kf;
     
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public UzytkownikFacade() {
         super(Uzytkownik.class);
     }
@@ -54,6 +54,7 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         return u.getZamowienia().get(0);
     }
     
+    @Deprecated
     public Zamowienie dodajZam(Uzytkownik u){
         Zamowienie zam = new Zamowienie();
         Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
