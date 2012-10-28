@@ -59,8 +59,7 @@ public class ZamowienieAc implements Serializable {
     }
 
     public String dodaj() {
-        Uzytkownik u=login.getZalogowany();
-        zamowienie=uf.dodajZam(u);
+        zamowienie=zf.dodajZam(login.getZalogowany());
         Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
         return "zamowieniaEdycja";
     }
@@ -70,15 +69,7 @@ public class ZamowienieAc implements Serializable {
     }
     
     public String usun() {
-        if(zamowienie.getKurs()!=null){
-        kursyAc.setKurs(zamowienie.getKurs());
-        kursyAc.setZam(zamowienie);
-        kursyAc.wycofaj();
-        }
-        zf.remove(zamowienie);
-        Uzytkownik u=login.getZalogowany();
-        u.getZamowienia().remove(zamowienie);
-        uf.edit(u);
+zf.usunZam(zamowienie);
         return "zamowieniaLista";
     }
     
