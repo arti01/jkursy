@@ -19,20 +19,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PostPersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
-
 /**
  *
  * @author arti01
  */
+
 @Entity
 @Table(name = "zamowienie")
 @NamedQueries({
     @NamedQuery(name = "Zamowienie.findAll", query = "SELECT z FROM Zamowienie z")})
 public class Zamowienie implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQZAM")

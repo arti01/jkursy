@@ -28,41 +28,19 @@ public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
     private List<Zamowienie> zamPoczatkowe = new ArrayList<Zamowienie>();
+    @EJB(beanName = "UzytkownikFacade")
+    private UzytkownikFacade uf;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
-     public Zamowienie dodajZam(Uzytkownik u){
-        Zamowienie zam = new Zamowienie();
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
-        zam.setDataZamowienia(ts);
-        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        zam.setUzytkownik(u);
-        getEntityManager().refresh(getEntityManager().find(Uzytkownik.class, u.getUsername()));
-        create(zam);
-        return zam;
-    }
-     
-     public void usunZam(Zamowienie zam){
-             /*if(zamowienie.getKurs()!=null){
-        kursyAc.setKurs(zamowienie.getKurs());
-        kursyAc.setZam(zamowienie);
-        kursyAc.wycofaj();
-        }*/
-        remove(zam);
-        getEntityManager().refresh(getEntityManager().find(Uzytkownik.class, zam.getUzytkownik().getUsername()));
-        getEntityManager().refresh(getEntityManager().find(Uzytkownik.class, zam.getKurs().getTragarz().getUsername()));
-     }
     
     public void dodajMenu(Zamowienie zam, Menu menu) {
         Zamowieniemenu zm = new Zamowieniemenu();
         zm.setMenu(menu);
         zam.getZamowieniemenu().add(0, zm);
-        //Logger.getAnonymousLogger().log(Level.OFF, getEntityManager().contains(zam)+"");
         edit(zam);
-
     }
 
     @SuppressWarnings("unchecked")

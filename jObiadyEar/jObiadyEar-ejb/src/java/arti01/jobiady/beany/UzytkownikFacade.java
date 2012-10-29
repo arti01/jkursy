@@ -7,6 +7,8 @@ package arti01.jobiady.beany;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -20,8 +22,8 @@ import javax.persistence.PersistenceContext;
 public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
-    //@EJB ZamowienieFacade zf;
-    @EJB KursFacade kf;
+    @EJB(beanName="ZamowienieFacade") ZamowienieFacade zf;
+    //@EJB KursFacade kf;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -42,19 +44,17 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         return u.getKursy().get(0);
     }
     
-    @Deprecated
-    public Zamowienie dodajZamOld(Uzytkownik u){
-        Zamowienie zam = new Zamowienie();
-        Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
-        zam.setDataZamowienia(ts);
-        zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-        zam.setUzytkownik(u);
-        u.getZamowienia().add(0, zam);
-        u=getEntityManager().merge(u);
-        return u.getZamowienia().get(0);
+    public void usunKurs(Kurs kurs){
+    Uzytkownik u=kurs.getTragarz();
+        for(Zamowienie zamF:kurs.getZamowienia()){
+            zamF.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
+            zamF.setKurs(null);
+            //zf.edit(zamF);
+        }
+        u.getKursy().remove(kurs);
+        edit(u);
     }
     
-    @Deprecated
     public Zamowienie dodajZam(Uzytkownik u){
         Zamowienie zam = new Zamowienie();
         Timestamp ts = new java.sql.Timestamp(Calendar.getInstance(TimeZone.getTimeZone("GMT-2")).getTime().getTime());
@@ -66,16 +66,8 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         return zam;
     }
     
-    @Deprecated
-    public Uzytkownik findRefresh(String uO){
-        Uzytkownik u=find(uO);
-         //getEntityManager().flush();
-         /*Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getZamowieniemenu().size()));
-         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getZamowieniemenu()));
-         Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, String.valueOf(u.getZamowienia().get(0).getPotrawy()));
-         */
-        getEntityManager().refresh(u);
-         return u;
-    }
-    
+    public void usunZam(Zamowienie zam){
+        Uzytkownik u=zam.getUzytkownik();
+        u.getZamowienia().remove(zam);
+     }
 }
