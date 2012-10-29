@@ -28,7 +28,7 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         try {
             request.logout();
-            zalogowany=null;
+            zalogowany = null;
         } catch (ServletException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -37,22 +37,22 @@ public class Login implements Serializable {
 
     public Uzytkownik getZalogowany() {
         //stub
-        if(zalogowany!=null){
-            zalogowany= userImp.find(zalogowany.getUsername());
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, zalogowany.getZamowienia().size()+"login");
+        if (zalogowany != null) {
+            zalogowany = userImp.find(zalogowany.getUsername());
+            //Logger.getLogger(Login.class.getName()).log(Level.SEVERE, zalogowany.getZamowienia().size()+"login");
         }
         //userImp.;
         return zalogowany;
     }
 
     public String login() {
-    FacesContext context = FacesContext.getCurrentInstance();
-    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
-    try {
-        request.login(username, password);
-        zalogowany = userImp.find(username);
-    } catch (ServletException e) {
+        try {
+            request.login(username, password);
+            zalogowany = userImp.find(username);
+        } catch (ServletException e) {
             try {
                 // Handle unknown username/password in request.login().
                 //context.addMessage(null, new FacesMessage("błąd logowania"));
@@ -62,11 +62,10 @@ public class Login implements Serializable {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 return "/all/loginerr";
             }
+        }
+        return "/all/index";
     }
-    return "/all/index";
-}
 
-    
     public void setZalogowany(Uzytkownik user) {
         zalogowany = user;
     }
@@ -86,6 +85,4 @@ public class Login implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
 }

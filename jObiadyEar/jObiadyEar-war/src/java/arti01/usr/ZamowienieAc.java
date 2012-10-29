@@ -59,7 +59,7 @@ public class ZamowienieAc implements Serializable {
     }
 
     public String dodaj() {
-        zamowienie=zf.dodajZam(login.getZalogowany());
+        zamowienie=uf.dodajZam(login.getZalogowany());
         Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
         return "zamowieniaEdycja";
     }
@@ -69,24 +69,13 @@ public class ZamowienieAc implements Serializable {
     }
     
     public String usun() {
-zf.usunZam(zamowienie);
+uf.usunZam(zamowienie);
         return "zamowieniaLista";
     }
     
     public void zamow() {
-        
-        //zf.edit(zamowienie);
         Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
-        zamowienie=zf.find(zamowienie.getIdzamowienie());
         zf.dodajMenu(zamowienie, menu);
-        /*Zamowieniemenu zm=new Zamowieniemenu();
-        zm.setMenu(menu);
-        //zm.setZamowienie(zamowienie);
-        zamowienie.getZamowieniemenu().add(0,zm);
-        //Logger.getLogger("zamienienie menu").log(Level.SEVERE, u.getZamowienia().indexOf(zamowienie)+"");
-        //Logger.getLogger("zamienienie menu").log(Level.SEVERE, zamowienie+"");
-        login.getZalogowany().getZamowienia().set(login.getZalogowany().getZamowienia().indexOf(zamowienie), zamowienie);
-        uf.edit(login.getZalogowany());*/
     }
     
     public void usunZzam() {

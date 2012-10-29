@@ -50,20 +50,12 @@ public class KursyAc implements Serializable {
     private double zero=0.00;
     
     public String dodaj() {
-        Uzytkownik u=login.getZalogowany();
-        kurs=uf.dodajKurs(u);
+        kurs=uf.dodajKurs(login.getZalogowany());
         return "kursEdycja";
     }
     
     public String usun() {
-        Uzytkownik u=login.getZalogowany();
-        for(Zamowienie zamF:kurs.getZamowienia()){
-            zamF.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
-            zamF.setKurs(null);
-            zf.edit(zamF);
-        }
-        u.getKursy().remove(kurs);
-        uf.edit(u);
+        uf.usunKurs(kurs);
         return "kursyLista";
     }
     
@@ -86,9 +78,6 @@ public class KursyAc implements Serializable {
     }
     
     public String kursEdycja() {
-        for(Zamowienie zam:zf.getZamPoczatkowe()){
-            Logger.getLogger("arti").log(Level.SEVERE, zam.getUzytkownik()+"");
-        }
         return "kursEdycja";
     }
     
