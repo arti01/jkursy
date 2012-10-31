@@ -69,7 +69,7 @@ public class ZamowienieAc implements Serializable {
     }
     
     public String usun() {
-uf.usunZam(zamowienie);
+        uf.usunZam(zamowienie);
         return "zamowieniaLista";
     }
     
