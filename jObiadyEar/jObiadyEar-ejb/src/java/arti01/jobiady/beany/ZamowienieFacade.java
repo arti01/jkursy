@@ -22,14 +22,14 @@ import javax.persistence.Query;
  *
  * @author arti01
  */
-@Stateful
+@Stateful(name="zamFa")
 public class ZamowienieFacade extends AbstractFacade<Zamowienie> {
 
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
     private List<Zamowienie> zamPoczatkowe = new ArrayList<Zamowienie>();
-    @EJB(beanName = "UzytkownikFacade")
-    private UzytkownikFacade uf;
+    //@EJB(beanName = "UzytkownikFacade")
+    //private UzytkownikFacade uf;
 
     @Override
     protected EntityManager getEntityManager() {

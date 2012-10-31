@@ -22,8 +22,8 @@ import javax.persistence.PersistenceContext;
 public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
     @PersistenceContext(unitName = "jObiadyEar-ejbPU")
     private EntityManager em;
-    @EJB(beanName="ZamowienieFacade") ZamowienieFacade zf;
-    //@EJB KursFacade kf;
+    @EJB ZamowienieFacade zf;
+    @EJB KursFacade kf;
     
     @Override
     protected EntityManager getEntityManager() {
@@ -49,8 +49,10 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         for(Zamowienie zamF:kurs.getZamowienia()){
             zamF.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
             zamF.setKurs(null);
-            //zf.edit(zamF);
+            zf.edit(zamF);
         }
+        kurs.getZamowienia().clear();
+        kf.edit(kurs);
         u.getKursy().remove(kurs);
         edit(u);
     }
@@ -61,13 +63,14 @@ public class UzytkownikFacade extends AbstractFacade<Uzytkownik> {
         zam.setDataZamowienia(ts);
         zam.setStatusZamowienia(StatusZamowienia.POCZATKOWY);
         zam.setUzytkownik(u);
-        u.getZamowienia().add(zam);
-        edit(u);
-        return zam;
+        u.getZamowienia().add(0, zam);
+        u=edit(u);
+        return u.getZamowienia().get(0);
     }
     
     public void usunZam(Zamowienie zam){
         Uzytkownik u=zam.getUzytkownik();
         u.getZamowienia().remove(zam);
+        edit(u);
      }
 }
