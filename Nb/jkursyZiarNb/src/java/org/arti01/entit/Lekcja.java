@@ -58,6 +58,11 @@ public class Lekcja implements Serializable {
     @OneToMany(mappedBy = "lekcja", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("datadodania DESC")
     private List<Lekcjakoment> lekcjakoments;
+    
+    @ManyToOne
+    @JoinColumn(name = "idlekcjarodzaje", referencedColumnName = "idlekcjarodzaje")
+    private Lekcjarodzaje lekcjarodzaje;
+    
     @Transient
     private Lekcjakoment lastKoment;
     @Transient
@@ -172,6 +177,14 @@ public class Lekcja implements Serializable {
         this.widoczna = widoczna;
     }
 
+    public Lekcjarodzaje getLekcjaRodzaje() {
+        return lekcjarodzaje;
+    }
+
+    public void setLekcjaRodzaje(Lekcjarodzaje lekcjaRodzaje) {
+        this.lekcjarodzaje = lekcjaRodzaje;
+    }
+    
     public Lekcjakoment getLastKoment() {
         if (getLekcjakoments().size() != 0) {
             lastKoment = getLekcjakoments().iterator().next();
@@ -279,4 +292,34 @@ public class Lekcja implements Serializable {
     public void setKomentDoFotBezOdp(List<Fotykursantkoment> komentDoFotBezOdp) {
         this.komentDoFotBezOdp = komentDoFotBezOdp;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + (this.idlekcja != null ? this.idlekcja.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lekcja other = (Lekcja) obj;
+        if (this.idlekcja != other.idlekcja && (this.idlekcja == null || !this.idlekcja.equals(other.idlekcja))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Lekcja{" + "idlekcja=" + idlekcja + '}';
+    }
+
+    
+    
 }

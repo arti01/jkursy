@@ -1,13 +1,12 @@
 package org.arti01.entit;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -45,6 +44,9 @@ public class Lekcjafotykursant implements Serializable {
     @OneToMany(mappedBy = "lekcjafotykursant", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @OrderBy(value = "datadodania DESC")
     private List<Fotykursantkoment> fotykursantkoment;
+    
+    @OneToOne(mappedBy="lekcjafotykursant")
+    private Galeriaszkoly galeriaszkoly;
 
     private boolean dousuniecia;
 
@@ -193,4 +195,40 @@ public class Lekcjafotykursant implements Serializable {
     public void setDowykladowcy(List<Fotykursantkoment> dowykladowcy) {
         this.dowykladowcy = dowykladowcy;
     }
+
+    public Galeriaszkoly getGaleriaszkoly() {
+        return galeriaszkoly;
+    }
+
+    public void setGaleriaszkoly(Galeriaszkoly galeriaszkoly) {
+        this.galeriaszkoly = galeriaszkoly;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + (this.idlekcjafotykursant != null ? this.idlekcjafotykursant.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Lekcjafotykursant other = (Lekcjafotykursant) obj;
+        if (this.idlekcjafotykursant != other.idlekcjafotykursant && (this.idlekcjafotykursant == null || !this.idlekcjafotykursant.equals(other.idlekcjafotykursant))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Lekcjafotykursant{" + "idlekcjafotykursant=" + idlekcjafotykursant + '}';
+    }
+    
 }

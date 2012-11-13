@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.xml.bind.annotation.XmlTransient;
-import org.eclipse.persistence.annotations.AdditionalCriteria;
 
 /**
  * The persistent class for the _users database table.
@@ -346,7 +345,7 @@ public class User implements Serializable {
             } else {
                 fotDoDodania = woleBezKoment;
             }
-            if (getKonkretnaLekcja().getLp() == 0) {
+            if (getKonkretnaLekcja().getLekcjaRodzaje().getIdlekcjarodzaje() != 0) {
                 fotDoDodania = wolneOgole;
             }
             return fotDoDodania;

@@ -87,8 +87,10 @@ public class LekacjaImp implements Serializable{
 		qt.setParameter("lp", lp);
 		qt.setParameter("kursy", kursy);
 		for(Lekcja l: (List<Lekcja>)qt.getResultList()){
+                                                      //  System.out.println(l.getLp()+" old LP");
 			l.setLp(l.getLp()-1);
 			em.merge(l);
+                                                      em.flush();
 		}
 	}
 
