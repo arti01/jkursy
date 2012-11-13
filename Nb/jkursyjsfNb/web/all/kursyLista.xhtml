@@ -1,125 +1,125 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-<ui:composition template="/templates/template.xhtml">
-	<ui:define name="body">
-			<div id="tabela2">
-				<h:form id="form1">
-					sortuj:
-					<h:selectOneMenu value="#{kursyAc.sort}" valueChangeListener="#{kursyAc.zmienSort}">
-						<f:selectItems value="#{kursyAc.listaSort}" />
-						<a4j:ajax event="change" execute="@this" render="form1" />
-					</h:selectOneMenu>
-					<a4j:commandButton value="rosnąco" action="#{kursyAc.zmienSortDesc}" render="form1" 
-						rendered="#{kursyAc.ascdesc=='ascending'}"/>
-					<a4j:commandButton value="malejąco" action="#{kursyAc.zmienSortDesc}" render="form1" 
-						rendered="#{kursyAc.ascdesc=='descending'}"/>
-					<rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
-						<rich:column id="nazwa" style="background-color: #{kurs.typykursu.kolor}">
-							<h:commandLink action="#{kursyAc.detale}">
-								<h:outputText value="#{kurs.nazwa}" styleClass="tytul" />
-							</h:commandLink>
-							<br />
-							<h:outputText value="#{kurs.opisKrotki}" />
-							<ul>
-								<a4j:repeat var="wyklad" value="#{kurs.wykladowcy}">
-									<li><h:commandLink action="#{kursyAc.wykladDetale}">
-											<f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
-											<h:outputText value="#{wyklad.imieNazwisko}" />
-										</h:commandLink></li>
-								</a4j:repeat>
-							</ul>
-							<hr />
-							<p>
-								<h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
-								<br />
-								<h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
-							</p>
-						</rich:column>
-						<rich:column style="background-color: #{kurs.typykursu.kolor}"
-							sortBy="#{kurs.poziomyzaawansowania.nazwa}" sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}"
-							rendered="#{adminKursyAc.poziomyzaawansowaniaOrder!='unsorted'}">
-							<ul>
-								<li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" /></li>
-								<li><h:commandLink action="#{indexAc.tk}">
-										<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
-										<h:outputText value="typ: #{kurs.typykursu.nazwa}" />
-									</h:commandLink></li>
-								<li><h:commandLink action="#{indexAc.pz}">
-										<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
-										<a4j:mediaOutput id="poziomimg" element="img" createContent="#{kursyAc.paintFota}"
-											value="#{kurs.poziomyzaawansowania.plik}" />
-									</h:commandLink> <rich:tooltip id="tt1" layout="block" target="poziomimg">
-										<h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
-									</rich:tooltip>
-								</li>
-							</ul>
-						</rich:column>
-						<rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.stacjonarnyTN}"
-							sortOrder="#{adminKursyAc.stacjonarnyTNOrder}"
-							rendered="#{adminKursyAc.poziomyzaawansowaniaOrder=='unsorted'}">
-							<ul>
-								<li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" /></li>
-								<li><h:commandLink action="#{indexAc.tk}">
-										<f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
-										<h:outputText value="typ: #{kurs.typykursu.nazwa}" />
-									</h:commandLink></li>
-								<li><h:commandLink action="#{indexAc.pz}">
-										<f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
-										<a4j:mediaOutput id="poziomimg1" element="img" createContent="#{kursyAc.paintFota}"
-											value="#{kurs.poziomyzaawansowania.plik}" />
-									</h:commandLink> <rich:tooltip id="tt11" layout="block" target="poziomimg1">
-										<h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
-									</rich:tooltip>
-								</li>
-							</ul>
-						</rich:column>
-						<rich:column id="cena" sortBy="#{kurs.cena}" sortOrder="#{adminKursyAc.cenaOrder}"
-							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder!='unsorted'}">
-							<h:outputText value="#{kurs.cena}">
-								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
-							</h:outputText>
-							<hr />
-							<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:outputText>
-							<h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
-							<h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:outputText>
-							<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
-						</rich:column>
-						<rich:column sortBy="#{kurs.dataod}" id="rozpoczecie" sortOrder="#{adminKursyAc.dataodOrder}"
-							style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder=='unsorted'}">
-							<h:outputText value="#{kurs.cena}">
-								<f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
-							</h:outputText>
-							<hr />
-							<h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:outputText>
-							<h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
-							<h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:outputText>
-							<h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
-						</rich:column>
-						<rich:column style="background-color: #{kurs.typykursu.kolor}">
-							<h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwacja}"
-								rendered="#{(login.zalogowany.username!=null)and(kurs.rezerwacjaDostepna)}">
-								<f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
-							</h:commandButton>
-							<h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml"
-								rendered="#{(login.zalogowany.username==null)}" />
-							<h:outputText value=" lub " rendered="#{(login.zalogowany.username==null)}" />
-							<h:link value="zaloguj" outcome="/all/login.xhtml" rendered="#{(login.zalogowany.username==null)}" />
-							<h:outputText value="aby rezerwować" rendered="#{(login.zalogowany.username==null)}" />
-						</rich:column>
-					</rich:dataTable>
-				</h:form>
-			</div>
-	</ui:define>
-</ui:composition>
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="body">
+            <div id="tabela2">
+                <h:form id="form1">
+                    sortuj:
+                    <h:selectOneMenu value="#{kursyAc.sort}" valueChangeListener="#{kursyAc.zmienSort}">
+                        <f:selectItems value="#{kursyAc.listaSort}" />
+                        <a4j:ajax event="change" execute="@this" render="form1" />
+                    </h:selectOneMenu>
+                    <a4j:commandButton value="rosnąco" action="#{kursyAc.zmienSortDesc}" render="form1" 
+                                       rendered="#{kursyAc.ascdesc=='ascending'}"/>
+                    <a4j:commandButton value="malejąco" action="#{kursyAc.zmienSortDesc}" render="form1" 
+                                       rendered="#{kursyAc.ascdesc=='descending'}"/>
+                    <rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
+                        <rich:column id="nazwa" style="background-color: #{kurs.typykursu.kolor}">
+                            <h:commandLink action="#{kursyAc.detale}">
+                                <h:outputText value="#{kurs.nazwa}" styleClass="tytul" />
+                            </h:commandLink>
+                            <br />
+                            <h:outputText value="#{kurs.opisKrotki}" />
+                            <ul>
+                                <a4j:repeat var="wyklad" value="#{kurs.wykladowcy}">
+                                    <li><h:commandLink action="#{kursyAc.wykladDetale}">
+                                            <f:setPropertyActionListener target="#{kursyAc.wykladowca}" value="#{wyklad}" />
+                                            <h:outputText value="#{wyklad.imieNazwisko}" />
+                                        </h:commandLink></li>
+                                </a4j:repeat>
+                            </ul>
+                            <hr />
+                            <p>
+                                <h:outputText value="liczebność grupy #{kurs.wielkoscgrupy}" />
+                                <br />
+                                <h:outputText value="(wolnych miejsc #{kurs.wolnychMiejsc})" />
+                            </p>
+                        </rich:column>
+                        <rich:column style="background-color: #{kurs.typykursu.kolor}"
+                                     sortBy="#{kurs.poziomyzaawansowania.nazwa}" sortOrder="#{adminKursyAc.poziomyzaawansowaniaOrder}"
+                                     rendered="#{adminKursyAc.poziomyzaawansowaniaOrder!='unsorted'}">
+                            <ul>
+                                <li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" /></li>
+                                <li><h:commandLink action="#{indexAc.tk}">
+                                        <f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
+                                        <h:outputText value="typ: #{kurs.typykursu.nazwa}" />
+                                    </h:commandLink></li>
+                                <li><h:commandLink action="#{indexAc.pz}">
+                                        <f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
+                                        <a4j:mediaOutput id="poziomimg" element="img" createContent="#{kursyAc.paintFota}"
+                                                         value="#{kurs.poziomyzaawansowania.plik}" />
+                                    </h:commandLink> <rich:tooltip id="tt1" layout="block" target="poziomimg">
+                                        <h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
+                                    </rich:tooltip>
+                                </li>
+                            </ul>
+                        </rich:column>
+                        <rich:column style="background-color: #{kurs.typykursu.kolor}" sortBy="#{kurs.stacjonarnyTN}"
+                                     sortOrder="#{adminKursyAc.stacjonarnyTNOrder}"
+                                     rendered="#{adminKursyAc.poziomyzaawansowaniaOrder=='unsorted'}">
+                            <ul>
+                                <li><h:outputText value="rodzaj: #{kurs.stacjonarnyTN}" /></li>
+                                <li><h:commandLink action="#{indexAc.tk}">
+                                        <f:setPropertyActionListener target="#{indexAc.tk}" value="#{kurs.typykursu}" />
+                                        <h:outputText value="typ: #{kurs.typykursu.nazwa}" />
+                                    </h:commandLink></li>
+                                <li><h:commandLink action="#{indexAc.pz}">
+                                        <f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
+                                        <a4j:mediaOutput id="poziomimg1" element="img" createContent="#{kursyAc.paintFota}"
+                                                         value="#{kurs.poziomyzaawansowania.plik}" />
+                                    </h:commandLink> <rich:tooltip id="tt11" layout="block" target="poziomimg1">
+                                        <h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
+                                    </rich:tooltip>
+                                </li>
+                            </ul>
+                        </rich:column>
+                        <rich:column id="cena" sortBy="#{kurs.cena}" sortOrder="#{adminKursyAc.cenaOrder}"
+                                     style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder!='unsorted'}">
+                            <h:outputText value="#{kurs.cena}">
+                                <f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
+                            </h:outputText>
+                            <hr />
+                            <h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                            <h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
+                            <h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                            <h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
+                        </rich:column>
+                        <rich:column sortBy="#{kurs.dataod}" id="rozpoczecie" sortOrder="#{adminKursyAc.dataodOrder}"
+                                     style="background-color: #{kurs.typykursu.kolor}" rendered="#{adminKursyAc.cenaOrder=='unsorted'}">
+                            <h:outputText value="#{kurs.cena}">
+                                <f:convertNumber currencySymbol="zł" groupingUsed="#{true}" maxFractionDigits="2" type="currency" />
+                            </h:outputText>
+                            <hr />
+                            <h:outputText value="#{kurs.dataod}" rendered="#{kurs.dataod!=null}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                            <h:outputText value="&lt;br/&gt;do:&lt;br/&gt;" rendered="#{kurs.dataod!=null}" escape="false" />
+                            <h:outputText value="#{kurs.datado}" rendered="#{kurs.dataod!=null}">
+                                <f:convertDateTime pattern="dd-MM-yyyy" />
+                            </h:outputText>
+                            <h:outputText value="rozpoczynamy, gdy zbierze się grupa" rendered="#{kurs.dataod==null}" />
+                        </rich:column>
+                        <rich:column style="background-color: #{kurs.typykursu.kolor}">
+                            <h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwacja}"
+                                             rendered="#{(login.zalogowany.username!=null)and(kurs.rezerwacjaDostepna)}">
+                                <f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
+                            </h:commandButton>
+                            <h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml"
+                                    rendered="#{(login.zalogowany.username==null)}" />
+                            <h:outputText value=" lub " rendered="#{(login.zalogowany.username==null)}" />
+                            <h:link value="zaloguj" outcome="/all/login.xhtml" rendered="#{(login.zalogowany.username==null)}" />
+                            <h:outputText value="aby rezerwować" rendered="#{(login.zalogowany.username==null)}" />
+                        </rich:column>
+                    </rich:dataTable>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
 </html>

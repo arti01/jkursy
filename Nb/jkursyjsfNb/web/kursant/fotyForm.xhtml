@@ -24,15 +24,15 @@
                     <li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji: " />
                         <h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantmax}" /></li>
                     <li><h:outputText value="Maksymalna ilość zdjęć, które możesz dodać do lekcji bez komentarza wykładowcy: " 
-                                      rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+                                      rendered="#{kursantLekcjaAc.lekcja.lekcjaRodzaje.idlekcjarodzaje==1}"/>
                         <h:outputText value="#{kursantLekcjaAc.lekcja.kursy.fotperkursantbezkoment}" 
-                                      rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
+                                      rendered="#{kursantLekcjaAc.lekcja.lekcjaRodzaje.idlekcjarodzaje==1}"/></li>
                     <li><h:outputText value="Ilość Twoich zdjęć dodanych do lekcji: " />
                         <h:outputText value="#{kursantLekcjaAc.zalogowany.fotyDodaneDoLekcji.size()}" /></li>
                     <li><h:outputText value="Ilość Twoich zdjęć nieskomentowanych przez wykładowcę: " 
-                                      rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/>
+                                      rendered="#{kursantLekcjaAc.lekcja.lekcjaRodzaje.idlekcjarodzaje==1}"/>
                         <h:outputText value="#{kursantLekcjaAc.zalogowany.fotyBezkomentarza.size()}" 
-                                      rendered="#{kursantLekcjaAc.lekcja.lp!=0}"/></li>
+                                      rendered="#{kursantLekcjaAc.lekcja.lekcjaRodzaje.idlekcjarodzaje==1}"/></li>
                     <li><h:outputText value="Możesz jeszcze dodać: " />
                         <h:outputText value="#{kursantLekcjaAc.zalogowany.fotDoDodania}" /></li>
                 </ul>

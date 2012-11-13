@@ -69,6 +69,7 @@
                                     <h:commandLink action="#{kursantLekcjaAc.pokaz}">
                                         <f:setPropertyActionListener target="#{kursantLekcjaAc.lekcja}" value="#{lekcja}" />
                                         <h:outputText value="#{lekcja.tytul}" />
+                                        (#{lekcja.lekcjaRodzaje.opis})
                                     </h:commandLink>
                                 </h:column>
                                 <h:column>

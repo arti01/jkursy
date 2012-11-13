@@ -24,233 +24,236 @@ import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.UserImp;
 import org.richfaces.component.SortOrder;
 
-@ManagedBean(name="kursyAc")
+@ManagedBean(name = "kursyAc")
 @SessionScoped
-public class KursyAc implements Serializable{
-	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(KursyAc.class);
-	private List<Kursy>kursy;
-	private ListDataModel<Kursy> allKursy = new ListDataModel<Kursy>();
-	private ListDataModel<User> allWykladowcy = new ListDataModel<User>();
-	private User wykladowca=new User();
-	private Kursy kurs;
-	@EJB KursyImp kursyImp;
-	@EJB UserImp userImp;
-	@EJB RoleImp roleImp;
-	@ManagedProperty(value="#{adminKursyAc}") org.arti01.admin.KursyAc adminKursyAc;
-	private Integer nrstrony;
-	private Userfoty uf=new Userfoty();
-	String[] listaSort=new String[]{"domyślne","cena", "poziom zaawansowania", "rodzaj","rozpoczęcie"};
-	String sort="";
-	String ascdesc="";
-	
-	public void zmienSort(ValueChangeEvent e) throws IOException{
-		sort=e.getNewValue().toString();
-		logger.info(sort);
-		if(sort.equals("domyślne")){
-			this.list();
-			ascdesc="";
-		}
-		if(sort.equals("cena")){
-			adminKursyAc.sortBycena();
-			ascdesc=adminKursyAc.getCenaOrder().toString();
-			logger.info(ascdesc);
-		}
-		if(sort.equals("poziom zaawansowania")) {
-			adminKursyAc.sortBypoziomyzaawansowania();
-			ascdesc=adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
-		}
-		if(sort.equals("rodzaj")) {
-			adminKursyAc.sortBystacjonarnyTN();
-			ascdesc=adminKursyAc.getStacjonarnyTNOrder().toString();
-		}
-		if(sort.equals("rozpoczęcie")) {
-			adminKursyAc.sortBydataod();
-			ascdesc=adminKursyAc.getDataodOrder().toString();
-		}
-	}
-	
-	public void zmienSortDesc(){
-		if(sort.equals("cena")){
-			adminKursyAc.sortBycena();
-			ascdesc=adminKursyAc.getCenaOrder().toString();
-		}
-		if(sort.equals("poziom zaawansowania")) {
-			adminKursyAc.sortBypoziomyzaawansowania();
-			ascdesc=adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
-		}
-		if(sort.equals("rodzaj")) {
-			adminKursyAc.sortBystacjonarnyTN();
-			ascdesc=adminKursyAc.getStacjonarnyTNOrder().toString();
-		}
-		if(sort.equals("rozpoczęcie")) {
-			adminKursyAc.sortBydataod();
-			ascdesc=adminKursyAc.getDataodOrder().toString();
-		}
-	}
-	
-	public KursyAc() {
-		kurs=new Kursy();
+public class KursyAc implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    Logger logger = Logger.getLogger(KursyAc.class);
+    private List<Kursy> kursy;
+    private ListDataModel<Kursy> allKursy = new ListDataModel<Kursy>();
+    private ListDataModel<User> allWykladowcy = new ListDataModel<User>();
+    private User wykladowca = new User();
+    private Kursy kurs;
+    @EJB
+    KursyImp kursyImp;
+    @EJB
+    UserImp userImp;
+    @EJB
+    RoleImp roleImp;
+    @ManagedProperty(value = "#{adminKursyAc}")
+    org.arti01.admin.KursyAc adminKursyAc;
+    private Integer nrstrony;
+    private Userfoty uf = new Userfoty();
+    String[] listaSort = new String[]{"domyślne", "cena", "poziom zaawansowania", "rodzaj", "rozpoczęcie"};
+    String sort = "";
+    String ascdesc = "";
+
+    public void zmienSort(ValueChangeEvent e) throws IOException {
+        sort = e.getNewValue().toString();
+        logger.info(sort);
+        if (sort.equals("domyślne")) {
+            this.list();
+            ascdesc = "";
+        }
+        if (sort.equals("cena")) {
+            adminKursyAc.sortBycena();
+            ascdesc = adminKursyAc.getCenaOrder().toString();
+            logger.info(ascdesc);
+        }
+        if (sort.equals("poziom zaawansowania")) {
+            adminKursyAc.sortBypoziomyzaawansowania();
+            ascdesc = adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
+        }
+        if (sort.equals("rodzaj")) {
+            adminKursyAc.sortBystacjonarnyTN();
+            ascdesc = adminKursyAc.getStacjonarnyTNOrder().toString();
+        }
+        if (sort.equals("rozpoczęcie")) {
+            adminKursyAc.sortBydataod();
+            ascdesc = adminKursyAc.getDataodOrder().toString();
+        }
     }
-	
-	public String list() {
-		adminKursyAc.setDatadoOrder(SortOrder.unsorted);
-		adminKursyAc.setDataodOrder(SortOrder.unsorted);
-		adminKursyAc.setStacjonarnyTNOrder(SortOrder.unsorted);
-		adminKursyAc.setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
-		adminKursyAc.setTypykursuOrder(SortOrder.unsorted);
-		adminKursyAc.setLpOrder(SortOrder.ascending);
-		adminKursyAc.setCenaOrder(SortOrder.unsorted);
-		adminKursyAc.setNazwaOrder(SortOrder.unsorted);
-		//logger.info("jestemmmm");
-		kursy=kursyImp.findAll();
-		allKursy.setWrappedData(kursy);
-		return "kursyLista";
-	}
-	
-public String userGaleriaDetale(){
-		nrstrony=(wykladowca.getUserfotyakcept().indexOf(uf))+1;
-		//logger.info("jestemmmm");
-		return "userGaleriaDetale";
-	}
-	
-	public String listA() {
-		kursy=kursyImp.findAll();
-		allKursy.setWrappedData(kursy);
-		return null;
-	}
-	
-	public String wykladList(){
-		Role rola = new Role();
-		rola.setRola(Role.WYKLADOWCA);
-		allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
-		return "wykladLista";
-	}
-	
-	public String detale() throws Exception{
-		FacesContext fs = FacesContext.getCurrentInstance();
-		Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
-		String idkursy = params.get("idkursy");
-		if(idkursy!=null){
-			kurs.setIdkursy(new Integer(idkursy));
-			kurs=kursyImp.find(kurs);
-		}
-		else kurs=allKursy.getRowData();
-		return "kursyDetale";
-	}
-	
-	public String wykladDetale(){
-		Role rola = new Role();
-		rola.setRola(Role.WYKLADOWCA);
-		allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
-		/*FacesContext fs = FacesContext.getCurrentInstance();
-		Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
-		String username = params.get("username");
-		if(username!=null)wykladowca.setUsername(username);*/
-		wykladowca=userImp.find(wykladowca);
-		return "wykladowcaDetale";
-	}
-	
-	public void paintFota(OutputStream stream, Object object) throws IOException {
-		//User u=new User();
-		//u.setUsername(object.toString());
-		//kurs.getPoziomyzaawansowania().
-    	stream.write((byte[])object);
+
+    public void zmienSortDesc() {
+        if (sort.equals("cena")) {
+            adminKursyAc.sortBycena();
+            ascdesc = adminKursyAc.getCenaOrder().toString();
+        }
+        if (sort.equals("poziom zaawansowania")) {
+            adminKursyAc.sortBypoziomyzaawansowania();
+            ascdesc = adminKursyAc.getPoziomyzaawansowaniaOrder().toString();
+        }
+        if (sort.equals("rodzaj")) {
+            adminKursyAc.sortBystacjonarnyTN();
+            ascdesc = adminKursyAc.getStacjonarnyTNOrder().toString();
+        }
+        if (sort.equals("rozpoczęcie")) {
+            adminKursyAc.sortBydataod();
+            ascdesc = adminKursyAc.getDataodOrder().toString();
+        }
     }
-	
-	public String userGaleria(){
-		wykladowca=userImp.find(wykladowca);
-		return "userGaleria";
-	}
 
-	public List<Kursy> getKursy() {
-		return kursy;
-	}
+    public KursyAc() {
+        kurs = new Kursy();
+    }
 
-	public void setKursy(List<Kursy> kursyAll) {
-		this.kursy = kursyAll;
-	}
+    public String list() {
+        adminKursyAc.setDatadoOrder(SortOrder.unsorted);
+        adminKursyAc.setDataodOrder(SortOrder.unsorted);
+        adminKursyAc.setStacjonarnyTNOrder(SortOrder.unsorted);
+        adminKursyAc.setPoziomyzaawansowaniaOrder(SortOrder.unsorted);
+        adminKursyAc.setTypykursuOrder(SortOrder.unsorted);
+        adminKursyAc.setLpOrder(SortOrder.ascending);
+        adminKursyAc.setCenaOrder(SortOrder.unsorted);
+        adminKursyAc.setNazwaOrder(SortOrder.unsorted);
+        //logger.info("jestemmmm");
+        kursy = kursyImp.findAll();
+        allKursy.setWrappedData(kursy);
+        return "kursyLista";
+    }
 
-	public Kursy getKurs() {
-		return kurs;
-	}
+    public String userGaleriaDetale() {
+        nrstrony = (wykladowca.getUserfotyakcept().indexOf(uf)) + 1;
+        //logger.info("jestemmmm");
+        return "userGaleriaDetale";
+    }
 
-	public void setKurs(Kursy kurs) {
-		this.kurs = kurs;
-	}
+    public String listA() {
+        kursy = kursyImp.findAll();
+        allKursy.setWrappedData(kursy);
+        return null;
+    }
 
-	public User getWykladowca() {
-		return wykladowca;
-	}
+    public String wykladList() {
+        Role rola = new Role();
+        rola.setRola(Role.WYKLADOWCA);
+        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+        return "wykladLista";
+    }
 
-	public void setWykladowca(User wykladowca) {
-		this.wykladowca = wykladowca;
-	}
+    public String detale() throws Exception {
+        FacesContext fs = FacesContext.getCurrentInstance();
+        Map<String, String> params = fs.getExternalContext().getRequestParameterMap();
+        String idkursy = params.get("idkursy");
+        if (idkursy != null) {
+            kurs.setIdkursy(new Integer(idkursy));
+            kurs = kursyImp.find(kurs);
+        } else {
+            kurs = allKursy.getRowData();
+        }
+        return "kursyDetale";
+    }
 
+    public String wykladDetale() {
+        Role rola = new Role();
+        rola.setRola(Role.WYKLADOWCA);
+        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+        /*FacesContext fs = FacesContext.getCurrentInstance();
+         Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
+         String username = params.get("username");
+         if(username!=null)wykladowca.setUsername(username);*/
+        wykladowca = userImp.find(wykladowca);
+        return "wykladowcaDetale";
+    }
 
-	public ListDataModel<Kursy> getAllKursy() {
-		return allKursy;
-	}
+    public void paintFota(OutputStream stream, Object object) throws IOException {
+        //User u=new User();
+        //u.setUsername(object.toString());
+        //kurs.getPoziomyzaawansowania().
+        stream.write((byte[]) object);
+    }
 
-	public void setAllKursy(ListDataModel<Kursy> allKursy) {
-		this.allKursy = allKursy;
-	}
-	
-	public ListDataModel<User> getAllWykladowcy() {
-		return allWykladowcy;
-	}
+    public String userGaleria() {
+        wykladowca = userImp.find(wykladowca);
+        return "userGaleria";
+    }
 
-	public void setAllWykladowcy(ListDataModel<User> allWykladowcy) {
-		this.allWykladowcy = allWykladowcy;
-	}
+    public List<Kursy> getKursy() {
+        return kursy;
+    }
 
-	public Integer getNrstrony() {
-		return nrstrony;
-	}
+    public void setKursy(List<Kursy> kursyAll) {
+        this.kursy = kursyAll;
+    }
 
-	public void setNrstrony(Integer nrstrony) {
-		this.nrstrony = nrstrony;
-	}
+    public Kursy getKurs() {
+        return kurs;
+    }
 
-	public Userfoty getUf() {
-		return uf;
-	}
+    public void setKurs(Kursy kurs) {
+        this.kurs = kurs;
+    }
 
-	public void setUf(Userfoty uf) {
-		this.uf = uf;
-	}
+    public User getWykladowca() {
+        return wykladowca;
+    }
 
-	public org.arti01.admin.KursyAc getAdminKursyAc() {
-		return adminKursyAc;
-	}
+    public void setWykladowca(User wykladowca) {
+        this.wykladowca = wykladowca;
+    }
 
-	public void setAdminKursyAc(org.arti01.admin.KursyAc adminKursyAc) {
-		this.adminKursyAc = adminKursyAc;
-	}
+    public ListDataModel<Kursy> getAllKursy() {
+        return allKursy;
+    }
 
-	public String[] getListaSort() {
-		return listaSort;
-	}
+    public void setAllKursy(ListDataModel<Kursy> allKursy) {
+        this.allKursy = allKursy;
+    }
 
-	public void setListaSort(String[] listaSort) {
-		this.listaSort = listaSort;
-	}
+    public ListDataModel<User> getAllWykladowcy() {
+        return allWykladowcy;
+    }
 
-	public String getSort() {
-		return sort;
-	}
+    public void setAllWykladowcy(ListDataModel<User> allWykladowcy) {
+        this.allWykladowcy = allWykladowcy;
+    }
 
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
+    public Integer getNrstrony() {
+        return nrstrony;
+    }
 
-	public String getAscdesc() {
-		return ascdesc;
-	}
+    public void setNrstrony(Integer nrstrony) {
+        this.nrstrony = nrstrony;
+    }
 
-	public void setAscdesc(String ascdesc) {
-		this.ascdesc = ascdesc;
-	}
-	
-	
+    public Userfoty getUf() {
+        return uf;
+    }
+
+    public void setUf(Userfoty uf) {
+        this.uf = uf;
+    }
+
+    public org.arti01.admin.KursyAc getAdminKursyAc() {
+        return adminKursyAc;
+    }
+
+    public void setAdminKursyAc(org.arti01.admin.KursyAc adminKursyAc) {
+        this.adminKursyAc = adminKursyAc;
+    }
+
+    public String[] getListaSort() {
+        return listaSort;
+    }
+
+    public void setListaSort(String[] listaSort) {
+        this.listaSort = listaSort;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getAscdesc() {
+        return ascdesc;
+    }
+
+    public void setAscdesc(String ascdesc) {
+        this.ascdesc = ascdesc;
+    }
 }

@@ -22,11 +22,13 @@ import org.arti01.entit.Lekcja;
 import org.arti01.entit.Lekcjafoty;
 import org.arti01.entit.Lekcjafotykursant;
 import org.arti01.entit.Lekcjapliki;
+import org.arti01.entit.Lekcjarodzaje;
 import org.arti01.entit.Role;
 import org.arti01.entit.Statyczne;
 import org.arti01.entit.User;
 import org.arti01.sesBean.KursyImp;
 import org.arti01.sesBean.LekacjaImp;
+import org.arti01.sesBean.LekcjarodzajeFacade;
 import org.arti01.sesBean.RoleImp;
 import org.arti01.sesBean.StatyczneImp;
 import org.arti01.sesBean.UserImp;
@@ -63,6 +65,9 @@ public class KursyAc implements Serializable {
     private User user = new User();
     private Lekcjafotykursant fotaKursant;
     private List<Lekcjafotykursant> fotyKursantow = new ArrayList<Lekcjafotykursant>();
+    @EJB
+    LekcjarodzajeFacade lekrodzImp;
+    private List<Lekcjarodzaje> lekcjarodzaje = new ArrayList<Lekcjarodzaje>();
 
     public String kursForm() {
         errorText = "";
@@ -81,6 +86,9 @@ public class KursyAc implements Serializable {
     public String lekcjaFormNew() {
         errorText = "";
         lekcja = new Lekcja();
+        Lekcjarodzaje lr=new Lekcjarodzaje();
+        lr.setIdlekcjarodzaje(1);
+        lekcja.setLekcjaRodzaje(lr);
         return "lekcjaForm";
     }
 
@@ -103,11 +111,12 @@ public class KursyAc implements Serializable {
         logger.info("lekcjaDodaj");
         lekcja.setKursy(kurs);
         lekcja.setDatazmiany(new Timestamp(new Date().getTime()));
+        lekcja.setLekcjaRodzaje(lekrodzImp.find(lekcja.getLekcjaRodzaje().getIdlekcjarodzaje()));
         if (lekcja.getIdlekcja() != null) {// edycja
             logger.info("eeeeeeeeeeeeeeeeeeeeeeeeedycja");
             lekcjaImp.update(lekcja);
         } else {
-            // logger.info(lekcjaImp.getLpAll(kurs));
+            logger.info("dodanieeeeeeeeeeee");
             if (kurs.getLekcjeLpAll().size() == 0) {
                 lekcja.setLp(1);
             } else {
@@ -212,17 +221,19 @@ public class KursyAc implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("kursyForm.xhtml");
     }
 
-        public String zaznaczDoUsuniecia() {
-            logger.info(fotaKursant);
-            if(!fotaKursant.isDousuniecia())
-                    fotaKursant.setDousuniecia(true);
-            else fotaKursant.setDousuniecia(false);
-            fotyKursantow.set(fotyKursantow.indexOf(fotaKursant), fotaKursant);
-            lekcja.setLekcjafotykursant(fotyKursantow);
-            lekcjaImp.update(lekcja);
+    public String zaznaczDoUsuniecia() {
+        logger.info(fotaKursant);
+        if (!fotaKursant.isDousuniecia()) {
+            fotaKursant.setDousuniecia(true);
+        } else {
+            fotaKursant.setDousuniecia(false);
+        }
+        fotyKursantow.set(fotyKursantow.indexOf(fotaKursant), fotaKursant);
+        lekcja.setLekcjafotykursant(fotyKursantow);
+        lekcjaImp.update(lekcja);
         return null;
     }
-    
+
     public User getZalogowany() {
         return zalogowany;
     }
@@ -339,5 +350,21 @@ public class KursyAc implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Lekcjarodzaje> getLekcjarodzaje() {
+        return lekcjarodzaje;
+    }
+
+    public void setLekcjarodzaje(List<Lekcjarodzaje> lekcjarodzaje) {
+        this.lekcjarodzaje = lekcjarodzaje;
+    }
+
+    public LekcjarodzajeFacade getLekrodzImp() {
+        return lekrodzImp;
+    }
+
+    public void setLekrodzImp(LekcjarodzajeFacade lekrodzImp) {
+        this.lekrodzImp = lekrodzImp;
     }
 }

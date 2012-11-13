@@ -1,39 +1,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
-	
-<ui:composition template="/templates/template.xhtml">
-	<ui:define name="body">
-		<table>
-			<ui:repeat var="news" value="#{adminNewsyAc.allNewsy}">
-				<tr>
-					<td>
-						<h3>
-							<h:outputText value="#{news.tytul} " />
-						</h3>
-						<h4>
-							<h:outputText value="(#{news.datadodaniaS})" />
-						</h4>
-						<div class="copy">
-						<a4j:mediaOutput element="img" createContent="#{adminNewsyAc.paintFota}" value="#{news.idnewsy}" cacheable="false"
-							rendered="#{news.fota!=null}" style="width:120px;">
-						</a4j:mediaOutput>
-							<h:outputText value="#{news.skrot}" />
-						</div>
-						<div id="wiecej">
-							<h:form>
-								<h:commandLink action="#{indexAc.newsWiecej}">
-									<f:setPropertyActionListener target="#{indexAc.news}" value="#{news}" />
-		czytaj więcej...
-		</h:commandLink>
-							</h:form>
-						</div></td>
-				</tr>
-			</ui:repeat>
-		</table>
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
 
-	</ui:define>
-</ui:composition>
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="body">
+            <table>
+                <ui:repeat var="news" value="#{adminNewsyAc.allNewsy}">
+                    <tr>
+                        <td>
+                            <h3>
+                                <h:outputText value="#{news.tytul} " />
+                            </h3>
+                            <h4>
+                                <h:outputText value="(#{news.datadodaniaS})" />
+                            </h4>
+                            <div class="copy">
+                                <a4j:mediaOutput element="img" createContent="#{adminNewsyAc.paintFota}" value="#{news.idnewsy}" cacheable="false"
+                                                 rendered="#{news.fota!=null}" style="width:120px;">
+                                </a4j:mediaOutput>
+                                <h:outputText value="#{news.skrot}" />
+                            </div>
+                            <div id="wiecej">
+                                <h:form>
+                                    <h:commandLink action="#{indexAc.newsWiecej}">
+                                        <f:setPropertyActionListener target="#{indexAc.news}" value="#{news}" />
+                                        czytaj więcej...
+                                    </h:commandLink>
+                                </h:form>
+                            </div></td>
+                    </tr>
+                </ui:repeat>
+            </table>
+
+        </ui:define>
+    </ui:composition>
 </html>
 
 

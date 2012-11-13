@@ -6,28 +6,24 @@
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="body">
             <div id="slider">
-                <rich:dataTable value="#{kursyAc.wykladowca.userfotyakcept}" var="fota" id="table" rows="1">
+                <rich:dataTable value="#{galeriaSzkolnaAc.gf.wszystkieGaleriaSzkoly()}" var="fota" id="table" rows="1">
                     <h:column>
                         <h:panelGrid columns="1">
-                            <a4j:mediaOutput element="img" createContent="#{wykladGaleriaAc.paintDuza}" value="#{fota.iduserfoty}"
+                            <a4j:mediaOutput element="img" createContent="#{galeriaSzkolnaAc.paintDuza}" value="#{fota.idlekcjafotykursant}"
                                              cacheable="false">
                             </a4j:mediaOutput>
-                            <h:outputText value="dodana: #{fota.datadodania}">
-                                <f:convertDateTime pattern="dd-MM-yyyy" />
-                            </h:outputText>
+                            <h:outputText value="kurs: #{fota.lekcja.kursy.nazwa}"/>
                             <h:outputText value="#{fota.opis}" />
-                            <h:outputText value="autor: #{kursyAc.wykladowca.imieNazwisko}" />
+                            <h:outputText value="autor: #{fota.user.imieNazwisko}" />
                         </h:panelGrid>
                     </h:column>
                 </rich:dataTable>
                 <div id="zakladki">
-                    <rich:dataScroller for="table" maxPages="10" page="#{kursyAc.nrstrony}" />
+                    <rich:dataScroller for="table" maxPages="10" page="#{galeriaSzkolnaAc.nrstrony}" />
                 </div>
                 <h:form>
                     <div id="galeria">
-                        <h:commandLink action="#{kursyAc.userGaleria}" >
-                            <h:outputText value="&#8592;powrót do miniatur" />
-                        </h:commandLink>
+                        <h:link value="&#8592;powrót do miniatur" outcome="/all/galeriaSzkolna.xhtml" />
                     </div>
                 </h:form>
             </div>

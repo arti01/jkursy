@@ -12,6 +12,8 @@
                 </li>
                 <li><h:link value="Typy kursów" outcome="/all/tkLista.xhtml" />
                 </li>
+                <li><h:link value="Galeria szkolna" outcome="/all/galeriaSzkolna.xhtml" />
+                </li>
                 <ui:repeat var="strona" value="#{indexAc.statyczneModel}">
                     <li><h:commandLink action="#{indexAc.statyczna}">
                             <h:outputText value="#{strona.tytul}" id="link" />

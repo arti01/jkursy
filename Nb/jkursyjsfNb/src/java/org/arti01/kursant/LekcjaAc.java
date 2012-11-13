@@ -70,8 +70,8 @@ public class LekcjaAc implements Serializable {
     private String nrstrony;
     private static int DLUGOSC = 800;
     private static int WYSOKOSC = 800;
-    private static int DLUGOSCmin = 150;
-    private static int WYSOKOSCmin = 100;
+    private static int DLUGOSCmin = 240;
+    private static int WYSOKOSCmin = 240;
 
     public String pokaz() {
         exifPokaz = false;
@@ -110,8 +110,11 @@ public class LekcjaAc implements Serializable {
         }
         listaFot = new ArrayList<Lekcjafotykursant>();
         logger.info(user.getUsername());
+        logger.info(kursyAc.getKurs().getLekcjas());
+        logger.info(lekcja);
         for (Lekcja l : kursyAc.getKurs().getLekcjas()) {
-            if (lekcja == l || lekcja == null) {
+        logger.info(lekcja==l);
+            if (lekcja.equals(l)|| lekcja == null) {
                 for (Lekcjafotykursant lfk : l.getLekcjafotykursant()) {
                     logger.info(lfk.getDatadodania());
                     logger.info(lfk.getUser().getUsername() + user.getUsername());

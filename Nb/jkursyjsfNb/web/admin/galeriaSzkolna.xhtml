@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:composition template="/templates/templateadm.xhtml">
+        <ui:define name="body">
+            <body>
+                <script type="text/javascript">
+                    function takNie() {
+                        return confirm('czy jestes pewien, ze chcesz tego?');
+                    };
+                </script>
+                <h2>Galeria Szkolna</h2>
+
+                <h:form>
+                    <h:commandLink value="wszytkie zdjecia" action="#{adminGaleriaSzkolyAc.list}">
+                        <f:setPropertyActionListener value="" target="#{adminGaleriaSzkolyAc.jakieFoty}"/>
+                    </h:commandLink>
+                    <br/>
+                    <h:commandLink value="w galerii szkoły" action="#{adminGaleriaSzkolyAc.list}">
+                        <f:setPropertyActionListener value="galeria" target="#{adminGaleriaSzkolyAc.jakieFoty}"/>
+                    </h:commandLink>
+                    <br/>
+                    <h:commandLink value="brak w galerii" action="#{adminGaleriaSzkolyAc.list}">
+                        <f:setPropertyActionListener value="brak" target="#{adminGaleriaSzkolyAc.jakieFoty}"/>
+                    </h:commandLink>
+                </h:form>
+
+                <h:form id="table">
+                    <h:dataTable var="fota" value="#{adminGaleriaSzkolyAc.foty}">
+                        <h:column>
+                            <a4j:mediaOutput element="img"
+                                             createContent="#{kursantLekcjaAc.paintDuza}"
+                                             value="#{fota.idlekcjafotykursant}" cacheable="false">
+                            </a4j:mediaOutput>
+                            <br/>
+                            lekcja: #{fota.lekcja.tytul}
+                            <br/>
+                            <hr/>
+                            kursant: #{fota.user.imieNazwisko}
+                        </h:column>
+                        <h:column>
+                            <h:commandButton value="usuń z galerii" action="#{adminGaleriaSzkolyAc.usunZGalerii}" rendered="#{fota.galeriaszkoly!=null}">
+                            </h:commandButton>
+                            <h:commandButton value="dodaj do galerii" action="#{adminGaleriaSzkolyAc.dodajDoGalerii}" rendered="#{fota.galeriaszkoly==null}">
+                            </h:commandButton>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </body>
+        </ui:define>
+    </ui:composition>
+</html>
