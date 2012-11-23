@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.Struktura;
+import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.Uzytkownik;
@@ -32,12 +33,13 @@ public class UsersM implements Serializable {
     Uzytkownik user;
     boolean edytuj=false;
     String nameFilter;
+    StrukturaJpaController struktC;
     
     @PostConstruct
     public void init(){
         userC=new UzytkownikJpaController();
         user=new Uzytkownik();
-        //Struktura struk=new;
+        struktC =new StrukturaJpaController();
     }
     
     public String lista(){
@@ -46,13 +48,14 @@ public class UsersM implements Serializable {
     }
     
     public void dodaj() throws NonexistentEntityException, Exception{
-        userC.create(user);
+        Struktura struktura=new Struktura();
         Dzial dzial=new Dzial(new Long(1));
+        struktura.setDzialId(dzial);
+        struktC.create(struktura);
+        user.setStruktura(struktura);
+        userC.create(user);
         System.out.println(user);
         System.out.println(user.getStruktura());
-        
-        Struktura struktura=new Struktura(serialVersionUID)
-        user.getStruktura().setDzialId(dzial);
         user=new Uzytkownik();
     }
     

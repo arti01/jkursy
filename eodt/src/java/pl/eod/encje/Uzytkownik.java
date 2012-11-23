@@ -50,7 +50,7 @@ public class Uzytkownik implements Serializable {
     private BigInteger extId;
     @OneToOne(mappedBy = "secUserId", fetch = FetchType.LAZY)
     Struktura strukturaSec;
-    @OneToOne(mappedBy = "userId", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "userId", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     Struktura struktura;
 
     public Uzytkownik() {
