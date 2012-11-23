@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <div id="tabela">
+            <h:form>
+                <hr/>
+                <h:outputLabel for="name" value="imię, nazwisko: "/>
+                <h:inputText id="name" value="#{UsersM.user.fullname}"  size="70" />
+                <h:outputLabel for="email: " value="email"/>
+                <h:inputText id="email" value="#{UsersM.user.adrEmail}"  size="70" />
+                <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="@all"/>
+                <hr/>
+                <rich:dataTable value="#{UsersM.users}" var="user" id="table">
+                    <rich:column sortOrder="ascending" sortBy="#{user.fullname}" style="width:40%" filterValue="#{UsersM.nameFilter}"
+                                 filterExpression="#{fn:containsIgnoreCase(user.fullname,UsersM.nameFilter)}">
+                        <f:facet name="header">
+                            <h:panelGroup>
+                                <h:outputText value="imię i nazwisko (do filtrowania użyj TAB)"/>
+                                <h:inputText value="#{UsersM.nameFilter}">
+                                    <a4j:ajax event="blur" render="table" execute="@this" />
+                                </h:inputText>
+                            </h:panelGroup>
+                        </f:facet>
+                        <h:inputText value="#{user.fullname}"  size="70" />
+                    </rich:column>
+
+                    <rich:column sortOrder="ascending" sortBy="#{user.fullname}" style="width:40%">
+                        <f:facet name="header">
+                            <h:outputText value="email"/>
+                        </f:facet> 
+                        <h:inputText value="#{user.adrEmail}"  size="70" />
+                    </rich:column>
+
+                    <rich:column   style="width:20%">
+                        <f:facet name="header">
+                            <h:outputText value="akcja"/>
+                        </f:facet> 
+                        <a4j:commandLink id="zapisz" value="zapisz" render="edycja" action="#{UsersM.zapisz}">
+                            <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
+                        </a4j:commandLink>
+                        <a4j:commandLink id="usun" value="usuń" render="@form" action="#{UsersM.usun}">
+                            <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
+                        </a4j:commandLink>
+                        <h:panelGroup id="edycja">
+                            <h:outputText value="zmieniono" rendered="#{UsersM.edytuj}"/>
+                        </h:panelGroup>
+                    </rich:column>
+                </rich:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,214 @@
+#top {
+    position: relative;
+    background-color: rgb(0, 119, 66);
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+    text-align: center;
+}
+
+#bottom {
+    position: relative;
+    background-color: #c2dfef;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-color: rgb(0, 119, 66);
+    padding: 5px;
+    width: 150px;
+    min-height: 1000px;
+}
+#left ul
+{
+    margin: 0;
+    padding: 5px 10px 5px 10px;
+    list-style: none;
+}
+
+
+#left li
+{
+    margin: 0;
+    padding: 5px 10px 5px 10px;
+    border-bottom: 2px  dotted #006633;
+    font-weight: bold;
+}
+
+#left li a
+{
+    color: #ffffff;
+    font-style: normal;
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#left li a:hover
+{
+    color: #FFFFFF;
+    text-decoration: none;
+    text-shadow: 1px 1px 3px #FFFFFF;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+#content {
+   float: bottom;
+}
+
+#contentLewy {
+    float: left;
+    padding: 5px;
+    width: 350px;
+    min-height: 500px;
+    margin: 5px;
+}
+
+#contentPrawy {
+    float: left;
+    padding: 5px;
+    width: 700px;
+    min-height: 500px;
+    margin: 5px;
+}
+
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #ffffff;
+    padding: 1px;
+    margin-left: 165px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+
+
+#tabela table
+{
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.9em;
+    font-style: normal;
+    line-height: 1.3em;
+    text-align: left;
+    padding: 1px;
+}
+
+#tabela table tr > td:first child
+{
+    width: 350px;
+
+}
+#tabela hr
+{
+    size: 1px;
+    width: 100%;
+    color: #000000;
+}
+
+
+
+#tabela th
+{
+    font-size: 1.1em;
+    background-color: #ffffcc;  
+    text-align: left;
+    padding: 5px 10px;
+    border: 3px solid #FFFFFF;
+}
+
+#tabela th a
+{
+    color: #000000;
+}
+#tabela th a:hover
+{
+    color: #6699FF;
+}
+
+#tabela table td
+{
+    max-width: 800px;
+    padding: 3px 2px;
+    border: 1px solid #FFFFFF;
+}
+#tabela table td table
+{       
+    table-layout: auto;
+    width: auto;
+    padding: 0px;
+    background-color: #FFFFFF;
+    border: 3px solid #CCCCCC;
+    font-size: 0.9em;
+}
+#tabela a
+{
+
+    display: block;
+    padding: 10px 0;
+    font-size: 1.1em;
+    clear: one;
+    text-decoration: none;
+    margin: 5px;
+    color: #000080;
+}
+#tabela a:hover
+{
+    color: #6699FF;
+    text-shadow: 0px 0px 2px #FFFFFF;
+}
+#tabela li a
+{
+    display: block;
+    clear: none;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+}
+#tabela li img
+{
+    margin: 0;
+    padding: 0;
+}
+
+#tabela tr:nth-child(even)
+{
+    background-color:#ffffcc;
+
+}
+#tabela tbody p
+{
+    font-size:0.9em ;
+    font-style: italic;
+}
+
+
