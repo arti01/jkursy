@@ -35,6 +35,9 @@ public class DzialJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    
+    
+    
     public void create(Dzial dzial) throws PreexistingEntityException, Exception {
         if (dzial.getStrukturaList() == null) {
             dzial.setStrukturaList(new ArrayList<Struktura>());
@@ -148,10 +151,14 @@ public class DzialJpaController implements Serializable {
         }
     }
 
-    public List<Dzial> findDzialEntities() {
+    public List<Dzial> getFindDzialEntities() {
         return findDzialEntities(true, -1, -1);
     }
 
+    public List<Dzial> findDzialEntities() {
+        return findDzialEntities(true, -1, -1);
+    }
+    
     public List<Dzial> findDzialEntities(int maxResults, int firstResult) {
         return findDzialEntities(false, maxResults, firstResult);
     }
@@ -193,5 +200,6 @@ public class DzialJpaController implements Serializable {
             em.close();
         }
     }
+    
     
 }

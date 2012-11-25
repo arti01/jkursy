@@ -32,7 +32,9 @@ import javax.persistence.Table;
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findBySzefId", query = "SELECT s FROM Struktura s WHERE s.szefId = :szefId"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
-    @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.nodeId = :nodeId")})
+    @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.nodeId = :nodeId"),
+        @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1")
+})
 public class Struktura implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,20 +43,21 @@ public class Struktura implements Serializable {
     @SequenceGenerator(name = "SEQSTRUKTURA", sequenceName = "SEQSTRUKTURA")
     @Column(name = "id")
     private Long id;
-    @Column(name = "szef_id")
-    private BigInteger szefId;
-    @Column(name = "st_kier")
+    @JoinColumn(name = "szef_id", referencedColumnName = "id")
+    @ManyToOne
+    private Uzytkownik szefId;
+    @Column(name = "st_kier", nullable = false)
     private Integer stKier;
     @Column(name = "node_id")
     private Integer nodeId;
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private Uzytkownik secUserId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private Uzytkownik userId;
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     private Dzial dzialId;
 
     public Struktura() {
@@ -72,20 +75,22 @@ public class Struktura implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getSzefId() {
+    public Uzytkownik getSzefId() {
         return szefId;
     }
 
-    public void setSzefId(BigInteger szefId) {
+    public void setSzefId(Uzytkownik szefId) {
         this.szefId = szefId;
     }
 
-    public Integer getStKier() {
-        return stKier;
+    public boolean isStKier() {
+        if(stKier==null||stKier==0) return false;
+        else return true;
     }
 
-    public void setStKier(Integer stKier) {
-        this.stKier = stKier;
+    public void setStKier(boolean stKier) {
+        if(stKier) this.stKier=1;
+        else this.stKier=0;
     }
 
     public Integer getNodeId() {

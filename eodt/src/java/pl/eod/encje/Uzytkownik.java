@@ -48,10 +48,12 @@ public class Uzytkownik implements Serializable {
     private String adrEmail;
     @Column(name = "ext_id")
     private BigInteger extId;
-    @OneToOne(mappedBy = "secUserId", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "secUserId")
     Struktura strukturaSec;
-    @OneToOne(mappedBy = "userId", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.ALL})
     Struktura struktura;
+    @OneToMany(mappedBy = "szefId")
+    List<Struktura> podwladni;
 
     public Uzytkownik() {
     }

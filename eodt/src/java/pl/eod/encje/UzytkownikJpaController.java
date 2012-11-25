@@ -75,6 +75,14 @@ public class UzytkownikJpaController implements Serializable {
         return uzytkownik;
     }
 
+    public void editaRTI(Uzytkownik uzytkownik) {
+        EntityManager em = null;
+          em = getEntityManager();
+        em.getTransaction().begin(); 
+        em.merge(uzytkownik);
+        em.getTransaction().commit();
+    }
+    
     public void edit(Uzytkownik uzytkownik) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {

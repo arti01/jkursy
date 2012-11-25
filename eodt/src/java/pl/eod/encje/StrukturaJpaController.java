@@ -6,6 +6,8 @@ package pl.eod.encje;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -22,7 +24,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 public class StrukturaJpaController implements Serializable {
 
     public StrukturaJpaController() {
-       if(this.emf==null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -31,6 +33,23 @@ public class StrukturaJpaController implements Serializable {
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Struktura> getFindKierownicy() {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            Query query = em.createNamedQuery("Struktura.kierownicy");
+            //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
+            List<Struktura> wynik= query.getResultList();
+            return wynik;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+    private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
     public void create(Struktura struktura) {
         EntityManager em = null;
@@ -198,6 +217,10 @@ public class StrukturaJpaController implements Serializable {
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
+    
+    public List<Struktura> getFindStrukturaEntities() {
+        return findStrukturaEntities(true, -1, -1);
+    }
 
     public List<Struktura> findStrukturaEntities(int maxResults, int firstResult) {
         return findStrukturaEntities(false, maxResults, firstResult);
@@ -240,5 +263,4 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-    
 }
