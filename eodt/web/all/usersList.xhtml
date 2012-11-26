@@ -29,7 +29,7 @@
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.user.struktura.stKier}"/>
                     
                     <h:outputLabel for="przelozony" value="przelozony: "/>
-                    <h:selectOneMenu id="przelozony" value="#{UsersM.user.struktura.szefId}" converter="UzytkownikConv">
+                    <h:selectOneMenu id="przelozony" value="#{UsersM.user.struktura.szefId}" converter="#{UzytkownikConv}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                         <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                     </h:selectOneMenu>
@@ -71,18 +71,33 @@
                         <h:selectOneMenu id="dzialE" value="#{user.struktura.dzialId.id}">
                             <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1.id}" itemLabel="#{dzial1.nazwa}"/>
                         </h:selectOneMenu>
+                        
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
                         <h:selectBooleanCheckbox id="kierownikE" value="#{user.struktura.stKier}"/>
+                        
+                        <br/>
+                        <h:outputLabel for="przelozonyE" value="przelozony: "/>
+                    <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId}" converter="#{UzytkownikConv}">
+                        <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
+                        <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                    </h:selectOneMenu>
                     </rich:column>
 
                     <rich:column   style="width:15%">
                         <f:facet name="header">
                             <h:outputText value="akcja"/>
                         </f:facet> 
-                        <a4j:commandLink id="zapisz" value="zapisz" render="edycja" action="#{UsersM.zapisz}">
+                        <a4j:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
+                                         oncomplete="#{rich:component('popup')}.show()">
                             <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
                         </a4j:commandLink>
+                        <rich:popupPanel id="popup" modal="false" autosized="true" resizeable="false">
+                            Zmiany zapisane
+                            <h:commandButton value="zamknij">
+                                <rich:componentControl target="popup" operation="hide" />
+                            </h:commandButton>
+                        </rich:popupPanel>
                         <a4j:commandLink id="usun" value="usuń" render="@form" action="#{UsersM.usun}">
                             <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
                         </a4j:commandLink>

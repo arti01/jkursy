@@ -15,23 +15,23 @@ import javax.faces.convert.Converter;
  *
  * @author arti01
  */
-@ManagedBean(name = "DzialConv")
+@ManagedBean(name = "UzytkownikConv")
 @SessionScoped
-public class DzialConv implements Converter, Serializable {
+public class UzytkownikConv implements Converter, Serializable {
     private Object object;
-    DzialJpaController dC=new DzialJpaController();
+    UzytkownikJpaController uC=new UzytkownikJpaController();
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        String dzial;
+        String u;
         try {
-            dzial = (value != null) ? value : null;
+            u = (value != null) ? value : null;
         } catch (NumberFormatException ec) {
             return null;
         }
         Object wynik=null;
         try{
-        wynik=dC.findDzial(new Long(dzial));
+        wynik=uC.findUzytkownik(new Long(u));
         }catch(NumberFormatException nfe){
             wynik=null;
         }
@@ -41,8 +41,8 @@ public class DzialConv implements Converter, Serializable {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        Dzial r = (Dzial) value;
+        Uzytkownik u = (Uzytkownik) value;
         //System.out.println((value != null) ? r.getRola() : null);
-        return (value != null) ? r.getId().toString() : null;
+        return (value != null) ? u.getId().toString() : null;
     }
 }
