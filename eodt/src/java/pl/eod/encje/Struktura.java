@@ -6,6 +6,7 @@ package pl.eod.encje;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -59,6 +61,9 @@ public class Struktura implements Serializable {
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne()
     private Dzial dzialId;
+    
+    @Transient
+    private List<Uzytkownik> bezposrPodwl;
 
     public Struktura() {
     }
@@ -123,6 +128,15 @@ public class Struktura implements Serializable {
 
     public void setDzialId(Dzial dzialId) {
         this.dzialId = dzialId;
+    }
+
+    public List<Uzytkownik> getBezposrPodwl() {
+        StrukturaJpaController sC=new StrukturaJpaController();
+        return sC.findBezposrPodwl(userId);
+    }
+
+    public void setBezposrPodwl(List<Uzytkownik> bezposrPodwl) {
+        this.bezposrPodwl = bezposrPodwl;
     }
 
     @Override
