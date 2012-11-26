@@ -27,7 +27,7 @@
 
                     <h:outputLabel for="kierownik" value="czy kierownik: "/>
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.user.struktura.stKier}"/>
-                    
+
                     <h:outputLabel for="przelozony" value="przelozony: "/>
                     <h:selectOneMenu id="przelozony" value="#{UsersM.user.struktura.szefId}" converter="#{UzytkownikConv}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
@@ -71,20 +71,24 @@
                         <h:selectOneMenu id="dzialE" value="#{user.struktura.dzialId.id}">
                             <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1.id}" itemLabel="#{dzial1.nazwa}"/>
                         </h:selectOneMenu>
-                        
+
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
                         <h:selectBooleanCheckbox id="kierownikE" value="#{user.struktura.stKier}"/>
-                        
+
                         <br/>
                         <h:outputLabel for="przelozonyE" value="przelozony: "/>
-                    <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId}" converter="#{UzytkownikConv}">
-                        <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
-                        <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
-                    </h:selectOneMenu>
-                        
-                        #{user.struktura.bezposrPodwl}
-                        
+                        <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId}" converter="#{UzytkownikConv}">
+                            <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
+                            <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                        </h:selectOneMenu>
+                        <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="ajax" rendered="#{fn:length(user.struktura.bezposrPodwl)>0}">
+                            <ul>
+                                <ui:repeat value="#{user.struktura.bezposrPodwl}" var="podwl">
+                                    <li>#{podwl.userId.fullname}</li>
+                                </ui:repeat>
+                            </ul>
+                        </rich:collapsiblePanel>
                     </rich:column>
 
                     <rich:column   style="width:15%">

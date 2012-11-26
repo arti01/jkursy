@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:define name="content">
+        <div id="tabela">
+            <h:form>
+                <hr/>
+                <h:inputText value="#{DzialyM.dzial.nazwa}"  size="70" />
+                <a4j:commandButton value="dodaj nowy" action="#{DzialyM.dodaj}" render="@form"/>
+                <hr/>
+
+                <rich:dataTable value="#{DzialyM.dzialy}" var="dzial" id="table">
+                    <rich:column sortOrder="ascending" sortBy="#{dzial.nazwa}" style="width:60%">
+                        <f:facet name="header">
+                            <h:outputText value="nazwa"/>
+                        </f:facet>
+                        <h:panelGrid columns="3" id="edycja">
+                            <h:inputText value="#{dzial.nazwa}"  size="70" >
+                            </h:inputText>
+                            <a4j:commandLink id="zapisz" value="zapisz" render="edycja" action="#{DzialyM.zapisz}">
+                                <f:setPropertyActionListener target="#{DzialyM.dzial}" value="#{dzial}"/>
+                            </a4j:commandLink>
+                            <a4j:commandLink id="usun" value="usuń" render="@form" action="#{DzialyM.usun}">
+                                <f:setPropertyActionListener target="#{DzialyM.dzial}" value="#{dzial}"/>
+                            </a4j:commandLink>
+                            <h:outputText value="zmieniono" rendered="#{DzialyM.edytuj}"/>
+                        </h:panelGrid>
+                    </rich:column>
+                    <rich:column>
+                        <h:panelGroup id="pracownicy">
+                            <a4j:commandLink  value="pokaż pracowników" render="pracownicy" rendered="#{!pracview}">
+                                <a4j:param value="true" assignTo="#{pracview}" />
+                            </a4j:commandLink>
+                            <a4j:commandLink  value="ukryj" render="pracownicy" rendered="#{pracview}">
+                                <a4j:param value="false" assignTo="#{pracview}" />
+                            </a4j:commandLink>
+                            <ui:repeat value="#{dzial.strukturaList}" var="struktura" rendered="#{pracview}">
+                                #{struktura.userId.fullname}
+                                <hr/>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </rich:column>
+                </rich:dataTable>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>
