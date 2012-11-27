@@ -84,7 +84,7 @@
                         
                         <br/>
                         <h:outputLabel for="przelozonyE" value="przelozony: "/>
-                        <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId}" converter="#{UzytkownikConv}">
+                        <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId.userId}" converter="#{UzytkownikConv}">
                             <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                             <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
@@ -101,10 +101,10 @@
                         <f:facet name="header">
                             <h:outputText value="akcja"/>
                         </f:facet> 
-                        <a4j:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
+                        <h:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
                                          oncomplete="#{rich:component('popup')}.show()">
                             <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
-                        </a4j:commandLink>
+                        </h:commandLink>
                         <rich:popupPanel id="popup" modal="false" style="padding: 10px;background: yellow; overflow: hidden" autosized="true" resizeable="false">
                             <h:commandButton value="zmiany zapisane - OK">
                                 <rich:componentControl target="popup" operation="hide" />
