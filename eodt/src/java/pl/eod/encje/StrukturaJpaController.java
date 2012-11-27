@@ -50,7 +50,7 @@ public class StrukturaJpaController implements Serializable {
         }
     }
     
-     @SuppressWarnings("unchecked")
+    /*@SuppressWarnings("unchecked")
     public List<Uzytkownik> findBezposrPodwl(Uzytkownik u) {
         EntityManager em = null;
         try {
@@ -65,7 +65,7 @@ public class StrukturaJpaController implements Serializable {
                 em.close();
             }
         }
-    }
+    }*/
     
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 

@@ -11,6 +11,8 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
+        
+        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h:form>
                 <hr/>
@@ -49,19 +51,16 @@
                                 </h:inputText>
                             </h:panelGroup>
                         </f:facet>
-                        <h:inputText value="#{user.fullname}"  size="50" />
+                        <h:outputLabel for="nameE" value="imię, nazwisko: "/>
+                        <h:inputText id="nameE" value="#{user.fullname}"  size="50" />
+                        <br/>
+                        <h:outputLabel for="emailE" value="imię, nazwisko: "/>
+                        <h:inputText id="emailE" value="#{user.adrEmail}"  size="50" />
                     </rich:column>
 
-                    <rich:column sortOrder="ascending" sortBy="#{user.fullname}" style="width:30%">
+                    <rich:column  style="width:30%">
                         <f:facet name="header">
-                            <h:outputText value="email"/>
-                        </f:facet> 
-                        <h:inputText value="#{user.adrEmail}"  size="50" />
-                    </rich:column>
-
-                    <rich:column  style="width:25%" filterExpression="#{user.struktura.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
-                        <f:facet name="header">
-                            <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
+                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
                                 <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
                                 <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                 <a4j:ajax render="table" execute="@this" event="change" />
@@ -76,15 +75,22 @@
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
                         <h:selectBooleanCheckbox id="kierownikE" value="#{user.struktura.stKier}"/>
 
+                    </rich:column>
+
+                    <rich:column  style="width:25%" filterExpression="#{user.struktura.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
+                        <f:facet name="header">
+                        
+                        </f:facet> 
+                        
                         <br/>
                         <h:outputLabel for="przelozonyE" value="przelozony: "/>
                         <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId}" converter="#{UzytkownikConv}">
                             <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                             <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
-                        <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="ajax" rendered="#{fn:length(user.struktura.bezposrPodwl)>0}">
+                        <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(user.struktura.bezpPod)>0}">
                             <ul>
-                                <ui:repeat value="#{user.struktura.bezposrPodwl}" var="podwl">
+                                <ui:repeat value="#{user.struktura.bezpPod}" var="podwl">
                                     <li>#{podwl.userId.fullname}</li>
                                 </ui:repeat>
                             </ul>

@@ -22,3 +22,7 @@ a:link:hover, a:visited:hover  {
     color: red;
     font-weight: bold;
 }
+
+.rf-cp-hdr {
+    border-width: 0px;
+}

@@ -52,8 +52,6 @@ public class Uzytkownik implements Serializable {
     Struktura strukturaSec;
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.ALL})
     Struktura struktura;
-    @OneToMany(mappedBy = "szefId")
-    List<Struktura> podwladni;
 
     public Uzytkownik() {
     }

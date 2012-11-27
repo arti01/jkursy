@@ -5,12 +5,10 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,7 +31,6 @@ import javax.persistence.Transient;
 @NamedQueries({
     @NamedQuery(name = "Struktura.findAll", query = "SELECT s FROM Struktura s"),
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
-    @NamedQuery(name = "Struktura.findBySzefId", query = "SELECT s FROM Struktura s WHERE s.szefId = :szefId"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
     @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.nodeId = :nodeId"),
         @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1")
@@ -45,9 +43,9 @@ public class Struktura implements Serializable {
     @SequenceGenerator(name = "SEQSTRUKTURA", sequenceName = "SEQSTRUKTURA")
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "szef_id", referencedColumnName = "id")
+    @JoinColumn(name = "szef_id", referencedColumnName = "user_id")
     @ManyToOne
-    private Uzytkownik szefId;
+    private Struktura szefId;
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
     @Column(name = "node_id")
@@ -61,6 +59,8 @@ public class Struktura implements Serializable {
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne()
     private Dzial dzialId;
+    @OneToMany(mappedBy = "szefId")
+    List<Struktura> bezpPod;
     
     @Transient
     private List<Uzytkownik> bezposrPodwl;
@@ -80,12 +80,20 @@ public class Struktura implements Serializable {
         this.id = id;
     }
 
-    public Uzytkownik getSzefId() {
+    public Struktura getSzefId() {
         return szefId;
     }
 
-    public void setSzefId(Uzytkownik szefId) {
+    public void setSzefId(Struktura szefId) {
         this.szefId = szefId;
+    }
+
+    public List<Struktura> getBezpPod() {
+        return bezpPod;
+    }
+
+    public void setBezpPod(List<Struktura> bezpPod) {
+        this.bezpPod = bezpPod;
     }
 
     public boolean isStKier() {
@@ -130,14 +138,14 @@ public class Struktura implements Serializable {
         this.dzialId = dzialId;
     }
 
-    public List<Uzytkownik> getBezposrPodwl() {
+    /*public List<Uzytkownik> getBezposrPodwl() {
         StrukturaJpaController sC=new StrukturaJpaController();
         return sC.findBezposrPodwl(userId);
     }
 
     public void setBezposrPodwl(List<Uzytkownik> bezposrPodwl) {
         this.bezposrPodwl = bezposrPodwl;
-    }
+    }*/
 
     @Override
     public int hashCode() {
