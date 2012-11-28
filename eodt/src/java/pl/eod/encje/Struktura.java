@@ -66,7 +66,7 @@ public class Struktura implements Serializable {
     @ManyToOne()
     private Dzial dzialId;
     
-    @OneToMany(mappedBy = "szefId", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     
     @Transient

@@ -129,8 +129,10 @@ public class StrukturaJpaController implements Serializable {
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
+            System.out.println(struktura.getSzefId());
             if(struktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
-            if(persistentStruktura.getSzefId()!=null)em.refresh(persistentStruktura.getSzefId());
+            if(persistentStruktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(),persistentStruktura.getSzefId().getId());
+            System.out.println(struktura.getSzefId());
     } finally {
             if (em != null) {
                 em.close();

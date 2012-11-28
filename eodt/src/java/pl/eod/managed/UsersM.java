@@ -72,6 +72,7 @@ public class UsersM implements Serializable {
     
     public void zapisz() throws NonexistentEntityException, Exception{
         struktC.editArti(strukt);
+        System.out.println(strukt.getSzefId());
         strukt=new Struktura();
         user=new Uzytkownik();
         strukt.setUserId(user);  

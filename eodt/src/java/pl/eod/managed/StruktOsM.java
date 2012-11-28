@@ -50,11 +50,12 @@ public class StruktOsM implements Serializable {
       Struktura firma=new Struktura();
       Uzytkownik uFirma=new Uzytkownik();
       uFirma.setFullname("Firma");
+      firma.setUserId(uFirma);
       if(srcRoots.size()==0) srcRoots.add(struktC.findStruktura(new Long("2801")));
       firma.setBezpPod(srcRoots);
       List<Struktura> wynik=new ArrayList<Struktura>();
       wynik.add(firma);
-      return srcRoots;
+      return wynik;
 
    }
     
