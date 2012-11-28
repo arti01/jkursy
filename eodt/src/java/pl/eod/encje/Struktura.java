@@ -5,8 +5,10 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,9 +45,11 @@ public class Struktura implements Serializable {
     @SequenceGenerator(name = "SEQSTRUKTURA", sequenceName = "SEQSTRUKTURA")
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "szef_id", referencedColumnName = "user_id")
-    @ManyToOne
+    
+    @JoinColumn(name = "szef_id", referencedColumnName = "id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Struktura szefId;
+    
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
     @Column(name = "node_id")
@@ -53,17 +57,20 @@ public class Struktura implements Serializable {
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @OneToOne()
     private Uzytkownik secUserId;
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @OneToOne()
+    
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Uzytkownik userId;
+    
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne()
     private Dzial dzialId;
-    @OneToMany(mappedBy = "szefId")
+    
+    @OneToMany(mappedBy = "szefId", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     List<Struktura> bezpPod;
     
     @Transient
-    private List<Uzytkownik> bezposrPodwl;
+    List<Struktura> bezpPodTree;
 
     public Struktura() {
     }
@@ -136,6 +143,14 @@ public class Struktura implements Serializable {
 
     public void setDzialId(Dzial dzialId) {
         this.dzialId = dzialId;
+    }
+
+    public List<Struktura> getBezpPodTree() {
+        List<Struktura> tree=new ArrayList<Struktura>();
+        for(Struktura s:bezpPod){
+            if(s.getBezpPod().size()>0) tree.add(s);
+        }
+        return tree;
     }
 
     /*public List<Uzytkownik> getBezposrPodwl() {

@@ -1,6 +1,6 @@
 #top {
     position: relative;
-    background-color: rgb(0, 119, 66);
+    background-color: #0033cc;
     color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
@@ -9,14 +9,14 @@
 
 #bottom {
     position: relative;
-    background-color: #c2dfef;
+    background-color: #0033cc;
     padding: 5px;
     margin: 10px 0px 0px 0px;
 }
 
 #left {
     float: left;
-    background-color: rgb(0, 119, 66);
+    background-color: #0033cc;
     padding: 5px;
     width: 150px;
     min-height: 1000px;
@@ -139,7 +139,7 @@
 #tabela th
 {
     font-size: 1em;
-    background-color: #ffffcc;  
+    background-color:#e2e8fa;  
     text-align: left;
     padding: 5px 5px;
     border: 2px solid #FFFFFF;
@@ -202,7 +202,7 @@
 
 #tabela tr:nth-child(even)
 {
-    background-color:#ffffcc;
+    background-color:#e2e8fa;
 
 }
 #tabela tbody p

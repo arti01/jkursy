@@ -11,38 +11,38 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-        
+
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h:form>
                 <hr/>
                 <h:panelGrid columns="2">
                     <h:outputLabel for="name" value="imię, nazwisko: "/>
-                    <h:inputText id="name" value="#{UsersM.user.fullname}"  size="50" />
+                    <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" />
                     <h:outputLabel for="email" value="email: "/>
-                    <h:inputText id="email" value="#{UsersM.user.adrEmail}"  size="50" />
+                    <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
 
                     <h:outputLabel for="dzial" value="dzial: "/>
-                    <h:selectOneMenu id="dzial" value="#{UsersM.user.struktura.dzialId}" converter="#{DzialConv}">
+                    <h:selectOneMenu id="dzial" value="#{UsersM.strukt.dzialId}" converter="#{DzialConv}">
                         <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial" itemValue="#{dzial}" itemLabel="#{dzial.nazwa}"/>
                     </h:selectOneMenu>
 
                     <h:outputLabel for="kierownik" value="czy kierownik: "/>
-                    <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.user.struktura.stKier}"/>
+                    <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}"/>
 
                     <h:outputLabel for="przelozony" value="przelozony: "/>
-                    <h:selectOneMenu id="przelozony" value="#{UsersM.user.struktura.szefId}" converter="#{UzytkownikConv}">
+                    <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
-                        <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                        <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                     </h:selectOneMenu>
                     <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="@form"/>
                 </h:panelGrid>
                 <hr/>
 
 
-                <rich:dataTable value="#{UsersM.users}" var="user" id="table">
-                    <rich:column sortOrder="ascending" sortBy="#{user.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
-                                 filterExpression="#{fn:containsIgnoreCase(user.fullname,UsersM.nameFilter)}">
+                <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table">
+                    <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
+                                 filterExpression="#{fn:containsIgnoreCase(strukt.userId.fullname,UsersM.nameFilter)}">
                         <f:facet name="header">
                             <h:panelGroup>
                                 <h:outputText value="imię i nazwisko (do filtrowania użyj TAB)"/><br/>
@@ -52,45 +52,46 @@
                             </h:panelGroup>
                         </f:facet>
                         <h:outputLabel for="nameE" value="imię, nazwisko: "/>
-                        <h:inputText id="nameE" value="#{user.fullname}"  size="50" />
+                        <h:inputText id="nameE" value="#{strukt.userId.fullname}"  size="50" />
                         <br/>
                         <h:outputLabel for="emailE" value="imię, nazwisko: "/>
-                        <h:inputText id="emailE" value="#{user.adrEmail}"  size="50" />
+                        <h:inputText id="emailE" value="#{strukt.userId.adrEmail}"  size="50" />
                     </rich:column>
 
-                    <rich:column  style="width:30%">
+                    <rich:column  style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
                         <f:facet name="header">
-                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
+                            <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
                                 <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
                                 <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                 <a4j:ajax render="table" execute="@this" event="change" />
                             </h:selectOneMenu>
                         </f:facet> 
                         <h:outputLabel for="dzialE" value="dzial: "/>
-                        <h:selectOneMenu id="dzialE" value="#{user.struktura.dzialId.id}">
-                            <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1.id}" itemLabel="#{dzial1.nazwa}"/>
+                        <h:selectOneMenu id="dzialE" value="#{strukt.dzialId}" converter="#{DzialConv}">
+                            <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                         </h:selectOneMenu>
 
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
-                        <h:selectBooleanCheckbox id="kierownikE" value="#{user.struktura.stKier}"/>
+                        <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}"/>
 
                     </rich:column>
 
-                    <rich:column  style="width:25%" filterExpression="#{user.struktura.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
+                    <rich:column  style="width:25%">
                         <f:facet name="header">
-                        
+
                         </f:facet> 
-                        
+
                         <br/>
                         <h:outputLabel for="przelozonyE" value="przelozony: "/>
-                        <h:selectOneMenu id="przelozonyE" value="#{user.struktura.szefId.userId}" converter="#{UzytkownikConv}">
+                        <h:selectOneMenu id="przelozonyE" value="#{strukt.szefId}" converter="#{StrukturaConv}">
                             <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
-                            <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                            <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
-                        <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(user.struktura.bezpPod)>0}">
+
+                        <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(strukt.bezpPod)>0}">
                             <ul>
-                                <ui:repeat value="#{user.struktura.bezpPod}" var="podwl">
+                                <ui:repeat value="#{strukt.bezpPod}" var="podwl">
                                     <li>#{podwl.userId.fullname}</li>
                                 </ui:repeat>
                             </ul>
@@ -101,17 +102,17 @@
                         <f:facet name="header">
                             <h:outputText value="akcja"/>
                         </f:facet> 
-                        <h:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
-                                         oncomplete="#{rich:component('popup')}.show()">
-                            <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
-                        </h:commandLink>
+                        <a4j:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
+                                       oncomplete="#{rich:component('popup')}.show()">
+                            <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
+                        </a4j:commandLink>
                         <rich:popupPanel id="popup" modal="false" style="padding: 10px;background: yellow; overflow: hidden" autosized="true" resizeable="false">
                             <h:commandButton value="zmiany zapisane - OK">
                                 <rich:componentControl target="popup" operation="hide" />
                             </h:commandButton>
                         </rich:popupPanel>
                         <a4j:commandLink id="usun" value="usuń" render="@form" action="#{UsersM.usun}">
-                            <f:setPropertyActionListener target="#{UsersM.user}" value="#{user}"/>
+                            <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                         </a4j:commandLink>
                         <h:panelGroup id="edycja">
                             <h:outputText value="zmieniono" rendered="#{UsersM.edytuj==cos}"/>

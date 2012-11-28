@@ -30,20 +30,22 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 public class UsersM implements Serializable {
     private static final long serialVersionUID = 1L;
     List <Uzytkownik> users=new ArrayList<Uzytkownik>();
+    List <Struktura> struktury=new ArrayList<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
     boolean edytuj=false;
     String nameFilter;
     Dzial dzialFilter;
     StrukturaJpaController struktC;
+    Struktura strukt;
     DzialJpaController dzialC;
     
     @PostConstruct
     public void init(){
         userC=new UzytkownikJpaController();
+        strukt=new Struktura();
         user=new Uzytkownik();
-        Struktura struk=new Struktura();
-        user.setStruktura(struk);
+        strukt.setUserId(user);
         struktC =new StrukturaJpaController();
         dzialC=new DzialJpaController();
     }
@@ -54,31 +56,26 @@ public class UsersM implements Serializable {
     }
     
     public void dodaj() throws NonexistentEntityException, Exception{
-        Struktura struktura=user.getStruktura();
-        //Dzial dzial=new Dzial(new Long(1));
-        //struktura.setDzialId(dzial);
-        struktC.create(struktura);
-        user.setStruktura(struktura);
-        userC.create(user);
+        struktC.create(strukt);
+        strukt=new Struktura();
         user=new Uzytkownik();
-        Struktura struk=new Struktura();
-        user.setStruktura(struk);
+        strukt.setUserId(user);
     }
     
     public void usun() throws NonexistentEntityException, Exception{
-        userC.destroy(user.getId());
+        struktC.destroy(strukt.getId());
+        strukt=new Struktura();
         user=new Uzytkownik();
-        Struktura struk=new Struktura();
-        user.setStruktura(struk);
+        strukt.setUserId(user);
         edytuj=false;
     }
     
     public void zapisz() throws NonexistentEntityException, Exception{
-        edytuj=true;
-        userC.editaRTI(user);
+        struktC.editArti(strukt);
+        strukt=new Struktura();
         user=new Uzytkownik();
-        Struktura struk=new Struktura();
-        user.setStruktura(struk);
+        strukt.setUserId(user);  
+        edytuj=true;
     }
 
     public List<Uzytkownik> getUsers() {
@@ -90,6 +87,16 @@ public class UsersM implements Serializable {
         this.users = users;
     }
 
+    public List<Struktura> getStruktury() {
+        struktury=struktC.findStrukturaEntities();
+        return struktury;
+    }
+
+    public void setStruktury(List<Struktura> struktury) {
+        this.struktury = struktury;
+    }
+    
+    
     public Uzytkownik getUser() {
         return user;
     }
@@ -131,6 +138,13 @@ public class UsersM implements Serializable {
     public StrukturaJpaController getStruktC() {
         return struktC;
     }
-    
+
+    public Struktura getStrukt() {
+        return strukt;
+    }
+
+    public void setStrukt(Struktura strukt) {
+        this.strukt = strukt;
+    }
     
 }

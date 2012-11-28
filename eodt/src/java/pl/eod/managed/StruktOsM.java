@@ -5,11 +5,15 @@
 package pl.eod.managed;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import pl.eod.encje.DzialJpaController;
+import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
+import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 
 
@@ -25,7 +29,8 @@ public class StruktOsM implements Serializable {
     UzytkownikJpaController userC;
     StrukturaJpaController struktC;
     DzialJpaController dzialC;
-    
+    private List<Struktura> srcRoots=new ArrayList<Struktura>();
+     
     @PostConstruct
     public void init(){
         userC=new UzytkownikJpaController();
@@ -37,6 +42,21 @@ public class StruktOsM implements Serializable {
         return "strukturaOs";
     }
     
+    
+
+
+
+   public synchronized List<Struktura> getSourceRoots() {
+      Struktura firma=new Struktura();
+      Uzytkownik uFirma=new Uzytkownik();
+      uFirma.setFullname("Firma");
+      if(srcRoots.size()==0) srcRoots.add(struktC.findStruktura(new Long("2801")));
+      firma.setBezpPod(srcRoots);
+      List<Struktura> wynik=new ArrayList<Struktura>();
+      wynik.add(firma);
+      return srcRoots;
+
+   }
     
     public DzialJpaController getDzialC() {
         return dzialC;

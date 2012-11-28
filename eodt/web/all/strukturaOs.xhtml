@@ -12,13 +12,13 @@
     <ui:define name="content">
         <div id="tabela">
             <h:form>
-                <rich:tree toggleType="ajax" var="item">
-                    <rich:treeModelRecursiveAdaptor roots="#{fileSystemBean.sourceRoots}" nodes="#{item.directories}">
+                <rich:tree toggleType="ajax" var="strukt">
+                    <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodTree}">
                         <rich:treeNode>
-                            #{item.shortPath}
+                            #{strukt.userId.fullname}
                         </rich:treeNode>
-                        <rich:treeModelAdaptor nodes="#{item.files}">
-                            <rich:treeNode>#{item}</rich:treeNode>
+                        <rich:treeModelAdaptor nodes="#{strukt.bezpPod}">
+                            <rich:treeNode>#{strukt.userId.fullname}</rich:treeNode>
                         </rich:treeModelAdaptor>
                     </rich:treeModelRecursiveAdaptor>
                 </rich:tree>

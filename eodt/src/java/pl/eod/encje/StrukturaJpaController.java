@@ -80,10 +80,10 @@ public class StrukturaJpaController implements Serializable {
                 struktura.setSecUserId(secUserId);
             }
             Uzytkownik userId = struktura.getUserId();
-            if (userId != null) {
+            /*if (userId != null) {
                 userId = em.getReference(userId.getClass(), userId.getId());
                 struktura.setUserId(userId);
-            }
+            }*/
             Dzial dzialId = struktura.getDzialId();
             if (dzialId != null) {
                 dzialId = em.getReference(dzialId.getClass(), dzialId.getId());
@@ -113,6 +113,7 @@ public class StrukturaJpaController implements Serializable {
                 dzialId = em.merge(dzialId);
             }
             em.getTransaction().commit();
+            if(struktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
         } finally {
             if (em != null) {
                 em.close();
@@ -120,6 +121,22 @@ public class StrukturaJpaController implements Serializable {
         }
     }
 
+    public void editArti(Struktura struktura) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            Struktura persistentStruktura=em.find(struktura.getClass(), struktura.getId());
+            em.getTransaction().begin();
+            em.merge(struktura);
+            em.getTransaction().commit();
+            if(struktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+            if(persistentStruktura.getSzefId()!=null)em.refresh(persistentStruktura.getSzefId());
+    } finally {
+            if (em != null) {
+                em.close();
+            }
+        }}
+            
     public void edit(Struktura struktura) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -136,14 +153,14 @@ public class StrukturaJpaController implements Serializable {
                 secUserIdNew = em.getReference(secUserIdNew.getClass(), secUserIdNew.getId());
                 struktura.setSecUserId(secUserIdNew);
             }
-            if (userIdNew != null) {
+            /*if (userIdNew != null) {
                 userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getId());
                 struktura.setUserId(userIdNew);
             }
             if (dzialIdNew != null) {
                 dzialIdNew = em.getReference(dzialIdNew.getClass(), dzialIdNew.getId());
                 struktura.setDzialId(dzialIdNew);
-            }
+            }*/
             struktura = em.merge(struktura);
             if (secUserIdOld != null && !secUserIdOld.equals(secUserIdNew)) {
                 secUserIdOld.setStrukturaSec(null);
@@ -158,7 +175,7 @@ public class StrukturaJpaController implements Serializable {
                 secUserIdNew.setStrukturaSec(struktura);
                 secUserIdNew = em.merge(secUserIdNew);
             }
-            if (userIdOld != null && !userIdOld.equals(userIdNew)) {
+            /*if (userIdOld != null && !userIdOld.equals(userIdNew)) {
                 userIdOld.setStrukturaSec(null);
                 userIdOld = em.merge(userIdOld);
             }
@@ -178,8 +195,10 @@ public class StrukturaJpaController implements Serializable {
             if (dzialIdNew != null && !dzialIdNew.equals(dzialIdOld)) {
                 dzialIdNew.getStrukturaList().add(struktura);
                 dzialIdNew = em.merge(dzialIdNew);
-            }
+            }*/
             em.getTransaction().commit();
+            if(struktura.getSzefId()!=null)em.refresh(struktura.getSzefId());
+            if(persistentStruktura.getSzefId()!=null)em.refresh(persistentStruktura.getSzefId());
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
