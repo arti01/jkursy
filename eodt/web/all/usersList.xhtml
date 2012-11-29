@@ -25,15 +25,18 @@
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}">
                         <a4j:ajax event="change" render="form" execute="@this"/>
                     </h:selectBooleanCheckbox>
-                    <h:outputLabel for="dzial" value="dział: "/>
-                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50" >
-                    wpisz dla kierownika, dla pracownika wypełni się automatycznie po wyborze przełożonego
-                    </h:inputText>
+                    <h:outputLabel for="dzial" value="dział: (edycja tylko dla kierownika)"/>
+                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50" />
 
                     <h:outputLabel for="przelozony" value="przelozony: "/>
+                    #{UsersM.strukt.szefId}
                     <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                         <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                        <a4j:ajax event="change" render="form" execute="@this">
+                           
+                        </a4j:ajax>
+                         <a4j:param assignTo="#{UsersM.strukt.dzialId.nazwa}" value="#{UsersM.strukt.szefId.dzialId.nazwa}"/>
                     </h:selectOneMenu>
                     <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="@form"/>
                 </h:panelGrid>
@@ -66,7 +69,7 @@
                                 <a4j:ajax render="table" execute="@this" event="change" />
                             </h:selectOneMenu>
                         </f:facet> 
-                        <h:outputLabel for="dzialE" value="dzial: "/>
+                        <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
                         <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
