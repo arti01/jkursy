@@ -14,7 +14,9 @@
 
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
+
             <h:form>
+                           
                 <hr/>
                 <h:panelGrid columns="2" id="form">
                     <h:outputLabel for="name" value="imię, nazwisko: "/>
@@ -23,21 +25,20 @@
                     <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
                     <h:outputLabel for="kierownik" value="czy kierownik: "/>
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}">
-                        <a4j:ajax event="change" render="form" execute="@this"/>
+                        <a4j:ajax event="change" render="dzial" execute="@this"/>
                     </h:selectBooleanCheckbox>
                     <h:outputLabel for="dzial" value="dział: (edycja tylko dla kierownika)"/>
-                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50" />
+                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
 
                     <h:outputLabel for="przelozony" value="przelozony: "/>
                     #{UsersM.strukt.szefId}
-                    <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
+                    #{UsersM.strukt.userId.fullname}
+                    <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                         <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                        <a4j:ajax event="change" render="form" execute="@this">
-                           
-                        </a4j:ajax>
-                         <a4j:param assignTo="#{UsersM.strukt.dzialId.nazwa}" value="#{UsersM.strukt.szefId.dzialId.nazwa}"/>
+                        <a4j:ajax event="change" render="dzial" execute="@this"/> 
                     </h:selectOneMenu>
+
                     <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="@form"/>
                 </h:panelGrid>
                 <hr/>

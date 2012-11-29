@@ -10,6 +10,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
@@ -80,6 +81,12 @@ public class UsersM implements Serializable {
         edytuj=true;
     }
 
+    public void dzialListener(ValueChangeEvent e){
+            //System.out.println(e.getNewValue());
+            Struktura str=(Struktura) e.getNewValue();
+            strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+	}
+    
     public List<Uzytkownik> getUsers() {
         users=userC.findUzytkownikEntities();
         return users;
