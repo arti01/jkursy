@@ -35,6 +35,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
     @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.nodeId = :nodeId"),
+    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null"),
         @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1")
 })
 public class Struktura implements Serializable {
@@ -63,14 +64,17 @@ public class Struktura implements Serializable {
     private Uzytkownik userId;
     
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Dzial dzialId;
     
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     
     @Transient
-    List<Struktura> bezpPodTree;
+    List<Struktura> bezpPodzPodwlad;
+    
+    @Transient
+    List<Struktura> bezpPodBezPodwlad;
 
     public Struktura() {
     }
@@ -145,13 +149,20 @@ public class Struktura implements Serializable {
         this.dzialId = dzialId;
     }
 
-    public List<Struktura> getBezpPodTree() {
+    public List<Struktura> getBezpPodzPodwlad() {
         List<Struktura> tree=new ArrayList<Struktura>();
         for(Struktura s:bezpPod){
             if(s.getBezpPod().size()>0) tree.add(s);
         }
         return tree;
     }
+
+    public List<Struktura> getBezpPodBezPodwlad() {
+        bezpPod.removeAll(getBezpPodzPodwlad());
+        return bezpPod;
+    }
+    
+    
 
     /*public List<Uzytkownik> getBezposrPodwl() {
         StrukturaJpaController sC=new StrukturaJpaController();

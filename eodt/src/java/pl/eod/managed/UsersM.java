@@ -46,6 +46,8 @@ public class UsersM implements Serializable {
         strukt=new Struktura();
         user=new Uzytkownik();
         strukt.setUserId(user);
+        Dzial dzial=new Dzial();
+        strukt.setDzialId(dzial);
         struktC =new StrukturaJpaController();
         dzialC=new DzialJpaController();
     }
@@ -72,7 +74,6 @@ public class UsersM implements Serializable {
     
     public void zapisz() throws NonexistentEntityException, Exception{
         struktC.editArti(strukt);
-        System.out.println(strukt.getSzefId());
         strukt=new Struktura();
         user=new Uzytkownik();
         strukt.setUserId(user);  

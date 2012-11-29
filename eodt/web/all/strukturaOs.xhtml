@@ -13,12 +13,20 @@
         <div id="tabela">
             <h:form>
                 <rich:tree toggleType="ajax" var="strukt">
-                    <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodTree}">
+                    <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
                         <rich:treeNode>
                             #{strukt.userId.fullname}
+                            <h:commandLink action="#{UsersM.lista}" value="(edytuj)">
+                                <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
+                            </h:commandLink>
                         </rich:treeNode>
-                        <rich:treeModelAdaptor nodes="#{strukt.bezpPod}">
-                            <rich:treeNode>#{strukt.userId.fullname}</rich:treeNode>
+                        <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
+                            <rich:treeNode>
+                                #{strukt.userId.fullname}
+                                <h:commandLink action="#{UsersM.lista}" value="(edytuj)">
+                                    <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
+                                </h:commandLink>
+                            </rich:treeNode>
                         </rich:treeModelAdaptor>
                     </rich:treeModelRecursiveAdaptor>
                 </rich:tree>

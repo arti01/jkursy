@@ -41,7 +41,7 @@ public class StrukturaJpaController implements Serializable {
             em = getEntityManager();
             Query query = em.createNamedQuery("Struktura.kierownicy");
             //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
-            List<Struktura> wynik= query.getResultList();
+            List<Struktura> wynik = query.getResultList();
             return wynik;
         } finally {
             if (em != null) {
@@ -49,24 +49,22 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-    
     /*@SuppressWarnings("unchecked")
-    public List<Uzytkownik> findBezposrPodwl(Uzytkownik u) {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            Query query = em.createNamedQuery("Struktura.findBySzefId");
-            query.setParameter("szefId", u);
-            //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
-            List<Uzytkownik> wynik= query.getResultList();
-            return wynik;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }*/
-    
+     public List<Uzytkownik> findBezposrPodwl(Uzytkownik u) {
+     EntityManager em = null;
+     try {
+     em = getEntityManager();
+     Query query = em.createNamedQuery("Struktura.findBySzefId");
+     query.setParameter("szefId", u);
+     //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
+     List<Uzytkownik> wynik= query.getResultList();
+     return wynik;
+     } finally {
+     if (em != null) {
+     em.close();
+     }
+     }
+     }*/
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
     public void create(Struktura struktura) {
@@ -81,14 +79,9 @@ public class StrukturaJpaController implements Serializable {
             }
             Uzytkownik userId = struktura.getUserId();
             /*if (userId != null) {
-                userId = em.getReference(userId.getClass(), userId.getId());
-                struktura.setUserId(userId);
-            }*/
-            Dzial dzialId = struktura.getDzialId();
-            if (dzialId != null) {
-                dzialId = em.getReference(dzialId.getClass(), dzialId.getId());
-                struktura.setDzialId(dzialId);
-            }
+             userId = em.getReference(userId.getClass(), userId.getId());
+             struktura.setUserId(userId);
+             }*/
             em.persist(struktura);
             if (secUserId != null) {
                 Struktura oldStrukturaSecOfSecUserId = secUserId.getStrukturaSec();
@@ -108,12 +101,10 @@ public class StrukturaJpaController implements Serializable {
                 userId.setStrukturaSec(struktura);
                 userId = em.merge(userId);
             }
-            if (dzialId != null) {
-                dzialId.getStrukturaList().add(struktura);
-                dzialId = em.merge(dzialId);
-            }
             em.getTransaction().commit();
-            if(struktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+            if (struktura.getSzefId() != null) {
+                em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+            }
         } finally {
             if (em != null) {
                 em.close();
@@ -125,20 +116,27 @@ public class StrukturaJpaController implements Serializable {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            Struktura persistentStruktura=em.find(struktura.getClass(), struktura.getId());
+            Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
+            Long idOldSzef = null;
+            if (oldStruktura.getSzefId() != null) {
+                idOldSzef = oldStruktura.getSzefId().getId();
+            }
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
-            System.out.println(struktura.getSzefId());
-            if(struktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
-            if(persistentStruktura.getSzefId()!=null)em.refresh(em.find(struktura.getClass(),persistentStruktura.getSzefId().getId());
-            System.out.println(struktura.getSzefId());
-    } finally {
+            if (struktura.getSzefId() != null) {
+                em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+            }
+            if (idOldSzef != null) {
+                em.refresh(em.find(struktura.getClass(), idOldSzef));
+            }
+        } finally {
             if (em != null) {
                 em.close();
             }
-        }}
-            
+        }
+    }
+
     public void edit(Struktura struktura) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -156,13 +154,13 @@ public class StrukturaJpaController implements Serializable {
                 struktura.setSecUserId(secUserIdNew);
             }
             /*if (userIdNew != null) {
-                userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getId());
-                struktura.setUserId(userIdNew);
-            }
-            if (dzialIdNew != null) {
-                dzialIdNew = em.getReference(dzialIdNew.getClass(), dzialIdNew.getId());
-                struktura.setDzialId(dzialIdNew);
-            }*/
+             userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getId());
+             struktura.setUserId(userIdNew);
+             }
+             if (dzialIdNew != null) {
+             dzialIdNew = em.getReference(dzialIdNew.getClass(), dzialIdNew.getId());
+             struktura.setDzialId(dzialIdNew);
+             }*/
             struktura = em.merge(struktura);
             if (secUserIdOld != null && !secUserIdOld.equals(secUserIdNew)) {
                 secUserIdOld.setStrukturaSec(null);
@@ -178,29 +176,33 @@ public class StrukturaJpaController implements Serializable {
                 secUserIdNew = em.merge(secUserIdNew);
             }
             /*if (userIdOld != null && !userIdOld.equals(userIdNew)) {
-                userIdOld.setStrukturaSec(null);
-                userIdOld = em.merge(userIdOld);
-            }
-            if (userIdNew != null && !userIdNew.equals(userIdOld)) {
-                Struktura oldStrukturaSecOfUserId = userIdNew.getStrukturaSec();
-                if (oldStrukturaSecOfUserId != null) {
-                    oldStrukturaSecOfUserId.setUserId(null);
-                    oldStrukturaSecOfUserId = em.merge(oldStrukturaSecOfUserId);
-                }
-                userIdNew.setStrukturaSec(struktura);
-                userIdNew = em.merge(userIdNew);
-            }
-            if (dzialIdOld != null && !dzialIdOld.equals(dzialIdNew)) {
-                dzialIdOld.getStrukturaList().remove(struktura);
-                dzialIdOld = em.merge(dzialIdOld);
-            }
-            if (dzialIdNew != null && !dzialIdNew.equals(dzialIdOld)) {
-                dzialIdNew.getStrukturaList().add(struktura);
-                dzialIdNew = em.merge(dzialIdNew);
-            }*/
+             userIdOld.setStrukturaSec(null);
+             userIdOld = em.merge(userIdOld);
+             }
+             if (userIdNew != null && !userIdNew.equals(userIdOld)) {
+             Struktura oldStrukturaSecOfUserId = userIdNew.getStrukturaSec();
+             if (oldStrukturaSecOfUserId != null) {
+             oldStrukturaSecOfUserId.setUserId(null);
+             oldStrukturaSecOfUserId = em.merge(oldStrukturaSecOfUserId);
+             }
+             userIdNew.setStrukturaSec(struktura);
+             userIdNew = em.merge(userIdNew);
+             }
+             if (dzialIdOld != null && !dzialIdOld.equals(dzialIdNew)) {
+             dzialIdOld.getStrukturaList().remove(struktura);
+             dzialIdOld = em.merge(dzialIdOld);
+             }
+             if (dzialIdNew != null && !dzialIdNew.equals(dzialIdOld)) {
+             dzialIdNew.getStrukturaList().add(struktura);
+             dzialIdNew = em.merge(dzialIdNew);
+             }*/
             em.getTransaction().commit();
-            if(struktura.getSzefId()!=null)em.refresh(struktura.getSzefId());
-            if(persistentStruktura.getSzefId()!=null)em.refresh(persistentStruktura.getSzefId());
+            if (struktura.getSzefId() != null) {
+                em.refresh(struktura.getSzefId());
+            }
+            if (persistentStruktura.getSzefId() != null) {
+                em.refresh(persistentStruktura.getSzefId());
+            }
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -253,10 +255,21 @@ public class StrukturaJpaController implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Struktura> getFindBezSzefa() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Struktura.findBezSzefa");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-    
+
     public List<Struktura> getFindStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }

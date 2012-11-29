@@ -16,19 +16,19 @@
         <div id="tabela">
             <h:form>
                 <hr/>
-                <h:panelGrid columns="2">
+                <h:panelGrid columns="2" id="form">
                     <h:outputLabel for="name" value="imię, nazwisko: "/>
                     <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" />
                     <h:outputLabel for="email" value="email: "/>
                     <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
-
-                    <h:outputLabel for="dzial" value="dzial: "/>
-                    <h:selectOneMenu id="dzial" value="#{UsersM.strukt.dzialId}" converter="#{DzialConv}">
-                        <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial" itemValue="#{dzial}" itemLabel="#{dzial.nazwa}"/>
-                    </h:selectOneMenu>
-
                     <h:outputLabel for="kierownik" value="czy kierownik: "/>
-                    <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}"/>
+                    <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}">
+                        <a4j:ajax event="change" render="form" execute="@this"/>
+                    </h:selectBooleanCheckbox>
+                    <h:outputLabel for="dzial" value="dział: "/>
+                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50" >
+                    wpisz dla kierownika, dla pracownika wypełni się automatycznie po wyborze przełożonego
+                    </h:inputText>
 
                     <h:outputLabel for="przelozony" value="przelozony: "/>
                     <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
@@ -67,13 +67,11 @@
                             </h:selectOneMenu>
                         </f:facet> 
                         <h:outputLabel for="dzialE" value="dzial: "/>
-                        <h:selectOneMenu id="dzialE" value="#{strukt.dzialId}" converter="#{DzialConv}">
-                            <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
-                        </h:selectOneMenu>
-
+                        <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
-                        <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}"/>
+                        <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}">
+                        </h:selectBooleanCheckbox>
 
                     </rich:column>
 
@@ -103,7 +101,7 @@
                             <h:outputText value="akcja"/>
                         </f:facet> 
                         <a4j:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}"
-                                       oncomplete="#{rich:component('popup')}.show()">
+                                         oncomplete="#{rich:component('popup')}.show()">
                             <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                         </a4j:commandLink>
                         <rich:popupPanel id="popup" modal="false" style="padding: 10px;background: yellow; overflow: hidden" autosized="true" resizeable="false">

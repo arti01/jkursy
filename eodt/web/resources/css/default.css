@@ -3,18 +3,18 @@ body
     margin: 0 auto;
     padding: 0px;
     font-family: tahoma,verdana,helvetica,sans-serif;
-    background-color: #0033cc;
+    background-color: #6666ff;
 }
 
 a:link, a:visited {
   color: #045491;
-  font-weight : bold;
+  font-weight : normal;
   text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
   color: #045491;
-  font-weight : bold;
+  font-weight : normal;
   text-decoration : none;
 }
 

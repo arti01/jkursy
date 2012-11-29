@@ -1,6 +1,6 @@
 #top {
     position: relative;
-    background-color: #0033cc;
+    background-color: #6666ff;
     color: white;
     padding: 5px;
     margin: 0px 0px 10px 0px;
@@ -9,14 +9,14 @@
 
 #bottom {
     position: relative;
-    background-color: #0033cc;
+    background-color: #6666ff;
     padding: 5px;
     margin: 10px 0px 0px 0px;
 }
 
 #left {
     float: left;
-    background-color: #0033cc;
+    background-color: #6666ff;
     padding: 5px;
     width: 150px;
     min-height: 1000px;
@@ -54,7 +54,7 @@
 
 #right {
     float: right;
-    background-color: #ece3a5;
+    background-color: #6666ff;
     padding: 5px;
     width: 150px;
 }
@@ -172,7 +172,7 @@
 #tabela a
 {
 
-    display: block;
+    display: compact;
     padding: 10px 0;
     font-size: 1em;
     clear: one;
