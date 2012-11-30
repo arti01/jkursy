@@ -121,6 +121,14 @@ public class StrukturaJpaController implements Serializable {
             if (oldStruktura.getSzefId() != null) {
                 idOldSzef = oldStruktura.getSzefId().getId();
             }
+            if (!struktura.isStKier()) {
+                if (struktura.getSzefId() != null) {
+                    struktura.setDzialId(struktura.getSzefId().getDzialId());
+                } else {
+                    struktura.setDzialId(null);
+                }
+            }
+            if(struktura.isStKier()&&!oldStruktura.isStKier()) struktura.setDzialId(new Dzial());
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();

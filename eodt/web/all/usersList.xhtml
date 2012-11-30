@@ -11,12 +11,11 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-
-        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+    <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
 
             <h:form>
-                           
+
                 <hr/>
                 <h:panelGrid columns="2" id="form">
                     <h:outputLabel for="name" value="imię, nazwisko: "/>
@@ -25,7 +24,7 @@
                     <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
                     <h:outputLabel for="kierownik" value="czy kierownik: "/>
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}" valueChangeListener="#{UsersM.kierListener}">
-                        <a4j:ajax event="change" render="dzial" execute="@this"/>
+                        <a4j:ajax event="change" render="dzial, przelozony" execute="@this"/>
                     </h:selectBooleanCheckbox>
                     <h:outputLabel for="dzial" value="dział: (edycja tylko dla kierownika)"/>
                     <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
@@ -34,9 +33,8 @@
                     <h:selectOneMenu id="przelozony" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                         <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                        <a4j:ajax event="change" render="dzial" execute="@this"/> 
+                        <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
                     </h:selectOneMenu>
-
                     <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="@form"/>
                 </h:panelGrid>
                 <hr/>
@@ -65,16 +63,14 @@
                             <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
                                 <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
                                 <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
-                                <a4j:ajax render="table" execute="@this" event="change" />
                             </h:selectOneMenu>
-                        </f:facet> 
+                        </f:facet>
+
                         <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
                         <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                         <br/>
                         <h:outputLabel for="kierownikE" value="czy kierownik: "/>
-                        <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}">
-                        </h:selectBooleanCheckbox>
-
+                        <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}"/>
                     </rich:column>
 
                     <rich:column  style="width:25%">

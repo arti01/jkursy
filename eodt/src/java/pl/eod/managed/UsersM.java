@@ -21,7 +21,6 @@ import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
-
 /**
  *
  * @author 103039
@@ -29,74 +28,84 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 @ManagedBean(name = "UsersM")
 @SessionScoped
 public class UsersM implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    List <Uzytkownik> users=new ArrayList<Uzytkownik>();
-    List <Struktura> struktury=new ArrayList<Struktura>();
+    List<Uzytkownik> users = new ArrayList<Uzytkownik>();
+    List<Struktura> struktury = new ArrayList<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
-    boolean edytuj=false;
+    boolean edytuj = false;
     String nameFilter;
     Dzial dzialFilter;
     StrukturaJpaController struktC;
     Struktura strukt;
     DzialJpaController dzialC;
-    
+
     @PostConstruct
-    public void init(){
-        userC=new UzytkownikJpaController();
-        struktC =new StrukturaJpaController();
-        dzialC=new DzialJpaController();
+    public void init() {
+        userC = new UzytkownikJpaController();
+        struktC = new StrukturaJpaController();
+        dzialC = new DzialJpaController();
         initUser();
     }
-    
-    private void initUser(){
-        strukt=new Struktura();
-        user=new Uzytkownik();
+
+    private void initUser() {
+        strukt = new Struktura();
+        user = new Uzytkownik();
         strukt.setUserId(user);
-        Dzial dzial=new Dzial();
+        Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
     }
-    
-    public String lista(){
-        edytuj=false;
+
+    public String lista() {
+        edytuj = false;
         return "usersList";
     }
-    
-    public void dodaj() throws NonexistentEntityException, Exception{
+
+    public void dodaj() throws NonexistentEntityException, Exception {
         struktC.create(strukt);
         initUser();
     }
-    
-    public void usun() throws NonexistentEntityException, Exception{
+
+    public void usun() throws NonexistentEntityException, Exception {
         struktC.destroy(strukt.getId());
         initUser();
-        edytuj=false;
-    }
-    
-    public void zapisz() throws NonexistentEntityException, Exception{
-        struktC.editArti(strukt);
-        initUser();
-        edytuj=true;
+        edytuj = false;
     }
 
-    public void kierListener(ValueChangeEvent e){
+    public void zapisz() throws NonexistentEntityException, Exception {
+        struktC.editArti(strukt);
+        initUser();
+        edytuj = true;
+    }
+
+    public void kierListener(ValueChangeEvent e) throws NullPointerException {
         Boolean kier;
         kier = (Boolean) e.getNewValue();
-        if(kier) strukt.getDzialId().setNazwa("");
-        else strukt.getDzialId().setNazwa(strukt.getSzefId().getDzialId().getNazwa());
-    }
-    
-    public void dzialListener(ValueChangeEvent e){
-            //System.out.println(e.getNewValue());
-            Struktura str=(Struktura) e.getNewValue();
-            if(!strukt.isStKier()){
-                strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+        try {
+            if (kier) {
+                strukt.getDzialId().setNazwa("");
+            } else {
+                strukt.getDzialId().setNazwa(strukt.getSzefId().getDzialId().getNazwa());
             }
-            else strukt.getDzialId().setNazwa("");
-	}
-    
+        } catch (NullPointerException ex) {
+        }
+    }
+
+    public void dzialListener(ValueChangeEvent e) throws NullPointerException {
+        Struktura str = (Struktura) e.getNewValue();
+        //System.out.println(strukt.getDzialId());
+        if (!strukt.isStKier()) {
+            if (str != null) {
+                strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+            } else {
+                strukt.getDzialId().setNazwa("");
+            }
+        }
+    }
+
     public List<Uzytkownik> getUsers() {
-        users=userC.findUzytkownikEntities();
+        users = userC.findUzytkownikEntities();
         return users;
     }
 
@@ -105,15 +114,14 @@ public class UsersM implements Serializable {
     }
 
     public List<Struktura> getStruktury() {
-        struktury=struktC.findStrukturaEntities();
+        struktury = struktC.findStrukturaEntities();
         return struktury;
     }
 
     public void setStruktury(List<Struktura> struktury) {
         this.struktury = struktury;
     }
-    
-    
+
     public Uzytkownik getUser() {
         return user;
     }
@@ -135,7 +143,7 @@ public class UsersM implements Serializable {
     }
 
     public void setNameFilter(String nameFilter) {
-        edytuj=false;
+        edytuj = false;
         this.nameFilter = nameFilter;
     }
 
@@ -144,7 +152,7 @@ public class UsersM implements Serializable {
     }
 
     public void setDzialFilter(Dzial dzialFilter) {
-        edytuj=false;
+        edytuj = false;
         this.dzialFilter = dzialFilter;
     }
 
@@ -163,5 +171,4 @@ public class UsersM implements Serializable {
     public void setStrukt(Struktura strukt) {
         this.strukt = strukt;
     }
-    
 }
