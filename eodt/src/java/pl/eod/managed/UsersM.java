@@ -44,13 +44,17 @@ public class UsersM implements Serializable {
     @PostConstruct
     public void init(){
         userC=new UzytkownikJpaController();
+        struktC =new StrukturaJpaController();
+        dzialC=new DzialJpaController();
+        initUser();
+    }
+    
+    private void initUser(){
         strukt=new Struktura();
         user=new Uzytkownik();
         strukt.setUserId(user);
         Dzial dzial=new Dzial();
         strukt.setDzialId(dzial);
-        struktC =new StrukturaJpaController();
-        dzialC=new DzialJpaController();
     }
     
     public String lista(){
@@ -60,31 +64,35 @@ public class UsersM implements Serializable {
     
     public void dodaj() throws NonexistentEntityException, Exception{
         struktC.create(strukt);
-        strukt=new Struktura();
-        user=new Uzytkownik();
-        strukt.setUserId(user);
+        initUser();
     }
     
     public void usun() throws NonexistentEntityException, Exception{
         struktC.destroy(strukt.getId());
-        strukt=new Struktura();
-        user=new Uzytkownik();
-        strukt.setUserId(user);
+        initUser();
         edytuj=false;
     }
     
     public void zapisz() throws NonexistentEntityException, Exception{
         struktC.editArti(strukt);
-        strukt=new Struktura();
-        user=new Uzytkownik();
-        strukt.setUserId(user);  
+        initUser();
         edytuj=true;
     }
 
+    public void kierListener(ValueChangeEvent e){
+        Boolean kier;
+        kier = (Boolean) e.getNewValue();
+        if(kier) strukt.getDzialId().setNazwa("");
+        else strukt.getDzialId().setNazwa(strukt.getSzefId().getDzialId().getNazwa());
+    }
+    
     public void dzialListener(ValueChangeEvent e){
             //System.out.println(e.getNewValue());
             Struktura str=(Struktura) e.getNewValue();
-            strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+            if(!strukt.isStKier()){
+                strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+            }
+            else strukt.getDzialId().setNazwa("");
 	}
     
     public List<Uzytkownik> getUsers() {
