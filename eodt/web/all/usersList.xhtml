@@ -95,8 +95,8 @@
                             <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                             <br/>
                             <h:outputLabel for="kierownikE" value="czy kierownik: "/>
-                            <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}">
-                                <a4j:ajax event="change" render="#{rich:clientId('colKier')}" execute="@this"/>
+                            <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}" valueChangeListener="#{UsersM.changeKierListener}">
+                                <a4j:ajax event="change" render="formTab" execute="@this"/>
                             </h:selectBooleanCheckbox>
 
                             <h:outputText value="TAK" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>

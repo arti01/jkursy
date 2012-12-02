@@ -19,8 +19,6 @@ import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
-import pl.eod.encje.Uzytkownik;
-import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -98,6 +96,24 @@ public class UsersM implements Serializable {
         } catch (NullPointerException ex) {
         }
     }
+    
+    public void changeKierListener(ValueChangeEvent e) throws NullPointerException, Exception {
+        Boolean kier;
+        kier = (Boolean) e.getNewValue();
+        Struktura str=struktury.getRowData();
+        try {
+            if (kier) {
+                Dzial d=new Dzial();
+                d.setNazwa("Nowy dział");
+                str.setDzialId(d);
+            } else {
+                str.setDzialId(str.getSzefId().getDzialId());
+            }
+            struktC.editArti(str);
+        } catch (NullPointerException ex) {
+        }
+    }
+    
 
     public void dzialListener(ValueChangeEvent e) throws NullPointerException {
         Struktura str = (Struktura) e.getNewValue();
