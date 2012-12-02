@@ -49,7 +49,7 @@ public class StruktOsM implements Serializable {
    public synchronized List<Struktura> getSourceRoots() {
       Struktura firma=new Struktura();
       Uzytkownik uFirma=new Uzytkownik();
-      uFirma.setFullname("Szef Wszystkich Szefów");
+      uFirma.setFullname("Organizacja");
       firma.setUserId(uFirma);
       srcRoots.clear();
       srcRoots.addAll(struktC.getFindBezSzefa());

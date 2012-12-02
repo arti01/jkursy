@@ -53,8 +53,10 @@ public class Struktura implements Serializable {
     
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
+    
     @Column(name = "node_id")
     private Integer nodeId;
+    
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @OneToOne()
     private Uzytkownik secUserId;
@@ -64,7 +66,7 @@ public class Struktura implements Serializable {
     private Uzytkownik userId;
     
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Dzial dzialId;
     
     @OneToMany(mappedBy = "szefId")
@@ -75,6 +77,13 @@ public class Struktura implements Serializable {
     
     @Transient
     List<Struktura> bezpPodBezPodwlad;
+    
+    @Transient
+    List<Struktura> wszyscyPodwladni;
+    
+    @Transient
+    List<Struktura> mozliwiSzefowie;
+            
 
     public Struktura() {
     }
@@ -161,17 +170,27 @@ public class Struktura implements Serializable {
         bezpPod.removeAll(getBezpPodzPodwlad());
         return bezpPod;
     }
-    
-    
 
-    /*public List<Uzytkownik> getBezposrPodwl() {
-        StrukturaJpaController sC=new StrukturaJpaController();
-        return sC.findBezposrPodwl(userId);
+    public List<Struktura> getWszyscyPodwladni() {
+        wszyscyPodwladni=new ArrayList<Struktura>();
+        wszyscyPodwladni.addAll(bezpPod);
+        for(Struktura s:bezpPod){
+            wszyscyPodwladni.addAll(s.getWszyscyPodwladni());
+        }
+        return wszyscyPodwladni;
     }
 
-    public void setBezposrPodwl(List<Uzytkownik> bezposrPodwl) {
-        this.bezposrPodwl = bezposrPodwl;
-    }*/
+    public List<Struktura> getMozliwiSzefowie() {
+        StrukturaJpaController strukC=new StrukturaJpaController();
+        mozliwiSzefowie=strukC.getFindKierownicy();
+        //System.out.println(this.userId);
+        //System.out.println(getWszyscyPodwladni());
+        mozliwiSzefowie.removeAll(getWszyscyPodwladni());
+        mozliwiSzefowie.remove(this);
+        return mozliwiSzefowie;
+    }
+    
+    
 
     @Override
     public int hashCode() {

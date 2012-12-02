@@ -22,18 +22,18 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
  * @author 103039
  */
 public class StrukturaJpaController implements Serializable {
-
+    
     public StrukturaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
     private EntityManagerFactory emf = null;
-
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindKierownicy() {
         EntityManager em = null;
@@ -66,41 +66,16 @@ public class StrukturaJpaController implements Serializable {
      }
      }*/
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
-
+    
     public void create(Struktura struktura) {
         EntityManager em = null;
+        System.out.println("create");
         try {
+            if(!struktura.isStKier()) struktura.setDzialId(struktura.getSzefId().getDzialId());
             em = getEntityManager();
+            System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
-            Uzytkownik secUserId = struktura.getSecUserId();
-            if (secUserId != null) {
-                secUserId = em.getReference(secUserId.getClass(), secUserId.getId());
-                struktura.setSecUserId(secUserId);
-            }
-            Uzytkownik userId = struktura.getUserId();
-            /*if (userId != null) {
-             userId = em.getReference(userId.getClass(), userId.getId());
-             struktura.setUserId(userId);
-             }*/
-            em.persist(struktura);
-            if (secUserId != null) {
-                Struktura oldStrukturaSecOfSecUserId = secUserId.getStrukturaSec();
-                if (oldStrukturaSecOfSecUserId != null) {
-                    oldStrukturaSecOfSecUserId.setSecUserId(null);
-                    oldStrukturaSecOfSecUserId = em.merge(oldStrukturaSecOfSecUserId);
-                }
-                secUserId.setStrukturaSec(struktura);
-                secUserId = em.merge(secUserId);
-            }
-            if (userId != null) {
-                Struktura oldStrukturaSecOfUserId = userId.getStrukturaSec();
-                if (oldStrukturaSecOfUserId != null) {
-                    oldStrukturaSecOfUserId.setUserId(null);
-                    oldStrukturaSecOfUserId = em.merge(oldStrukturaSecOfUserId);
-                }
-                userId.setStrukturaSec(struktura);
-                userId = em.merge(userId);
-            }
+            em.merge(struktura);
             em.getTransaction().commit();
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
@@ -111,7 +86,7 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-
+    
     public void editArti(Struktura struktura) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
@@ -128,10 +103,18 @@ public class StrukturaJpaController implements Serializable {
                     struktura.setDzialId(null);
                 }
             }
-            if(struktura.isStKier()&&!oldStruktura.isStKier()) struktura.setDzialId(new Dzial());
+            if (struktura.isStKier() && !oldStruktura.isStKier()) {
+                struktura.setDzialId(new Dzial());
+            }
+            if (!struktura.isStKier() && oldStruktura.isStKier()) {
+                System.out.println(oldStruktura.getDzialId());
+                DzialJpaController dzialC = new DzialJpaController();
+                dzialC.destroy(oldStruktura.getDzialId());
+            }
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
+            
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
@@ -144,117 +127,26 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-
-    public void edit(Struktura struktura) throws NonexistentEntityException, Exception {
+    
+    
+    public void destroyArti(Struktura struktura) throws NonexistentEntityException {
         EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Struktura persistentStruktura = em.find(Struktura.class, struktura.getId());
-            Uzytkownik secUserIdOld = persistentStruktura.getSecUserId();
-            Uzytkownik secUserIdNew = struktura.getSecUserId();
-            Uzytkownik userIdOld = persistentStruktura.getUserId();
-            Uzytkownik userIdNew = struktura.getUserId();
-            Dzial dzialIdOld = persistentStruktura.getDzialId();
-            Dzial dzialIdNew = struktura.getDzialId();
-            if (secUserIdNew != null) {
-                secUserIdNew = em.getReference(secUserIdNew.getClass(), secUserIdNew.getId());
-                struktura.setSecUserId(secUserIdNew);
-            }
-            /*if (userIdNew != null) {
-             userIdNew = em.getReference(userIdNew.getClass(), userIdNew.getId());
-             struktura.setUserId(userIdNew);
-             }
-             if (dzialIdNew != null) {
-             dzialIdNew = em.getReference(dzialIdNew.getClass(), dzialIdNew.getId());
-             struktura.setDzialId(dzialIdNew);
-             }*/
-            struktura = em.merge(struktura);
-            if (secUserIdOld != null && !secUserIdOld.equals(secUserIdNew)) {
-                secUserIdOld.setStrukturaSec(null);
-                secUserIdOld = em.merge(secUserIdOld);
-            }
-            if (secUserIdNew != null && !secUserIdNew.equals(secUserIdOld)) {
-                Struktura oldStrukturaSecOfSecUserId = secUserIdNew.getStrukturaSec();
-                if (oldStrukturaSecOfSecUserId != null) {
-                    oldStrukturaSecOfSecUserId.setSecUserId(null);
-                    oldStrukturaSecOfSecUserId = em.merge(oldStrukturaSecOfSecUserId);
-                }
-                secUserIdNew.setStrukturaSec(struktura);
-                secUserIdNew = em.merge(secUserIdNew);
-            }
-            /*if (userIdOld != null && !userIdOld.equals(userIdNew)) {
-             userIdOld.setStrukturaSec(null);
-             userIdOld = em.merge(userIdOld);
-             }
-             if (userIdNew != null && !userIdNew.equals(userIdOld)) {
-             Struktura oldStrukturaSecOfUserId = userIdNew.getStrukturaSec();
-             if (oldStrukturaSecOfUserId != null) {
-             oldStrukturaSecOfUserId.setUserId(null);
-             oldStrukturaSecOfUserId = em.merge(oldStrukturaSecOfUserId);
-             }
-             userIdNew.setStrukturaSec(struktura);
-             userIdNew = em.merge(userIdNew);
-             }
-             if (dzialIdOld != null && !dzialIdOld.equals(dzialIdNew)) {
-             dzialIdOld.getStrukturaList().remove(struktura);
-             dzialIdOld = em.merge(dzialIdOld);
-             }
-             if (dzialIdNew != null && !dzialIdNew.equals(dzialIdOld)) {
-             dzialIdNew.getStrukturaList().add(struktura);
-             dzialIdNew = em.merge(dzialIdNew);
-             }*/
-            em.getTransaction().commit();
-            if (struktura.getSzefId() != null) {
-                em.refresh(struktura.getSzefId());
-            }
-            if (persistentStruktura.getSzefId() != null) {
-                em.refresh(persistentStruktura.getSzefId());
-            }
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Long id = struktura.getId();
-                if (findStruktura(id) == null) {
-                    throw new NonexistentEntityException("The struktura with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
+        if (struktura.bezpPod.size() > 0) {
+            return;
         }
-    }
-
-    public void destroy(Long id) throws NonexistentEntityException {
-        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Struktura struktura;
-            try {
-                struktura = em.getReference(Struktura.class, id);
-                struktura.getId();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The struktura with id " + id + " no longer exists.", enfe);
+            if (struktura.isStKier()) {
+                em.remove(em.merge(struktura));
+                DzialJpaController dzialC = new DzialJpaController();
+                dzialC.destroy(struktura.getDzialId());
+                System.out.println(struktura.getDzialId().getNazwa());
             }
-            Uzytkownik secUserId = struktura.getSecUserId();
-            if (secUserId != null) {
-                secUserId.setStrukturaSec(null);
-                secUserId = em.merge(secUserId);
+            else em.remove(em.merge(struktura));
+             if (struktura.getSzefId() != null) {
+                em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
-            Uzytkownik userId = struktura.getUserId();
-            if (userId != null) {
-                userId.setStrukturaSec(null);
-                userId = em.merge(userId);
-            }
-            Dzial dzialId = struktura.getDzialId();
-            if (dzialId != null) {
-                dzialId.getStrukturaList().remove(struktura);
-                dzialId = em.merge(dzialId);
-            }
-            em.remove(struktura);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -262,7 +154,7 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindBezSzefa() {
         EntityManager em = getEntityManager();
@@ -273,19 +165,19 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-
+    
     public List<Struktura> getFindStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-
+    
     public List<Struktura> findStrukturaEntities(int maxResults, int firstResult) {
         return findStrukturaEntities(false, maxResults, firstResult);
     }
-
+    
     private List<Struktura> findStrukturaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -301,7 +193,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Struktura findStruktura(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -310,7 +202,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public int getStrukturaCount() {
         EntityManager em = getEntityManager();
         try {

@@ -7,6 +7,7 @@ package pl.eod.encje;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -37,9 +39,12 @@ public class Dzial implements Serializable {
     @SequenceGenerator(name = "SEQDZIAL", sequenceName = "SEQDZIAL")
     @Column(name = "id")
     private Long id;
-    @Column(name = "nazwa")
+    
+    @Size(min=0, max=255)
+    @Column(name = "nazwa", nullable = false)
     private String nazwa;
-    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY)
+    
+    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Struktura> strukturaList;
 
     public Dzial() {

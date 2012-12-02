@@ -11,6 +11,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
@@ -31,7 +33,8 @@ public class UsersM implements Serializable {
 
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
-    List<Struktura> struktury = new ArrayList<Struktura>();
+    List<Struktura> strukturyOld = new ArrayList<Struktura>();
+    DataModel<Struktura>struktury=new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
     boolean edytuj = false;
@@ -55,6 +58,8 @@ public class UsersM implements Serializable {
         strukt.setUserId(user);
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
+        struktury.setWrappedData(struktC.findStrukturaEntities());
+        System.out.println(struktury.getRowCount()+"initUser");
     }
 
     public String lista() {
@@ -68,12 +73,14 @@ public class UsersM implements Serializable {
     }
 
     public void usun() throws NonexistentEntityException, Exception {
-        struktC.destroy(strukt.getId());
+        struktC.destroyArti(strukt);
         initUser();
         edytuj = false;
     }
 
     public void zapisz() throws NonexistentEntityException, Exception {
+        System.out.println(strukt);
+        System.out.println(strukt.isStKier());
         struktC.editArti(strukt);
         initUser();
         edytuj = true;
@@ -113,14 +120,23 @@ public class UsersM implements Serializable {
         this.users = users;
     }
 
-    public List<Struktura> getStruktury() {
-        struktury = struktC.findStrukturaEntities();
+    public List<Struktura> getStrukturyOld() {
+        return strukturyOld;
+    }
+
+    public void setStrukturyOld(List<Struktura> strukturyOld) {
+        this.strukturyOld = strukturyOld;
+    }
+
+    public DataModel<Struktura> getStruktury() {
         return struktury;
     }
 
-    public void setStruktury(List<Struktura> struktury) {
+    public void setStruktury(DataModel<Struktura> struktury) {
         this.struktury = struktury;
     }
+
+
 
     public Uzytkownik getUser() {
         return user;

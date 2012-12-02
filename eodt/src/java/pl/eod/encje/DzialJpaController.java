@@ -125,24 +125,13 @@ public class DzialJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException {
+    public void destroy(Dzial dzial) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Dzial dzial;
-            try {
-                dzial = em.getReference(Dzial.class, id);
-                dzial.getId();
-            } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The dzial with id " + id + " no longer exists.", enfe);
-            }
-            List<Struktura> strukturaList = dzial.getStrukturaList();
-            for (Struktura strukturaListStruktura : strukturaList) {
-                strukturaListStruktura.setDzialId(null);
-                strukturaListStruktura = em.merge(strukturaListStruktura);
-            }
-            em.remove(dzial);
+            
+            em.remove(em.merge(dzial));
             em.getTransaction().commit();
         } finally {
             if (em != null) {

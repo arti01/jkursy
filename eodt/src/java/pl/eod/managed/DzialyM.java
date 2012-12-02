@@ -45,7 +45,7 @@ public class DzialyM implements Serializable {
     }
     
     public void usun() throws NonexistentEntityException, Exception{
-        dzialC.destroy(dzial.getId());
+        dzialC.destroy(dzial);
         dzial=new Dzial();
     }
     

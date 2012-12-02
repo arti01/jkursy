@@ -6,21 +6,21 @@ package pl.eod.encje;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -42,14 +42,22 @@ public class Uzytkownik implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUSER")
     @SequenceGenerator(name = "SEQUSER", sequenceName = "SEQUSER")
     private Long id;
-    @Column(name = "fullname")
+    
+    @Column(name = "fullname", nullable = false)
+    @Size(min = 3, max = 255)
     private String fullname;
+    
+    @Email
+    @NotEmpty()
     @Column(name = "adr_email")
     private String adrEmail;
+    
     @Column(name = "ext_id")
     private BigInteger extId;
+    
     @OneToOne(mappedBy = "secUserId")
     Struktura strukturaSec;
+    
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.ALL})
     Struktura struktura;
 
