@@ -17,15 +17,17 @@
                     <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
                         <rich:treeNode>
                             #{strukt.userId.fullname}
-                            <h:commandLink action="#{UsersM.lista}" value="(edytuj)" rendered="#{strukt.dzialId.nazwa!=null}">
+                            <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.dzialId.nazwa!=null}">
                                 <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
+                                <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{null}"/>
                             </h:commandLink>
                         </rich:treeNode>
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
                             <rich:treeNode>
                                 #{strukt.userId.fullname}
-                                <h:commandLink action="#{UsersM.lista}" value="(edytuj)">
+                                <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
                                     <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{null}"/>
                                 </h:commandLink>
                             </rich:treeNode>
                         </rich:treeModelAdaptor>

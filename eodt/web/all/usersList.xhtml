@@ -59,9 +59,9 @@
                 </a4j:outputPanel>
             </h:form>
             <hr/>
-            
+
             <h:form>
-                
+
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="fff">
                         <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
@@ -72,6 +72,9 @@
                                     <h:inputText value="#{UsersM.nameFilter}">
                                         <a4j:ajax event="blur" render="formTab" execute="@this" />
                                     </h:inputText>
+                                    <a4j:commandLink value="wszyscy" rendered="#{UsersM.nameFilter!=null and UsersM.nameFilter!=''}" render="formTab" action="#{UsersM.listaFiltr}">
+                                        <f:setPropertyActionListener  target="#{UsersM.nameFilter}" value="#{null}"/>
+                                    </a4j:commandLink>
                                 </h:panelGroup>
                             </f:facet>
 
@@ -85,15 +88,15 @@
                         </rich:column>
 
                         <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
-
                             <f:facet name="header">
-                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="false">
+                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
                                     <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <a4j:ajax event="change" render="formTab" execute="@this" />
                                 </h:selectOneMenu>
                             </f:facet>
 
-                            
+
                             <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
                             <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                             <br/>

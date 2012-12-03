@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/eodt"/>
+<Context antiJARLocking="true" path="/eodt">
+    <Resource name="jdbc/eod" auth="Container" type="javax.sql.DataSource"
+        username="eod" password="eod"
+	driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432/eod"
+	maxActive="10" maxIdle="3" maxWait="10000"
+	removeAbandoned="true" removeAbandonedTimeout="100"/>
+</Context>

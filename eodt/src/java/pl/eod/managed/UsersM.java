@@ -67,6 +67,14 @@ public class UsersM implements Serializable {
 
     public String lista() {
         edytuj = false;
+        nameFilter=null;
+        dzialFilter=null;
+        return "usersList";
+    }
+    
+    public String listaFiltr() {
+        edytuj = false;
+        System.err.println("c"+nameFilter+"c");
         return "usersList";
     }
 
