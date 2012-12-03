@@ -19,15 +19,15 @@
                             #{strukt.dzialId.nazwa}
                             <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.userId!=null}">
                                 <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{strukt.dzialId}"/>
-                                <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{null}"/>
+                                <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
                             </h:commandLink>
                         </rich:treeNode>
-                        <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
+                        <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwladKier}">
                             <rich:treeNode>
-                                <h:outputText value="#{strukt.userId.fullname} - pracownik"/>
+                                <h:outputText value="#{strukt.dzialId.nazwa}"/>
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
                                     <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
-                                    <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{null}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{strukt.dzialId}"/>
                                 </h:commandLink>
                             </rich:treeNode>
                         </rich:treeModelAdaptor>

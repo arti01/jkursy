@@ -13,15 +13,12 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-
-
             <h:form>
                 <a4j:outputPanel id="formWprow" layout="block">
                     <h:panelGrid columns="3" id="form">
                         <h:outputLabel for="name" value="imię, nazwisko: "/>
                         <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" />
                         <h:message for="name" styleClass="error" />
-
 
                         <h:outputLabel for="email" value="email: "/>
                         <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
@@ -54,6 +51,7 @@
                         <br/>
                         <h:message for="dodaj" styleClass="error"/>
                         <br/>
+
                         <a4j:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </h:panelGrid>
                 </a4j:outputPanel>

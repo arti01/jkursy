@@ -166,6 +166,15 @@ public class Struktura implements Serializable {
         return tree;
     }
 
+    public List<Struktura> getBezpPodBezPodwladKier() {
+        List<Struktura>bezpPodKier=new ArrayList<Struktura>();
+        bezpPod.removeAll(getBezpPodzPodwlad());
+        for(Struktura s:bezpPod){
+            if(s.isStKier()) bezpPodKier.add(s);
+        }
+        return bezpPodKier;
+    }
+    
     public List<Struktura> getBezpPodBezPodwlad() {
         bezpPod.removeAll(getBezpPodzPodwlad());
         return bezpPod;

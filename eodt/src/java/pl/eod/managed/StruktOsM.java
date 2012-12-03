@@ -10,7 +10,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
@@ -47,7 +46,7 @@ public class StruktOsM implements Serializable {
    public synchronized List<Struktura> getSourceRoots() {
       Struktura firma=new Struktura();
       Uzytkownik uFirma=new Uzytkownik();
-      uFirma.setFullname("Organizacja");
+      uFirma.setFullname("Organizacja - wg pracowników");
       firma.setUserId(uFirma);
       srcRoots.clear();
       srcRoots.addAll(struktC.getFindBezSzefa());

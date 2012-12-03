@@ -46,7 +46,7 @@ public class StruktDzialM implements Serializable {
    public synchronized List<Struktura> getSourceRoots() {
       Struktura firma=new Struktura();
             Dzial uDzial=new Dzial();
-      uDzial.setNazwa("Organizacja");
+      uDzial.setNazwa("Organizacja - wg działów");
       firma.setDzialId(uDzial);
       srcRoots.clear();
       srcRoots.addAll(struktC.getFindBezSzefa());
