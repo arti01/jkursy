@@ -16,43 +16,43 @@
             <h:form>
                 <a4j:outputPanel id="formWprow" layout="block">
                     <h:panelGrid columns="3" id="form">
-                        <h:outputLabel for="name" value="imię, nazwisko: "/>
-                        <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" />
-                        <h:message for="name" styleClass="error" />
+                            <h:outputLabel for="name" value="imię, nazwisko: "/>
+                            <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" ><rich:validator/></h:inputText>
+                            <rich:message for="name" styleClass="error" />
 
-                        <h:outputLabel for="email" value="email: "/>
-                        <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50" />
-                        <h:message for="email" styleClass="error" />
+                            <h:outputLabel for="email" value="email: "/>
+                            <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50"><rich:validator/></h:inputText>
+                            <rich:message for="email" styleClass="error" />
 
-                        <h:outputLabel for="kierownik" value="czy kierownik: "/>
-                        <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}" valueChangeListener="#{UsersM.kierListener}">
-                            <a4j:ajax event="change" render="dzial, przelozony" execute="@this"/>
-                        </h:selectBooleanCheckbox>
+                            <h:outputLabel for="kierownik" value="czy kierownik: "/>
+                            <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}" valueChangeListener="#{UsersM.kierListener}">
+                                <a4j:ajax event="change" render="dzial, przelozony" execute="@this"/>
+                            </h:selectBooleanCheckbox>
 
-                        <h:message for="dzial" styleClass="error" />
-                        <h:outputLabel for="dzial" value="dział: (edycja tylko dla kierownika)"/>
-                        <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
+                            <rich:message for="dzial" styleClass="error" />
+                            <h:outputLabel for="dzial" value="dział: (edycja tylko dla kierownika)"/>
+                            <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
 
-                        <h:outputText value=" "/>
-                        <h:outputLabel for="przelozonyK" value="przelozony: "/>
-                        <h:panelGroup id="przelozony">
-                            <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
-                                <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
-                                <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                                <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
-                            </h:selectOneMenu>
+                            <h:outputText value=" "/>
+                            <h:outputLabel for="przelozonyK" value="przelozony: "/>
+                            <h:panelGroup id="przelozony">
+                                <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
+                                    <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
+                                    <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                                    <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
+                                </h:selectOneMenu>
 
-                            <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
-                                <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                                <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
-                            </h:selectOneMenu>
-                        </h:panelGroup>
-                        <h:outputText value=" "/>
-                        <br/>
-                        <h:message for="dodaj" styleClass="error"/>
-                        <br/>
-
-                        <a4j:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                                <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
+                                    <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                                    <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
+                                </h:selectOneMenu>
+                            </h:panelGroup>
+                            <h:outputText value=" "/>
+                            <br/>
+                            <rich:message for="dodaj" styleClass="error"/>
+                            <br/>
+                            <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
+                            <a4j:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </h:panelGrid>
                 </a4j:outputPanel>
             </h:form>
@@ -76,13 +76,13 @@
                                 </h:panelGroup>
                             </f:facet>
 
-                            <h:message for="nameE" styleClass="error" />
+                            <rich:message for="nameE" styleClass="error" />
                             <h:outputLabel for="nameE" value="imię, nazwisko: "/>
-                            <h:inputText id="nameE" value="#{strukt.userId.fullname}"  size="50" />
+                            <h:inputText id="nameE" value="#{strukt.userId.fullname}"  size="50"><rich:validator/></h:inputText>
                             <br/>
-                            <h:message for="emailE" styleClass="error" />
+                            <rich:message for="emailE" styleClass="error" />
                             <h:outputLabel for="emailE" value="email: "/>
-                            <h:inputText id="emailE" value="#{strukt.userId.adrEmail}"  size="50" />
+                            <h:inputText id="emailE" value="#{strukt.userId.adrEmail}"  size="50" ><rich:validator/></h:inputText>
                         </rich:column>
 
                         <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
@@ -98,7 +98,7 @@
                             <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
                             <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                             <br/>
-                            <h:message for="kierownikE" styleClass="error" />
+                            <rich:message for="kierownikE" styleClass="error" />
                             <h:outputLabel for="kierownikE" value="czy kierownik: "/>
                             <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}" valueChangeListener="#{UsersM.changeKierListener}">
                                 <a4j:ajax event="change" render="formTab, , formWprow" execute="@this"/>
@@ -112,7 +112,7 @@
                             <f:facet name="header">
                             </f:facet> 
                             <br/>
-                            <h:message for="przelozonyEK" styleClass="error"/>
+                            <rich:message for="przelozonyEK" styleClass="error"/>
                             <h:outputLabel for="przelozonyEK" value="przelozony: "/>
                             <h:selectOneMenu id="przelozonyEK" value="#{strukt.szefId}" converter="#{StrukturaConv}" rendered="#{strukt.stKier}">
                                 <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />
@@ -137,7 +137,7 @@
                             <f:facet name="header">
                                 <h:outputText value="akcja"/>
                             </f:facet>
-                            <h:message for="zapisz" styleClass="error"/>
+                            <rich:message for="zapisz" styleClass="error"/>
                             <br/>
                             <a4j:commandLink id="zapisz" value="zapisz" render="@form, formWprow" action="#{UsersM.zapisz}" limitRender="true">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>

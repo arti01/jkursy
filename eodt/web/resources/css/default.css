@@ -26,3 +26,7 @@ a:link:hover, a:visited:hover  {
 .rf-cp-hdr {
     border-width: 0px;
 }
+
+.rf-ntf-cnt{
+    background-color: whitesmoke;
+}
