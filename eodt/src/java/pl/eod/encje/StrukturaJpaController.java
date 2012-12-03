@@ -22,18 +22,18 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
  * @author 103039
  */
 public class StrukturaJpaController implements Serializable {
-    
+
     public StrukturaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
     private EntityManagerFactory emf = null;
-    
+
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindKierownicy() {
         EntityManager em = null;
@@ -66,14 +66,16 @@ public class StrukturaJpaController implements Serializable {
      }
      }*/
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
-    
-    public void create(Struktura struktura) {
+
+    public String create(Struktura struktura) {
         EntityManager em = null;
-        System.out.println("create");
         try {
-            if(!struktura.isStKier()) struktura.setDzialId(struktura.getSzefId().getDzialId());
+            if (!struktura.isStKier()) {
+                if(struktura.getSzefId()==null) return "pracownik musi mieć przełożonego";
+                struktura.setDzialId(struktura.getSzefId().getDzialId());
+            }
             em = getEntityManager();
-            System.out.println(struktura.getDzialId());
+            //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
@@ -85,9 +87,40 @@ public class StrukturaJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
-    
-    public void editArti(Struktura struktura) throws NonexistentEntityException, Exception {
+
+    public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
+        EntityManager em = null;
+        
+        if (!struktura.isStKier()) {
+            if (struktura.getSzefId() != null) {
+                struktura.setDzialId(struktura.getSzefId().getDzialId());
+                DzialJpaController dzialC=new DzialJpaController();
+                dzialC.destroy(dzialOld);
+            } else {
+                return "Brak przełożonego - ustaw i zapisz";
+            }
+        } else {
+            Dzial d = new Dzial();
+            d.setNazwa("Nowy dział");
+            struktura.setDzialId(d);
+        }
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(struktura);
+            em.getTransaction().commit();
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return null;
+    }
+
+    public String editArti(Struktura struktura) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -100,21 +133,13 @@ public class StrukturaJpaController implements Serializable {
                 if (struktura.getSzefId() != null) {
                     struktura.setDzialId(struktura.getSzefId().getDzialId());
                 } else {
-                    struktura.setDzialId(null);
+                    return "Brak przełożonego - ustaw i zapisz";
                 }
-            }
-            if (struktura.isStKier() && !oldStruktura.isStKier()) {
-                struktura.setDzialId(new Dzial());
-            }
-            if (!struktura.isStKier() && oldStruktura.isStKier()) {
-                System.out.println(oldStruktura.getDzialId());
-                DzialJpaController dzialC = new DzialJpaController();
-                dzialC.destroy(oldStruktura.getDzialId());
             }
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
-            
+
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
@@ -126,9 +151,9 @@ public class StrukturaJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
-    
-    
+
     public void destroyArti(Struktura struktura) throws NonexistentEntityException {
         EntityManager em = null;
         if (struktura.bezpPod.size() > 0) {
@@ -142,9 +167,10 @@ public class StrukturaJpaController implements Serializable {
                 DzialJpaController dzialC = new DzialJpaController();
                 dzialC.destroy(struktura.getDzialId());
                 System.out.println(struktura.getDzialId().getNazwa());
+            } else {
+                em.remove(em.merge(struktura));
             }
-            else em.remove(em.merge(struktura));
-             if (struktura.getSzefId() != null) {
+            if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
             em.getTransaction().commit();
@@ -154,7 +180,7 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindBezSzefa() {
         EntityManager em = getEntityManager();
@@ -165,19 +191,19 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-    
+
     public List<Struktura> getFindStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-    
+
     public List<Struktura> findStrukturaEntities(int maxResults, int firstResult) {
         return findStrukturaEntities(false, maxResults, firstResult);
     }
-    
+
     private List<Struktura> findStrukturaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -193,7 +219,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public Struktura findStruktura(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -202,7 +228,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public int getStrukturaCount() {
         EntityManager em = getEntityManager();
         try {

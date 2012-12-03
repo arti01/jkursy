@@ -52,13 +52,16 @@
                         </h:panelGroup>
                         <h:outputText value=" "/>
                         <br/>
-                        <a4j:commandLink value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                        <h:message for="dodaj" styleClass="error"/>
+                        <br/>
+                        <a4j:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </h:panelGrid>
                 </a4j:outputPanel>
             </h:form>
             <hr/>
             
             <h:form>
+                
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="fff">
                         <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
@@ -84,22 +87,23 @@
                         <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
 
                             <f:facet name="header">
-                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
+                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="false">
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
                                     <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                 </h:selectOneMenu>
                             </f:facet>
 
-                            <h:message for="dzialE" styleClass="error" />
+                            
                             <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
                             <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
                             <br/>
+                            <h:message for="kierownikE" styleClass="error" />
                             <h:outputLabel for="kierownikE" value="czy kierownik: "/>
                             <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}" valueChangeListener="#{UsersM.changeKierListener}">
-                                <a4j:ajax event="change" render="formTab" execute="@this"/>
+                                <a4j:ajax event="change" render="formTab, , formWprow" execute="@this"/>
                             </h:selectBooleanCheckbox>
 
-                            <h:outputText value="TAK" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>
+                            <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>
                         </rich:column>
 
 
@@ -107,6 +111,7 @@
                             <f:facet name="header">
                             </f:facet> 
                             <br/>
+                            <h:message for="przelozonyEK" styleClass="error"/>
                             <h:outputLabel for="przelozonyEK" value="przelozony: "/>
                             <h:selectOneMenu id="przelozonyEK" value="#{strukt.szefId}" converter="#{StrukturaConv}" rendered="#{strukt.stKier}">
                                 <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />
@@ -130,12 +135,14 @@
                         <rich:column   style="width:15%">
                             <f:facet name="header">
                                 <h:outputText value="akcja"/>
-                            </f:facet> 
-                            <a4j:commandLink id="zapisz" value="zapisz" render="@form" action="#{UsersM.zapisz}">
+                            </f:facet>
+                            <h:message for="zapisz" styleClass="error"/>
+                            <br/>
+                            <a4j:commandLink id="zapisz" value="zapisz" render="@form, formWprow" action="#{UsersM.zapisz}" limitRender="true">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink id="usun" value="usuń" render="@form" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
+                            <a4j:commandLink id="usun" value="usuń" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
                             <h:panelGroup id="edycja">

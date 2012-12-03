@@ -8,9 +8,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.ArrayDataModel;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.Dzial;
@@ -32,7 +36,7 @@ public class UsersM implements Serializable {
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
     List<Struktura> strukturyOld = new ArrayList<Struktura>();
-    DataModel<Struktura>struktury=new ListDataModel<Struktura>();
+    DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
     boolean edytuj = false;
@@ -56,8 +60,9 @@ public class UsersM implements Serializable {
         strukt.setUserId(user);
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
+        struktury = new ListDataModel<Struktura>();
         struktury.setWrappedData(struktC.findStrukturaEntities());
-        System.out.println(struktury.getRowCount()+"initUser");
+        //System.out.println(struktury.getRowCount()+"initUser");
     }
 
     public String lista() {
@@ -66,8 +71,15 @@ public class UsersM implements Serializable {
     }
 
     public void dodaj() throws NonexistentEntityException, Exception {
-        struktC.create(strukt);
-        initUser();
+        String error = struktC.create(strukt);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+        } else {
+            initUser();
+        }
     }
 
     public void usun() throws NonexistentEntityException, Exception {
@@ -77,9 +89,14 @@ public class UsersM implements Serializable {
     }
 
     public void zapisz() throws NonexistentEntityException, Exception {
-        System.out.println(strukt);
-        System.out.println(strukt.isStKier());
-        struktC.editArti(strukt);
+        String error = struktC.editArti(strukt);
+        if (error == null) {
+            error = "Zmiana wykonana";
+        }
+        FacesMessage message = new FacesMessage(error);
+        FacesContext context = FacesContext.getCurrentInstance();
+        UIComponent zapisz = UIComponent.getCurrentComponent(context);
+        context.addMessage(zapisz.getClientId(context), message);
         initUser();
         edytuj = true;
     }
@@ -89,31 +106,32 @@ public class UsersM implements Serializable {
         kier = (Boolean) e.getNewValue();
         try {
             if (kier) {
-                strukt.getDzialId().setNazwa("");
+                strukt.getDzialId().setNazwa("Nowy dział");
             } else {
                 strukt.getDzialId().setNazwa(strukt.getSzefId().getDzialId().getNazwa());
             }
         } catch (NullPointerException ex) {
         }
     }
-    
+
     public void changeKierListener(ValueChangeEvent e) throws NullPointerException, Exception {
         Boolean kier;
         kier = (Boolean) e.getNewValue();
-        Struktura str=struktury.getRowData();
-        try {
-            if (kier) {
-                Dzial d=new Dzial();
-                d.setNazwa("Nowy dział");
-                str.setDzialId(d);
-            } else {
-                str.setDzialId(str.getSzefId().getDzialId());
-            }
-            struktC.editArti(str);
-        } catch (NullPointerException ex) {
+        Struktura str = struktury.getRowData();
+        System.err.println(str.getDzialId() + "old dzial");
+        str.setStKier(kier);
+        String error = struktC.changeKier(str, str.getDzialId());
+        System.err.println(error);
+
+        if (error != null) {
+            str.setStKier(true);
+            FacesMessage message = new FacesMessage(error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent kierownikE = UIComponent.getCurrentComponent(context);
+            context.addMessage(kierownikE.getClientId(context), message);
         }
+        initUser();
     }
-    
 
     public void dzialListener(ValueChangeEvent e) throws NullPointerException {
         Struktura str = (Struktura) e.getNewValue();
@@ -151,8 +169,6 @@ public class UsersM implements Serializable {
     public void setStruktury(DataModel<Struktura> struktury) {
         this.struktury = struktury;
     }
-
-
 
     public Uzytkownik getUser() {
         return user;
