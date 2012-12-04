@@ -9,10 +9,13 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,18 +34,19 @@ public class UserRoles implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQROLE")
+    @SequenceGenerator(name = "SEQROLE", sequenceName = "SEQROLE")
     private Integer id;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    
-    @ManyToMany
-    private List<Hasla> hasla;
     
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "ROLENAME")
+    @Column(name = "ROLE_NAME")
     private String rolename;
 
+    @ManyToMany
+    private List<Uzytkownik> uzytkownik;
+    
     public UserRoles() {
     }
 
@@ -58,14 +62,6 @@ public class UserRoles implements Serializable {
         this.id = id;
     }
 
-    public List<Hasla> getHasla() {
-        return hasla;
-    }
-
-    public void setHasla(List<Hasla> hasla) {
-        this.hasla = hasla;
-    }
-
     public String getRolename() {
         return rolename;
     }
@@ -74,6 +70,16 @@ public class UserRoles implements Serializable {
         this.rolename = rolename;
     }
 
+    public List<Uzytkownik> getUzytkownik() {
+        return uzytkownik;
+    }
+
+    public void setUzytkownik(List<Uzytkownik> uzytkownik) {
+        this.uzytkownik = uzytkownik;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 3;

@@ -7,8 +7,11 @@ package pl.eod.encje;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +29,7 @@ import javax.validation.constraints.Size;
  * @author 103039
  */
 @Entity
-@Table(name = "HASLA")
+@Table(name = "passwords")
 @NamedQueries({
     @NamedQuery(name = "Hasla.findAll", query = "SELECT h FROM Hasla h")})
 public class Hasla implements Serializable {
@@ -33,33 +37,22 @@ public class Hasla implements Serializable {
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
 
     @Id
+    @Basic(optional = false)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQPASS")
+    @SequenceGenerator(name = "SEQPASS", sequenceName = "SEQPASS")
     private Long id;
     
-    @JoinColumn(name = "email", referencedColumnName = "adr_email")
+    
+    @OneToOne(mappedBy = "hasla")
     private Uzytkownik uzytkownik;
     
     @Size(max = 50)
     @Column(name = "PASS")
     private String pass;
     
-    @JoinTable(name = "user_roles",
-    joinColumns = {
-        @JoinColumn(name = "email", nullable = false)},
-    inverseJoinColumns = {
-        @JoinColumn(name = "email", nullable = false)})
-    @ManyToMany()
-    private List<UserRoles> role;
-    
 
     public Hasla() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Uzytkownik getUzytkownik() {
@@ -78,18 +71,10 @@ public class Hasla implements Serializable {
         this.pass = pass;
     }
 
-    public List<UserRoles> getRole() {
-        return role;
-    }
-
-    public void setRole(List<UserRoles> role) {
-        this.role = role;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 43 * hash + (this.uzytkownik != null ? this.uzytkownik.hashCode() : 0);
         return hash;
     }
 
@@ -102,11 +87,13 @@ public class Hasla implements Serializable {
             return false;
         }
         final Hasla other = (Hasla) obj;
-        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+        if (this.uzytkownik != other.uzytkownik && (this.uzytkownik == null || !this.uzytkownik.equals(other.uzytkownik))) {
             return false;
         }
         return true;
     }
+
+    
 
     
 }

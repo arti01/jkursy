@@ -48,7 +48,7 @@ public class Struktura implements Serializable {
     private Long id;
     
     @JoinColumn(name = "szef_id", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne()
     private Struktura szefId;
     
     @Column(name = "st_kier", nullable = false)
@@ -61,12 +61,12 @@ public class Struktura implements Serializable {
     @OneToOne()
     private Uzytkownik secUserId;
     
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Uzytkownik userId;
     
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
-    @ManyToOne(cascade = {CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
     private Dzial dzialId;
     
     @OneToMany(mappedBy = "szefId")

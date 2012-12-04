@@ -2,12 +2,17 @@
 <Context antiJARLocking="true" path="/eodt">
     
     <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
-           driverName="org.apache.derby.jdbc.ClientDriver"
-           connectionURL="jdbc:derby://10.151.64.147:1527/eod"
+           driverName="org.postgresql.ds.PGConnectionPoolDataSource"
+           connectionURL="jdbc:postgresql://127.0.0.1:5432/eod"
            username="eod" password="eod"
            userTable="login" userNameCol="email" userCredCol="pass"
            userRoleTable="user_roles" roleNameCol="rolename"
            resourceName="eod"/>
+    
+    <Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99" 
+           dataSourceName="jdbc/eod" localDataSource="true" 
+           userTable="dbo.userPass" userNameCol="username" userCredCol="password" 
+           userRoleTable="dbo.userRoles" roleNameCol="role_name"/>
     
     <Resource name="jdbc/eod" auth="Container" type="javax.sql.DataSource"
               username="eod" password="eod"

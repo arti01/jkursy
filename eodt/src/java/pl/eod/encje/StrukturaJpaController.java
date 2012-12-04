@@ -54,8 +54,8 @@ public class StrukturaJpaController implements Serializable {
 
     public String create(Struktura struktura) {
         Hasla h=new Hasla();
-        h.setPass("z");
-        struktura.getUserId().setHasla(h);
+       h.setPass("z");
+       struktura.getUserId().setHasla(h);
         
         EntityManager em = null;
         try {
@@ -67,6 +67,7 @@ public class StrukturaJpaController implements Serializable {
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
             em.merge(struktura);
+            
             em.getTransaction().commit();
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
@@ -154,14 +155,18 @@ public class StrukturaJpaController implements Serializable {
             if (struktura.isStKier()) {
                 em.remove(em.merge(struktura));
                 DzialJpaController dzialC = new DzialJpaController();
-                dzialC.destroy(struktura.getDzialId());
+                //dzialC.destroy(struktura.getDzialId());
+                //em.remove(struktura);
                 System.out.println(struktura.getDzialId().getNazwa());
             } else {
-                em.remove(em.merge(struktura));
+                Struktura s=struktura.getSzefId();
+                s.get
+                em.merge(s);
             }
             if (struktura.getSzefId() != null) {
-                em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+               // em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
+            System.out.println(struktura.getId());
             em.getTransaction().commit();
         } finally {
             if (em != null) {

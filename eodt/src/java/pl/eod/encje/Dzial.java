@@ -44,7 +44,7 @@ public class Dzial implements Serializable {
     @Column(name = "nazwa", nullable = false)
     private String nazwa;
     
-    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Struktura> strukturaList;
 
     public Dzial() {
