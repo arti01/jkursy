@@ -5,6 +5,7 @@
     <class>pl.eod.encje.Struktura</class>
     <class>pl.eod.encje.Uzytkownik</class>
     <class>pl.eod.encje.Dzial</class>
+    <class>pl.eod.encje.UserRoles</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
