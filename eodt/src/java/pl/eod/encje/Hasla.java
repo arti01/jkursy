@@ -10,9 +10,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -22,62 +25,71 @@ import javax.validation.constraints.Size;
  * @author 103039
  */
 @Entity
-@Table(name = "USER_ROLES")
+@Table(name = "HASLA")
 @NamedQueries({
-    @NamedQuery(name = "UserRoles.findAll", query = "SELECT u FROM UserRoles u")})
-public class UserRoles implements Serializable {
+    @NamedQuery(name = "Hasla.findAll", query = "SELECT h FROM Hasla h")})
+public class Hasla implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")
-    private Integer id;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    
-    @ManyToMany
-    private List<Hasla> hasla;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
-    @Column(name = "ROLENAME")
-    private String rolename;
 
-    public UserRoles() {
+    @Id
+    private Long id;
+    
+    @JoinColumn(name = "email", referencedColumnName = "adr_email")
+    private Uzytkownik uzytkownik;
+    
+    @Size(max = 50)
+    @Column(name = "PASS")
+    private String pass;
+    
+    @JoinTable(name = "user_roles",
+    joinColumns = {
+        @JoinColumn(name = "email", nullable = false)},
+    inverseJoinColumns = {
+        @JoinColumn(name = "email", nullable = false)})
+    @ManyToMany()
+    private List<UserRoles> role;
+    
+
+    public Hasla() {
     }
 
-    public UserRoles(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public List<Hasla> getHasla() {
-        return hasla;
+    public Uzytkownik getUzytkownik() {
+        return uzytkownik;
     }
 
-    public void setHasla(List<Hasla> hasla) {
-        this.hasla = hasla;
+    public void setUzytkownik(Uzytkownik uzytkownik) {
+        this.uzytkownik = uzytkownik;
     }
 
-    public String getRolename() {
-        return rolename;
+    public String getPass() {
+        return pass;
     }
 
-    public void setRolename(String rolename) {
-        this.rolename = rolename;
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public List<UserRoles> getRole() {
+        return role;
+    }
+
+    public void setRole(List<UserRoles> role) {
+        this.role = role;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + (this.id != null ? this.id.hashCode() : 0);
+        int hash = 7;
+        hash = 47 * hash + (this.id != null ? this.id.hashCode() : 0);
         return hash;
     }
 
@@ -89,7 +101,7 @@ public class UserRoles implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final UserRoles other = (UserRoles) obj;
+        final Hasla other = (Hasla) obj;
         if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
             return false;
         }

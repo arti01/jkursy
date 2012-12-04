@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -60,6 +61,9 @@ public class Uzytkownik implements Serializable {
     
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.ALL})
     Struktura struktura;
+    
+    @OneToOne(mappedBy = "uzytkownik", cascade = {CascadeType.ALL})
+    Hasla hasla;
 
     public Uzytkownik() {
     }
@@ -114,6 +118,14 @@ public class Uzytkownik implements Serializable {
 
     public void setStruktura(Struktura struktura) {
         this.struktura = struktura;
+    }
+
+    public Hasla getHasla() {
+        return hasla;
+    }
+
+    public void setHasla(Hasla hasla) {
+        this.hasla = hasla;
     }
 
     @Override

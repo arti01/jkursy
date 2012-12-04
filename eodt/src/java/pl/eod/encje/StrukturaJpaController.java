@@ -49,25 +49,14 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-    /*@SuppressWarnings("unchecked")
-     public List<Uzytkownik> findBezposrPodwl(Uzytkownik u) {
-     EntityManager em = null;
-     try {
-     em = getEntityManager();
-     Query query = em.createNamedQuery("Struktura.findBySzefId");
-     query.setParameter("szefId", u);
-     //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
-     List<Uzytkownik> wynik= query.getResultList();
-     return wynik;
-     } finally {
-     if (em != null) {
-     em.close();
-     }
-     }
-     }*/
+
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
     public String create(Struktura struktura) {
+        Hasla h=new Hasla();
+        h.setPass("z");
+        struktura.getUserId().setHasla(h);
+        
         EntityManager em = null;
         try {
             if (!struktura.isStKier()) {

@@ -2,9 +2,10 @@
 <Context antiJARLocking="true" path="/eodt">
     
     <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
-           driverName="org.postgresql.Driver"
-           connectionURL="jdbc:postgresql://127.0.0.1:5432/jakwafoto?user=eod&amp;password=eod"
-           userTable="uzytkownik" userNameCol="login" userCredCol="pass"
+           driverName="org.apache.derby.jdbc.ClientDriver"
+           connectionURL="jdbc:derby://10.151.64.147:1527/eod"
+           username="eod" password="eod"
+           userTable="login" userNameCol="email" userCredCol="pass"
            userRoleTable="user_roles" roleNameCol="rolename"
            resourceName="eod"/>
     
