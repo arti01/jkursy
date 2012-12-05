@@ -7,10 +7,13 @@ import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.print.DocFlavor;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
+import pl.eod.encje.Uzytkownik;
+import pl.eod.encje.UzytkownikJpaController;
 
 @ManagedBean(name = "login")
 @SessionScoped
@@ -22,19 +25,13 @@ public class Login implements Serializable {
     String username;
     String password;
 
-    public String wyloguj() {
+  public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        try {
-            request.
-            request.logout();
-            zalogowany=null;
-        } catch (ServletException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return "/all/index.xhtml?faces-redirect=true";
+        request.getSession().invalidate();
+        return "/index.html";
     }
-
+/*  
     public Struktura getZalogowany() {
         //stub
         if(zalogowany!=null){
@@ -43,32 +40,47 @@ public class Login implements Serializable {
         //userImp.;
         return zalogowany;
     }
-
+*/
     public String login() {
     FacesContext context = FacesContext.getCurrentInstance();
     HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
-    try {
-        request.login(username, password);
-        zalogowany = userImp.find(username);
-    } catch (ServletException e) {
-            try {
+        System.err.println(request.getUserPrincipal().getName());
+        //strukC=new StrukturaJpaController();
+        UzytkownikJpaController uzytC=new UzytkownikJpaController();
+        zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
+        System.err.println(zalogowany.getDzialId().getNazwa());
+            /*try {
                 // Handle unknown username/password in request.login().
                 //context.addMessage(null, new FacesMessage("błąd logowania"));
-                request.logout();
+                //request.logout();
                 return "/all/loginerr";
             } catch (ServletException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 return "/all/loginerr";
-            }
-    }
+            }*/
     return "/all/index";
 }
 
     
-    public void setZalogowany(Uzytkownik user) {
+    
+    public void setZalogowany(Struktura user) {
         zalogowany = user;
     }
+
+    public Struktura getZalogowany() {
+        FacesContext context = FacesContext.getCurrentInstance();
+    HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+        System.err.println(request.getUserPrincipal().getName());
+        //strukC=new StrukturaJpaController();
+        UzytkownikJpaController uzytC=new UzytkownikJpaController();
+        zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
+        System.err.println(zalogowany.getDzialId().getNazwa());
+        return zalogowany;
+    }
+    
+    
 
     public String getUsername() {
         return username;

@@ -9,17 +9,23 @@
                 xmlns:a4j="http://richfaces.org/a4j">
 
     <ui:define name="content">
-        <h:form>
-            <h:outputLabel for="username" value="Login" />
-            <h:inputText id="username" value="#{login.username}" required="true" />
-            <h:message for="username" />
-            <br />
-            <h:outputLabel for="password" value="Hasło" />
-            <h:inputSecret id="password" value="#{login.password}" required="true" />
-            <h:message for="password" />
-            <br />
-            <h:commandButton value="Zaloguj" action="#{login.login}" />
-            <h:messages globalOnly="true" />
-        </h:form>
+        <form method="POST" action="j_security_check">
+            <table>
+                <tr>
+                    <td colspan="2">Login to the Tomcat-Demo application:</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="j_username" /></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" name="j_password"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Go" /></td>
+                </tr>
+            </table>
+        </form>
     </ui:define>
 </ui:composition>

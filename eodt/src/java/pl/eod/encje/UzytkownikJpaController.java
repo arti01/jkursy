@@ -83,67 +83,6 @@ public class UzytkownikJpaController implements Serializable {
         em.getTransaction().commit();
     }
     
-    public void edit(Uzytkownik uzytkownik) throws NonexistentEntityException, Exception {
-        EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            Uzytkownik persistentUzytkownik = em.find(Uzytkownik.class, uzytkownik.getId());
-            Struktura strukturaSecOld = persistentUzytkownik.getStrukturaSec();
-            Struktura strukturaSecNew = uzytkownik.getStrukturaSec();
-            Struktura strukturaOld = persistentUzytkownik.getStruktura();
-            Struktura strukturaNew = uzytkownik.getStruktura();
-            if (strukturaSecNew != null) {
-                strukturaSecNew = em.getReference(strukturaSecNew.getClass(), strukturaSecNew.getId());
-                uzytkownik.setStrukturaSec(strukturaSecNew);
-            }
-            if (strukturaNew != null) {
-                strukturaNew = em.getReference(strukturaNew.getClass(), strukturaNew.getId());
-                uzytkownik.setStruktura(strukturaNew);
-            }
-            uzytkownik = em.merge(uzytkownik);
-            if (strukturaSecOld != null && !strukturaSecOld.equals(strukturaSecNew)) {
-                strukturaSecOld.setSecUserId(null);
-                strukturaSecOld = em.merge(strukturaSecOld);
-            }
-            if (strukturaSecNew != null && !strukturaSecNew.equals(strukturaSecOld)) {
-                Uzytkownik oldSecUserIdOfStrukturaSec = strukturaSecNew.getSecUserId();
-                if (oldSecUserIdOfStrukturaSec != null) {
-                    oldSecUserIdOfStrukturaSec.setStrukturaSec(null);
-                    oldSecUserIdOfStrukturaSec = em.merge(oldSecUserIdOfStrukturaSec);
-                }
-                strukturaSecNew.setSecUserId(uzytkownik);
-                strukturaSecNew = em.merge(strukturaSecNew);
-            }
-            if (strukturaOld != null && !strukturaOld.equals(strukturaNew)) {
-                strukturaOld.setUserId(null);
-                strukturaOld = em.merge(strukturaOld);
-            }
-            if (strukturaNew != null && !strukturaNew.equals(strukturaOld)) {
-                Uzytkownik oldUserIdOfStruktura = strukturaNew.getUserId();
-                if (oldUserIdOfStruktura != null) {
-                    oldUserIdOfStruktura.setStruktura(null);
-                    oldUserIdOfStruktura = em.merge(oldUserIdOfStruktura);
-                }
-                strukturaNew.setUserId(uzytkownik);
-                strukturaNew = em.merge(strukturaNew);
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Long id = uzytkownik.getId();
-                if (findUzytkownik(id) == null) {
-                    throw new NonexistentEntityException("The uzytkownik with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
 
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
@@ -222,4 +161,15 @@ public class UzytkownikJpaController implements Serializable {
         }
     }
     
+    public Struktura findStruktura(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q=em.createNamedQuery("Uzytkownik.findByAdrEmail");
+            q.setParameter("adrEmail", email);
+            Uzytkownik u=(Uzytkownik) q.getSingleResult();
+            return u.getStruktura();
+        } finally {
+            em.close();
+        }
+    }
 }
