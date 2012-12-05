@@ -154,14 +154,13 @@ public class StrukturaJpaController implements Serializable {
             em.getTransaction().begin();
             if (struktura.isStKier()) {
                 em.remove(em.merge(struktura));
-                DzialJpaController dzialC = new DzialJpaController();
+                //DzialJpaController dzialC = new DzialJpaController();
                 //dzialC.destroy(struktura.getDzialId());
                 //em.remove(struktura);
                 System.out.println(struktura.getDzialId().getNazwa());
             } else {
-                Struktura s=struktura.getSzefId();
-                s.get
-                em.merge(s);
+                struktura.setDzialId(null);
+                em.remove(em.merge(struktura));
             }
             if (struktura.getSzefId() != null) {
                // em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));

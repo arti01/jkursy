@@ -52,7 +52,7 @@
                             <rich:message for="dodaj" styleClass="error"/>
                             <br/>
                             <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-                            <h:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                            <a4j:commandLink id="dodaj" value="dodaj nowego" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </h:panelGrid>
                 </a4j:outputPanel>
             </h:form>
