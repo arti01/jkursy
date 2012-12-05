@@ -44,7 +44,8 @@ public class UserRoles implements Serializable {
     @Column(name = "ROLE_NAME")
     private String rolename;
 
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "role")
     private List<Uzytkownik> uzytkownik;
     
     public UserRoles() {

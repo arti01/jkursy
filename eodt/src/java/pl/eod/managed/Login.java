@@ -29,7 +29,8 @@ public class Login implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         request.getSession().invalidate();
-        return "/index.html";
+        //return "../index.html?faces-redirect=true";
+        return "../index.html";
     }
 /*  
     public Struktura getZalogowany() {

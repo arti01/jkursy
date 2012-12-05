@@ -6,6 +6,7 @@ package pl.eod.encje;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +15,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -61,7 +64,17 @@ public class Uzytkownik implements Serializable {
     @JoinColumn(name = "haslo_id", referencedColumnName = "id")
     @OneToOne
     private Hasla hasla;
+    
+    @JoinColumn(name = "adr_email", referencedColumnName = "username")
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<UserRoles> role;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik")
+    private List<WnUrlop> wnUrlopList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy")
+    private List<WnHistoria> wnHistoriaList;
+    
     public Uzytkownik() {
     }
 
@@ -116,6 +129,31 @@ public class Uzytkownik implements Serializable {
     public void setHasla(Hasla hasla) {
         this.hasla = hasla;
     }
+
+    public List<UserRoles> getRole() {
+        return role;
+    }
+
+    public void setRole(List<UserRoles> role) {
+        this.role = role;
+    }
+
+    public List<WnUrlop> getWnUrlopList() {
+        return wnUrlopList;
+    }
+
+    public void setWnUrlopList(List<WnUrlop> wnUrlopList) {
+        this.wnUrlopList = wnUrlopList;
+    }
+
+    public List<WnHistoria> getWnHistoriaList() {
+        return wnHistoriaList;
+    }
+
+    public void setWnHistoriaList(List<WnHistoria> wnHistoriaList) {
+        this.wnHistoriaList = wnHistoriaList;
+    }
+    
 
     @Override
     public int hashCode() {

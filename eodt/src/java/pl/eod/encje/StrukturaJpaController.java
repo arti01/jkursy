@@ -5,9 +5,11 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
@@ -55,7 +57,12 @@ public class StrukturaJpaController implements Serializable {
     public String create(Struktura struktura) {
         Hasla h=new Hasla();
        h.setPass("z");
+       UserRoles r=new UserRoles();
+       r.setRolename("urlop");
        struktura.getUserId().setHasla(h);
+       List<UserRoles>rl=new ArrayList<UserRoles>();
+       rl.add(r);
+       struktura.getUserId().setRole(rl);
         
         EntityManager em = null;
         try {

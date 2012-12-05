@@ -5,7 +5,8 @@
     <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
     <h:form>
         <ul>
-            <li><h:link value="Strona główna" outcome="/index.html" /></li>
+            <li><h:link value="Strona główna" outcome="../index.xhtml" /></li>
+            <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
             <li><h:commandLink value="Wyloguj" action="#{login.wyloguj}" /></li>
         </ul>
     </h:form>

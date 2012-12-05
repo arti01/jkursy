@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template_urlop.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <div id="tabela">
+            <h:form>
+                <a4j:outputPanel id="formWprow" layout="block">
+                    <h:panelGrid columns="3" id="form">
+                        <h:outputLabel for="name" value="imię, nazwisko: "/>
+                        <h:inputText id="name" value="#{UrlopM.urlop.uzytkownik.fullname}"  size="50" readonly="true"/>
+                        <rich:message for="name" styleClass="error" />
+                        
+                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj)"/>
+                        <h:selectOneMenu id="rodzajW" value="#{UrlopM.urlop.rodzajId}">
+                            <f:selectItems value="#{UrlopM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
+                        </h:selectOneMenu>
+
+                        <rich:message for="dodaj" styleClass="error"/>
+                        <br/>
+                        <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
+                        <a4j:commandLink id="dodaj" value="Zapisz wniosek" action="#{UsersM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                    </h:panelGrid>
+                </a4j:outputPanel>
+            </h:form>
+            <hr/>
+
+            <h:form>
+
+                <a4j:outputPanel id="formTab" layout="block">
+                    <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="fff">
+                        <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
+                                     filterExpression="#{fn:containsIgnoreCase(strukt.userId.fullname,UsersM.nameFilter)}">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="imię i nazwisko (do filtrowania użyj TAB)"/><br/>
+                                    <h:inputText value="#{UsersM.nameFilter}">
+                                        <a4j:ajax event="blur" render="formTab" execute="@this" />
+                                    </h:inputText>
+                                    <a4j:commandLink value="wszyscy" rendered="#{UsersM.nameFilter!=null and UsersM.nameFilter!=''}" render="formTab" action="#{UsersM.listaFiltr}">
+                                        <f:setPropertyActionListener  target="#{UsersM.nameFilter}" value="#{null}"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                            </f:facet>
+
+                            <rich:message for="nameE" styleClass="error" />
+                            <h:outputLabel for="nameE" value="imię, nazwisko: "/>
+                            <h:inputText id="nameE" value="#{strukt.userId.fullname}"  size="50"><rich:validator/></h:inputText>
+                            <br/>
+                            <rich:message for="emailE" styleClass="error" />
+                            <h:outputLabel for="emailE" value="email: "/>
+                            <h:inputText id="emailE" value="#{strukt.userId.adrEmail}"  size="50" ><rich:validator/></h:inputText>
+                        </rich:column>
+
+                        <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
+                            <f:facet name="header">
+                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
+                                    <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
+                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <a4j:ajax event="change" render="formTab" execute="@this" />
+                                </h:selectOneMenu>
+                            </f:facet>
+
+
+                            <h:outputLabel for="dzialE" value="dzial: (edycja tylko dla kierownika)"/>
+                            <h:inputText id="dzialE" value="#{strukt.dzialId.nazwa}" readonly="#{!strukt.stKier}" size="50"/>
+                            <br/>
+                            <rich:message for="kierownikE" styleClass="error" />
+                            <h:outputLabel for="kierownikE" value="czy kierownik: "/>
+                            <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}" valueChangeListener="#{UsersM.changeKierListener}">
+                                <a4j:ajax event="change" render="formTab, , formWprow" execute="@this"/>
+                            </h:selectBooleanCheckbox>
+
+                            <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>
+                        </rich:column>
+
+
+                        <rich:column  style="width:25%" id="colPrzel">
+                            <f:facet name="header">
+                            </f:facet> 
+                            <br/>
+                            <rich:message for="przelozonyEK" styleClass="error"/>
+                            <h:outputLabel for="przelozonyEK" value="przelozony: "/>
+                            <h:selectOneMenu id="przelozonyEK" value="#{strukt.szefId}" converter="#{StrukturaConv}" rendered="#{strukt.stKier}">
+                                <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />
+                                <f:selectItems value="#{strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                            </h:selectOneMenu>
+
+                            <h:selectOneMenu id="przelozonyEP" value="#{strukt.szefId}" converter="#{StrukturaConv}" rendered="#{!strukt.stKier}">
+                                <f:selectItems value="#{strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                            </h:selectOneMenu>
+
+                            <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(strukt.bezpPod)>0}">
+                                <ul>
+                                    <ui:repeat value="#{strukt.bezpPod}" var="podwl">
+                                        <li>#{podwl.userId.fullname}</li>
+                                    </ui:repeat>
+                                </ul>
+                            </rich:collapsiblePanel>
+
+                        </rich:column>
+
+                        <rich:column   style="width:15%">
+                            <f:facet name="header">
+                                <h:outputText value="akcja"/>
+                            </f:facet>
+                            <rich:message for="zapisz" styleClass="error"/>
+                            <br/>
+                            <a4j:commandLink id="zapisz" value="zapisz" render="@form, formWprow" action="#{UsersM.zapisz}" limitRender="true">
+                                <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
+                            </a4j:commandLink>
+                            <hr/>
+                            <a4j:commandLink id="usun" value="usuń" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
+                                <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
+                            </a4j:commandLink>
+                            <h:panelGroup id="edycja">
+                                <h:outputText value="zmieniono" rendered="#{UsersM.edytuj==cos}"/>
+                            </h:panelGroup>
+                        </rich:column>
+                    </rich:dataTable>
+                </a4j:outputPanel>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

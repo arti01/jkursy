@@ -7,6 +7,10 @@
     <class>pl.eod.encje.Struktura</class>
     <class>pl.eod.encje.UserRoles</class>
     <class>pl.eod.encje.Uzytkownik</class>
+    <class>pl.eod.encje.WnHistoria</class>
+    <class>pl.eod.encje.WnRodzaje</class>
+    <class>pl.eod.encje.WnStatusy</class>
+    <class>pl.eod.encje.WnUrlop</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
