@@ -4,13 +4,17 @@
  */
 package pl.eod.encje;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.io.Serializable;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,12 +23,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Constraint;
+import javax.validation.ConstraintValidator;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -43,36 +52,43 @@ public class WnUrlop implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQWNURLOP")
     @SequenceGenerator(name = "SEQWNURLOP", sequenceName = "SEQWNURLOP")
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_od")
     @Temporal(TemporalType.DATE)
     private Date dataOd;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_do")
     @Temporal(TemporalType.DATE)
     private Date dataDo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "nr_wniosku")
     private String nrWniosku;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprowadzenia")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataWprowadzenia;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId")
+    
+    @OrderBy(value = "id ASC")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.EAGER)
     private List<WnHistoria> wnHistoriaList;
+    
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WnStatusy statusId;
+    
     @JoinColumn(name = "rodzaj_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WnRodzaje rodzajId;
@@ -80,10 +96,14 @@ public class WnUrlop implements Serializable {
     @JoinColumn(name = "uid", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uzytkownik uzytkownik;
+    
+    @JoinColumn(name = "akceptant_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Uzytkownik akceptant;
 
     public WnUrlop() {
     }
-
+    
     public WnUrlop(Long id) {
         this.id = id;
     }
@@ -166,6 +186,14 @@ public class WnUrlop implements Serializable {
 
     public void setUzytkownik(Uzytkownik uzytkownik) {
         this.uzytkownik = uzytkownik;
+    }
+
+    public Uzytkownik getAkceptant() {
+        return akceptant;
+    }
+
+    public void setAkceptant(Uzytkownik akceptant) {
+        this.akceptant = akceptant;
     }
 
     @Override

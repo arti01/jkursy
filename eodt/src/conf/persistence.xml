@@ -16,6 +16,10 @@
     <properties>
       <jta-data-source>java:comp/env/jdbc/eod</jta-data-source>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
+      <property name="javax.persistence.validation.group.pre-update" value="true"/>
+      <property name="eclipselink.logging.parameters" value="false"/>
+      <property name="eclipselink.logging.level.sql" value="INFO"/>
+      <property name="eclipselink.logging.level.cache" value="INFO"/>
     </properties>
   </persistence-unit>
 </persistence>

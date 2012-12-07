@@ -13,52 +13,17 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-            <h:form>
-                <a4j:outputPanel id="formWprow" layout="block">
-                    <h:panelGrid columns="3" id="form">
-                        <h:outputLabel for="name" value="imię, nazwisko: "/>
-                        <h:inputText id="name" value="#{UrlopM.urlop.uzytkownik.fullname}"  size="50" readonly="true"/>
-                        <rich:message for="name" styleClass="error" />
-
-                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj)"/>
-                        <h:selectOneMenu id="rodzajW" value="#{UrlopM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
-                            <f:selectItems value="#{UrlopM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
-                        </h:selectOneMenu>
-                        <rich:message for="rodzajW" styleClass="error" />
-
-                        <h:outputLabel for="data_od" value="data od:"/>
-                        <rich:calendar value="#{UrlopM.urlop.dataOd}" id="data_od" locale="#{UrlopM.locale}"
-                                       popup="true" datePattern="yyyy-MM-dd"
-                                       showApplyButton="#{calendarBean.showApply}" style="width:200px">
-                            <rich:validator /></rich:calendar>
-                        <rich:message for="data_od" styleClass="error" />
-
-                        <h:outputLabel for="data_do" value="data do:"/>
-                        <rich:calendar value="#{UrlopM.urlop.dataDo}" id="data_do" locale="#{UrlopM.locale}"
-                                       popup="true" datePattern="yyyy-MM-dd"
-                                       showApplyButton="#{calendarBean.showApply}" style="width:200px">
-                            <rich:validator /></rich:calendar>
-
-                        <rich:message for="data_do" styleClass="error" />
-
-                        <rich:message for="dodaj" styleClass="error"/>
-                        <br/>
-                        <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-                        <a4j:commandLink id="dodaj" value="Zapisz wniosek" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
-                    </h:panelGrid>
-                </a4j:outputPanel>
-            </h:form>
-            <hr/>
+            
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopM.urlopyList}" var="urlop" id="table">
+                    <rich:dataTable value="#{UrlopM.urlopyAkcept}" var="urlop" id="table">
                         <rich:column >
                             <f:facet name="header">
                                 Id wniosku (a co z numerem wniosku?)
                             </f:facet>
                             <h:outputText value="#{urlop.id}"/>
-                                <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
+                                <rich:collapsiblePanel header="Historia" expanded="false" switchType="ajax" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
                                     <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                         <rich:column>
                                             <f:facet name="header">
@@ -121,23 +86,17 @@
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">
-                                Akceptant
-                            </f:facet>
-                            <h:outputText value="#{urlop.akceptant.fullname}"/>
-                        </rich:column>
-                        <rich:column >
-                            <f:facet name="header">
                                 Akcje
                             </f:facet>
-                            <a4j:commandLink value="usuń" action="#{UrlopM.usun}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow">
+                            <a4j:commandLink value="Cofnij" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="edytuj" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formWprow">
+                            <a4j:commandLink value="Akceptuj" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="false">
+                            <a4j:commandLink value="Odrzuć" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>

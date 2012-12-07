@@ -7,8 +7,10 @@ package pl.eod.encje;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,21 +43,36 @@ public class WnHistoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQWNHIST")
     @SequenceGenerator(name = "SEQWNHIST", sequenceName = "SEQWNHIST")
     private Long id;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_zmiany")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataZmiany;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "opis_zmiany")
+    private String opisZmiany;
+    
     @JoinColumn(name = "urlop_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private WnUrlop urlopId;
+    
+    
     @JoinColumn(name = "status_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private WnStatusy statusId;
     
     @JoinColumn(name = "zmieniajacy", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uzytkownik zmieniajacy;
+    
+    @JoinColumn(name = "akceptant", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Uzytkownik akceptant;
+    
+    
 
     public WnHistoria() {
     }
@@ -107,6 +124,22 @@ public class WnHistoria implements Serializable {
 
     public void setZmieniajacy(Uzytkownik zmieniajacy) {
         this.zmieniajacy = zmieniajacy;
+    }
+
+    public String getOpisZmiany() {
+        return opisZmiany;
+    }
+
+    public void setOpisZmiany(String opisZmiany) {
+        this.opisZmiany = opisZmiany;
+    }
+
+    public Uzytkownik getAkceptant() {
+        return akceptant;
+    }
+
+    public void setAkceptant(Uzytkownik akceptant) {
+        this.akceptant = akceptant;
     }
 
     @Override

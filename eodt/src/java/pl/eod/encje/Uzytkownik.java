@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -69,11 +70,19 @@ public class Uzytkownik implements Serializable {
     @ManyToMany(cascade = CascadeType.ALL)
     private List<UserRoles> role;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik", orphanRemoval = true)
+    @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopList;
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "akceptant")
+    @OrderBy(value = "id DESC")
+    private List<WnUrlop> wnUrlopListDoAkceptu;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy")
     private List<WnHistoria> wnHistoriaList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant")
+    private List<WnHistoria> wnHistoriaListAkceptant;
     
     public Uzytkownik() {
     }
@@ -160,6 +169,22 @@ public class Uzytkownik implements Serializable {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
+    }
+
+    public List<WnUrlop> getWnUrlopListDoAkceptu() {
+        return wnUrlopListDoAkceptu;
+    }
+
+    public void setWnUrlopListDoAkceptu(List<WnUrlop> wnUrlopListDoAkceptu) {
+        this.wnUrlopListDoAkceptu = wnUrlopListDoAkceptu;
+    }
+
+    public List<WnHistoria> getWnHistoriaListAkceptant() {
+        return wnHistoriaListAkceptant;
+    }
+
+    public void setWnHistoriaListAkceptant(List<WnHistoria> wnHistoriaListAkceptant) {
+        this.wnHistoriaListAkceptant = wnHistoriaListAkceptant;
     }
 
     @Override

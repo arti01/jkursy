@@ -7,6 +7,7 @@
         <ul>
             <li><h:link value="Strona główna" outcome="../index.xhtml" /></li>
             <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
+            <li><h:commandLink value="Wnioski do akceptu" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier}"/></li>
             <li><h:commandLink value="Wyloguj" action="#{login.wyloguj}" /></li>
         </ul>
     </h:form>

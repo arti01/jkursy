@@ -167,6 +167,7 @@ public class UzytkownikJpaController implements Serializable {
             Query q=em.createNamedQuery("Uzytkownik.findByAdrEmail");
             q.setParameter("adrEmail", email);
             Uzytkownik u=(Uzytkownik) q.getSingleResult();
+            em.refresh(u);
             return u.getStruktura();
         } finally {
             em.close();
