@@ -5,15 +5,12 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,12 +20,14 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
-@Table(name = "wn_rodzaje")
+@Table(name = "config")
 @NamedQueries({
-    @NamedQuery(name = "WnRodzaje.findAll", query = "SELECT w FROM WnRodzaje w ORDER BY w.id"),
-    @NamedQuery(name = "WnRodzaje.findById", query = "SELECT w FROM WnRodzaje w WHERE w.id = :id"),
-    @NamedQuery(name = "WnRodzaje.findByOpis", query = "SELECT w FROM WnRodzaje w WHERE w.opis = :opis")})
-public class WnRodzaje implements Serializable {
+    @NamedQuery(name = "Config.findAll", query = "SELECT c FROM Config c"),
+    @NamedQuery(name = "Config.findById", query = "SELECT c FROM Config c WHERE c.id = :id"),
+    @NamedQuery(name = "Config.findByNazwa", query = "SELECT c FROM Config c WHERE c.nazwa = :nazwa"),
+    @NamedQuery(name = "Config.findByOpis", query = "SELECT c FROM Config c WHERE c.opis = :opis"),
+    @NamedQuery(name = "Config.findByWartosc", query = "SELECT c FROM Config c WHERE c.wartosc = :wartosc")})
+public class Config implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -37,21 +36,28 @@ public class WnRodzaje implements Serializable {
     private Long id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(name = "opis", unique = true)
+    @Size(min = 1, max = 50)
+    @Column(name = "nazwa", unique = false)
+    private String nazwa;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
+    @Column(name = "opis")
     private String opis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rodzajId")
-    private List<WnUrlop> wnUrlopList;
+    @Size(max = 255)
+    @Column(name = "wartosc")
+    private String wartosc;
 
-    public WnRodzaje() {
+    public Config() {
     }
 
-    public WnRodzaje(Long id) {
+    public Config(Long id) {
         this.id = id;
     }
 
-    public WnRodzaje(Long id, String opis) {
+    public Config(Long id, String nazwa, String opis) {
         this.id = id;
+        this.nazwa = nazwa;
         this.opis = opis;
     }
 
@@ -63,6 +69,14 @@ public class WnRodzaje implements Serializable {
         this.id = id;
     }
 
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
     public String getOpis() {
         return opis;
     }
@@ -71,12 +85,12 @@ public class WnRodzaje implements Serializable {
         this.opis = opis;
     }
 
-    public List<WnUrlop> getWnUrlopList() {
-        return wnUrlopList;
+    public String getWartosc() {
+        return wartosc;
     }
 
-    public void setWnUrlopList(List<WnUrlop> wnUrlopList) {
-        this.wnUrlopList = wnUrlopList;
+    public void setWartosc(String wartosc) {
+        this.wartosc = wartosc;
     }
 
     @Override
@@ -89,10 +103,10 @@ public class WnRodzaje implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof WnRodzaje)) {
+        if (!(object instanceof Config)) {
             return false;
         }
-        WnRodzaje other = (WnRodzaje) object;
+        Config other = (Config) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -101,7 +115,7 @@ public class WnRodzaje implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.eod.encje.WnRodzaje[ id=" + id + " ]";
+        return "pl.eod.encje.Config[ id=" + id + " ]";
     }
     
 }

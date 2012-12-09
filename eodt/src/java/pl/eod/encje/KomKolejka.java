@@ -5,21 +5,17 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.Constraint;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -27,32 +23,34 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
-@Table(name = "dzial")
+@Table(name = "kom_kolejka")
 @NamedQueries({
-    @NamedQuery(name = "Dzial.findAll", query = "SELECT d FROM Dzial d"),
-    @NamedQuery(name = "Dzial.findById", query = "SELECT d FROM Dzial d WHERE d.id = :id"),
-    @NamedQuery(name = "Dzial.findByNazwa", query = "SELECT d FROM Dzial d WHERE d.nazwa = :nazwa")})
-
-public class Dzial implements Serializable {
+    @NamedQuery(name = "KomKolejka.findAll", query = "SELECT k FROM KomKolejka k")})
+public class KomKolejka implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDZIAL")
-    @SequenceGenerator(name = "SEQDZIAL", sequenceName = "SEQDZIAL")
+    @NotNull
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQKOMKOL")
+    @SequenceGenerator(name = "SEQKOMKOL", sequenceName = "SEQKOMKOL")
     private Long id;
-    
-    @Size(min=0, max=255)
-    @Column(name = "nazwa", nullable = false, unique = true)
-    private String nazwa;
-    
-    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Struktura> strukturaList;
+    @Size(max = 2147483647)
+    @Column(name = "adres_list")
+    private String adresList;
+    @Size(max = 2147483647)
+    @Column(name = "tresc")
+    private String tresc;
+    @Column(name = "status")
+    private Integer status;
+    @Size(max = 255)
+    @Column(name = "temat")
+    private String temat;
 
-    public Dzial() {
+    public KomKolejka() {
     }
 
-    public Dzial(Long id) {
+    public KomKolejka(Long id) {
         this.id = id;
     }
 
@@ -64,23 +62,38 @@ public class Dzial implements Serializable {
         this.id = id;
     }
 
-    public String getNazwa() {
-        return nazwa;
+    public String getAdresList() {
+        return adresList;
     }
 
-    public void setNazwa(String nazwa) {
-        this.nazwa = nazwa;
+    public void setAdresList(String adresList) {
+        this.adresList = adresList;
     }
 
-    public List<Struktura> getStrukturaList() {
-        return strukturaList;
+    public String getTresc() {
+        return tresc;
     }
 
-    public void setStrukturaList(List<Struktura> strukturaList) {
-        this.strukturaList = strukturaList;
+    public void setTresc(String tresc) {
+        this.tresc = tresc;
     }
 
-    
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getTemat() {
+        return temat;
+    }
+
+    public void setTemat(String temat) {
+        this.temat = temat;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -91,10 +104,10 @@ public class Dzial implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Dzial)) {
+        if (!(object instanceof KomKolejka)) {
             return false;
         }
-        Dzial other = (Dzial) object;
+        KomKolejka other = (KomKolejka) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -103,7 +116,7 @@ public class Dzial implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.eod.encje.Dzial[ id=" + id + " ]";
+        return "pl.eod.encje.KomKolejka[ id=" + id + " ]";
     }
     
 }

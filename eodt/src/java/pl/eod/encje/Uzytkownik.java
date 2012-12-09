@@ -5,7 +5,6 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,11 +48,13 @@ public class Uzytkownik implements Serializable {
     
     @Column(name = "fullname", nullable = false)
     @Size(min = 3, max = 255)
+    @NotEmpty
     private String fullname;
     
+    @NotEmpty
     @Email
-    @NotEmpty()
-    @Column(name = "adr_email")
+    //@UzytkowAdniot(value = true)
+    @Column(name = "adr_email", unique = true)
     private String adrEmail;
     
     @OneToOne(mappedBy = "secUserId")

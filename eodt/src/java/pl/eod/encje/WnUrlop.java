@@ -28,6 +28,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.constraints.NotNull;
@@ -100,6 +101,9 @@ public class WnUrlop implements Serializable {
     @JoinColumn(name = "akceptant_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uzytkownik akceptant;
+    
+    @Transient
+    private Date dataOstZmiany;
 
     public WnUrlop() {
     }
@@ -194,6 +198,15 @@ public class WnUrlop implements Serializable {
 
     public void setAkceptant(Uzytkownik akceptant) {
         this.akceptant = akceptant;
+    }
+
+    public Date getDataOstZmiany() {
+        dataOstZmiany=getWnHistoriaList().get(getWnHistoriaList().size()-1).getDataZmiany();
+        return dataOstZmiany;
+    }
+
+    public void setDataOstZmiany(Date dataOstZmiany) {
+        this.dataOstZmiany = dataOstZmiany;
     }
 
     @Override

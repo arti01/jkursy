@@ -41,7 +41,7 @@ public class UserRoles implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "ROLE_NAME")
+    @Column(name = "ROLE_NAME", unique = true)
     private String rolename;
 
     

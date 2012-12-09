@@ -32,11 +32,11 @@ public class MyTaskCollector implements TaskCollector {
 
 	public TaskTable getTasks() {
 		SchedulingPattern pattern = new SchedulingPattern("* * * * *");
-		Task task = new MyTask();
-                Task taskm=new MojTask();
+                Task taskm=new EskalacjeTask();
+                Task taskw=new MailWysylkaTask();
 		TaskTable ret = new TaskTable();
 		ret.add(pattern, taskm);
-                ret.add(pattern, task);
+                ret.add(pattern, taskw);
 		return ret;
 	}
 

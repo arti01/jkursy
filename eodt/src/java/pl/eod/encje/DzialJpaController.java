@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 import pl.eod.encje.exceptions.PreexistingEntityException;
@@ -22,10 +23,11 @@ import pl.eod.encje.exceptions.PreexistingEntityException;
  * @author arti01
  */
 public class DzialJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public DzialJpaController() {
-        if(this.emf==null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -35,9 +37,6 @@ public class DzialJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    
-    
-    
     public void create(Dzial dzial) throws PreexistingEntityException, Exception {
         if (dzial.getStrukturaList() == null) {
             dzial.setStrukturaList(new ArrayList<Struktura>());
@@ -130,7 +129,7 @@ public class DzialJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            
+
             em.remove(em.merge(dzial));
             em.getTransaction().commit();
         } finally {
@@ -147,7 +146,7 @@ public class DzialJpaController implements Serializable {
     public List<Dzial> findDzialEntities() {
         return findDzialEntities(true, -1, -1);
     }
-    
+
     public List<Dzial> findDzialEntities(int maxResults, int firstResult) {
         return findDzialEntities(false, maxResults, firstResult);
     }
@@ -189,6 +188,19 @@ public class DzialJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
+
+    public Dzial findDzialByNazwa(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Dzial.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            Dzial u = (Dzial) q.getSingleResult();
+            em.refresh(u);
+            return u;
+        } catch (NoResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }

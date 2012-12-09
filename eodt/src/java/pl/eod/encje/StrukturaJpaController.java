@@ -18,6 +18,7 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
+import pl.eod.encje.exceptions.mojWyjatek;
 
 /**
  *
@@ -51,34 +52,42 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
-    public String create(Struktura struktura) {
-        Hasla h=new Hasla();
-       h.setPass("z");
-       UserRoles r=new UserRoles();
-       r.setRolename("urlop");
-       struktura.getUserId().setHasla(h);
-       List<UserRoles>rl=new ArrayList<UserRoles>();
-       rl.add(r);
-       struktura.getUserId().setRole(rl);
-        
+    public String create(Struktura struktura) throws Exception {
+        Hasla h = new Hasla();
+        h.setPass("z");
+        UserRoles r = new UserRoles();
+        r.setRolename("urlop");
+        struktura.getUserId().setHasla(h);
+        List<UserRoles> rl = new ArrayList<UserRoles>();
+        rl.add(r);
+        struktura.getUserId().setRole(rl);
+
         EntityManager em = null;
         try {
             if (!struktura.isStKier()) {
-                if(struktura.getSzefId()==null) return "pracownik musi mieć przełożonego";
+                if (struktura.getSzefId() == null) {
+                    return "pracownik musi mieć przełożonego";
+                }
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
+            }
+            UzytkownikJpaController uC = new UzytkownikJpaController();
+            if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
+                //System.err.println("valid tutaj 1");
+                return "email już istnieje";
             }
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
             em.merge(struktura);
-            
+
             em.getTransaction().commit();
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
+        } catch (Exception ex) {
+            throw new mojWyjatek(ex.getMessage());
         } finally {
             if (em != null) {
                 em.close();
@@ -89,11 +98,11 @@ public class StrukturaJpaController implements Serializable {
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
         EntityManager em = null;
-        
+
         if (!struktura.isStKier()) {
             if (struktura.getSzefId() != null) {
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
-                DzialJpaController dzialC=new DzialJpaController();
+                DzialJpaController dzialC = new DzialJpaController();
                 dzialC.destroy(dzialOld);
             } else {
                 return "Brak przełożonego - ustaw i zapisz";
@@ -133,6 +142,13 @@ public class StrukturaJpaController implements Serializable {
                     return "Brak przełożonego - ustaw i zapisz";
                 }
             }
+            if (!struktura.getUserId().getAdrEmail().equals(oldStruktura.getUserId().getAdrEmail())) {
+                UzytkownikJpaController uC = new UzytkownikJpaController();
+                if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
+                    return "email już istnieje";
+                }
+            }
+
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
@@ -170,7 +186,7 @@ public class StrukturaJpaController implements Serializable {
                 em.remove(em.merge(struktura));
             }
             if (struktura.getSzefId() != null) {
-               // em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
+                // em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
             System.out.println(struktura.getId());
             em.getTransaction().commit();

@@ -40,7 +40,7 @@ public class WnStatusy implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 255)
-    @Column(name = "opis")
+    @Column(name = "opis", unique = true)
     private String opis;
     @Basic(optional = false)
     @NotNull

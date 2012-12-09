@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -169,6 +170,8 @@ public class UzytkownikJpaController implements Serializable {
             Uzytkownik u=(Uzytkownik) q.getSingleResult();
             em.refresh(u);
             return u.getStruktura();
+        }catch(NoResultException ex){
+            return null;
         } finally {
             em.close();
         }

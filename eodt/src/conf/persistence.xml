@@ -11,6 +11,8 @@
     <class>pl.eod.encje.WnRodzaje</class>
     <class>pl.eod.encje.WnStatusy</class>
     <class>pl.eod.encje.WnUrlop</class>
+    <class>pl.eod.encje.Config</class>
+    <class>pl.eod.encje.KomKolejka</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
