@@ -79,7 +79,7 @@ public class StrukturaJpaController implements Serializable {
             }
             
             DzialJpaController dC = new DzialJpaController();
-            if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+            if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null&&struktura.isStKier()) {
                 //System.err.println("valid tutaj 1");
                 return "dział już istnieje";
             }
@@ -154,6 +154,13 @@ public class StrukturaJpaController implements Serializable {
                 UzytkownikJpaController uC = new UzytkownikJpaController();
                 if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
                     return "email już istnieje";
+                }
+            }
+            
+            if (!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) {
+                DzialJpaController dC = new DzialJpaController();
+                if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+                    return "dział już istnieje";
                 }
             }
 

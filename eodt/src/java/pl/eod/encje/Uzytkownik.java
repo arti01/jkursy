@@ -5,7 +5,6 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,6 +24,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import java.util.List;
 
 /**
  *
@@ -64,7 +64,7 @@ public class Uzytkownik implements Serializable {
     Struktura struktura;
     
     @JoinColumn(name = "haslo_id", referencedColumnName = "id")
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Hasla hasla;
     
     @JoinColumn(name = "adr_email", referencedColumnName = "username")
