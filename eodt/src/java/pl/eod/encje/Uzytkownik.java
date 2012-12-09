@@ -68,7 +68,7 @@ public class Uzytkownik implements Serializable {
     private Hasla hasla;
     
     @JoinColumn(name = "adr_email", referencedColumnName = "username")
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     private List<UserRoles> role;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik", orphanRemoval = true)

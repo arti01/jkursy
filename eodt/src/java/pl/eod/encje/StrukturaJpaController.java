@@ -57,12 +57,12 @@ public class StrukturaJpaController implements Serializable {
     public String create(Struktura struktura) throws Exception {
         Hasla h = new Hasla();
         h.setPass("z");
-        UserRoles r = new UserRoles();
-        r.setRolename("urlop");
+        //UserRoles r = new UserRoles();
+        //r.setRolename("urlop");
         struktura.getUserId().setHasla(h);
-        List<UserRoles> rl = new ArrayList<UserRoles>();
-        rl.add(r);
-        struktura.getUserId().setRole(rl);
+        //List<UserRoles> rl = new ArrayList<UserRoles>();
+        //rl.add(r);
+        //struktura.getUserId().setRole(rl);
 
         EntityManager em = null;
         try {
@@ -77,6 +77,14 @@ public class StrukturaJpaController implements Serializable {
                 //System.err.println("valid tutaj 1");
                 return "email już istnieje";
             }
+            
+            DzialJpaController dC = new DzialJpaController();
+            if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+                //System.err.println("valid tutaj 1");
+                return "dział już istnieje";
+            }
+            
+            
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();

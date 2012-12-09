@@ -69,6 +69,7 @@ public class UsersM implements Serializable {
         edytuj = false;
         nameFilter=null;
         dzialFilter=null;
+        initUser();
         return "usersList";
     }
     
