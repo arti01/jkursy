@@ -77,14 +77,14 @@ public class StrukturaJpaController implements Serializable {
                 //System.err.println("valid tutaj 1");
                 return "email już istnieje";
             }
-            
+
             DzialJpaController dC = new DzialJpaController();
-            if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null&&struktura.isStKier()) {
+            if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null && struktura.isStKier()) {
                 //System.err.println("valid tutaj 1");
                 return "dział już istnieje";
             }
-            
-            
+
+
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
@@ -110,8 +110,6 @@ public class StrukturaJpaController implements Serializable {
         if (!struktura.isStKier()) {
             if (struktura.getSzefId() != null) {
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
-                DzialJpaController dzialC = new DzialJpaController();
-                dzialC.destroy(dzialOld);
             } else {
                 return "Brak przełożonego - ustaw i zapisz";
             }
@@ -125,6 +123,10 @@ public class StrukturaJpaController implements Serializable {
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
+            if (!struktura.isStKier()) {
+                DzialJpaController dzialC = new DzialJpaController();
+                dzialC.destroy(dzialOld);
+            }
 
         } finally {
             if (em != null) {
@@ -156,8 +158,15 @@ public class StrukturaJpaController implements Serializable {
                     return "email już istnieje";
                 }
             }
-            
+
             if (!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) {
+                DzialJpaController dC = new DzialJpaController();
+                if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+                    return "dział już istnieje";
+                }
+            }
+
+            if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
                 DzialJpaController dC = new DzialJpaController();
                 if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
                     return "dział już istnieje";
