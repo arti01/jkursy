@@ -5,11 +5,10 @@
     <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
     <h:form>
         <ul>
-            <li><h:link value="Strona główna" outcome="/all/index.xhtml" /></li>
+            <li><h:link value="Strona główna" outcome="../index.xhtml" /></li>
             <li><h:commandLink value="Użytkownicy" action="#{UsersM.lista}" /></li>
-            <li><h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" /></li>
-            <li><h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" /></li>
-            <li><a href="../logout.jsp">Wyjście</a></li>
+            <li><h:commandLink value="Drzewo per osoby" action="#{StruktOsM.lista}" /></li>
+            <li><h:commandLink value="Drzewo per działy" action="#{StruktDzialM.lista}" /></li>
         </ul>
     </h:form>
 </html>

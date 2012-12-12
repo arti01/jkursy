@@ -3,7 +3,7 @@ body
     margin: 0 auto;
     padding: 0px;
     font-family: tahoma,verdana,helvetica,sans-serif;
-    background-color: #6666ff;
+    background-color: #8bc1b5;
 }
 
 a:link, a:visited {
@@ -24,9 +24,13 @@ a:link:hover, a:visited:hover  {
 }
 
 .rf-cp-hdr {
-    border-width: 0px;
+    border: 0px;
 }
 
 .rf-ntf-cnt{
     background-color: whitesmoke;
+}
+.rf-dt{
+	border: 1px solid brown;
+	width: 620px;
 }

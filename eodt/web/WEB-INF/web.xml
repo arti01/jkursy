@@ -31,22 +31,19 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.xhtml</welcome-file>
+        <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>eod</realm-name>
-        <form-login-config>
-            <form-login-page>/logowanie/login.xhtml?faces-redirect=true</form-login-page>
+        <form-login-config><!-- ?faces-redirect=true -->
+            <form-login-page>/logowanie/login.xhtml</form-login-page>
             <form-error-page>/logowanie/loginerr.xhtml</form-error-page>
         </form-login-config>
     </login-config>
   
-    <security-role>
-        <description>urlop</description>
-        <role-name>urlop</role-name>
-    </security-role>
+    
     
     <security-constraint>
         <display-name>Eod - urlop</display-name>
@@ -60,9 +57,31 @@
         </web-resource-collection>
         <auth-constraint>
             <role-name>urlop</role-name>
+            <role-name>eoduser</role-name>
         </auth-constraint>
     </security-constraint>
-    
+    <security-constraint>
+        <display-name>Eod - urlop</display-name>
+        <web-resource-collection>
+            <web-resource-name>Modul urlop</web-resource-name>
+            <url-pattern>*.xhtml</url-pattern>
+            <http-method>DELETE</http-method>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>eoduser</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-role>
+        <description>urlop</description>
+        <role-name>urlop</role-name>
+    </security-role>
+    <security-role>
+        <description>eoduser</description>
+        <role-name>eoduser</role-name>
+    </security-role>
     
     <error-page>
         <error-code>500</error-code>
