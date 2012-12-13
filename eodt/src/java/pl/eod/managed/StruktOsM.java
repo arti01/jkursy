@@ -39,7 +39,7 @@ public class StruktOsM implements Serializable {
     }
     
     public String lista(){
-        return "strukturaOs";
+        return "/all/strukturaOs";
     }
     
 

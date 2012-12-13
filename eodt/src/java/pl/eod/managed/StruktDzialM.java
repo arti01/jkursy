@@ -39,7 +39,7 @@ public class StruktDzialM implements Serializable {
     }
     
     public String lista(){
-        return "strukturaDzial";
+        return "/all/strukturaDzial";
     }
     
 

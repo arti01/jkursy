@@ -70,7 +70,7 @@ public class UsersM implements Serializable {
         nameFilter=null;
         dzialFilter=null;
         initUser();
-        return "usersList";
+        return "/all/usersList";
     }
     
     public String listaFiltr() {

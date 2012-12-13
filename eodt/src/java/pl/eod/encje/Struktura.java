@@ -205,7 +205,7 @@ public class Struktura implements Serializable {
         String[] strarray = new String[getUserId().getRole().size()];
         List<String> strList=new ArrayList<String>();
         for(UserRoles rola:getUserId().getRole()){
-            strList.add(rola.getRolename());
+            strList.add("="+rola.getRolename()+"=");
         }
         strList.toArray(strarray);
         return strarray;

@@ -46,12 +46,12 @@ public class UrlopM implements Serializable {
 
     public String list() {
         initUrlop();
-        return "urlopyList";
+        return "/urlop/urlopyList";
     }
     
     public String listPodwl() {
         initUrlop();
-        return "urlopyListPodwl";
+        return "/urlop/urlopyListPodwl";
     }
 
     public void wyslij() {
