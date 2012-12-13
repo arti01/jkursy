@@ -46,6 +46,9 @@
                                     <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                                     <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
                                 </h:selectOneMenu>
+                                <br/>
+                                <h:outputLabel for="extid" value="zewnętrzne id: "/>
+                                <h:inputText id="extid" value="#{UsersM.strukt.extId}" />
                             </h:panelGroup>
                             <h:outputText value=" "/>
                             <br/>

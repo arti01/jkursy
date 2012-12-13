@@ -34,7 +34,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Struktura.findAll", query = "SELECT s FROM Struktura s"),
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
-    @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.nodeId = :nodeId"),
+    @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.extId = :extId"),
     @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null"),
     @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1")
 })
@@ -54,8 +54,8 @@ public class Struktura implements Serializable {
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
     
-    @Column(name = "node_id")
-    private Integer nodeId;
+    @Column(name = "ext_id")
+    private Integer extId;
     
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @OneToOne()
@@ -128,12 +128,12 @@ public class Struktura implements Serializable {
         else this.stKier=0;
     }
 
-    public Integer getNodeId() {
-        return nodeId;
+    public Integer getExtId() {
+        return extId;
     }
 
-    public void setNodeId(Integer nodeId) {
-        this.nodeId = nodeId;
+    public void setExtId(Integer extId) {
+        this.extId = extId;
     }
 
     public Uzytkownik getSecUserId() {
