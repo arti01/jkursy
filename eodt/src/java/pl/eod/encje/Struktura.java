@@ -83,7 +83,9 @@ public class Struktura implements Serializable {
     
     @Transient
     List<Struktura> mozliwiSzefowie;
-            
+    
+    @Transient
+    String[] rolaString;
 
     public Struktura() {
     }
@@ -198,9 +200,17 @@ public class Struktura implements Serializable {
         mozliwiSzefowie.remove(this);
         return mozliwiSzefowie;
     }
-    
-    
 
+    public String[] getRolaString() {
+        String[] strarray = new String[getUserId().getRole().size()];
+        List<String> strList=new ArrayList<String>();
+        for(UserRoles rola:getUserId().getRole()){
+            strList.add(rola.getRolename());
+        }
+        strList.toArray(strarray);
+        return strarray;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -224,6 +234,5 @@ public class Struktura implements Serializable {
     @Override
     public String toString() {
         return "pl.eod.encje.Struktura[ id=" + id + " ]";
-    }
-    
+    }    
 }
