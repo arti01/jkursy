@@ -3,8 +3,10 @@ package pl.eod.managed;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.print.DocFlavor;
 import javax.servlet.ServletException;
@@ -13,6 +15,7 @@ import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
+import pl.eod.encje.exceptions.NonexistentEntityException;
 
 @ManagedBean(name = "login")
 @SessionScoped
@@ -31,16 +34,31 @@ public class Login implements Serializable {
         //return "../index.html?faces-redirect=true";
         return "../index.html?faces-redirect=true";
     }
-    /*  
-     public Struktura getZalogowany() {
-     //stub
-     if(zalogowany!=null){
-     zalogowany= userImp.find(zalogowany.getUsername());
-     }
-     //userImp.;
-     return zalogowany;
-     }
-     */
+
+    public String zmienHaslo() throws NonexistentEntityException, Exception {
+        String error = null;
+        if (!zalogowany.getUserId().getHasla().getPass().equals(password)) {
+            error = "rózne hasła";
+        } else {
+            StrukturaJpaController strukC = new StrukturaJpaController();
+            strukC.editArti(zalogowany);
+        }
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (error != null) {
+            FacesMessage message = new FacesMessage(error);
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            return null;
+        } else {
+            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+            request.getSession().invalidate();
+            FacesMessage message = new FacesMessage("zmiana wykonana");
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            //System.err.println("tutaj");
+            return "../index.html";
+        }
+    }
 
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();

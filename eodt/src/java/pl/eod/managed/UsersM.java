@@ -80,6 +80,7 @@ public class UsersM implements Serializable {
     }
 
     public void dodaj() throws NonexistentEntityException, Exception {
+        if(strukt.getExtId()==0) strukt.setExtId(null);
         String error = struktC.create(strukt);
         if (error != null) {
             FacesMessage message = new FacesMessage(error);
@@ -98,6 +99,7 @@ public class UsersM implements Serializable {
     }
 
     public void zapisz() throws NonexistentEntityException, Exception {
+        if(strukt.getExtId()==0) strukt.setExtId(null);
         String error = struktC.editArti(strukt);
         if (error == null) {
             error = "Zmiana wykonana";

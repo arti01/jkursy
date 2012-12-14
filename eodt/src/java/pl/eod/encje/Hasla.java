@@ -23,6 +23,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -47,7 +48,8 @@ public class Hasla implements Serializable {
     @OneToOne(mappedBy = "hasla")
     private Uzytkownik uzytkownik;
     
-    @Size(max = 50)
+    @Size(min=1, max = 50)
+    @NotEmpty
     @Column(name = "PASS")
     private String pass;
     

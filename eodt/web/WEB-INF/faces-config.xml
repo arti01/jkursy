@@ -11,10 +11,13 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <locale-config>
+            <default-locale>pl_PL</default-locale>
+        </locale-config>
+        <message-bundle>bundle</message-bundle>
     </application>
     <managed-bean>
         <managed-bean-name>urlopM</managed-bean-name>
         <managed-bean-class>pl.eod.managwn.UrlopM</managed-bean-class>
-    
         <managed-bean-scope>session</managed-bean-scope></managed-bean>
 </faces-config>

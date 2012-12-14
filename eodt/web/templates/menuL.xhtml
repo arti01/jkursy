@@ -17,6 +17,9 @@
             <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
             <li><h:commandLink value="Wnioski do akceptu" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier}"/></li>
             </h:panelGrid>
+            <h:panelGroup rendered="#{login.zalogowany.extId==null}">
+                <li><h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></li>
+            </h:panelGroup>
             <li><a href="../logout.jsp">Wyjście</a></li>
         </ul>
     </h:form>
