@@ -72,6 +72,9 @@ public class Struktura implements Serializable {
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     
+    @Column(name = "usuniety", nullable = false)
+    private Integer usuniety;
+    
     @Transient
     List<Struktura> bezpPodzPodwlad;
     
@@ -210,7 +213,17 @@ public class Struktura implements Serializable {
         strList.toArray(strarray);
         return strarray;
     }
+
+    public boolean isUsuniety() {
+        if(usuniety==1) return true;
+        else return false;
+    }
     
+    public void setUsuniety(Integer usuniety) {
+        this.usuniety = usuniety;
+    }
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
