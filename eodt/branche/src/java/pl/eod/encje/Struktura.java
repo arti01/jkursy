@@ -72,7 +72,7 @@ public class Struktura implements Serializable {
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     
-    @Column(name = "usuniety", nullable = false)
+    @Column(name = "usuniety", nullable = false, columnDefinition="default '0'")
     private Integer usuniety;
     
     @Transient
