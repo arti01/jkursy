@@ -7,18 +7,16 @@ package pl.eod.encje;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.management.relation.Role;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 import pl.eod.encje.exceptions.mojWyjatek;
+import pl.eod.managed.Login;
 
 /**
  *
@@ -54,16 +52,29 @@ public class StrukturaJpaController implements Serializable {
     }
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
+    @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
+        if (struktura.getExtId() != null) {
+            if (struktura.getExtId() == 0) {
+                struktura.setExtId(null);
+            }
+        }
+        ConfigJpaController confC = new ConfigJpaController();
+        String defPass = confC.findConfigNazwa("domysle_haslo").getWartosc();
         Hasla h = new Hasla();
-        h.setPass("z");
-        //UserRoles r = new UserRoles();
-        //r.setRolename("urlop");
+        //System.out.println("--"+defPass+"====");
+        if (confC.findConfigNazwa("realm_szyfrowanie").getWartosc().equals("md5")) {
+            h.setPass(Login.md5(defPass));
+        } else {
+            h.setPass(defPass);
+        }
         struktura.getUserId().setHasla(h);
-        //List<UserRoles> rl = new ArrayList<UserRoles>();
-        //rl.add(r);
-        //struktura.getUserId().setRole(rl);
 
+        UserRolesJpaController urC=new UserRolesJpaController();
+        List<UserRoles> url=new ArrayList<UserRoles>();
+        url.add(urC.findByNazwa("eoduser"));
+        struktura.getUserId().setRole(url); ;
+        
         EntityManager em = null;
         try {
             if (!struktura.isStKier()) {
@@ -83,7 +94,6 @@ public class StrukturaJpaController implements Serializable {
                 //System.err.println("valid tutaj 1");
                 return "dział już istnieje";
             }
-
 
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
@@ -106,7 +116,6 @@ public class StrukturaJpaController implements Serializable {
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
         EntityManager em = null;
-
         if (!struktura.isStKier()) {
             if (struktura.getSzefId() != null) {
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
@@ -137,6 +146,11 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception {
+        if (struktura.getExtId() != null) {
+            if (struktura.getExtId() == 0) {
+                struktura.setExtId(null);
+            }
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -172,7 +186,6 @@ public class StrukturaJpaController implements Serializable {
                     return "dział już istnieje";
                 }
             }
-
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();

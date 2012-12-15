@@ -1,19 +1,18 @@
 package pl.eod.managed;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.print.DocFlavor;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
-import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
@@ -40,7 +39,11 @@ public class Login implements Serializable {
         if (!zalogowany.getUserId().getHasla().getPass().equals(password)) {
             error = "rózne hasła";
         } else {
-            StrukturaJpaController strukC = new StrukturaJpaController();
+            ConfigJpaController confC = new ConfigJpaController();
+            if (confC.findConfigNazwa("realm_szyfrowanie").getWartosc().equals("md5")) {
+                zalogowany.getUserId().getHasla().setPass(Login.md5(zalogowany.getUserId().getHasla().getPass()));
+            }
+            strukC = new StrukturaJpaController();
             strukC.editArti(zalogowany);
         }
         FacesContext context = FacesContext.getCurrentInstance();
@@ -63,20 +66,10 @@ public class Login implements Serializable {
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
         System.err.println(request.getUserPrincipal().getName());
         //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
-        /*try {
-         // Handle unknown username/password in request.login().
-         //context.addMessage(null, new FacesMessage("błąd logowania"));
-         //request.logout();
-         return "/all/loginerr";
-         } catch (ServletException ex) {
-         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-         return "/all/loginerr";
-         }*/
         return "/all/index";
     }
 
@@ -92,6 +85,24 @@ public class Login implements Serializable {
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
         return zalogowany;
+    }
+
+    public static String md5(String input) {
+        String md5 = null;
+        if (null == input) {
+            return null;
+        }
+        try {
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            //Update input string in message digest
+            digest.update(input.getBytes(), 0, input.length());
+            //Converts message digest value in base 16 (hex)
+            md5 = new BigInteger(1, digest.digest()).toString(16);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return md5;
     }
 
     public String getUsername() {

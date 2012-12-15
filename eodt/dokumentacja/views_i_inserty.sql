@@ -21,6 +21,8 @@ INSERT INTO config VALUES (3, 'mail_smtp_socketFactory_port', 'mail_smtp_socketF
 INSERT INTO config VALUES (4, 'mail_smtp_port', 'mail_smtp_port', '465');
 INSERT INTO config VALUES (5, 'username', 'username', '');
 INSERT INTO config VALUES (6, 'password', 'password', '');
+INSERT INTO config VALUES (7, 'domysle_haslo', 'domyslne haslo przy zakladaniu usera', 'a');
+INSERT INTO config VALUES (8, 'realm_szyfrowanie', 'md5 lub none', 'md5');
 
 
 --

@@ -171,6 +171,7 @@ public class UzytkownikJpaController implements Serializable {
             em.refresh(u);
             return u.getStruktura();
         }catch(NoResultException ex){
+            //ex.printStackTrace();
             return null;
         } finally {
             em.close();

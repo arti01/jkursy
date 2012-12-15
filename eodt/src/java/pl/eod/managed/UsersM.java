@@ -14,7 +14,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
-import javax.faces.model.ArrayDataModel;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.Dzial;
@@ -80,7 +79,6 @@ public class UsersM implements Serializable {
     }
 
     public void dodaj() throws NonexistentEntityException, Exception {
-        if(strukt.getExtId()==0) strukt.setExtId(null);
         String error = struktC.create(strukt);
         if (error != null) {
             FacesMessage message = new FacesMessage(error);
@@ -99,7 +97,6 @@ public class UsersM implements Serializable {
     }
 
     public void zapisz() throws NonexistentEntityException, Exception {
-        if(strukt.getExtId()==0) strukt.setExtId(null);
         String error = struktC.editArti(strukt);
         if (error == null) {
             error = "Zmiana wykonana";

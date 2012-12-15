@@ -172,7 +172,6 @@ public class WnRodzajeJpaController implements Serializable {
     private List<WnRodzaje> findWnRodzajeEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(WnRodzaje.class)).orderBy(em.getCriteriaBuilder().asc(cq.from(WnRodzaje.class).get("id")));
             Query q = em.createQuery(cq);
