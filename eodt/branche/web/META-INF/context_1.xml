@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/eodt">
+    
+    <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
+           driverName="org.apache.derby.jdbc.ClientDriver"
+           connectionURL="jdbc:derby://10.151.64.147:1527/eod"
+           username="eod" password="eod"
+           userTable="eod.userpass" userNameCol="username" userCredCol="password" 
+           userRoleTable="eod.user_roles" roleNameCol="role_name"
+           resourceName="eod"/>
+    
+    <!--<Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99" 
+           dataSourceName="jdbc/eod" localDataSource="true" 
+           userTable="dbo.userPass" userNameCol="username" userCredCol="password" 
+           userRoleTable="dbo.userRoles" roleNameCol="role_name"/>
+    -->
+    <Resource name="jdbc/eod" auth="Container" type="javax.sql.DataSource"
+              username="eod" password="eod"
+              driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432/eod"
+              maxActive="10" maxIdle="3" maxWait="10000"
+              removeAbandoned="true" removeAbandonedTimeout="100"/>
+</Context>
