@@ -126,9 +126,9 @@
                                 <f:selectItems value="#{strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                             </h:selectOneMenu>
 
-                            <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(strukt.bezpPod)>0}">
+                            <rich:collapsiblePanel header="Bezpośredni podwładni" expanded="false" switchType="client" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
                                 <ul>
-                                    <ui:repeat value="#{strukt.bezpPod}" var="podwl">
+                                    <ui:repeat value="#{strukt.bezpPodWidoczni}" var="podwl">
                                         <li>#{podwl.userId.fullname}</li>
                                     </ui:repeat>
                                 </ul>
