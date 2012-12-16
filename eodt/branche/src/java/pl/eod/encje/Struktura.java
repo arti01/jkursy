@@ -215,7 +215,7 @@ public class Struktura implements Serializable {
     }
 
     public boolean isUsuniety() {
-        if(usuniety==1) return true;
+        if(usuniety!=null&&usuniety==1) return true;
         else return false;
     }
     

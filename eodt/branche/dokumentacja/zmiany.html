@@ -1,0 +1,39 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div>
+            <h3>2012-12-16</h3>
+            <ul>
+                <li>
+                    Obsługa usuwania użytkowników - zamiast usunięcia z tabeli zmiana
+                    flagi odpowiedzialnej za wyświetlanie usera oraz za możliwość jego
+                    logowania.
+                </li>
+            </ul>
+            
+            <h3>2012-12-15</h3>
+            <ul>
+                <li>
+                    w tabeli config domyślne hasło nadawane podczas tworzenia użytkownika
+                </li>
+                <li>
+                    obsługa MD5 - dodano parametr w config mowiący, czy hasła w momencie zmiany
+                    i tworzenia użytkownika mają być haszowane MD5 (realm musi być wtedy ustawiony,
+                    digest=MD5
+                </li>
+                <li>
+                    W momencie dodawania nowego użytkownika system dodaje mu automatycznie rolę
+                    "eoduser"
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

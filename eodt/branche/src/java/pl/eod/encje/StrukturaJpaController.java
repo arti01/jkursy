@@ -70,11 +70,11 @@ public class StrukturaJpaController implements Serializable {
         }
         struktura.getUserId().setHasla(h);
 
-        UserRolesJpaController urC=new UserRolesJpaController();
-        List<UserRoles> url=new ArrayList<UserRoles>();
+        UserRolesJpaController urC = new UserRolesJpaController();
+        List<UserRoles> url = new ArrayList<UserRoles>();
         url.add(urC.findByNazwa("eoduser"));
-        struktura.getUserId().setRole(url); ;
-        
+        struktura.getUserId().setRole(url);;
+
         EntityManager em = null;
         try {
             if (!struktura.isStKier()) {
@@ -112,6 +112,26 @@ public class StrukturaJpaController implements Serializable {
             }
         }
         return null;
+    }
+
+    public void zrobNiewidczony(Struktura struktura) {
+        EntityManager em = null;
+
+        struktura.setUsuniety(1);
+        if (struktura.isStKier()) {
+            Dzial dzial = struktura.getDzialId();
+            struktura.setDzialId(null);
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(struktura);
+            em.remove(dzial);
+            em.getTransaction().commit();
+        } else {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(struktura);
+            em.getTransaction().commit();
+        }
     }
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
@@ -243,6 +263,16 @@ public class StrukturaJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }
+
+    public List<Struktura> findStrukturaWidoczni() {
+        List<Struktura> wynik = new ArrayList<Struktura>();
+        for (Struktura s : findStrukturaEntities(true, -1, -1)) {
+            if (!s.isUsuniety()) {
+                wynik.add(s);
+            }
+        }
+        return wynik;
     }
 
     public List<Struktura> findStrukturaEntities() {

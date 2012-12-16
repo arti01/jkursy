@@ -60,7 +60,7 @@ public class UsersM implements Serializable {
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
         struktury = new ListDataModel<Struktura>();
-        struktury.setWrappedData(struktC.findStrukturaEntities());
+        struktury.setWrappedData(struktC.findStrukturaWidoczni());
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
@@ -90,7 +90,13 @@ public class UsersM implements Serializable {
         }
     }
 
-    public void usun() throws NonexistentEntityException, Exception {
+    public void usun() throws NonexistentEntityException, Exception{
+        struktC.zrobNiewidczony(strukt);
+        initUser();
+        edytuj = false;
+    }
+    @Deprecated
+    public void usunOld() throws NonexistentEntityException, Exception {
         struktC.destroyArti(strukt);
         initUser();
         edytuj = false;
@@ -126,10 +132,8 @@ public class UsersM implements Serializable {
         Boolean kier;
         kier = (Boolean) e.getNewValue();
         Struktura str = struktury.getRowData();
-        System.err.println(str.getDzialId() + "old dzial");
         str.setStKier(kier);
         String error = struktC.changeKier(str, str.getDzialId());
-        System.err.println(error);
 
         if (error != null) {
             str.setStKier(true);
