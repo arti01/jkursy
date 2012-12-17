@@ -3,7 +3,6 @@
     
     <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
            driverName="org.postgresql.Driver"
-           digest="MD5"
            connectionURL="jdbc:postgresql://127.0.0.1:5432/eod?user=eod&amp;password=eod"
            username="eod" password="eod"
            userTable="userpass" userNameCol="username" userCredCol="password" 

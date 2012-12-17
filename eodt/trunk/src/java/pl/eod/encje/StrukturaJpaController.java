@@ -54,9 +54,9 @@ public class StrukturaJpaController implements Serializable {
 
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
-        if (struktura.getExtId() != null) {
-            if (struktura.getExtId() == 0) {
-                struktura.setExtId(null);
+        if (struktura.getUserId().getExtId() != null) {
+            if (struktura.getUserId().getExtId() == 0) {
+                struktura.getUserId().setExtId(null);
             }
         }
         ConfigJpaController confC = new ConfigJpaController();
@@ -146,9 +146,9 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception {
-        if (struktura.getExtId() != null) {
-            if (struktura.getExtId() == 0) {
-                struktura.setExtId(null);
+        if (struktura.getUserId().getExtId() != null) {
+            if (struktura.getUserId().getExtId() == 0) {
+                struktura.getUserId().setExtId(null);
             }
         }
         EntityManager em = null;

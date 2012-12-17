@@ -51,7 +51,7 @@
 
                         <h:outputText value=" "/>
                         <h:outputLabel for="extid" value="Zewnętrzne id:"/>
-                        <h:inputText id="extid" value="#{UsersM.strukt.extId}" size="10"/>
+                        <h:inputText id="extid" value="#{UsersM.strukt.userId.extId}" size="10"/>
                         <rich:message for="extid" styleClass="error" />
                         <br/>
                         <rich:message for="dodaj" styleClass="error"/>
@@ -98,7 +98,7 @@
                             <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>
                             <br/>
                             <h:outputLabel for="extidE" value="zewnętrzne id: "/>
-                            <h:inputText id="extidE" value="#{strukt.extId}" size="10"/>
+                            <h:inputText id="extidE" value="#{strukt.userId.extId}" size="10"/>
                         </rich:column>
 
                         <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
