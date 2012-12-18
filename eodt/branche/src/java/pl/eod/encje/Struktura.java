@@ -34,8 +34,7 @@ import javax.persistence.Transient;
     @NamedQuery(name = "Struktura.findAll", query = "SELECT s FROM Struktura s"),
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
-    @NamedQuery(name = "Struktura.findByNodeId", query = "SELECT s FROM Struktura s WHERE s.extId = :extId"),
-    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and s.usuniety!=1"),
+    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety!=1 or s.usuniety is null)"),
     @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null)")
 })
 public class Struktura implements Serializable {
@@ -52,8 +51,6 @@ public class Struktura implements Serializable {
     private Struktura szefId;
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
-    @Column(name = "ext_id")
-    private Integer extId;
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @OneToOne()
     private Uzytkownik secUserId;
@@ -127,14 +124,6 @@ public class Struktura implements Serializable {
         }
     }
 
-    public Integer getExtId() {
-        return extId;
-    }
-
-    public void setExtId(Integer extId) {
-        this.extId = extId;
-    }
-
     public Uzytkownik getSecUserId() {
         return secUserId;
     }
@@ -161,7 +150,7 @@ public class Struktura implements Serializable {
 
     public List<Struktura> getBezpPodzPodwlad() {
         List<Struktura> tree = new ArrayList<Struktura>();
-        for (Struktura s : bezpPod) {
+        for (Struktura s : getBezpPodWidoczni()) {
             if (s.getBezpPod().size() > 0) {
                 tree.add(s);
             }
@@ -181,8 +170,9 @@ public class Struktura implements Serializable {
     }
 
     public List<Struktura> getBezpPodBezPodwlad() {
-        bezpPod.removeAll(getBezpPodzPodwlad());
-        return bezpPod;
+        bezpPodBezPodwlad=getBezpPodWidoczni();
+        bezpPodBezPodwlad.removeAll(getBezpPodzPodwlad());
+        return bezpPodBezPodwlad;
     }
 
     public List<Struktura> getWszyscyPodwladni() {

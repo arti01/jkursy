@@ -4,10 +4,7 @@
  */
 package pl.eod.encje;
 
-import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.io.Serializable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -29,12 +26,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.Constraint;
-import javax.validation.ConstraintValidator;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *

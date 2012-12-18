@@ -54,9 +54,9 @@ public class StrukturaJpaController implements Serializable {
 
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
-        if (struktura.getExtId() != null) {
-            if (struktura.getExtId() == 0) {
-                struktura.setExtId(null);
+        if (struktura.getUserId().getExtId() != null) {
+            if (struktura.getUserId().getExtId() == 0) {
+                struktura.getUserId().setExtId(null);
             }
         }
         ConfigJpaController confC = new ConfigJpaController();
@@ -116,12 +116,14 @@ public class StrukturaJpaController implements Serializable {
 
     public void zrobNiewidczony(Struktura struktura) {
         EntityManager em = null;
-
+        em = getEntityManager();
+Dzial dOld=em.find(Dzial.class, struktura.getDzialId().getId());
+Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
         struktura.setUsuniety(1);
         if (struktura.isStKier()) {
             Dzial dzial = struktura.getDzialId();
             struktura.setDzialId(null);
-            em = getEntityManager();
+            struktura.setSzefId(null);
             em.getTransaction().begin();
             em.merge(struktura);
             em.remove(em.merge(dzial));
@@ -129,9 +131,12 @@ public class StrukturaJpaController implements Serializable {
         } else {
             em = getEntityManager();
             em.getTransaction().begin();
+            struktura.setSzefId(null);
             em.merge(struktura);
             em.getTransaction().commit();
         }
+        em.refresh(em.merge(sOld));
+        em.refresh(em.merge(dOld));
     }
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
@@ -166,9 +171,9 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception {
-        if (struktura.getExtId() != null) {
-            if (struktura.getExtId() == 0) {
-                struktura.setExtId(null);
+        if (struktura.getUserId().getExtId() != null) {
+            if (struktura.getUserId().getExtId() == 0) {
+                struktura.getUserId().setExtId(null);
             }
         }
         EntityManager em = null;

@@ -57,6 +57,9 @@ public class Uzytkownik implements Serializable {
     @Column(name = "adr_email", unique = true)
     private String adrEmail;
     
+    @Column(name = "ext_id")
+    private Integer extId;
+    
     @OneToOne(mappedBy = "secUserId")
     Struktura strukturaSec;
     
@@ -188,6 +191,15 @@ public class Uzytkownik implements Serializable {
         this.wnHistoriaListAkceptant = wnHistoriaListAkceptant;
     }
 
+    public Integer getExtId() {
+        return extId;
+    }
+
+    public void setExtId(Integer extId) {
+        this.extId = extId;
+    }
+    
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set

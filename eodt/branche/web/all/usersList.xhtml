@@ -51,7 +51,7 @@
 
                         <h:outputText value=" "/>
                         <h:outputLabel for="extid" value="Zewnętrzne Id:"/>
-                        <h:inputText id="extid" value="#{UsersM.strukt.extId}" size="10"/>
+                        <h:inputText id="extid" value="#{UsersM.strukt.userId.extId}" size="10"/>
                         <rich:message for="extid" styleClass="error" />
                         <br/>
                         <rich:message for="dodaj" styleClass="error"/>
@@ -91,14 +91,14 @@
                             <br/>
                             <rich:message for="kierownikE" styleClass="error" />
                             <h:outputLabel for="kierownikE" value="Czy kierownik?: "/>
-                            <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPod)==0}" valueChangeListener="#{UsersM.changeKierListener}">
+                            <h:selectBooleanCheckbox id="kierownikE" value="#{strukt.stKier}" rendered="#{fn:length(strukt.bezpPodWidoczni)==0}" valueChangeListener="#{UsersM.changeKierListener}">
                                 <a4j:ajax event="change" render="formTab, , formWprow" execute="@this"/>
                             </h:selectBooleanCheckbox>
 
-                            <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(strukt.bezpPod)>0) and strukt.stKier}"/>
+                            <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(strukt.bezpPodWidoczni)>0) and strukt.stKier}"/>
                             <br/>
                             <h:outputLabel for="extidE" value="zewnętrzne id: "/>
-                            <h:inputText id="extidE" value="#{strukt.extId}" size="10"/>
+                            <h:inputText id="extidE" value="#{strukt.userId.extId}" size="10"/>
                         </rich:column>
 
                         <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
