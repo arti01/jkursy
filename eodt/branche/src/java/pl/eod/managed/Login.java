@@ -66,7 +66,7 @@ public class Login implements Serializable {
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        System.err.println(request.getUserPrincipal().getName());
+        //System.err.println(request.getUserPrincipal().getName());
         //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
@@ -84,6 +84,10 @@ public class Login implements Serializable {
         //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
+        if(zalogowany.isUsuniety()) {  
+            this.wyloguj();
+            return null;
+        }
         return zalogowany;
     }
 

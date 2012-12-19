@@ -6,6 +6,7 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <h:panelGroup rendered="#{login.zalogowany!=null}">
         <center>
         <h1>Elektroniczny Obieg Dokumentów</h1>
         <p align="center" style="margin-top: 50px;">System <b>eSK.EOD</b> w wersji 1.0 umożliwi Państwu zarządzanie strukturą organizacyjną Państwa przedsiębiorstwa oraz zarządzaniem wnioskami urlopowymi.
@@ -17,6 +18,12 @@
         <p align="left" style="margin-left: 20px;"><b>WAŻNE!</b> Ze względu na to, że system będzie się komunikował z pracownikami Państwa przedsiębiorstwa poprzez pocztę elektroniczną, należy szczególną uwagę zwrócić na poprawność adresów email wpisywanych przy poszczególnych pracownikach.</p>
         <p style="font-size: 20px;margin-top: 50px;">Zapraszamy do korzystania z systemu eSK.EOD!</p>
         </center>
+        </h:panelGroup>
+        
+        <h:panelGroup rendered="#{login.zalogowany==null}">
+        <h1>Elektroniczny Obieg Dokumentów</h1>
+        <h2>Konto NIEaktywne</h2>
+        </h:panelGroup>
         
     </ui:define>
 
