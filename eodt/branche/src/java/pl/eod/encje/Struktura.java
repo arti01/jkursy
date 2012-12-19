@@ -62,8 +62,10 @@ public class Struktura implements Serializable {
     private Dzial dzialId;
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
-    @Column(name = "usuniety", nullable = false, columnDefinition = "default '0'")
+    
+    @Column(name = "usuniety", nullable = true)
     private Integer usuniety;
+    
     @Transient
     List<Struktura> bezpPodzPodwlad;
     @Transient
