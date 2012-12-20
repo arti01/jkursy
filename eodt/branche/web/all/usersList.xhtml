@@ -28,12 +28,12 @@
                         <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}" valueChangeListener="#{UsersM.kierListener}">
                             <a4j:ajax event="change" render="dzial, przelozony" execute="@this"/>
                         </h:selectBooleanCheckbox>
+                        <rich:message for="kierownik" styleClass="error" />
 
-                        <rich:message for="dzial" styleClass="error" />
                         <h:outputLabel for="dzial" value="Dział: (edycja tylko dla kierownika)"/>
                         <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
+                        <rich:message for="dzial" styleClass="error" />
 
-                        <h:outputText value=" "/>
                         <h:outputLabel for="przelozonyK" value="Przełożony: "/>
                         <h:panelGroup id="przelozony">
                             <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
@@ -41,6 +41,7 @@
                                 <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                                 <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
                             </h:selectOneMenu>
+                            <rich:message for="przelozonyK" styleClass="error" />
 
                             <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
                                 <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
@@ -48,8 +49,12 @@
                             </h:selectOneMenu>
                             <rich:message for="przelozonyP" styleClass="error" />
                         </h:panelGroup>
+                        <h:outputText value=""/>
 
-                        <h:outputText value=" "/>
+                        <h:outputLabel for="przyjwnioski" value="Czy uprawniona do innych przyjmowania wniosków?: "/>
+                        <h:selectBooleanCheckbox id="przyjwnioski" value="#{UsersM.strukt.przyjmowanieWnioskow}"/>
+                        <rich:message for="przyjwnioski" styleClass="error" />
+
                         <h:outputLabel for="extid" value="Zewnętrzne Id:"/>
                         <h:inputText id="extid" value="#{UsersM.strukt.userId.extId}" size="10"/>
                         <rich:message for="extid" styleClass="error" />
@@ -134,6 +139,9 @@
                                 </ul>
                             </rich:collapsiblePanel>
                             <br/>
+                            <h:outputLabel for="przyjwnioskiE" value="Czy uprawniona do innych przyjmowania wniosków?: "/>
+                            <h:selectBooleanCheckbox id="przyjwnioskiE" value="#{strukt.przyjmowanieWnioskow}"/>
+                            <rich:message for="przyjwnioskiE" styleClass="error" />
                         </rich:column>
 
                         <rich:column   style="width:15%">

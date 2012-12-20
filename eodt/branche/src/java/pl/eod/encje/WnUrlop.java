@@ -95,6 +95,10 @@ public class WnUrlop implements Serializable {
     @ManyToOne(optional = false)
     private Uzytkownik akceptant;
     
+    @JoinColumn(name = "przyjmujacy", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Uzytkownik przyjmujacy;
+    
     @Transient
     private Date dataOstZmiany;
 
@@ -202,6 +206,14 @@ public class WnUrlop implements Serializable {
         this.dataOstZmiany = dataOstZmiany;
     }
 
+    public Uzytkownik getPrzyjmujacy() {
+        return przyjmujacy;
+    }
+
+    public void setPrzyjmujacy(Uzytkownik przyjmujacy) {
+        this.przyjmujacy = przyjmujacy;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

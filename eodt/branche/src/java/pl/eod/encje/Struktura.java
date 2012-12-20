@@ -23,6 +23,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -51,6 +52,11 @@ public class Struktura implements Serializable {
     private Struktura szefId;
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
+    
+    @NotNull
+    @Column(name = "przyjmowanie_wnioskow", nullable = false)
+    private int przyjmowanieWnioskow;
+    
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @OneToOne()
     private Uzytkownik secUserId;
@@ -228,6 +234,19 @@ public class Struktura implements Serializable {
         }
         return wynik;
     }
+    
+
+    public boolean isPrzyjmowanieWnioskow() {
+        if(przyjmowanieWnioskow==1) return false;
+        else return true;
+    }
+
+    public void setPrzyjmowanieWnioskow(boolean przyjmowanieWnioskow) {
+        if(przyjmowanieWnioskow) this.przyjmowanieWnioskow=0;
+        else this.przyjmowanieWnioskow = 1;
+    }
+    
+    
     
     @Override
     public int hashCode() {

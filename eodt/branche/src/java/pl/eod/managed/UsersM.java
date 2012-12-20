@@ -55,6 +55,7 @@ public class UsersM implements Serializable {
 
     private void initUser() {
         strukt = new Struktura();
+        strukt.setPrzyjmowanieWnioskow(false);
         user = new Uzytkownik();
         strukt.setUserId(user);
         Dzial dzial = new Dzial();

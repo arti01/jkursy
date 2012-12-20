@@ -88,6 +88,9 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant")
     private List<WnHistoria> wnHistoriaListAkceptant;
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
+    private List<WnUrlop> wnUrlopListPrzyjmujacy;
+    
     public Uzytkownik() {
     }
 
@@ -165,6 +168,14 @@ public class Uzytkownik implements Serializable {
 
     public void setWnHistoriaList(List<WnHistoria> wnHistoriaList) {
         this.wnHistoriaList = wnHistoriaList;
+    }
+
+    public List<WnUrlop> getWnUrlopListPrzyjmujacy() {
+        return wnUrlopListPrzyjmujacy;
+    }
+
+    public void setWnUrlopListPrzyjmujacy(List<WnUrlop> wnUrlopListPrzyjmujacy) {
+        this.wnUrlopListPrzyjmujacy = wnUrlopListPrzyjmujacy;
     }
     
 
