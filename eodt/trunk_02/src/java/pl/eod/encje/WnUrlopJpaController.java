@@ -66,9 +66,9 @@ public class WnUrlopJpaController implements Serializable {
         try {
             em = getEntityManager();
             Uzytkownik u = em.find(Uzytkownik.class, wnUrlop.getUzytkownik().getId());
-            System.err.println(u.getWnUrlopList());
+            //System.err.println(u.getWnUrlopList());
             u.getWnUrlopList().remove(wnUrlop);
-            System.err.println(u.getWnUrlopList());
+            //System.err.println(u.getWnUrlopList());
             em.getTransaction().begin();
             em.merge(u);
             em.getTransaction().commit();
@@ -81,7 +81,7 @@ public class WnUrlopJpaController implements Serializable {
     }
 
     public void eskaluj(WnUrlop urlop) {
-        System.err.println(urlop.getId());
+        //System.err.println(urlop.getId());
         if (urlop.getAkceptant().getStruktura().getSzefId() == null) {
             return;
         }
