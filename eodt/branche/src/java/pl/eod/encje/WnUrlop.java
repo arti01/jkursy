@@ -76,7 +76,7 @@ public class WnUrlop implements Serializable {
     private Date dataWprowadzenia;
     
     @OrderBy(value = "id ASC")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<WnHistoria> wnHistoriaList;
     
     @JoinColumn(name = "status_id", referencedColumnName = "id")

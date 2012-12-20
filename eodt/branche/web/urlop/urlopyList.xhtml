@@ -58,40 +58,40 @@
                                 Id wniosku (a co z numerem wniosku?)
                             </f:facet>
                             <h:outputText value="#{urlop.id}"/>
-                                <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
-                                    <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                data zmiany
-                                            </f:facet>
-                                            <h:outputText value="#{hist.dataZmiany}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
-                                        </rich:column>
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                Zmianę wykonał
-                                            </f:facet>
-                                            <h:outputText value="#{hist.zmieniajacy.fullname}"/>
-                                        </rich:column>
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                Status
-                                            </f:facet>
-                                            <h:outputText value="#{hist.statusId.opis}"/>
-                                        </rich:column>
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                Opis
-                                            </f:facet>
-                                            <h:outputText value="#{hist.opisZmiany}"/>
-                                        </rich:column>
-                                        <rich:column>
-                                            <f:facet name="header">
-                                                Akceptant
-                                            </f:facet>
-                                            <h:outputText value="#{hist.akceptant.fullname}"/>
-                                        </rich:column>
-                                    </h:dataTable>
-                                </rich:collapsiblePanel>
+                            <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
+                                <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            data zmiany
+                                        </f:facet>
+                                        <h:outputText value="#{hist.dataZmiany}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            Zmianę wykonał
+                                        </f:facet>
+                                        <h:outputText value="#{hist.zmieniajacy.fullname}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            Status
+                                        </f:facet>
+                                        <h:outputText value="#{hist.statusId.opis}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            Opis
+                                        </f:facet>
+                                        <h:outputText value="#{hist.opisZmiany}"/>
+                                    </rich:column>
+                                    <rich:column>
+                                        <f:facet name="header">
+                                            Akceptant
+                                        </f:facet>
+                                        <h:outputText value="#{hist.akceptant.fullname}"/>
+                                    </rich:column>
+                                </h:dataTable>
+                            </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">
