@@ -58,7 +58,7 @@ public class UrlopObceM {
         wnh.setZmieniajacy(login.getZalogowany().getUserId());
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(urlop.getUzytkownik().getStruktura().getSzefId().getUserId());
-        wnh.setOpisZmiany("wysłano do akceptu przełożonemu");
+        wnh.setOpisZmiany("uprawniona osoba wysłała wniosek do akceptu przełożonemu");
         
         urlop.getWnHistoriaList().add(wnh);
 
@@ -75,9 +75,9 @@ public class UrlopObceM {
         initUrlop();
         
         FacesContext context = FacesContext.getCurrentInstance();
-        UIComponent zapisz = UIComponent.getCurrentComponent(context);
+        UIComponent zapisz = UIComponent.getCurrentComponent(context); 
         FacesMessage message = new FacesMessage();
-        message.setSummary("wniosek wysłany");
+        message.setSummary("uprawniona osoba wysłała wniosek");
         context.addMessage(zapisz.getClientId(context), message);
 
     }
@@ -108,7 +108,7 @@ public class UrlopObceM {
             wnh.setStatusId(st);
             wnh.setZmieniajacy(login.getZalogowany().getUserId());
             wnh.setUrlopId(urlop);
-            wnh.setOpisZmiany("inna osoba wprowadziła nowy wniosek");
+            wnh.setOpisZmiany("uprawniona osoba wprowadziła wniosek");
             urlop.getWnHistoriaList().add(wnh);
             urlop.setPrzyjmujacy(login.getZalogowany().getUserId());
             error = urlopC.createEdit(urlop);
