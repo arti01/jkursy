@@ -17,7 +17,7 @@
                 <h4>Menu Urlopy</h4>
             <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
             <li><h:commandLink value="Wnioski do akceptu" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier}"/></li>
-            <li><h:commandLink value="Obce wnioski" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.przyjmowanieWnioskow}"/></li>
+            <li><h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" rendered="#{login.zalogowany.przyjmowanieWnioskow}"/></li>
             </h:panelGrid>
             <h:panelGroup rendered="#{login.zalogowany.userId.extId==null and login.zalogowany!=null}">
                 <li><h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></li>

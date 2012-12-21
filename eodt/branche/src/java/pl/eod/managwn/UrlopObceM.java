@@ -9,13 +9,16 @@ import java.util.Date;
 import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
+import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
@@ -23,10 +26,8 @@ import pl.eod.encje.WnUrlop;
 import pl.eod.encje.WnUrlopJpaController;
 import pl.eod.managed.Login;
 
-/**
- *
- * @author arti01
- */
+@ManagedBean(name = "UrlopObceM")
+@SessionScoped
 public class UrlopObceM {
 
     private WnUrlop urlop;
@@ -47,16 +48,16 @@ public class UrlopObceM {
         WnStatusy st = new WnStatusy();
         st.setId(new Long(2));
         urlop.setStatusId(st);
-        urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
+        urlop.setAkceptant(urlop.getUzytkownik().getStruktura().getSzefId().getUserId());
         
         WnHistoria wnh = new WnHistoria();
         wnh.setDataZmiany(new Date());
         WnStatusy st1 = new WnStatusy();
         st1.setId(new Long(2));
         wnh.setStatusId(st1);
-        wnh.setZmieniajacy(urlop.getUzytkownik());
+        wnh.setZmieniajacy(login.getZalogowany().getUserId());
         wnh.setUrlopId(urlop);
-        wnh.setAkceptant(login.getZalogowany().getSzefId().getUserId());
+        wnh.setAkceptant(urlop.getUzytkownik().getStruktura().getSzefId().getUserId());
         wnh.setOpisZmiany("wysłano do akceptu przełożonemu");
         
         urlop.getWnHistoriaList().add(wnh);
@@ -95,7 +96,7 @@ public class UrlopObceM {
         WnStatusy st = new WnStatusy();
         st.setId(new Long(1));
         urlop.setStatusId(st);
-        urlop.setNrWniosku("ddddddddddd");
+        urlop.setNrWniosku("ooooooooo");
         urlop.setDataWprowadzenia(new Date());
 
         String error = null;
@@ -105,10 +106,11 @@ public class UrlopObceM {
             WnHistoria wnh = new WnHistoria();
             wnh.setDataZmiany(new Date());
             wnh.setStatusId(st);
-            wnh.setZmieniajacy(urlop.getUzytkownik());
+            wnh.setZmieniajacy(login.getZalogowany().getUserId());
             wnh.setUrlopId(urlop);
-            wnh.setOpisZmiany("wprowadzono nowy wniosek");
+            wnh.setOpisZmiany("inna osoba wprowadziła nowy wniosek");
             urlop.getWnHistoriaList().add(wnh);
+            urlop.setPrzyjmujacy(login.getZalogowany().getUserId());
             error = urlopC.createEdit(urlop);
         } else {
             error = urlopC.createEdit(urlop);
@@ -139,8 +141,8 @@ public class UrlopObceM {
 
     private void initUrlop() {
         urlop = new WnUrlop();
-        urlop.setUzytkownik(login.getZalogowany().getUserId());
-        urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
+        urlop.setUzytkownik(new Uzytkownik());
+        urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopListPrzyjmujacy());
     }
 
     public WnUrlop getUrlop() {
