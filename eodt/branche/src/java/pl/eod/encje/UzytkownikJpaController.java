@@ -169,6 +169,7 @@ public class UzytkownikJpaController implements Serializable {
             q.setParameter("adrEmail", email);
             Uzytkownik u=(Uzytkownik) q.getSingleResult();
             em.refresh(u);
+            //em.refresh(u.getStruktura());
             return u.getStruktura();
         }catch(NoResultException ex){
             //ex.printStackTrace();

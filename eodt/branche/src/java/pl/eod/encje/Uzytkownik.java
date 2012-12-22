@@ -63,7 +63,7 @@ public class Uzytkownik implements Serializable {
     @OneToOne(mappedBy = "secUserId")
     Struktura strukturaSec;
     
-    @OneToOne(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.ALL})
+    @OneToOne(mappedBy = "userId", cascade = {CascadeType.ALL})
     Struktura struktura;
     
     @JoinColumn(name = "haslo_id", referencedColumnName = "id")

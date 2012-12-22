@@ -198,9 +198,10 @@ Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
                 }
             }
 
-            if (!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) {
+            if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa()))&&struktura.isStKier() == true) {
                 DzialJpaController dC = new DzialJpaController();
                 if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+                    //System.err.println("blad 1");
                     return "dział już istnieje";
                 }
             }
@@ -221,6 +222,7 @@ Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
             if (idOldSzef != null) {
                 em.refresh(em.find(struktura.getClass(), idOldSzef));
             }
+            
         } finally {
             if (em != null) {
                 em.close();

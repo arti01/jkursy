@@ -150,7 +150,7 @@
                             </f:facet>
                             <rich:message for="zapisz" styleClass="error"/>
                             <br/>
-                            <a4j:commandLink id="zapisz#{row}" value="[Zapisz]" render="@form, formWprow" action="#{UsersM.zapisz}" limitRender="true">
+                            <a4j:commandLink id="zapisz" value="[Zapisz]" render="@form, formWprow" action="#{UsersM.zapisz}" >
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
                             <hr/>
