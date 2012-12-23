@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -83,11 +83,15 @@ public class UsersM implements Serializable {
     public void dodaj() throws NonexistentEntityException, Exception {
         String error = struktC.create(strukt);
         if (error != null) {
-            FacesMessage message = new FacesMessage(error);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
+            FacesMessage message = new FacesMessage("dodano");
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
             initUser();
         }
     }
@@ -139,7 +143,7 @@ public class UsersM implements Serializable {
 
         if (error != null) {
             str.setStKier(true);
-            FacesMessage message = new FacesMessage(error);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent kierownikE = UIComponent.getCurrentComponent(context);
             context.addMessage(kierownikE.getClientId(context), message);
