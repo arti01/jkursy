@@ -84,7 +84,7 @@ public class Login implements Serializable {
         //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
-        if(zalogowany.isUsuniety()) {  
+        if (zalogowany.isUsuniety()) {
             this.wyloguj();
             return null;
         }
@@ -102,10 +102,10 @@ public class Login implements Serializable {
             //Update input string in message digest
             digest.update(input.getBytes(), 0, input.length());
             //Converts message digest value in base 16 (hex)
-            System.out.println(digest.digest());
-            System.out.println(new BigInteger(1, digest.digest()).toString(17));
-            System.out.println(new BigInteger(1, digest.digest()).toString(16));
             md5 = new BigInteger(1, digest.digest()).toString(16);
+            while (md5.length() < 32) {
+                md5 = "0" + md5;
+            }
             //new BigInteger
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

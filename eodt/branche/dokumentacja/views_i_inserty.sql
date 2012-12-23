@@ -48,12 +48,12 @@ INSERT INTO wn_statusy VALUES (4, '#EE0000', 'Odrzucony', 'OD');
 INSERT INTO wn_statusy VALUES (5, '#112233', 'Cofnięty', 'CO');
 
 /*
---dodawanie adminow z pelnia praw
+--dodawanie adminow z pelnia praw (hasla 'a')
 INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');
 INSERT INTO dzial (id, nazwa) VALUES (2, 'admin-md5');
 
 INSERT INTO passwords (id, pass) VALUES (1, 'a');
-INSERT INTO passwords (id, pass) VALUES (2, 'cc175b9c0f1b6a831c399e269772661');
+INSERT INTO passwords (id, pass) VALUES (2, '0cc175b9c0f1b6a831c399e269772661');
 
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id) VALUES (1, 'admin@admin.eod', 'admin', 1, NULL);
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id) VALUES (2, 'admin-md5@admin.eod', 'admin-md5', 2, NULL);
@@ -64,4 +64,13 @@ INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usu
 INSERT INTO user_roles (id, role_name) VALUES (2, 'eodstru');
 INSERT INTO user_roles (id, role_name) VALUES (1, 'eodurlop');
 INSERT INTO user_roles (id, role_name) VALUES (3, 'eoduser');
+
+
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (1, 1);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (2, 1);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 1);
+
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (1, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (2, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 2);
 */
