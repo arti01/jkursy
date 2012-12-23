@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW user_roles_view AS 
+CREATE VIEW user_roles_view AS 
  SELECT u.adr_email AS username, ur.role_name
    FROM user_roles ur
    JOIN uzytkownik_user_roles uur ON ur.id = uur.role_id
@@ -7,7 +7,7 @@ CREATE OR REPLACE VIEW user_roles_view AS
 ALTER TABLE user_roles_view
   OWNER TO eod;
 
-CREATE OR REPLACE VIEW userpass AS 
+CREATE VIEW userpass AS 
  SELECT u.adr_email AS username, p.pass AS password
    FROM uzytkownik u
    JOIN passwords p ON p.id = u.haslo_id;
@@ -47,3 +47,21 @@ INSERT INTO wn_statusy VALUES (1, '#0000EE', 'Utworzony', 'UT');
 INSERT INTO wn_statusy VALUES (4, '#EE0000', 'Odrzucony', 'OD');
 INSERT INTO wn_statusy VALUES (5, '#112233', 'Cofnięty', 'CO');
 
+/*
+--dodawanie adminow z pelnia praw
+INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');
+INSERT INTO dzial (id, nazwa) VALUES (2, 'admin-md5');
+
+INSERT INTO passwords (id, pass) VALUES (1, 'a');
+INSERT INTO passwords (id, pass) VALUES (2, 'cc175b9c0f1b6a831c399e269772661');
+
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id) VALUES (1, 'admin@admin.eod', 'admin', 1, NULL);
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id) VALUES (2, 'admin-md5@admin.eod', 'admin-md5', 2, NULL);
+
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (1, 1, 1, NULL, NULL, 1, NULL, 1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1);
+
+INSERT INTO user_roles (id, role_name) VALUES (2, 'eodstru');
+INSERT INTO user_roles (id, role_name) VALUES (1, 'eodurlop');
+INSERT INTO user_roles (id, role_name) VALUES (3, 'eoduser');
+*/

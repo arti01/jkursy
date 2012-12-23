@@ -117,8 +117,11 @@ public class StrukturaJpaController implements Serializable {
     public void zrobNiewidczony(Struktura struktura) {
         EntityManager em = null;
         em = getEntityManager();
-Dzial dOld=em.find(Dzial.class, struktura.getDzialId().getId());
-Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
+        Dzial dOld = em.find(Dzial.class, struktura.getDzialId().getId());
+        Struktura sOld = null;
+        if(struktura.getSzefId()!=null){
+            sOld = em.find(Struktura.class, struktura.getSzefId().getId());
+        }
         struktura.setUsuniety(1);
         if (struktura.isStKier()) {
             Dzial dzial = struktura.getDzialId();
@@ -134,9 +137,9 @@ Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
             struktura.setSzefId(null);
             em.merge(struktura);
             em.getTransaction().commit();
+            em.refresh(em.merge(dOld));
         }
-        em.refresh(em.merge(sOld));
-        em.refresh(em.merge(dOld));
+        if(sOld!=null) em.refresh(em.merge(sOld));
     }
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
@@ -198,7 +201,7 @@ Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
                 }
             }
 
-            if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa()))&&struktura.isStKier() == true) {
+            if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) && struktura.isStKier() == true) {
                 DzialJpaController dC = new DzialJpaController();
                 if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
                     //System.err.println("blad 1");
@@ -222,7 +225,7 @@ Struktura sOld=em.find(Struktura.class, struktura.getSzefId().getId());
             if (idOldSzef != null) {
                 em.refresh(em.find(struktura.getClass(), idOldSzef));
             }
-            
+
         } finally {
             if (em != null) {
                 em.close();
