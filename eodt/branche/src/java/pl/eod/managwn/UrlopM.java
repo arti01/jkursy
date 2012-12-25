@@ -17,11 +17,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
-import pl.eod.encje.StrukturaJpaController;
-import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
@@ -48,48 +45,53 @@ public class UrlopM implements Serializable {
         initUrlop();
         return "/urlop/urlopyList";
     }
-    
+
     public String listPodwl() {
         initUrlop();
         return "/urlop/urlopyListPodwl";
     }
 
     public void wyslij() {
-        WnStatusy st = new WnStatusy();
-        st.setId(new Long(2));
-        urlop.setStatusId(st);
-        urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-        
-        WnHistoria wnh = new WnHistoria();
-        wnh.setDataZmiany(new Date());
-        WnStatusy st1 = new WnStatusy();
-        st1.setId(new Long(2));
-        wnh.setStatusId(st1);
-        wnh.setZmieniajacy(urlop.getUzytkownik());
-        wnh.setUrlopId(urlop);
-        wnh.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-        wnh.setOpisZmiany("wysłano do akceptu przełożonemu");
-        
-        urlop.getWnHistoriaList().add(wnh);
+        String info = "";
+        try {
+            WnStatusy st = new WnStatusy();
+            st.setId(new Long(2));
+            urlop.setStatusId(st);
+            urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
 
-        urlopC.createEdit(urlop);
-        
-        //wysylanie maila
-        KomKolejka kk=new KomKolejka();
-        kk.setAdresList(urlop.getAkceptant().getAdrEmail());
-        kk.setStatus(0);
-        kk.setTemat("prośba o akceptację wniosku urlopowego");
-        kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez "+urlop.getUzytkownik().getFullname());
-        KomKolC.create(kk);
-        
-        initUrlop();
-        
-        FacesContext context = FacesContext.getCurrentInstance();
-        UIComponent zapisz = UIComponent.getCurrentComponent(context);
-        FacesMessage message = new FacesMessage();
-        message.setSummary("wniosek wysłany");
-        context.addMessage(zapisz.getClientId(context), message);
+            WnHistoria wnh = new WnHistoria();
+            wnh.setDataZmiany(new Date());
+            WnStatusy st1 = new WnStatusy();
+            st1.setId(new Long(2));
+            wnh.setStatusId(st1);
+            wnh.setZmieniajacy(urlop.getUzytkownik());
+            wnh.setUrlopId(urlop);
+            wnh.setAkceptant(login.getZalogowany().getSzefId().getUserId());
+            wnh.setOpisZmiany("wysłano do akceptu przełożonemu");
 
+            urlop.getWnHistoriaList().add(wnh);
+
+            urlopC.createEdit(urlop);
+
+            //wysylanie maila
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("prośba o akceptację wniosku urlopowego");
+            kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez " + urlop.getUzytkownik().getFullname());
+            KomKolC.create(kk);
+            info = "Wniosek wysłany";
+        } catch (Exception ex) {
+            info = "Coś poszło nie tak";
+            ex.printStackTrace();
+        } finally {
+            initUrlop();
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            FacesMessage message = new FacesMessage();
+            message.setSummary(info);
+            context.addMessage(zapisz.getClientId(context), message);
+        }
     }
 
     public void akcept() {
@@ -97,7 +99,7 @@ public class UrlopM implements Serializable {
         st.setId(new Long(3));
         urlop.setStatusId(st);
         urlop.setAkceptant(null);
-        
+
         WnHistoria wnh = new WnHistoria();
         wnh.setDataZmiany(new Date());
         WnStatusy st1 = new WnStatusy();
@@ -107,33 +109,34 @@ public class UrlopM implements Serializable {
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(null);
         wnh.setOpisZmiany("Wniosek zaakceptowany");
-        
+
         urlop.getWnHistoriaList().add(wnh);
 
         urlopC.createEdit(urlop);
 
-        KomKolejka kk=new KomKolejka();
+        KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
         kk.setStatus(0);
         kk.setTemat("Wniosek o urlop zaakceptowany");
-        kk.setTresc("Twoj wniosek o urlop "+urlop.getNrWniosku()+" został zaakceptowany");
+        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
         KomKolC.create(kk);
-        
+
         initUrlop();
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         FacesMessage message = new FacesMessage();
         message.setSummary("Wniosek zaakceptowany");
         context.addMessage(zapisz.getClientId(context), message);
+        System.out.println(urlop);
     }
-    
+
     public void odrzuc() {
         WnStatusy st = new WnStatusy();
         st.setId(new Long(4));
         urlop.setStatusId(st);
         urlop.setAkceptant(null);
-        
+
         WnHistoria wnh = new WnHistoria();
         wnh.setDataZmiany(new Date());
         WnStatusy st1 = new WnStatusy();
@@ -143,18 +146,18 @@ public class UrlopM implements Serializable {
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(null);
         wnh.setOpisZmiany("Wniosek odrzucony");
-        
+
         urlop.getWnHistoriaList().add(wnh);
 
         urlopC.createEdit(urlop);
 
-        KomKolejka kk=new KomKolejka();
+        KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
         kk.setStatus(0);
         kk.setTemat("Wniosek o urlop odrzucony");
-        kk.setTresc("Twoj wniosek o urlop "+urlop.getNrWniosku()+" został odrzucony");
+        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
         KomKolC.create(kk);
-        
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -164,13 +167,13 @@ public class UrlopM implements Serializable {
         context.addMessage(zapisz.getClientId(context), message);
 
     }
-    
+
     public void cofnij() {
         WnStatusy st = new WnStatusy();
         st.setId(new Long(5));
         urlop.setStatusId(st);
         urlop.setAkceptant(null);
-        
+
         WnHistoria wnh = new WnHistoria();
         wnh.setDataZmiany(new Date());
         WnStatusy st1 = new WnStatusy();
@@ -180,18 +183,18 @@ public class UrlopM implements Serializable {
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(null);
         wnh.setOpisZmiany("Wniosek cofnięty do wystawcy");
-        
+
         urlop.getWnHistoriaList().add(wnh);
 
         urlopC.createEdit(urlop);
-        
-        KomKolejka kk=new KomKolejka();
+
+        KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
         kk.setStatus(0);
         kk.setTemat("Wniosek o urlop cofnięty");
-        kk.setTresc("Twoj wniosek o urlop "+urlop.getNrWniosku()+" został cofnięty do poprawy");
+        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
         KomKolC.create(kk);
-        
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -200,7 +203,7 @@ public class UrlopM implements Serializable {
         message.setSummary("Wniosek cofnięty do wystawcy");
         context.addMessage(zapisz.getClientId(context), message);
     }
-    
+
     public void usun() {
         urlopC.destroy(urlop);
         FacesContext context = FacesContext.getCurrentInstance();
@@ -241,24 +244,24 @@ public class UrlopM implements Serializable {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
         } else {
             initUrlop();
-            
+
             message.setSummary("wniosek zapisany");
             message.setSeverity(FacesMessage.SEVERITY_INFO);
         }
         context.addMessage(zapisz.getClientId(context), message);
     }
-    
 
     @PostConstruct
     public void init() {
         urlopC = new WnUrlopJpaController();
         rodzajeC = new WnRodzajeJpaController();
-        KomKolC=new KomKolejkaJpaController();
+        KomKolC = new KomKolejkaJpaController();
         initUrlop();
     }
 
     private void initUrlop() {
         urlop = new WnUrlop();
+        login.refresh();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
         urlopyAkcept.setWrappedData(login.getZalogowany().getUserId().getWnUrlopListDoAkceptu());
@@ -304,5 +307,4 @@ public class UrlopM implements Serializable {
     public void setUrlopyAkcept(DataModel<WnUrlop> urlopyAkcept) {
         this.urlopyAkcept = urlopyAkcept;
     }
-    
 }

@@ -145,7 +145,7 @@
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="false">
+                            <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="true">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>

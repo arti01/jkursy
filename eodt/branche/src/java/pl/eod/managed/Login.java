@@ -21,7 +21,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 public class Login implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    Struktura zalogowany;
+    Struktura zalogowany=null;
     StrukturaJpaController strukC;
     String username;
     String password;
@@ -77,17 +77,20 @@ public class Login implements Serializable {
         zalogowany = user;
     }
 
-    public Struktura getZalogowany() {
+    public void refresh() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
-        //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
         if (zalogowany.isUsuniety()) {
             this.wyloguj();
-            return null;
+            //return null;
         }
+        //return zalogowany;
+    }
+    
+    public Struktura getZalogowany() {
+        if(zalogowany==null) refresh();
         return zalogowany;
     }
 

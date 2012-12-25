@@ -51,7 +51,7 @@ public class UsersM implements Serializable {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
-        initUser();
+        //initUser();
     }
 
     private void initUser() {

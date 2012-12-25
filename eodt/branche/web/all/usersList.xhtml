@@ -69,7 +69,6 @@
             <hr/>
 
             <h:form>
-
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row">
                         <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
@@ -92,6 +91,7 @@
                             <br/>
                             <rich:message for="emailE" styleClass="error" />
                             <h:outputLabel for="emailE" value="eMail: "/>
+                            <br/>
                             <h:inputText id="emailE" value="#{strukt.userId.adrEmail}"  size="45" ><rich:validator/></h:inputText>
                             <br/>
                             <rich:message for="kierownikE" styleClass="error" />
