@@ -1,0 +1,70 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div>
+            <h3>2012-12-21</h3>
+            <ul>
+                <li>
+                    Obsługa przyjmowania wniosków przez inną osobę z działu
+                </li>
+                <li>
+                    Należy dodać pola integer, nullable do dwóch tabel, struktura->przyjmowanie_wnioskow (domyślny 1),
+                    wn_urlop->przyjmujacy (domyślny null).
+                </li>
+                <li>
+                    Osoba uprawniona ma dostęp do opcji Obce wnioski (plik templates/menuL.xhtml), a formularz
+                    i lista w urlop/urlopyListObce.xhtml
+                    gdzie może złożyć wniosek dla każdej osoby ze swojego działu (rozwijalna lista we wniosku),
+                    na liście pole "Wniosek osoby:" mówi, za kogo złożono wniosek
+                </li>
+                <li>
+                    W opcji Twoje wnioski (urlop/urlopyList.xhtml) dodałem pole "Wniosek złożony przez" które
+                    mówi, kto złożył wniosek
+                </li>
+                <li>
+                    W historii wniosków pole zmianę wykonał odnotowuje, czy operacje założenia wniosku i wysłania
+                    do akceptu wykonał ktoś osobiście czy przez osobę uprawnioną
+                </li>
+                <li>
+                    W persistance.xml zaremowalem property odpowiedzialną za tworzenie tabel,
+                    a do dokuemntacja/views_i_inserty.sql dodałem inserty tworzące użytkowników
+                    administracyjnych (z hasłem plain i md5), którzy mają dodane wszystkie prawa.
+                    W razie, jakby po tych insertach system walil naruszeniem unikalności, to
+                    restart aplikacji załatwi problem.
+                </li>
+            </ul>
+            <h3>2012-12-16</h3>
+            <ul>
+                <li>
+                    Obsługa usuwania użytkowników - zamiast usunięcia z tabeli zmiana
+                    flagi odpowiedzialnej za wyświetlanie usera oraz za możliwość jego
+                    logowania.
+                </li>
+            </ul>
+            
+            <h3>2012-12-15</h3>
+            <ul>
+                <li>
+                    w tabeli config domyślne hasło nadawane podczas tworzenia użytkownika
+                </li>
+                <li>
+                    obsługa MD5 - dodano parametr w config mowiący, czy hasła w momencie zmiany
+                    i tworzenia użytkownika mają być haszowane MD5 (realm musi być wtedy ustawiony,
+                    digest=MD5
+                </li>
+                <li>
+                    W momencie dodawania nowego użytkownika system dodaje mu automatycznie rolę
+                    "eoduser"
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
