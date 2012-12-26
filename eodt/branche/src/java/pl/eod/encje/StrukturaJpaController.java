@@ -30,8 +30,6 @@ public class StrukturaJpaController implements Serializable {
         }
     }
     private EntityManagerFactory emf = null;
-    
-    private EntityManager em = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
@@ -39,7 +37,7 @@ public class StrukturaJpaController implements Serializable {
 
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindKierownicy() {
-        //EntityManager em = null;
+        EntityManager em = null;
         try {
             em = getEntityManager();
             Query query = em.createNamedQuery("Struktura.kierownicy");
@@ -77,7 +75,7 @@ public class StrukturaJpaController implements Serializable {
         url.add(urC.findByNazwa("eoduser"));
         struktura.getUserId().setRole(url);;
 
-        //EntityManager em = null;
+        EntityManager em = null;
         try {
             if (!struktura.isStKier()) {
                 if (struktura.getSzefId() == null) {
@@ -117,7 +115,7 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public void zrobNiewidczony(Struktura struktura) {
-        //EntityManager em = null;
+        EntityManager em = null;
         em = getEntityManager();
         Dzial dOld = em.find(Dzial.class, struktura.getDzialId().getId());
         Struktura sOld = null;
@@ -145,7 +143,7 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
-        //EntityManager em = null;
+        EntityManager em = null;
         if (!struktura.isStKier()) {
             if (struktura.getSzefId() != null) {
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
@@ -181,7 +179,7 @@ public class StrukturaJpaController implements Serializable {
                 struktura.getUserId().setExtId(null);
             }
         }
-        //EntityManager em = null;
+        EntityManager em = null;
         try {
             em = getEntityManager();
             Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
@@ -237,7 +235,7 @@ public class StrukturaJpaController implements Serializable {
     }
 
     public void destroyArti(Struktura struktura) throws NonexistentEntityException {
-        //EntityManager em = null;
+        EntityManager em = null;
         if (struktura.bezpPod.size() > 0) {
             return;
         }
