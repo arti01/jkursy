@@ -106,8 +106,6 @@ public class WnUrlopJpaController implements Serializable {
         kk.setTemat("prośba o akceptację wniosku urlopowego - eskalacja");
         kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez " + urlop.getUzytkownik().getFullname());
         KomKolC.create(kk);
-
-
     }
 
     public void eskalujCron() {
