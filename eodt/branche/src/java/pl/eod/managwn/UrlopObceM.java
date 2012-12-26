@@ -140,6 +140,7 @@ public class UrlopObceM {
     }
 
     private void initUrlop() {
+        login.refresh();
         urlop = new WnUrlop();
         urlop.setUzytkownik(new Uzytkownik());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopListPrzyjmujacy());

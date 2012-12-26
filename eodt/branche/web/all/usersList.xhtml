@@ -69,7 +69,7 @@
             <hr/>
 
             <h:form>
-                <a4j:outputPanel id="formTab" layout="block">
+                <a4j:outputPanel id="formTab" layout="block" >
                     <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row">
                         <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:30%" filterValue="#{UsersM.nameFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(strukt.userId.fullname,UsersM.nameFilter)}">
@@ -150,7 +150,7 @@
                             </f:facet>
                             <rich:message for="zapisz" styleClass="error"/>
                             <br/>
-                            <a4j:commandLink id="zapisz" value="[Zapisz]" render="@form, formWprow" action="#{UsersM.zapisz}" >
+                            <a4j:commandLink id="zapisz" value="[Zapisz]" render="@form, formWprow" action="#{UsersM.zapisz}" immediate="true">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
                             <hr/>

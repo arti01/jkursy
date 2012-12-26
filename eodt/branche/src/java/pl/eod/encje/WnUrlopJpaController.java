@@ -82,12 +82,13 @@ public class WnUrlopJpaController implements Serializable {
 
     public void eskaluj(WnUrlop urlop) {
         //System.err.println(urlop.getId());
-        if (urlop.getAkceptant().getStruktura().getSzefId() == null) {
+
+        try {
+            urlop.setAkceptant(urlop.getAkceptant().getStruktura().getSzefId().getUserId());
+        } catch (NullPointerException np) {
+            System.err.println("Podczas eskalacji nie można ustawić akceptanta dla wniosku o id " + urlop.getId());
             return;
         }
-
-        urlop.setAkceptant(urlop.getAkceptant().getStruktura().getSzefId().getUserId());
-
         WnHistoria wnh = new WnHistoria();
         wnh.setStatusId(urlop.getStatusId());
         wnh.setDataZmiany(new Date());
