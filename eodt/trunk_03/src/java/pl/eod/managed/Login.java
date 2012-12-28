@@ -25,6 +25,8 @@ public class Login implements Serializable {
     StrukturaJpaController strukC;
     String username;
     String password;
+    boolean urlop;
+    boolean struktura;
 
     public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -82,6 +84,7 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
+        
         if (zalogowany.isUsuniety()) {
             this.wyloguj();
             //return null;
@@ -131,4 +134,21 @@ public class Login implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isUrlop() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if(request.isUserInRole("eodurlop")) urlop=true;
+        else urlop=false;
+        return urlop;
+    }
+
+    public boolean isStruktura() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if(request.isUserInRole("eodstru")) struktura=true;
+        else struktura=false;
+        return struktura;
+    }
+    
 }

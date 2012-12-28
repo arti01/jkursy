@@ -6,14 +6,14 @@
     <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
     <h:form>
         <ul>
-            <h:panelGrid rendered="#{fn:contains(fn:join(login.zalogowany.rolaString, ''), '=eodstru=')}">
+            <h:panelGrid rendered="#{login.struktura}">
                 <h4>Menu Struktura</h4>
                 
             <li><h:commandLink value="Użytkownicy" action="#{UsersM.lista}" /></li>
             <li><h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" /></li>
             <li><h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" /></li>
             </h:panelGrid>
-            <h:panelGrid rendered="#{fn:contains(fn:join(login.zalogowany.rolaString, ''), '=eodurlop=')}">
+            <h:panelGrid rendered="#{login.urlop}">
                 <h4>Menu Urlopy</h4>
             <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
             <li><h:commandLink value="Wnioski do akceptu" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier}"/></li>
