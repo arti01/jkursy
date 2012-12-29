@@ -13,359 +13,356 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@Table(name="kursy")
-@NamedQuery(name="findNiezakonczone", query="select k from Kursy k where k.datado>=:datado order by k.dataod desc")
+@Table(name = "kursy")
+@NamedQuery(name = "findNiezakonczone", query = "select k from Kursy k where k.datado>=:datado order by k.dataod desc")
 @XmlRootElement
 public class Kursy implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private Integer idkursy;
-
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
+    private Integer idkursy;
     @Temporal( TemporalType.DATE)
-	@Column(nullable=false)
-	private Date datado;
-
+    @Column(nullable = false)
+    private Date datado;
     @Temporal( TemporalType.DATE)
-	@Column(nullable=false)
-	private Date dataod;
+    @Column(nullable = false)
+    private Date dataod;
+    @Column(nullable = false, length = 255)
+    @Size(min = 1, max = 255)
+    private String nazwa;
+    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1)
+    private String opis;
+    @Column(nullable = false)
+    @NotNull
+    private Integer lp;
+    private double cena;
+    @Column(name = "opis_krotki", length = 2147483647)
+    @Size(min = 1)
+    @NotNull(message = "problem")
+    private String opisKrotki;
+    @NotNull
+    @DecimalMin(message = "grupa nie może być mniejsza od 1", value = "1")
+    private Integer wielkoscgrupy;
+    @NotNull
+    @DecimalMin(message = "zdjęć nie może być mniej niż 1", value = "1")
+    private Integer fotperkursantmax;
+    @NotNull
+    @DecimalMin(message = "zdjęć nie może być mniej niż od 1", value = "1")
+    private Integer fotperkursantbezkoment;
+    //bi-directional many-to-many association to User
+    @ManyToMany(mappedBy = "kursies", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Set<User> users;
+    @ManyToMany(mappedBy = "kursyZarezerwowane", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    private Set<User> rezerwujacy;
+    //bi-directional many-to-one association to Lekcja
+    @OneToMany(mappedBy = "kursy", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OrderBy(value = "lp")
+    private List<Lekcja> lekcjas;
+    @OneToMany(mappedBy = "kursy", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OrderBy(value = "datadodania")
+    private List<Newsykursy> newsykursy;
+    @ManyToOne
+    @JoinColumn(name = "idpoziomyzaawansowania")
+    private Poziomyzaawansowania poziomyzaawansowania;
+    @ManyToOne
+    @JoinColumn(name = "idtypykursu")
+    private Typykursu typykursu;
+    @OneToMany(mappedBy = "kursy", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @OrderBy(value = "idkursyrezerwacje")
+    private List<KursyRezerwacje> rezerwacje;
+    @NotNull
+    private boolean stacjonarny;
+    @NotNull
+    private boolean rezerwacjaDostepna;
+    @NotNull
+    private boolean widoczny;
+    @Transient
+    private List<User> wykladowcy;
+    @Transient
+    private List<User> kursanci;
+    @Transient
+    private List<Integer> lekcjeLpAll;
+    @Transient
+    private String stacjonarnyTN;
+    @Transient
+    private ArrayList<Lekcja> lekcjeWidoczne;
+    @Transient
+    private Integer wolnychMiejsc;
+    @Transient
+    private List<KursyRezerwacje> rezerwacjeNowe;
 
-	@Column(nullable=false, length=255)
-	@Size(min=1, max=255)
-	private String nazwa;
-
-	@Column(nullable=false, length=2147483647)
-	@Size(min=1)
-	private String opis;
-
-	@Column(nullable=false)
-	@NotNull
-	private Integer lp;
-	
-	private double cena;
-	
-	@Column(name="opis_krotki", length=2147483647)
-	@Size(min=1)
-	@NotNull(message="problem")
-	private String opisKrotki;
-	
-	@NotNull
-	@DecimalMin(message="grupa nie może być mniejsza od 1", value="1")
-	private Integer wielkoscgrupy;
-	
-	@NotNull
-	@DecimalMin(message="zdjęć nie może być mniej niż 1", value="1")
-	private Integer fotperkursantmax;
-
-	@NotNull
-	@DecimalMin(message="zdjęć nie może być mniej niż od 1", value="1")
-	private Integer fotperkursantbezkoment;
-	
-	//bi-directional many-to-many association to User
-	@ManyToMany(mappedBy="kursies", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	private Set<User> users;
-	
-	@ManyToMany(mappedBy="kursyZarezerwowane", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	private Set<User> rezerwujacy;
-	
-	//bi-directional many-to-one association to Lekcja
-	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@OrderBy(value="lp")
-	private List<Lekcja> lekcjas;
-	
-	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@OrderBy(value="datadodania")
-	private List<Newsykursy> newsykursy;
-	
-	@ManyToOne
-	@JoinColumn(name="idpoziomyzaawansowania")
-	private Poziomyzaawansowania poziomyzaawansowania;
-	
-	@ManyToOne
-	@JoinColumn(name="idtypykursu")
-	private Typykursu typykursu;
-	
-	@OneToMany(mappedBy="kursy", cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
-	@OrderBy(value="idkursyrezerwacje")
-	private List<KursyRezerwacje> rezerwacje;
-	
-	@NotNull
-	private boolean stacjonarny;
-	
-	@NotNull
-	private boolean rezerwacjaDostepna;
-	
-	@Transient
-	private List<User> wykladowcy;
-	
-	@Transient
-	private List<User> kursanci;
-	
-	@Transient
-	private List<Integer> lekcjeLpAll;
-	
-	@Transient
-	private String stacjonarnyTN;
-	
-	@Transient
-	private ArrayList<Lekcja> lekcjeWidoczne;
-	
-	@Transient
-	private Integer wolnychMiejsc;
-	
-	@Transient
-	private List<KursyRezerwacje> rezerwacjeNowe;
-	
     public Kursy() {
     }
 
-	public Integer getIdkursy() {
-		return this.idkursy;
-	}
+    public Integer getIdkursy() {
+        return this.idkursy;
+    }
 
-	public void setIdkursy(Integer idkursy) {
-		this.idkursy = idkursy;
-	}
+    public void setIdkursy(Integer idkursy) {
+        this.idkursy = idkursy;
+    }
 
-	public Date getDatado() {
-		return this.datado;
-	}
+    public Date getDatado() {
+        return this.datado;
+    }
 
-	public void setDatado(Date datado) {
-		this.datado = datado;
-	}
+    public void setDatado(Date datado) {
+        this.datado = datado;
+    }
 
-	public Date getDataod() {
-		return this.dataod;
-	}
+    public Date getDataod() {
+        return this.dataod;
+    }
 
-	public void setDataod(Date dataod) {
-		this.dataod = dataod;
-	}
+    public void setDataod(Date dataod) {
+        this.dataod = dataod;
+    }
 
-	public String getNazwa() {
-		return this.nazwa;
-	}
+    public String getNazwa() {
+        return this.nazwa;
+    }
 
-	public void setNazwa(String nazwa) {
-		this.nazwa = nazwa;
-	}
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
 
-	public String getOpis() {
-		return this.opis;
-	}
+    public String getOpis() {
+        return this.opis;
+    }
 
-	public void setOpis(String opis) {
-		this.opis = opis;
-	}
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
 
-	public String getOpisKrotki() {
-		return this.opisKrotki;
-	}
+    public String getOpisKrotki() {
+        return this.opisKrotki;
+    }
 
-	public void setOpisKrotki(String opisKrotki) {
-		this.opisKrotki = opisKrotki;
-	}
-                
-            @XmlTransient
-	public Set<User> getUsers() {
-		return this.users;
-	}
+    public void setOpisKrotki(String opisKrotki) {
+        this.opisKrotki = opisKrotki;
+    }
 
-	public void setUsers(Set<User> users) {
-		this.users = users;
-	}
-                
-            @XmlTransient
-	public List<User> getWykladowcy() {
-		List<User>wykladowcy1=new ArrayList<User>();
-		Role wyklad=new Role();
-		wyklad.setRola(Role.WYKLADOWCA);
-		for(User u:getUsers()){
-			for(Role r:u.getRoles()){
-				if(r.getRola().equals(wyklad.getRola())) wykladowcy1.add(u);
-			}
-		}
-		wykladowcy=wykladowcy1;
-		return wykladowcy;
-	}
+    @XmlTransient
+    public Set<User> getUsers() {
+        return this.users;
+    }
 
-	public void setWykladowcy(List<User> wykladowcy) {
-		this.wykladowcy = wykladowcy;
-	}
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
-@XmlTransient	
-        public List<User> getKursanci() {
-		List<User>kursanci1=new ArrayList<User>();
-		Role kursant=new Role();
-		kursant.setRola(Role.KURSANT);
-		for(User u:getUsers()){
-			for(Role r:u.getRoles()){
-				if(r.getRola().equals(kursant.getRola())) kursanci1.add(u);
-			}
-		}
-		kursanci=kursanci1;
-		return kursanci;
-	}
+    public boolean isWidoczny() {
+        return widoczny;
+    }
 
-	public void setKursanci(List<User> kursanci) {
-		this.kursanci = kursanci;
-	}
+    public void setWidoczny(boolean widoczny) {
+        this.widoczny = widoczny;
+    }
+    
+    @XmlTransient
+    public List<User> getWykladowcy() {
+        List<User> wykladowcy1 = new ArrayList<User>();
+        Role wyklad = new Role();
+        wyklad.setRola(Role.WYKLADOWCA);
+        for (User u : getUsers()) {
+            for (Role r : u.getRoles()) {
+                if (r.getRola().equals(wyklad.getRola())) {
+                    wykladowcy1.add(u);
+                }
+            }
+        }
+        wykladowcy = wykladowcy1;
+        return wykladowcy;
+    }
 
-        @XmlTransient
-	public List<Lekcja> getLekcjas() {
-		return lekcjas;
-	}
+    public void setWykladowcy(List<User> wykladowcy) {
+        this.wykladowcy = wykladowcy;
+    }
 
-	public void setLekcjas(List<Lekcja> lekcjas) {
-		this.lekcjas = lekcjas;
-	}
+    @XmlTransient
+    public List<User> getKursanci() {
+        List<User> kursanci1 = new ArrayList<User>();
+        Role kursant = new Role();
+        kursant.setRola(Role.KURSANT);
+        for (User u : getUsers()) {
+            for (Role r : u.getRoles()) {
+                if (r.getRola().equals(kursant.getRola())) {
+                    kursanci1.add(u);
+                }
+            }
+        }
+        kursanci = kursanci1;
+        return kursanci;
+    }
 
-	public List<Integer> getLekcjeLpAll() {
-		return lekcjeLpAll;
-	}
+    public void setKursanci(List<User> kursanci) {
+        this.kursanci = kursanci;
+    }
 
-	public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
-		this.lekcjeLpAll = lekcjeLpAll;
-	}
+    @XmlTransient
+    public List<Lekcja> getLekcjas() {
+        return lekcjas;
+    }
 
-	public List<Newsykursy> getNewsykursy() {
-		return newsykursy;
-	}
+    public void setLekcjas(List<Lekcja> lekcjas) {
+        this.lekcjas = lekcjas;
+    }
 
-	public void setNewsykursy(List<Newsykursy> newsykursy) {
-		this.newsykursy = newsykursy;
-	}
+    public List<Integer> getLekcjeLpAll() {
+        return lekcjeLpAll;
+    }
 
-	public boolean isStacjonarny() {
-		return stacjonarny;
-	}
+    public void setLekcjeLpAll(List<Integer> lekcjeLpAll) {
+        this.lekcjeLpAll = lekcjeLpAll;
+    }
 
-	public void setStacjonarny(boolean stacjonarny) {
-		this.stacjonarny = stacjonarny;
-	}
+    public List<Newsykursy> getNewsykursy() {
+        return newsykursy;
+    }
 
-	public String getStacjonarnyTN() {
-		if(stacjonarny) stacjonarnyTN="Stacjonarny";
-		else stacjonarnyTN="Internetowy";
-		return stacjonarnyTN;
-	}
+    public void setNewsykursy(List<Newsykursy> newsykursy) {
+        this.newsykursy = newsykursy;
+    }
 
-	public void setStacjonarnyTN(String stacjonarnyTN) {
-		this.stacjonarnyTN = stacjonarnyTN;
-	}
+    public boolean isStacjonarny() {
+        return stacjonarny;
+    }
 
-	public Poziomyzaawansowania getPoziomyzaawansowania() {
-		return poziomyzaawansowania;
-	}
+    public void setStacjonarny(boolean stacjonarny) {
+        this.stacjonarny = stacjonarny;
+    }
 
-	public void setPoziomyzaawansowania(Poziomyzaawansowania poziomyzaawansowania) {
-		this.poziomyzaawansowania = poziomyzaawansowania;
-	}
+    public String getStacjonarnyTN() {
+        if (stacjonarny) {
+            stacjonarnyTN = "Stacjonarny";
+        } else {
+            stacjonarnyTN = "Internetowy";
+        }
+        return stacjonarnyTN;
+    }
 
-	public void setLekcjeWidoczne(ArrayList<Lekcja> lekcjeWidoczne) {
-		this.lekcjeWidoczne = lekcjeWidoczne;
-	}
+    public void setStacjonarnyTN(String stacjonarnyTN) {
+        this.stacjonarnyTN = stacjonarnyTN;
+    }
 
-@XmlTransient	
-        public ArrayList<Lekcja> getLekcjeWidoczne() {
-		lekcjeWidoczne =new ArrayList<Lekcja>();
-		for(Lekcja l:getLekcjas()){
-			if(l.isWidoczna())lekcjeWidoczne.add(l);
-		}
-		return lekcjeWidoczne;
-	}
+    public Poziomyzaawansowania getPoziomyzaawansowania() {
+        return poziomyzaawansowania;
+    }
 
-	public Integer getWielkoscgrupy() {
-		return wielkoscgrupy;
-	}
+    public void setPoziomyzaawansowania(Poziomyzaawansowania poziomyzaawansowania) {
+        this.poziomyzaawansowania = poziomyzaawansowania;
+    }
 
-	public void setWielkoscgrupy(Integer wielkoscgrupy) {
-		this.wielkoscgrupy = wielkoscgrupy;
-	}
-	public Integer getWolnychMiejsc() {
-		if(idkursy==null) return 0;
-		wolnychMiejsc=getWielkoscgrupy()-getKursanci().size()-getRezerwacjeNowe().size();
-		return wolnychMiejsc;
-	}
+    public void setLekcjeWidoczne(ArrayList<Lekcja> lekcjeWidoczne) {
+        this.lekcjeWidoczne = lekcjeWidoczne;
+    }
 
-	public void setWolnychMiejsc(Integer wolnychMiejsc) {
-		this.wolnychMiejsc = wolnychMiejsc;
-	}
+    @XmlTransient
+    public ArrayList<Lekcja> getLekcjeWidoczne() {
+        lekcjeWidoczne = new ArrayList<Lekcja>();
+        for (Lekcja l : getLekcjas()) {
+            if (l.isWidoczna()) {
+                lekcjeWidoczne.add(l);
+            }
+        }
+        return lekcjeWidoczne;
+    }
 
-@XmlTransient	
-        public Typykursu getTypykursu() {
-		return typykursu;
-	}
+    public Integer getWielkoscgrupy() {
+        return wielkoscgrupy;
+    }
 
-	public void setTypykursu(Typykursu typykursu) {
-		this.typykursu = typykursu;
-	}
+    public void setWielkoscgrupy(Integer wielkoscgrupy) {
+        this.wielkoscgrupy = wielkoscgrupy;
+    }
 
-	public Integer getFotperkursantmax() {
-		return fotperkursantmax;
-	}
+    public Integer getWolnychMiejsc() {
+        if (idkursy == null) {
+            return 0;
+        }
+        wolnychMiejsc = getWielkoscgrupy() - getKursanci().size() - getRezerwacjeNowe().size();
+        return wolnychMiejsc;
+    }
 
-	public void setFotperkursantmax(Integer fotperkursantmax) {
-		this.fotperkursantmax = fotperkursantmax;
-	}
+    public void setWolnychMiejsc(Integer wolnychMiejsc) {
+        this.wolnychMiejsc = wolnychMiejsc;
+    }
 
-	public Integer getFotperkursantbezkoment() {
-		return fotperkursantbezkoment;
-	}
+    @XmlTransient
+    public Typykursu getTypykursu() {
+        return typykursu;
+    }
 
-	public void setFotperkursantbezkoment(Integer fotperkursantbezkoment) {
-		this.fotperkursantbezkoment = fotperkursantbezkoment;
-	}
+    public void setTypykursu(Typykursu typykursu) {
+        this.typykursu = typykursu;
+    }
 
-	public Set<User> getRezerwujacy() {
-		return rezerwujacy;
-	}
+    public Integer getFotperkursantmax() {
+        return fotperkursantmax;
+    }
 
-	public void setRezerwujacy(Set<User> rezerwujacy) {
-		this.rezerwujacy = rezerwujacy;
-	}
+    public void setFotperkursantmax(Integer fotperkursantmax) {
+        this.fotperkursantmax = fotperkursantmax;
+    }
 
-	public List<KursyRezerwacje> getRezerwacje() {
-		return rezerwacje;
-	}
+    public Integer getFotperkursantbezkoment() {
+        return fotperkursantbezkoment;
+    }
 
-	public void setRezerwacje(List<KursyRezerwacje> rezerwacje) {
-		this.rezerwacje = rezerwacje;
-	}
+    public void setFotperkursantbezkoment(Integer fotperkursantbezkoment) {
+        this.fotperkursantbezkoment = fotperkursantbezkoment;
+    }
 
-	public List<KursyRezerwacje> getRezerwacjeNowe() {
-		rezerwacjeNowe=new ArrayList<KursyRezerwacje>();
-		for(KursyRezerwacje kr:getRezerwacje()){
-			if(kr.getAktywna()&&!kr.getWykonana()) rezerwacjeNowe.add(kr);
-		}
-		return rezerwacjeNowe;
-	}
+    public Set<User> getRezerwujacy() {
+        return rezerwujacy;
+    }
 
-	public Integer getLp() {
-		return lp;
-	}
+    public void setRezerwujacy(Set<User> rezerwujacy) {
+        this.rezerwujacy = rezerwujacy;
+    }
 
-	public void setLp(Integer lp) {
-		this.lp = lp;
-	}
+    public List<KursyRezerwacje> getRezerwacje() {
+        return rezerwacje;
+    }
 
-	public boolean isRezerwacjaDostepna() {
-		return rezerwacjaDostepna;
-	}
+    public void setRezerwacje(List<KursyRezerwacje> rezerwacje) {
+        this.rezerwacje = rezerwacje;
+    }
 
-	public void setRezerwacjaDostepna(boolean rezerwacjaDostepna) {
-		this.rezerwacjaDostepna = rezerwacjaDostepna;
-	}
+    public List<KursyRezerwacje> getRezerwacjeNowe() {
+        rezerwacjeNowe = new ArrayList<KursyRezerwacje>();
+        for (KursyRezerwacje kr : getRezerwacje()) {
+            if (kr.getAktywna() && !kr.getWykonana()) {
+                rezerwacjeNowe.add(kr);
+            }
+        }
+        return rezerwacjeNowe;
+    }
 
-	public double getCena() {
-		return cena;
-	}
+    public Integer getLp() {
+        return lp;
+    }
 
-	public void setCena(double cena) {
-		this.cena = cena;
-	}
+    public void setLp(Integer lp) {
+        this.lp = lp;
+    }
 
+    public boolean isRezerwacjaDostepna() {
+        return rezerwacjaDostepna;
+    }
+
+    public void setRezerwacjaDostepna(boolean rezerwacjaDostepna) {
+        this.rezerwacjaDostepna = rezerwacjaDostepna;
+    }
+
+    public double getCena() {
+        return cena;
+    }
+
+    public void setCena(double cena) {
+        this.cena = cena;
+    }
 }
