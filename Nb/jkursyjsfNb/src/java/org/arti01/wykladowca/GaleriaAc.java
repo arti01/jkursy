@@ -78,7 +78,7 @@ public class GaleriaAc implements Serializable {
 
     public void zmienLp(ValueChangeEvent event) throws IOException {
         fota = fotyAll.getRowData();
-        ufi.update(fota, (Integer) event.getNewValue());
+        
         fotyAll = new ListDataModel<Userfoty>();
         User user = loginBean.getZalogowany();
         fotyAll.setWrappedData(ui.find(user).getUserfoty());
@@ -124,6 +124,7 @@ public class GaleriaAc implements Serializable {
         fota.setAkcept(false);
         fota.setOpis(null);
         ufi.insert(fota);
+        ufi.update(fota, 1);
         allLp = new ArrayList<Integer>();
         User user = loginBean.getZalogowany();
         for (Userfoty uf : ui.find(user).getUserfoty()) {

@@ -108,7 +108,7 @@ public class KursyAc implements Serializable {
         adminKursyAc.setCenaOrder(SortOrder.unsorted);
         adminKursyAc.setNazwaOrder(SortOrder.unsorted);
         //logger.info("jestemmmm");
-        kursy = kursyImp.findAll();
+        kursy = kursyImp.findAllWidoczne();
         allKursy.setWrappedData(kursy);
         return "kursyLista";
     }
@@ -120,7 +120,7 @@ public class KursyAc implements Serializable {
     }
 
     public String listA() {
-        kursy = kursyImp.findAll();
+        kursy = kursyImp.findAllWidoczne();
         allKursy.setWrappedData(kursy);
         return null;
     }

@@ -1,199 +1,195 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
-<ui:composition template="/templates/templateadm.xhtml">
-	<ui:define name="body">
-		<body>
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
+    <ui:composition template="/templates/templateadm.xhtml">
+        <ui:define name="body">
+            <body>
 
-			<table>
-				<tr>
-					<td><h:form>
-							<h:panelGroup>
-								<h:panelGrid columns="3">
-									<h:outputLabel for="bledy" />
-									<h:outputLabel for="bledy" />
-									<h:outputText id="bledy" value="#{adminUsersAc.errorText}" styleClass="error" />
+                <table>
+                    <tr>
+                        <td><h:form>
+                                <h:panelGroup>
+                                    <h:panelGrid columns="3">
+                                        <h:outputLabel for="bledy" />
+                                        <h:outputLabel for="bledy" />
+                                        <h:outputText id="bledy" value="#{adminUsersAc.errorText}" styleClass="error" />
 
-									<h:message for="username" styleClass="error" />
-									<h:outputLabel value="username" />
-									<h:inputText id="username" value="#{adminUsersAc.user.username}" size="50"
-										readonly="#{adminUsersAc.user.username!=null}" immediate="true" />
+                                        <h:message for="username" styleClass="error" />
+                                        <h:outputLabel value="username" />
+                                        <h:inputText id="username" value="#{adminUsersAc.user.username}" size="50"
+                                                     readonly="#{adminUsersAc.user.username!=null}" immediate="true" />
 
-									<h:message for="userpass" styleClass="error" />
-									<h:outputLabel value="hasło" />
-									<h:inputText id="userpass" value="#{adminUsersAc.user.userpass}" immediate="true" size="50" />
+                                        <h:message for="userpass" styleClass="error" />
+                                        <h:outputLabel value="hasło" />
+                                        <h:inputText id="userpass" value="#{adminUsersAc.user.userpass}" immediate="true" size="50" />
 
-									<h:message for="userpass1" styleClass="error" />
-									<h:outputLabel value="hasło ponownie" />
-									<h:inputText id="userpass1" value="#{adminUsersAc.userpass1}" immediate="true" size="50" />
+                                        <h:message for="userpass1" styleClass="error" />
+                                        <h:outputLabel value="hasło ponownie" />
+                                        <h:inputText id="userpass1" value="#{adminUsersAc.userpass1}" immediate="true" size="50" />
 
 
-									<h:message for="imieNazwisko" styleClass="error" />
-									<h:outputLabel value="imie i nazwisko" />
-									<h:inputText id="imieNazwisko" value="#{adminUsersAc.user.imieNazwisko}" immediate="true" size="50" />
+                                        <h:message for="imieNazwisko" styleClass="error" />
+                                        <h:outputLabel value="imie i nazwisko" />
+                                        <h:inputText id="imieNazwisko" value="#{adminUsersAc.user.imieNazwisko}" immediate="true" size="50" />
 
-									<h:message for="email" styleClass="error" />
-									<h:outputLabel value="email" />
-									<h:inputText id="email" value="#{adminUsersAc.user.email}" immediate="true" size="50" />
+                                        <h:message for="email" styleClass="error" />
+                                        <h:outputLabel value="email" />
+                                        <h:inputText id="email" value="#{adminUsersAc.user.email}" immediate="true" size="50" />
 
-									<h:message for="miasto" styleClass="error" />
-									<h:outputLabel value="miasto" />
-									<h:inputText id="miasto" value="#{adminUsersAc.user.miasto}" immediate="true" size="50" />
+                                        <h:message for="miasto" styleClass="error" />
+                                        <h:outputLabel value="miasto" />
+                                        <h:inputText id="miasto" value="#{adminUsersAc.user.miasto}" immediate="true" size="50" />
 
-									<h:message for="kodpocztowy" styleClass="error" />
-									<h:outputLabel value="kod pocztowy" />
-									<h:inputText id="kodpocztowy" value="#{userAc.user.kodpocztowy}" immediate="true" size="10" />
+                                        <h:message for="kodpocztowy" styleClass="error" />
+                                        <h:outputLabel value="kod pocztowy" />
+                                        <h:inputText id="kodpocztowy" value="#{userAc.user.kodpocztowy}" immediate="true" size="10" />
 
-									<h:message for="ulica" styleClass="error" />
-									<h:outputLabel value="ulica" />
-									<h:inputText id="ulica" value="#{adminUsersAc.user.ulica}" immediate="true" size="50" />
+                                        <h:message for="ulica" styleClass="error" />
+                                        <h:outputLabel value="ulica" />
+                                        <h:inputText id="ulica" value="#{adminUsersAc.user.ulica}" immediate="true" size="50" />
 
-									<h:message for="nip" styleClass="error" />
-									<h:outputLabel value="nip" />
-									<h:inputText id="nip" value="#{adminUsersAc.user.nip}" immediate="true" size="50" />
+                                        <h:message for="nip" styleClass="error" />
+                                        <h:outputLabel value="nip" />
+                                        <h:inputText id="nip" value="#{adminUsersAc.user.nip}" immediate="true" size="50" />
 
-									<h:message for="tel1" styleClass="error" />
-									<h:outputLabel value="telefon" />
-									<h:inputText id="tel1" value="#{adminUsersAc.user.tel1}" immediate="true" size="50" />
+                                        <h:message for="tel1" styleClass="error" />
+                                        <h:outputLabel value="telefon" />
+                                        <h:inputText id="tel1" value="#{adminUsersAc.user.tel1}" immediate="true" size="50" />
 
-									<h:message for="dataZmiany" styleClass="error" />
-									<h:outputLabel value="data zmiany" />
-									<h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}" immediate="true" readonly="true"
-										size="19">
-										<f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
-									</h:inputText>
+                                        <h:message for="dataZmiany" styleClass="error" />
+                                        <h:outputLabel value="data zmiany" />
+                                        <h:inputText id="dataZmiany" value="#{adminUsersAc.user.dataZmiany}" immediate="true" readonly="true"
+                                                     size="19">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss" />
+                                        </h:inputText>
 
-									<h:message for="opis" styleClass="error" />
-									<h:outputLabel value="opis" />
-									<h:inputTextarea id="opis" value="#{adminUsersAc.user.opis}" immediate="true" cols="48" />
+                                        <h:message for="opis" styleClass="error" />
+                                        <h:outputLabel value="opis" />
+                                        <h:inputTextarea id="opis" value="#{adminUsersAc.user.opis}" immediate="true" cols="48" />
 
-								</h:panelGrid>
-								<h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
-									<f:selectItems value="#{adminUsersAc.allRolesName}" var="role" itemValue="#{role}" />
-								</h:selectManyCheckbox>
-								<h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
-							</h:panelGroup>
-						</h:form></td>
-					<td>
-						<table id="tabeleKursow">
-							<tr valign="top">
-								<td><h:form>
-										<rich:dataTable value="#{adminUsersAc.jestWkursach}" var="kurs" id="tabled"
-											rendered="#{adminUsersAc.pokazTabele}">
-											<f:facet name="header">należy do kursów</f:facet>
-											<rich:column>
-												<a4j:commandLink action="#{adminUsersAc.usunZkursu}" render="tabled, table">
-													<h:outputText value="usun kurs" />
-												</a4j:commandLink>
-											</rich:column>
-											<rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie nazwa" render="tabled" action="#{adminKursyAc.sortBynazwa}" />
-												</f:facet>
-												<h:outputText value="#{kurs.nazwa}" />
-											</rich:column>
+                                    </h:panelGrid>
+                                    <h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
+                                        <f:selectItems value="#{adminUsersAc.allRolesName}" var="role" itemValue="#{role}" />
+                                    </h:selectManyCheckbox>
+                                    <h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
+                                </h:panelGroup>
+                            </h:form></td>
+                        <td>
+                            <table id="tabeleKursow">
+                                <tr valign="top">
+                                    <td><h:form>
+                                            <rich:dataTable value="#{adminUsersAc.jestWkursach}" var="kurs" id="tabled"
+                                                            rendered="#{adminUsersAc.pokazTabele}">
+                                                <f:facet name="header">należy do kursów</f:facet>
+                                                <rich:column>
+                                                    <a4j:commandLink action="#{adminUsersAc.usunZkursu}" render="tabled, table">
+                                                        <h:outputText value="usun kurs" />
+                                                    </a4j:commandLink>
+                                                </rich:column>
+                                                <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie nazwa" render="tabled" action="#{adminKursyAc.sortBynazwa}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.nazwa}" />
+                                                </rich:column>
 
-											<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data rozpoczęcia" render="tabled" action="#{adminKursyAc.sortBydataod}" />
-												</f:facet>
-												<h:outputText value="#{kurs.dataod}">
-													<f:convertDateTime pattern="dd-MM-yyyy" />
-												</h:outputText>
-											</rich:column>
+                                                <rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie data rozpoczęcia" render="tabled" action="#{adminKursyAc.sortBydataod}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.dataod}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                    </h:outputText>
+                                                </rich:column>
 
-											<rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data zakończenia" render="tabled" action="#{adminKursyAc.sortBydatado}" />
-												</f:facet>
-												<h:outputText value="#{kurs.datado}">
-													<f:convertDateTime pattern="dd-MM-yyyy" />
-												</h:outputText>
-											</rich:column>
+                                                <rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie data zakończenia" render="tabled" action="#{adminKursyAc.sortBydatado}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.datado}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                    </h:outputText>
+                                                </rich:column>
 
-										</rich:dataTable>
-									</h:form>
-								</td>
+                                            </rich:dataTable>
+                                        </h:form>
+                                    </td>
 
-								<td><h:form>
-										<rich:dataTable value="#{adminUsersAc.dostepneKursy}" var="kurs" id="table"
-											rendered="#{adminUsersAc.pokazTabele}">
-											<f:facet name="header">dostępne kursy</f:facet>
+                                    <td><h:form>
+                                            <rich:dataTable value="#{adminUsersAc.dostepneKursy}" var="kurs" id="table"
+                                                            rendered="#{adminUsersAc.pokazTabele}">
+                                                <f:facet name="header">dostępne kursy</f:facet>
 
-											<rich:column>
-												<f:facet name="header">
-												</f:facet>
-												<a4j:commandLink action="#{adminUsersAc.dodajDokursu}" render="tabled, table">
-													<h:outputText value="dodaj kurs" />
-												</a4j:commandLink>
-											</rich:column>
+                                                <rich:column>
+                                                    <f:facet name="header">
+                                                    </f:facet>
+                                                    <a4j:commandLink action="#{adminUsersAc.dodajDokursu}" render="tabled, table">
+                                                        <h:outputText value="dodaj kurs" />
+                                                    </a4j:commandLink>
+                                                </rich:column>
 
-											<rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie nazwa" render="table" action="#{adminKursyAc.sortBynazwa}" />
-												</f:facet>
-												<h:outputText value="#{kurs.nazwa}" />
-											</rich:column>
+                                                <rich:column sortBy="#{kurs.nazwa}" id="nazwa" sortOrder="#{adminKursyAc.nazwaOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie nazwa" render="table" action="#{adminKursyAc.sortBynazwa}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.nazwa}" />
+                                                </rich:column>
 
-											<rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data rozpoczęcia" render="table" action="#{adminKursyAc.sortBydataod}" />
-												</f:facet>
-												<h:outputText value="#{kurs.dataod}">
-													<f:convertDateTime pattern="dd-MM-yyyy" />
-												</h:outputText>
-											</rich:column>
+                                                <rich:column sortBy="#{kurs.dataod}" id="dataod" sortOrder="#{adminKursyAc.dataodOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie data rozpoczęcia" render="table" action="#{adminKursyAc.sortBydataod}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.dataod}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                    </h:outputText>
+                                                </rich:column>
 
-											<rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
-												<f:facet name="header">
-													<a4j:commandLink value="sortowanie data zakończenia" render="table" action="#{adminKursyAc.sortBydatado}" />
-												</f:facet>
-												<h:outputText value="#{kurs.datado}">
-													<f:convertDateTime pattern="dd-MM-yyyy" />
-												</h:outputText>
-											</rich:column>
-										</rich:dataTable>
-									</h:form></td>
-							</tr>
-						</table> <script type="text/javascript">
-							tinyMCE
-									.init({
-										// General options
-										mode : "textareas",
-										theme : "advanced",
-										plugins : "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
-
-										// Theme options
-										theme_advanced_buttons1 : "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
-										theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
-										theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
-										theme_advanced_buttons4 : "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
-										theme_advanced_toolbar_location : "top",
-										theme_advanced_toolbar_align : "left",
-										theme_advanced_statusbar_location : "bottom",
-										theme_advanced_resizing : true,
-
-										// Example content CSS (should be your site CSS)
-										content_css : "../burned/default.css",
-
-										// Drop lists for link/image/media/template dialogs
-										template_external_list_url : "js/template_list.js",
-										external_link_list_url : "js/link_list.js",
-										external_image_list_url : "js/image_list.js",
-										media_external_list_url : "js/media_list.js",
-
-										// Replace values for the template plugin
-										template_replace_values : {
-											username : "Some User",
-											staffid : "991234"
-										}
-									});
-						</script></td>
-				</tr>
-			</table>
-		</body>
-	</ui:define>
-</ui:composition>
+                                                <rich:column sortBy="#{kurs.datado}" id="datado" sortOrder="#{adminKursyAc.datadoOrder}">
+                                                    <f:facet name="header">
+                                                        <a4j:commandLink value="sortowanie data zakończenia" render="table" action="#{adminKursyAc.sortBydatado}" />
+                                                    </f:facet>
+                                                    <h:outputText value="#{kurs.datado}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy" />
+                                                    </h:outputText>
+                                                </rich:column>
+                                            </rich:dataTable>
+                                        </h:form></td>
+                                </tr>
+                            </table> <script type="text/javascript">
+                                tinyMCE
+                                        .init({
+                                    // General options
+                                    mode: "textareas",
+                                    theme: "advanced",
+                                    plugins: "safari,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+                                    // Theme options
+                                    theme_advanced_buttons1: "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
+                                    theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+                                    theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+                                    theme_advanced_buttons4: "insertlayer,moveforward,movebackward,absolute,|,styleprops,spellchecker,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,blockquote,pagebreak,|,insertfile,insertimage",
+                                    theme_advanced_toolbar_location: "top",
+                                    theme_advanced_toolbar_align: "left",
+                                    theme_advanced_statusbar_location: "bottom",
+                                    theme_advanced_resizing: true,
+                                    // Example content CSS (should be your site CSS)
+                                    content_css: "../burned/default.css",
+                                    // Drop lists for link/image/media/template dialogs
+                                    template_external_list_url: "js/template_list.js",
+                                    external_link_list_url: "js/link_list.js",
+                                    external_image_list_url: "js/image_list.js",
+                                    media_external_list_url: "js/media_list.js",
+                                    // Replace values for the template plugin
+                                    template_replace_values: {
+                                        username: "Some User",
+                                        staffid: "991234"
+                                    }
+                                });
+                            </script></td>
+                    </tr>
+                </table>
+            </body>
+        </ui:define>
+    </ui:composition>
 </html>

@@ -245,9 +245,6 @@ body
 }
 
 
-
-
-
 #baner
 {
     float: right;
@@ -725,8 +722,6 @@ body
     float: left;
     border: none;
     padding: 0 30px;
-
-
 }
 
 #slider img
@@ -872,10 +867,12 @@ body
     padding: 0;
 }
 
-
-
 #tabela2 tbody p
 {
     font-size:0.9em ;
     font-style: italic;
+}
+
+.error{
+    color: red;
 }

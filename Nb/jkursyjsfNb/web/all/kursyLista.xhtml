@@ -112,10 +112,16 @@
                                 <f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
                             </h:commandButton>
                             <h:link value="zarejestruj się" outcome="/all/rejestracja.xhtml"
-                                    rendered="#{(login.zalogowany.username==null)}" />
-                            <h:outputText value=" lub " rendered="#{(login.zalogowany.username==null)}" />
-                            <h:link value="zaloguj" outcome="/all/login.xhtml" rendered="#{(login.zalogowany.username==null)}" />
-                            <h:outputText value="aby rezerwować" rendered="#{(login.zalogowany.username==null)}" />
+                                    rendered="#{(login.zalogowany.username==null and kurs.rezerwacjaDostepna)}" />
+                            <h:outputText value=" lub " rendered="#{(login.zalogowany.username==null and kurs.rezerwacjaDostepna)}" />
+                            <h:link value="zaloguj" outcome="/all/login.xhtml" rendered="#{(login.zalogowany.username==null and kurs.rezerwacjaDostepna)}" />
+                            <h:outputText value="aby rezerwować" rendered="#{(login.zalogowany.username==null and kurs.rezerwacjaDostepna)}" />
+                            
+                            <h:commandLink value="powiadom, gdy rezerwacja będzie dostępna" action="#{kursantKursyAc.rezerwacja}"
+                                             rendered="#{!kurs.rezerwacjaDostepna}">
+                                <f:setPropertyActionListener target="#{kursantKursyAc.kurs}" value="#{kurs}" />
+                            </h:commandLink>
+                            
                         </rich:column>
                     </rich:dataTable>
                 </h:form>

@@ -3,9 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/templates/templateadm.xhtml">
         <ui:define name="body">
             <body>
@@ -27,14 +25,14 @@
                             </f:facet>
                             <h:column id="username">
                                 <f:facet name="header">
-                                    <h:outputText value="login" render="table"/>
+                                    <h:outputText value="login"/>
                                 </f:facet>
                                 <h:outputText value="#{user.username}"/>
                             </h:column>
 
                             <h:column id="imieNazwisko">
                                 <f:facet name="header">
-                                    <h:outputText value="imie nazwisko" render="table"/>
+                                    <h:outputText value="imie nazwisko"/>
                                 </f:facet>
                                 <h:outputText value="#{user.imieNazwisko}" />
                             </h:column>
@@ -55,14 +53,14 @@
                             </f:facet>
                             <h:column id="username">
                                 <f:facet name="header">
-                                    <h:outputText value="login" render="table"/>
+                                    <h:outputText value="login"/>
                                 </f:facet>
                                 <h:outputText value="#{user.username}"/>
                             </h:column>
 
                             <h:column id="imieNazwisko">
                                 <f:facet name="header">
-                                    <h:outputText value="imie nazwisko" render="table"/>
+                                    <h:outputText value="imie nazwisko"/>
                                 </f:facet>
                                 <h:outputText value="#{user.imieNazwisko}" />
                             </h:column>

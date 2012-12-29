@@ -1,75 +1,66 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
-<ui:composition template="/templates/template.xhtml">
-	<ui:define name="body">
-		<h:form>
-			<h:panelGroup>
-			Pola oznaczone (*) są wymagane
-				<h:panelGrid columns="4">
-					<h:outputLabel for="bledy" />
-					<h:outputLabel for="bledy" />
-					<h:outputText id="bledy" value="#{userAc.errorText}" styleClass="error" />
-					<h:outputLabel for="bledy" />
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html" >
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="body">
+            <h:form>
+                <h:panelGroup>
+                    Pola oznaczone (*) są wymagane
+                    <h:panelGrid columns="4">
+                        <h:outputLabel for="bledy" />
+                        <h:outputLabel for="bledy" />
+                        <h:outputText id="bledy" value="#{userAc.errorText}" styleClass="error" />
+                        <h:outputLabel for="bledy" />
 
-					<h:message for="username" styleClass="error" />
-					<h:outputLabel value="login" />
-					<h:inputText id="username" value="#{userAc.user.username}" size="50"
-						readonly="#{userAc.user.username!=null}" immediate="true" />
-					<h:outputLabel value="*"/>
+                        <h:message for="username" styleClass="error" />
+                        <h:outputLabel value="login" />
+                        <h:inputText id="username" value="#{userAc.user.username}" size="50"
+                                     readonly="#{userAc.user.username!=null}" immediate="true" />
+                        <h:outputLabel value="*"/>
 
-					<h:message for="userpass" styleClass="error" />
-					<h:outputLabel value="hasło" />
-					<h:inputText id="userpass" value="#{userAc.user.userpass}" immediate="true" size="50" />
-					<h:outputLabel value="*"/>
+                        <h:message for="userpass" styleClass="error" />
+                        <h:outputLabel value="hasło" />
+                        <h:inputText id="userpass" value="#{userAc.user.userpass}" immediate="true" size="50" />
+                        <h:outputLabel value="*"/>
 
-					<h:message for="userpass1" styleClass="error" />
-					<h:outputLabel value="hasło ponownie" />
-					<h:inputText id="userpass1" value="#{userAc.userpass1}" immediate="true" size="50" />
-					<h:outputLabel value="*"/>
+                        <h:message for="userpass1" styleClass="error" />
+                        <h:outputLabel value="hasło ponownie" />
+                        <h:inputText id="userpass1" value="#{userAc.userpass1}" immediate="true" size="50" />
+                        <h:outputLabel value="*"/>
 
-					<h:message for="imieNazwisko" styleClass="error" />
-					<h:outputLabel value="imie i nazwisko" />
-					<h:inputText id="imieNazwisko" value="#{userAc.user.imieNazwisko}" immediate="true" size="50" />
-					<h:outputLabel value="*"/>
+                        <h:message for="imieNazwisko" styleClass="error" />
+                        <h:outputLabel value="imie i nazwisko" />
+                        <h:inputText id="imieNazwisko" value="#{userAc.user.imieNazwisko}" immediate="true" size="50" />
+                        <h:outputLabel value="*"/>
 
-					<h:message for="email" styleClass="error" />
-					<h:outputLabel value="email" />
-					<h:inputText id="email" value="#{userAc.user.email}" immediate="true" size="50" />
-					<h:outputLabel value="*"/>
+                        <h:message for="email" styleClass="error" />
+                        <h:outputLabel value="email" />
+                        <h:inputText id="email" value="#{userAc.user.email}" immediate="true" size="50" />
+                        <h:outputLabel value="*"/>
+                        
+                        <h:message for="tel1" styleClass="error" />
+                        <h:outputLabel value="telefon" />
+                        <h:inputText id="tel1" value="#{userAc.user.tel1}" immediate="true" size="50" />
+                        <h:outputLabel value="" />
 
-					<h:message for="miasto" styleClass="error" />
-					<h:outputLabel value="miasto" />
-					<h:inputText id="miasto" value="#{userAc.user.miasto}" immediate="true" size="50" />
-					<h:outputLabel value="" />
-					
-					<h:message for="kodpocztowy" styleClass="error" />
-					<h:outputLabel value="kod pocztowy" />
-					<h:inputText id="kodpocztowy" value="#{userAc.user.kodpocztowy}" immediate="true" size="10" />
-					<h:outputLabel value="" />
-
-					<h:message for="ulica" styleClass="error" />
-					<h:outputLabel value="ulica, nr domu/mieszkanie" />
-					<h:inputText id="ulica" value="#{userAc.user.ulica}" immediate="true" size="50" />
-					<h:outputLabel value="" />
-
-					<h:message for="nip" styleClass="error" />
-					<h:outputLabel value="nip" />
-					<h:inputText id="nip" value="#{userAc.user.nip}" immediate="true" size="50" />
-					<h:outputLabel value="" />
-
-					<h:message for="tel1" styleClass="error" />
-					<h:outputLabel value="telefon" />
-					<h:inputText id="tel1" value="#{userAc.user.tel1}" immediate="true" size="50" />
-					<h:outputLabel value="" />
-					
-					<h:message for="polecajacy" styleClass="error" />
-					<h:outputLabel value="polecający" />
-					<h:inputText id="polecajacy" value="#{userAc.user.polecajacy}" immediate="true" size="50"/>
-					<h:outputLabel value="" />
-				</h:panelGrid>
-				<h:commandButton value="wyślij" action="#{userAc.dodaj}" />
-			</h:panelGroup>
-		</h:form>
-	</ui:define>
-</ui:composition>
+                        <h:message for="polecajacy" styleClass="error" />
+                        <h:outputLabel value="polecający" />
+                        <h:inputText id="polecajacy" value="#{userAc.user.polecajacy}" immediate="true" size="50"/>
+                        <h:outputLabel value="" />
+                    </h:panelGrid>
+                </h:panelGroup>
+                <!--  <h:panelGrid columns="2">
+                      <h:outputLabel for="regtr" value="Regulamin:"/>
+                      <h:inputTextarea id="regtr" readonly="true" value="To jest regulamin - potrzebuję treść" cols="77" rows="20"/>
+                      <h:outputLabel for="reg" value="zaznaczenie pola oznacza akceptację regulaminu"/>
+                      <h:selectBooleanCheckbox id="reg" value="#{wyslij}">
+                          <a4j:ajax execute="@this" render="wyslij" event="valueChange"/>
+                      </h:selectBooleanCheckbox>
+                  </h:panelGrid>-->
+                <h:panelGroup id="wyslij">
+                    <h:commandButton value="wyslij" action="#{userAc.dodaj}"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>
