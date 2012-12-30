@@ -47,7 +47,7 @@ INSERT INTO wn_statusy VALUES (1, '#0000EE', 'Utworzony', 'UT');
 INSERT INTO wn_statusy VALUES (4, '#EE0000', 'Odrzucony', 'OD');
 INSERT INTO wn_statusy VALUES (5, '#112233', 'Cofnięty', 'CO');
 
-/*
+
 --dodawanie adminow z pelnia praw (hasla 'a')
 INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');
 INSERT INTO dzial (id, nazwa) VALUES (2, 'admin-md5');
@@ -73,4 +73,3 @@ INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 1);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (1, 2);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (2, 2);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 2);
-*/

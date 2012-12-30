@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -21,12 +22,19 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 public class Login implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    Struktura zalogowany=null;
+    Struktura zalogowany = null;
     StrukturaJpaController strukC;
     String username;
     String password;
     boolean urlop;
     boolean struktura;
+    String typLogowania;
+
+    @PostConstruct
+    public void init() {
+        ConfigJpaController confC = new ConfigJpaController();
+        typLogowania = confC.findConfigNazwa("realm_szyfrowanie").getWartosc();
+    }
 
     public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -84,16 +92,18 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
-        
+
         if (zalogowany.isUsuniety()) {
             this.wyloguj();
             //return null;
         }
         //return zalogowany;
     }
-    
+
     public Struktura getZalogowany() {
-        if(zalogowany==null) refresh();
+        if (zalogowany == null) {
+            refresh();
+        }
         return zalogowany;
     }
 
@@ -138,17 +148,30 @@ public class Login implements Serializable {
     public boolean isUrlop() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if(request.isUserInRole("eodurlop")) urlop=true;
-        else urlop=false;
+        if (request.isUserInRole("eodurlop")) {
+            urlop = true;
+        } else {
+            urlop = false;
+        }
         return urlop;
     }
 
     public boolean isStruktura() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if(request.isUserInRole("eodstru")) struktura=true;
-        else struktura=false;
+        if (request.isUserInRole("eodstru")) {
+            struktura = true;
+        } else {
+            struktura = false;
+        }
         return struktura;
     }
-    
+
+    public String getTypLogowania() {
+        return typLogowania;
+    }
+
+    public void setTypLogowania(String typLogowania) {
+        this.typLogowania = typLogowania;
+    }
 }
