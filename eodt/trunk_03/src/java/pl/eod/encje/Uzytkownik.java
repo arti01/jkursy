@@ -36,7 +36,8 @@ import java.util.List;
     @NamedQuery(name = "Uzytkownik.findAll", query = "SELECT u FROM Uzytkownik u"),
     @NamedQuery(name = "Uzytkownik.findById", query = "SELECT u FROM Uzytkownik u WHERE u.id = :id"),
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
-    @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail")})
+    @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
+    @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId")})
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,7 +59,7 @@ public class Uzytkownik implements Serializable {
     private String adrEmail;
     
     @Column(name = "ext_id")
-    private Integer extId;
+    private String extId;
     
     @OneToOne(mappedBy = "secUserId")
     Struktura strukturaSec;
@@ -202,11 +203,11 @@ public class Uzytkownik implements Serializable {
         this.wnHistoriaListAkceptant = wnHistoriaListAkceptant;
     }
 
-    public Integer getExtId() {
+    public String getExtId() {
         return extId;
     }
 
-    public void setExtId(Integer extId) {
+    public void setExtId(String extId) {
         this.extId = extId;
     }
     

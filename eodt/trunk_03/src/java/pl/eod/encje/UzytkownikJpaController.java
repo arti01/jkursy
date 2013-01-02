@@ -178,4 +178,21 @@ public class UzytkownikJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public Struktura findStrukturaExtid(String extid) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q=em.createNamedQuery("Uzytkownik.findByExtId");
+            q.setParameter("extId", extid);
+            Uzytkownik u=(Uzytkownik) q.getSingleResult();
+            em.refresh(u);
+            //em.refresh(u.getStruktura());
+            return u.getStruktura();
+        }catch(NoResultException ex){
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }

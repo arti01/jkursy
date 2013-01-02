@@ -92,7 +92,10 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
-
+        //obsluga zewnetrzne id
+        if(zalogowany==null){
+            zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());    
+        }
         if (zalogowany.isUsuniety()) {
             this.wyloguj();
             //return null;
