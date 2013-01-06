@@ -19,10 +19,12 @@ INSERT INTO config VALUES (1, 'eskalujPoMinutach', 'eskaluj wniosek po uplywie m
 INSERT INTO config VALUES (2, 'mail_smtp_host', 'mail_smtp_host', 'smtp.gmail.com');
 INSERT INTO config VALUES (3, 'mail_smtp_socketFactory_port', 'mail_smtp_socketFactory_port', '465');
 INSERT INTO config VALUES (4, 'mail_smtp_port', 'mail_smtp_port', '465');
-INSERT INTO config VALUES (5, 'username', 'username', '');
-INSERT INTO config VALUES (6, 'password', 'password', '');
-INSERT INTO config VALUES (7, 'domysle_haslo', 'domyslne haslo przy zakladaniu usera', 'a');
-INSERT INTO config VALUES (8, 'realm_szyfrowanie', 'md5 lub none', 'md5');
+INSERT INTO config VALUES (5, 'czy_ssl', 'czy email ssl', 'tak');
+INSERT INTO config VALUES (6, 'email_link', 'link dolaczony do emaila informujacego o urlopie', 'http://test.test.pll');
+INSERT INTO config VALUES (7, 'username', 'username', '');
+INSERT INTO config VALUES (8, 'password', 'password', '');
+INSERT INTO config VALUES (9, 'domysle_haslo', 'domyslne haslo przy zakladaniu usera', 'a');
+INSERT INTO config VALUES (10, 'realm_szyfrowanie', 'md5 lub none', 'md5');
 
 
 --

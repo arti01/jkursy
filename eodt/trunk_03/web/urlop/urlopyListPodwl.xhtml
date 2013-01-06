@@ -20,9 +20,9 @@
                     <rich:dataTable value="#{UrlopM.urlopyAkcept}" var="urlop" id="table">
                         <rich:column >
                             <f:facet name="header">
-                                Id wniosku (a co z numerem wniosku?)
+                                Nr wniosku
                             </f:facet>
-                            <h:outputText value="#{urlop.id}"/>
+                            <h:outputText value="#{urlop.nrWniosku}"/>
                                 <rich:collapsiblePanel header="Historia" expanded="false" switchType="ajax" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
                                     <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                         <rich:column>

@@ -173,7 +173,7 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
-    public String editArti(Struktura struktura) throws NonexistentEntityException, Exception {
+    public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -195,9 +195,11 @@ public class StrukturaJpaController implements Serializable {
                 }
             }
             if (!struktura.getUserId().getAdrEmail().equals(oldStruktura.getUserId().getAdrEmail())) {
+                if(!struktura.getUserId().getAdrEmail().equals("")){
                 UzytkownikJpaController uC = new UzytkownikJpaController();
                 if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
                     return "email już istnieje";
+                }
                 }
             }
 

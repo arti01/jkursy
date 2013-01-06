@@ -5,6 +5,7 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
@@ -51,7 +52,17 @@ public class WnUrlopJpaController implements Serializable {
             Uzytkownik u = em.find(Uzytkownik.class, wnUrlop.getUzytkownik().getId());
             u.getWnUrlopList().add(0, wnUrlop);
             em.getTransaction().begin();
+            if(wnUrlop.getId()==null) em.persist(wnUrlop);
             em.merge(u);
+            em.getTransaction().commit();
+            //nadawanie numeru wniosku;
+            String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
+            nrWniosku=nrWniosku+"/"+wnUrlop.getId()+"/";
+            SimpleDateFormat sdf=new SimpleDateFormat("YYYY");
+            nrWniosku=nrWniosku+sdf.format(new Date());
+            wnUrlop.setNrWniosku(nrWniosku);
+            em.getTransaction().begin();
+            em.merge(wnUrlop);
             em.getTransaction().commit();
         } finally {
             if (em != null) {

@@ -5,7 +5,6 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +40,6 @@ import java.util.List;
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUSER")
     @SequenceGenerator(name = "SEQUSER", sequenceName = "SEQUSER")
@@ -52,7 +50,7 @@ public class Uzytkownik implements Serializable {
     @NotEmpty
     private String fullname;
     
-    @NotEmpty
+    //@NotEmpty
     @Email
     //@UzytkowAdniot(value = true)
     @Column(name = "adr_email", unique = true)

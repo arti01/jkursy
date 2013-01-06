@@ -30,6 +30,9 @@ public class MailWyslij {
         this.mail_smtp_port = confC.findConfigNazwa("mail_smtp_port").getWartosc();
         this.username = confC.findConfigNazwa("username").getWartosc();
         this.password = confC.findConfigNazwa("password").getWartosc();
+        this.link=confC.findConfigNazwa("email_link").getWartosc();
+        this.czy_ssl=confC.findConfigNazwa("czy_ssl").getWartosc();
+        this.tresc=this.tresc+"/n/r"+this.link;
     }
     String temat;
     String tresc;
@@ -39,6 +42,8 @@ public class MailWyslij {
     String mail_smtp_port;
     String username;
     String password;
+    String link;
+    String czy_ssl;
 
     public void wyslij() {
         Properties props = new Properties();
@@ -51,7 +56,7 @@ public class MailWyslij {
 
         props.put("mail.smtp.host", mail_smtp_host);
         props.put("mail.smtp.socketFactory.port", mail_smtp_socketFactory_port);
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        if(czy_ssl.equals("tak")) props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", mail_smtp_port);
 
