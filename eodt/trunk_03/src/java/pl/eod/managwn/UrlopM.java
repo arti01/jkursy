@@ -74,14 +74,15 @@ public class UrlopM implements Serializable {
             urlopC.createEdit(urlop);
 
             //wysylanie maila
-            if(!urlop.getAkceptant().getAdrEmail().equals("")){
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(urlop.getAkceptant().getAdrEmail());
-            kk.setStatus(0);
-            kk.setTemat("prośba o akceptację wniosku urlopowego");
-            kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez " + urlop.getUzytkownik().getFullname());
-            KomKolC.create(kk);
+            if (!urlop.getAkceptant().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+                kk.setStatus(0);
+                kk.setTemat("prośba o akceptację wniosku urlopowego");
+                kk.setTresc("Proszę o akceptację wniosku urlopowego " + urlop.getNrWniosku() + " wystawionego przez " + urlop.getUzytkownik().getFullname());
+                KomKolC.create(kk);
             }
+            
             info = "Wniosek wysłany";
         } catch (Exception ex) {
             info = "Coś poszło nie tak";
@@ -116,14 +117,24 @@ public class UrlopM implements Serializable {
 
         urlopC.createEdit(urlop);
 
-        if(!urlop.getUzytkownik().getAdrEmail().equals("")){
-        KomKolejka kk = new KomKolejka();
-        kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
-        kk.setStatus(0);
-        kk.setTemat("Wniosek o urlop zaakceptowany");
-        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
-        KomKolC.create(kk);
+        if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop zaakceptowany");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+            KomKolC.create(kk);
         }
+        
+        if (urlop.getPrzyjmujacy()!=null) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop zaakceptowany");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+            KomKolC.create(kk);
+        }
+        
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -154,14 +165,24 @@ public class UrlopM implements Serializable {
 
         urlopC.createEdit(urlop);
 
-        if(!urlop.getUzytkownik().getAdrEmail().equals("")){
-        KomKolejka kk = new KomKolejka();
-        kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
-        kk.setStatus(0);
-        kk.setTemat("Wniosek o urlop odrzucony");
-        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
-        KomKolC.create(kk);
+        if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop odrzucony");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
+            KomKolC.create(kk);
         }
+        
+        if (urlop.getPrzyjmujacy()!=null) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop odrzucony");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
+            KomKolC.create(kk);
+        }
+        
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -192,14 +213,24 @@ public class UrlopM implements Serializable {
 
         urlopC.createEdit(urlop);
 
-        if(!urlop.getUzytkownik().getAdrEmail().equals("")){
-        KomKolejka kk = new KomKolejka();
-        kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
-        kk.setStatus(0);
-        kk.setTemat("Wniosek o urlop cofnięty");
-        kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
-        KomKolC.create(kk);
+        if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop cofnięty");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
+            KomKolC.create(kk);
         }
+        
+        if (urlop.getPrzyjmujacy()!=null) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+            kk.setStatus(0);
+            kk.setTemat("Wniosek o urlop cofnięty");
+            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
+            KomKolC.create(kk);
+        }
+        
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();

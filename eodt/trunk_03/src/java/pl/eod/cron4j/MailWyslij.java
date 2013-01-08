@@ -32,7 +32,7 @@ public class MailWyslij {
         this.password = confC.findConfigNazwa("password").getWartosc();
         this.link=confC.findConfigNazwa("email_link").getWartosc();
         this.czy_ssl=confC.findConfigNazwa("czy_ssl").getWartosc();
-        this.tresc=this.tresc+"/n/r"+this.link;
+        this.tresc=this.tresc+"\n\r"+this.link;
     }
     String temat;
     String tresc;

@@ -85,8 +85,9 @@ public class StrukturaJpaController implements Serializable {
             }
             UzytkownikJpaController uC = new UzytkownikJpaController();
             if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
-                //System.err.println("valid tutaj 1");
-                return "email już istnieje";
+                if (!struktura.getUserId().getAdrEmail().equals("")) {
+                    return "email już istnieje";
+                }
             }
 
             DzialJpaController dC = new DzialJpaController();
@@ -119,7 +120,7 @@ public class StrukturaJpaController implements Serializable {
         em = getEntityManager();
         Dzial dOld = em.find(Dzial.class, struktura.getDzialId().getId());
         Struktura sOld = null;
-        if(struktura.getSzefId()!=null){
+        if (struktura.getSzefId() != null) {
             sOld = em.find(Struktura.class, struktura.getSzefId().getId());
         }
         struktura.setUsuniety(1);
@@ -139,7 +140,9 @@ public class StrukturaJpaController implements Serializable {
             em.getTransaction().commit();
             em.refresh(em.merge(dOld));
         }
-        if(sOld!=null) em.refresh(em.merge(sOld));
+        if (sOld != null) {
+            em.refresh(em.merge(sOld));
+        }
     }
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
@@ -195,11 +198,11 @@ public class StrukturaJpaController implements Serializable {
                 }
             }
             if (!struktura.getUserId().getAdrEmail().equals(oldStruktura.getUserId().getAdrEmail())) {
-                if(!struktura.getUserId().getAdrEmail().equals("")){
-                UzytkownikJpaController uC = new UzytkownikJpaController();
-                if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
-                    return "email już istnieje";
-                }
+                if (!struktura.getUserId().getAdrEmail().equals("")) {
+                    UzytkownikJpaController uC = new UzytkownikJpaController();
+                    if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null) {
+                        return "email już istnieje";
+                    }
                 }
             }
 

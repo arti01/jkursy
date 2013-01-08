@@ -1,7 +1,3 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,6 +6,26 @@ and open the template in the editor.
     </head>
     <body>
         <div>
+            <h3>2012-01-08</h3>
+            <ul>
+                <li>
+                    Możliwość dodawania użytkownika o bez adresu e-mail - należy ściągnąć klucz unikalny
+                    na tab. użytkownicy.
+                </li>
+                <li>
+                    Nowe parametry w config:
+                    INSERT INTO config VALUES (5, 'czy_ssl', 'czy email ssl', 'tak');
+                    INSERT INTO config VALUES (6, 'email_link', 'link dolaczony do emaila informujacego o urlopie', 'http://test.test.pll');
+                    Uwaga na pole ID - te inserty naruszą unikalność - ale dodałem je tak, aby zachować logiczną kolejność (na żywym można je po prostu dodać
+                    jako nowe wiersze)
+                </li>
+                <li>
+                    dodano nr wniosku - do list i do maili
+                </li>
+                <li>
+                    dodano wysyłanie maili o odrzuceniu, akceptacji i cofnięciu również do osoby przyjmującej wniosek
+                </li>
+            </ul>
             <h3>2012-12-21</h3>
             <ul>
                 <li>
@@ -49,7 +65,7 @@ and open the template in the editor.
                     logowania.
                 </li>
             </ul>
-            
+
             <h3>2012-12-15</h3>
             <ul>
                 <li>

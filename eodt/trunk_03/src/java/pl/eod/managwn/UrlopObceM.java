@@ -69,7 +69,7 @@ public class UrlopObceM {
         kk.setAdresList(urlop.getAkceptant().getAdrEmail());
         kk.setStatus(0);
         kk.setTemat("prośba o akceptację wniosku urlopowego");
-        kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez "+urlop.getUzytkownik().getFullname());
+        kk.setTresc("Proszę o akceptację wniosku urlopowego "+urlop.getNrWniosku()+" wystawionego przez "+urlop.getUzytkownik().getFullname());
         KomKolC.create(kk);
         
         initUrlop();
