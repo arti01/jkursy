@@ -6,7 +6,7 @@
     </head>
     <body>
         <div>
-            <h3>2012-01-08</h3>
+            <h3>2012-01-08/09</h3>
             <ul>
                 <li>
                     Możliwość dodawania użytkownika o bez adresu e-mail - należy ściągnąć klucz unikalny
@@ -14,16 +14,27 @@
                 </li>
                 <li>
                     Nowe parametry w config:
-                    INSERT INTO config VALUES (5, 'czy_ssl', 'czy email ssl', 'tak');
-                    INSERT INTO config VALUES (6, 'email_link', 'link dolaczony do emaila informujacego o urlopie', 'http://test.test.pll');
-                    Uwaga na pole ID - te inserty naruszą unikalność - ale dodałem je tak, aby zachować logiczną kolejność (na żywym można je po prostu dodać
-                    jako nowe wiersze)
+                    INSERT INTO config VALUES (9, 'czy_ssl', 'czy email ssl', 'tak');
+                    INSERT INTO config VALUES (10, 'email_link', 'link dolaczony do emaila informujacego o urlopie', 'http://test.test.pll');
+                    Uwaga na pole ID - nowe inserty z pliku sql naruszą unikalność, jeśli będą wykonane na już istniejących danych, w takim
+                    przypadku lepiej uzyć powyższe.
                 </li>
                 <li>
                     dodano nr wniosku - do list i do maili
                 </li>
                 <li>
                     dodano wysyłanie maili o odrzuceniu, akceptacji i cofnięciu również do osoby przyjmującej wniosek
+                </li>
+                <li>
+                    wprowadzono nową pozycję w menu - Historia wniosków do akceptu - są tam wszystkie wnioski, których
+                    akceptantem na jakimś etapie była osoba zalogowana (chodzi o to, że nawet jak nie zaakceptował, bo nie zdążył 
+                    i była eskalacja do jego przelożonego, to i tak taki wniosek na tej liście się pojawi)
+                </li>
+                <li>
+                    wprowadzono sortowanie dla wniosków do akceptu oraz dla historii akceptowanych
+                </li>
+                <li>
+                    Ku pamięci - osoba stojąca najwyżej w hierarchii nie może składać wniosków - brakuje mu akceptanta (przełożonego)
                 </li>
             </ul>
             <h3>2012-12-21</h3>

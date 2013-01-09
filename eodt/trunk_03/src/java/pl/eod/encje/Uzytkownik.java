@@ -82,12 +82,15 @@ public class Uzytkownik implements Serializable {
     private List<WnUrlop> wnUrlopListDoAkceptu;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy")
+    @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaList;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant")
+    @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaListAkceptant;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
+    @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
     
     public Uzytkownik() {

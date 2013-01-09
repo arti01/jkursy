@@ -34,6 +34,7 @@ public class UrlopM implements Serializable {
     private WnUrlop urlop;
     private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();
     private DataModel<WnUrlop> urlopyAkcept = new ListDataModel<WnUrlop>();
+    private DataModel<WnUrlop> urlopyAkceptHist = new ListDataModel<WnUrlop>();
     private WnUrlopJpaController urlopC;
     private WnRodzajeJpaController rodzajeC;
     private KomKolejkaJpaController KomKolC;
@@ -49,6 +50,11 @@ public class UrlopM implements Serializable {
     public String listPodwl() {
         initUrlop();
         return "/urlop/urlopyListPodwl";
+    }
+    
+    public String listPodwlHist() {
+        initUrlop();
+        return "/urlop/urlopyListAkceptHist";
     }
 
     public void wyslij() {
@@ -300,6 +306,15 @@ public class UrlopM implements Serializable {
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
         urlopyAkcept.setWrappedData(login.getZalogowany().getUserId().getWnUrlopListDoAkceptu());
+        
+        ArrayList<WnUrlop> akceptHist=new ArrayList<WnUrlop>();
+        login.refresh();
+        for(WnHistoria wh:login.getZalogowany().getUserId().getWnHistoriaListAkceptant()){
+            if(!akceptHist.contains(wh.getUrlopId())) {
+                akceptHist.add(wh.getUrlopId());
+            }
+        }
+        urlopyAkceptHist.setWrappedData(akceptHist);
     }
 
     public WnUrlop getUrlop() {
@@ -342,4 +357,10 @@ public class UrlopM implements Serializable {
     public void setUrlopyAkcept(DataModel<WnUrlop> urlopyAkcept) {
         this.urlopyAkcept = urlopyAkcept;
     }
+
+    public DataModel<WnUrlop> getUrlopyAkceptHist() {
+        return urlopyAkceptHist;
+    }
+    
+    
 }

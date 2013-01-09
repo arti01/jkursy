@@ -96,7 +96,7 @@ public class UrlopObceM {
         WnStatusy st = new WnStatusy();
         st.setId(new Long(1));
         urlop.setStatusId(st);
-        urlop.setNrWniosku("ooooooooo");
+        //urlop.setNrWniosku("ooooooooo");
         urlop.setDataWprowadzenia(new Date());
 
         String error = null;
