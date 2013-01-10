@@ -18,6 +18,21 @@
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UrlopM.urlopyAkcept}" var="urlop" id="table">
+                        <rich:column filterValue="#{UrlopM.namePodwFilter}"
+                                     filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.namePodwFilter)}">
+                            <f:facet name="header">
+                                <h:panelGroup>
+                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:inputText value="#{UrlopM.namePodwFilter}">
+                                        <a4j:ajax event="blur" render="formTab" execute="@this" />
+                                    </h:inputText>
+                                    <a4j:commandLink value="wszyscy" rendered="#{UrlopM.namePodwFilter!=null and UrlopM.namePodwFilter!=''}" render="formTab" action="#{UrlopM.listPodwl}">
+                                        <f:setPropertyActionListener  target="#{UrlopM.namePodwFilter}" value="#{null}"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
+                            </f:facet>
+                            <h:outputText value="#{urlop.uzytkownik.fullname}"/>
+                        </rich:column>
                         <rich:column >
                             <f:facet name="header">
                                 Nr wniosku

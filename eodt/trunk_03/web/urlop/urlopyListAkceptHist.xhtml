@@ -18,9 +18,18 @@
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UrlopM.urlopyAkceptHist}" var="urlop" id="table">
-                        <rich:column >
+                        <rich:column filterValue="#{UrlopM.nameAkceptHistFilter}"
+                                     filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameAkceptHistFilter)}">
                             <f:facet name="header">
-                                Wniosek osoby:
+                                <h:panelGroup>
+                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:inputText value="#{UrlopM.nameAkceptHistFilter}">
+                                        <a4j:ajax event="blur" render="formTab" execute="@this" />
+                                    </h:inputText>
+                                    <a4j:commandLink value="wszyscy" rendered="#{UrlopM.nameAkceptHistFilter!=null and UrlopM.nameAkceptHistFilter!=''}" render="formTab" action="#{UrlopM.listPodwlHist}">
+                                        <f:setPropertyActionListener  target="#{UrlopM.nameAkceptHistFilter}" value="#{null}"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
                             </f:facet>
                             <h:outputText value="#{urlop.uzytkownik.fullname}"/>
                         </rich:column>

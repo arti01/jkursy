@@ -5,6 +5,7 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.sql.SQLData;
 import java.text.SimpleDateFormat;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -19,6 +20,7 @@ import java.util.TimeZone;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import pl.eod.encje.exceptions.IllegalOrphanException;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
@@ -57,7 +59,7 @@ public class WnUrlopJpaController implements Serializable {
             em.getTransaction().commit();
             //nadawanie numeru wniosku;
             String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
-            nrWniosku=nrWniosku+"/"+wnUrlop.getId()+"/";
+            nrWniosku=nrWniosku+"/"+getWnUrlopCountRokBiezacy()+"/";
             SimpleDateFormat sdf=new SimpleDateFormat("YYYY");
             nrWniosku=nrWniosku+sdf.format(new Date());
             wnUrlop.setNrWniosku(nrWniosku);
@@ -169,6 +171,30 @@ public class WnUrlopJpaController implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public int getWnUrlopCountRokBiezacy() {
+        Calendar cal= Calendar.getInstance();
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<WnUrlop> rt = cq.from(WnUrlop.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            cq.where(cb.greaterThan(rt.get(WnUrlop_.dataWprowadzenia), cal.getTime()));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
     public int getWnUrlopCount() {
         EntityManager em = getEntityManager();
         try {

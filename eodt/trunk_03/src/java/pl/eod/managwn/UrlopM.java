@@ -41,6 +41,10 @@ public class UrlopM implements Serializable {
     @ManagedProperty(value = "#{login}")
     private Login login;
     private Locale locale;
+    
+    String nameAkceptHistFilter;
+    String nameObceFilter;
+    String namePodwFilter;
 
     public String list() {
         initUrlop();
@@ -361,6 +365,29 @@ public class UrlopM implements Serializable {
     public DataModel<WnUrlop> getUrlopyAkceptHist() {
         return urlopyAkceptHist;
     }
-    
+
+    public String getNameAkceptHistFilter() {
+        return nameAkceptHistFilter;
+    }
+
+    public void setNameAkceptHistFilter(String nameAkceptHistFilter) {
+        this.nameAkceptHistFilter = nameAkceptHistFilter;
+    }
+
+    public String getNameObceFilter() {
+        return nameObceFilter;
+    }
+
+    public void setNameObceFilter(String nameObceFilter) {
+        this.nameObceFilter = nameObceFilter;
+    }
+
+    public String getNamePodwFilter() {
+        return namePodwFilter;
+    }
+
+    public void setNamePodwFilter(String namePodwFilter) {
+        this.namePodwFilter = namePodwFilter;
+    }
     
 }
