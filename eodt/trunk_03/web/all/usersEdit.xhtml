@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+
+        <h:form>
+            <a4j:outputPanel id="formWprow" layout="block">
+                <h:panelGrid columns="3" id="form">
+                    <h:outputLabel for="name" value="Imię i nazwisko: "/>
+                    <h:inputText id="name" value="#{UsersM.strukt.userId.fullname}"  size="50" ><rich:validator/></h:inputText>
+                    <rich:message for="name" styleClass="error" />
+
+                    <h:outputLabel for="email" value="eMail: "/>
+                    <h:inputText id="email" value="#{UsersM.strukt.userId.adrEmail}"  size="50"><rich:validator/></h:inputText>
+                    <rich:message for="email" styleClass="error" />
+
+                    <h:outputLabel for="kierownikE" value="Czy kierownik?: "/>
+                    <h:panelGroup>
+                        <h:selectBooleanCheckbox id="kierownikE" value="#{UsersM.strukt.stKier}" rendered="#{fn:length(UsersM.strukt.bezpPodWidoczni)==0}" valueChangeListener="#{UsersM.changeKierListener}">
+                            <a4j:ajax event="change" render="formWprow" execute="@this"/>
+                        </h:selectBooleanCheckbox>
+                        <rich:message for="kierownik" styleClass="error" />
+                        <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(UsersM.strukt.bezpPodWidoczni)>0) and UsersM.strukt.stKier}"/>
+                    </h:panelGroup>
+                    <br/>
+                    <h:outputLabel for="dzial" value="Dział: (edycja tylko dla kierownika)"/>
+                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
+                    <rich:message for="dzial" styleClass="error" />
+
+                    <h:outputLabel for="przelozonyEK" value="Przełożony: "/>
+                    <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" rendered="#{UsersM.strukt.stKier}">
+                        <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />
+                        <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                    </h:selectOneMenu>
+
+                    <h:selectOneMenu id="przelozonyEP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" rendered="#{!UsersM.strukt.stKier}">
+                        <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                    </h:selectOneMenu>
+                    <rich:message for="przelozonyEK" styleClass="error"/>
+
+                    <h:outputLabel for="przyjwnioski" value="Czy uprawniona do innych przyjmowania wniosków?: "/>
+                    <h:selectBooleanCheckbox id="przyjwnioski" value="#{UsersM.strukt.przyjmowanieWnioskow}"/>
+                    <rich:message for="przyjwnioski" styleClass="error" />
+
+                    <h:outputLabel for="extid" value="Zewnętrzne Id:"/>
+                    <h:inputText id="extid" value="#{UsersM.strukt.userId.extId}" size="10"/>
+                    <rich:message for="extid" styleClass="error" />
+                    <br/>
+                    <rich:message for="zapisz" styleClass="error"/>
+                    <br/>
+                    <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
+                    <a4j:commandLink id="zapisz" value="[Zapisz]" action="#{UsersM.zapisz}" render="formWprow" execute="formWprow"/>
+                </h:panelGrid>
+            </a4j:outputPanel>
+        </h:form>
+        <hr/>
+
+    </ui:define>
+
+</ui:composition>

@@ -73,6 +73,18 @@ public class UsersM implements Serializable {
         return "/all/usersList";
     }
     
+    public String nowy() {
+        edytuj = false;
+        nameFilter=null;
+        dzialFilter=null;
+        initUser();
+        return "/all/usersAdd";
+    }
+    
+    public String edycja() {
+        return "/all/usersEdit";
+    }
+    
     public String listaFiltr() {
         edytuj = false;
         //System.err.println("c"+nameFilter+"c");
@@ -107,7 +119,7 @@ public class UsersM implements Serializable {
         edytuj = false;
     }
 
-    public void zapisz() throws NonexistentEntityException, Exception {
+    public String zapisz() throws NonexistentEntityException, Exception {
         String error = struktC.editArti(strukt);
         if (error == null) {
             error = "Zmiana wykonana";
@@ -118,6 +130,7 @@ public class UsersM implements Serializable {
         context.addMessage(zapisz.getClientId(context), message);
         initUser();
         edytuj = true;
+        return "/all/usersList";
     }
 
     public void kierListener(ValueChangeEvent e) throws NullPointerException {

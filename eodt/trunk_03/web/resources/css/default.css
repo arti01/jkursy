@@ -34,3 +34,11 @@ a:link:hover, a:visited:hover  {
 	border: 1px solid brown;
 	width: 620px;
 }
+
+.rf-dt-c {
+    font-size: 13px;
+}
+
+.rf-cp-b {
+    font-size: 13px;
+}
