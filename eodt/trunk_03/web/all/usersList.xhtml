@@ -13,7 +13,7 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-
+	<h4>Lista pracowników</h4>
             <h:form>
                 <a4j:outputPanel id="formTabNew" layout="block" >
                     <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row">
@@ -33,8 +33,8 @@
 
                             <h:outputText id="nameE" value="#{strukt.userId.fullname}"/>
 
-                            <rich:collapsiblePanel header="Detale" expanded="false" switchType="client">
-                                <h:panelGrid columns="2" style="width:100%">
+                            <rich:collapsiblePanel header="Szczegóły" expanded="false" switchType="client">
+                                <h:panelGrid columns="2" style="width:100%;border-spacing:0px;">
                                     <h:outputLabel for="email" value="eMail: "/>
                                     <h:outputText id="email" value="#{strukt.userId.adrEmail}"/>
 
@@ -47,7 +47,7 @@
                                     <h:outputLabel for="przyjwnioski" value="Czy uprawniony do przyjmowania wniosków innych osób?: "/>
                                     <h:selectBooleanCheckbox id="przyjwnioski" value="#{strukt.przyjmowanieWnioskow}" readonly="true"/>
 
-                                    <h:outputLabel for="extid" value="Zewnętrzne Id:"/>
+                                    <h:outputLabel for="extid" value="Zewnętrzny identyfikator:"/>
                                     <h:outputText id="extid" value="#{strukt.userId.extId}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="1" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
@@ -81,11 +81,11 @@
                             </f:facet>
                             <rich:message for="zapisz" styleClass="error"/>
                             <br/>
-                            <h:commandLink id="zapisz" value="[Edytuj]" action="#{UsersM.edycja}">
+                            <h:commandLink id="zapisz" value="[  Edytuj  ]"  action="#{UsersM.edycja}">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </h:commandLink>
                             <br/>
-                            <a4j:commandLink id="usun" value="[Usuń]" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
+                            <a4j:commandLink id="usun" value="[  Usuń  ]" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
                         </rich:column>

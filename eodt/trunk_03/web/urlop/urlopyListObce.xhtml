@@ -13,7 +13,7 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-            <h3>Obsługa Obcych Wniosków</h3>
+            <h4>Obce wnioski</h4>
             <h:form>
                 <a4j:outputPanel id="formWprow" layout="block">
                     <h:panelGrid columns="3" id="form">
@@ -47,8 +47,11 @@
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-                        <a4j:commandLink id="dodaj" value="Zapisz wniosek" action="#{UrlopObceM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                        
                     </h:panelGrid>
+                    <center>
+                    <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopObceM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                    </center>
                 </a4j:outputPanel>
             </h:form>
             <hr/>
@@ -131,11 +134,11 @@
                             <br/>
                             <h:outputText value="#{urlop.dataDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" locale="#{UrlopObceM.locale}" timeZone="CET"/></h:outputText>
                         </rich:column>
-                        <rich:column style="background-color: #{urlop.statusId.kolor}">
+                        <rich:column style="background-color: #{urlop.statusId.kolor}; text-align: center">
                             <f:facet name="header">
                                 Status
                             </f:facet>
-                            <h:outputText value="#{urlop.statusId.opis}"/>
+                            <h:outputText style="text-alignment: center;" value="#{urlop.statusId.opis}"/>
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">

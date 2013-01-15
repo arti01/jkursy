@@ -43,12 +43,11 @@ INSERT INTO wn_rodzaje VALUES (1, 'Wypoczynkowy');
 -- Data for Name: wn_statusy; Type: TABLE DATA; Schema: public; Owner: eod
 --
 
-INSERT INTO wn_statusy VALUES (2, '#22DD55', 'Wysłany', 'UW');
-INSERT INTO wn_statusy VALUES (3, '#00EE00', 'Zaakceptowany', 'AK');
-INSERT INTO wn_statusy VALUES (1, '#0000EE', 'Utworzony', 'UT');
-INSERT INTO wn_statusy VALUES (4, '#EE0000', 'Odrzucony', 'OD');
-INSERT INTO wn_statusy VALUES (5, '#112233', 'Cofnięty', 'CO');
-
+INSERT INTO wn_statusy VALUES (2, '#e8ca79', 'Wysłany', 'UW');
+INSERT INTO wn_statusy VALUES (3, '#6fbb3a', 'Zaakceptowany', 'AK');
+INSERT INTO wn_statusy VALUES (1, '#9ddcda', 'Utworzony', 'UT');
+INSERT INTO wn_statusy VALUES (4, '#e87161', 'Odrzucony', 'OD');
+INSERT INTO wn_statusy VALUES (5, '#eaed8e', 'Cofnięty', 'CO');
 
 --dodawanie adminow z pelnia praw (hasla 'a')
 INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');

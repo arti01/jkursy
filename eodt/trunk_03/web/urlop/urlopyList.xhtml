@@ -13,7 +13,7 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-            <h3>Obsługa Wniosków</h3>
+            <h4>Twoje wnioski</h4>
 
             <a4j:outputPanel id="formWprow" layout="block">
                 <h:form>
@@ -46,8 +46,11 @@
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-                        <a4j:commandLink id="dodaj" value="Zapisz wniosek" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                        
                     </h:panelGrid>
+                    <center>
+                    <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                    </center>
                 </h:form>
             </a4j:outputPanel>
             <hr/>
@@ -81,7 +84,7 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.zmieniajacy.fullname}"/>
                                     </rich:column>
-                                    <rich:column>
+                                    <rich:column  style="alignment-adjust: central">
                                         <f:facet name="header">
                                             Status
                                         </f:facet>
@@ -122,7 +125,7 @@
                             <br/>
                             <h:outputText value="#{urlop.dataDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" locale="#{UrlopM.locale}" timeZone="CET"/></h:outputText>
                         </rich:column>
-                        <rich:column style="background-color: #{urlop.statusId.kolor}">
+                        <rich:column style="background-color: #{urlop.statusId.kolor} ; text-align: center">
                             <f:facet name="header">
                                 Status
                             </f:facet>

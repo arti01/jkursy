@@ -2,18 +2,18 @@ body
 {
     margin: 0 auto;
     padding: 0px;
-    font-family: tahoma,verdana,helvetica,sans-serif;
-    background-color: #8bc1b5;
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    background-color: #A7D1FF;
 }
 
 a:link, a:visited {
-  color: #045491;
+  color: black;
   font-weight : normal;
   text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
-  color: #045491;
+  color: gray;
   font-weight : normal;
   text-decoration : none;
 }
@@ -31,7 +31,7 @@ a:link:hover, a:visited:hover  {
     background-color: whitesmoke;
 }
 .rf-dt{
-	border: 1px solid brown;
+	border: 1px solid black;
 	width: 620px;
 }
 

@@ -8,17 +8,17 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
 
-        <div id="login">
+        <div id="login" style="background-color: #C1DFFF;">
             <center>
                 <form method="POST" name="loginform" action="j_security_check">
-                    <table style="vertical-align: middle; background-color: #c8cccd; margin: 10px,10px,10px,10px; border: 1px solid gray;"  cellpadding="5" cellspacing="5" border="0">
+                    <table style="width:300px;vertical-align: middle; background-color: #c8cccd; margin: 10px,10px,10px,10px; border: 1px solid gray;"  cellpadding="5" cellspacing="5" border="0">
                         <tr>
-                            <td>Użytkownik:</td>
-                            <td><input type="text" name="j_username"  class="pole_wpis"/></td>
+                            <td width="120px">Użytkownik:</td>
+                            <td width="180px"><input type="text" name="j_username"  class="pole_wpis" size="10" maxlength="250"/></td>
                         </tr>
                         <tr>
                             <td>Hasło:</td>
-                            <td><input type="password" name="j_password" class="pole_wpis"/></td>
+                            <td><input type="password" name="j_password" class="pole_wpis" size="10" maxlength="250"/></td>
                         </tr>
                         <tr>
                             <td colspan="2"><input type="submit" value="Zaloguj" class="przycisk" /></td>

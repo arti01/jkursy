@@ -13,7 +13,7 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-            <h3>Historia Akceptowanych Wniosków</h3>
+            <h4>Historia wniosków</h4>
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
@@ -93,7 +93,7 @@
                             <br/>
                             <h:outputText value="#{urlop.dataDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" locale="#{UrlopObceM.locale}" timeZone="CET"/></h:outputText>
                         </rich:column>
-                        <rich:column style="background-color: #{urlop.statusId.kolor}">
+                        <rich:column style="background-color: #{urlop.statusId.kolor}; text-align: center">
                             <f:facet name="header">
                                 Status
                             </f:facet>

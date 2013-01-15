@@ -60,7 +60,7 @@ public class WnUrlopJpaController implements Serializable {
             //nadawanie numeru wniosku;
             String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
             nrWniosku=nrWniosku+"/"+getWnUrlopCountRokBiezacy()+"/";
-            SimpleDateFormat sdf=new SimpleDateFormat("YYYY");
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
             nrWniosku=nrWniosku+sdf.format(new Date());
             wnUrlop.setNrWniosku(nrWniosku);
             em.getTransaction().begin();

@@ -13,7 +13,7 @@
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
-            
+            <h4>Wnioski do akceptacji</h4>
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
@@ -93,7 +93,7 @@
                             <br/>
                             <h:outputText value="#{urlop.dataDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" locale="#{UrlopM.locale}" timeZone="CET"/></h:outputText>
                         </rich:column>
-                        <rich:column style="background-color: #{urlop.statusId.kolor}">
+                        <rich:column style="background-color: #{urlop.statusId.kolor}; text-align: center">
                             <f:facet name="header">
                                 Status
                             </f:facet>
@@ -103,15 +103,15 @@
                             <f:facet name="header">
                                 Akcje
                             </f:facet>
-                            <a4j:commandLink value="Cofnij" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[  Cofnij  ]" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="Akceptuj" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[  Akceptuj  ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="Odrzuć" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[  Odrzuć  ]" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>

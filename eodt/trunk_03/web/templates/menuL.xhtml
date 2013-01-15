@@ -1,30 +1,79 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-    <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-    <h:form>
-        <ul>
-            <h:panelGrid rendered="#{login.struktura}">
-                <h4>Menu Struktura</h4>
-                
-            <li><h:commandLink value="Użytkownicy" action="#{UsersM.lista}" /></li>
-            <li><h:commandLink value="Nowy" action="#{UsersM.nowy}" /></li>
-            <li><h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" /></li>
-            <li><h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" /></li>
-            </h:panelGrid>
-            <h:panelGrid rendered="#{login.urlop}">
-                <h4>Menu Urlopy</h4>
-            <li><h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" /></li>
-            <li><h:commandLink value="Wnioski do akceptu" action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier}"/></li>
-            <li><h:commandLink value="Historia wniosków do akceptu" action="#{UrlopM.listPodwlHist}" rendered="#{login.zalogowany.stKier}"/></li>
-            <li><h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" rendered="#{login.zalogowany.przyjmowanieWnioskow}"/></li>
-            </h:panelGrid>
-            <h:panelGroup rendered="#{login.zalogowany.userId.extId==null and login.zalogowany!=null}">
-                <li><h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></li>
-            </h:panelGroup>
-            <li><a href="../logout.jsp">Wyjście</a></li>
-        </ul>
-    </h:form>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<link type="text/css" rel="stylesheet"
+	href="../resources/css/default.css"></link>
+<h:form>
+<h4>Menu</h4>
+	<ul>
+		<h:panelGrid rendered="#{login.struktura}">
+			<table
+				style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+				<tr>
+					<td width="100%"><h:commandLink value="Nowy pracownik"
+							action="#{UsersM.nowy}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink value="Lista pracowników"
+							action="#{UsersM.lista}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink value="Struktura osobowa"
+							action="#{StruktOsM.lista}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink value="Struktura działów"
+							action="#{StruktDzialM.lista}" /></td>
+				</tr>
+			</table>
+		</h:panelGrid>
+		<h:panelGrid rendered="#{login.urlop}">
+			<table
+				style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+
+				<tr>
+					<td width="100%"><h:commandLink value="Twoje wnioski"
+							action="#{UrlopM.list}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink value="Wnioski do akceptacji"
+							action="#{UrlopM.listPodwl}"
+							rendered="#{login.zalogowany.stKier}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink
+							value="Historia wniosków"
+							action="#{UrlopM.listPodwlHist}"
+							rendered="#{login.zalogowany.stKier}" /></td>
+				</tr>
+				<tr>
+					<td width="100%"><h:commandLink value="Obce wnioski"
+							action="#{UrlopObceM.list}"
+							rendered="#{login.zalogowany.przyjmowanieWnioskow}" /></td>
+				</tr>
+			</table>
+		</h:panelGrid>
+		<h:panelGroup
+			rendered="#{login.zalogowany.userId.extId==null and login.zalogowany!=null}">
+			<table
+				style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+
+				<tr>
+					<td width="100%"><h:outputLink
+							value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></td>
+				</tr>
+			</table>
+		</h:panelGroup>
+		<table
+			style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+			<tr>
+				<td width="100%"><a target="_top" href="../logout.jsp">Wyjście</a>
+				</td>
+			</tr>
+
+		</table>
+	</ul>
+</h:form>
 </html>

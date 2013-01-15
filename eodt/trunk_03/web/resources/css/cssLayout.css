@@ -1,7 +1,7 @@
 
 #top {
     position: relative;
-    background-color: #e9efef;
+    background-color: #C1DFFF;
     color: black;
     padding: 0px;
     margin: 0px 0px 10px 0px;
@@ -12,7 +12,7 @@
 
 #bottom {
     position: relative;
-    background-color: #e9efef;/*c8cccd;*/
+    background-color: #C1DFFF;/*c8cccd;*/
     padding: 5px;
     margin: 10px 0px 0px 0px;
     font-family: Arial, tahoma, sans;
@@ -26,16 +26,17 @@
     float: left;
     background-color: #e9efef;
     color: black;
-    padding: 0px;
+    padding: 0,0,0,0;
     width: 160px;
     min-height: 520px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: Arial, tahoma,sans;
+    border: 1px solid black;
 }
 #left ul
 {
     margin: 0;
-    padding: 5px 10px 5px 10px;
+    padding: 2px 2px 2px 2px;
     list-style: none;
 }
 
@@ -43,17 +44,22 @@
 #left li
 {
     margin: 0;
-    padding: 5px 10px 5px 10px;
-    border-bottom: 2px  dotted #006633;
+    /*padding: 5px 10px 5px 10px;*/
+   /* border-bottom: 2px  dotted #006633; */
     font-weight: bold;
 }
 
+#left tbody h4 {
+	font-size: 12px;
+	padding: 0,0,0,0;
+	margin: 0,0,0,0;
+}
 #left li a
 {
     color: black;
-    font-style: normal;
+    /*font-style: normal;*/
     text-decoration: none;
-    font-weight: normal;
+    /*font-weight: normal;*/
 }
 
 #left li a:hover
@@ -71,20 +77,24 @@
 }
 
 #content {
+	font-size: 12px;
+	position: relative;
    float: top;
 }
 
 #contentLewy {
     float: left;
-    padding: 5px;
+    padding: 0px;
     width: 350px;
     min-height: 500px;
-    margin: 5px;
+    margin: 0px;
 }
 .przycisk {
-	width: 80%;
+	width: 100px;
 	border: 1px solid black;
-	background-color: orange;	
+	background-color: orange;
+	padding: 5px, 2px, 5px, 2px;
+	margin: 5px, 2px, 5px, 2px;	
 }
 .pole_wpis{
 	width: 100%;
@@ -98,6 +108,7 @@
     margin: 5px;
 }
 #login {
+	background-color: #C1DFFF;
 	position: relative;
 	top:60px;
 	width: 100%;
@@ -117,7 +128,8 @@
 }
 
 .left_content {
-    background-color: #f9f9ff;
+	
+    background-color: white;
     padding: 1px;
     margin-left: 165px;
     height: 520px;
@@ -128,14 +140,16 @@
     font-family: arial, tahoma, sans;
 }
 .login_content {
-    background-color: #e9efef;
+	background-color: #C1DFFF;
+    
     padding: 0px;
     text-align: center;
     min-height: 520px;
     border: 0px solid black;
 }
 .right_content {
-    background-color: #dddddd;
+	
+    background-color: #C1DFFF;
     padding: 5px;
     margin: 0px 170px 0px 170px;
 }
@@ -157,7 +171,7 @@
 {
     width: 100%;
     table-layout: auto;
-    font-size: 0.9em;
+    font-size: 12px;
     font-style: normal;
     line-height: 1.3em;
     text-align: left;
@@ -169,6 +183,9 @@
 }
 #tabela select {
 	border: 1px solid black;	
+}
+#tabela form{
+	border: 0px;
 }
 
 #tabela table tr > td:first child
@@ -187,7 +204,7 @@
 
 #tabela th
 {
-    font-size: 1em;
+    font-size: 12px;
     background-color:#e2e8fa;  
     text-align: left;
     padding: 2px 2px;
@@ -206,42 +223,46 @@
 #tabela table td
 {
     max-width: 800px;
-    padding: 2px 2px;
-    
-    border: 0px solid #FFFFFF;
+    padding: 0px 0px;
+     border-bottom: 1px solid darkblue;
+    /*border: 0px solid #FFFFFF;*/
 }
 #tabela table tr td{
 	border-spacing:0px;
   
-  border-width: 0px;
+  	border-width: 0px;
+  	/*border-bottom-width: 1px;*/
 }
 #tabela table td table
 {       
-    /*table-layout: auto;*/
+    table-layout: auto;
     width: 200px;
     padding: 0px;
     background-color: #FFFFFF;
-    border: 0px solid black;
-    font-size: 0.9em;
+    border-width: 0px;
+  	
+    font-size: 12px;
     font-family: arial,tahoma, sans;
-    
+   
     
 }
 #tabela a
 {
 
     display: compact;
-    padding: 5px 0;
+    padding: 0,0,0,0;
     font-size: 1em;
     clear: one;
     font-weight:bold;
-    text-decoration: underline;
+    text-decoration: none;
     margin: 0px;
-    color: #000080;
+    color: black;
+    border-width: 0px;
+  	
 }
 #tabela a:hover
 {
-    color: #6699FF;
+    color: gray;
     text-shadow: 0px 0px 2px #FFFFFF;
 }
 #tabela li a
