@@ -34,7 +34,9 @@ a:link:hover, a:visited:hover  {
 	border: 1px solid black;
 	width: 620px;
 }
-
+.rf-trn-lbl {
+	font-size: 12px;
+}
 .rf-dt-c {
     font-size: 13px;
 }

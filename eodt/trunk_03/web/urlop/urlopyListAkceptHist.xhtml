@@ -39,7 +39,7 @@
                             </f:facet>
                             <h:outputText value="#{urlop.nrWniosku}"/>
                             <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
-                                <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
+                                <rich:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                     <rich:column>
                                         <f:facet name="header">
                                             data zmiany
@@ -52,17 +52,19 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.zmieniajacy.fullname}"/>
                                     </rich:column>
-                                    <rich:column>
+                                    <rich:column style="text-align: center">
                                         <f:facet name="header">
                                             Status
                                         </f:facet>
                                         <h:outputText value="#{hist.statusId.opis}"/>
                                     </rich:column>
                                     <rich:column>
-                                        <f:facet name="header">
-                                            Opis
-                                        </f:facet>
-                                        <h:outputText value="#{hist.opisZmiany}"/>
+                                        <rich:panel>
+                                            <h:outputText value=" [opis] " id="opis"/>
+                                            <rich:tooltip id="tt1" layout="block">
+                                                <h:outputText value="#{hist.opisZmiany}"/>
+                                            </rich:tooltip>
+                                        </rich:panel>
                                     </rich:column>
                                     <rich:column>
                                         <f:facet name="header">
@@ -70,7 +72,7 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.akceptant.fullname}"/>
                                     </rich:column>
-                                </h:dataTable>
+                                </rich:dataTable>
                             </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >

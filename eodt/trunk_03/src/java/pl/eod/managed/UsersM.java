@@ -30,7 +30,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
  */
 @ManagedBean(name = "UsersM")
 @SessionScoped
-public class UsersM implements Serializable{
+public class UsersM implements Serializable {
 
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();

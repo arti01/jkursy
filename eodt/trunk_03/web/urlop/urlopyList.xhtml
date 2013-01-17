@@ -18,24 +18,24 @@
             <a4j:outputPanel id="formWprow" layout="block">
                 <h:form>
                     <h:panelGrid columns="3" id="form">
-                        <h:outputLabel for="name" value="imię, nazwisko: "/>
+                        <h:outputLabel for="name" value="Imię i nazwisko: "/>
                         <h:inputText id="name" value="#{UrlopM.urlop.uzytkownik.fullname}"  size="50" readonly="true"/>
                         <rich:message for="name" styleClass="error" />
 
-                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj)"/>
+                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
                             <f:selectItems value="#{UrlopM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
                         </h:selectOneMenu>
                         <rich:message for="rodzajW" styleClass="error" />
 
-                        <h:outputLabel for="data_od" value="data od:"/>
+                        <h:outputLabel for="data_od" value="Data od:"/>
                         <rich:calendar value="#{UrlopM.urlop.dataOd}" id="data_od" locale="#{UrlopM.locale}"
                                        popup="true" datePattern="yyyy-MM-dd"
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
                             <rich:validator /></rich:calendar>
                         <rich:message for="data_od" styleClass="error" />
 
-                        <h:outputLabel for="data_do" value="data do:"/>
+                        <h:outputLabel for="data_do" value="Data do:"/>
                         <rich:calendar value="#{UrlopM.urlop.dataDo}" id="data_do" locale="#{UrlopM.locale}"
                                        popup="true" datePattern="yyyy-MM-dd"
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
@@ -46,10 +46,10 @@
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-                        
+
                     </h:panelGrid>
                     <center>
-                    <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
+                        <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </center>
                 </h:form>
             </a4j:outputPanel>
@@ -57,7 +57,7 @@
 
             <a4j:outputPanel id="formTab" layout="block">
                 <h:form>
-                    <rich:dataTable value="#{UrlopM.urlopyList}" var="urlop" id="table">
+                    <rich:dataTable value="#{UrlopM.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey">
                         <rich:column >
                             <f:facet name="header">
                                 Wniosek złożony przez
@@ -71,7 +71,7 @@
                             </f:facet>
                             <h:outputText value="#{urlop.nrWniosku}"/>
                             <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
-                                <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
+                                <rich:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                     <rich:column>
                                         <f:facet name="header">
                                             data zmiany
@@ -91,10 +91,12 @@
                                         <h:outputText value="#{hist.statusId.opis}"/>
                                     </rich:column>
                                     <rich:column>
-                                        <f:facet name="header">
-                                            Opis
-                                        </f:facet>
-                                        <h:outputText value="#{hist.opisZmiany}"/>
+                                        <rich:panel>
+                                            <h:outputText value=" [opis] " id="opis"/>
+                                            <rich:tooltip id="tt1" layout="block">
+                                                <h:outputText value="#{hist.opisZmiany}"/>
+                                            </rich:tooltip>
+                                        </rich:panel>
                                     </rich:column>
                                     <rich:column>
                                         <f:facet name="header">
@@ -102,7 +104,7 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.akceptant.fullname}"/>
                                     </rich:column>
-                                </h:dataTable>
+                                </rich:dataTable>
                             </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >

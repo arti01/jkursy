@@ -60,10 +60,10 @@
                                     </ul>
                                 </h:panelGrid>
                             </rich:collapsiblePanel>
-                            <br/>
+                            <hr/>
                         </rich:column>
 
-                        <rich:column id="colKier" style="width:30%" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
+                        <rich:column id="colKier" style="width:30%; text-align: center" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
                             <f:facet name="header">
                                 <h:outputText value="Dział"/><br/>
                                 <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
@@ -72,7 +72,9 @@
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>
                             </f:facet>
+                            <br/>
                             <h:outputText id="dzialE" value="#{strukt.dzialId.nazwa}"/>
+                            <hr/>
                         </rich:column>
 
                         <rich:column   style="width:10%">
@@ -88,6 +90,7 @@
                             <a4j:commandLink id="usun" value="[  Usuń  ]" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
+                            <hr/>
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>

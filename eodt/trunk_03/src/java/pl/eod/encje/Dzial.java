@@ -5,6 +5,7 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Constraint;
 import javax.validation.constraints.Size;
 
@@ -48,6 +50,9 @@ public class Dzial implements Serializable {
     
     @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Struktura> strukturaList;
+    
+    @Transient
+   private List<Struktura> strukturaListWidoczni; 
 
     public Dzial() {
     }
@@ -78,6 +83,14 @@ public class Dzial implements Serializable {
 
     public void setStrukturaList(List<Struktura> strukturaList) {
         this.strukturaList = strukturaList;
+    }
+
+    public List<Struktura> getStrukturaListWidoczni() {
+        strukturaListWidoczni=new ArrayList<Struktura>();
+        for(Struktura s:getStrukturaList()){
+            if(!s.isUsuniety()) strukturaListWidoczni.add(s);
+        }
+        return strukturaListWidoczni;
     }
 
     

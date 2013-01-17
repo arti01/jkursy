@@ -14,29 +14,30 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h4>Obce wnioski</h4>
-            <h:form>
+            
                 <a4j:outputPanel id="formWprow" layout="block">
+            <h:form>
                     <h:panelGrid columns="3" id="form">
-                        <h:outputLabel for="name" value="imię, nazwisko: "/>
+                        <h:outputLabel for="name" value="Imię i nazwisko: "/>
                         <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}">
-                            <f:selectItems value="#{login.zalogowany.dzialId.strukturaList}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                            <f:selectItems value="#{login.zalogowany.dzialId.strukturaListWidoczni}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
                         <rich:message for="name" styleClass="error" />
 
-                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj)"/>
+                        <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopObceM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
                             <f:selectItems value="#{UrlopObceM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
                         </h:selectOneMenu>
                         <rich:message for="rodzajW" styleClass="error" />
 
-                        <h:outputLabel for="data_od" value="data od:"/>
+                        <h:outputLabel for="data_od" value="Data od:"/>
                         <rich:calendar value="#{UrlopObceM.urlop.dataOd}" id="data_od" locale="#{UrlopObceM.locale}"
                                        popup="true" datePattern="yyyy-MM-dd"
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
                             <rich:validator /></rich:calendar>
                         <rich:message for="data_od" styleClass="error" />
 
-                        <h:outputLabel for="data_do" value="data do:"/>
+                        <h:outputLabel for="data_do" value="Data do:"/>
                         <rich:calendar value="#{UrlopObceM.urlop.dataDo}" id="data_do" locale="#{UrlopObceM.locale}"
                                        popup="true" datePattern="yyyy-MM-dd"
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
@@ -52,13 +53,14 @@
                     <center>
                     <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopObceM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </center>
-                </a4j:outputPanel>
             </h:form>
+                </a4j:outputPanel>
+            
             <hr/>
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopObceM.urlopyList}" var="urlop" id="table">
+                    <rich:dataTable value="#{UrlopObceM.urlopyList}" var="urlop" id="table" rowKeyVar="row">
                         <rich:column filterValue="#{UrlopM.nameObceFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameObceFilter)}">
                             <f:facet name="header">
@@ -79,8 +81,8 @@
                                 Nr wniosku
                             </f:facet>
                             <h:outputText value="#{urlop.nrWniosku}"/>
-                            <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
-                                <h:dataTable value="#{urlop.wnHistoriaList}" var="hist">
+                            <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab-#{row}">
+                                <rich:dataTable value="#{urlop.wnHistoriaList}" var="hist" id="histTabt-#{row}">
                                     <rich:column>
                                         <f:facet name="header">
                                             data zmiany
@@ -93,17 +95,19 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.zmieniajacy.fullname}"/>
                                     </rich:column>
-                                    <rich:column>
+                                    <rich:column style="text-align: center">
                                         <f:facet name="header">
                                             Status
                                         </f:facet>
                                         <h:outputText value="#{hist.statusId.opis}"/>
                                     </rich:column>
                                     <rich:column>
-                                        <f:facet name="header">
-                                            Opis
-                                        </f:facet>
-                                        <h:outputText value="#{hist.opisZmiany}"/>
+                                        <rich:panel id="panel_#{row}">
+                                            <h:outputText value=" [opis] " id="opis"/>
+                                            <rich:tooltip id="tt1" layout="block">
+                                                <h:outputText value="#{hist.opisZmiany}"/>
+                                            </rich:tooltip>
+                                        </rich:panel>
                                     </rich:column>
                                     <rich:column>
                                         <f:facet name="header">
@@ -111,7 +115,7 @@
                                         </f:facet>
                                         <h:outputText value="#{hist.akceptant.fullname}"/>
                                     </rich:column>
-                                </h:dataTable>
+                                </rich:dataTable>
                             </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >
