@@ -77,8 +77,8 @@ public class MailWyslij {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(adresat));
             message.setSubject(temat);
             message.setText(tresc);
-
-            Transport.send(message);
+            System.out.println(adresat);
+            //Transport.send(message);
 
             System.out.println("Done");
 

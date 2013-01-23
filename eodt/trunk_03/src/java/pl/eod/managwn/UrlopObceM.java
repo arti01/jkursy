@@ -66,7 +66,8 @@ public class UrlopObceM {
         
         //wysylanie maila
         KomKolejka kk=new KomKolejka();
-        kk.setAdresList(urlop.getAkceptant().getAdrEmail()+","+urlop.getUzytkownik().getStruktura().getExtraemail());
+        if(urlop.getUzytkownik().getStruktura().getExtraemail()!=null) kk.setAdresList(urlop.getAkceptant().getAdrEmail()+","+urlop.getUzytkownik().getStruktura().getExtraemail());
+        else kk.setAdresList(urlop.getAkceptant().getAdrEmail());
         kk.setStatus(0);
         kk.setTemat("prośba o akceptację wniosku urlopowego");
         kk.setTresc("Proszę o akceptację wniosku urlopowego "+urlop.getNrWniosku()+" wystawionego przez "+urlop.getUzytkownik().getFullname());
