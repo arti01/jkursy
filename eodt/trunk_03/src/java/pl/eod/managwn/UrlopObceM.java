@@ -66,7 +66,7 @@ public class UrlopObceM {
         
         //wysylanie maila
         KomKolejka kk=new KomKolejka();
-        kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+        kk.setAdresList(urlop.getAkceptant().getAdrEmail()+","+urlop.getUzytkownik().getStruktura().getExtraemail());
         kk.setStatus(0);
         kk.setTemat("prośba o akceptację wniosku urlopowego");
         kk.setTresc("Proszę o akceptację wniosku urlopowego "+urlop.getNrWniosku()+" wystawionego przez "+urlop.getUzytkownik().getFullname());
@@ -93,6 +93,16 @@ public class UrlopObceM {
     }
 
     public void dodaj() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UIComponent zapisz = UIComponent.getCurrentComponent(context);
+        FacesMessage message = new FacesMessage();
+        
+        if(urlop.getUzytkownik()==null){
+            message.setSummary("wybierz pracownika");
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage(zapisz.getClientId(context), message);
+            return;
+        }
         WnStatusy st = new WnStatusy();
         st.setId(new Long(1));
         urlop.setStatusId(st);
@@ -115,9 +125,6 @@ public class UrlopObceM {
         } else {
             error = urlopC.createEdit(urlop);
         }
-        FacesContext context = FacesContext.getCurrentInstance();
-        UIComponent zapisz = UIComponent.getCurrentComponent(context);
-        FacesMessage message = new FacesMessage();
         if (error != null) {
             message.setSummary(error);
             message.setSeverity(FacesMessage.SEVERITY_ERROR);

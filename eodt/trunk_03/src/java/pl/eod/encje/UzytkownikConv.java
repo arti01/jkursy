@@ -25,6 +25,7 @@ public class UzytkownikConv implements Converter, Serializable {
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         String u;
+        //System.out.println(value+"asobiekt start");
         try {
             u = (value != null) ? value : null;
         } catch (NumberFormatException ec) {

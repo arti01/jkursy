@@ -72,6 +72,9 @@ public class Struktura implements Serializable {
     @Column(name = "usuniety", nullable = true)
     private Integer usuniety;
     
+    @Column(name = "extraemail", nullable = true)
+    private String extraemail;
+    
     @Transient
     List<Struktura> bezpPodzPodwlad;
     @Transient
@@ -245,8 +248,14 @@ public class Struktura implements Serializable {
         if(przyjmowanieWnioskow) this.przyjmowanieWnioskow=0;
         else this.przyjmowanieWnioskow = 1;
     }
-    
-    
+
+    public String getExtraemail() {
+        return extraemail;
+    }
+
+    public void setExtraemail(String extraemail) {
+        this.extraemail = extraemail;
+    }
     
     @Override
     public int hashCode() {

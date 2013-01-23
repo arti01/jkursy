@@ -175,7 +175,7 @@
     font-style: normal;
     line-height: 1.3em;
     text-align: left;
-    padding: 0px;
+    padding: 1px;
     border-spacing: 0px;
 }
 #tabela input {
@@ -223,21 +223,21 @@
 #tabela table td
 {
     max-width: 800px;
-    padding: 0px 0px;
+    padding: 2px 2px;
      border-bottom: 1px solid darkblue;
     /*border: 0px solid #FFFFFF;*/
 }
 #tabela table tr td{
 	border-spacing:0px;
   
-  	border-width: 0px;
+  	border-width: 1px;
   	/*border-bottom-width: 1px;*/
 }
 #tabela table td table
 {       
     table-layout: auto;
     width: 200px;
-    padding: 0px;
+    padding: 2px;
     background-color: #FFFFFF;
     border-width: 0px;
   	

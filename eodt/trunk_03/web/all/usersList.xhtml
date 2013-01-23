@@ -49,6 +49,9 @@
 
                                     <h:outputLabel for="extid" value="Zewnętrzny identyfikator:"/>
                                     <h:outputText id="extid" value="#{strukt.userId.extId}"/>
+                                    
+                                    <h:outputLabel for="extraemail" value="Dodatkowe emaile:"/>
+                                    <h:outputText id="extraemail" value="#{strukt.extraemail}"/>
                                 </h:panelGrid>
                                 <h:panelGrid columns="1" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
                                     <br/>
@@ -60,7 +63,6 @@
                                     </ul>
                                 </h:panelGrid>
                             </rich:collapsiblePanel>
-                            <hr/>
                         </rich:column>
 
                         <rich:column id="colKier" style="width:30%; text-align: center" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
@@ -74,7 +76,6 @@
                             </f:facet>
                             <br/>
                             <h:outputText id="dzialE" value="#{strukt.dzialId.nazwa}"/>
-                            <hr/>
                         </rich:column>
 
                         <rich:column   style="width:10%">
@@ -82,7 +83,6 @@
                                 <h:outputText value="Akcje"/>
                             </f:facet>
                             <rich:message for="zapisz" styleClass="error"/>
-                            <br/>
                             <h:commandLink id="zapisz" value="[  Edytuj  ]"  action="#{UsersM.edycja}">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </h:commandLink>
@@ -90,7 +90,6 @@
                             <a4j:commandLink id="usun" value="[  Usuń  ]" render="@form, formWprow" action="#{UsersM.usun}" rendered="#{fn:length(strukt.bezpPod)==0}" execute="formTab">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
-                            <hr/>
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>
