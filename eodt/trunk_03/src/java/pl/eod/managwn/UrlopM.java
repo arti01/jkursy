@@ -84,6 +84,15 @@ public class UrlopM implements Serializable {
             urlopC.createEdit(urlop);
 
             //wysylanie maila
+            if(urlop.getUzytkownik().getStruktura().getExtraemail()!=null){
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                kk.setStatus(0);
+                kk.setTemat("prośba o akceptację wniosku urlopowego");
+                kk.setTresc("Proszę o akceptację wniosku urlopowego " + urlop.getNrWniosku() + " wystawionego przez " + urlop.getUzytkownik().getFullname());
+                KomKolC.create(kk);
+            }
+            
             if (!urlop.getAkceptant().getAdrEmail().equals("")) {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getAkceptant().getAdrEmail());

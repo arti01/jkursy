@@ -130,6 +130,7 @@ public class UsersM implements Serializable {
         context.addMessage(zapisz.getClientId(context), message);
         initUser();
         edytuj = true;
+        //new Login().refresh();
         return "/all/usersList";
     }
 

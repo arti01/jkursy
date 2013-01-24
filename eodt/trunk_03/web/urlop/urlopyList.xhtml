@@ -40,8 +40,12 @@
                                        popup="true" datePattern="yyyy-MM-dd"
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
                             <rich:validator /></rich:calendar>
-
                         <rich:message for="data_do" styleClass="error" />
+                        
+                        <h:outputLabel for="extraemail" value="#{UrlopM.urlop.extraemail} czy wysłać informacje na dodatkowe e-maile?" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
+                        <h:selectBooleanCheckbox value="#{UrlopM.urlop.extraemail}" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
+                        <rich:message for="extraemail" styleClass="error" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
+                        <h:outputText id="extraemail" value="#{UrlopM.urlop.uzytkownik.struktura.extraemail}" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
 
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
