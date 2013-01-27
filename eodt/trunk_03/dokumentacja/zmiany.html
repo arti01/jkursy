@@ -8,10 +8,12 @@
         <div>
             <h3>2012-01-24</h3>
             <h4>dodanie pola "ekstra email" które wypełnione powoduje wysłanie informacji o wysłaniu
-            nowego wniosku nie tylko do przełożonego, ale również na adresy w nim wymienione</h4>
+                nowego wniosku nie tylko do przełożonego, ale również na adresy w nim wymienione</h4>
             <ul>
                 <li>
-                 Dodać pola (skrypty)
+                    Dodać pola:
+                    - struktura - extraemail character varying(255),
+                    - wn_urlop - extraemail smallint,
                 </li>
                 <li>
                     checkbox wyslij na dodatkowe emaile pojawia się wtedy, gdy długość
@@ -20,6 +22,17 @@
                 <li>
                     pole extraemaile przy dodawaniu/edycji pracownika musi zawierać adresy email
                     oddzielone przecinkiem
+                </li>
+                <li>
+                    Nowa tabela dla linków (Do pobrania) w menu:
+                    CREATE TABLE menu_linki
+                    (
+                    id integer NOT NULL,
+                    nazwa character varying(255),
+                    link character varying(255),
+                    opis character varying(255),
+                    CONSTRAINT menu_linki_pkey PRIMARY KEY (id )
+                    )
                 </li>
             </ul>
             <h3>2012-01-08/09/10</h3>

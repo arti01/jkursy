@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +13,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import pl.eod.encje.ConfigJpaController;
+import pl.eod.encje.MenuLinki;
+import pl.eod.encje.MenuLinkiJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.UzytkownikJpaController;
@@ -29,11 +32,15 @@ public class Login implements Serializable {
     boolean urlop;
     boolean struktura;
     String typLogowania;
+    List<MenuLinki> menuLinki;
+    MenuLinkiJpaController menuLinkiC;
 
     @PostConstruct
     public void init() {
         ConfigJpaController confC = new ConfigJpaController();
         typLogowania = confC.findConfigNazwa("realm_szyfrowanie").getWartosc();
+        menuLinkiC= new MenuLinkiJpaController();
+        menuLinki=menuLinkiC.findMenuLinkiEntities();
     }
 
     public String wyloguj() {
@@ -177,4 +184,10 @@ public class Login implements Serializable {
     public void setTypLogowania(String typLogowania) {
         this.typLogowania = typLogowania;
     }
+
+    public List<MenuLinki> getMenuLinki() {
+        return menuLinki;
+    }
+    
+    
 }
