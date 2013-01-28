@@ -37,7 +37,6 @@ public class UzytkownikConv implements Converter, Serializable {
         }catch(NumberFormatException nfe){
             wynik=null;
         }
-        System.out.println(wynik+"asobiekt");
         return wynik;
 
     }
@@ -45,7 +44,6 @@ public class UzytkownikConv implements Converter, Serializable {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         Uzytkownik u = (Uzytkownik) value;
-        System.out.println((value != null) ? u.getId().toString() : null);
         return (value != null) ? u.getId().toString() : null;
     }
 }

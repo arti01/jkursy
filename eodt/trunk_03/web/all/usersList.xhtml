@@ -43,6 +43,20 @@
 
                                     <h:outputLabel for="przelozonyK" value="Przełożony: "/>
                                     <h:outputText id="przelozonyK" value="#{strukt.szefId.userId.fullname}"/>
+                                    
+                                    <h:outputLabel for="sec_user_id" value="zastępca:"/>
+                                    <h:outputText id="sec_user_id" value="#{strukt.secUserId.fullname}"/>
+                                    
+                                    <h:outputLabel for="sec_user_id_jest" value="jest zastępcą dla:"/>
+                                    <h:panelGrid columns="2">
+                                        <ul>
+                                        <ui:repeat value="#{strukt.userId.strukturaSec}" var="str">
+                                            <li>
+                                                #{str.userId.fullname}
+                                            </li>
+                                        </ui:repeat>
+                                            </ul>
+                                    </h:panelGrid>
 
                                     <h:outputLabel for="przyjwnioski" value="Czy uprawniony do przyjmowania wniosków innych osób?: "/>
                                     <h:selectBooleanCheckbox id="przyjwnioski" value="#{strukt.przyjmowanieWnioskow}" readonly="true"/>

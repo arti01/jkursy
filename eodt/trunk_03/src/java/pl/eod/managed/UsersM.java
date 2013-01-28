@@ -175,7 +175,7 @@ public class UsersM implements Serializable {
             }
         }
     }
-
+    
     public List<Uzytkownik> getUsers() {
         users = userC.findUzytkownikEntities();
         return users;

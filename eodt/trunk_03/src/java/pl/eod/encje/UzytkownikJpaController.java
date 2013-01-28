@@ -12,6 +12,7 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
@@ -149,6 +150,21 @@ public class UzytkownikJpaController implements Serializable {
         }
     }
 
+    public Uzytkownik findUzytkownikByEmail(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Uzytkownik> user = cq.from(Uzytkownik.class);
+            cq.select(user);
+            cq.where(cb.equal(user.get(Uzytkownik_.adrEmail), email));
+            Query q = em.createQuery(cq);
+            return (Uzytkownik)q.getSingleResult();
+        } finally {
+            em.close();
+        }
+    }
+    
     public int getUzytkownikCount() {
         EntityManager em = getEntityManager();
         try {

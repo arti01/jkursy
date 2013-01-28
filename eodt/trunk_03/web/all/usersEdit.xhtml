@@ -47,6 +47,13 @@
                         <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                     </h:selectOneMenu>
                     <rich:message for="przelozonyEK" styleClass="error"/>
+                    
+                    <h:outputLabel for="sec_user_id" value="Zastępca (podaj email)"/>
+                    <rich:autocomplete id="sec_user_id" value="#{UsersM.strukt.secUserId}" mode="lazyClient" autocompleteList="#{UsersM.users}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
+                        #{user.adrEmail}
+                        #{user.fullname}
+                    </rich:autocomplete>
+                    <rich:message for="sec_user_id" styleClass="error" />
 
                     <h:outputLabel for="przyjwnioski" value="Czy uprawniona do innych przyjmowania wniosków?: "/>
                     <h:selectBooleanCheckbox id="przyjwnioski" value="#{UsersM.strukt.przyjmowanieWnioskow}"/>
