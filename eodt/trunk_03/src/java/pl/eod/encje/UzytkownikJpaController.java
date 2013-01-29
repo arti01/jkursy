@@ -39,26 +39,14 @@ public class UzytkownikJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Struktura strukturaSec = uzytkownik.getStrukturaSec();
-            if (strukturaSec != null) {
-                strukturaSec = em.getReference(strukturaSec.getClass(), strukturaSec.getId());
-                uzytkownik.setStrukturaSec(strukturaSec);
-            }
+            
             Struktura struktura = uzytkownik.getStruktura();
             if (struktura != null) {
                 struktura = em.getReference(struktura.getClass(), struktura.getId());
                 uzytkownik.setStruktura(struktura);
             }
             em.persist(uzytkownik);
-            if (strukturaSec != null) {
-                Uzytkownik oldSecUserIdOfStrukturaSec = strukturaSec.getSecUserId();
-                if (oldSecUserIdOfStrukturaSec != null) {
-                    oldSecUserIdOfStrukturaSec.setStrukturaSec(null);
-                    oldSecUserIdOfStrukturaSec = em.merge(oldSecUserIdOfStrukturaSec);
-                }
-                strukturaSec.setSecUserId(uzytkownik);
-                strukturaSec = em.merge(strukturaSec);
-            }
+            
             if (struktura != null) {
                 Uzytkownik oldUserIdOfStruktura = struktura.getUserId();
                 if (oldUserIdOfStruktura != null) {
@@ -97,11 +85,6 @@ public class UzytkownikJpaController implements Serializable {
                 uzytkownik.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The uzytkownik with id " + id + " no longer exists.", enfe);
-            }
-            Struktura strukturaSec = uzytkownik.getStrukturaSec();
-            if (strukturaSec != null) {
-                strukturaSec.setSecUserId(null);
-                strukturaSec = em.merge(strukturaSec);
             }
             Struktura struktura = uzytkownik.getStruktura();
             if (struktura != null) {
@@ -158,6 +141,7 @@ public class UzytkownikJpaController implements Serializable {
             Root<Uzytkownik> user = cq.from(Uzytkownik.class);
             cq.select(user);
             cq.where(cb.equal(user.get(Uzytkownik_.adrEmail), email));
+            cq.where(cb.and(cb.equal(user.get(Uzytkownik_.adrEmail), "")));
             Query q = em.createQuery(cq);
             return (Uzytkownik)q.getSingleResult();
         } finally {

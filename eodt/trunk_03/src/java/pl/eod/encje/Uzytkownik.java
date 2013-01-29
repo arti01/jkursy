@@ -24,7 +24,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -61,7 +60,7 @@ public class Uzytkownik implements Serializable {
     private String extId;
     
     @OneToMany(mappedBy = "secUserId")
-    Struktura strukturaSec;
+    List<Struktura> strukturaSec;
     
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.ALL})
     Struktura struktura;
@@ -125,11 +124,11 @@ public class Uzytkownik implements Serializable {
         this.adrEmail = adrEmail;
     }
 
-    public Struktura getStrukturaSec() {
+    public List<Struktura> getStrukturaSec() {
         return strukturaSec;
     }
 
-    public void setStrukturaSec(Struktura strukturaSec) {
+    public void setStrukturaSec(List<Struktura> strukturaSec) {
         this.strukturaSec = strukturaSec;
     }
 

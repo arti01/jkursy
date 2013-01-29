@@ -58,15 +58,17 @@ public class Struktura implements Serializable {
     private int przyjmowanieWnioskow;
     
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Uzytkownik secUserId;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Uzytkownik userId;
+    
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.ALL})
     private Dzial dzialId;
+    
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     
