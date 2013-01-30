@@ -14,6 +14,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
@@ -140,10 +141,14 @@ public class UzytkownikJpaController implements Serializable {
             CriteriaQuery cq = cb.createQuery();
             Root<Uzytkownik> user = cq.from(Uzytkownik.class);
             cq.select(user);
-            cq.where(cb.equal(user.get(Uzytkownik_.adrEmail), email));
-            cq.where(cb.and(cb.equal(user.get(Uzytkownik_.adrEmail), "")));
+            Predicate emailP=cb.equal(user.get(Uzytkownik_.adrEmail), email);
+            Predicate niePuste=cb.notEqual(user.get(Uzytkownik_.adrEmail), "");
+            cq.where(cb.and(emailP, niePuste));
             Query q = em.createQuery(cq);
-            return (Uzytkownik)q.getSingleResult();
+            if(q.getResultList().isEmpty()) {
+                return null;
+            }
+            else return (Uzytkownik)q.getSingleResult();
         } finally {
             em.close();
         }
