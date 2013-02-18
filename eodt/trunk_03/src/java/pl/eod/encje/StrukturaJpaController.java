@@ -186,6 +186,8 @@ public class StrukturaJpaController implements Serializable {
         try {
             em = getEntityManager();
             Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
+            Struktura oldSecUser=null;
+            if(oldStruktura.getSecUserId()!=null) oldSecUser=oldStruktura.getSecUserId().getStruktura();
             Long idOldSzef = null;
             if (oldStruktura.getSzefId() != null) {
                 idOldSzef = oldStruktura.getSzefId().getId();
@@ -220,6 +222,7 @@ public class StrukturaJpaController implements Serializable {
                     return "dział już istnieje";
                 }
             }
+            
             em.getTransaction().begin();
             em.merge(struktura);
             em.getTransaction().commit();
@@ -229,6 +232,12 @@ public class StrukturaJpaController implements Serializable {
             }
             if (idOldSzef != null) {
                 em.refresh(em.find(struktura.getClass(), idOldSzef));
+            }
+            if(struktura.getSecUserId()!=null){
+                em.refresh(em.find(struktura.getClass(), struktura.getSecUserId().getStruktura().getId()));
+            }
+            if(oldSecUser!=null){
+                em.refresh(em.find(struktura.getClass(), oldSecUser.getId()));
             }
 
         } finally {

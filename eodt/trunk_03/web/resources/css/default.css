@@ -44,3 +44,7 @@ a:link:hover, a:visited:hover  {
 .rf-cp-b {
     font-size: 13px;
 }
+
+input.rf-au-inp{
+    font-size: 13px;
+}
