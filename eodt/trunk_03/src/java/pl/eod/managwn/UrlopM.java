@@ -19,6 +19,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
+import pl.eod.encje.Struktura;
+import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
@@ -318,16 +320,22 @@ public class UrlopM implements Serializable {
         login.refresh();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
-        urlopyAkcept.setWrappedData(login.getZalogowany().getUserId().getWnUrlopListDoAkceptu());
+        
+        ArrayList<WnUrlop> akceptL=new ArrayList<WnUrlop>();
+        akceptL.addAll(login.getZalogowany().getUserId().getWnUrlopListDoAkceptu());
+        for(Struktura s:login.getZalogowany().getUserId().getStrukturaSec()){
+            akceptL.addAll(s.getUserId().getWnUrlopListDoAkceptu());
+        }
+        urlopyAkcept.setWrappedData(akceptL);
         
         ArrayList<WnUrlop> akceptHist=new ArrayList<WnUrlop>();
-        login.refresh();
         for(WnHistoria wh:login.getZalogowany().getUserId().getWnHistoriaListAkceptant()){
             if(!akceptHist.contains(wh.getUrlopId())) {
                 akceptHist.add(wh.getUrlopId());
             }
         }
         urlopyAkceptHist.setWrappedData(akceptHist);
+        login.refresh();
     }
 
     public WnUrlop getUrlop() {

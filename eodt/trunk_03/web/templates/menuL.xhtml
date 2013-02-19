@@ -42,7 +42,7 @@
                     <tr>
                         <td width="100%"><h:commandLink value="Wnioski do akceptacji"
                                                         action="#{UrlopM.listPodwl}"
-                                                        rendered="#{login.zalogowany.stKier}" /></td>
+                                                        rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" /></td>
                     </tr>
                     <tr>
                         <td width="100%"><h:commandLink
