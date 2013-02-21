@@ -47,9 +47,11 @@ public class Struktura implements Serializable {
     @SequenceGenerator(name = "SEQSTRUKTURA", sequenceName = "SEQSTRUKTURA")
     @Column(name = "id")
     private Long id;
+    
     @JoinColumn(name = "szef_id", referencedColumnName = "id")
     @ManyToOne()
     private Struktura szefId;
+    
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
     

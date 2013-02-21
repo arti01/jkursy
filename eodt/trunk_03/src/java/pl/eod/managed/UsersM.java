@@ -107,7 +107,7 @@ public class UsersM implements Serializable {
         }
     }
 
-    public void usun() throws NonexistentEntityException, Exception{
+    public void usun() {
         struktC.zrobNiewidczony(strukt);
         initUser();
         edytuj = false;
@@ -122,16 +122,17 @@ public class UsersM implements Serializable {
     public String zapisz() throws NonexistentEntityException, Exception {
         String error = struktC.editArti(strukt);
         if (error == null) {
-            error = "Zmiana wykonana";
+            initUser();
+            //error = "Zmiana wykonana";
+            return "/all/usersList";
         }
         FacesMessage message = new FacesMessage(error);
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         context.addMessage(zapisz.getClientId(context), message);
-        initUser();
         edytuj = true;
         //new Login().refresh();
-        return "/all/usersList";
+        return "/all/usersEdit";
     }
 
     public void kierListener(ValueChangeEvent e) throws NullPointerException {

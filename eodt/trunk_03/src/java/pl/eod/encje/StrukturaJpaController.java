@@ -119,7 +119,8 @@ public class StrukturaJpaController implements Serializable {
         EntityManager em = null;
         em = getEntityManager();
         Dzial dOld = em.find(Dzial.class, struktura.getDzialId().getId());
-        Struktura sOld = null;
+        Struktura sOld;
+        sOld = null;
         if (struktura.getSzefId() != null) {
             sOld = em.find(Struktura.class, struktura.getSzefId().getId());
         }
@@ -176,7 +177,7 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
-    public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
+    public String editArti(Struktura struktura)  {
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -208,6 +209,8 @@ public class StrukturaJpaController implements Serializable {
                 }
             }
 
+            System.out.println(struktura.getDzialId().getNazwa());
+            System.out.println(oldStruktura.getDzialId().getNazwa());
             if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) && struktura.isStKier() == true) {
                 DzialJpaController dC = new DzialJpaController();
                 if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
@@ -225,6 +228,7 @@ public class StrukturaJpaController implements Serializable {
             
             em.getTransaction().begin();
             em.merge(struktura);
+            em.merge(struktura.getDzialId());
             em.getTransaction().commit();
 
             if (struktura.getSzefId() != null) {
