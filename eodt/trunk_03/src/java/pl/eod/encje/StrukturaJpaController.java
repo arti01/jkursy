@@ -209,8 +209,8 @@ public class StrukturaJpaController implements Serializable {
                 }
             }
 
-            System.out.println(struktura.getDzialId().getNazwa());
-            System.out.println(oldStruktura.getDzialId().getNazwa());
+            //System.out.println(struktura.getDzialId().getNazwa());
+            //System.out.println(oldStruktura.getDzialId().getNazwa());
             if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) && struktura.isStKier() == true) {
                 DzialJpaController dC = new DzialJpaController();
                 if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
@@ -228,7 +228,9 @@ public class StrukturaJpaController implements Serializable {
             
             em.getTransaction().begin();
             em.merge(struktura);
-            em.merge(struktura.getDzialId());
+            /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
+                em.merge(struktura.getDzialId());   
+            }*/
             em.getTransaction().commit();
 
             if (struktura.getSzefId() != null) {
