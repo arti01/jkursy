@@ -48,7 +48,7 @@ public class Dzial implements Serializable {
     @Column(name = "nazwa", nullable = false, unique = true)
     private String nazwa;
     
-    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY)
     private List<Struktura> strukturaList;
     
     @Transient

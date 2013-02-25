@@ -27,16 +27,18 @@
                     <h:outputLabel for="kierownikE" value="Czy kierownik?: "/>
                     <h:panelGroup>
                         <h:selectBooleanCheckbox id="kierownikE" value="#{UsersM.strukt.stKier}" rendered="#{fn:length(UsersM.strukt.bezpPodWidoczni)==0}" valueChangeListener="#{UsersM.changeKierListener}">
-                            <a4j:ajax event="change" render="formWprow" execute="@this"/>
+                            <a4j:ajax event="change" render="formWprow" execute="kierownikE"/>
                         </h:selectBooleanCheckbox>
-                        <rich:message for="kierownik" styleClass="error" />
+                        <rich:message for="kierownikE" styleClass="error" />
                         <h:outputText value="TAK (nie można zmienić, posiada podwładnych)" rendered="#{(fn:length(UsersM.strukt.bezpPodWidoczni)>0) and UsersM.strukt.stKier}"/>
                     </h:panelGroup>
                     <br/>
-                    <h:outputLabel for="dzial" value="Dział: (edycja tylko dla kierownika)"/>
-                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" readonly="#{!UsersM.strukt.stKier}" size="50"/>
-                    <rich:message for="dzial" styleClass="error" />
 
+                    <h:outputLabel for="dzial" value="Dział: (edycja tylko dla kierownika)" rendered="#{UsersM.strukt.stKier}"/>
+                    <h:inputText id="dzial" value="#{UsersM.strukt.dzialId.nazwa}" rendered="#{UsersM.strukt.stKier}" size="50"/>
+                    <rich:message for="dzial" styleClass="error" rendered="#{UsersM.strukt.stKier}"/>
+                    
+                    
                     <h:outputLabel for="przelozonyEK" value="Przełożony: "/>
                     <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" rendered="#{UsersM.strukt.stKier}">
                         <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />

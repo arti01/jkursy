@@ -68,6 +68,7 @@
                     </tr>
                 </table>
             </h:panelGroup>
+            <h:panelGroup rendered="#{fn:length(login.menuLinki)>0}">
             <h4>do pobrania</h4>
             <ul>
                 <ui:repeat value="#{login.menuLinki}" var="menuLinki">
@@ -82,6 +83,7 @@
                     </li>
                 </ui:repeat>
             </ul>
+            </h:panelGroup>
             <table
                 style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
                 <tr>

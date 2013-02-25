@@ -48,7 +48,7 @@
                                     <h:outputText id="sec_user_id" value="#{strukt.secUserId.fullname}"/>
 
                                     <h:outputLabel for="sec_user_id_jest" value="jest zastępcą dla:"/>
-                                    <h:panelGroup >
+                                    <h:panelGroup id="sec_user_id_jest">
                                         <ul>
                                             <ui:repeat value="#{strukt.userId.strukturaSec}" var="str">
                                                 <li>

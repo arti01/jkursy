@@ -25,7 +25,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 public class UzytkownikJpaController implements Serializable {
 
     public UzytkownikJpaController() {
-        if(this.emf==null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -40,14 +40,14 @@ public class UzytkownikJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            
+
             Struktura struktura = uzytkownik.getStruktura();
             if (struktura != null) {
                 struktura = em.getReference(struktura.getClass(), struktura.getId());
                 uzytkownik.setStruktura(struktura);
             }
             em.persist(uzytkownik);
-            
+
             if (struktura != null) {
                 Uzytkownik oldUserIdOfStruktura = struktura.getUserId();
                 if (oldUserIdOfStruktura != null) {
@@ -68,12 +68,11 @@ public class UzytkownikJpaController implements Serializable {
 
     public void editaRTI(Uzytkownik uzytkownik) {
         EntityManager em = null;
-          em = getEntityManager();
-        em.getTransaction().begin(); 
+        em = getEntityManager();
+        em.getTransaction().begin();
         em.merge(uzytkownik);
         em.getTransaction().commit();
     }
-    
 
     public void destroy(Long id) throws NonexistentEntityException {
         EntityManager em = null;
@@ -137,23 +136,24 @@ public class UzytkownikJpaController implements Serializable {
     public Uzytkownik findUzytkownikByEmail(String email) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<Uzytkownik> user = cq.from(Uzytkownik.class);
             cq.select(user);
-            Predicate emailP=cb.equal(user.get(Uzytkownik_.adrEmail), email);
-            Predicate niePuste=cb.notEqual(user.get(Uzytkownik_.adrEmail), "");
+            Predicate emailP = cb.equal(user.get(Uzytkownik_.adrEmail), email);
+            Predicate niePuste = cb.notEqual(user.get(Uzytkownik_.adrEmail), "");
             cq.where(cb.and(emailP, niePuste));
             Query q = em.createQuery(cq);
-            if(q.getResultList().isEmpty()) {
+            if (q.getResultList().isEmpty()) {
                 return null;
+            } else {
+                return (Uzytkownik) q.getSingleResult();
             }
-            else return (Uzytkownik)q.getSingleResult();
         } finally {
             em.close();
         }
     }
-    
+
     public int getUzytkownikCount() {
         EntityManager em = getEntityManager();
         try {
@@ -166,34 +166,36 @@ public class UzytkownikJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public Struktura findStruktura(String email) {
         EntityManager em = getEntityManager();
         try {
-            Query q=em.createNamedQuery("Uzytkownik.findByAdrEmail");
+            Query q = em.createNamedQuery("Uzytkownik.findByAdrEmail");
             q.setParameter("adrEmail", email);
-            Uzytkownik u=(Uzytkownik) q.getSingleResult();
+            Uzytkownik u = (Uzytkownik) q.getResultList().get(0);
             em.refresh(u);
             //em.refresh(u.getStruktura());
             return u.getStruktura();
-        }catch(NoResultException ex){
+        } catch (NoResultException ex) {
             //ex.printStackTrace();
+            return null;
+        } catch (Exception ex1) {
             return null;
         } finally {
             em.close();
         }
     }
-    
+
     public Struktura findStrukturaExtid(String extid) {
         EntityManager em = getEntityManager();
         try {
-            Query q=em.createNamedQuery("Uzytkownik.findByExtId");
+            Query q = em.createNamedQuery("Uzytkownik.findByExtId");
             q.setParameter("extId", extid);
-            Uzytkownik u=(Uzytkownik) q.getSingleResult();
+            Uzytkownik u = (Uzytkownik) q.getSingleResult();
             em.refresh(u);
             //em.refresh(u.getStruktura());
             return u.getStruktura();
-        }catch(NoResultException ex){
+        } catch (NoResultException ex) {
             //ex.printStackTrace();
             return null;
         } finally {

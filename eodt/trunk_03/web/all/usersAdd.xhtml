@@ -27,7 +27,7 @@
 
                     <h:outputLabel for="kierownik" value="Czy kierownik?: "/>
                     <h:selectBooleanCheckbox id="kierownik" value="#{UsersM.strukt.stKier}" valueChangeListener="#{UsersM.kierListener}">
-                        <a4j:ajax event="change" render="dzial, przelozony" execute="@this"/>
+                        <a4j:ajax event="change" render="dzial, przelozony, przelozonyP" execute="@this"/>
                     </h:selectBooleanCheckbox>
                     <rich:message for="kierownik" styleClass="error" />
 
@@ -40,13 +40,12 @@
                         <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
                             <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                             <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                            <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
                         </h:selectOneMenu>
                         <rich:message for="przelozonyK" styleClass="error" />
 
                         <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
                             <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                            <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/> 
+                            <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/>
                         </h:selectOneMenu>
                         <rich:message for="przelozonyP" styleClass="error" />
                     </h:panelGroup>
@@ -79,7 +78,6 @@
                 </h:panelGrid>
             </a4j:outputPanel>
         </h:form>
-
         <hr/>
 
     </ui:define>

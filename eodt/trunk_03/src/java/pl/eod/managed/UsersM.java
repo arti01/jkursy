@@ -7,6 +7,8 @@ package pl.eod.managed;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -135,7 +137,7 @@ public class UsersM implements Serializable {
         return "/all/usersEdit";
     }
 
-    public void kierListener(ValueChangeEvent e) throws NullPointerException {
+    public void kierListener(ValueChangeEvent e)  {
         Boolean kier;
         kier = (Boolean) e.getNewValue();
         try {
@@ -145,24 +147,33 @@ public class UsersM implements Serializable {
                 strukt.getDzialId().setNazwa(strukt.getSzefId().getDzialId().getNazwa());
             }
         } catch (NullPointerException ex) {
+            //ex.printStackTrace();
+        } catch (Exception ex1) {
+            ex1.printStackTrace();
         }
+        //strukt.setStKier(true);
     }
 
-    public void changeKierListener(ValueChangeEvent e) throws NullPointerException, Exception {
+    public void changeKierListener(ValueChangeEvent e) throws NonexistentEntityException, Exception {
         Boolean kier;
         kier = (Boolean) e.getNewValue();
-        Struktura str = struktury.getRowData();
-        str.setStKier(kier);
-        String error = struktC.changeKier(str, str.getDzialId());
+        strukt.setStKier(kier);
+        String error=null;
+        try {
+            error = struktC.changeKier(strukt, strukt.getDzialId());
+            strukt=struktC.findStruktura(strukt.getId());
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(UsersM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(UsersM.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (error != null) {
-            str.setStKier(true);
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent kierownikE = UIComponent.getCurrentComponent(context);
             context.addMessage(kierownikE.getClientId(context), message);
         }
-        initUser();
     }
 
     public void dzialListener(ValueChangeEvent e) throws NullPointerException {

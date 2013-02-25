@@ -106,6 +106,7 @@ public class StrukturaJpaController implements Serializable {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             throw new mojWyjatek(ex.getMessage());
         } finally {
             if (em != null) {
@@ -125,6 +126,8 @@ public class StrukturaJpaController implements Serializable {
             sOld = em.find(Struktura.class, struktura.getSzefId().getId());
         }
         struktura.setUsuniety(1);
+        struktura.getUserId().setRole(null);
+        struktura.getUserId().setAdrEmail(struktura.getId()+"usuniety"+struktura.getUserId().getAdrEmail());
         if (struktura.isStKier()) {
             Dzial dzial = struktura.getDzialId();
             struktura.setDzialId(null);
@@ -137,6 +140,7 @@ public class StrukturaJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             struktura.setSzefId(null);
+            struktura.setDzialId(null);
             em.merge(struktura);
             em.getTransaction().commit();
             em.refresh(em.merge(dOld));
@@ -148,16 +152,17 @@ public class StrukturaJpaController implements Serializable {
 
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
         EntityManager em = null;
-        if (!struktura.isStKier()) {
-            if (struktura.getSzefId() != null) {
-                struktura.setDzialId(struktura.getSzefId().getDzialId());
-            } else {
-                return "Brak przełożonego - ustaw i zapisz";
-            }
-        } else {
+        if (struktura.isStKier()) {
             Dzial d = new Dzial();
             d.setNazwa("Nowy dział");
             struktura.setDzialId(d);
+        } else {
+            if (struktura.getSzefId() != null) {
+                struktura.setDzialId(struktura.getSzefId().getDzialId());
+            } 
+            else {
+                return "Brak przełożonego - wybierz właściwego";
+            }
         }
         try {
             em = getEntityManager();
@@ -167,6 +172,7 @@ public class StrukturaJpaController implements Serializable {
             if (!struktura.isStKier()) {
                 DzialJpaController dzialC = new DzialJpaController();
                 dzialC.destroy(dzialOld);
+                System.out.println(dzialOld.getNazwa() + "usuwanie dzialu" + struktura.getDzialId().getNazwa());
             }
 
         } finally {
@@ -177,7 +183,7 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
-    public String editArti(Struktura struktura)  {
+    public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -187,8 +193,12 @@ public class StrukturaJpaController implements Serializable {
         try {
             em = getEntityManager();
             Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
-            Struktura oldSecUser=null;
-            if(oldStruktura.getSecUserId()!=null) oldSecUser=oldStruktura.getSecUserId().getStruktura();
+            Struktura oldSecUser = null;
+            Dzial oldDzial=oldStruktura.getDzialId();
+            boolean oldKier=oldStruktura.isStKier();
+            if (oldStruktura.getSecUserId() != null) {
+                oldSecUser = oldStruktura.getSecUserId().getStruktura();
+            }
             Long idOldSzef = null;
             if (oldStruktura.getSzefId() != null) {
                 idOldSzef = oldStruktura.getSzefId().getId();
@@ -209,23 +219,15 @@ public class StrukturaJpaController implements Serializable {
                 }
             }
 
-            //System.out.println(struktura.getDzialId().getNazwa());
-            //System.out.println(oldStruktura.getDzialId().getNazwa());
-            if ((!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) && struktura.isStKier() == true) {
-                DzialJpaController dC = new DzialJpaController();
-                if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
-                    //System.err.println("blad 1");
-                    return "dział już istnieje";
+            if (struktura.isStKier() == true) {
+                if (!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) {
+                    DzialJpaController dC = new DzialJpaController();
+                    if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
+                        return "dział już istnieje";
+                    }
                 }
             }
 
-            if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
-                DzialJpaController dC = new DzialJpaController();
-                if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null) {
-                    return "dział już istnieje";
-                }
-            }
-            
             em.getTransaction().begin();
             em.merge(struktura);
             /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
@@ -239,11 +241,18 @@ public class StrukturaJpaController implements Serializable {
             if (idOldSzef != null) {
                 em.refresh(em.find(struktura.getClass(), idOldSzef));
             }
-            if(struktura.getSecUserId()!=null){
+            if (struktura.getSecUserId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSecUserId().getStruktura().getId()));
             }
-            if(oldSecUser!=null){
+            if (oldSecUser != null) {
                 em.refresh(em.find(struktura.getClass(), oldSecUser.getId()));
+            }
+            
+            System.out.println(struktura.isStKier()+"--------"+oldKier+oldDzial.getNazwa());
+            
+            if(!struktura.isStKier()&&oldKier){
+                    DzialJpaController dzialC = new DzialJpaController();
+                    dzialC.destroy(oldDzial);
             }
 
         } finally {

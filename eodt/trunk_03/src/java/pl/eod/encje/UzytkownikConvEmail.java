@@ -23,14 +23,14 @@ public class UzytkownikConvEmail implements Converter, Serializable {
         String u;
         Object wynik = null;
         wynik = uC.findUzytkownikByEmail(value);
-        System.out.println(wynik + "asobiekt");
+        //System.out.println(wynik + "asobiekt");
         return wynik;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         Uzytkownik u = (Uzytkownik) value;
-        System.out.println((value != null) ? "asstring"+u.getId().toString() : "asstring"+null);
+        //System.out.println((value != null) ? "asstringEmail"+u.getId().toString() : "asstringEmail"+null);
         return (value != null) ? u.getAdrEmail() : null;
     }
 }
