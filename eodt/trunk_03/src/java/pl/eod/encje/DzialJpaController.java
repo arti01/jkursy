@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 import pl.eod.encje.exceptions.PreexistingEntityException;
 
@@ -153,8 +154,11 @@ public class DzialJpaController implements Serializable {
     private List<Dzial> findDzialEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Dzial.class));
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Dzial> dzial = cq.from(Dzial.class);
+            cq.select(dzial);
+            cq.orderBy(cb.asc(dzial.get(Dzial_.nazwa)));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);

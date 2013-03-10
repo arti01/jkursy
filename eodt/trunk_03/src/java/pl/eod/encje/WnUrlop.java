@@ -73,6 +73,10 @@ public class WnUrlop implements Serializable {
     private Date dataWprowadzenia;
     @Column(name = "extraemail", nullable = true)
     private Integer extraemail;
+    
+    @Column(name = "info_dod", nullable = true)
+    private String infoDod;
+    
     @OrderBy(value = "id ASC")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.EAGER, orphanRemoval = true)
     private List<WnHistoria> wnHistoriaList;
@@ -221,6 +225,14 @@ public class WnUrlop implements Serializable {
     public void setExtraemail(boolean extraemail) {
         if(extraemail) this.extraemail =1;
         else this.extraemail =null;
+    }
+
+    public String getInfoDod() {
+        return infoDod;
+    }
+
+    public void setInfoDod(String infoDod) {
+        this.infoDod = infoDod;
     }
 
     @Override

@@ -38,6 +38,8 @@
                                 Nr wniosku
                             </f:facet>
                             <h:outputText value="#{urlop.nrWniosku}"/>
+                            <hr/>
+                            <h:outputText value="#{urlop.infoDod}" rendered="#{fn:length(urlop.infoDod)>0}"/>
                                 <rich:collapsiblePanel header="Historia" expanded="false" switchType="ajax" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
                                     <rich:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                         <rich:column>

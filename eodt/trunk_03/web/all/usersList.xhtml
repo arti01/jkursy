@@ -83,8 +83,9 @@
                             <f:facet name="header">
                                 <h:outputText value="Dział"/><br/>
                                 <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
-                                    <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="true"/>
+                                    <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" noSelectionOption="true"/>
                                     <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>
                             </f:facet>

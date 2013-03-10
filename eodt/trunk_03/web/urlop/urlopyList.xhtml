@@ -47,6 +47,10 @@
                         <rich:message for="extraemail" styleClass="error" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
                         <h:outputText id="extraemail" value="#{UrlopM.urlop.uzytkownik.struktura.extraemail}" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
 
+                        <h:outputLabel for="infoDod" value="informacje dodatkowe"/>
+                        <h:inputTextarea id="infoDod" value="#{UrlopM.urlop.infoDod}" cols="52"/>
+                        <rich:message for="infoDod" styleClass="error" />
+                        
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
@@ -74,6 +78,8 @@
                                 Nr wniosku
                             </f:facet>
                             <h:outputText value="#{urlop.nrWniosku}"/>
+                            <hr/>
+                            <h:outputText value="#{urlop.infoDod}" rendered="#{fn:length(urlop.infoDod)>0}"/>
                             <rich:collapsiblePanel header="Historia" expanded="false" switchType="client" rendered="#{fn:length(urlop.wnHistoriaList)>0}" id="histTab">
                                 <rich:dataTable value="#{urlop.wnHistoriaList}" var="hist">
                                     <rich:column>

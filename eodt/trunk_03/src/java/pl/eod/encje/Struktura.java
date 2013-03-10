@@ -36,7 +36,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
     @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety!=1 or s.usuniety is null)"),
-    @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null)")
+    @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname")
 })
 public class Struktura implements Serializable {
 
