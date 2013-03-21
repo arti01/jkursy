@@ -53,7 +53,7 @@ public class Uzytkownik implements Serializable {
     //@NotEmpty
     @Email
     //@UzytkowAdniot(value = true)
-    @Column(name = "adr_email", unique = true)
+    @Column(name = "adr_email")
     private String adrEmail;
     
     @Column(name = "ext_id")

@@ -91,6 +91,8 @@ public class Struktura implements Serializable {
     @Transient
     List<Struktura> bezpPodWidoczni;
     @Transient
+    List<Struktura> obceWnioski;
+    @Transient
     String[] rolaString;
 
     public Struktura() {
@@ -240,6 +242,22 @@ public class Struktura implements Serializable {
         for(Struktura s:getBezpPod()){
             if(!s.isUsuniety())wynik.add(s);
         }
+        return wynik;
+    }
+
+    public List<Struktura> getObceWnioski() {
+        List<Struktura>wynik=new ArrayList<Struktura>();
+        if(isStKier()) wynik.addAll(getBezpPodWidoczni());
+        else{
+            wynik.addAll(szefId.getBezpPodWidoczni());
+            wynik.add(szefId);
+        }
+        //wyszukiwanie podwładnych drugiego poziomu, czyli podwaładnych kierowników,
+        //którzy mają za szefa szefa tego działu
+        Struktura szef=null;
+        if(isStKier()) szef=this;
+        else szef=szefId;
+        
         return wynik;
     }
     

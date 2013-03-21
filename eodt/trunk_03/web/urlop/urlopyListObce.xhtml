@@ -21,7 +21,7 @@
                         <h:outputLabel for="name" value="Imię i nazwisko: "/>
                         <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}">
                             <f:selectItem itemLabel="wybierz" noSelectionOption="true"/>
-                            <f:selectItems value="#{login.zalogowany.dzialId.strukturaListWidoczni}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
+                            <f:selectItems value="#{login.zalogowany.obceWnioski}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                             <a4j:ajax event="change" execute="@this" render="formWprow"/>
                         </h:selectOneMenu>
                         <rich:message for="name" styleClass="error" />
