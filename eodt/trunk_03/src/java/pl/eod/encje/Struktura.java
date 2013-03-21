@@ -39,7 +39,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname")
 })
 public class Struktura implements Serializable {
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -47,39 +47,29 @@ public class Struktura implements Serializable {
     @SequenceGenerator(name = "SEQSTRUKTURA", sequenceName = "SEQSTRUKTURA")
     @Column(name = "id")
     private Long id;
-    
     @JoinColumn(name = "szef_id", referencedColumnName = "id")
     @ManyToOne()
     private Struktura szefId;
-    
     @Column(name = "st_kier", nullable = false)
     private Integer stKier;
-    
     @NotNull
     @Column(name = "przyjmowanie_wnioskow", nullable = false)
     private int przyjmowanieWnioskow;
-    
     @JoinColumn(name = "sec_user_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.ALL})
     private Uzytkownik secUserId;
-    
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH})
     private Uzytkownik userId;
-    
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     private Dzial dzialId;
-    
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
-    
     @Column(name = "usuniety", nullable = true)
     private Integer usuniety;
-    
     @Column(name = "extraemail", nullable = true)
     private String extraemail;
-    
     @Transient
     List<Struktura> bezpPodzPodwlad;
     @Transient
@@ -94,38 +84,38 @@ public class Struktura implements Serializable {
     List<Struktura> obceWnioski;
     @Transient
     String[] rolaString;
-
+    
     public Struktura() {
     }
-
+    
     public Struktura(Long id) {
         this.id = id;
     }
-
+    
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
-
+    
     public Struktura getSzefId() {
         return szefId;
     }
-
+    
     public void setSzefId(Struktura szefId) {
         this.szefId = szefId;
     }
-
+    
     public List<Struktura> getBezpPod() {
         return bezpPod;
     }
-
+    
     public void setBezpPod(List<Struktura> bezpPod) {
         this.bezpPod = bezpPod;
     }
-
+    
     public boolean isStKier() {
         if (stKier == null || stKier == 0) {
             return false;
@@ -133,7 +123,7 @@ public class Struktura implements Serializable {
             return true;
         }
     }
-
+    
     public void setStKier(boolean stKier) {
         if (stKier) {
             this.stKier = 1;
@@ -141,31 +131,31 @@ public class Struktura implements Serializable {
             this.stKier = 0;
         }
     }
-
+    
     public Uzytkownik getSecUserId() {
         return secUserId;
     }
-
+    
     public void setSecUserId(Uzytkownik secUserId) {
         this.secUserId = secUserId;
     }
-
+    
     public Uzytkownik getUserId() {
         return userId;
     }
-
+    
     public void setUserId(Uzytkownik userId) {
         this.userId = userId;
     }
-
+    
     public Dzial getDzialId() {
         return dzialId;
     }
-
+    
     public void setDzialId(Dzial dzialId) {
         this.dzialId = dzialId;
     }
-
+    
     public List<Struktura> getBezpPodzPodwlad() {
         List<Struktura> tree = new ArrayList<Struktura>();
         for (Struktura s : getBezpPodWidoczni()) {
@@ -175,7 +165,7 @@ public class Struktura implements Serializable {
         }
         return tree;
     }
-
+    
     public List<Struktura> getBezpPodBezPodwladKier() {
         List<Struktura> bezpPodKier = new ArrayList<Struktura>();
         bezpPod.removeAll(getBezpPodzPodwlad());
@@ -186,13 +176,13 @@ public class Struktura implements Serializable {
         }
         return bezpPodKier;
     }
-
+    
     public List<Struktura> getBezpPodBezPodwlad() {
-        bezpPodBezPodwlad=getBezpPodWidoczni();
+        bezpPodBezPodwlad = getBezpPodWidoczni();
         bezpPodBezPodwlad.removeAll(getBezpPodzPodwlad());
         return bezpPodBezPodwlad;
     }
-
+    
     public List<Struktura> getWszyscyPodwladni() {
         wszyscyPodwladni = new ArrayList<Struktura>();
         wszyscyPodwladni.addAll(getBezpPodWidoczni());
@@ -201,7 +191,7 @@ public class Struktura implements Serializable {
         }
         return wszyscyPodwladni;
     }
-
+    
     public List<Struktura> getMozliwiSzefowie() {
         StrukturaJpaController strukC = new StrukturaJpaController();
         mozliwiSzefowie = strukC.getFindKierownicy();
@@ -211,7 +201,7 @@ public class Struktura implements Serializable {
         mozliwiSzefowie.remove(this);
         return mozliwiSzefowie;
     }
-
+    
     public String[] getRolaString() {
         String[] strarray = new String[getUserId().getRole().size()];
         List<String> strList = new ArrayList<String>();
@@ -221,7 +211,7 @@ public class Struktura implements Serializable {
         strList.toArray(strarray);
         return strarray;
     }
-
+    
     public boolean isUsuniety() {
         if (usuniety == null) {
             return false;
@@ -232,50 +222,72 @@ public class Struktura implements Serializable {
             return false;
         }
     }
-
+    
     public void setUsuniety(Integer usuniety) {
         this.usuniety = usuniety;
     }
-
+    
     public List<Struktura> getBezpPodWidoczni() {
-        List<Struktura>wynik=new ArrayList<Struktura>();
-        for(Struktura s:getBezpPod()){
-            if(!s.isUsuniety())wynik.add(s);
+        List<Struktura> wynik = new ArrayList<Struktura>();
+        for (Struktura s : getBezpPod()) {
+            if (!s.isUsuniety()) {
+                wynik.add(s);
+            }
         }
         return wynik;
     }
-
+    
     public List<Struktura> getObceWnioski() {
-        List<Struktura>wynik=new ArrayList<Struktura>();
-        if(isStKier()) wynik.addAll(getBezpPodWidoczni());
-        else{
+        List<Struktura> wynik = new ArrayList<Struktura>();
+        if (isStKier()) {
+            wynik.addAll(getBezpPodWidoczni());
+        } else {
             wynik.addAll(szefId.getBezpPodWidoczni());
             wynik.add(szefId);
         }
         //wyszukiwanie podwładnych drugiego poziomu, czyli podwaładnych kierowników,
         //którzy mają za szefa szefa tego działu
-        Struktura szef=null;
-        if(isStKier()) szef=this;
-        else szef=szefId;
+        Struktura szef;
+        if (isStKier()) {
+            szef = this;
+        } else {
+            szef = szefId;
+        }
+        
+        for (Struktura s : szef.getBezpPod()) {
+            if (s.isStKier()) {
+                for (Struktura s1 : s.getBezpPodWidoczni()) {
+                    if (!s1.isStKier()) {
+                        wynik.add(s1);
+                    }
+                }
+            }
+            
+        }
         
         return wynik;
     }
     
-
     public boolean isPrzyjmowanieWnioskow() {
-        if(przyjmowanieWnioskow==1) return false;
-        else return true;
+        if (przyjmowanieWnioskow == 1) {
+            return false;
+        } else {
+            return true;
+        }
     }
-
+    
     public void setPrzyjmowanieWnioskow(boolean przyjmowanieWnioskow) {
-        if(przyjmowanieWnioskow) this.przyjmowanieWnioskow=0;
-        else this.przyjmowanieWnioskow = 1;
+        if (przyjmowanieWnioskow) {
+            this.przyjmowanieWnioskow = 0;
+        } else {
+            this.przyjmowanieWnioskow = 1;
+        }
     }
-
+    
     public String getExtraemail() {
         return extraemail;
     }
-
+    
     public void setExtraemail(String extraemail) {
         this.extraemail = extraemail;
     }
@@ -286,7 +298,7 @@ public class Struktura implements Serializable {
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
-
+    
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -299,7 +311,7 @@ public class Struktura implements Serializable {
         }
         return true;
     }
-
+    
     @Override
     public String toString() {
         return "pl.eod.encje.Struktura[ id=" + id + " ]";
