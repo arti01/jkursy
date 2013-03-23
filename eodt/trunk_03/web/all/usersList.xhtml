@@ -32,7 +32,7 @@
                             </f:facet>
 
                             <h:outputText id="nameE" value="#{strukt.userId.fullname}"/>
-
+                            #{strukt.userId.wnLimity.ulimit}
                             <rich:collapsiblePanel header="Szczegóły" expanded="false" switchType="client">
                                 <h:panelGrid columns="2" style="width:100%;border-spacing:0px;">
                                     <h:outputLabel for="email" value="eMail: "/>
@@ -82,8 +82,13 @@
                         <rich:column id="colKier" style="width:30%; text-align: center" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
                             <f:facet name="header">
                                 <h:outputText value="Dział"/><br/>
-                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}">
-                                    <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" noSelectionOption="true"/>
+                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id==0}">
+                                    <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" />
+                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
+                                    <a4j:ajax event="change" render="formTabNew" execute="@this" />
+                                </h:selectOneMenu>
+                                <h:selectOneMenu id="dzialFbez" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id!=0}">
                                     <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />

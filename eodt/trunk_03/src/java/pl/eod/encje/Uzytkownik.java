@@ -24,6 +24,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
+import org.eclipse.persistence.annotations.IdValidation;
+import org.eclipse.persistence.annotations.PrimaryKey;
 
 /**
  *
@@ -37,6 +39,7 @@ import java.util.List;
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
     @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId")})
+@PrimaryKey(validation = IdValidation.NONE)
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,6 +61,9 @@ public class Uzytkownik implements Serializable {
     
     @Column(name = "ext_id")
     private String extId;
+    
+    @OneToOne(mappedBy = "username", cascade = {CascadeType.REFRESH})
+    WnLimity wnLimity;
     
     @OneToMany(mappedBy = "secUserId")
     List<Struktura> strukturaSec;
@@ -210,6 +216,14 @@ public class Uzytkownik implements Serializable {
 
     public void setExtId(String extId) {
         this.extId = extId;
+    }
+
+    public WnLimity getWnLimity() {
+        return wnLimity;
+    }
+
+    public void setWnLimity(WnLimity wnLimity) {
+        this.wnLimity = wnLimity;
     }
     
     
