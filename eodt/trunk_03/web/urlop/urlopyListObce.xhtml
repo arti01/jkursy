@@ -24,7 +24,7 @@
                             <f:selectItems value="#{login.zalogowany.obceWnioski}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                             <a4j:ajax event="change" execute="@this" render="formWprow"/>
                         </h:selectOneMenu>
-                        <rich:message for="name" styleClass="error" />
+                        Dostępny urlop:<strong>#{UrlopObceM.urlop.uzytkownik.wnLimity.ulimit}</strong>
 
                         <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopObceM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
