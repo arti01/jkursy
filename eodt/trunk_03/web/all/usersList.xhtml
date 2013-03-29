@@ -106,7 +106,7 @@
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </h:commandLink>
                             <br/>
-                            <a4j:commandLink id="usun" value="[  Usuń  ]" render="@form, formWprow" 
+                            <a4j:commandLink id="usun" value="[  Usuń  ]" render="formTabNew" 
                                              oncomplete="#{rich:component('confirmPane')}.show()" rendered="#{fn:length(strukt.bezpPod)==0}" execute="@this">
                                 <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
                             </a4j:commandLink>
@@ -114,7 +114,7 @@
                     </rich:dataTable>
                 </a4j:outputPanel>
                 
-                 <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formWprow" execute="@this"
+                 <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formTabNew" execute="@this"
                                 oncomplete="#{rich:component('confirmPane')}.hide();" />
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Czy na pewno chcesz usunąć?

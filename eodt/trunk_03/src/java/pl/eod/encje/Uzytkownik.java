@@ -39,7 +39,7 @@ import org.eclipse.persistence.annotations.PrimaryKey;
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
     @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId")})
-@PrimaryKey(validation = IdValidation.NONE)
+@PrimaryKey(validation = IdValidation.NULL)
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
