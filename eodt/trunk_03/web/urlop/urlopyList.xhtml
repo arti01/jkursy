@@ -14,9 +14,9 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h4>Twoje wnioski</h4>
+            <h:form id="form1">
+                <a4j:outputPanel id="formWprow" layout="block">
 
-            <a4j:outputPanel id="formWprow" layout="block">
-                <h:form>
                     <h:panelGrid columns="3" id="form">
                         <h:outputLabel for="name" value="Imię i nazwisko: "/>
                         <h:inputText id="name" value="#{UrlopM.urlop.uzytkownik.fullname}"  size="50" readonly="true"/>
@@ -41,7 +41,7 @@
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
                             <rich:validator /></rich:calendar>
                         <rich:message for="data_do" styleClass="error" />
-                        
+
                         <h:outputLabel for="extraemail" value="#{UrlopM.urlop.extraemail} czy wysłać informacje na dodatkowe e-maile?" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
                         <h:selectBooleanCheckbox value="#{UrlopM.urlop.extraemail}" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
                         <rich:message for="extraemail" styleClass="error" rendered="#{fn:length(UrlopM.urlop.uzytkownik.struktura.extraemail)>0}"/>
@@ -50,7 +50,7 @@
                         <h:outputLabel for="infoDod" value="informacje dodatkowe"/>
                         <h:inputTextarea id="infoDod" value="#{UrlopM.urlop.infoDod}" cols="52"/>
                         <rich:message for="infoDod" styleClass="error" />
-                        
+
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
@@ -59,12 +59,10 @@
                     <center>
                         <a4j:commandLink id="dodaj" value="[  Zapisz wniosek  ]" action="#{UrlopM.dodaj}" render="formTab, formWprow" execute="formWprow"/>
                     </center>
-                </h:form>
-            </a4j:outputPanel>
-            <hr/>
+                </a4j:outputPanel>
+                <hr/>
 
-            <a4j:outputPanel id="formTab" layout="block">
-                <h:form>
+                <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UrlopM.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey">
                         <rich:column >
                             <f:facet name="header">
@@ -153,22 +151,29 @@
                             <f:facet name="header">
                                 Akcje
                             </f:facet>
-                            <a4j:commandLink value="usuń" action="#{UrlopM.usun}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow">
+                            <a4j:commandLink value="usuń" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" oncomplete="#{rich:component('confirmPane')}.show()" execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="edytuj" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formWprow">
+                            <a4j:commandLink value="edytuj" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formWprow" execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="true">
+                            <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="true" execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>
                     </rich:dataTable>
-                </h:form>
-            </a4j:outputPanel>
+                </a4j:outputPanel>
+
+                <a4j:jsFunction name="remove" action="#{UrlopM.usun}" render="formTab, formWprow" execute="@this"
+                                oncomplete="#{rich:component('confirmPane')}.hide();" />
+                <rich:popupPanel id="confirmPane" autosized="true">
+                    Czy na pewno chcesz usunąć?
+                    <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
+                    <a4j:commandButton value="TAK" onclick="remove(); return false;" />
+                </rich:popupPanel>    
+            </h:form>
         </div>
     </ui:define>
-
 </ui:composition>
