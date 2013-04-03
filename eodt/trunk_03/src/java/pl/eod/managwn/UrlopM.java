@@ -5,6 +5,7 @@
 package pl.eod.managwn;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -43,7 +44,6 @@ public class UrlopM implements Serializable {
     @ManagedProperty(value = "#{login}")
     private Login login;
     private Locale locale;
-    
     String nameAkceptHistFilter;
     String nameObceFilter;
     String namePodwFilter;
@@ -57,7 +57,7 @@ public class UrlopM implements Serializable {
         initUrlop();
         return "/urlop/urlopyListPodwl";
     }
-    
+
     public String listPodwlHist() {
         initUrlop();
         return "/urlop/urlopyListAkceptHist";
@@ -86,24 +86,25 @@ public class UrlopM implements Serializable {
             urlopC.createEdit(urlop);
 
             //wysylanie maila
-            if(urlop.getUzytkownik().getStruktura().getExtraemail()!=null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (urlop.isExtraemail()) {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
                 kk.setStatus(0);
-                kk.setTemat("prośba o akceptację wniosku urlopowego");
-                kk.setTresc("Proszę o akceptację wniosku urlopowego " + urlop.getNrWniosku() + " wystawionego przez " + urlop.getUzytkownik().getFullname());
+                kk.setTemat("Informacja o wniosku urlopowym");
+                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
             }
-            
+
             if (!urlop.getAkceptant().getAdrEmail().equals("")) {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getAkceptant().getAdrEmail());
                 kk.setStatus(0);
-                kk.setTemat("prośba o akceptację wniosku urlopowego");
-                kk.setTresc("Proszę o akceptację wniosku urlopowego " + urlop.getNrWniosku() + " wystawionego przez " + urlop.getUzytkownik().getFullname());
+                kk.setTemat("Prośba o akceptację wniosku urlopowego");
+                kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
             }
-            
+
             info = "Wniosek wysłany";
         } catch (Exception ex) {
             info = "Coś poszło nie tak";
@@ -146,8 +147,8 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
             KomKolC.create(kk);
         }
-        
-        if (urlop.getPrzyjmujacy()!=null) {
+
+        if (urlop.getPrzyjmujacy() != null) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
@@ -155,7 +156,7 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
             KomKolC.create(kk);
         }
-        
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -194,8 +195,8 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
             KomKolC.create(kk);
         }
-        
-        if (urlop.getPrzyjmujacy()!=null) {
+
+        if (urlop.getPrzyjmujacy() != null) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
@@ -203,7 +204,7 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
             KomKolC.create(kk);
         }
-        
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -242,8 +243,8 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
         }
-        
-        if (urlop.getPrzyjmujacy()!=null) {
+
+        if (urlop.getPrzyjmujacy() != null) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
@@ -251,7 +252,7 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
         }
-        
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -320,17 +321,17 @@ public class UrlopM implements Serializable {
         login.refresh();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
-        
-        ArrayList<WnUrlop> akceptL=new ArrayList<WnUrlop>();
+
+        ArrayList<WnUrlop> akceptL = new ArrayList<WnUrlop>();
         akceptL.addAll(login.getZalogowany().getUserId().getWnUrlopListDoAkceptu());
-        for(Struktura s:login.getZalogowany().getUserId().getStrukturaSec()){
+        for (Struktura s : login.getZalogowany().getUserId().getStrukturaSec()) {
             akceptL.addAll(s.getUserId().getWnUrlopListDoAkceptu());
         }
         urlopyAkcept.setWrappedData(akceptL);
-        
-        ArrayList<WnUrlop> akceptHist=new ArrayList<WnUrlop>();
-        for(WnHistoria wh:login.getZalogowany().getUserId().getWnHistoriaListAkceptant()){
-            if(!akceptHist.contains(wh.getUrlopId())) {
+
+        ArrayList<WnUrlop> akceptHist = new ArrayList<WnUrlop>();
+        for (WnHistoria wh : login.getZalogowany().getUserId().getWnHistoriaListAkceptant()) {
+            if (!akceptHist.contains(wh.getUrlopId())) {
                 akceptHist.add(wh.getUrlopId());
             }
         }
@@ -406,5 +407,4 @@ public class UrlopM implements Serializable {
     public void setNamePodwFilter(String namePodwFilter) {
         this.namePodwFilter = namePodwFilter;
     }
-    
 }

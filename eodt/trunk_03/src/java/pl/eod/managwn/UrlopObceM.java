@@ -4,6 +4,7 @@
  */
 package pl.eod.managwn;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -65,13 +66,24 @@ public class UrlopObceM {
         urlopC.createEdit(urlop);
         
         //wysylanie maila
-        KomKolejka kk=new KomKolejka();
-        if(urlop.getUzytkownik().getStruktura().getExtraemail()!=null) kk.setAdresList(urlop.getAkceptant().getAdrEmail()+","+urlop.getUzytkownik().getStruktura().getExtraemail());
-        else kk.setAdresList(urlop.getAkceptant().getAdrEmail());
-        kk.setStatus(0);
-        kk.setTemat("prośba o akceptację wniosku urlopowego");
-        kk.setTresc("Proszę o akceptację wniosku urlopowego "+urlop.getNrWniosku()+" wystawionego przez "+urlop.getUzytkownik().getFullname());
-        KomKolC.create(kk);
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (urlop.isExtraemail()) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                kk.setStatus(0);
+                kk.setTemat("Informacja o wniosku urlopowym");
+                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                KomKolC.create(kk);
+            }
+
+            if (!urlop.getAkceptant().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+                kk.setStatus(0);
+                kk.setTemat("Prośba o akceptację wniosku urlopowego");
+                kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                KomKolC.create(kk);
+            }
         
         initUrlop();
         

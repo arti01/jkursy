@@ -111,13 +111,14 @@ public class WnUrlopJpaController implements Serializable {
         wnh.setOpisZmiany("Wniosek eskalowany automatycznie");
         urlop.getWnHistoriaList().add(wnh);
         createEdit(urlop);
-
+        
         KomKolejkaJpaController KomKolC = new KomKolejkaJpaController();
         KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getAkceptant().getAdrEmail());
         kk.setStatus(0);
-        kk.setTemat("prośba o akceptację wniosku urlopowego - eskalacja");
-        kk.setTresc("Proszę o akceptację wniosku urlopowego wystawionego przez " + urlop.getUzytkownik().getFullname());
+        kk.setTemat("Prośba o akceptację wniosku urlopowego - eskalacja");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        kk.setTresc("Proszę o akceptację wniosku urlopowego, który nie został zaakceptowany przez bezpośredniego przełożonego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
         KomKolC.create(kk);
     }
 

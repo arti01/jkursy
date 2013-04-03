@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -46,6 +47,8 @@ public class UsersM implements Serializable {
     StrukturaJpaController struktC;
     Struktura strukt;
     DzialJpaController dzialC;
+    @ManagedProperty(value = "#{login}")
+    private Login login;
 
     @PostConstruct
     public void init() {
@@ -85,6 +88,16 @@ public class UsersM implements Serializable {
     
     public String edycja() {
         return "/all/usersEdit";
+    }
+    
+    public String ustawZastepce() {
+        strukt=login.getZalogowany();
+        return "/common/ustawZastepce";
+    }
+    
+    public String ustawZastepceZapisz() throws NonexistentEntityException, Exception {
+        zapisz();
+        return "/logowanie/index";
     }
     
     public String listaFiltr() {
@@ -262,4 +275,14 @@ public class UsersM implements Serializable {
     public void setStrukt(Struktura strukt) {
         this.strukt = strukt;
     }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+    
+    
 }

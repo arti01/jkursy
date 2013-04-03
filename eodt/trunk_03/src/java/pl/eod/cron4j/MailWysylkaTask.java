@@ -28,7 +28,7 @@ public class MailWysylkaTask extends Task {
                 kk.setStatus(1);
                 kkc.edit(kk);
             } catch (Exception e) {
-                ;
+                e.printStackTrace();
             }
         }
     }

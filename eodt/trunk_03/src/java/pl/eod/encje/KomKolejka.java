@@ -39,7 +39,7 @@ public class KomKolejka implements Serializable {
     @Column(name = "adres_list")
     private String adresList;
     @Size(max = 2147483647)
-    @Column(name = "tresc")
+    @Column(name = "tresc", length = 2147483647)
     private String tresc;
     @Column(name = "status")
     private Integer status;
