@@ -31,6 +31,8 @@ public class Login implements Serializable {
     String password;
     boolean urlop;
     boolean struktura;
+    boolean admin;
+    boolean kierownik;
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
@@ -39,8 +41,8 @@ public class Login implements Serializable {
     public void init() {
         ConfigJpaController confC = new ConfigJpaController();
         typLogowania = confC.findConfigNazwa("realm_szyfrowanie").getWartosc();
-        menuLinkiC= new MenuLinkiJpaController();
-        menuLinki=menuLinkiC.findMenuLinkiEntities();
+        menuLinkiC = new MenuLinkiJpaController();
+        menuLinki = menuLinkiC.findMenuLinkiEntities();
     }
 
     public String wyloguj() {
@@ -100,12 +102,16 @@ public class Login implements Serializable {
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
         //obsluga zewnetrzne id
-        if(zalogowany==null){
-            zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());    
+        if (zalogowany == null) {
+            zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());
         }
+        try{
         if (zalogowany.isUsuniety()) {
             this.wyloguj();
             //return null;
+        }
+        }catch(NullPointerException ex){
+            System.err.println("brak użytkownika w bazie - user zewnętrzny");
         }
         //return zalogowany;
     }
@@ -177,6 +183,30 @@ public class Login implements Serializable {
         return struktura;
     }
 
+    public boolean isAdmin() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.isUserInRole("eodadm")) {
+            admin = true;
+        } else {
+            admin = false;
+        }
+        return admin;
+    }
+
+    public boolean isKierownik() {
+        try {
+            if (getZalogowany().isStKier()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+
+    }
+
     public String getTypLogowania() {
         return typLogowania;
     }
@@ -188,6 +218,4 @@ public class Login implements Serializable {
     public List<MenuLinki> getMenuLinki() {
         return menuLinki;
     }
-    
-    
 }

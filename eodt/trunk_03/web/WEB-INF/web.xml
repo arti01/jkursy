@@ -102,6 +102,7 @@
             <role-name>eoduser</role-name>
             <role-name>eodstru</role-name>
             <role-name>eodurlop</role-name>
+            <role-name>eodadm</role-name>
         </auth-constraint>
     </security-constraint>
     <security-role>
@@ -115,6 +116,10 @@
     <security-role>
         <description>eoduser</description>
         <role-name>eoduser</role-name>
+    </security-role>
+    <security-role>
+        <description>eodadm</description>
+        <role-name>eodadm</role-name>
     </security-role>
     <error-page>
         <error-code>500</error-code>

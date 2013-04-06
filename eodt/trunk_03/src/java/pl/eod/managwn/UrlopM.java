@@ -70,7 +70,7 @@ public class UrlopM implements Serializable {
             st.setId(new Long(2));
             urlop.setStatusId(st);
             urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-
+            
             WnHistoria wnh = new WnHistoria();
             wnh.setDataZmiany(new Date());
             WnStatusy st1 = new WnStatusy();
@@ -106,8 +106,10 @@ public class UrlopM implements Serializable {
             }
 
             info = "Wniosek wysłany";
+            
         } catch (Exception ex) {
-            info = "Coś poszło nie tak";
+            if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
+            else info = "Coś poszło nie tak";
             ex.printStackTrace();
         } finally {
             initUrlop();

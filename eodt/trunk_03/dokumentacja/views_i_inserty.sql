@@ -1,21 +1,3 @@
-/*
-CREATE TABLE extpass
-(
-  pass character varying(255),
-  login character varying(255) NOT NULL,
-  rola character varying(255),
-  id bigint NOT NULL,
-  ulimit character varying(50),
-  CONSTRAINT extpass_pkey PRIMARY KEY (id )
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE extpass
-  OWNER TO eod;
-*/
-
-
 CREATE VIEW user_roles_view AS 
  SELECT u.adr_email AS username, ur.role_name
    FROM user_roles ur

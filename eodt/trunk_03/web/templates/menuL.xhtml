@@ -31,12 +31,23 @@
                 </table>
             </h:panelGrid>
             
-            <h:panelGrid rendered="#{login.zalogowany.stKier}">
+            <h:panelGrid rendered="#{login.kierownik}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
                     <tr>
                         <td width="100%"><h:commandLink value="Ustaw swojego zastępcę"
                                                         action="#{UsersM.ustawZastepce}" /></td>
+                    </tr>
+                </table>
+            </h:panelGrid>
+            
+            <h:panelGrid rendered="#{login.admin}">
+                <table
+                    style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+
+                    <tr>
+                        <td width="100%"><h:commandLink value="Lista wszystkich wniosków"
+                                                        action="#{UrlopM.list}" /></td>
                     </tr>
                 </table>
             </h:panelGrid>
