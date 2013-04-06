@@ -21,7 +21,6 @@ import javax.faces.model.ListDataModel;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
 import pl.eod.encje.Struktura;
-import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
@@ -409,4 +408,14 @@ public class UrlopM implements Serializable {
     public void setNamePodwFilter(String namePodwFilter) {
         this.namePodwFilter = namePodwFilter;
     }
+
+    public WnUrlopJpaController getUrlopC() {
+        return urlopC;
+    }
+
+    public void setUrlopC(WnUrlopJpaController urlopC) {
+        this.urlopC = urlopC;
+    }
+    
+    
 }

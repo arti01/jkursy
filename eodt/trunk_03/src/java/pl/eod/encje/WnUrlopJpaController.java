@@ -5,10 +5,8 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
-import java.sql.SQLData;
 import java.text.SimpleDateFormat;
 import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
@@ -21,8 +19,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
-import pl.eod.encje.exceptions.IllegalOrphanException;
-import pl.eod.encje.exceptions.NonexistentEntityException;
+import javax.persistence.criteria.Order;
 
 /**
  *
@@ -150,9 +147,14 @@ public class WnUrlopJpaController implements Serializable {
     private List<WnUrlop> findWnUrlopEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(WnUrlop.class));
-            Query q = em.createQuery(cq);
+            CriteriaBuilder queryBuilder = em.getCriteriaBuilder();
+            CriteriaQuery<WnUrlop> queryDefinition = queryBuilder.createQuery(WnUrlop.class);
+            Root<WnUrlop> urlop = queryDefinition.from(WnUrlop.class);
+            Order o;
+            o=queryBuilder.desc(urlop.get("id"));
+            queryDefinition.select(urlop).orderBy(o);
+            CriteriaQuery cq = queryBuilder.createQuery();
+            Query q=em.createQuery(queryDefinition);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
