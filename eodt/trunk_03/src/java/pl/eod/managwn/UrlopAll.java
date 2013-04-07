@@ -4,48 +4,49 @@
  */
 package pl.eod.managwn;
 
-import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.model.DataModel;
-import javax.faces.model.ListDataModel;
-import pl.eod.encje.WnUrlop;
+import pl.eod.encje.WnStatusy;
+import pl.eod.encje.WnStatusyJpaController;
 import pl.eod.encje.WnUrlopJpaController;
 
 @ManagedBean(name = "UrlopAll")
 @SessionScoped
 public class UrlopAll extends UrlopM{
-    //private WnUrlopJpaController UrlopC;
-    //private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();
+    WnStatusy statusFilter;
+    WnStatusyJpaController wnStatusyC;
     
     @PostConstruct
     @Override
     public void init() {
+    setWnStatusyC(new WnStatusyJpaController());
     setUrlopC(new WnUrlopJpaController());
     getUrlopyList().setWrappedData(getUrlopC().findWnUrlopEntities());
     }
     
     @Override
     public String list(){
+        statusFilter=new WnStatusy(new Long(0));
+        wnStatusyC.getFindWnStatusyEntities();
         return "/urlop/urlopyListWszystko";
     }
-/*
-    public WnUrlopJpaController getUrlopC() {
-        return UrlopC;
+
+    public WnStatusy getStatusFilter() {
+        return statusFilter;
     }
 
-    public void setUrlopC(WnUrlopJpaController UrlopC) {
-        this.UrlopC = UrlopC;
+    public void setStatusFilter(WnStatusy statusFilter) {
+        this.statusFilter = statusFilter;
     }
 
-    public DataModel<WnUrlop> getUrlopyList() {
-        return urlopyList;
+    public WnStatusyJpaController getWnStatusyC() {
+        return wnStatusyC;
     }
 
-    public void setUrlopyList(DataModel<WnUrlop> urlopyList) {
-        this.urlopyList = urlopyList;
+    public void setWnStatusyC(WnStatusyJpaController wnStatusyC) {
+        this.wnStatusyC = wnStatusyC;
     }
-  */  
-    
+
+
 }
