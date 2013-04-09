@@ -79,7 +79,7 @@
                 </table>
             </h:panelGrid>
             <h:panelGroup
-                rendered="#{login.zalogowany.userId.extId==null and login.zalogowany!=null}">
+                rendered="#{(login.zalogowany.userId.extId==null or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
 
