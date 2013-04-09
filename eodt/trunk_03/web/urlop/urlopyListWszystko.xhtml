@@ -17,14 +17,22 @@
             <h:form id="form1">
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UrlopAll.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey">
-                        <rich:column >
+                        <rich:column filterValue="#{UrlopAll.nameFilter}"
+                                     filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopAll.nameFilter)}">
                             <f:facet name="header">
-                                Wniosek złożony przez
+                                <h:panelGroup>
+                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:inputText value="#{UrlopAll.nameFilter}">
+                                        <a4j:ajax event="blur" render="formTab" execute="@this" />
+                                    </h:inputText>
+                                    <a4j:commandLink value="wszyscy" rendered="#{UrlopAll.nameFilter!=null and UrlopAll.nameFilter!=''}" render="formTab" >
+                                        <f:setPropertyActionListener  target="#{UrlopAll.nameFilter}" value="#{null}"/>
+                                    </a4j:commandLink>
+                                </h:panelGroup>
                             </f:facet>
-                            <h:outputText value="#{urlop.przyjmujacy.fullname}" rendered="#{urlop.przyjmujacy!=null}"/>
-                            <h:outputText value="#{urlop.uzytkownik.fullname}" rendered="#{urlop.przyjmujacy==null}"/>
+                            <h:outputText value="#{urlop.uzytkownik.fullname}"/>
                         </rich:column>
-                        <rich:column >
+                        <rich:column>
                             <f:facet name="header">
                                 Nr wniosku
                             </f:facet>
@@ -90,7 +98,7 @@
                         </rich:column>
                         <rich:column style="background-color: #{urlop.statusId.kolor}; text-align: center" filterExpression="#{urlop.statusId==UrlopAll.statusFilter or UrlopAll.statusFilter==null}">
                             <f:facet name="header">
-                                Status
+                                Status<br/>
                                 <h:selectOneMenu id="dzialF" value="#{UrlopAll.statusFilter}" converter="#{WnStatusyConv}" rendered="#{UrlopAll.statusFilter.id==0}">
                                     <f:selectItem itemValue="#{null}" itemLabel="wybierz status" />
                                     <f:selectItems value="#{UrlopAll.wnStatusyC.findWnStatusyEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.opis}"/>

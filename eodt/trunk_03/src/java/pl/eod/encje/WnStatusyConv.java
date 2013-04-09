@@ -37,7 +37,7 @@ public class WnStatusyConv implements Converter, Serializable {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         WnStatusy u = (WnStatusy) value;
-        System.out.println((value != null) ? u.getId().toString() : null);
+        //System.out.println((value != null) ? u.getId().toString() : null);
         return (value != null) ? u.getId().toString() : null;
     }
 }

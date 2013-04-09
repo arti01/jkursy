@@ -15,6 +15,7 @@ import pl.eod.encje.WnUrlopJpaController;
 @SessionScoped
 public class UrlopAll extends UrlopM{
     WnStatusy statusFilter;
+    String nameFilter;
     WnStatusyJpaController wnStatusyC;
     
     @PostConstruct
@@ -27,6 +28,7 @@ public class UrlopAll extends UrlopM{
     
     @Override
     public String list(){
+        System.err.println("ssssssssssssss");
         statusFilter=new WnStatusy(new Long(0));
         wnStatusyC.getFindWnStatusyEntities();
         return "/urlop/urlopyListWszystko";
@@ -48,5 +50,14 @@ public class UrlopAll extends UrlopM{
         this.wnStatusyC = wnStatusyC;
     }
 
+    public String getNameFilter() {
+        return nameFilter;
+    }
+
+    public void setNameFilter(String nameFilter) {
+        this.nameFilter = nameFilter;
+    }
+
+    
 
 }
