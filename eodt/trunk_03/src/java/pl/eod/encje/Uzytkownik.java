@@ -59,7 +59,7 @@ public class Uzytkownik implements Serializable {
     @Column(name = "adr_email")
     private String adrEmail;
     
-    @Column(name = "ext_id")
+    @Column(name = "ext_id", nullable=false)
     private String extId;
     
     @OneToOne(mappedBy = "username", cascade = {CascadeType.REFRESH})
@@ -100,9 +100,11 @@ public class Uzytkownik implements Serializable {
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
     
     public Uzytkownik() {
+        this.extId = "";
     }
 
     public Uzytkownik(Long id) {
+        this.extId = "";
         this.id = id;
     }
 
@@ -215,7 +217,7 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setExtId(String extId) {
-        this.extId = extId;
+        this.extId=(extId == null) ? "" : extId;
     }
 
     public WnLimity getWnLimity() {

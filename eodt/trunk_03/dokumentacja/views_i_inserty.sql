@@ -25,6 +25,7 @@ INSERT INTO config VALUES (7, 'username', 'username', '');
 INSERT INTO config VALUES (8, 'password', 'password', '');
 INSERT INTO config VALUES (9, 'domysle_haslo', 'domyslne haslo przy zakladaniu usera', 'a');
 INSERT INTO config VALUES (10, 'realm_szyfrowanie', 'md5 lub none', 'md5');
+INSERT INTO config VALUES (11, 'email_unikalny', '1-nie, 0-tak', '1');
 
 
 --

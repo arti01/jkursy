@@ -19,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
@@ -49,13 +50,13 @@ public class UsersM implements Serializable {
     DzialJpaController dzialC;
     @ManagedProperty(value = "#{login}")
     private Login login;
+    boolean sprawdzacUnikEmail;
 
     @PostConstruct
     public void init() {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
-        //initUser();
     }
 
     private void initUser() {
@@ -139,7 +140,7 @@ public class UsersM implements Serializable {
         if (error == null) {
             initUser();
             //error = "Zmiana wykonana";
-            return "/all/usersList";
+            return "/all/usersList?faces-redirect=true";
         }
         FacesMessage message = new FacesMessage(error);
         FacesContext context = FacesContext.getCurrentInstance();

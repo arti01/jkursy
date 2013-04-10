@@ -21,18 +21,18 @@
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopAll.nameFilter)}">
                             <f:facet name="header">
                                 <h:panelGroup>
-                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:outputText value="Wniosek osoby &lt;br/&gt; (do filtrowania użyj TAB)" escape="false"/><br/>
                                     <h:inputText value="#{UrlopAll.nameFilter}">
                                         <a4j:ajax event="blur" render="formTab" execute="@this" />
                                     </h:inputText>
-                                    <a4j:commandLink value="wszyscy" rendered="#{UrlopAll.nameFilter!=null and UrlopAll.nameFilter!=''}" render="formTab" >
+                                    <a4j:commandLink value="&nbsp;wszyscy" rendered="#{UrlopAll.nameFilter!=null and UrlopAll.nameFilter!=''}" render="formTab" >
                                         <f:setPropertyActionListener  target="#{UrlopAll.nameFilter}" value="#{null}"/>
                                     </a4j:commandLink>
                                 </h:panelGroup>
                             </f:facet>
                             <h:outputText value="#{urlop.uzytkownik.fullname}"/>
                         </rich:column>
-                        <rich:column>
+                        <rich:column  style="width: 330px;">
                             <f:facet name="header">
                                 Nr wniosku
                             </f:facet>
@@ -112,12 +112,6 @@
                                 </h:selectOneMenu>
                             </f:facet>
                             <h:outputText value="#{urlop.statusId.opis}"/>
-                        </rich:column>
-                        <rich:column >
-                            <f:facet name="header">
-                                Akceptant
-                            </f:facet>
-                            <h:outputText value="#{urlop.akceptant.fullname}"/>
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>

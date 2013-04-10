@@ -6,11 +6,28 @@
     </head>
     <body>
         <div>
+            <h3>2012-04-10</h3>
+            <h4>ściągnięcie sprawdzamia unikalności email przy edycji i wprowadzaniu</h4>
+            <ul>
+                <li>odpalić polecenie: INSERT INTO config VALUES (11, 'email_unikalny', '1-nie, 0-tak', '1');</li>
+                <li>zdecydowanie przetestować czy się nic nie sypie po wprowadzeniu</li>
+                <li>jeśli uzytkownik zaloguje się na email, który nie jest unikalny, to będzie losowo zalogowany
+                albo na jedno, albo na drugie konto - w związku z czym będzie miał problem z akceptowaniem urlopów drugiej
+                gałęzi. Wydaje się, że jedynym rozwiązaniem było by logowanie się po ext_id, które by musiało być różne
+                dla każdego rekordu o tym samym email</li>
+                <li>w tabeli uzytkownik ustawic nullable na false i wszystkie nulle zamienic na pusty string</li>
+            </ul>
 
             <h3>2012-04-09</h3>
             <h4>Menu zmiana hasła</h4>
             <ul>
                 <li>zmieniono warunek z ext_id==null na ext_id==null and ext_id.contains(@)</li>
+            </ul>
+            <h4>Lista wszystkich wniosków</h4>
+            <ul>
+                <li>zrobione jako pozycja w menu dla uprawnienia eodadm</li>
+                <li>nalezy dokładnie sprawdzić logowania z EOD i z zewnątrz, gdyż zmieniony został sposób obsługi
+                uprawnień w menu</li>
             </ul>
 
             
