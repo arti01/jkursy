@@ -51,7 +51,7 @@
                                         <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
                                     </rich:panelMenuItem>
                                 </rich:panelMenuGroup>
-                                <rich:panelMenuItem rendered="#{(login.zalogowany.userId.extId==null or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
+                                <rich:panelMenuItem rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
                                     <h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink>
                                 </rich:panelMenuItem>
                                 <rich:panelMenuItem>
