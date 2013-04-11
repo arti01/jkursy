@@ -147,7 +147,7 @@ public class UzytkownikJpaController implements Serializable {
             if (q.getResultList().isEmpty()) {
                 return null;
             } else {
-                return (Uzytkownik) q.getSingleResult();
+                return (Uzytkownik) q.setMaxResults(1).getSingleResult();
             }
         } finally {
             em.close();

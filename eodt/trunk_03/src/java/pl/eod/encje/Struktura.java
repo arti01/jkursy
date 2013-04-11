@@ -20,6 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -34,8 +35,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Struktura.findAll", query = "SELECT s FROM Struktura s"),
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
-    @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier"),
-    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety!=1 or s.usuniety is null)"),
+    @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier ORDER BY s.userId.fullname"),
+    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname"),
     @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname")
 })
 public class Struktura implements Serializable {
@@ -64,6 +65,7 @@ public class Struktura implements Serializable {
     @JoinColumn(name = "dzial_id", referencedColumnName = "id")
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
     private Dzial dzialId;
+    @OrderBy()
     @OneToMany(mappedBy = "szefId")
     List<Struktura> bezpPod;
     @Column(name = "usuniety", nullable = true)
