@@ -12,6 +12,46 @@
             <h:panelGrid rendered="#{login.struktura}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+
+                    <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                                    groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
+                                    topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
+                        <rich:panelMenuGroup label="Struktura organizacyjna">
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Lista pracowników" action="#{UsersM.lista}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+                        <rich:panelMenuItem>
+                                <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
+                        </rich:panelMenuItem>
+                        <rich:panelMenuGroup label="Obsługa urlopów">
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Lista wszystkich wniosków" action="#{UrlopAll.list}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Wnioski do akceptacji" action="#{UrlopM.listPodwl}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Historia wniosków" action="#{UrlopM.listPodwlHist}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+                    </rich:panelMenu>
+
                     <tr>
                         <td width="100%"><h:commandLink value="Nowy pracownik"
                                                         action="#{UsersM.nowy}" /></td>
@@ -30,7 +70,7 @@
                     </tr>
                 </table>
             </h:panelGrid>
-            
+
             <h:panelGrid rendered="#{login.kierownik}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
@@ -40,7 +80,7 @@
                     </tr>
                 </table>
             </h:panelGrid>
-            
+
             <h:panelGrid rendered="#{login.admin}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
@@ -51,7 +91,7 @@
                     </tr>
                 </table>
             </h:panelGrid>
-            
+
             <h:panelGrid rendered="#{login.urlop}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
@@ -84,26 +124,26 @@
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
 
                     <tr>
-                       <td width="100%"><h:outputLink
+                        <td width="100%"><h:outputLink
                                 value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></td>
                     </tr>
                 </table>
             </h:panelGroup>
             <h:panelGroup rendered="#{fn:length(login.menuLinki)>0}">
-            <h4>do pobrania</h4>
-            <ul>
-                <ui:repeat value="#{login.menuLinki}" var="menuLinki">
-                    <li><rich:panel>
-                            <h:outputLink value="#{menuLinki.link}">
-                                <h:outputText value="#{menuLinki.nazwa}"/>
-                            </h:outputLink>
-                            <rich:tooltip id="tt1" layout="block">
-                                <h:outputText value="#{menuLinki.opis}"/>
-                            </rich:tooltip>
-                        </rich:panel>
-                    </li>
-                </ui:repeat>
-            </ul>
+                <h4>do pobrania</h4>
+                <ul>
+                    <ui:repeat value="#{login.menuLinki}" var="menuLinki">
+                        <li><rich:panel>
+                                <h:outputLink value="#{menuLinki.link}">
+                                    <h:outputText value="#{menuLinki.nazwa}"/>
+                                </h:outputLink>
+                                <rich:tooltip id="tt1" layout="block">
+                                    <h:outputText value="#{menuLinki.opis}"/>
+                                </rich:tooltip>
+                            </rich:panel>
+                        </li>
+                    </ui:repeat>
+                </ul>
             </h:panelGroup>
             <table
                 style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
