@@ -38,7 +38,7 @@ import org.eclipse.persistence.annotations.PrimaryKey;
     @NamedQuery(name = "Uzytkownik.findById", query = "SELECT u FROM Uzytkownik u WHERE u.id = :id"),
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
-    @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and u.struktura.usuniety!=1")})
+    @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and (u.struktura.usuniety!=1 or u.struktura.usuniety is null)")})
 @PrimaryKey(validation = IdValidation.NULL)
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;

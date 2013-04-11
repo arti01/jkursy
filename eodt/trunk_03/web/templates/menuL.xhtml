@@ -8,127 +8,64 @@
     <h:outputStylesheet library="css" name="../resources/css/default.css"/>
     <h:form>
         <h4>Menu</h4>
-        <ul>
-            <h:panelGrid rendered="#{login.struktura}">
-                <table
-                    style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
-
-                    <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
-                                    groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
-                                    topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
-                        <rich:panelMenuGroup label="Struktura organizacyjna">
-                            <rich:panelMenuItem >
-                                <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Lista pracowników" action="#{UsersM.lista}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
-                            </rich:panelMenuItem>
-                        </rich:panelMenuGroup>
-                        <rich:panelMenuItem>
-                                <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
-                        </rich:panelMenuItem>
-                        <rich:panelMenuGroup label="Obsługa urlopów">
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Lista wszystkich wniosków" action="#{UrlopAll.list}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Wnioski do akceptacji" action="#{UrlopM.listPodwl}"/>
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Historia wniosków" action="#{UrlopM.listPodwlHist}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
-                            </rich:panelMenuItem>
-                        </rich:panelMenuGroup>
-                    </rich:panelMenu>
-
-                    <tr>
-                        <td width="100%"><h:commandLink value="Nowy pracownik"
-                                                        action="#{UsersM.nowy}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink value="Lista pracowników"
-                                                        action="#{UsersM.lista}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink value="Struktura osobowa"
-                                                        action="#{StruktOsM.lista}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink value="Struktura działów"
-                                                        action="#{StruktDzialM.lista}" /></td>
-                    </tr>
-                </table>
-            </h:panelGrid>
-
-            <h:panelGrid rendered="#{login.kierownik}">
                 <table
                     style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
                     <tr>
-                        <td width="100%"><h:commandLink value="Ustaw swojego zastępcę"
-                                                        action="#{UsersM.ustawZastepce}" /></td>
+                        <td width="100%">
+                            <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                                            groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
+                                            topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
+                                <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}">
+                                    <rich:panelMenuItem >
+                                        <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem>
+                                        <h:commandLink value="Lista pracowników" action="#{UsersM.lista}" />
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem>
+                                        <h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" />
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem>
+                                        <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
+                                    </rich:panelMenuItem>
+                                </rich:panelMenuGroup>
+                                
+                                <rich:panelMenuItem rendered="#{login.kierownik}">
+                                    <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
+                                </rich:panelMenuItem>
+                                <rich:panelMenuItem rendered="#{login.admin}">
+                                        <h:commandLink value="Lista wszystkich wniosków" action="#{UrlopAll.list}" />
+                                    </rich:panelMenuItem>
+                                
+                                <rich:panelMenuGroup label="Obsługa urlopów" rendered="#{login.urlop}">
+                                    <rich:panelMenuItem>
+                                        <h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" />
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" >
+                                        <h:commandLink value="Wnioski do akceptacji" action="#{UrlopM.listPodwl}"/>
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem rendered="#{login.zalogowany.stKier}">
+                                        <h:commandLink value="Historia wniosków" action="#{UrlopM.listPodwlHist}" />
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem rendered="#{login.zalogowany.przyjmowanieWnioskow}">
+                                        <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
+                                    </rich:panelMenuItem>
+                                </rich:panelMenuGroup>
+                                <rich:panelMenuItem rendered="#{(login.zalogowany.userId.extId==null or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
+                                    <h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink>
+                                </rich:panelMenuItem>
+                                <rich:panelMenuItem>
+                                    <a target="_top" href="../logout.jsp">Wyjście</a>
+                                </rich:panelMenuItem>
+                                <rich:panelMenuItem>
+                                    Dostępny urlop:<br/>
+                                    <strong>#{login.zalogowany.userId.wnLimity.ulimit}</strong>
+                                </rich:panelMenuItem>
+                            </rich:panelMenu>
+                        </td>
                     </tr>
                 </table>
-            </h:panelGrid>
-
-            <h:panelGrid rendered="#{login.admin}">
-                <table
-                    style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
-
-                    <tr>
-                        <td width="100%"><h:commandLink value="Lista wszystkich wniosków"
-                                                        action="#{UrlopAll.list}" /></td>
-                    </tr>
-                </table>
-            </h:panelGrid>
-
-            <h:panelGrid rendered="#{login.urlop}">
-                <table
-                    style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
-
-                    <tr>
-                        <td width="100%"><h:commandLink value="Twoje wnioski"
-                                                        action="#{UrlopM.list}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink value="Wnioski do akceptacji"
-                                                        action="#{UrlopM.listPodwl}"
-                                                        rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink
-                                value="Historia wniosków"
-                                action="#{UrlopM.listPodwlHist}"
-                                rendered="#{login.zalogowany.stKier}" /></td>
-                    </tr>
-                    <tr>
-                        <td width="100%"><h:commandLink value="Obce wnioski"
-                                                        action="#{UrlopObceM.list}"
-                                                        rendered="#{login.zalogowany.przyjmowanieWnioskow}" /></td>
-                    </tr>
-                </table>
-            </h:panelGrid>
-            <h:panelGroup
-                rendered="#{(login.zalogowany.userId.extId==null or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
-                <table
-                    style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
-
-                    <tr>
-                        <td width="100%"><h:outputLink
-                                value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink></td>
-                    </tr>
-                </table>
-            </h:panelGroup>
+                
             <h:panelGroup rendered="#{fn:length(login.menuLinki)>0}">
                 <h4>do pobrania</h4>
                 <ul>
@@ -145,23 +82,6 @@
                     </ui:repeat>
                 </ul>
             </h:panelGroup>
-            <table
-                style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
-                <tr>
-                    <td width="100%"><a target="_top" href="../logout.jsp">Wyjście</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Dostępny urlop:
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <strong>#{login.zalogowany.userId.wnLimity.ulimit}</strong>
-                    </td>
-                </tr>
-            </table>
-        </ul>
+
     </h:form>
 </html>
