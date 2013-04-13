@@ -43,8 +43,8 @@ public class DcPlik implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1, max = 256)
+    @Column(nullable = false, length = 256)
     private String nazwa;
     @Lob
     private byte[] plik;

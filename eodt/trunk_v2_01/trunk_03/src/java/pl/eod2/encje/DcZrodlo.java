@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -44,13 +45,13 @@ public class DcZrodlo implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1, max = 256)
+    @Column(nullable = false, length = 256)
     private String nazwa;
-    @Size(max = 2147483647)
-    @Column(length = 2147483647)
+    @Size(max = 10485760)
+    @Lob
     private String opis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idZrodlo", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zrodloId", fetch = FetchType.LAZY)
     private List<DcDokument> dcDokumentList;
 
     public DcZrodlo() {

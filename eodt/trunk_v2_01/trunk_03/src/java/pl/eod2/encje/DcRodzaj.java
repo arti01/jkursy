@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -46,11 +47,11 @@ public class DcRodzaj implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2147483647)
-    @Column(nullable = false, length = 2147483647)
+    @Size(min = 1, max = 256)
+    @Column(nullable = false, length = 256)
     private String nazwa;
-    @Size(max = 2147483647)
-    @Column(length = 2147483647)
+    @Size(max = 10485760)
+    @Lob
     private String opis;
     @JoinColumn(name = "id_rodzaj_grupa", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
