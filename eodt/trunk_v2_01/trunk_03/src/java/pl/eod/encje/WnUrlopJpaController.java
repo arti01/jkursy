@@ -1,0 +1,213 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pl.eod.encje;
+
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Order;
+
+/**
+ *
+ * @author arti01
+ */
+public class WnUrlopJpaController implements Serializable {
+
+    public WnUrlopJpaController() {
+        if (this.emf == null) {
+            this.emf = Persistence.createEntityManagerFactory("eodtPU");
+        }
+    }
+    private EntityManagerFactory emf = null;
+
+    public EntityManager getEntityManager() {
+        return emf.createEntityManager();
+    }
+
+    public String createEdit(WnUrlop wnUrlop) {
+        if (wnUrlop.getDataDo().before(wnUrlop.getDataOd())) {
+            return "Data końca nie może być przed datą początku";
+        }
+        if (wnUrlop.getWnHistoriaList() == null) {
+            wnUrlop.setWnHistoriaList(new ArrayList<WnHistoria>());
+        }
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            Uzytkownik u = em.find(Uzytkownik.class, wnUrlop.getUzytkownik().getId());
+            u.getWnUrlopList().add(0, wnUrlop);
+            em.getTransaction().begin();
+            if(wnUrlop.getId()==null) em.persist(wnUrlop);
+            em.merge(u);
+            em.getTransaction().commit();
+            //nadawanie numeru wniosku;
+            String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
+            nrWniosku=nrWniosku+"/"+getWnUrlopCountRokBiezacy()+"/";
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
+            nrWniosku=nrWniosku+sdf.format(new Date());
+            wnUrlop.setNrWniosku(nrWniosku);
+            em.getTransaction().begin();
+            em.merge(wnUrlop);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return null;
+    }
+
+    public String destroy(WnUrlop wnUrlop) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            Uzytkownik u = em.find(Uzytkownik.class, wnUrlop.getUzytkownik().getId());
+            //System.err.println(u.getWnUrlopList());
+            u.getWnUrlopList().remove(wnUrlop);
+            //System.err.println(u.getWnUrlopList());
+            em.getTransaction().begin();
+            em.merge(u);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return null;
+    }
+
+    public void eskaluj(WnUrlop urlop) {
+        //System.err.println(urlop.getId());
+
+        try {
+            urlop.setAkceptant(urlop.getAkceptant().getStruktura().getSzefId().getUserId());
+        } catch (NullPointerException np) {
+            System.err.println("Podczas eskalacji nie można ustawić akceptanta dla wniosku o id " + urlop.getId());
+            return;
+        }
+        WnHistoria wnh = new WnHistoria();
+        wnh.setStatusId(urlop.getStatusId());
+        wnh.setDataZmiany(new Date());
+        wnh.setZmieniajacy(null);
+        wnh.setUrlopId(urlop);
+        wnh.setAkceptant(urlop.getAkceptant());
+        wnh.setOpisZmiany("Wniosek eskalowany automatycznie");
+        urlop.getWnHistoriaList().add(wnh);
+        createEdit(urlop);
+        
+        KomKolejkaJpaController KomKolC = new KomKolejkaJpaController();
+        KomKolejka kk = new KomKolejka();
+        kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+        kk.setStatus(0);
+        kk.setTemat("Prośba o akceptację wniosku urlopowego - eskalacja");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        kk.setTresc("Proszę o akceptację wniosku urlopowego, który nie został zaakceptowany przez bezpośredniego przełożonego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+        KomKolC.create(kk);
+    }
+
+    public void eskalujCron() {
+        Date dataWyk;
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("CET"), new Locale("pl", "PL"));
+        ConfigJpaController cfgC = new ConfigJpaController();
+        Config cfg = cfgC.findConfigNazwa("eskalujPoMinutach");
+        //System.out.println(cfg.getWartosc());
+        cal.add(Calendar.MINUTE, -(new Long(cfg.getWartosc()).intValue()));
+        for (WnUrlop u : findWnUrlopEntities()) {
+            //System.out.println(cal.getTime());
+            //System.out.println(u.getDataOstZmiany());
+            //System.out.println(u.getDataOstZmiany().before(cal.getTime()));
+            if (u.getDataOstZmiany().before(cal.getTime()) && u.getStatusId().getId() == 2) {
+                eskaluj(u);
+            }
+        }
+    }
+
+    public List<WnUrlop> findWnUrlopEntities() {
+        return findWnUrlopEntities(true, -1, -1);
+    }
+
+    public List<WnUrlop> findWnUrlopEntities(int maxResults, int firstResult) {
+        return findWnUrlopEntities(false, maxResults, firstResult);
+    }
+
+    private List<WnUrlop> findWnUrlopEntities(boolean all, int maxResults, int firstResult) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder queryBuilder = em.getCriteriaBuilder();
+            CriteriaQuery<WnUrlop> queryDefinition = queryBuilder.createQuery(WnUrlop.class);
+            Root<WnUrlop> urlop = queryDefinition.from(WnUrlop.class);
+            Order o;
+            o=queryBuilder.desc(urlop.get("id"));
+            queryDefinition.select(urlop).orderBy(o);
+            CriteriaQuery cq = queryBuilder.createQuery();
+            Query q=em.createQuery(queryDefinition);
+            if (!all) {
+                q.setMaxResults(maxResults);
+                q.setFirstResult(firstResult);
+            }
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public WnUrlop findWnUrlop(Long id) {
+        EntityManager em = getEntityManager();
+        try {
+            return em.find(WnUrlop.class, id);
+        } finally {
+            em.close();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public int getWnUrlopCountRokBiezacy() {
+        Calendar cal= Calendar.getInstance();
+        cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<WnUrlop> rt = cq.from(WnUrlop.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            cq.where(cb.greaterThan(rt.get(WnUrlop_.dataWprowadzenia), cal.getTime()));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int getWnUrlopCount() {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            Root<WnUrlop> rt = cq.from(WnUrlop.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+}

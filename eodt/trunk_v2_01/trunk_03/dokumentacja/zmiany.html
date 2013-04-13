@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <div>
+            
+            <h3>2012-04-11</h3>
+            <h4>sortowanie w strukturze organizacyjnej</h4>
+            <ul>
+                <li>alfabetycznie wg fullname</li>
+            </ul>
+            <h4>zmiana menu</h4>
+            
+            <h3>2012-04-10</h3>
+            <h4>ściągnięcie sprawdzamia unikalności email przy edycji i wprowadzaniu</h4>
+            <ul>
+                <li>odpalić polecenie: INSERT INTO config VALUES (11, 'email_unikalny', '1-nie, 0-tak', '1');</li>
+                <li>zdecydowanie przetestować czy się nic nie sypie po wprowadzeniu</li>
+                <li>jeśli uzytkownik zaloguje się na email, który nie jest unikalny, to będzie losowo zalogowany
+                albo na jedno, albo na drugie konto - w związku z czym będzie miał problem z akceptowaniem urlopów drugiej
+                gałęzi. Wydaje się, że jedynym rozwiązaniem było by logowanie się po ext_id, które by musiało być różne
+                dla każdego rekordu o tym samym email</li>
+                <li>w tabeli uzytkownik ustawic dla ext_id nullable na false i wszystkie nulle zamienic na pusty string</li>
+            </ul>
+
+            <h3>2012-04-09</h3>
+            <h4>Menu zmiana hasła</h4>
+            <ul>
+                <li>zmieniono warunek z ext_id==null na ext_id=='' and ext_id.contains(@)</li>
+            </ul>
+            <h4>Lista wszystkich wniosków</h4>
+            <ul>
+                <li>zrobione jako pozycja w menu dla uprawnienia eodadm</li>
+                <li>nalezy dokładnie sprawdzić logowania z EOD i z zewnątrz, gdyż zmieniony został sposób obsługi
+                uprawnień w menu</li>
+            </ul>
+
+            
+            <h3>2012-04-03</h3>
+            <h4>ustawianie zastepcy przez kierownika</h4>
+            <ul>
+                <li>dodano nowa pozycje w menu</li>
+            </ul>
+            
+            <h4>zmiany tresci maila</h4>
+            <ul>
+                <li>dodano wiecej informacji w tresci maila</li>
+                <li>w tabeli kom_kolejka pole tresc nalezy ustawic na ok 1000 znakow (typ pola text lub odpowiednik)</li>
+                <li>poprawione formatki wnioskow urlopowych (przy ekstra email się rozjeżdzały)</li>
+                <li>poprawiona tresc i tytul maila dla ekstra email</li>
+            </ul>
+            
+            <h3>2012-03-21</h3>
+            <h4>Limit urlopu</h4>
+            <ul>
+                <li>limit urlopu korzysta w view wn_limity o strukturze: username (które ma być takie, jak ext_id (zewnętrze id) w tabeli uzytkownik, 
+                oraz z ulimit (string)</li>
+                <li>info o limicie dla zalogowanego pojawia się w menu, zaś dla osoby wprowadzanej w ramach funkcjonalnosci
+                Obce Wnioski na formatce</li>
+            </ul>
+            
+             <h3>2012-03-21</h3>
+            <h4>Obce wnioski</h4>
+            <ul>
+                <li>
+                    Przed zmianą osoba uprawniona do skladania obcych wniosków mogła składać je w imieniu osób ze swojego działu
+                    (czyli wszyscy podwładni przełożonego działu bez kierowników - kierownik to już inny dział)
+                </li>
+                <li>
+                    Obecnie ta osoba może składać wnioski dla: 
+                    - wszystkich podwładnych swojego szefa (wraz z kierownikami);
+                    - podwładnych poziom niżej, czyli osób będących w jednostkach organizacyjnych pod szefem osoby uprawnionej
+                    do obcych wniosków.
+                </li>
+                <li>
+                    Kurde, trochę ciężko to opisać... Kierownik ma podwnego Zenek, który jest uprawniony do przyjmowania wniosków,
+                    podwładnego Jasiu, podwładnego Stasiu który jest kierownikiem.
+                    Stasiu ma Marka, który jest pracownikiem oraz Darka, który jest kierownikiem.
+                    Zenek może złożyć wnioski za Jasia, Stasia, Marka ale nie Darka.
+                    Uff...
+                </li>
+            </ul>
+            
+            <h3>2012-03-10</h3>
+            <h4>dodanie pola "info_dod" do wniosku urlopowego. Pole umożliwia wpisanie dowolnych treści przez składającego wniosek</h4>
+            <ul>
+                <li>
+                    Dodać pola:
+                    ALTER TABLE wn_urlop ADD COLUMN info_dod text;
+                </li>
+            </ul>
+            
+            <h3>2012-01-24</h3>
+            <h4>dodanie pola "ekstra email" które wypełnione powoduje wysłanie informacji o wysłaniu
+                nowego wniosku nie tylko do przełożonego, ale również na adresy w nim wymienione</h4>
+            <ul>
+                <li>
+                    Dodać pola:
+                    - struktura - extraemail character varying(255),
+                    - wn_urlop - extraemail smallint,
+                </li>
+                <li>
+                    checkbox wyslij na dodatkowe emaile pojawia się wtedy, gdy długość
+                    pola extraemail>0 (czyli po prostu jest wypełnione)
+                </li>
+                <li>
+                    pole extraemaile przy dodawaniu/edycji pracownika musi zawierać adresy email
+                    oddzielone przecinkiem
+                </li>
+                <li>
+                    Nowa tabela dla linków (Do pobrania) w menu:
+                    CREATE TABLE menu_linki
+                    (
+                    id integer NOT NULL,
+                    nazwa character varying(255),
+                    link character varying(255),
+                    opis character varying(255),
+                    CONSTRAINT menu_linki_pkey PRIMARY KEY (id )
+                    )
+                </li>
+            </ul>
+            <h3>2012-01-08/09/10</h3>
+            <ul>
+                <li>
+                    Możliwość dodawania użytkownika o bez adresu e-mail - należy ściągnąć klucz unikalny
+                    na tab. użytkownicy.
+                </li>
+                <li>
+                    Nowe parametry w config:
+                    INSERT INTO config VALUES (9, 'czy_ssl', 'czy email ssl', 'tak');
+                    INSERT INTO config VALUES (10, 'email_link', 'link dolaczony do emaila informujacego o urlopie', 'http://test.test.pll');
+                    Uwaga na pole ID - nowe inserty z pliku sql naruszą unikalność, jeśli będą wykonane na już istniejących danych, w takim
+                    przypadku lepiej uzyć powyższe.
+                </li>
+                <li>
+                    dodano nr wniosku - do list i do maili, numer sklada się z ttt/nnn/rrrr (typ urlopu)/numer kolejny wniosku/rok
+                    przy czym pytanie - czy nnn ma być numerem kolejnym dla danego typu urlopu (np 3 okolicznosciowy, 29 wypoczynkowy),
+                    czy mam liczyć wszystkie urlopy z danego roku (teraz tak jest)
+                </li>
+                <li>
+                    dodano wysyłanie maili o odrzuceniu, akceptacji i cofnięciu również do osoby przyjmującej wniosek
+                </li>
+                <li>
+                    wprowadzono nową pozycję w menu - Historia wniosków do akceptu - są tam wszystkie wnioski, których
+                    akceptantem na jakimś etapie była osoba zalogowana (chodzi o to, że nawet jak nie zaakceptował, bo nie zdążył 
+                    i była eskalacja do jego przelożonego, to i tak taki wniosek na tej liście się pojawi)
+                </li>
+                <li>
+                    wprowadzono sortowanie dla wniosków do akceptu oraz dla historii akceptowanych
+                </li>
+                <li>
+                    Ku pamięci - osoba stojąca najwyżej w hierarchii nie może składać wniosków - brakuje mu akceptanta (przełożonego)
+                </li>
+                <li>
+                    Wprowadzony filtr po nazwisku dla list obcych wniosków, do akceptu (tu doszła kolumna z nazwiskiem, bo nie było) i do historii akceptowanych
+                </li>
+            </ul>
+            <h3>2012-12-21</h3>
+            <ul>
+                <li>
+                    Obsługa przyjmowania wniosków przez inną osobę z działu
+                </li>
+                <li>
+                    Należy dodać pola integer, nullable do dwóch tabel, struktura->przyjmowanie_wnioskow (domyślny 1),
+                    wn_urlop->przyjmujacy (domyślny null).
+                </li>
+                <li>
+                    Osoba uprawniona ma dostęp do opcji Obce wnioski (plik templates/menuL.xhtml), a formularz
+                    i lista w urlop/urlopyListObce.xhtml
+                    gdzie może złożyć wniosek dla każdej osoby ze swojego działu (rozwijalna lista we wniosku),
+                    na liście pole "Wniosek osoby:" mówi, za kogo złożono wniosek
+                </li>
+                <li>
+                    W opcji Twoje wnioski (urlop/urlopyList.xhtml) dodałem pole "Wniosek złożony przez" które
+                    mówi, kto złożył wniosek
+                </li>
+                <li>
+                    W historii wniosków pole zmianę wykonał odnotowuje, czy operacje założenia wniosku i wysłania
+                    do akceptu wykonał ktoś osobiście czy przez osobę uprawnioną
+                </li>
+                <li>
+                    W persistance.xml zaremowalem property odpowiedzialną za tworzenie tabel,
+                    a do dokuemntacja/views_i_inserty.sql dodałem inserty tworzące użytkowników
+                    administracyjnych (z hasłem plain i md5), którzy mają dodane wszystkie prawa.
+                    W razie, jakby po tych insertach system walil naruszeniem unikalności, to
+                    restart aplikacji załatwi problem.
+                </li>
+            </ul>
+            <h3>2012-12-16</h3>
+            <ul>
+                <li>
+                    Obsługa usuwania użytkowników - zamiast usunięcia z tabeli zmiana
+                    flagi odpowiedzialnej za wyświetlanie usera oraz za możliwość jego
+                    logowania.
+                </li>
+            </ul>
+
+            <h3>2012-12-15</h3>
+            <ul>
+                <li>
+                    w tabeli config domyślne hasło nadawane podczas tworzenia użytkownika
+                </li>
+                <li>
+                    obsługa MD5 - dodano parametr w config mowiący, czy hasła w momencie zmiany
+                    i tworzenia użytkownika mają być haszowane MD5 (realm musi być wtedy ustawiony,
+                    digest=MD5
+                </li>
+                <li>
+                    W momencie dodawania nowego użytkownika system dodaje mu automatycznie rolę
+                    "eoduser"
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
