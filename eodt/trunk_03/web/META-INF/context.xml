@@ -15,7 +15,7 @@
            userTable="dbo.userPass" userNameCol="username" userCredCol="password" 
            userRoleTable="dbo.userRoles" roleNameCol="role_name"/>
     -->
-    <Resource name="jdbc/eod" auth="Container" type="javax.sql.DataSource"
+    <Resource name="jdbc/eod_v2" auth="Container" type="javax.sql.DataSource"
               username="eod" password="eod"
               driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432/eod_v2"
               maxActive="10" maxIdle="3" maxWait="10000"
