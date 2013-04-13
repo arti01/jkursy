@@ -26,6 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
+import pl.eod2.encje.DcDokument;
 
 /**
  *
@@ -38,7 +39,7 @@ import org.eclipse.persistence.annotations.PrimaryKey;
     @NamedQuery(name = "Uzytkownik.findById", query = "SELECT u FROM Uzytkownik u WHERE u.id = :id"),
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
-    @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and (u.struktura.usuniety!=1 or u.struktura.usuniety is null)")})
+    @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and (u.struktura.usuniety<>1 or u.struktura.usuniety is null)")})
 @PrimaryKey(validation = IdValidation.NULL)
 public class Uzytkownik implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -98,6 +99,10 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
+    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false)
+    @OrderBy(value = "id DESC")
+    private List<DcDokument> dcDokumentList;
     
     public Uzytkownik() {
         this.extId = "";
@@ -226,6 +231,14 @@ public class Uzytkownik implements Serializable {
 
     public void setWnLimity(WnLimity wnLimity) {
         this.wnLimity = wnLimity;
+    }
+
+    public List<DcDokument> getDcDokumentList() {
+        return dcDokumentList;
+    }
+
+    public void setDcDokumentList(List<DcDokument> dcDokumentList) {
+        this.dcDokumentList = dcDokumentList;
     }
     
     
