@@ -33,6 +33,9 @@ public class Login implements Serializable {
     boolean struktura;
     boolean admin;
     boolean kierownik;
+    boolean dcRej;
+    boolean dcOdb;
+    boolean dcCfg;
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
@@ -183,6 +186,41 @@ public class Login implements Serializable {
         return struktura;
     }
 
+    public boolean isDcRej() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.isUserInRole("eoddok_rej")) {
+            dcRej = true;
+        } else {
+            dcRej = false;
+        }
+        return dcRej;
+    }
+
+    public boolean isDcOdb() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.isUserInRole("eoddok_odb")) {
+            dcOdb = true;
+        } else {
+            dcOdb = false;
+        }
+        return dcOdb;
+    }
+
+    public boolean isDcCfg() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        if (request.isUserInRole("eoddok_cfg")) {
+            dcCfg = true;
+        } else {
+            dcCfg = false;
+        }
+        return dcCfg;
+    }
+    
+    
+
     public boolean isAdmin() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -207,6 +245,8 @@ public class Login implements Serializable {
 
     }
 
+    
+    
     public String getTypLogowania() {
         return typLogowania;
     }

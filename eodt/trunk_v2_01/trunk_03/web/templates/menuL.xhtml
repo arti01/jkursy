@@ -15,6 +15,16 @@
                             <rich:panelMenu itemMode="client" groupMode="client" groupExpandedLeftIcon="triangleUp"
                                             groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                                             topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
+                                
+                                <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}">
+                                    <rich:panelMenuItem >
+                                        <h:commandLink value="Rodzaje" action="#{UsersM.nowy}"/>
+                                    </rich:panelMenuItem>
+                                    <rich:panelMenuItem>
+                                        <h:commandLink value="Grupy rodzajów" action="#{UsersM.lista}" />
+                                    </rich:panelMenuItem>
+                                </rich:panelMenuGroup>
+                                
                                 <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}">
                                     <rich:panelMenuItem >
                                         <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
