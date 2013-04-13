@@ -4,7 +4,7 @@
     <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
            driverName="org.postgresql.Driver"
            digest="md5"
-           connectionURL="jdbc:postgresql://127.0.0.1:5432/eod?user=eod&amp;password=eod"
+           connectionURL="jdbc:postgresql://127.0.0.1:5432/eod_v2?user=eod&amp;password=eod"
            username="eod" password="eod"
            userTable="userpass" userNameCol="username" userCredCol="password" 
            userRoleTable="user_roles_view" roleNameCol="role_name"
@@ -17,7 +17,7 @@
     -->
     <Resource name="jdbc/eod" auth="Container" type="javax.sql.DataSource"
               username="eod" password="eod"
-              driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432:5432/eod"
+              driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432/eod_v2"
               maxActive="10" maxIdle="3" maxWait="10000"
               removeAbandoned="true" removeAbandonedTimeout="100"/>
 </Context>
