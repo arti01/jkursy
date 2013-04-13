@@ -6,7 +6,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.WnUrlop;
 import pl.eod2.encje.DcRodzajGrupa;
 import pl.eod2.encje.DcRodzajGrupaJpaController;
 
@@ -15,6 +14,7 @@ import pl.eod2.encje.DcRodzajGrupaJpaController;
 public class RodzajeGrupy {
     private DataModel<DcRodzajGrupa> lista = new ListDataModel<DcRodzajGrupa>();
     private DcRodzajGrupaJpaController dcRodzajGrupaC;
+    private RodzajeGrupy rodzajGrupy;
     
     @PostConstruct
     void init(){
@@ -26,6 +26,10 @@ public class RodzajeGrupy {
         lista.setWrappedData(dcRodzajGrupaC.findDcRodzajGrupaEntities());
     }
 
+    public void test(){
+        System.err.println("test"+lista.getRowData().getNazwa());
+    }
+    
     public String list(){
         return "/dccfg/rodzajegrupy";
     }

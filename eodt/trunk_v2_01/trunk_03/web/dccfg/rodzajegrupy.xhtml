@@ -14,7 +14,7 @@
 		<h4>Grupy Rodzajów</h4>
         <h:form>
             <rich:list value="#{rodzajeGrupy.lista}" id="list" var="vendorList">
-                <h:outputText value="#{vendorList.nazwa}" />
+                <a4j:commandLink value="#{vendorList.nazwa}" action="#{rodzajeGrupy.test}"/>
     </rich:list>
         </h:form>
         <hr/>
