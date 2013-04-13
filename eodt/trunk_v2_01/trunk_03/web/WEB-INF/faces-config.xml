@@ -25,4 +25,9 @@
         <managed-bean-class>pl.eod.managwn.UrlopObceM</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>rodzajeGrupy</managed-bean-name>
+        <managed-bean-class>pl.eod2.managedCfg.RodzajeGrupy</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
