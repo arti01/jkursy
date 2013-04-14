@@ -22,6 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -45,7 +46,8 @@ public class DcRodzajGrupa implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 256)
+    @NotEmpty
+    @Size(min = 3, max = 256)
     @Column(nullable = false, length = 256)
     private String nazwa;
     @Size(max = 10485760)

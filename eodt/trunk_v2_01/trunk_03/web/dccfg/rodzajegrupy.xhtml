@@ -17,22 +17,24 @@
             <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
                 <h:panelGrid columns="3" id="dodajGrid">
                     <h:outputLabel for="nameD" value="nazwa: "/>
-                    <h:inputText id="nameD" value="#{RodzajeGrupy.rodzajGrupa.nazwa}"  size="50" ><rich:validator/></h:inputText>
+                    <h:inputText id="nameD" value="#{RodzajeGrupy.rodzajGrupa.nazwa}"  size="90" ><rich:validator/></h:inputText>
                     <rich:message for="nameD" styleClass="error" />
 
                     <h:outputLabel for="opisD" value="opis: "/>
-                    <h:inputText id="opisD" value="#{RodzajeGrupy.rodzajGrupa.opis}"  size="50" ><rich:validator/></h:inputText>
+                    <h:inputTextarea id="opisD" value="#{RodzajeGrupy.rodzajGrupa.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
                 </h:panelGrid>
                 <a4j:commandButton value="Dodaj" action="#{RodzajeGrupy.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}" 
                                    rendered="#{RodzajeGrupy.rodzajGrupa.id==null}"/>
-                <a4j:commandButton value="Zapisz" action="#{RodzajeGrupy.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
-                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}" 
-                                   rendered="#{RodzajeGrupy.rodzajGrupa.id!=null}"/>
+                <a4j:commandButton value="Zapisz" action="#{RodzajeGrupy.edytuj}" render="listPanel, dodajPane" execute="dodajPane" parent="form"
+                                   oncomplete="if (#{facesContext.maximumSeverity!=null}) {#{rich:component('dodajPane')}.hide();}" rendered="#{RodzajeGrupy.rodzajGrupa.id!=null}"/>
 
                 <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                         return false;" />
+                <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7">
+                #{facesContext.maximumSeverity}sssssssssssssssssss
+                </rich:notifyMessages>
             </rich:popupPanel>
 
             <rich:panel id="listPanel">
