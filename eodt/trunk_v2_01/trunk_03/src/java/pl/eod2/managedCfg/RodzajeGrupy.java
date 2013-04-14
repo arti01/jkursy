@@ -1,9 +1,11 @@
-
 package pl.eod2.managedCfg;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcRodzajGrupa;
@@ -14,42 +16,52 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 @ManagedBean(name = "RodzajeGrupy")
 @SessionScoped
 public class RodzajeGrupy {
+
     private DataModel<DcRodzajGrupa> lista = new ListDataModel<DcRodzajGrupa>();
     private DcRodzajGrupaJpaController dcRodzajGrupaC;
     private DcRodzajGrupa rodzajGrupa;
-    
+    private String error;
+
     @PostConstruct
-    void init(){
-        dcRodzajGrupaC=new DcRodzajGrupaJpaController();
+    void init() {
+        dcRodzajGrupaC = new DcRodzajGrupaJpaController();
         refresh();
     }
-    
-    void refresh(){
+
+    void refresh() {
         lista.setWrappedData(dcRodzajGrupaC.findDcRodzajGrupaEntities());
-        rodzajGrupa=new DcRodzajGrupa();
+        rodzajGrupa = new DcRodzajGrupa();
+        error = null;
     }
-    
-    public void dodaj(){
-        dcRodzajGrupaC.create(rodzajGrupa);
-        refresh();
+
+    public void dodaj() {
+        error = dcRodzajGrupaC.create(rodzajGrupa);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+        } else {
+            refresh();
+        }
     }
-    
-    public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception{
+
+    public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
         dcRodzajGrupaC.edit(rodzajGrupa);
         refresh();
     }
-    
-    public void usun() throws IllegalOrphanException, NonexistentEntityException{
+
+    public void usun() throws IllegalOrphanException, NonexistentEntityException {
         //rodzajGrupa=lista.getRowData();
         dcRodzajGrupaC.destroy(rodzajGrupa.getId());
         refresh();
     }
 
-    public void test(){
-        System.err.println("test"+lista.getRowData().getNazwa());
+    public void test() {
+        System.err.println("test" + lista.getRowData().getNazwa());
     }
-    
-    public String list(){
+
+    public String list() {
         return "/dccfg/rodzajegrupy";
     }
 
@@ -69,4 +81,11 @@ public class RodzajeGrupy {
         this.rodzajGrupa = rodzajGrupa;
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }

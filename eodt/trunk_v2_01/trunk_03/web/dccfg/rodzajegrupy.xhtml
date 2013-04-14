@@ -24,17 +24,17 @@
                     <h:inputTextarea id="opisD" value="#{RodzajeGrupy.rodzajGrupa.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
                 </h:panelGrid>
-                <a4j:commandButton value="Dodaj" action="#{RodzajeGrupy.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
-                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}" 
-                                   rendered="#{RodzajeGrupy.rodzajGrupa.id==null}"/>
-                <a4j:commandButton value="Zapisz" action="#{RodzajeGrupy.edytuj}" render="listPanel, dodajPane" execute="dodajPane" parent="form"
-                                   oncomplete="if (#{facesContext.maximumSeverity!=null}) {#{rich:component('dodajPane')}.hide();}" rendered="#{RodzajeGrupy.rodzajGrupa.id!=null}"/>
+                <rich:message for="zapisz" styleClass="error" />
+                <rich:message for="dodaj" styleClass="error" />
 
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{RodzajeGrupy.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RodzajeGrupy.rodzajGrupa.id==null}"/>
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{RodzajeGrupy.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RodzajeGrupy.rodzajGrupa.id!=null}"/>
                 <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                         return false;" />
-                <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7">
-                #{facesContext.maximumSeverity}sssssssssssssssssss
-                </rich:notifyMessages>
             </rich:popupPanel>
 
             <rich:panel id="listPanel">

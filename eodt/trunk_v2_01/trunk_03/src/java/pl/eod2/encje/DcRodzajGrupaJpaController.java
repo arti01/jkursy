@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import pl.eod.encje.Uzytkownik;
+import pl.eod.encje.UzytkownikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -22,10 +25,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class DcRodzajGrupaJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public DcRodzajGrupaJpaController() {
-         if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -35,8 +39,12 @@ public class DcRodzajGrupaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DcRodzajGrupa dcRodzajGrupa) {
+    public String create(DcRodzajGrupa dcRodzajGrupa) {
         EntityManager em = null;
+        DcRodzajGrupaJpaController uC = new DcRodzajGrupaJpaController();
+        if ((uC.findDcRodzajGrupa(dcRodzajGrupa.getNazwa())) != null) {
+            return "email już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -47,6 +55,7 @@ public class DcRodzajGrupaJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
 
     public void edit(DcRodzajGrupa dcRodzajGrupa) throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -170,6 +179,25 @@ public class DcRodzajGrupaJpaController implements Serializable {
         }
     }
 
+    public DcRodzajGrupa findDcRodzajGrupa(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcRodzajGrupa.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            DcRodzajGrupa u = (DcRodzajGrupa) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     public int getDcRodzajGrupaCount() {
         EntityManager em = getEntityManager();
         try {
@@ -182,5 +210,4 @@ public class DcRodzajGrupaJpaController implements Serializable {
             em.close();
         }
     }
-    
 }
