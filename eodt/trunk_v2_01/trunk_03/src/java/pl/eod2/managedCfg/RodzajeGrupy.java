@@ -14,7 +14,7 @@ import pl.eod2.encje.DcRodzajGrupaJpaController;
 public class RodzajeGrupy {
     private DataModel<DcRodzajGrupa> lista = new ListDataModel<DcRodzajGrupa>();
     private DcRodzajGrupaJpaController dcRodzajGrupaC;
-    private RodzajeGrupy rodzajGrupy;
+    private DcRodzajGrupa rodzajGrupa;
     
     @PostConstruct
     void init(){
@@ -24,6 +24,12 @@ public class RodzajeGrupy {
     
     void refresh(){
         lista.setWrappedData(dcRodzajGrupaC.findDcRodzajGrupaEntities());
+        rodzajGrupa=new DcRodzajGrupa();
+    }
+    
+    public void dodaj(){
+        dcRodzajGrupaC.create(rodzajGrupa);
+        refresh();
     }
 
     public void test(){
@@ -41,6 +47,13 @@ public class RodzajeGrupy {
     public void setLista(DataModel<DcRodzajGrupa> lista) {
         this.lista = lista;
     }
-    
-    
+
+    public DcRodzajGrupa getRodzajGrupa() {
+        return rodzajGrupa;
+    }
+
+    public void setRodzajGrupa(DcRodzajGrupa rodzajGrupa) {
+        this.rodzajGrupa = rodzajGrupa;
+    }
+
 }

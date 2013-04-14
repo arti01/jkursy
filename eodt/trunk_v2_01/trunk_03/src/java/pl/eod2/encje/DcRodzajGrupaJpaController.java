@@ -36,29 +36,11 @@ public class DcRodzajGrupaJpaController implements Serializable {
     }
 
     public void create(DcRodzajGrupa dcRodzajGrupa) {
-        if (dcRodzajGrupa.getDcRodzajList() == null) {
-            dcRodzajGrupa.setDcRodzajList(new ArrayList<DcRodzaj>());
-        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            List<DcRodzaj> attachedDcRodzajList = new ArrayList<DcRodzaj>();
-            for (DcRodzaj dcRodzajListDcRodzajToAttach : dcRodzajGrupa.getDcRodzajList()) {
-                dcRodzajListDcRodzajToAttach = em.getReference(dcRodzajListDcRodzajToAttach.getClass(), dcRodzajListDcRodzajToAttach.getId());
-                attachedDcRodzajList.add(dcRodzajListDcRodzajToAttach);
-            }
-            dcRodzajGrupa.setDcRodzajList(attachedDcRodzajList);
             em.persist(dcRodzajGrupa);
-            for (DcRodzaj dcRodzajListDcRodzaj : dcRodzajGrupa.getDcRodzajList()) {
-                DcRodzajGrupa oldIdRodzajGrupaOfDcRodzajListDcRodzaj = dcRodzajListDcRodzaj.getIdRodzajGrupa();
-                dcRodzajListDcRodzaj.setIdRodzajGrupa(dcRodzajGrupa);
-                dcRodzajListDcRodzaj = em.merge(dcRodzajListDcRodzaj);
-                if (oldIdRodzajGrupaOfDcRodzajListDcRodzaj != null) {
-                    oldIdRodzajGrupaOfDcRodzajListDcRodzaj.getDcRodzajList().remove(dcRodzajListDcRodzaj);
-                    oldIdRodzajGrupaOfDcRodzajListDcRodzaj = em.merge(oldIdRodzajGrupaOfDcRodzajListDcRodzaj);
-                }
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {

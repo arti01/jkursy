@@ -32,6 +32,12 @@
       <property name="eclipselink.logging.parameters" value="false"/>
       <property name="eclipselink.logging.level.sql" value="INFO"/>
       <property name="eclipselink.logging.level.cache" value="INFO"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
     </properties>
+  </persistence-unit>
+  <persistence-unit name="eodtPU2" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <non-jta-data-source>jdbc/test</non-jta-data-source>
+    <properties/>
   </persistence-unit>
 </persistence>

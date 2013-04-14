@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/eodt_v2">
-    
-    <Realm className="org.apache.catalina.realm.JDBCRealm" debug="99"
-           driverName="org.postgresql.Driver"
-           digest="md5"
-           connectionURL="jdbc:postgresql://127.0.0.1:5432/eod_v2?user=eod&amp;password=eod"
-           username="eod" password="eod"
-           userTable="userpass" userNameCol="username" userCredCol="password" 
-           userRoleTable="user_roles_view" roleNameCol="role_name"
-           resourceName="eod"/>
-    
-    <!--<Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99" 
+  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionURL="jdbc:postgresql://127.0.0.1:5432/eod_v2?user=eod&amp;password=eod" debug="99" digest="md5" driverName="org.postgresql.Driver" password="eod" resourceName="eod" roleNameCol="role_name" userCredCol="password" userNameCol="username" userRoleTable="user_roles_view" userTable="userpass" username="eod"/>
+  <!--<Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99" 
            dataSourceName="jdbc/eod" localDataSource="true" 
            userTable="dbo.userPass" userNameCol="username" userCredCol="password" 
            userRoleTable="dbo.userRoles" roleNameCol="role_name"/>
     -->
-    <Resource name="jdbc/eod_v2" auth="Container" type="javax.sql.DataSource"
-              username="eod" password="eod"
-              driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" url="jdbc:postgresql://127.0.0.1:5432/eod_v2"
-              maxActive="10" maxIdle="3" maxWait="10000"
-              removeAbandoned="true" removeAbandonedTimeout="100"/>
+  <Resource auth="Container" driverClassName="org.postgresql.ds.PGConnectionPoolDataSource" maxActive="10" maxIdle="3" maxWait="10000" name="jdbc/eod_v2" password="eod" removeAbandoned="true" removeAbandonedTimeout="100" type="javax.sql.DataSource" url="jdbc:postgresql://127.0.0.1:5432/eod_v2" username="eod"/>
+  <Resource auth="Container" driverClassName="org.postgresql.Driver" maxActive="20" maxIdle="10" maxWait="-1" name="jdbc/test" password="eod" type="javax.sql.DataSource" url="jdbc:postgresql://127.0.0.1:5432/eod_v2" username="eod"/>
 </Context>
