@@ -8,6 +8,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcRodzajGrupa;
 import pl.eod2.encje.DcRodzajGrupaJpaController;
+import pl.eod2.encje.exceptions.IllegalOrphanException;
+import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 @ManagedBean(name = "RodzajeGrupy")
 @SessionScoped
@@ -29,6 +31,17 @@ public class RodzajeGrupy {
     
     public void dodaj(){
         dcRodzajGrupaC.create(rodzajGrupa);
+        refresh();
+    }
+    
+    public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception{
+        dcRodzajGrupaC.edit(rodzajGrupa);
+        refresh();
+    }
+    
+    public void usun() throws IllegalOrphanException, NonexistentEntityException{
+        //rodzajGrupa=lista.getRowData();
+        dcRodzajGrupaC.destroy(rodzajGrupa.getId());
         refresh();
     }
 
