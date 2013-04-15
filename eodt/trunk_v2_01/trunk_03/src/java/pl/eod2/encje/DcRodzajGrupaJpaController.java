@@ -43,7 +43,7 @@ public class DcRodzajGrupaJpaController implements Serializable {
         EntityManager em = null;
         DcRodzajGrupaJpaController uC = new DcRodzajGrupaJpaController();
         if ((uC.findDcRodzajGrupa(dcRodzajGrupa.getNazwa())) != null) {
-            return "email już istnieje";
+            return "nazwa już istnieje";
         }
         try {
             em = getEntityManager();
@@ -58,8 +58,12 @@ public class DcRodzajGrupaJpaController implements Serializable {
         return null;
     }
 
-    public void edit(DcRodzajGrupa dcRodzajGrupa) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public String edit(DcRodzajGrupa dcRodzajGrupa) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
+        DcRodzajGrupa old=findDcRodzajGrupa(dcRodzajGrupa.getId());
+        if (findDcRodzajGrupa(dcRodzajGrupa.getNazwa()) != null && findDcRodzajGrupa(dcRodzajGrupa.getNazwa()).getId()!=old.getId()) {
+            return "nazwa już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -112,6 +116,7 @@ public class DcRodzajGrupaJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
