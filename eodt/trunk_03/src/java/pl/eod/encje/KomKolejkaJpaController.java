@@ -5,6 +5,7 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -38,6 +39,8 @@ public class KomKolejkaJpaController implements Serializable {
     public void create(KomKolejka komKolejka) {
         EntityManager em = null;
         try {
+            Date data=new Date();
+            komKolejka.setDataInsert(data);
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(komKolejka);

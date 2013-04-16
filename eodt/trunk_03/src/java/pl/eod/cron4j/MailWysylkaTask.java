@@ -6,9 +6,9 @@ package pl.eod.cron4j;
 
 import it.sauronsoftware.cron4j.Task;
 import it.sauronsoftware.cron4j.TaskExecutionContext;
+import java.util.Date;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
-import pl.eod.encje.WnUrlopJpaController;
 
 /**
  *
@@ -26,6 +26,8 @@ public class MailWysylkaTask extends Task {
             try {
                 mw.wyslij();
                 kk.setStatus(1);
+                Date data=new Date();
+                kk.setDataInsert(data);
                 kkc.edit(kk);
             } catch (Exception e) {
                 e.printStackTrace();
