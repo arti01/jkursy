@@ -53,14 +53,14 @@ public class WnUrlopJpaController implements Serializable {
             em.getTransaction().begin();
             if(wnUrlop.getId()==null) em.persist(wnUrlop);
             em.merge(u);
-            em.getTransaction().commit();
+            //em.getTransaction().commit();
             //nadawanie numeru wniosku;
             String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
-            nrWniosku=nrWniosku+"/"+getWnUrlopCountRokBiezacy()+"/";
+            nrWniosku=nrWniosku+"/"+(getWnUrlopCountRokBiezacy()+1)+"/";
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
             nrWniosku=nrWniosku+sdf.format(new Date());
-            wnUrlop.setNrWniosku(nrWniosku);
-            em.getTransaction().begin();
+            if(wnUrlop.getStatusId().getId()==1) wnUrlop.setNrWniosku(nrWniosku);
+            //em.getTransaction().begin();
             em.merge(wnUrlop);
             em.getTransaction().commit();
         } finally {
