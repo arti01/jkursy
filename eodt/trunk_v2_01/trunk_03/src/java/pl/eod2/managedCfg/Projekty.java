@@ -10,8 +10,6 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcProjekt;
 import pl.eod2.encje.DcProjektJpaController;
-import pl.eod2.encje.DcRodzajGrupa;
-import pl.eod2.encje.DcRodzajGrupaJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -72,6 +70,7 @@ public class Projekty {
     }
 
     public String list() {
+        refresh();
         return "/dccfg/projekty";
     }
 

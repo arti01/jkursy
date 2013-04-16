@@ -51,7 +51,7 @@
                         <f:facet name="header">opis</f:facet>
                             #{item.opis}
                     </rich:column>
-                    <rich:column>
+                    <rich:column style="width: 45px">
                         <a4j:commandLink execute="@this" render="@none"
                                          oncomplete="#{rich:component('confirmPane')}.show()">
                             <h:graphicImage value="/images/delete.gif" alt="delete" />

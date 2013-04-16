@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -37,14 +38,14 @@ public class DcRodzajJpaController implements Serializable {
     }
 
     public String create(DcRodzaj dcRodzaj) {
-        if (dcRodzaj.getDcDokumentList() == null) {
-            dcRodzaj.setDcDokumentList(new ArrayList<DcDokument>());
-        }
         EntityManager em = null;
+        if ((findDcRodzaj(dcRodzaj.getNazwa())) != null) {
+            return "nazwa już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-em.persist(dcRodzaj);
+            em.persist(dcRodzaj);
             em.getTransaction().commit();
         }catch(Exception ex){
             return "blad";
@@ -56,8 +57,12 @@ em.persist(dcRodzaj);
         return null;
     }
 
-    public void edit(DcRodzaj dcRodzaj) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public String edit(DcRodzaj dcRodzaj) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
+        DcRodzaj old=findDcRodzaj(dcRodzaj.getId());
+        if (findDcRodzaj(dcRodzaj.getNazwa()) != null && findDcRodzaj(dcRodzaj.getNazwa()).getId()!=old.getId()) {
+            return "nazwa już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -124,6 +129,7 @@ em.persist(dcRodzaj);
                 em.close();
             }
         }
+        return null;
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
@@ -191,6 +197,25 @@ em.persist(dcRodzaj);
         EntityManager em = getEntityManager();
         try {
             return em.find(DcRodzaj.class, id);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public DcRodzaj findDcRodzaj(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcRodzaj.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            DcRodzaj u = (DcRodzaj) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
         } finally {
             em.close();
         }

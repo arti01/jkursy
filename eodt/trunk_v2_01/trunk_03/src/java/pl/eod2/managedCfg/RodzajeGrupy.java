@@ -70,6 +70,7 @@ public class RodzajeGrupy {
     }
 
     public String list() {
+        refresh();
         return "/dccfg/rodzajegrupy";
     }
 
