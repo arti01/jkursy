@@ -59,7 +59,9 @@ public class KomKolejka implements Serializable {
     @Column(name = "data_wysylk")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataWysylk;
-
+    @Column(name = "id_dokumentu")
+    private int idDokumenu;
+    
     public KomKolejka() {
     }
 
@@ -121,6 +123,14 @@ public class KomKolejka implements Serializable {
 
     public void setDataWysylk(Date dataWysylk) {
         this.dataWysylk = dataWysylk;
+    }
+
+    public int getIdDokumenu() {
+        return idDokumenu;
+    }
+
+    public void setIdDokumenu(int idDokumenu) {
+        this.idDokumenu = idDokumenu;
     }
 
     @Override

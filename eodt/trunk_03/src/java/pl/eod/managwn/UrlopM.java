@@ -90,6 +90,7 @@ public class UrlopM implements Serializable {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
                 kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
                 kk.setTemat("Informacja o wniosku urlopowym");
                 kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
@@ -99,6 +100,7 @@ public class UrlopM implements Serializable {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getAkceptant().getAdrEmail());
                 kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
                 kk.setTemat("Prośba o akceptację wniosku urlopowego");
                 kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
@@ -144,6 +146,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop zaakceptowany");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
             KomKolC.create(kk);
@@ -153,6 +156,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop zaakceptowany");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
             KomKolC.create(kk);
@@ -192,6 +196,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop odrzucony");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
             KomKolC.create(kk);
@@ -201,6 +206,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop odrzucony");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został odrzucony");
             KomKolC.create(kk);
@@ -240,6 +246,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop cofnięty");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
@@ -249,6 +256,7 @@ public class UrlopM implements Serializable {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop cofnięty");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
