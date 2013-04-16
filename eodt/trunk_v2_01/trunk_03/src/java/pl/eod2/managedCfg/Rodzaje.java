@@ -46,6 +46,7 @@ public class Rodzaje {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
+            
             refresh();
         }
     }

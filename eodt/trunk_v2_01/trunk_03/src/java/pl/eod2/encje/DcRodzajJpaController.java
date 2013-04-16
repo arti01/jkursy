@@ -46,8 +46,10 @@ public class DcRodzajJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(dcRodzaj);
+            em.refresh(em.merge(dcRodzaj.getIdRodzajGrupa()));
             em.getTransaction().commit();
         }catch(Exception ex){
+            ex.printStackTrace();
             return "blad";
         } finally {
             if (em != null) {
