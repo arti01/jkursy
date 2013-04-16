@@ -27,7 +27,7 @@ public class MailWysylkaTask extends Task {
                 mw.wyslij();
                 kk.setStatus(1);
                 Date data=new Date();
-                kk.setDataInsert(data);
+                kk.setDataWysylk(data);
                 kkc.edit(kk);
             } catch (Exception e) {
                 e.printStackTrace();

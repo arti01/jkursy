@@ -113,6 +113,7 @@ public class WnUrlopJpaController implements Serializable {
         KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getAkceptant().getAdrEmail());
         kk.setStatus(0);
+        kk.setIdDokumenu(urlop.getId().intValue());
         kk.setTemat("Prośba o akceptację wniosku urlopowego - eskalacja");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         kk.setTresc("Proszę o akceptację wniosku urlopowego, który nie został zaakceptowany przez bezpośredniego przełożonego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
