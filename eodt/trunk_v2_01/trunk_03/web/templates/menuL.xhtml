@@ -26,6 +26,15 @@
                                     <rich:panelMenuItem >
                                         <h:commandLink value="Projekty" action="#{ProjektyCfg.list}"/>
                                     </rich:panelMenuItem>
+                                    <rich:panelMenuItem >
+                                        <h:commandLink value="Żródła" action="#{ZrodlaCfg.list}"/>
+                                    </rich:panelMenuItem>
+                                </rich:panelMenuGroup>
+                                
+                                <rich:panelMenuGroup label="Dokumenty - rejestracja" rendered="#{login.dcRej}">
+                                    <rich:panelMenuItem >
+                                        <h:commandLink value="Rejestracja" action="#{RejestracjaRej.list}"/>
+                                    </rich:panelMenuItem>
                                 </rich:panelMenuGroup>
                                 
                                 <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}">
