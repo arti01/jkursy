@@ -14,6 +14,7 @@ import javax.faces.convert.Converter;
 @ManagedBean(name = "DcRodzajGrupaConv")
 @SessionScoped
 public class DcRodzajGrupaConv implements Converter, Serializable {
+    private static final long serialVersionUID = 1L;
     
     private Object object;
     DcRodzajGrupaJpaController uC=new DcRodzajGrupaJpaController();

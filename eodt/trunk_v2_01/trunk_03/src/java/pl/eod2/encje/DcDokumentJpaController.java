@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import pl.eod.encje.Uzytkownik;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -23,8 +24,10 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  */
 public class DcDokumentJpaController implements Serializable {
 
-    public DcDokumentJpaController(EntityManagerFactory emf) {
-        this.emf = emf;
+    public DcDokumentJpaController() {
+       if (this.emf == null) {
+            this.emf = Persistence.createEntityManagerFactory("eodtPU");
+        }
     }
     private EntityManagerFactory emf = null;
 
@@ -32,7 +35,7 @@ public class DcDokumentJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DcDokument dcDokument) {
+    public String create(DcDokument dcDokument) {
         if (dcDokument.getDcPlikList() == null) {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }
@@ -40,67 +43,19 @@ public class DcDokumentJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Uzytkownik userId = dcDokument.getUserId();
-            if (userId != null) {
-                userId = em.getReference(userId.getClass(), userId.getId());
-                dcDokument.setUserId(userId);
-            }
-            DcZrodlo zrodloId = dcDokument.getZrodloId();
-            if (zrodloId != null) {
-                zrodloId = em.getReference(zrodloId.getClass(), zrodloId.getId());
-                dcDokument.setZrodloId(zrodloId);
-            }
-            DcRodzaj rodzajId = dcDokument.getRodzajId();
-            if (rodzajId != null) {
-                rodzajId = em.getReference(rodzajId.getClass(), rodzajId.getId());
-                dcDokument.setRodzajId(rodzajId);
-            }
-            DcProjekt projektId = dcDokument.getProjektId();
-            if (projektId != null) {
-                projektId = em.getReference(projektId.getClass(), projektId.getId());
-                dcDokument.setProjektId(projektId);
-            }
-            List<DcPlik> attachedDcPlikList = new ArrayList<DcPlik>();
-            for (DcPlik dcPlikListDcPlikToAttach : dcDokument.getDcPlikList()) {
-                dcPlikListDcPlikToAttach = em.getReference(dcPlikListDcPlikToAttach.getClass(), dcPlikListDcPlikToAttach.getId());
-                attachedDcPlikList.add(dcPlikListDcPlikToAttach);
-            }
-            dcDokument.setDcPlikList(attachedDcPlikList);
             em.persist(dcDokument);
-            if (userId != null) {
-                userId.getDcDokumentList().add(dcDokument);
-                userId = em.merge(userId);
-            }
-            if (zrodloId != null) {
-                zrodloId.getDcDokumentList().add(dcDokument);
-                zrodloId = em.merge(zrodloId);
-            }
-            if (rodzajId != null) {
-                rodzajId.getDcDokumentList().add(dcDokument);
-                rodzajId = em.merge(rodzajId);
-            }
-            if (projektId != null) {
-                projektId.getDcDokumentList().add(dcDokument);
-                projektId = em.merge(projektId);
-            }
-            for (DcPlik dcPlikListDcPlik : dcDokument.getDcPlikList()) {
-                DcDokument oldIdDokOfDcPlikListDcPlik = dcPlikListDcPlik.getIdDok();
-                dcPlikListDcPlik.setIdDok(dcDokument);
-                dcPlikListDcPlik = em.merge(dcPlikListDcPlik);
-                if (oldIdDokOfDcPlikListDcPlik != null) {
-                    oldIdDokOfDcPlikListDcPlik.getDcPlikList().remove(dcPlikListDcPlik);
-                    oldIdDokOfDcPlikListDcPlik = em.merge(oldIdDokOfDcPlikListDcPlik);
-                }
-            }
             em.getTransaction().commit();
+        }catch(Exception ex){
+            return "blad";
         } finally {
             if (em != null) {
                 em.close();
             }
         }
+        return null;
     }
 
-    public void edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -210,6 +165,7 @@ public class DcDokumentJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
 
     public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {

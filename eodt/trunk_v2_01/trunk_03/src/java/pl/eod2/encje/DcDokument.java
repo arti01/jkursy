@@ -38,7 +38,7 @@ import pl.eod.encje.Uzytkownik;
 @NamedQueries({
     @NamedQuery(name = "DcDokument.findAll", query = "SELECT d FROM DcDokument d"),
     @NamedQuery(name = "DcDokument.findById", query = "SELECT d FROM DcDokument d WHERE d.id = :id"),
-    @NamedQuery(name = "DcDokument.findByTytul", query = "SELECT d FROM DcDokument d WHERE d.tytul = :tytul"),
+    @NamedQuery(name = "DcDokument.findByNazwa", query = "SELECT d FROM DcDokument d WHERE d.nazwa = :tytul"),
     @NamedQuery(name = "DcDokument.findByOpis", query = "SELECT d FROM DcDokument d WHERE d.opis = :opis"),
     @NamedQuery(name = "DcDokument.findByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
     @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok")})
@@ -55,7 +55,7 @@ public class DcDokument implements Serializable {
     @NotNull
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256)
-    private String tytul;
+    private String nazwa;
     @Size(max = 10485760)
     @Lob
     private String opis;
@@ -91,7 +91,7 @@ public class DcDokument implements Serializable {
 
     public DcDokument(Integer id, String tytul, Date dataWprow, int userId) {
         this.id = id;
-        this.tytul = tytul;
+        this.nazwa = tytul;
         this.dataWprow = dataWprow;
     }
 
@@ -103,12 +103,12 @@ public class DcDokument implements Serializable {
         this.id = id;
     }
 
-    public String getTytul() {
-        return tytul;
+    public String getNazwa() {
+        return nazwa;
     }
 
-    public void setTytul(String tytul) {
-        this.tytul = tytul;
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
     }
 
     public String getOpis() {
