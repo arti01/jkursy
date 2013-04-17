@@ -28,7 +28,7 @@ public class RodzajeGrupy {
         refresh();
     }
 
-    void refresh() {
+    public void refresh() {
         lista.setWrappedData(dcRodzajGrupaC.findDcRodzajGrupaEntities());
         rodzajGrupa = new DcRodzajGrupa();
         error = null;

@@ -7,12 +7,14 @@ package pl.eod2.managedCfg;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcRodzaj;
+import pl.eod2.encje.DcRodzajGrupa;
 import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -25,6 +27,8 @@ public class Rodzaje {
     private DcRodzajJpaController dcC;
     private DcRodzaj obiekt;
     private String error;
+    @ManagedProperty(value = "#{RodzajeGrupyCfg}")
+    private RodzajeGrupy rodzajeGrupy;
 
     @PostConstruct
     void init() {
@@ -61,6 +65,7 @@ public class Rodzaje {
             lista.setWrappedData(dcC.findDcRodzajEntities());
         } else {
             refresh();
+            rodzajeGrupy.refresh();
         }
     }
 
@@ -68,6 +73,7 @@ public class Rodzaje {
         //rodzajGrupa=lista.getRowData();
         dcC.destroy(obiekt.getId());
         refresh();
+        rodzajeGrupy.refresh();
     }
 
     public void test() {
@@ -102,4 +108,13 @@ public class Rodzaje {
     public void setError(String error) {
         this.error = error;
     }
+
+    public RodzajeGrupy getRodzajeGrupy() {
+        return rodzajeGrupy;
+    }
+
+    public void setRodzajeGrupy(RodzajeGrupy rodzajeGrupy) {
+        this.rodzajeGrupy = rodzajeGrupy;
+    }
+
 }
