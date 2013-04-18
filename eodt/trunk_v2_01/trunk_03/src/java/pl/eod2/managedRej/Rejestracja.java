@@ -1,16 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.eod2.managedRej;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import pl.eod.managed.Login;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
@@ -24,6 +23,8 @@ public class Rejestracja {
     private DcDokumentJpaController dcC;
     private DcDokument obiekt;
     private String error;
+    @ManagedProperty(value = "#{login}")
+    private Login login;
 
     @PostConstruct
     void init() {
@@ -38,6 +39,7 @@ public class Rejestracja {
     }
 
     public void dodaj() {
+        obiekt.setUserId(login.getZalogowany().getUserId());
         error = dcC.create(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
@@ -48,6 +50,8 @@ public class Rejestracja {
             refresh();
         }
     }
+    
+    
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
         error=dcC.edit(obiekt);
@@ -63,14 +67,17 @@ public class Rejestracja {
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {
-        //rodzajGrupa=lista.getRowData();
         dcC.destroy(obiekt.getId());
         refresh();
     }
 
     public String list() {
         refresh();
-        return "/dcrej/dokument";
+        return "/dcrej/dokumentList";
+    }
+    
+    public String detale() {
+        return "/dcrej/dokumentDetale?faces-redirect=true";
     }
 
     public DataModel<DcDokument> getLista() {
@@ -96,4 +103,12 @@ public class Rejestracja {
     public void setError(String error) {
         this.error = error;
     }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }    
 }

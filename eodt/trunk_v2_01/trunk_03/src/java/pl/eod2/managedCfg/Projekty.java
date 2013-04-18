@@ -21,7 +21,7 @@ public class Projekty {
     private DcProjektJpaController dcC;
     private DcProjekt obiekt;
     private String error;
-
+    
     @PostConstruct
     void init() {
         dcC = new DcProjektJpaController();
@@ -97,4 +97,5 @@ public class Projekty {
     public void setError(String error) {
         this.error = error;
     }
+
 }

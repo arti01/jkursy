@@ -10,6 +10,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -39,6 +40,7 @@ public class DcDokumentJpaController implements Serializable {
         if (dcDokument.getDcPlikList() == null) {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }
+        dcDokument.setDataWprow(new Date());
         EntityManager em = null;
         try {
             em = getEntityManager();

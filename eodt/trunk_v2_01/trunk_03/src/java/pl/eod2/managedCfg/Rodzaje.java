@@ -14,7 +14,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcRodzaj;
-import pl.eod2.encje.DcRodzajGrupa;
 import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;

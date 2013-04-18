@@ -42,7 +42,9 @@
                     <h4>[dodaj]</h4>
                 </a4j:commandLink>
 
-                <rich:dataTable value="#{ZrodlaCfg.lista}" var="item" iterationStatusVar="it" id="table"  style="width: 100%">
+                <rich:dataTable value="#{ZrodlaCfg.lista}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
+                    <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <rich:column sortBy="#{item.nazwa}" sortOrder="ascending">
                         <f:facet name="header">nazwa</f:facet>
                             #{item.nazwa}
@@ -54,11 +56,11 @@
                     <rich:column style="width: 45px">
                         <a4j:commandLink execute="@this" render="@none"
                                          oncomplete="#{rich:component('confirmPane')}.show()">
-                            <h:graphicImage value="/images/delete.gif" alt="delete" />
+                            <h:graphicImage value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{ZrodlaCfg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
                         <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
-                            <h:graphicImage value="/images/edit.gif" alt="edit" />
+                            <h:graphicImage value="/images/edit.png" alt="edit" />
                             <f:setPropertyActionListener target="#{ZrodlaCfg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
                     </rich:column>

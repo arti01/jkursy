@@ -62,10 +62,10 @@ public class DcDokument implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprow", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataWprow;
     @Column(name = "data_dok")
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataDok;
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
