@@ -175,6 +175,9 @@
                                              render="formTab, formWprow" limitRender="false"  execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopObceM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
+                            <a4j:commandLink value="anuluj" action="#{UrlopObceM.anuluj}" rendered="#{urlop.statusId.id==3}" render="formTab, formWprow" limitRender="true" execute="@this">
+                                <f:setPropertyActionListener target="#{UrlopObceM.urlop}" value="#{urlop}"/>
+                            </a4j:commandLink>
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>
