@@ -22,6 +22,12 @@
                 <h:selectOneMenu id="grupaD" value="#{RodzajeCfg.obiekt.idRodzajGrupa}" converter="#{DcRodzajGrupaConv}" >
                     <f:selectItems value="#{RodzajeGrupyCfg.lista}" var="grupa" itemValue="#{grupa}" itemLabel="#{grupa.nazwa}"/>
                 </h:selectOneMenu>
+                <rich:message for="grupaD" styleClass="error" />
+                
+                <h:outputLabel for="typFlowD" value="typ akceptacji: "/>
+                <h:selectOneMenu id="typFlowD" value="#{RodzajeCfg.obiekt.idTypFlow}" converter="#{DcTypFlowConv}" >
+                    <f:selectItems value="#{RodzajeCfg.typFlowLista}" var="typ" itemValue="#{typ}" itemLabel="#{typ.nazwa}"/>
+                </h:selectOneMenu>
             </h:panelGrid>
             <hr/>
             <rich:message for="zapisz" styleClass="error" />

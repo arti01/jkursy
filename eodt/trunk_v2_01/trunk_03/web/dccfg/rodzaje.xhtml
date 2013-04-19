@@ -33,9 +33,16 @@
                             #{item.opis}
                     </rich:column>
                     <rich:column>
+                        <f:facet name="header">typ akceptacji:</f:facet>
+                        <h:outputText value="#{item.idTypFlow.nazwa}" id="typFlow"/>
+                        <rich:tooltip id="tt1" layout="block" target="typFlow">
+                            <h:outputText value="#{item.idTypFlow.opis}"/>
+                        </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
                         <f:facet name="header">grupa</f:facet>
                         <h:outputText value="#{item.idRodzajGrupa.nazwa}" id="grupa"/>
-                        <rich:tooltip id="tt1" layout="block" target="grupa">
+                        <rich:tooltip id="tt2" layout="block" target="grupa">
                             <h:outputText value="#{item.idRodzajGrupa.opis}"/>
                         </rich:tooltip>
                     </rich:column>

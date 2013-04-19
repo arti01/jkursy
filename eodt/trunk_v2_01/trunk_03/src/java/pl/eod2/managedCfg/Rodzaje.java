@@ -4,6 +4,8 @@
  */
 package pl.eod2.managedCfg;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +17,8 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.DcRodzajJpaController;
+import pl.eod2.encje.DcTypFlow;
+import pl.eod2.encje.DcTypFlowJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -28,15 +32,19 @@ public class Rodzaje {
     private String error;
     @ManagedProperty(value = "#{RodzajeGrupyCfg}")
     private RodzajeGrupy rodzajeGrupy;
+    private List<DcTypFlow> typFlowLista =new ArrayList<DcTypFlow>();
+    private DcTypFlowJpaController dcTypFlowC;
 
     @PostConstruct
     void init() {
         dcC = new DcRodzajJpaController();
+        dcTypFlowC = new DcTypFlowJpaController();
         refresh();
     }
 
     void refresh() {
         lista.setWrappedData(dcC.findDcRodzajEntities());
+        typFlowLista=dcTypFlowC.findDcTypFlowEntities();
         obiekt = new DcRodzaj();
         error = null;
     }
@@ -49,7 +57,6 @@ public class Rodzaje {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
-            
             refresh();
         }
     }
@@ -114,6 +121,14 @@ public class Rodzaje {
 
     public void setRodzajeGrupy(RodzajeGrupy rodzajeGrupy) {
         this.rodzajeGrupy = rodzajeGrupy;
+    }
+
+    public List<DcTypFlow> getTypFlowLista() {
+        return typFlowLista;
+    }
+
+    public void setTypFlowLista(List<DcTypFlow> typFlowLista) {
+        this.typFlowLista = typFlowLista;
     }
 
 }
