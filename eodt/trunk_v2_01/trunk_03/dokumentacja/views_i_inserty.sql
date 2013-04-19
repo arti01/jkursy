@@ -49,6 +49,7 @@ INSERT INTO wn_statusy VALUES (3, '#6fbb3a', 'Zaakceptowany', 'AK');
 INSERT INTO wn_statusy VALUES (1, '#9ddcda', 'Utworzony', 'UT');
 INSERT INTO wn_statusy VALUES (4, '#e87161', 'Odrzucony', 'OD');
 INSERT INTO wn_statusy VALUES (5, '#eaed8e', 'Cofnięty', 'CO');
+INSERT INTO wn_statusy VALUES (6, '#C0C0C0', 'Anulowany po akcepcie', 'AN');
 
 --dodawanie adminow z pelnia praw (hasla 'a')
 INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');

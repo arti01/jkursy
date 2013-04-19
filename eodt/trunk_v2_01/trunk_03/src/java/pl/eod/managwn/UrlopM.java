@@ -62,6 +62,67 @@ public class UrlopM implements Serializable {
         return "/urlop/urlopyListAkceptHist";
     }
 
+    public void anuluj() {
+        String info = "";
+        try {
+            WnStatusy st = new WnStatusy();
+            st.setId(new Long(6));
+            urlop.setStatusId(st);
+            //urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
+            
+            WnHistoria wnh = new WnHistoria();
+            wnh.setDataZmiany(new Date());
+            WnStatusy st1 = new WnStatusy();
+            st1.setId(new Long(6));
+            wnh.setStatusId(st1);
+            wnh.setZmieniajacy(urlop.getUzytkownik());
+            wnh.setUrlopId(urlop);
+            //wnh.setAkceptant(login.getZalogowany().getSzefId().getUserId());
+            wnh.setOpisZmiany("anulowano po zaakceptowaniu");
+
+            urlop.getWnHistoriaList().add(wnh);
+
+            urlopC.createEdit(urlop);
+
+            //wysylanie maila
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (urlop.isExtraemail()) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Informacja o anulowaniu wniosku urlopowego");
+                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " anulował urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                KomKolC.create(kk);
+            }
+
+            if (!login.getZalogowany().getSzefId().getUserId().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(login.getZalogowany().getSzefId().getUserId().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Informacja o anulowaniu wniosku urlopowego");
+                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " anulował urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                KomKolC.create(kk);
+            }
+
+            info = "Wniosek anulowany";
+            
+        } catch (Exception ex) {
+            //if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
+            //else 
+            info = "Coś poszło nie tak";
+            ex.printStackTrace();
+        } finally {
+            initUrlop();
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            FacesMessage message = new FacesMessage();
+            message.setSummary(info);
+            context.addMessage(zapisz.getClientId(context), message);
+        }
+    }
+    
     public void wyslij() {
         String info = "";
         try {
