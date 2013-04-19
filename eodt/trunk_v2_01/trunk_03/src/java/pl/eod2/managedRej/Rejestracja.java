@@ -1,5 +1,7 @@
 package pl.eod2.managedRej;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,12 +31,12 @@ public class Rejestracja {
     @PostConstruct
     void init() {
         dcC = new DcDokumentJpaController();
-        refresh();
+        refresh(true);
     }
 
-    void refresh() {
+    void refresh(boolean obiektTak) {
         lista.setWrappedData(dcC.findDcDokumentEntities());
-        obiekt = new DcDokument();
+        if(obiektTak) obiekt = new DcDokument();
         error = null;
     }
 
@@ -47,14 +49,23 @@ public class Rejestracja {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
-            refresh();
+            refresh(true);
         }
     }
     
     
 
-    public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        error=dcC.edit(obiekt);
+    public void edytuj() {
+        try {
+            error=dcC.edit(obiekt);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //System.err.println(error);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -62,17 +73,39 @@ public class Rejestracja {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findDcDokumentEntities());
         } else {
-            refresh();
+            refresh(true);
+        }
+    }
+    
+    public void edytujZdetale() {
+        try {
+            error=dcC.edit(obiekt);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //System.err.println(error);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            lista.setWrappedData(dcC.findDcDokumentEntities());
+        } else {
+            refresh(false);
         }
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {
         dcC.destroy(obiekt.getId());
-        refresh();
+        refresh(true);
     }
 
     public String list() {
-        refresh();
+        refresh(true);
         return "/dcrej/dokumentList";
     }
     
