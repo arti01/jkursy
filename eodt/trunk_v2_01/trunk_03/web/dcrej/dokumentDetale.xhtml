@@ -19,47 +19,53 @@
                     <ui:include src="./dokumentEdit.xhtml"/>
                     <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytujZdetale}" execute="@form"/>
                 </rich:tab>
+
+                <rich:tab header="pliki" id="tabPliki">
+                    <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
+                                     addLabel="dodaj plik" listHeight="40px" >
+                        <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
+                    </rich:fileUpload>
+                <hr/>
+                    <rich:dataTable value="#{RejestracjaRej.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
+                    <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <rich:column sortBy="#{item.id}" sortOrder="descending">
+                        <f:facet name="header">nazwa</f:facet>
+                            #{item.nazwa}
+                    </rich:column>
+                    <rich:column >
+                        <f:facet name="header">data dodania</f:facet>
+                        <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
+                    </rich:column>
+                    <rich:column style="width: 50px">
+                        <a4j:commandLink execute="@this" render="@none"
+                                         oncomplete="#{rich:component('confirmPane')}.show()">
+                            <h:graphicImage value="/images/delete.png" alt="delete" />
+                            <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
+                        </a4j:commandLink>
+                        <h:commandLink action="#{fileUploadBean.download}" >
+                            <h:graphicImage value="/images/detail.png" alt="detale" />
+                            <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
+                        </h:commandLink>
+                    </rich:column>
+                </rich:dataTable>
                 
-                <rich:tab header="pliki">
-                    <h:form>
-                        <h:panelGrid columns="2" columnClasses="top,top">
-                            <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="5">
-                                <a4j:ajax event="uploadcomplete" execute="@none" render="info" />
-                            </rich:fileUpload>
-                            <h:panelGroup id="info" layout="block">
-                                <rich:panel bodyClass="info">
-                                    <f:facet name="header">
-                                        <h:outputText value="Uploaded Files Info" />
-                                    </f:facet>
-                                    <h:outputText value="No files currently uploaded" rendered="#{fileUploadBean.size==0}" />
-                                    <rich:dataGrid columns="1" value="#{fileUploadBean.files}" var="file" rowKeyVar="row">
-                                        <rich:panel bodyClass="rich-laguna-panel-no-header">
-                                            <h:panelGrid columns="2">
-                                                <a4j:mediaOutput element="img" mimeType="image/jpeg" createContent="#{fileUploadBean.paint}"
-                                                                 value="#{row}" style="width:100px; height:100px;" cacheable="false">
-                                                    <f:param value="#{fileUploadBean.timeStamp}" name="time" />
-                                                </a4j:mediaOutput>
-                                                <h:panelGrid columns="2">
-                                                    <h:outputText value="File Name:" />
-                                                    <h:outputText value="#{file.name}" />
-                                                    <h:outputText value="File Length(bytes):" />
-                                                    <h:outputText value="#{file.length}" />
-                                                </h:panelGrid>
-                                            </h:panelGrid>
-                                        </rich:panel>
-                                    </rich:dataGrid>
-                                </rich:panel>
-                                <br />
-                                <a4j:commandButton action="#{fileUploadBean.clearUploadData}" render="info, upload" value="Clear Uploaded Data"
-                                                   rendered="#{fileUploadBean.size>0}" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </h:form>
                 </rich:tab>
+                
+                <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+            <rich:popupPanel id="confirmPane" autosized="true">
+                Na pewno chcesz skasować?
+                <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                        return false;" />
+                <a4j:commandButton value="Tak" onclick="remove();
+                        return false;" />
+            </rich:popupPanel>
+                
             </rich:tabPanel>
             <rich:popupPanel id="statPane" autosized="true">
                 <h:graphicImage value="/images/ai.gif" alt="ai" />
-                Proszę czekać
+                Proszę czekać...
             </rich:popupPanel>
         </h:form>
         <hr/>

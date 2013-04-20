@@ -79,7 +79,7 @@ public class DcDokument implements Serializable {
     @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcProjekt projektId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcPlik> dcPlikList;
 
     public DcDokument() {

@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -46,6 +49,9 @@ public class DcPlik implements Serializable {
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256)
     private String nazwa;
+    @Column(name = "data_dodania")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataDodania;
     @Lob
     private byte[] plik;
     @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = false)
@@ -94,6 +100,14 @@ public class DcPlik implements Serializable {
 
     public void setIdDok(DcDokument idDok) {
         this.idDok = idDok;
+    }
+
+    public Date getDataDodania() {
+        return dataDodania;
+    }
+
+    public void setDataDodania(Date dataDodania) {
+        this.dataDodania = dataDodania;
     }
 
     @Override

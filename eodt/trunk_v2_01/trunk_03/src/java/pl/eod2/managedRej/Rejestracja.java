@@ -14,6 +14,8 @@ import javax.faces.model.ListDataModel;
 import pl.eod.managed.Login;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
+import pl.eod2.encje.DcPlik;
+import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -23,7 +25,9 @@ public class Rejestracja {
 
     private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
     private DcDokumentJpaController dcC;
+    private DcPlikJpaController dcPlikC;
     private DcDokument obiekt;
+    private DcPlik plik;
     private String error;
     @ManagedProperty(value = "#{login}")
     private Login login;
@@ -31,6 +35,7 @@ public class Rejestracja {
     @PostConstruct
     void init() {
         dcC = new DcDokumentJpaController();
+        dcPlikC = new DcPlikJpaController();
         refresh(true);
     }
 
@@ -103,6 +108,12 @@ public class Rejestracja {
         dcC.destroy(obiekt.getId());
         refresh(true);
     }
+    
+    public void usunPlik() throws IllegalOrphanException, NonexistentEntityException {
+        dcPlikC.destroy(plik.getId());
+        obiekt.getDcPlikList().remove(plik);
+        edytujZdetale();
+    }
 
     public String list() {
         refresh(true);
@@ -144,4 +155,29 @@ public class Rejestracja {
     public void setLogin(Login login) {
         this.login = login;
     }    
+
+    public DcDokumentJpaController getDcC() {
+        return dcC;
+    }
+
+    public void setDcC(DcDokumentJpaController dcC) {
+        this.dcC = dcC;
+    }
+
+    public DcPlikJpaController getDcPlikC() {
+        return dcPlikC;
+    }
+
+    public void setDcPlikC(DcPlikJpaController dcPlikC) {
+        this.dcPlikC = dcPlikC;
+    }
+
+    public DcPlik getPlik() {
+        return plik;
+    }
+
+    public void setPlik(DcPlik plik) {
+        this.plik = plik;
+    }
+    
 }
