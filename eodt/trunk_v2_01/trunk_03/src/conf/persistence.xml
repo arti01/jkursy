@@ -21,6 +21,7 @@
     <class>pl.eod2.encje.DcZrodlo</class>
     <class>pl.eod2.encje.DcRodzaj</class>
     <class>pl.eod2.encje.DcProjekt</class>
+    <class>pl.eod2.encje.DcDokumentStatus</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

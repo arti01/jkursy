@@ -12,3 +12,7 @@ INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (7, 2);
 
 INSERT INTO dc_typ_flow (id, nazwa, opis ) VALUES (1, 'akceptacje', 'dokument podlegający procesowi akceptacji');
 INSERT INTO dc_typ_flow (id, nazwa, opis ) VALUES (2, 'informacje', 'dokument do zapoznania się i ewentualnie potwierdzenia');
+
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (1, 'nowy', 'dokument po zarejestrowaniu');
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (2, 'w trakcie', 'dokument w trakcie akceptacji lub dystrybucji');
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (3, 'zamknięty', 'dokument zamknięty');

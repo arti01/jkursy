@@ -81,6 +81,9 @@ public class DcDokument implements Serializable {
     private DcProjekt projektId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcPlik> dcPlikList;
+    @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcDokumentStatus dokStatusId;
 
     public DcDokument() {
     }
@@ -173,6 +176,14 @@ public class DcDokument implements Serializable {
 
     public void setDcPlikList(List<DcPlik> dcPlikList) {
         this.dcPlikList = dcPlikList;
+    }
+
+    public DcDokumentStatus getDokStatusId() {
+        return dokStatusId;
+    }
+
+    public void setDokStatusId(DcDokumentStatus dokStatusId) {
+        this.dokStatusId = dokStatusId;
     }
 
     @Override
