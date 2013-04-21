@@ -11,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.MenuLinki;
@@ -36,6 +37,8 @@ public class Login implements Serializable {
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
+    boolean menuStrukturaExp=false;
+    boolean menuUrlopExp=false;
 
     @PostConstruct
     public void init() {
@@ -114,6 +117,18 @@ public class Login implements Serializable {
             System.err.println("brak użytkownika w bazie - user zewnętrzny");
         }
         //return zalogowany;
+    }
+    
+    public void menuStrukturaExpList(ActionEvent event){
+        if(menuStrukturaExp) menuStrukturaExp=false;
+        else menuStrukturaExp=true;
+        menuUrlopExp=false;
+    }
+    
+    public void menuUrlopExpList(ActionEvent event){
+        if(menuUrlopExp) menuUrlopExp=false;
+        else menuUrlopExp=true;
+        menuStrukturaExp=false;
     }
 
     public Struktura getZalogowany() {
@@ -218,4 +233,22 @@ public class Login implements Serializable {
     public List<MenuLinki> getMenuLinki() {
         return menuLinki;
     }
+
+    public boolean isMenuStrukturaExp() {
+        return menuStrukturaExp;
+    }
+
+    public void setMenuStrukturaExp(boolean menuStrukturaExp) {
+        this.menuStrukturaExp = menuStrukturaExp;
+    }
+
+    public boolean isMenuUrlopExp() {
+        return menuUrlopExp;
+    }
+
+    public void setMenuUrlopExp(boolean menuUrlopExp) {
+        this.menuUrlopExp = menuUrlopExp;
+    }
+    
+    
 }
