@@ -42,6 +42,8 @@ public class Login implements Serializable {
     MenuLinkiJpaController menuLinkiC;
     boolean menuStrukturaExp=false;
     boolean menuUrlopExp=false;
+    boolean menuDcCfgExp=false;
+    boolean menuDcRejExp=false;
 
     @PostConstruct
     public void init() {
@@ -126,12 +128,32 @@ public class Login implements Serializable {
         if(menuStrukturaExp) menuStrukturaExp=false;
         else menuStrukturaExp=true;
         menuUrlopExp=false;
+        menuDcRejExp=false;
+        menuDcCfgExp=false;
     }
     
     public void menuUrlopExpList(ActionEvent event){
         if(menuUrlopExp) menuUrlopExp=false;
         else menuUrlopExp=true;
         menuStrukturaExp=false;
+        menuDcRejExp=false;
+        menuDcCfgExp=false;
+    }
+    
+    public void menuDcCfgExpList(ActionEvent event){
+        if(menuDcCfgExp) menuDcCfgExp=false;
+        else menuDcCfgExp=true;
+        menuStrukturaExp=false;
+        menuUrlopExp=false;
+        menuDcRejExp=false;
+    }
+    
+    public void menuDcRejExpList(ActionEvent event){
+        if(menuDcRejExp) menuDcRejExp=false;
+        else menuDcRejExp=true;
+        menuStrukturaExp=false;
+        menuUrlopExp=false;
+        menuDcCfgExp=false;
     }
 
     public Struktura getZalogowany() {
@@ -289,6 +311,21 @@ public class Login implements Serializable {
     public void setMenuUrlopExp(boolean menuUrlopExp) {
         this.menuUrlopExp = menuUrlopExp;
     }
-    
+
+    public boolean isMenuDcCfgExp() {
+        return menuDcCfgExp;
+    }
+
+    public void setMenuDcCfgExp(boolean menuDcCfgExp) {
+        this.menuDcCfgExp = menuDcCfgExp;
+    }
+
+    public boolean isMenuDcRejExp() {
+        return menuDcRejExp;
+    }
+
+    public void setMenuDcRejExp(boolean menuDcRejExp) {
+        this.menuDcRejExp = menuDcRejExp;
+    }
     
 }

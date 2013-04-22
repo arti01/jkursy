@@ -61,6 +61,8 @@ public class DcRodzaj implements Serializable {
     @JoinColumn(name = "id_typ_flow", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcTypFlow idTypFlow;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rodzajId", fetch = FetchType.LAZY)
+    private List<DcAkceptKroki> dcAkceptKroki;
 
     public DcRodzaj() {
     }
@@ -120,6 +122,14 @@ public class DcRodzaj implements Serializable {
 
     public void setIdTypFlow(DcTypFlow idTypFlow) {
         this.idTypFlow = idTypFlow;
+    }
+
+    public List<DcAkceptKroki> getDcAkceptKroki() {
+        return dcAkceptKroki;
+    }
+
+    public void setDcAkceptKroki(List<DcAkceptKroki> dcAkceptKroki) {
+        this.dcAkceptKroki = dcAkceptKroki;
     }
     
     @Override

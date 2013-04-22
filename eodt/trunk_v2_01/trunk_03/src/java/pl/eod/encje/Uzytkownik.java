@@ -26,6 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
+import pl.eod2.encje.DcAkceptKroki;
 import pl.eod2.encje.DcDokument;
 
 /**
@@ -103,6 +104,9 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false)
     @OrderBy(value = "id DESC")
     private List<DcDokument> dcDokumentList;
+    
+    @ManyToMany(mappedBy = "uzytkownikList")
+    private List<DcAkceptKroki> dcAkceptKrokiList;
     
     public Uzytkownik() {
         this.extId = "";
@@ -239,6 +243,14 @@ public class Uzytkownik implements Serializable {
 
     public void setDcDokumentList(List<DcDokument> dcDokumentList) {
         this.dcDokumentList = dcDokumentList;
+    }
+
+    public List<DcAkceptKroki> getDcAkceptKrokiList() {
+        return dcAkceptKrokiList;
+    }
+
+    public void setDcAkceptKrokiList(List<DcAkceptKroki> dcAkceptKrokiList) {
+        this.dcAkceptKrokiList = dcAkceptKrokiList;
     }
     
     

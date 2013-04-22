@@ -13,11 +13,11 @@
             style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
             <tr>
                 <td width="100%">
-                    <rich:panelMenu itemMode="client" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                    <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
                                     groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                                     topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
 
-                        <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}">
+                        <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}" expanded="#{login.menuDcCfgExp}" actionListener="#{login.menuDcCfgExpList}">
                             <rich:panelMenuItem >
                                 <h:commandLink value="Rodzaje" action="#{RodzajeCfg.list}"/>
                             </rich:panelMenuItem>
@@ -32,7 +32,7 @@
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
 
-                        <rich:panelMenuGroup label="Dokumenty - rejestracja" rendered="#{login.dcRej}">
+                        <rich:panelMenuGroup label="Dokumenty - rejestracja" rendered="#{login.dcRej}" expanded="#{login.menuDcRejExp}" actionListener="#{login.menuDcRejExpList}">
                             <rich:panelMenuItem >
                                 <h:commandLink value="Rejestracja" action="#{RejestracjaRej.list}"/>
                             </rich:panelMenuItem>

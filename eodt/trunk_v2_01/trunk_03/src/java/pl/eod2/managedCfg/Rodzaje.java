@@ -90,6 +90,10 @@ public class Rodzaje {
         refresh();
         return "/dccfg/rodzaje";
     }
+    
+    public String krokiLista() {
+        return "/dccfg/rodzajKroki?faces-redirect=true";
+    }
 
     public DataModel<DcRodzaj> getLista() {
         return lista;
