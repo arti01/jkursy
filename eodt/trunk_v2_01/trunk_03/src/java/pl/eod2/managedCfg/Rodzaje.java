@@ -99,17 +99,32 @@ public class Rodzaje {
     }
     
     public void dodajKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
-        akcKrok.setStatus(0);
         akcKrok.setRodzajId(obiekt);
         obiekt=dcC.dodajKrok(obiekt, akcKrok);
-        System.err.println(akcKrok.getUzytkownikList());
-        System.err.println(akcKrok.getId());
         akcKrok=new DcAkceptKroki();
+        usersLista=uC.findUzytkownikEntities();
+    }
+    
+    public void editKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
+        obiekt=dcC.editKrok(obiekt, akcKrok);
+        akcKrok=new DcAkceptKroki();
+        usersLista=uC.findUzytkownikEntities();
+    }
+    
+    public void usunKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
+        obiekt=dcC.usunKrok(obiekt, akcKrok);
+        akcKrok=new DcAkceptKroki();
+    }
+    
+    public void editKrokPrepare(){
+        usersLista.removeAll(akcKrok.getUzytkownikList());
     }
 
     public void dodajUser(){
         if(akcKrok.getUzytkownikList()==null) akcKrok.setUzytkownikList(new ArrayList<Uzytkownik>());
         akcKrok.getUzytkownikList().add(user);
+        usersLista.remove(user);
+        user=new Uzytkownik();
     }
     
     public void test() {

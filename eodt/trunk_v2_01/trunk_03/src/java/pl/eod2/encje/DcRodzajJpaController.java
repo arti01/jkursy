@@ -188,6 +188,39 @@ public class DcRodzajJpaController implements Serializable {
         return rodzaj;
     }
     
+    public DcRodzaj editKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
+         EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(krok);
+            rodzaj=em.merge(rodzaj);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return rodzaj;
+    }
+    
+    public DcRodzaj usunKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
+         EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            rodzaj.getDcAkceptKroki().remove(krok);
+            em.remove(em.merge(krok));
+            rodzaj=em.merge(rodzaj);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return rodzaj;
+    }
+    
     public List<DcRodzaj> findDcRodzajEntities() {
         return findDcRodzajEntities(true, -1, -1);
     }

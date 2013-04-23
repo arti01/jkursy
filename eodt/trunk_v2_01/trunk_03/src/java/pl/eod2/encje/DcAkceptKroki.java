@@ -32,7 +32,6 @@ import pl.eod.encje.Uzytkownik;
 @NamedQueries({
     @NamedQuery(name = "DcAkceptKroki.findAll", query = "SELECT d FROM DcAkceptKroki d"),
     @NamedQuery(name = "DcAkceptKroki.findById", query = "SELECT d FROM DcAkceptKroki d WHERE d.id = :id"),
-    @NamedQuery(name = "DcAkceptKroki.findByStatus", query = "SELECT d FROM DcAkceptKroki d WHERE d.status = :status"),
     @NamedQuery(name = "DcAkceptKroki.findByRodzajId", query = "SELECT d FROM DcAkceptKroki d WHERE d.rodzajId = :rodzajId")})
 public class DcAkceptKroki implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,10 +42,6 @@ public class DcAkceptKroki implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "STATUS", nullable = false)
-    private int status;
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
@@ -66,7 +61,6 @@ public class DcAkceptKroki implements Serializable {
 
     public DcAkceptKroki(Integer id, int status, int idDcRodzaj, int idDcTypKroku) {
         this.id = id;
-        this.status = status;
     }
 
     public Integer getId() {
@@ -75,14 +69,6 @@ public class DcAkceptKroki implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
     }
 
     public DcRodzaj getRodzajId() {
