@@ -171,6 +171,23 @@ public class DcRodzajJpaController implements Serializable {
         }
     }
 
+    public DcRodzaj dodajKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
+         EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(krok);
+            rodzaj.getDcAkceptKroki().add(krok);
+            rodzaj=em.merge(rodzaj);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return rodzaj;
+    }
+    
     public List<DcRodzaj> findDcRodzajEntities() {
         return findDcRodzajEntities(true, -1, -1);
     }

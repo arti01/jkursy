@@ -15,6 +15,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import pl.eod.encje.Uzytkownik;
+import pl.eod.encje.UzytkownikJpaController;
+import pl.eod2.encje.DcAkceptKroki;
+import pl.eod2.encje.DcAkceptTypKroku;
+import pl.eod2.encje.DcAkceptTypKrokuJpaController;
 import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.DcTypFlow;
@@ -33,19 +38,30 @@ public class Rodzaje {
     @ManagedProperty(value = "#{RodzajeGrupyCfg}")
     private RodzajeGrupy rodzajeGrupy;
     private List<DcTypFlow> typFlowLista =new ArrayList<DcTypFlow>();
+    private List<DcAkceptTypKroku> typKrokuLista =new ArrayList<DcAkceptTypKroku>();
+    private List<Uzytkownik> usersLista =new ArrayList<Uzytkownik>();
     private DcTypFlowJpaController dcTypFlowC;
+    private DcAkceptTypKrokuJpaController dcTypKrokuC;
+    private UzytkownikJpaController uC;
+    private DcAkceptKroki akcKrok;
+    private Uzytkownik user;
 
     @PostConstruct
     void init() {
         dcC = new DcRodzajJpaController();
         dcTypFlowC = new DcTypFlowJpaController();
+        dcTypKrokuC = new DcAkceptTypKrokuJpaController();
+        uC=new UzytkownikJpaController();
         refresh();
     }
 
     void refresh() {
         lista.setWrappedData(dcC.findDcRodzajEntities());
         typFlowLista=dcTypFlowC.findDcTypFlowEntities();
+        typKrokuLista=dcTypKrokuC.findDcAkceptTypKrokuEntities();
+        usersLista=uC.findUzytkownikEntities();
         obiekt = new DcRodzaj();
+        akcKrok=new DcAkceptKroki();
         error = null;
     }
 
@@ -81,7 +97,21 @@ public class Rodzaje {
         refresh();
         rodzajeGrupy.refresh();
     }
+    
+    public void dodajKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
+        akcKrok.setStatus(0);
+        akcKrok.setRodzajId(obiekt);
+        obiekt=dcC.dodajKrok(obiekt, akcKrok);
+        System.err.println(akcKrok.getUzytkownikList());
+        System.err.println(akcKrok.getId());
+        akcKrok=new DcAkceptKroki();
+    }
 
+    public void dodajUser(){
+        if(akcKrok.getUzytkownikList()==null) akcKrok.setUzytkownikList(new ArrayList<Uzytkownik>());
+        akcKrok.getUzytkownikList().add(user);
+    }
+    
     public void test() {
         System.err.println("test" + lista.getRowData().getNazwa());
     }
@@ -92,6 +122,7 @@ public class Rodzaje {
     }
     
     public String krokiLista() {
+        
         return "/dccfg/rodzajKroki?faces-redirect=true";
     }
 
@@ -133,6 +164,38 @@ public class Rodzaje {
 
     public void setTypFlowLista(List<DcTypFlow> typFlowLista) {
         this.typFlowLista = typFlowLista;
+    }
+
+    public DcAkceptKroki getAkcKrok() {
+        return akcKrok;
+    }
+
+    public void setAkcKrok(DcAkceptKroki akcKrok) {
+        this.akcKrok = akcKrok;
+    }
+
+    public List<DcAkceptTypKroku> getTypKrokuLista() {
+        return typKrokuLista;
+    }
+
+    public void setTypKrokuLista(List<DcAkceptTypKroku> typKrokuLista) {
+        this.typKrokuLista = typKrokuLista;
+    }
+
+    public Uzytkownik getUser() {
+        return user;
+    }
+
+    public void setUser(Uzytkownik user) {
+        this.user = user;
+    }
+
+    public List<Uzytkownik> getUsersLista() {
+        return usersLista;
+    }
+
+    public void setUsersLista(List<Uzytkownik> usersLista) {
+        this.usersLista = usersLista;
     }
 
 }
