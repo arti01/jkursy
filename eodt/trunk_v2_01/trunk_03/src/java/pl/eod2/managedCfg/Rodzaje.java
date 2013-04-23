@@ -127,6 +127,13 @@ public class Rodzaje {
         user=new Uzytkownik();
     }
     
+     public void usunUser(){
+         System.err.println(user);
+        akcKrok.getUzytkownikList().remove(user);
+        usersLista.add(user);
+        user=new Uzytkownik();
+    }
+    
     public void test() {
         System.err.println("test" + lista.getRowData().getNazwa());
     }
