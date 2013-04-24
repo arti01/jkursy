@@ -37,9 +37,9 @@ public class Rodzaje {
     private String error;
     @ManagedProperty(value = "#{RodzajeGrupyCfg}")
     private RodzajeGrupy rodzajeGrupy;
-    private List<DcTypFlow> typFlowLista =new ArrayList<DcTypFlow>();
-    private List<DcAkceptTypKroku> typKrokuLista =new ArrayList<DcAkceptTypKroku>();
-    private List<Uzytkownik> usersLista =new ArrayList<Uzytkownik>();
+    private List<DcTypFlow> typFlowLista = new ArrayList<DcTypFlow>();
+    private List<DcAkceptTypKroku> typKrokuLista = new ArrayList<DcAkceptTypKroku>();
+    private List<Uzytkownik> usersLista = new ArrayList<Uzytkownik>();
     private DcTypFlowJpaController dcTypFlowC;
     private DcAkceptTypKrokuJpaController dcTypKrokuC;
     private UzytkownikJpaController uC;
@@ -51,17 +51,17 @@ public class Rodzaje {
         dcC = new DcRodzajJpaController();
         dcTypFlowC = new DcTypFlowJpaController();
         dcTypKrokuC = new DcAkceptTypKrokuJpaController();
-        uC=new UzytkownikJpaController();
+        uC = new UzytkownikJpaController();
         refresh();
     }
 
     void refresh() {
         lista.setWrappedData(dcC.findDcRodzajEntities());
-        typFlowLista=dcTypFlowC.findDcTypFlowEntities();
-        typKrokuLista=dcTypKrokuC.findDcAkceptTypKrokuEntities();
-        usersLista=uC.findUzytkownikEntities();
+        typFlowLista = dcTypFlowC.findDcTypFlowEntities();
+        typKrokuLista = dcTypKrokuC.findDcAkceptTypKrokuEntities();
+        usersLista = uC.findUzytkownikEntities();
         obiekt = new DcRodzaj();
-        akcKrok=new DcAkceptKroki();
+        akcKrok = new DcAkceptKroki();
         error = null;
     }
 
@@ -78,7 +78,7 @@ public class Rodzaje {
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        error=dcC.edit(obiekt);
+        error = dcC.edit(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -97,51 +97,69 @@ public class Rodzaje {
         refresh();
         rodzajeGrupy.refresh();
     }
-    
-    public void dodajKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
+
+    public void dodajKrok() throws IllegalOrphanException, NonexistentEntityException {
         akcKrok.setRodzajId(obiekt);
-        obiekt=dcC.dodajKrok(obiekt, akcKrok);
-        akcKrok=new DcAkceptKroki();
-        usersLista=uC.findUzytkownikEntities();
+        error = dcC.dodajKrok(obiekt, akcKrok);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            obiekt=dcC.findDcRodzaj(obiekt.getId());
+        } else {
+            akcKrok = new DcAkceptKroki();
+            usersLista = uC.findUzytkownikEntities();
+        }
     }
-    
-    public void editKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
-        obiekt=dcC.editKrok(obiekt, akcKrok);
-        akcKrok=new DcAkceptKroki();
-        usersLista=uC.findUzytkownikEntities();
+
+    public void editKrok() throws IllegalOrphanException, NonexistentEntityException {
+        error = dcC.editKrok(obiekt, akcKrok);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            obiekt=dcC.findDcRodzaj(obiekt.getId());
+        } else {
+            akcKrok = new DcAkceptKroki();
+            usersLista = uC.findUzytkownikEntities();
+        }
     }
-    
-    public void usunKrok() throws IllegalOrphanException, NonexistentEntityException, Exception{
-        obiekt=dcC.usunKrok(obiekt, akcKrok);
-        akcKrok=new DcAkceptKroki();
+
+    public void usunKrok() throws IllegalOrphanException, NonexistentEntityException, Exception {
+        obiekt = dcC.usunKrok(obiekt, akcKrok);
+        akcKrok = new DcAkceptKroki();
     }
-    
-    public void editKrokPrepare(){
+
+    public void editKrokPrepare() {
         usersLista.removeAll(akcKrok.getUzytkownikList());
     }
 
-    public void dodajUser(){
-        if(akcKrok.getUzytkownikList()==null) akcKrok.setUzytkownikList(new ArrayList<Uzytkownik>());
+    public void dodajUser() {
+        if (akcKrok.getUzytkownikList() == null) {
+            akcKrok.setUzytkownikList(new ArrayList<Uzytkownik>());
+        }
         akcKrok.getUzytkownikList().add(user);
         usersLista.remove(user);
-        user=new Uzytkownik();
+        user = new Uzytkownik();
     }
-    
-     public void usunUser(){
-         //System.err.println(user);
+
+    public void usunUser() {
+        //System.err.println(user);
         akcKrok.getUzytkownikList().remove(user);
         usersLista.add(user);
-        user=new Uzytkownik();
+        user = new Uzytkownik();
     }
-     
-     public void upKrok(){
-        obiekt=dcC.upKrok(obiekt, akcKrok);
+
+    public void upKrok() {
+        obiekt = dcC.upKrok(obiekt, akcKrok);
     }
-     
-     public void downKrok(){
-        obiekt=dcC.downKrok(obiekt, akcKrok);
+
+    public void downKrok() {
+        obiekt = dcC.downKrok(obiekt, akcKrok);
     }
-    
+
     public void test() {
         System.err.println("test" + lista.getRowData().getNazwa());
     }
@@ -150,9 +168,9 @@ public class Rodzaje {
         refresh();
         return "/dccfg/rodzaje";
     }
-    
+
     public String krokiLista() {
-        
+
         return "/dccfg/rodzajKroki?faces-redirect=true";
     }
 
@@ -227,5 +245,4 @@ public class Rodzaje {
     public void setUsersLista(List<Uzytkownik> usersLista) {
         this.usersLista = usersLista;
     }
-
 }

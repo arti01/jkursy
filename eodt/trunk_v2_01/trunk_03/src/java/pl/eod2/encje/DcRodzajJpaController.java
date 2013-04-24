@@ -23,11 +23,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class DcRodzajJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
 
     public DcRodzajJpaController() {
-       if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -48,7 +48,7 @@ public class DcRodzajJpaController implements Serializable {
             em.persist(dcRodzaj);
             em.refresh(em.merge(dcRodzaj.getIdRodzajGrupa()));
             em.getTransaction().commit();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return "blad";
         } finally {
@@ -61,8 +61,8 @@ public class DcRodzajJpaController implements Serializable {
 
     public String edit(DcRodzaj dcRodzaj) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
-        DcRodzaj old=findDcRodzaj(dcRodzaj.getId());
-        if (findDcRodzaj(dcRodzaj.getNazwa()) != null && findDcRodzaj(dcRodzaj.getNazwa()).getId()!=old.getId()) {
+        DcRodzaj old = findDcRodzaj(dcRodzaj.getId());
+        if (findDcRodzaj(dcRodzaj.getNazwa()) != null && findDcRodzaj(dcRodzaj.getNazwa()).getId() != old.getId()) {
             return "nazwa już istnieje";
         }
         try {
@@ -171,54 +171,63 @@ public class DcRodzajJpaController implements Serializable {
         }
     }
 
-    public DcRodzaj dodajKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
-         EntityManager em = null;
-         krok.setLp(rodzaj.getDcAkceptKroki().size()+1);
+    public String dodajKrok(DcRodzaj rodzaj, DcAkceptKroki krok) {
+        String error = null;
+        EntityManager em = null;
+        krok.setLp(rodzaj.getDcAkceptKroki().size() + 1);
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(krok);
             rodzaj.getDcAkceptKroki().add(krok);
-            rodzaj=em.merge(rodzaj);
+            em.merge(rodzaj);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            error = "blad - zapewnie podwojony członek grupy";
         } finally {
             if (em != null) {
                 em.close();
             }
+            return error;
         }
-        return rodzaj;
     }
-    
-    public DcRodzaj editKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
-         EntityManager em = null;
+
+    public String editKrok(DcRodzaj rodzaj, DcAkceptKroki krok) {
+        EntityManager em = null;
+        String error = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.merge(krok);
-            rodzaj=em.merge(rodzaj);
+            em.merge(rodzaj);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            error = "blad - zapewnie podwojony członek grupy";
+            return error;
         } finally {
             if (em != null) {
                 em.close();
             }
+            return error;
         }
-        return rodzaj;
     }
-    
-    public DcRodzaj upKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
-         EntityManager em = null;
+
+    public DcRodzaj upKrok(DcRodzaj rodzaj, DcAkceptKroki krok) {
+        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
-                if(k.getLp()==krok.getLp()-1){
-                    k.setLp(k.getLp()+1);
+            for (DcAkceptKroki k : rodzaj.getDcAkceptKroki()) {
+                if (k.getLp() == krok.getLp() - 1) {
+                    k.setLp(k.getLp() + 1);
                     em.merge(k);
                 }
             }
-            krok.setLp(krok.getLp()-1);
+            krok.setLp(krok.getLp() - 1);
             em.merge(krok);
-            rodzaj=em.merge(rodzaj);
+            rodzaj = em.merge(rodzaj);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -227,21 +236,21 @@ public class DcRodzajJpaController implements Serializable {
         }
         return rodzaj;
     }
-    
-    public DcRodzaj downKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
-         EntityManager em = null;
+
+    public DcRodzaj downKrok(DcRodzaj rodzaj, DcAkceptKroki krok) {
+        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
-                if(k.getLp()==krok.getLp()+1){
-                    k.setLp(k.getLp()-1);
+            for (DcAkceptKroki k : rodzaj.getDcAkceptKroki()) {
+                if (k.getLp() == krok.getLp() + 1) {
+                    k.setLp(k.getLp() - 1);
                     em.merge(k);
                 }
             }
-            krok.setLp(krok.getLp()+1);
+            krok.setLp(krok.getLp() + 1);
             em.merge(krok);
-            rodzaj=em.merge(rodzaj);
+            rodzaj = em.merge(rodzaj);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -250,21 +259,21 @@ public class DcRodzajJpaController implements Serializable {
         }
         return rodzaj;
     }
-    
-    public DcRodzaj usunKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
-         EntityManager em = null;
+
+    public DcRodzaj usunKrok(DcRodzaj rodzaj, DcAkceptKroki krok) {
+        EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
-                if(k.getLp()>krok.getLp()){
-                    k.setLp(k.getLp()-1);
+            for (DcAkceptKroki k : rodzaj.getDcAkceptKroki()) {
+                if (k.getLp() > krok.getLp()) {
+                    k.setLp(k.getLp() - 1);
                     em.merge(k);
                 }
             }
             rodzaj.getDcAkceptKroki().remove(krok);
             em.remove(em.merge(krok));
-            rodzaj=em.merge(rodzaj);
+            rodzaj = em.merge(rodzaj);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -273,7 +282,7 @@ public class DcRodzajJpaController implements Serializable {
         }
         return rodzaj;
     }
-    
+
     public List<DcRodzaj> findDcRodzajEntities() {
         return findDcRodzajEntities(true, -1, -1);
     }
@@ -286,12 +295,14 @@ public class DcRodzajJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(DcRodzaj.class));
+            cq
+                    .select(cq.from(DcRodzaj.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
+
             return q.getResultList();
         } finally {
             em.close();
@@ -300,13 +311,15 @@ public class DcRodzajJpaController implements Serializable {
 
     public DcRodzaj findDcRodzaj(Integer id) {
         EntityManager em = getEntityManager();
+
+
         try {
             return em.find(DcRodzaj.class, id);
         } finally {
             em.close();
         }
     }
-    
+
     public DcRodzaj findDcRodzaj(String nazwa) {
         EntityManager em = getEntityManager();
         try {
@@ -338,5 +351,4 @@ public class DcRodzajJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

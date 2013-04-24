@@ -103,7 +103,7 @@ public class UzytkownikJpaController implements Serializable {
     public List<Uzytkownik> findUzytkownikEntities() {
         return findUzytkownikEntities(true, -1, -1);
     }
-
+    
     public List<Uzytkownik> findUzytkownikEntities(int maxResults, int firstResult) {
         return findUzytkownikEntities(false, maxResults, firstResult);
     }
@@ -143,6 +143,28 @@ public class UzytkownikJpaController implements Serializable {
             Predicate emailP = cb.equal(user.get(Uzytkownik_.adrEmail), email);
             Predicate niePuste = cb.notEqual(user.get(Uzytkownik_.adrEmail), "");
             cq.where(cb.and(emailP, niePuste));
+            Query q = em.createQuery(cq);
+            if (q.getResultList().isEmpty()) {
+                return null;
+            } else {
+                return (Uzytkownik) q.setMaxResults(1).getSingleResult();
+            }
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Uzytkownik findUzytkownikByEmailFullname(String email, String fullname) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Uzytkownik> user = cq.from(Uzytkownik.class);
+            cq.select(user);
+            Predicate emailP = cb.equal(user.get(Uzytkownik_.adrEmail), email);
+            Predicate fullP = cb.equal(user.get(Uzytkownik_.fullname), fullname);
+            Predicate niePuste = cb.notEqual(user.get(Uzytkownik_.adrEmail), "");
+            cq.where(cb.and(emailP, niePuste, fullP));
             Query q = em.createQuery(cq);
             if (q.getResultList().isEmpty()) {
                 return null;

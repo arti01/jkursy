@@ -92,7 +92,7 @@
                         </a4j:commandLink>
                     </rich:column>
                     <rich:column style="width: 45px">
-                        <a4j:commandLink execute="@this" render="@none">
+                        <a4j:commandLink execute="@this" render="@none" oncomplete="#{rich:component('confirmPane')}.show();" >
                             <h:graphicImage value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
                         </a4j:commandLink>

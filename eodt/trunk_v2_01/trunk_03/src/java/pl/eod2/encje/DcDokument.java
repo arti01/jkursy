@@ -84,6 +84,8 @@ public class DcDokument implements Serializable {
     @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokumentStatus dokStatusId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DcDokumentKrok> dcDokKrok;
 
     public DcDokument() {
     }
@@ -184,6 +186,14 @@ public class DcDokument implements Serializable {
 
     public void setDokStatusId(DcDokumentStatus dokStatusId) {
         this.dokStatusId = dokStatusId;
+    }
+
+    public List<DcDokumentKrok> getDcDokKrok() {
+        return dcDokKrok;
+    }
+
+    public void setDcDokKrok(List<DcDokumentKrok> dcDokKrok) {
+        this.dcDokKrok = dcDokKrok;
     }
 
     @Override

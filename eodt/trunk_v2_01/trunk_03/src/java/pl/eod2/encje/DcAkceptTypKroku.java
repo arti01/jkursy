@@ -43,6 +43,8 @@ public class DcAkceptTypKroku implements Serializable {
     private String nazwa;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dcAckeptTypKroku", fetch = FetchType.LAZY, orphanRemoval = false)
     private List<DcAkceptKroki> dcAkceptKrokiList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dcAckeptTypKroku", fetch = FetchType.LAZY, orphanRemoval = false)
+    private List<DcDokumentKrok> dcDocKrokiList;
 
     public DcAkceptTypKroku() {
     }
@@ -78,6 +80,14 @@ public class DcAkceptTypKroku implements Serializable {
 
     public void setDcAkceptKrokiList(List<DcAkceptKroki> dcAkceptKrokiList) {
         this.dcAkceptKrokiList = dcAkceptKrokiList;
+    }
+
+    public List<DcDokumentKrok> getDcDocKrokiList() {
+        return dcDocKrokiList;
+    }
+
+    public void setDcDocKrokiList(List<DcDokumentKrok> dcDocKrokiList) {
+        this.dcDocKrokiList = dcDocKrokiList;
     }
     
     @Override
