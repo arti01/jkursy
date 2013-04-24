@@ -128,10 +128,18 @@ public class Rodzaje {
     }
     
      public void usunUser(){
-         System.err.println(user);
+         //System.err.println(user);
         akcKrok.getUzytkownikList().remove(user);
         usersLista.add(user);
         user=new Uzytkownik();
+    }
+     
+     public void upKrok(){
+        obiekt=dcC.upKrok(obiekt, akcKrok);
+    }
+     
+     public void downKrok(){
+        obiekt=dcC.downKrok(obiekt, akcKrok);
     }
     
     public void test() {

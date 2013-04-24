@@ -173,6 +173,7 @@ public class DcRodzajJpaController implements Serializable {
 
     public DcRodzaj dodajKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
          EntityManager em = null;
+         krok.setLp(rodzaj.getDcAkceptKroki().size()+1);
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -204,11 +205,63 @@ public class DcRodzajJpaController implements Serializable {
         return rodzaj;
     }
     
+    public DcRodzaj upKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
+         EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
+                if(k.getLp()==krok.getLp()-1){
+                    k.setLp(k.getLp()+1);
+                    em.merge(k);
+                }
+            }
+            krok.setLp(krok.getLp()-1);
+            em.merge(krok);
+            rodzaj=em.merge(rodzaj);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return rodzaj;
+    }
+    
+    public DcRodzaj downKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
+         EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
+                if(k.getLp()==krok.getLp()+1){
+                    k.setLp(k.getLp()-1);
+                    em.merge(k);
+                }
+            }
+            krok.setLp(krok.getLp()+1);
+            em.merge(krok);
+            rodzaj=em.merge(rodzaj);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return rodzaj;
+    }
+    
     public DcRodzaj usunKrok(DcRodzaj rodzaj, DcAkceptKroki krok){
          EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            for(DcAkceptKroki k:rodzaj.getDcAkceptKroki()){
+                if(k.getLp()>krok.getLp()){
+                    k.setLp(k.getLp()-1);
+                    em.merge(k);
+                }
+            }
             rodzaj.getDcAkceptKroki().remove(krok);
             em.remove(em.merge(krok));
             rodzaj=em.merge(rodzaj);

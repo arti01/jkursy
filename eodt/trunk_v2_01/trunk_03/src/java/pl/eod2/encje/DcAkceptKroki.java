@@ -42,15 +42,20 @@ public class DcAkceptKroki implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private Integer lp;
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "id", referencedColumnName = "id",nullable = false)
     @ManyToMany()
     private List<Uzytkownik> uzytkownikList;
     @JoinColumn(name = "ID_DC_RODZAJ", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcRodzaj rodzajId;
+    
 
     public DcAkceptKroki() {
     }
@@ -93,6 +98,14 @@ public class DcAkceptKroki implements Serializable {
 
     public void setUzytkownikList(List<Uzytkownik> uzytkownikList) {
         this.uzytkownikList = uzytkownikList;
+    }
+
+    public Integer getLp() {
+        return lp;
+    }
+
+    public void setLp(Integer lp) {
+        this.lp = lp;
     }
 
     @Override

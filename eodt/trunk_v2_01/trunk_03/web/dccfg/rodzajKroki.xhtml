@@ -12,7 +12,7 @@
     <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h3>Definicja kroków akceptacji</h3>
-        <h3>#{RodzajeCfg.obiekt.nazwa}</h3>
+        <h3>Rodzaj: #{RodzajeCfg.obiekt.nazwa}</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
@@ -35,6 +35,7 @@
                             #{user.adrEmail}
                             #{user.fullname}
                         </rich:autocomplete>
+                        <rich:message for="user_id" styleClass="error" />
                         <a4j:commandButton value="dodaj członka" execute="user_id" action="#{RodzajeCfg.dodajUser}" render="user_list, user_id"/>
                         <rich:list id="user_list" value="#{RodzajeCfg.akcKrok.uzytkownikList}" var="user">
                             #{user.fullname}
@@ -46,7 +47,6 @@
                     </h:panelGrid>
                     </rich:panel>
                 </h:panelGrid>
-                <rich:message for="user_id" styleClass="error" />
 
                 <rich:message for="zapisz" styleClass="error" />
                 <rich:message for="dodaj" styleClass="error" />
@@ -66,10 +66,10 @@
                     <h4>[dodaj krok]</h4>
                 </a4j:commandLink>
 
-                <rich:dataTable id="tableKroki" value="#{RodzajeCfg.obiekt.dcAkceptKroki}" var="item" iterationStatusVar="it" rows="10" style="width: 100%">
-                    <rich:column sortBy="#{item.id}" sortOrder="ascending">
-                        <f:facet name="header">id</f:facet>
-                            #{item.id}
+                <rich:dataTable id="tableKroki" value="#{RodzajeCfg.obiekt.dcAkceptKroki}" var="item" iterationStatusVar="it" style="width: 100%">
+                    <rich:column sortBy="#{item.lp}" sortOrder="ascending">
+                        <f:facet name="header">lp</f:facet>
+                            #{item.lp}
                     </rich:column>
                     <rich:column >
                         <f:facet name="header">typ akceptacji</f:facet>
@@ -82,8 +82,17 @@
                         </rich:list>
                     </rich:column>
                     <rich:column style="width: 45px">
-                        <a4j:commandLink execute="@this" render="@none"
-                                         oncomplete="#{rich:component('confirmPane')}.show()">
+                        <a4j:commandLink action="#{RodzajeCfg.upKrok}" execute="@this" render="tableKroki" rendered="#{item.lp>1}">
+                            <h:graphicImage value="/images/go-up.png" alt="delete" />
+                            <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
+                        </a4j:commandLink>
+                        <a4j:commandLink action="#{RodzajeCfg.downKrok}" execute="@this" render="tableKroki" rendered="#{item.lp&lt;fn:length(RodzajeCfg.obiekt.dcAkceptKroki)}">
+                            <h:graphicImage value="/images/go-down.png" alt="edit" />
+                            <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
+                        </a4j:commandLink>
+                    </rich:column>
+                    <rich:column style="width: 45px">
+                        <a4j:commandLink execute="@this" render="@none">
                             <h:graphicImage value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
                         </a4j:commandLink>
