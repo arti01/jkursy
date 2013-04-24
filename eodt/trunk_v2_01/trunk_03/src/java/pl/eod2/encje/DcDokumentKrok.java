@@ -5,7 +5,9 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -30,9 +33,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "DcDokumentKrok.findAll", query = "SELECT d FROM DcDokumentKrok d"),
     @NamedQuery(name = "DcDokumentKrok.findById", query = "SELECT d FROM DcDokumentKrok d WHERE d.id = :id"),
     @NamedQuery(name = "DcDokumentKrok.findByLp", query = "SELECT d FROM DcDokumentKrok d WHERE d.lp = :lp"),
-    @NamedQuery(name = "DcDokumentKrok.findByIdDokument", query = "SELECT d FROM DcDokumentKrok d WHERE d.idDokument = :idDokument"),
-    @NamedQuery(name = "DcDokumentKrok.findByAkcept", query = "SELECT d FROM DcDokumentKrok d WHERE d.akcept = :akcept"),
-    @NamedQuery(name = "DcDokumentKrok.findByIdDcTypKroku", query = "SELECT d FROM DcDokumentKrok d WHERE d.idDcTypKroku = :idDcTypKroku")})
+    @NamedQuery(name = "DcDokumentKrok.findByAkcept", query = "SELECT d FROM DcDokumentKrok d WHERE d.akcept = :akcept")})
 public class DcDokumentKrok implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,6 +57,8 @@ public class DcDokumentKrok implements Serializable {
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokumentKrok", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DcDokumentKrokUzytkownik> dcKrokUzytkownikaList;
 
     public DcDokumentKrok() {
     }
@@ -108,6 +111,14 @@ public class DcDokumentKrok implements Serializable {
 
     public void setDcAckeptTypKroku(DcAkceptTypKroku dcAckeptTypKroku) {
         this.dcAckeptTypKroku = dcAckeptTypKroku;
+    }
+
+    public List<DcDokumentKrokUzytkownik> getDcKrokUzytkownikaList() {
+        return dcKrokUzytkownikaList;
+    }
+
+    public void setDcKrokUzytkownikaList(List<DcDokumentKrokUzytkownik> dcKrokUzytkownikaList) {
+        this.dcKrokUzytkownikaList = dcKrokUzytkownikaList;
     }
 
     @Override

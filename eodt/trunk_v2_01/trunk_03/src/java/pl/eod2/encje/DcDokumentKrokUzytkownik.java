@@ -8,14 +8,18 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import pl.eod.encje.Uzytkownik;
 
 /**
  *
@@ -38,14 +42,12 @@ public class DcDokumentKrokUzytkownik implements Serializable {
     @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_USER", nullable = false)
-    private int idUser;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_DOKUMENT_KROK", nullable = false)
-    private int idDokumentKrok;
+    @JoinColumn(name = "ID_USER", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Uzytkownik idUser;
+    @JoinColumn(name = "ID_DOKUMENT_KROK", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcDokumentKrok idDokumentKrok;
     @Basic(optional = false)
     @NotNull
     @Column(name = "AKCEPT", nullable = false)
@@ -60,8 +62,6 @@ public class DcDokumentKrokUzytkownik implements Serializable {
 
     public DcDokumentKrokUzytkownik(Integer id, int idUser, int idDokumentKrok, int akcept) {
         this.id = id;
-        this.idUser = idUser;
-        this.idDokumentKrok = idDokumentKrok;
         this.akcept = akcept;
     }
 
@@ -73,19 +73,19 @@ public class DcDokumentKrokUzytkownik implements Serializable {
         this.id = id;
     }
 
-    public int getIdUser() {
+    public Uzytkownik getIdUser() {
         return idUser;
     }
 
-    public void setIdUser(int idUser) {
+    public void setIdUser(Uzytkownik idUser) {
         this.idUser = idUser;
     }
 
-    public int getIdDokumentKrok() {
+    public DcDokumentKrok getIdDokumentKrok() {
         return idDokumentKrok;
     }
 
-    public void setIdDokumentKrok(int idDokumentKrok) {
+    public void setIdDokumentKrok(DcDokumentKrok idDokumentKrok) {
         this.idDokumentKrok = idDokumentKrok;
     }
 
