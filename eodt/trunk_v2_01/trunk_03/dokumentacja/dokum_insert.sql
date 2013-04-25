@@ -19,3 +19,7 @@ INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (3, 'zamknięty', 'doku
 
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (1, 'wszyscy muszą zaakceptować');
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (2, 'wystarczy jeden do akceptacji');
+
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (1, 'brak akceptu');
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (2, 'częściowa akceptacja');
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (3, 'zaakceptowany');

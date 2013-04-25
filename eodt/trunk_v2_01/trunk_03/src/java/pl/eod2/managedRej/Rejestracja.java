@@ -64,7 +64,10 @@ public class Rejestracja {
         }
     }
     
-    
+    public void wyslijDoAkceptacji(){
+        dcC.wyslijDoAkceptacji(obiekt);
+        refresh(true);
+    }
 
     public void edytuj() {
         try {

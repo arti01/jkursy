@@ -48,10 +48,9 @@ public class DcDokumentKrokUzytkownik implements Serializable {
     @JoinColumn(name = "ID_DOKUMENT_KROK", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokumentKrok idDokumentKrok;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "AKCEPT", nullable = false)
-    private int akcept;
+    @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcAkceptStatus akcept;
 
     public DcDokumentKrokUzytkownik() {
     }
@@ -62,7 +61,6 @@ public class DcDokumentKrokUzytkownik implements Serializable {
 
     public DcDokumentKrokUzytkownik(Integer id, int idUser, int idDokumentKrok, int akcept) {
         this.id = id;
-        this.akcept = akcept;
     }
 
     public Integer getId() {
@@ -89,11 +87,11 @@ public class DcDokumentKrokUzytkownik implements Serializable {
         this.idDokumentKrok = idDokumentKrok;
     }
 
-    public int getAkcept() {
+    public DcAkceptStatus getAkcept() {
         return akcept;
     }
 
-    public void setAkcept(int akcept) {
+    public void setAkcept(DcAkceptStatus akcept) {
         this.akcept = akcept;
     }
 

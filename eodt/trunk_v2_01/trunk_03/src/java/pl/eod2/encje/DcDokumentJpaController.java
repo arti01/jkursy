@@ -26,7 +26,7 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 public class DcDokumentJpaController implements Serializable {
 
     public DcDokumentJpaController() {
-       if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -36,18 +36,43 @@ public class DcDokumentJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    private DcDokument createKroki(DcDokument dcDokument) {
+        dcDokument.setDcDokKrok(new ArrayList<DcDokumentKrok>());
+        for (DcAkceptKroki aKrok : dcDokument.getRodzajId().getDcAkceptKroki()) {
+            DcDokumentKrok krok = new DcDokumentKrok();
+            krok.setAkcept(new DcAkceptStatus(1));
+            krok.setDcAckeptTypKroku(aKrok.getDcAckeptTypKroku());
+            krok.setIdDok(dcDokument);
+            krok.setLp(aKrok.getLp());
+            krok.setDcKrokUzytkownikaList(new ArrayList<DcDokumentKrokUzytkownik>());
+            for (Uzytkownik u : aKrok.getUzytkownikList()) {
+                DcDokumentKrokUzytkownik krokUser = new DcDokumentKrokUzytkownik();
+                krokUser.setAkcept(new DcAkceptStatus(1));
+                krokUser.setIdDokumentKrok(krok);
+                krokUser.setIdUser(u);
+                krok.getDcKrokUzytkownikaList().add(krokUser);
+            }
+            //em.persist(krok);
+            dcDokument.getDcDokKrok().add(krok);
+        }
+        return dcDokument;
+    }
+
     public String create(DcDokument dcDokument) {
         if (dcDokument.getDcPlikList() == null) {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }
         dcDokument.setDataWprow(new Date());
+        dcDokument.setDokStatusId(new DcDokumentStatus(1));
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            dcDokument = this.createKroki(dcDokument);
             em.persist(dcDokument);
             em.getTransaction().commit();
-        }catch(Exception ex){
+        } catch (Exception ex) {
+            ex.printStackTrace();
             return "blad";
         } finally {
             if (em != null) {
@@ -55,6 +80,24 @@ public class DcDokumentJpaController implements Serializable {
             }
         }
         return null;
+    }
+
+    public void wyslijDoAkceptacji(DcDokument dcDokument) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            dcDokument.setDokStatusId(new DcDokumentStatus(2));
+            em.merge(dcDokument);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
     }
 
     public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -108,6 +151,9 @@ public class DcDokumentJpaController implements Serializable {
             }
             dcPlikListNew = attachedDcPlikListNew;
             dcDokument.setDcPlikList(dcPlikListNew);
+
+            dcDokument = this.createKroki(dcDokument);
+
             dcDokument = em.merge(dcDokument);
             if (userIdOld != null && !userIdOld.equals(userIdNew)) {
                 userIdOld.getDcDokumentList().remove(dcDokument);
@@ -267,5 +313,4 @@ public class DcDokumentJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

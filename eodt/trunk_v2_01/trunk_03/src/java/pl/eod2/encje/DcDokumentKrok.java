@@ -50,10 +50,9 @@ public class DcDokumentKrok implements Serializable {
     @JoinColumn(name = "ID_DOKUMENT", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokument idDok;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "AKCEPT", nullable = false)
-    private int akcept;
+    @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcAkceptStatus akcept;
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
@@ -70,7 +69,6 @@ public class DcDokumentKrok implements Serializable {
     public DcDokumentKrok(Integer id, int lp, int idDokument, int akcept, int idDcTypKroku) {
         this.id = id;
         this.lp = lp;
-        this.akcept = akcept;
     }
 
     public Integer getId() {
@@ -96,15 +94,15 @@ public class DcDokumentKrok implements Serializable {
     public void setIdDok(DcDokument idDok) {
         this.idDok = idDok;
     }
-    
-    public int getAkcept() {
+
+    public DcAkceptStatus getAkcept() {
         return akcept;
     }
 
-    public void setAkcept(int akcept) {
+    public void setAkcept(DcAkceptStatus akcept) {
         this.akcept = akcept;
     }
-
+    
     public DcAkceptTypKroku getDcAckeptTypKroku() {
         return dcAckeptTypKroku;
     }
