@@ -30,12 +30,12 @@
                         </rich:tooltip>
                     </h:panelGrid>
                     <hr/>
-                    <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytujZdetale}" execute="@form" render="infoDod"  rendered="#{item.dokStatusId.id==1}"/>
+                    <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytujZdetale}" execute="@form" render="infoDod"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}"/>
                 </rich:tab>
 
                 <rich:tab header="Załączniki" id="tabPliki">
                     <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
-                                     addLabel="dodaj plik" listHeight="40px" >
+                                     addLabel="dodaj plik" listHeight="40px"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
                         <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
                     </rich:fileUpload>
                     <hr/>
