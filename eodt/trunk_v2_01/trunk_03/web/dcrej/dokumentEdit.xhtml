@@ -14,7 +14,7 @@
                     <h:inputTextarea id="opisD" value="#{RejestracjaRej.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
 
-                    <h:outputLabel for="dataD" value="Data dokumentu"/>
+                    <h:outputLabel for="dataD" value="Data dokumentu:"/>
                     <rich:calendar value="#{RejestracjaRej.obiekt.dataDok}" id="dataD" locale="#{UrlopM.locale}"
                                    popup="true" datePattern="yyyy-MM-dd"
                                    showApplyButton="#{calendarBean.showApply}" style="width:200px">

@@ -44,6 +44,7 @@ public class Login implements Serializable {
     boolean menuUrlopExp=false;
     boolean menuDcCfgExp=false;
     boolean menuDcRejExp=false;
+    boolean menuDcOdbExp=false;
 
     @PostConstruct
     public void init() {
@@ -130,6 +131,7 @@ public class Login implements Serializable {
         menuUrlopExp=false;
         menuDcRejExp=false;
         menuDcCfgExp=false;
+        menuDcOdbExp=false;
     }
     
     public void menuUrlopExpList(ActionEvent event){
@@ -138,6 +140,7 @@ public class Login implements Serializable {
         menuStrukturaExp=false;
         menuDcRejExp=false;
         menuDcCfgExp=false;
+        menuDcOdbExp=false;
     }
     
     public void menuDcCfgExpList(ActionEvent event){
@@ -146,6 +149,7 @@ public class Login implements Serializable {
         menuStrukturaExp=false;
         menuUrlopExp=false;
         menuDcRejExp=false;
+        menuDcOdbExp=false;
     }
     
     public void menuDcRejExpList(ActionEvent event){
@@ -154,6 +158,16 @@ public class Login implements Serializable {
         menuStrukturaExp=false;
         menuUrlopExp=false;
         menuDcCfgExp=false;
+        menuDcOdbExp=false;
+    }
+    
+    public void menuDcOdbExpList(ActionEvent event){
+        if(menuDcOdbExp) menuDcOdbExp=false;
+        else menuDcOdbExp=true;
+        menuStrukturaExp=false;
+        menuUrlopExp=false;
+        menuDcCfgExp=false;
+        menuDcRejExp=false;
     }
 
     public Struktura getZalogowany() {
@@ -326,6 +340,14 @@ public class Login implements Serializable {
 
     public void setMenuDcRejExp(boolean menuDcRejExp) {
         this.menuDcRejExp = menuDcRejExp;
+    }
+
+    public boolean isMenuDcOdbExp() {
+        return menuDcOdbExp;
+    }
+
+    public void setMenuDcOdbExp(boolean menuDcOdbExp) {
+        this.menuDcOdbExp = menuDcOdbExp;
     }
     
 }

@@ -38,22 +38,33 @@ public class DcDokumentJpaController implements Serializable {
 
     private DcDokument createKroki(DcDokument dcDokument) {
         dcDokument.setDcDokKrok(new ArrayList<DcDokumentKrok>());
-        for (DcAkceptKroki aKrok : dcDokument.getRodzajId().getDcAkceptKroki()) {
-            DcDokumentKrok krok = new DcDokumentKrok();
-            krok.setAkcept(new DcAkceptStatus(1));
-            krok.setDcAckeptTypKroku(aKrok.getDcAckeptTypKroku());
-            krok.setIdDok(dcDokument);
-            krok.setLp(aKrok.getLp());
-            krok.setDcKrokUzytkownikaList(new ArrayList<DcDokumentKrokUzytkownik>());
-            for (Uzytkownik u : aKrok.getUzytkownikList()) {
-                DcDokumentKrokUzytkownik krokUser = new DcDokumentKrokUzytkownik();
-                krokUser.setAkcept(new DcAkceptStatus(1));
-                krokUser.setIdDokumentKrok(krok);
-                krokUser.setIdUser(u);
-                krok.getDcKrokUzytkownikaList().add(krokUser);
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            DcAkceptStatus aS1=new DcAkceptStatusJpaController().findDcAkceptStatus(1);
+            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            for (DcAkceptKroki aKrok : dcDokument.getRodzajId().getDcAkceptKroki()) {
+                DcDokumentKrok krok = new DcDokumentKrok();
+                krok.setAkcept(aS1);
+                krok.setDcAckeptTypKroku(aKrok.getDcAckeptTypKroku());
+                krok.setIdDok(dcDokument);
+                krok.setLp(aKrok.getLp());
+                krok.setDcKrokUzytkownikaList(new ArrayList<DcDokumentKrokUzytkownik>());
+                for (Uzytkownik u : aKrok.getUzytkownikList()) {
+                    DcDokumentKrokUzytkownik krokUser = new DcDokumentKrokUzytkownik();
+                    krokUser.setAkcept(aS2);
+                    krokUser.setIdDokumentKrok(krok);
+                    krokUser.setIdUser(u);
+                    krok.getDcKrokUzytkownikaList().add(krokUser);
+                    em.persist(krokUser);
+                }
+                em.persist(krok);
+                dcDokument.getDcDokKrok().add(krok);
             }
-            //em.persist(krok);
-            dcDokument.getDcDokKrok().add(krok);
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
         return dcDokument;
     }
@@ -71,6 +82,7 @@ public class DcDokumentJpaController implements Serializable {
             dcDokument = this.createKroki(dcDokument);
             em.persist(dcDokument);
             em.getTransaction().commit();
+            em.refresh(dcDokument);
         } catch (Exception ex) {
             ex.printStackTrace();
             return "blad";
@@ -85,10 +97,73 @@ public class DcDokumentJpaController implements Serializable {
     public void wyslijDoAkceptacji(DcDokument dcDokument) {
         EntityManager em = null;
         try {
+            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
             em = getEntityManager();
             em.getTransaction().begin();
             dcDokument.setDokStatusId(new DcDokumentStatus(2));
+            for (DcDokumentKrok dk : dcDokument.getDcDokKrok()) {
+                if (dk.getLp() == 1) {
+                    dk.setAkcept(aS2);
+                }
+            }
             em.merge(dcDokument);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+    }
+
+    public void akceptuj(DcDokumentKrokUzytkownik dku) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            DcAkceptStatus aS4=new DcAkceptStatusJpaController().findDcAkceptStatus(4);
+            DcAkceptStatus aS3=new DcAkceptStatusJpaController().findDcAkceptStatus(3);
+            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            //zmiana statusu akceptacji usera na zaakceptowany
+            dku.setAkcept(aS4);
+            em.merge(dku);
+            //jesli wymaga akceptacji tylko jednego to zmiana statusu kroku na zaakceptowany
+            if (dku.getIdDokumentKrok().getDcAckeptTypKroku().getId() == 2) {
+                dku.getIdDokumentKrok().setAkcept(aS4);
+                //jesli wymaga akceptacji wszystkich, to sprawdzenie, czy wszyscy inni zaakceptowali
+                //jesli tak, zmiana na zaakceptowany, jesli nie, to na czesciowo zaakceptowany
+            } else {
+                boolean czyInni = true;
+                for (DcDokumentKrokUzytkownik dkui : dku.getIdDokumentKrok().getDcKrokUzytkownikaList()) {
+                    if (dkui.getAkcept().getId() == 2) {
+                        czyInni = false;
+                    }
+                }
+                if (czyInni) {
+                    dku.getIdDokumentKrok().setAkcept(aS4);
+                } else {
+                    dku.getIdDokumentKrok().setAkcept(aS3);
+                }
+            }
+            em.merge(dku.getIdDokumentKrok());
+//wyszukiwanie kolejnego kroku i zmiana statusu
+            DcDokumentKrok dkNext = null;
+            for (DcDokumentKrok dk2 : dku.getIdDokumentKrok().getIdDok().getDcDokKrok()) {
+                if (dk2.getLp() == dku.getIdDokumentKrok().getLp() + 1) {
+                    dkNext = dk2;
+                }
+            }
+            //jesli nie ma klejnego kroku zmien status dokumentu
+            if (dkNext == null) {
+                dku.getIdDokumentKrok().getIdDok().setDokStatusId(new DcDokumentStatus(3));
+                em.merge(dku.getIdDokumentKrok().getIdDok());
+            } //jesli jest kolejny, to zmien  mu status z poczatkowy na brak akceptu
+            else {
+                dkNext.setAkcept(aS2);
+                em.merge(dkNext);
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();

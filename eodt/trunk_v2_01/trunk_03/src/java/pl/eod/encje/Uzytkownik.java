@@ -5,6 +5,7 @@
 package pl.eod.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,10 +25,12 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
+import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
 import pl.eod2.encje.DcAkceptKroki;
 import pl.eod2.encje.DcDokument;
+import pl.eod2.encje.DcDokumentKrokUzytkownik;
 
 /**
  *
@@ -44,71 +47,62 @@ import pl.eod2.encje.DcDokument;
     @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and (u.struktura.usuniety<>1 or u.struktura.usuniety is null)")})
 @PrimaryKey(validation = IdValidation.NULL)
 public class Uzytkownik implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUSER")
     @SequenceGenerator(name = "SEQUSER", sequenceName = "SEQUSER")
     private Long id;
-    
     @Column(name = "fullname", nullable = false)
     @Size(min = 3, max = 255)
     @NotEmpty
     private String fullname;
-    
     //@NotEmpty
     @Email
     //@UzytkowAdniot(value = true)
     @Column(name = "adr_email")
     private String adrEmail;
-    
-    @Column(name = "ext_id", nullable=false)
+    @Column(name = "ext_id", nullable = false)
     private String extId;
-    
     @OneToOne(mappedBy = "username", cascade = {CascadeType.REFRESH})
     WnLimity wnLimity;
-    
     @OneToMany(mappedBy = "secUserId")
     List<Struktura> strukturaSec;
-    
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.ALL})
     Struktura struktura;
-    
     @JoinColumn(name = "haslo_id", referencedColumnName = "id")
     @OneToOne(cascade = CascadeType.ALL)
     private Hasla hasla;
-    
     @JoinColumn(name = "adr_email", referencedColumnName = "username")
     @ManyToMany()
     private List<UserRoles> role;
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik", orphanRemoval = true)
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopList;
-    
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "akceptant")
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListDoAkceptu;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy")
     @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaList;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant")
     @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaListAkceptant;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
-    
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false)
     @OrderBy(value = "id DESC")
     private List<DcDokument> dcDokumentList;
-    
     @ManyToMany(mappedBy = "uzytkownikList")
     private List<DcAkceptKroki> dcAkceptKrokiList;
-    
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idUser", orphanRemoval = false)
+    @OrderBy(value = "id DESC")
+    private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikList;
+    @Transient
+    private List<DcDokumentKrokUzytkownik> dcDoAkceptuKrokiList;
+
     public Uzytkownik() {
         this.extId = "";
     }
@@ -197,7 +191,6 @@ public class Uzytkownik implements Serializable {
     public void setWnUrlopListPrzyjmujacy(List<WnUrlop> wnUrlopListPrzyjmujacy) {
         this.wnUrlopListPrzyjmujacy = wnUrlopListPrzyjmujacy;
     }
-    
 
     @Override
     public int hashCode() {
@@ -227,7 +220,7 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setExtId(String extId) {
-        this.extId=(extId == null) ? "" : extId;
+        this.extId = (extId == null) ? "" : extId;
     }
 
     public WnLimity getWnLimity() {
@@ -253,8 +246,27 @@ public class Uzytkownik implements Serializable {
     public void setDcAkceptKrokiList(List<DcAkceptKroki> dcAkceptKrokiList) {
         this.dcAkceptKrokiList = dcAkceptKrokiList;
     }
-    
-    
+
+    public List<DcDokumentKrokUzytkownik> getDcDokumentKrokUzytkownikList() {
+        return dcDokumentKrokUzytkownikList;
+    }
+
+    public void setDcDokumentKrokUzytkownikList(List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikList) {
+        this.dcDokumentKrokUzytkownikList = dcDokumentKrokUzytkownikList;
+    }
+
+    public List<DcDokumentKrokUzytkownik> getDcDoAkceptuKrokiList() {
+        List<DcDokumentKrokUzytkownik> wynik = new ArrayList<DcDokumentKrokUzytkownik>();
+        for (DcDokumentKrokUzytkownik dku : getDcDokumentKrokUzytkownikList()) {
+            //krok danego użytkownika musi być bez akceptu
+            //krok dokumentu musi być do akceptu lub częsciowa akceptacja
+            if (dku.getAkcept().getId() == 2 && (dku.getIdDokumentKrok().getAkcept().getId() == 2 || dku.getIdDokumentKrok().getAkcept().getId() == 3)) {
+                wynik.add(dku);
+            }
+        }
+        return wynik;
+    }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -272,5 +284,4 @@ public class Uzytkownik implements Serializable {
     public String toString() {
         return "pl.eod.encje.Uzytkownik[ id=" + id + " ]";
     }
-    
 }
