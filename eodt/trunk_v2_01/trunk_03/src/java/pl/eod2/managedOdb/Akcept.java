@@ -35,15 +35,17 @@ public class Akcept {
     }
 
     public void akceptuj() {
+        DcDokumentKrokUzytkownik dkuDoZmiany=null;
         for (DcDokumentKrok dk : obiekt.getDcDokKrok()) {
             if (dk.getAkcept().getId() == 2 || dk.getAkcept().getId() == 3) {
                 for (DcDokumentKrokUzytkownik dku : dk.getDcKrokUzytkownikaList()) {
                     if (dku.getIdUser() == login.getZalogowany().getUserId()) {
-                        dcC.akceptuj(dku);
+                        dkuDoZmiany=dku;
                     }
                 }
             }
         }
+        dcC.akceptuj(dkuDoZmiany);
     }
 
     public DcDokument getObiekt() {

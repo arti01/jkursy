@@ -41,8 +41,8 @@ public class DcDokumentJpaController implements Serializable {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            DcAkceptStatus aS1=new DcAkceptStatusJpaController().findDcAkceptStatus(1);
-            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            DcAkceptStatus aS1 = new DcAkceptStatusJpaController().findDcAkceptStatus(1);
+            DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
             for (DcAkceptKroki aKrok : dcDokument.getRodzajId().getDcAkceptKroki()) {
                 DcDokumentKrok krok = new DcDokumentKrok();
                 krok.setAkcept(aS1);
@@ -97,7 +97,7 @@ public class DcDokumentJpaController implements Serializable {
     public void wyslijDoAkceptacji(DcDokument dcDokument) {
         EntityManager em = null;
         try {
-            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
             em = getEntityManager();
             em.getTransaction().begin();
             dcDokument.setDokStatusId(new DcDokumentStatus(2));
@@ -123,9 +123,9 @@ public class DcDokumentJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DcAkceptStatus aS4=new DcAkceptStatusJpaController().findDcAkceptStatus(4);
-            DcAkceptStatus aS3=new DcAkceptStatusJpaController().findDcAkceptStatus(3);
-            DcAkceptStatus aS2=new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            DcAkceptStatus aS4 = new DcAkceptStatusJpaController().findDcAkceptStatus(4);
+            DcAkceptStatus aS3 = new DcAkceptStatusJpaController().findDcAkceptStatus(3);
+            DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
             //zmiana statusu akceptacji usera na zaakceptowany
             dku.setAkcept(aS4);
             em.merge(dku);
@@ -148,23 +148,28 @@ public class DcDokumentJpaController implements Serializable {
                 }
             }
             em.merge(dku.getIdDokumentKrok());
-//wyszukiwanie kolejnego kroku i zmiana statusu
+            //wyszukiwanie kolejnego kroku i zmiana statusu, jeśli ten krok jest zaakceptowany
             DcDokumentKrok dkNext = null;
-            for (DcDokumentKrok dk2 : dku.getIdDokumentKrok().getIdDok().getDcDokKrok()) {
-                if (dk2.getLp() == dku.getIdDokumentKrok().getLp() + 1) {
-                    dkNext = dk2;
+            if (dku.getIdDokumentKrok().getAkcept().getId() == 4) {
+                for (DcDokumentKrok dk2 : dku.getIdDokumentKrok().getIdDok().getDcDokKrok()) {
+                    if (dk2.getLp() == dku.getIdDokumentKrok().getLp() + 1) {
+                        dkNext = dk2;
+                    }
                 }
             }
-            //jesli nie ma klejnego kroku zmien status dokumentu
-            if (dkNext == null) {
+            //jesli nie ma kolejnego kroku a biezacy jest zaakceptowany zmien status dokumentu 
+            if (dkNext == null&&dku.getIdDokumentKrok().getAkcept().getId() == 4) {
                 dku.getIdDokumentKrok().getIdDok().setDokStatusId(new DcDokumentStatus(3));
                 em.merge(dku.getIdDokumentKrok().getIdDok());
             } //jesli jest kolejny, to zmien  mu status z poczatkowy na brak akceptu
-            else {
+            else if(dkNext != null){
                 dkNext.setAkcept(aS2);
                 em.merge(dkNext);
             }
+            //a jesli nie ma kolejnego, a obecny nie jest zaakceptowany to nic nie rob ;)
+           
             em.getTransaction().commit();
+
         } catch (Exception ex) {
             ex.printStackTrace();
             //return "blad";
