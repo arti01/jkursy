@@ -24,6 +24,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
+import javax.persistence.ManyToOne;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
 
@@ -98,6 +99,10 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
+    
+    @JoinColumn(name = "spolka_id", referencedColumnName = "id")
+    @ManyToOne()
+    private Spolki spolkaId;
     
     public Uzytkownik() {
         this.extId = "";
@@ -187,7 +192,14 @@ public class Uzytkownik implements Serializable {
     public void setWnUrlopListPrzyjmujacy(List<WnUrlop> wnUrlopListPrzyjmujacy) {
         this.wnUrlopListPrzyjmujacy = wnUrlopListPrzyjmujacy;
     }
-    
+
+    public Spolki getSpolkaId() {
+        return spolkaId;
+    }
+
+    public void setSpolkaId(Spolki spolkaId) {
+        this.spolkaId = spolkaId;
+    }
 
     @Override
     public int hashCode() {
