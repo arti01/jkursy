@@ -94,13 +94,14 @@ public class DcDokumentJpaController implements Serializable {
         return null;
     }
 
-    public void wyslijDoAkceptacji(DcDokument dcDokument) {
+    public DcDokument wyslijDoAkceptacji(DcDokument dcDokument) {
         EntityManager em = null;
         try {
             DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            DcDokumentStatus dS2 = new DcDokumentStatusJpaController().findDcDokumentStatus(2);
             em = getEntityManager();
             em.getTransaction().begin();
-            dcDokument.setDokStatusId(new DcDokumentStatus(2));
+            dcDokument.setDokStatusId(dS2);
             for (DcDokumentKrok dk : dcDokument.getDcDokKrok()) {
                 if (dk.getLp() == 1) {
                     dk.setAkcept(aS2);
@@ -116,10 +117,12 @@ public class DcDokumentJpaController implements Serializable {
                 em.close();
             }
         }
+        return dcDokument;
     }
 
-    public void akceptuj(DcDokumentKrokUzytkownik dku) {
+    public DcDokument akceptuj(DcDokumentKrokUzytkownik dku) {
         EntityManager em = null;
+        DcDokument dok = dku.getIdDokumentKrok().getIdDok();
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -168,9 +171,8 @@ public class DcDokumentJpaController implements Serializable {
                 em.merge(dkNext);
             }
             //a jesli nie ma kolejnego, a obecny nie jest zaakceptowany to nic nie rob ;)
-           
             em.getTransaction().commit();
-
+        dok=new DcDokumentJpaController().findDcDokument(dok.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
             //return "blad";
@@ -179,6 +181,7 @@ public class DcDokumentJpaController implements Serializable {
                 em.close();
             }
         }
+        return dok;
     }
 
     public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {

@@ -105,9 +105,11 @@
                 </rich:popupPanel>
 
             </rich:tabPanel>
-            <a4j:commandButton value="wyślij do akceptacji" action="#{RejestracjaRej.wyslijDoAkceptacji}" render="tabPanel" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}" execute="@this">
-                <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{RejestracjaRej.obiekt}" />
-            </a4j:commandButton>
+            <rich:panel id="wyslij">
+                <a4j:commandButton value="wyślij do akceptacji" action="#{RejestracjaRej.wyslijDoAkceptacji}" render="tabPanel, wyslij" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}" execute="@this">
+                    <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{RejestracjaRej.obiekt}" />
+                </a4j:commandButton>
+            </rich:panel>
             <rich:popupPanel id="statPane" autosized="true">
                 <h:graphicImage value="/images/ai.gif" alt="ai" />
                 Proszę czekać...

@@ -34,7 +34,7 @@ public class Akcept {
         return "/dcodb/dokumentDetale?faces-redirect=true";
     }
 
-    public void akceptuj() {
+    public String akceptuj() {
         DcDokumentKrokUzytkownik dkuDoZmiany=null;
         for (DcDokumentKrok dk : obiekt.getDcDokKrok()) {
             if (dk.getAkcept().getId() == 2 || dk.getAkcept().getId() == 3) {
@@ -46,6 +46,7 @@ public class Akcept {
             }
         }
         dcC.akceptuj(dkuDoZmiany);
+        return "/dcodb/akcList?faces-redirect=true";
     }
 
     public DcDokument getObiekt() {

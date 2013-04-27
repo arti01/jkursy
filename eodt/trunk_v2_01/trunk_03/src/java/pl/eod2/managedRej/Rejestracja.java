@@ -65,7 +65,7 @@ public class Rejestracja {
     }
     
     public void wyslijDoAkceptacji(){
-        dcC.wyslijDoAkceptacji(obiekt);
+        obiekt=dcC.wyslijDoAkceptacji(obiekt);
         refresh(false);
     }
 

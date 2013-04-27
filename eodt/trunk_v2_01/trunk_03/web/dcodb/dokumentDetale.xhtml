@@ -122,8 +122,10 @@
                     <a4j:commandButton value="Tak" onclick="remove();
                             return false;" />
                 </rich:popupPanel>
-
             </rich:tabPanel>
+            <rich:panel id="wyslij">
+                <h:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" rendered="#{AkceptOdb.obiekt.dokStatusId.id==2}" />
+            </rich:panel>
             <rich:popupPanel id="statPane" autosized="true">
                 <h:graphicImage value="/images/ai.gif" alt="ai" />
                 Proszę czekać...
