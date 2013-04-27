@@ -11,7 +11,7 @@
 
     <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Detale dokumentu</h3>
+        <h3>Detale dokumentu #{AkceptOdb.obiekt.nazwa}</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:tabPanel >
@@ -100,11 +100,14 @@
                         <rich:column>
                             <f:facet name="header">członkowie kroku</f:facet>
                             <rich:dataTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
-                                <rich:column style="width: 80%">
+                                <rich:column style="width: 60%">
                                     #{krokUser.idUser.fullname}    
                                 </rich:column>
                                 <rich:column style="width: 20%">
                                     #{krokUser.akcept.nazwa}
+                                </rich:column>
+                                <rich:column style="width: 20%">
+                                    <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                                 </rich:column>
                             </rich:dataTable>
                         </rich:column>

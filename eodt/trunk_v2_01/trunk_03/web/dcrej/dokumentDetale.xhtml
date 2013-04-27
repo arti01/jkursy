@@ -11,10 +11,10 @@
 
     <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Detale dokumentu</h3>
+        <h3>Detale dokumentu: #{RejestracjaRej.obiekt.nazwa}</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
-            <rich:tabPanel >
+            <rich:tabPanel id="tabPanel">
                 <rich:tab header="Informacje podstawowe">
                     <ui:include src="./dokumentEdit.xhtml"/>
                     <h:panelGrid id="infoDod" columns="3">
@@ -81,11 +81,14 @@
                         <rich:column>
                             <f:facet name="header">członkowie kroku</f:facet>
                             <rich:dataTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
-                                <rich:column style="width: 80%">
+                                <rich:column style="width: 60%">
                                     #{krokUser.idUser.fullname}    
                                 </rich:column>
                                 <rich:column style="width: 20%">
                                     #{krokUser.akcept.nazwa}
+                                </rich:column>
+                                <rich:column style="width: 20%">
+                                    <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                                 </rich:column>
                             </rich:dataTable>
                         </rich:column>
@@ -102,6 +105,9 @@
                 </rich:popupPanel>
 
             </rich:tabPanel>
+            <a4j:commandButton value="wyślij do akceptacji" action="#{RejestracjaRej.wyslijDoAkceptacji}" render="tabPanel" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}" execute="@this">
+                <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{RejestracjaRej.obiekt}" />
+            </a4j:commandButton>
             <rich:popupPanel id="statPane" autosized="true">
                 <h:graphicImage value="/images/ai.gif" alt="ai" />
                 Proszę czekać...

@@ -128,6 +128,7 @@ public class DcDokumentJpaController implements Serializable {
             DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
             //zmiana statusu akceptacji usera na zaakceptowany
             dku.setAkcept(aS4);
+            dku.setDataAkcept(new Date());
             em.merge(dku);
             //jesli wymaga akceptacji tylko jednego to zmiana statusu kroku na zaakceptowany
             if (dku.getIdDokumentKrok().getDcAckeptTypKroku().getId() == 2) {

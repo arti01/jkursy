@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import pl.eod.encje.Uzytkownik;
 
@@ -42,6 +45,10 @@ public class DcDokumentKrokUzytkownik implements Serializable {
     @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
+    @Basic(optional = false)
+    @Column(name = "data_akcept", nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataAkcept;
     @JoinColumn(name = "ID_USER", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik idUser;
@@ -100,6 +107,14 @@ public class DcDokumentKrokUzytkownik implements Serializable {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
+    }
+
+    public Date getDataAkcept() {
+        return dataAkcept;
+    }
+
+    public void setDataAkcept(Date dataAkcept) {
+        this.dataAkcept = dataAkcept;
     }
 
     @Override
