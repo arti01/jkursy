@@ -92,6 +92,14 @@ public class Spolki implements Serializable {
         this.opis = opis;
     }
 
+    public List<Uzytkownik> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<Uzytkownik> userList) {
+        this.userList = userList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

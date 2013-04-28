@@ -60,6 +60,9 @@
                         <rich:panelMenuItem>
                             <a target="_top" href="../logout.jsp">Wyjście</a>
                         </rich:panelMenuItem>
+                        <rich:panelMenuItem>
+                            Zalogowany jako: #{login.zalogowany.userId.fullname}, <br/>spółka: #{login.zalogowany.userId.spolkaId.nazwa}
+                        </rich:panelMenuItem>
                         <rich:panelMenuItem rendered="#{fn:length(login.zalogowany.userId.wnLimity.ulimit)!=0}">
                             Dostępny urlop:<br/>
                             <strong>#{login.zalogowany.userId.wnLimity.ulimit}</strong>
