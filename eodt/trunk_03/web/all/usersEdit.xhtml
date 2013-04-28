@@ -68,6 +68,12 @@
                     <h:outputLabel for="extraemail" value="Dodatkowe emaile (oddzielone przecinkiem):"/>
                     <h:inputText id="extraemail" value="#{UsersM.strukt.extraemail}" size="50"/>
                     <rich:message for="extraemail" styleClass="error" />
+                    
+                    <h:outputLabel for="role" value="role w systemie:"/>
+                    <h:selectManyCheckbox id="role" value="#{UsersM.strukt.userId.role}">
+                        <f:selectItems value="#{UsersM.roleAll}" var="rola" itemValue="#{rola}" itemLabel="#{rola.rolename}"/>
+                    </h:selectManyCheckbox>
+                    <rich:message for="role" styleClass="error" />
                     <br/>
                     <rich:message for="zapisz" styleClass="error"/>
                     <br/>

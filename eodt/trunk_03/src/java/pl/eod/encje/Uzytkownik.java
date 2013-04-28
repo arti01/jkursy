@@ -25,6 +25,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
 
@@ -103,6 +104,9 @@ public class Uzytkownik implements Serializable {
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
     @ManyToOne()
     private Spolki spolkaId;
+    
+    @Transient
+    boolean eodstru;
     
     public Uzytkownik() {
         this.extId = "";
@@ -198,7 +202,20 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setSpolkaId(Spolki spolkaId) {
+        
         this.spolkaId = spolkaId;
+    }
+
+    public boolean isEodstru() {
+        eodstru=false;
+        for(UserRoles rola : this.getRole()){
+            if(rola.getRolename().equals("eodstru")) eodstru=true;
+        }
+        return eodstru;
+    }
+
+    public void setEodstru(boolean eodstru) {
+        this.eodstru = eodstru;
     }
 
     @Override

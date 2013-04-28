@@ -24,6 +24,8 @@ import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
+import pl.eod.encje.UserRoles;
+import pl.eod.encje.UserRolesJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.exceptions.NonexistentEntityException;
@@ -39,6 +41,7 @@ public class UsersM implements Serializable {
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
     List<Struktura> strukturyOld = new ArrayList<Struktura>();
+    List<UserRoles>roleAll=new ArrayList<UserRoles>();
     DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
@@ -46,6 +49,7 @@ public class UsersM implements Serializable {
     String nameFilter;
     Dzial dzialFilter;
     StrukturaJpaController struktC;
+    UserRolesJpaController urC;
     Struktura strukt;
     DzialJpaController dzialC;
     @ManagedProperty(value = "#{login}")
@@ -57,6 +61,7 @@ public class UsersM implements Serializable {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
+        urC=new UserRolesJpaController();
     }
 
     private void initUser() {
@@ -68,6 +73,7 @@ public class UsersM implements Serializable {
         strukt.setDzialId(dzial);
         struktury = new ListDataModel<Struktura>();
         struktury.setWrappedData(struktC.findStrukturaWidoczni());
+        roleAll=urC.findRolesEntities();
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
@@ -283,6 +289,14 @@ public class UsersM implements Serializable {
 
     public void setLogin(Login login) {
         this.login = login;
+    }
+
+    public List<UserRoles> getRoleAll() {
+        return roleAll;
+    }
+
+    public void setRoleAll(List<UserRoles> roleAll) {
+        this.roleAll = roleAll;
     }
     
     
