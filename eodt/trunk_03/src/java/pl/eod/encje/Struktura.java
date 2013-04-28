@@ -115,7 +115,13 @@ public class Struktura implements Serializable {
         Collections.sort(bezpPod, new Comparator<Struktura>() {
             @Override
             public int compare(Struktura s1, Struktura s2) {
-                return s1.getUserId().getFullname().compareToIgnoreCase(s2.getUserId().getFullname());
+                int wynik;
+                try {
+                    wynik = s1.getUserId().getFullname().compareToIgnoreCase(s2.getUserId().getFullname());
+                } catch (NullPointerException mpe) {
+                    wynik = 0;
+                }
+                return wynik;
             }
         });
         return bezpPod;

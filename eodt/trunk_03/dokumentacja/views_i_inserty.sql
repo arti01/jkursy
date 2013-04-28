@@ -61,8 +61,8 @@ INSERT INTO spolki (id, nazwa, opis) VALUES (2, 'Sp2', 'Sp2');
 INSERT INTO passwords (id, pass) VALUES (1, 'a');
 INSERT INTO passwords (id, pass) VALUES (2, '0cc175b9c0f1b6a831c399e269772661');
 
-INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (1, 'admin@admin.eod', 'admin', 1, NULL, 2);
-INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (2, 'admin-md5@admin.eod', 'admin-md5', 2, NULL, 1);
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (1, 'admin@admin.eod', 'admin', 1, '', 2);
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (2, 'admin-md5@admin.eod', 'admin-md5', 2, '', 1);
 
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (1, 1, 1, NULL, NULL, 1, NULL, 1);
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1);
