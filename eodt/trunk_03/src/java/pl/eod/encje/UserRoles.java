@@ -102,6 +102,5 @@ public class UserRoles implements Serializable {
         }
         return true;
     }
-
     
 }

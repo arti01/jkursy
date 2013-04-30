@@ -70,7 +70,7 @@
                     <rich:message for="extraemail" styleClass="error" />
                     
                     <h:outputLabel for="role" value="role w systemie:"/>
-                    <h:selectManyCheckbox id="role" value="#{UsersM.strukt.userId.role}">
+                    <h:selectManyCheckbox id="role" value="#{UsersM.strukt.userId.role}" readonly="false" converter="#{UserRolesConv}">
                         <f:selectItems value="#{UsersM.roleAll}" var="rola" itemValue="#{rola}" itemLabel="#{rola.rolename}"/>
                     </h:selectManyCheckbox>
                     <rich:message for="role" styleClass="error" />

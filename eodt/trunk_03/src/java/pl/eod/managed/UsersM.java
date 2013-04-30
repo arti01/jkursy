@@ -19,7 +19,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
@@ -45,6 +44,7 @@ public class UsersM implements Serializable {
     DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
+    List<UserRoles> rolesKlon;
     boolean edytuj = false;
     String nameFilter;
     Dzial dzialFilter;
@@ -73,7 +73,7 @@ public class UsersM implements Serializable {
         strukt.setDzialId(dzial);
         struktury = new ListDataModel<Struktura>();
         struktury.setWrappedData(struktC.findStrukturaWidoczni());
-        roleAll=urC.findRolesEntities();
+        roleAll=urC.findDostepneDoEdycji();
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
@@ -94,6 +94,7 @@ public class UsersM implements Serializable {
     }
     
     public String edycja() {
+        rolesKlon=strukt.getUserId().getRole();
         return "/all/usersEdit";
     }
     
@@ -142,6 +143,9 @@ public class UsersM implements Serializable {
     }
 
     public String zapisz() throws NonexistentEntityException, Exception {
+        //pozostają role nieedytowalne
+        rolesKlon.removeAll(roleAll);
+        strukt.getUserId().getRole().addAll(rolesKlon);
         String error = struktC.editArti(strukt);
         if (error == null) {
             initUser();

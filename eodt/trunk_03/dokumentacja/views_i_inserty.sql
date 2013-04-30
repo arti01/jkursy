@@ -101,6 +101,6 @@ INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 4);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (4, 4);
 
 -- Uwaga, należy dostosować tabelę i nazwy pól w def. tego widoku
-CREATE OR REPLACE VIEW wn_limity AS 
+CREATE VIEW wn_limity AS 
  SELECT DISTINCT extpass.login AS username, extpass.ulimit
    FROM extpass;

@@ -45,8 +45,28 @@ public class UserRolesJpaController implements Serializable {
             em.close();
         }
     }
-    
-     public List<UserRoles> findRolesEntities() {
+
+    public List<UserRoles> findDostepneDoEdycji() {
+        String rola1="eodstru";
+        String rola2="eodurlop";
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<UserRoles> cfg = cq.from(UserRoles.class);
+            cq.select(cfg);
+            //cq.where(cb.equal(cfg.get(UserRoles_.rolename), rola1));
+            cq.where(
+                    cb.or(
+                    cb.equal(cfg.get(UserRoles_.rolename), rola1), cb.equal(cfg.get(UserRoles_.rolename), rola2)));
+            Query q = em.createQuery(cq);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<UserRoles> findRolesEntities() {
         return findRolesEntities(true, -1, -1);
     }
 
