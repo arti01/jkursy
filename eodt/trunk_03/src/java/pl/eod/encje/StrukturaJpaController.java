@@ -73,9 +73,7 @@ public class StrukturaJpaController implements Serializable {
         struktura.getUserId().setHasla(h);
 
         UserRolesJpaController urC = new UserRolesJpaController();
-        List<UserRoles> url = new ArrayList<UserRoles>();
-        url.add(urC.findByNazwa("eoduser"));
-        struktura.getUserId().setRole(url);;
+        struktura.getUserId().getRole().add(urC.findByNazwa("eoduser"));
 
         EntityManager em = null;
         try {
@@ -101,8 +99,8 @@ public class StrukturaJpaController implements Serializable {
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
+            System.err.println(struktura.getUserId().getRole());
             em.merge(struktura);
-
             em.getTransaction().commit();
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));

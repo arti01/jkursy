@@ -52,27 +52,27 @@ INSERT INTO wn_statusy VALUES (5, '#eaed8e', 'Cofnięty', 'CO');
 INSERT INTO wn_statusy VALUES (6, '#C0C0C0', 'Anulowany po akcepcie', 'AN');
 
 --dodawanie adminow z pelnia praw (hasla 'a')
-INSERT INTO dzial (id, nazwa) VALUES (1, 'admin');
+INSERT INTO dzial (id, nazwa) VALUES (3, 'admin');
 INSERT INTO dzial (id, nazwa) VALUES (2, 'admin-md5');
-INSERT INTO dzial (id, nazwa) VALUES (3, 'Cala Firma');
+INSERT INTO dzial (id, nazwa) VALUES (1, 'Cala Firma');
 INSERT INTO dzial (id, nazwa) VALUES (4, 'Przezes Spółka 1');
 
 INSERT INTO spolki (id, nazwa, opis) VALUES (1, 'Spółka1', 'Spółka1');
 
-INSERT INTO passwords (id, pass) VALUES (1, 'a');
+INSERT INTO passwords (id, pass) VALUES (3, 'a');
 INSERT INTO passwords (id, pass) VALUES (2, '0cc175b9c0f1b6a831c399e269772661');
-INSERT INTO passwords (id, pass) VALUES (3, '0cc175b9c0f1b6a831c399e269772661');
+INSERT INTO passwords (id, pass) VALUES (1, '0cc175b9c0f1b6a831c399e269772661');
 INSERT INTO passwords (id, pass) VALUES (4, '0cc175b9c0f1b6a831c399e269772661');
 
-INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (1, 'admin@admin.eod', 'admin', 1, '', null);
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (3, 'admin@admin.eod', 'admin', 1, '', null);
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (2, 'admin-md5@admin.eod', 'admin-md5', 2, '', null);
-INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (3, 'generyczny@generyczny', 'generyczny', 3, '', null);
+INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (1, 'generyczny@generyczny', 'generyczny', 3, '', null);
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (4, 'prezesSp1@prezesSp1', 'Przezes  Spółki 1', 4, '', 1);
 
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (3, 1, 3, NULL, NULL, 3, NULL, 1);
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (1, 1, 1, NULL, NULL, 1, NULL, 1);
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1);
-INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (4, 1, 4, 3, NULL, 4, NULL, 1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (4, 1, 4, 1, NULL, 4, NULL, 1);
 
 INSERT INTO user_roles (id, role_name) VALUES (2, 'eodstru');
 INSERT INTO user_roles (id, role_name) VALUES (1, 'eodurlop');

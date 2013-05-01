@@ -30,7 +30,11 @@
                                 <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-
+                        
+                        <rich:panelMenuItem rendered="#{login.admin}">
+                            <h:commandLink value="Zarządzanie spółkami" action="#{SpolkiMg.list}"/>
+                        </rich:panelMenuItem>
+                        
                         <rich:panelMenuItem rendered="#{login.kierownik}">
                             <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
                         </rich:panelMenuItem>
@@ -52,9 +56,7 @@
                                 <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-                        <rich:panelMenuItem rendered="#{login.admin}">
-                            <h:commandLink value="Zarządzanie spółkami" action="#{SpolkiMg.list}"/>
-                        </rich:panelMenuItem>
+
                         <rich:panelMenuItem 
                             rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@') or fn:contains(login.zalogowany.userId.extId, 'FN')) 
                                         and login.zalogowany!=null}">
