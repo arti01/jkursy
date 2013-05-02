@@ -65,6 +65,11 @@
 
                                     <h:outputLabel for="extraemail" value="Dodatkowe emaile:"/>
                                     <h:outputText id="extraemail" value="#{strukt.extraemail}"/>
+                                    
+                                    <h:outputLabel for="roles" value="uprawnienia:"/>
+                                <ui:repeat id="roles" value="#{strukt.userId.role}" var="rola">
+                                    #{rola.rolename},
+                                </ui:repeat>
                                 </h:panelGrid>
                                 <h:panelGrid columns="1" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
                                     <br/>
@@ -75,6 +80,7 @@
                                         </ui:repeat>
                                     </ul>
                                 </h:panelGrid>
+
                             </rich:collapsiblePanel>
                         </rich:column>
 
@@ -113,13 +119,15 @@
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>
-                
-                 <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formTabNew" execute="@this"
+
+                <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formTabNew" execute="@this"
                                 oncomplete="#{rich:component('confirmPane')}.hide();" />
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Czy na pewno chcesz usunąć?
-                    <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
-                    <a4j:commandButton value="TAK" onclick="remove(); return false;" />
+                    <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide();
+                            return false;" />
+                    <a4j:commandButton value="TAK" onclick="remove();
+                            return false;" />
                 </rich:popupPanel>   
             </h:form>
         </div>

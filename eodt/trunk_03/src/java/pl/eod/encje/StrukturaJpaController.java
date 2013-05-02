@@ -12,7 +12,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 import pl.eod.encje.exceptions.mojWyjatek;
@@ -116,6 +118,29 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
+    public Struktura findGeneryczny(){
+    EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Struktura> user = cq.from(Struktura.class);
+            cq.select(user);
+            Predicate nadrz = cb.isNull(user.get(Struktura_.szefId));
+            cq.where(nadrz);
+            Query q = em.createQuery(cq);
+            if (q.getResultList().isEmpty()) {
+                return null;
+            } else {
+                for(Struktura s:(List<Struktura>)q.getResultList()){
+                    if(s.bezpPod.size()>0) return s;
+                }
+                return null;
+            }
+        } finally {
+            em.close();
+        }
+    }
+    
     public void zrobNiewidczony(Struktura struktura) {
         EntityManager em = null;
         em = getEntityManager();

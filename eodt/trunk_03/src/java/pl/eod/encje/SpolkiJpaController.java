@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import pl.eod.encje.exceptions.NonexistentEntityException;
+import pl.eod.managed.Login;
 
 /**
  *
@@ -37,13 +38,41 @@ public class SpolkiJpaController implements Serializable {
         if (spolki.getUserList() == null) {
             spolki.setUserList(new ArrayList<Uzytkownik>());
         }
+        Struktura generyk = new StrukturaJpaController().findGeneryczny();
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(spolki);
+            //tworzenie prezesa
+            Struktura prezes = new Struktura();
+            Dzial dzial = new Dzial();
+            dzial.setNazwa("prezes " + spolki.getNazwa());
+            em.persist(dzial);
+            prezes.setDzialId(dzial);
+            Uzytkownik user = new Uzytkownik();
+            user.setAdrEmail("prezes@" + spolki.getNazwa());
+            user.setEodstru(true);
+            List<UserRoles> role = new UserRolesJpaController().findRolesEntities();
+            user.setRole(role);
+            user.setFullname("Prezes " + spolki.getNazwa());
+            String defPass = new ConfigJpaController().findConfigNazwa("domysle_haslo").getWartosc();
+            Hasla h = new Hasla();
+            //System.out.println("--"+defPass+"====");
+            if (new ConfigJpaController().findConfigNazwa("realm_szyfrowanie").getWartosc().equals("md5")) {
+                h.setPass(Login.md5(defPass));
+            } else {
+                h.setPass(defPass);
+            }
+            user.setHasla(h);
+            user.setSpolkaId(spolki);
+            user.setStruktura(prezes);
+            prezes.setStKier(true);
+            prezes.setSzefId(generyk);
+            prezes.setUserId(user);
+            em.persist(prezes);
             em.getTransaction().commit();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
             return "blad";
         } finally {
@@ -178,5 +207,4 @@ public class SpolkiJpaController implements Serializable {
             em.close();
         }
     }
-    
 }

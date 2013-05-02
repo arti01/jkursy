@@ -6,6 +6,23 @@
     </head>
     <body>
         <div>
+            <h3>2012-05-01</h3>
+            
+            <h4>Dodano zakładanie społek</h4>
+            Dodanie nowej spółki skutkuje dodaniem również jego prezesa, który
+            ma wszystkie uprawnienia (włącznie z adminem), a którego przełożonym
+            jest użytkownik generyczny.
+            Uwaga - użytkownik generyczny jest wybierany wg następujących warunków:
+            <ul>
+                <li>nie ma przełożonego (szefId is null)</li>
+                <li>ma przynajmniej jednego podwładnego - dlatego, że aby można było dodać
+                jeszcze konta administracyjne poza strukturą. W każdym razie trzeba sprawdzić,
+                czy w strukturze nie ma więcej niż jednego na szczycie z podwłądnymi.</li>
+            </ul>
+            
+            <h3>2012-04-30</h3>
+            
+            <h4>Dodano edycję uprawnień dla struktury i urlopów</h4>
             
             <h3>2012-04-19</h3>
             

@@ -99,7 +99,7 @@ public class UzytkownikJpaController implements Serializable {
             }
         }
     }
-
+    
     public List<Uzytkownik> findUzytkownikEntities() {
         return findUzytkownikEntities(true, -1, -1);
     }
