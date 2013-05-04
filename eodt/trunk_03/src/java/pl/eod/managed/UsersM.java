@@ -213,7 +213,7 @@ public class UsersM implements Serializable {
     }
     
     public List<Uzytkownik> getUsers() {
-        users = userC.findUzytkownikEntities();
+        users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId());
         return users;
     }
 
