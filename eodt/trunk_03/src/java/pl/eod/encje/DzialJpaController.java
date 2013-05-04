@@ -15,6 +15,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 import pl.eod.encje.exceptions.PreexistingEntityException;
 
@@ -141,6 +143,28 @@ public class DzialJpaController implements Serializable {
 
     public List<Dzial> getFindDzialEntities() {
         return findDzialEntities(true, -1, -1);
+    }
+
+    public List<Dzial> findDzialEntities(Spolki spolka) {
+         EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Object> cq = cb.createQuery();
+            Root<Dzial> dzial = cq.from(Dzial.class);
+            Join<Dzial, Struktura> struktura=dzial.join(Dzial_.strukturaList);
+            Join<Struktura, Uzytkownik> userzy=struktura.join(Struktura_.userId);
+            cq.select(dzial);
+            Predicate nadrz = cb.and(cb.equal(userzy.get(Uzytkownik_.spolkaId), spolka),
+                    cb.isNotNull(userzy.get(Uzytkownik_.spolkaId)));
+            //dla adminow
+            if(spolka!=null) cq.where(nadrz);
+            cq.distinct(true);
+            Query q = em.createQuery(cq);
+            //System.err.println(q.getResultList());
+            return (List<Dzial>) q.getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     public List<Dzial> findDzialEntities() {

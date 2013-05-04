@@ -89,12 +89,12 @@
                                 <h:outputText value="Dział"/><br/>
                                 <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id==0}">
                                     <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" />
-                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>
                                 <h:selectOneMenu id="dzialFbez" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id!=0}">
-                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>

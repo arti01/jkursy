@@ -14,6 +14,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.exceptions.NonexistentEntityException;
@@ -38,11 +39,18 @@ public class StrukturaJpaController implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Struktura> getFindKierownicy() {
+    public List<Struktura> getFindKierownicy(Spolki spolka) {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            Query query = em.createNamedQuery("Struktura.kierownicy");
+            Query query;
+            //dla adminow
+            if (spolka != null) {
+                query = em.createNamedQuery("Struktura.kierownicy");
+                query.setParameter("spolka", spolka);
+            } else {
+                query = em.createNamedQuery("Struktura.kierownicyAll");
+            }
             //LOG.log(Level.OFF, query.getResultList().toString()+"logger");
             List<Struktura> wynik = query.getResultList();
             return wynik;
@@ -57,8 +65,8 @@ public class StrukturaJpaController implements Serializable {
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
         ConfigJpaController confC = new ConfigJpaController();
-        boolean sprawdzacUnikEmail=(confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
-        
+        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
+
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -118,8 +126,8 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
-    public Struktura findGeneryczny(){
-    EntityManager em = getEntityManager();
+    public Struktura findGeneryczny() {
+        EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
@@ -131,8 +139,10 @@ public class StrukturaJpaController implements Serializable {
             if (q.getResultList().isEmpty()) {
                 return null;
             } else {
-                for(Struktura s:(List<Struktura>)q.getResultList()){
-                    if(s.bezpPod.size()>0) return s;
+                for (Struktura s : (List<Struktura>) q.getResultList()) {
+                    if (s.bezpPod.size() > 0) {
+                        return s;
+                    }
                 }
                 return null;
             }
@@ -140,7 +150,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public void zrobNiewidczony(Struktura struktura) {
         EntityManager em = null;
         em = getEntityManager();
@@ -152,7 +162,7 @@ public class StrukturaJpaController implements Serializable {
         }
         struktura.setUsuniety(1);
         struktura.getUserId().setRole(null);
-        struktura.getUserId().setAdrEmail(struktura.getId()+"usuniety"+struktura.getUserId().getAdrEmail());
+        struktura.getUserId().setAdrEmail(struktura.getId() + "usuniety" + struktura.getUserId().getAdrEmail());
         if (struktura.isStKier()) {
             Dzial dzial = struktura.getDzialId();
             struktura.setDzialId(null);
@@ -184,8 +194,7 @@ public class StrukturaJpaController implements Serializable {
         } else {
             if (struktura.getSzefId() != null) {
                 struktura.setDzialId(struktura.getSzefId().getDzialId());
-            } 
-            else {
+            } else {
                 return "Brak przełożonego - wybierz właściwego";
             }
         }
@@ -210,7 +219,7 @@ public class StrukturaJpaController implements Serializable {
 
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
         ConfigJpaController confC = new ConfigJpaController();
-        boolean sprawdzacUnikEmail=(confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
+        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -221,8 +230,8 @@ public class StrukturaJpaController implements Serializable {
             em = getEntityManager();
             Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
             Struktura oldSecUser = null;
-            Dzial oldDzial=oldStruktura.getDzialId();
-            boolean oldKier=oldStruktura.isStKier();
+            Dzial oldDzial = oldStruktura.getDzialId();
+            boolean oldKier = oldStruktura.isStKier();
             if (oldStruktura.getSecUserId() != null) {
                 oldSecUser = oldStruktura.getSecUserId().getStruktura();
             }
@@ -240,7 +249,7 @@ public class StrukturaJpaController implements Serializable {
             if (!struktura.getUserId().getAdrEmail().equals(oldStruktura.getUserId().getAdrEmail())) {
                 if (!struktura.getUserId().getAdrEmail().equals("")) {
                     UzytkownikJpaController uC = new UzytkownikJpaController();
-                    if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null&& sprawdzacUnikEmail) {
+                    if (uC.findStruktura(struktura.getUserId().getAdrEmail()) != null && sprawdzacUnikEmail) {
                         return "email już istnieje";
                     }
                 }
@@ -258,8 +267,8 @@ public class StrukturaJpaController implements Serializable {
             em.getTransaction().begin();
             em.merge(struktura);
             /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
-                em.merge(struktura.getDzialId());   
-            }*/
+             em.merge(struktura.getDzialId());   
+             }*/
             em.getTransaction().commit();
 
             if (struktura.getSzefId() != null) {
@@ -274,12 +283,12 @@ public class StrukturaJpaController implements Serializable {
             if (oldSecUser != null) {
                 em.refresh(em.find(struktura.getClass(), oldSecUser.getId()));
             }
-            
+
             //System.out.println(struktura.isStKier()+"--------"+oldKier+oldDzial.getNazwa());
-            
-            if(!struktura.isStKier()&&oldKier){
-                    DzialJpaController dzialC = new DzialJpaController();
-                    dzialC.destroy(oldDzial);
+
+            if (!struktura.isStKier() && oldKier) {
+                DzialJpaController dzialC = new DzialJpaController();
+                dzialC.destroy(oldDzial);
             }
 
             em.refresh(em.merge(struktura));
@@ -327,9 +336,9 @@ public class StrukturaJpaController implements Serializable {
         }
     }
 
-    public List<Struktura> findStrukturaWidoczni() {
+    public List<Struktura> findStrukturaWidoczni(Spolki spolka) {
         List<Struktura> wynik = new ArrayList<Struktura>();
-        for (Struktura s : findStrukturaEntities(true, -1, -1)) {
+        for (Struktura s : findStrukturaEntities(spolka)) {
             if (!s.isUsuniety()) {
                 wynik.add(s);
             }
@@ -339,6 +348,28 @@ public class StrukturaJpaController implements Serializable {
 
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
+    }
+
+    public List<Struktura> findStrukturaEntities(Spolki spolka) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Object> cq = cb.createQuery();
+            Root<Struktura> struktura = cq.from(Struktura.class);
+            Join<Struktura, Uzytkownik> userzy = struktura.join(Struktura_.userId);
+            cq.select(struktura);
+            Predicate nadrz = cb.and(cb.equal(userzy.get(Uzytkownik_.spolkaId), spolka),
+                    cb.isNotNull(userzy.get(Uzytkownik_.spolkaId)));
+            //dla adminow
+            if (spolka != null) {
+                cq.where(nadrz);
+            }
+            Query q = em.createQuery(cq);
+            //System.err.println(q.getResultList());
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     public List<Struktura> getFindStrukturaEntities() {

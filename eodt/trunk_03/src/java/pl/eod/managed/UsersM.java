@@ -41,6 +41,8 @@ public class UsersM implements Serializable {
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
     List<Struktura> strukturyOld = new ArrayList<Struktura>();
     List<UserRoles>roleAll=new ArrayList<UserRoles>();
+    List<Dzial>dzialyAll=new ArrayList<Dzial>();
+    List<Struktura>kierownicyAll=new ArrayList<Struktura>();
     DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
@@ -72,8 +74,10 @@ public class UsersM implements Serializable {
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
         struktury = new ListDataModel<Struktura>();
-        struktury.setWrappedData(struktC.findStrukturaWidoczni());
+        struktury.setWrappedData(struktC.findStrukturaWidoczni(login.zalogowany.getUserId().getSpolkaId()));
         roleAll=urC.findDostepneDoEdycji();
+        dzialyAll=dzialC.findDzialEntities(login.zalogowany.getUserId().getSpolkaId());
+        kierownicyAll=struktC.getFindKierownicy(login.zalogowany.getUserId().getSpolkaId());
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
@@ -290,7 +294,6 @@ public class UsersM implements Serializable {
     public Login getLogin() {
         return login;
     }
-
     public void setLogin(Login login) {
         this.login = login;
     }
@@ -302,6 +305,21 @@ public class UsersM implements Serializable {
     public void setRoleAll(List<UserRoles> roleAll) {
         this.roleAll = roleAll;
     }
-    
+
+    public List<Dzial> getDzialyAll() {
+        return dzialyAll;
+    }
+
+    public void setDzialyAll(List<Dzial> dzialyAll) {
+        this.dzialyAll = dzialyAll;
+    }
+
+    public List<Struktura> getKierownicyAll() {
+        return kierownicyAll;
+    }
+
+    public void setKierownicyAll(List<Struktura> kierownicyAll) {
+        this.kierownicyAll = kierownicyAll;
+    }
     
 }

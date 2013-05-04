@@ -22,7 +22,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -38,8 +37,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Struktura.findAll", query = "SELECT s FROM Struktura s"),
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier ORDER BY s.userId.fullname"),
-    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname"),
-    @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety!=1 or s.usuniety is null) ORDER BY s.userId.fullname")
+    @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety<>1 or s.usuniety is null) ORDER BY s.userId.fullname"),
+    @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety<>1 or s.usuniety is null) AND s.userId.spolkaId=:spolka ORDER BY s.userId.fullname"),
+    @NamedQuery(name = "Struktura.kierownicyAll", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety<>1 or s.usuniety is null) ORDER BY s.userId.fullname")
 })
 public class Struktura implements Serializable {
 
@@ -209,7 +209,7 @@ public class Struktura implements Serializable {
 
     public List<Struktura> getMozliwiSzefowie() {
         StrukturaJpaController strukC = new StrukturaJpaController();
-        mozliwiSzefowie = strukC.getFindKierownicy();
+        mozliwiSzefowie = strukC.getFindKierownicy(this.userId.getSpolkaId());
         //System.out.println(this.userId);
         //System.out.println(getWszyscyPodwladni());
         mozliwiSzefowie.removeAll(getWszyscyPodwladni());
@@ -219,11 +219,11 @@ public class Struktura implements Serializable {
 
     public String[] getRolaString() {
         String[] strarray = new String[getUserId().getRole().size()];
-        List<String> strList = new ArrayList<String>();
-        for (UserRoles rola : getUserId().getRole()) {
-            strList.add("=" + rola.getRolename() + "=");
-        }
-        strList.toArray(strarray);
+        //List<String> strList = new ArrayList<String>();
+        //for (UserRoles rola : getUserId().getRole()) {
+          //  strList.add("=" + rola.getRolename() + "=");
+        //}
+        //strList.toArray(strarray);
         return strarray;
     }
 
