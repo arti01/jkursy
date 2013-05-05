@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
-import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 
 /**
@@ -30,6 +30,8 @@ public class StruktDzialM implements Serializable {
     StrukturaJpaController struktC;
     DzialJpaController dzialC;
     private List<Struktura> srcRoots=new ArrayList<Struktura>();
+    @ManagedProperty(value = "#{login}")
+    private Login login;
      
     @PostConstruct
     public void init(){
@@ -49,7 +51,7 @@ public class StruktDzialM implements Serializable {
       uDzial.setNazwa("Organizacja - wg działów");
       firma.setDzialId(uDzial);
       srcRoots.clear();
-      srcRoots.addAll(struktC.getFindBezSzefa());
+      srcRoots.addAll(struktC.getFindBezSzefa(login.isAdmin()));
       firma.setBezpPod(srcRoots);
       List<Struktura> wynik=new ArrayList<Struktura>();
       wynik.add(firma);
@@ -62,6 +64,14 @@ public class StruktDzialM implements Serializable {
 
     public StrukturaJpaController getStruktC() {
         return struktC;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
     
     

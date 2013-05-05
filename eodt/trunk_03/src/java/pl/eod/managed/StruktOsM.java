@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
@@ -30,6 +31,8 @@ public class StruktOsM implements Serializable {
     StrukturaJpaController struktC;
     DzialJpaController dzialC;
     private List<Struktura> srcRoots=new ArrayList<Struktura>();
+    @ManagedProperty(value = "#{login}")
+    private Login login;
      
     @PostConstruct
     public void init(){
@@ -49,10 +52,18 @@ public class StruktOsM implements Serializable {
       uFirma.setFullname("Organizacja - wg pracowników");
       firma.setUserId(uFirma);
       srcRoots.clear();
-      srcRoots.addAll(struktC.getFindBezSzefa());
+      srcRoots.addAll(struktC.getFindBezSzefa(login.isAdmin()));
       firma.setBezpPod(srcRoots);
       List<Struktura> wynik=new ArrayList<Struktura>();
-      wynik.add(firma);
+      
+      if(login.isAdmin())wynik.add(firma);
+      else {
+          for(Struktura s:srcRoots.get(0).getBezpPod()){
+              if(s.getUserId().getSpolkaId().equals(login.zalogowany.getUserId().getSpolkaId())){
+                  wynik.add(s);
+              }
+          }
+      }
       return wynik;
 
    }
@@ -63,6 +74,14 @@ public class StruktOsM implements Serializable {
 
     public StrukturaJpaController getStruktC() {
         return struktC;
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
     }
     
     

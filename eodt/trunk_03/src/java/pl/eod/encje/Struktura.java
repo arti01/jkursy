@@ -38,6 +38,7 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name = "Struktura.findById", query = "SELECT s FROM Struktura s WHERE s.id = :id"),
     @NamedQuery(name = "Struktura.findByStKier", query = "SELECT s FROM Struktura s WHERE s.stKier = :stKier ORDER BY s.userId.fullname"),
     @NamedQuery(name = "Struktura.findBezSzefa", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety<>1 or s.usuniety is null) ORDER BY s.userId.fullname"),
+    @NamedQuery(name = "Struktura.findBezSzefaSpolka", query = "SELECT s FROM Struktura s WHERE s.szefId is null and (s.usuniety<>1 or s.usuniety is null) AND s.userId.spolkaId=:spolka ORDER BY s.userId.fullname"),
     @NamedQuery(name = "Struktura.kierownicy", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety<>1 or s.usuniety is null) AND s.userId.spolkaId=:spolka ORDER BY s.userId.fullname"),
     @NamedQuery(name = "Struktura.kierownicyAll", query = "SELECT s FROM Struktura s WHERE s.stKier=1 and (s.usuniety<>1 or s.usuniety is null) ORDER BY s.userId.fullname")
 })
@@ -174,7 +175,7 @@ public class Struktura implements Serializable {
     public List<Struktura> getBezpPodzPodwlad() {
         List<Struktura> tree = new ArrayList<Struktura>();
         for (Struktura s : getBezpPodWidoczni()) {
-            if (s.getBezpPod().size() > 0) {
+            if (s.getBezpPod().size() > 0 ) {
                 tree.add(s);
             }
         }
@@ -192,6 +193,7 @@ public class Struktura implements Serializable {
         return bezpPodKier;
     }
 
+    //podwladni bezposredni bez tych, ktory maja swoich podwladnych
     public List<Struktura> getBezpPodBezPodwlad() {
         bezpPodBezPodwlad = getBezpPodWidoczni();
         bezpPodBezPodwlad.removeAll(getBezpPodzPodwlad());
@@ -222,7 +224,7 @@ public class Struktura implements Serializable {
         String[] strarray = new String[getUserId().getRole().size()];
         //List<String> strList = new ArrayList<String>();
         //for (UserRoles rola : getUserId().getRole()) {
-          //  strList.add("=" + rola.getRolename() + "=");
+        //  strList.add("=" + rola.getRolename() + "=");
         //}
         //strList.toArray(strarray);
         return strarray;
