@@ -213,6 +213,7 @@ public class Struktura implements Serializable {
         //System.out.println(this.userId);
         //System.out.println(getWszyscyPodwladni());
         mozliwiSzefowie.removeAll(getWszyscyPodwladni());
+        mozliwiSzefowie.add(strukC.findGeneryczny());
         mozliwiSzefowie.remove(this);
         return mozliwiSzefowie;
     }

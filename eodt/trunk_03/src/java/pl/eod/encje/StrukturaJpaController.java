@@ -26,18 +26,18 @@ import pl.eod.managed.Login;
  * @author 103039
  */
 public class StrukturaJpaController implements Serializable {
-
+    
     public StrukturaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
     private EntityManagerFactory emf = null;
-
+    
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-
+    
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindKierownicy(Spolki spolka) {
         EntityManager em = null;
@@ -61,12 +61,12 @@ public class StrukturaJpaController implements Serializable {
         }
     }
     private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
-
+    
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
         ConfigJpaController confC = new ConfigJpaController();
         boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
-
+        
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -81,10 +81,10 @@ public class StrukturaJpaController implements Serializable {
             h.setPass(defPass);
         }
         struktura.getUserId().setHasla(h);
-
+        
         UserRolesJpaController urC = new UserRolesJpaController();
         struktura.getUserId().getRole().add(urC.findByNazwa("eoduser"));
-
+        
         EntityManager em = null;
         try {
             if (!struktura.isStKier()) {
@@ -99,17 +99,20 @@ public class StrukturaJpaController implements Serializable {
                     return "email już istnieje";
                 }
             }
-
+            
+            if (struktura.getSzefId() != null) {
+                struktura.getUserId().setSpolkaId(struktura.getSzefId().getUserId().getSpolkaId());
+            }
+            
             DzialJpaController dC = new DzialJpaController();
             if (dC.findDzialByNazwa(struktura.getDzialId().getNazwa()) != null && struktura.isStKier()) {
                 //System.err.println("valid tutaj 1");
                 return "dział już istnieje";
             }
-
             em = getEntityManager();
             //System.out.println(struktura.getDzialId());
             em.getTransaction().begin();
-            System.err.println(struktura.getUserId().getRole());
+            //System.err.println(struktura.getUserId().getRole());
             em.merge(struktura);
             em.getTransaction().commit();
             if (struktura.getSzefId() != null) {
@@ -125,7 +128,7 @@ public class StrukturaJpaController implements Serializable {
         }
         return null;
     }
-
+    
     public Struktura findGeneryczny() {
         EntityManager em = getEntityManager();
         try {
@@ -150,7 +153,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public void zrobNiewidczony(Struktura struktura) {
         EntityManager em = null;
         em = getEntityManager();
@@ -184,7 +187,7 @@ public class StrukturaJpaController implements Serializable {
             em.refresh(em.merge(sOld));
         }
     }
-
+    
     public String changeKier(Struktura struktura, Dzial dzialOld) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         if (struktura.isStKier()) {
@@ -208,7 +211,7 @@ public class StrukturaJpaController implements Serializable {
                 dzialC.destroy(dzialOld);
                 System.out.println(dzialOld.getNazwa() + "usuwanie dzialu" + struktura.getDzialId().getNazwa());
             }
-
+            
         } finally {
             if (em != null) {
                 em.close();
@@ -216,7 +219,7 @@ public class StrukturaJpaController implements Serializable {
         }
         return null;
     }
-
+    
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
         ConfigJpaController confC = new ConfigJpaController();
         boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
@@ -254,7 +257,7 @@ public class StrukturaJpaController implements Serializable {
                     }
                 }
             }
-
+            
             if (struktura.isStKier() == true) {
                 if (!struktura.getDzialId().getNazwa().equals(oldStruktura.getDzialId().getNazwa())) {
                     DzialJpaController dC = new DzialJpaController();
@@ -263,14 +266,14 @@ public class StrukturaJpaController implements Serializable {
                     }
                 }
             }
-
+            
             em.getTransaction().begin();
             em.merge(struktura);
             /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
              em.merge(struktura.getDzialId());   
              }*/
             em.getTransaction().commit();
-
+            
             if (struktura.getSzefId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSzefId().getId()));
             }
@@ -290,7 +293,7 @@ public class StrukturaJpaController implements Serializable {
                 DzialJpaController dzialC = new DzialJpaController();
                 dzialC.destroy(oldDzial);
             }
-
+            
             em.refresh(em.merge(struktura));
         } finally {
             if (em != null) {
@@ -299,7 +302,7 @@ public class StrukturaJpaController implements Serializable {
         }
         return null;
     }
-
+    
     public void destroyArti(Struktura struktura) throws NonexistentEntityException {
         EntityManager em = null;
         if (struktura.bezpPod.size() > 0) {
@@ -324,7 +327,7 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     public List<Struktura> getFindBezSzefa() {
         EntityManager em = getEntityManager();
@@ -335,7 +338,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Struktura> findStrukturaWidoczni(Spolki spolka) {
         List<Struktura> wynik = new ArrayList<Struktura>();
         for (Struktura s : findStrukturaEntities(spolka)) {
@@ -345,11 +348,11 @@ public class StrukturaJpaController implements Serializable {
         }
         return wynik;
     }
-
+    
     public List<Struktura> findStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-
+    
     public List<Struktura> findStrukturaEntities(Spolki spolka) {
         EntityManager em = getEntityManager();
         try {
@@ -371,15 +374,15 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Struktura> getFindStrukturaEntities() {
         return findStrukturaEntities(true, -1, -1);
     }
-
+    
     public List<Struktura> findStrukturaEntities(int maxResults, int firstResult) {
         return findStrukturaEntities(false, maxResults, firstResult);
     }
-
+    
     private List<Struktura> findStrukturaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -395,7 +398,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public Struktura findStruktura(Long id) {
         EntityManager em = getEntityManager();
         try {
@@ -404,7 +407,7 @@ public class StrukturaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public int getStrukturaCount() {
         EntityManager em = getEntityManager();
         try {

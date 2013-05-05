@@ -11,7 +11,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
 		<h4>Edycja pracownika</h4>
         <h:form>
             <a4j:outputPanel id="formWprow" layout="block">
@@ -40,15 +40,9 @@
                     
                     
                     <h:outputLabel for="przelozonyEK" value="Przełożony: "/>
-                    <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" rendered="#{UsersM.strukt.stKier}">
-                        <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true" />
+                    <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
                         <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                     </h:selectOneMenu>
-
-                    <h:selectOneMenu id="przelozonyEP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" rendered="#{!UsersM.strukt.stKier}">
-                        <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                    </h:selectOneMenu>
-                    <rich:message for="przelozonyEK" styleClass="error"/>
                     
                     <h:outputLabel for="sec_user_id" value="Zastępuje go (podaj email)"/>
                     <rich:autocomplete id="sec_user_id" value="#{UsersM.strukt.secUserId}" mode="lazyClient" autocompleteList="#{UsersM.users}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">

@@ -52,7 +52,7 @@ public class Spolki implements Serializable {
     @Size(max = 255)
     @Column(name = "opis", length = 255)
     private String opis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spolkaId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spolkaId", orphanRemoval = true)
     @OrderBy(value = "id DESC")
     private List<Uzytkownik> userList;
 

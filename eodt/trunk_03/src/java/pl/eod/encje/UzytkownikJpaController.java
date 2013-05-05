@@ -99,28 +99,31 @@ public class UzytkownikJpaController implements Serializable {
             }
         }
     }
-    
+
     public List<Uzytkownik> findUzytkownikEntities() {
         return findUzytkownikEntities(true, -1, -1);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Uzytkownik> findUzytkownikEntities(Spolki spolka) {
-         EntityManager em = getEntityManager();
+        EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Object> cq = cb.createQuery();
             Root<Uzytkownik> user = cq.from(Uzytkownik.class);
             cq.select(user);
-            Predicate nadrz = cb.and(cb.equal(user.get(Uzytkownik_.spolkaId), spolka),cb.isNotNull(user.get(Uzytkownik_.spolkaId)));
-            cq.where(nadrz);
+            Predicate nadrz = cb.and(cb.equal(user.get(Uzytkownik_.spolkaId), spolka), cb.isNotNull(user.get(Uzytkownik_.spolkaId)));
+            if (spolka != null) {
+                cq.where(nadrz);
+            }
             Query q = em.createQuery(cq);
-            System.err.println(q.getResultList());
-            return q.getResultList();
+            //System.err.println(q.getResultList());
+            return (List<Uzytkownik>) q.getResultList();
         } finally {
             em.close();
         }
     }
-    
+
     public List<Uzytkownik> findUzytkownikEntities(int maxResults, int firstResult) {
         return findUzytkownikEntities(false, maxResults, firstResult);
     }

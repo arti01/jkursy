@@ -38,7 +38,6 @@
                     <h:outputLabel for="przelozonyK" value="Przełożony: "/>
                     <h:panelGroup id="przelozony">
                         <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
-                            <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
                             <f:selectItems value="#{UsersM.kierownicyAll}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
                         <rich:message for="przelozonyK" styleClass="error" />

@@ -147,12 +147,9 @@ public class SpolkiJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The spolki with id " + id + " no longer exists.", enfe);
             }
-            List<Uzytkownik> userList = spolki.getUserList();
-            for (Uzytkownik userListUzytkownik : userList) {
-                userListUzytkownik.setSpolkaId(null);
-                userListUzytkownik = em.merge(userListUzytkownik);
-            }
-            em.remove(spolki);
+            em.refresh(spolki);
+            spolki.getUserList().clear();
+            em.remove(em.merge(spolki));
             em.getTransaction().commit();
         } finally {
             if (em != null) {

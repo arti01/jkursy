@@ -54,7 +54,7 @@
                     </rich:column>
                     <rich:column style="width: 45px">
                         <a4j:commandLink execute="@this" render="@none"
-                                         oncomplete="#{rich:component('confirmPane')}.show()" rendered="#{fn:length(item.userList)==0}">
+                                         oncomplete="#{rich:component('confirmPane')}.show()" rendered="false">
                             <h:graphicImage value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{SpolkiMg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
