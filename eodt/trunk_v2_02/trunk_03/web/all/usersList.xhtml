@@ -11,7 +11,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <div id="tabela">
             <h4>Lista pracowników</h4>
             <h:form>
@@ -65,6 +65,11 @@
 
                                     <h:outputLabel for="extraemail" value="Dodatkowe emaile:"/>
                                     <h:outputText id="extraemail" value="#{strukt.extraemail}"/>
+                                    
+                                    <h:outputLabel for="roles" value="uprawnienia:"/>
+                                <ui:repeat id="roles" value="#{strukt.userId.role}" var="rola">
+                                    #{rola.rolename},
+                                </ui:repeat>
                                 </h:panelGrid>
                                 <h:panelGrid columns="1" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
                                     <br/>
@@ -75,6 +80,7 @@
                                         </ui:repeat>
                                     </ul>
                                 </h:panelGrid>
+
                             </rich:collapsiblePanel>
                         </rich:column>
 
@@ -83,12 +89,12 @@
                                 <h:outputText value="Dział"/><br/>
                                 <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id==0}">
                                     <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" />
-                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>
                                 <h:selectOneMenu id="dzialFbez" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id!=0}">
-                                    <f:selectItems value="#{UsersM.dzialC.findDzialEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
+                                    <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />
                                 </h:selectOneMenu>
@@ -113,13 +119,15 @@
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>
-                
-                 <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formTabNew" execute="@this"
+
+                <a4j:jsFunction name="remove" action="#{UsersM.usun}" render="formTabNew" execute="@this"
                                 oncomplete="#{rich:component('confirmPane')}.hide();" />
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Czy na pewno chcesz usunąć?
-                    <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
-                    <a4j:commandButton value="TAK" onclick="remove(); return false;" />
+                    <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide();
+                            return false;" />
+                    <a4j:commandButton value="TAK" onclick="remove();
+                            return false;" />
                 </rich:popupPanel>   
             </h:form>
         </div>

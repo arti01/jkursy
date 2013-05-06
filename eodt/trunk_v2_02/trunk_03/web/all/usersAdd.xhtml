@@ -38,13 +38,12 @@
                     <h:outputLabel for="przelozonyK" value="Przełożony: "/>
                     <h:panelGroup id="przelozony">
                         <h:selectOneMenu id="przelozonyK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{UsersM.strukt.stKier}">
-                            <f:selectItem itemValue="#{null}" itemLabel="brak" noSelectionOption="true"/>
-                            <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                            <f:selectItems value="#{UsersM.kierownicyAll}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                         </h:selectOneMenu>
                         <rich:message for="przelozonyK" styleClass="error" />
 
                         <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
-                            <f:selectItems value="#{UsersM.struktC.findKierownicy}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                            <f:selectItems value="#{UsersM.kierownicyAll}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                             <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/>
                         </h:selectOneMenu>
                         <rich:message for="przelozonyP" styleClass="error" />
@@ -69,6 +68,13 @@
                     <h:outputLabel for="extraemail" value="Dodatkowe emaile (oddzielone przecinkiem):"/>
                     <h:inputText id="extraemail" value="#{UsersM.strukt.extraemail}" size="50"/>
                     <rich:message for="extraemail" styleClass="error" />
+                    
+                    <h:outputLabel for="role" value="role w systemie:"/>
+                    <h:selectManyCheckbox id="role" value="#{UsersM.strukt.userId.role}" converter="#{UserRolesConv}">
+                        <f:selectItems value="#{UsersM.roleAll}" var="rola" itemValue="#{rola}" itemLabel="#{rola.rolename}"/>
+                    </h:selectManyCheckbox>
+                    <rich:message for="role" styleClass="error" />
+                    
                     <br/>
                     <rich:message for="dodaj" styleClass="error"/>
                     <br/>

@@ -15,6 +15,7 @@
     <class>pl.eod.encje.KomKolejka</class>
     <class>pl.eod.encje.MenuLinki</class>
     <class>pl.eod.encje.WnLimity</class>
+    <class>pl.eod.encje.Spolki</class>
     <class>pl.eod2.encje.DcRodzajGrupa</class>
     <class>pl.eod2.encje.DcPlik</class>
     <class>pl.eod2.encje.DcDokument</class>

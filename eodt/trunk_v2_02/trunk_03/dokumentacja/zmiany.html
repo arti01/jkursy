@@ -6,6 +6,51 @@
     </head>
     <body>
         <div>
+            <h3>2012-05-05</h3>
+            <h4>Filtrowanie wg społek - drzewko osobowe</h4>
+            <ul>
+                <li>
+                    user o uprawnieniach adm ma podglad calego drzewka (firma->generyczny->prezesi i admini poza struktura),
+                    user o innych uprawnieniach tylko do swojej spolki (prezes i poniżej, bez generycznego).
+                    Uwaga - jeśli user ma uprawnienia adm a nalezy do jakiejś spółki, to mimo, że widzi na drzewku
+                    całą firmę, to już w liście pracowników ich nie zobaczy (czyli nie wyedytuje).
+                    Czyli - dostęp do wszystkich pracowników wymaga uprawnienia adm oraz umieszczenia najwyżej w hierarchii,
+                    bez ustawionej spółki.
+                </li>
+            </ul>
+            
+            <h3>2012-05-04</h3>
+            <h4>Filtrowanie wg społek</h4>
+            <ul>
+                <li>zlikwidowano możliwość wyboru przelozonego "brak"- teraz każdy musi miec szefa</li>
+                <li>wyjatkiem są predefiniowani uzytkownicy admin (czyli system zezwala na zakladanie takich userów tylko
+                poprzez grzebanie w bazie, przez GUI nie da rady - zawsze na szczycie jest uzytkownik generyczny</li>
+                <li>nowy user dziedziczy id spolki po przelozonym</li>
+                <li>nie ma możliwości zmiany id społki</li>
+                <li>nie ma mozliwości wybrania przelozonego z innej spolki, nie mozna z innej spolki ustawić zastępcy</li>
+                <li>na liscie po wybraniu wszyscy pokazują się tylko pracownicy danej spółki</li>
+            </ul>
+            
+            <h3>2012-05-01</h3>
+            <h4>Dodano zakładanie społek</h4>
+            Dodanie nowej spółki skutkuje dodaniem również jego prezesa, który
+            ma wszystkie uprawnienia (włącznie z adminem), a którego przełożonym
+            jest użytkownik generyczny.
+            Uwaga - użytkownik generyczny jest wybierany wg następujących warunków:
+            <ul>
+                <li>zalozyc tabele:
+                CREATE TABLE spolki (id INTEGER NOT NULL, nazwa VARCHAR(255) NOT NULL, opis VARCHAR(255), PRIMARY KEY (id))
+                </li>
+                <li>zmodyfikowac tabele uzytkownik dodajac spolka_id INTEGER</li>
+                <li>nie ma przełożonego (szefId is null)</li>
+                <li>ma przynajmniej jednego podwładnego - dlatego, że aby można było dodać
+                jeszcze konta administracyjne poza strukturą. W każdym razie trzeba sprawdzić,
+                czy w strukturze nie ma więcej niż jednego na szczycie z podwłądnymi.</li>
+            </ul>
+            
+            <h3>2012-04-30</h3>
+            
+            <h4>Dodano edycję uprawnień dla struktury i urlopów</h4>
             
             <h3>2012-04-19</h3>
             

@@ -19,11 +19,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
+import pl.eod.encje.UserRoles;
+import pl.eod.encje.UserRolesJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.encje.exceptions.NonexistentEntityException;
@@ -39,13 +40,18 @@ public class UsersM implements Serializable {
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
     List<Struktura> strukturyOld = new ArrayList<Struktura>();
+    List<UserRoles>roleAll=new ArrayList<UserRoles>();
+    List<Dzial>dzialyAll=new ArrayList<Dzial>();
+    List<Struktura>kierownicyAll=new ArrayList<Struktura>();
     DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
+    List<UserRoles> rolesKlon;
     boolean edytuj = false;
     String nameFilter;
     Dzial dzialFilter;
     StrukturaJpaController struktC;
+    UserRolesJpaController urC;
     Struktura strukt;
     DzialJpaController dzialC;
     @ManagedProperty(value = "#{login}")
@@ -57,6 +63,7 @@ public class UsersM implements Serializable {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
+        urC=new UserRolesJpaController();
     }
 
     private void initUser() {
@@ -67,7 +74,10 @@ public class UsersM implements Serializable {
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
         struktury = new ListDataModel<Struktura>();
-        struktury.setWrappedData(struktC.findStrukturaWidoczni());
+        struktury.setWrappedData(struktC.findStrukturaWidoczni(login.zalogowany.getUserId().getSpolkaId()));
+        roleAll=urC.findDostepneDoEdycji();
+        dzialyAll=dzialC.findDzialEntities(login.zalogowany.getUserId().getSpolkaId());
+        kierownicyAll=struktC.getFindKierownicy(login.zalogowany.getUserId().getSpolkaId());
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
@@ -88,6 +98,7 @@ public class UsersM implements Serializable {
     }
     
     public String edycja() {
+        rolesKlon=strukt.getUserId().getRole();
         return "/all/usersEdit";
     }
     
@@ -136,6 +147,9 @@ public class UsersM implements Serializable {
     }
 
     public String zapisz() throws NonexistentEntityException, Exception {
+        //pozostają role nieedytowalne
+        rolesKlon.removeAll(roleAll);
+        strukt.getUserId().getRole().addAll(rolesKlon);
         String error = struktC.editArti(strukt);
         if (error == null) {
             initUser();
@@ -203,7 +217,7 @@ public class UsersM implements Serializable {
     }
     
     public List<Uzytkownik> getUsers() {
-        users = userC.findUzytkownikEntities();
+        users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId());
         return users;
     }
 
@@ -280,10 +294,32 @@ public class UsersM implements Serializable {
     public Login getLogin() {
         return login;
     }
-
     public void setLogin(Login login) {
         this.login = login;
     }
-    
+
+    public List<UserRoles> getRoleAll() {
+        return roleAll;
+    }
+
+    public void setRoleAll(List<UserRoles> roleAll) {
+        this.roleAll = roleAll;
+    }
+
+    public List<Dzial> getDzialyAll() {
+        return dzialyAll;
+    }
+
+    public void setDzialyAll(List<Dzial> dzialyAll) {
+        this.dzialyAll = dzialyAll;
+    }
+
+    public List<Struktura> getKierownicyAll() {
+        return kierownicyAll;
+    }
+
+    public void setKierownicyAll(List<Struktura> kierownicyAll) {
+        this.kierownicyAll = kierownicyAll;
+    }
     
 }

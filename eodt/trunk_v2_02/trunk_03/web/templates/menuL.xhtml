@@ -4,8 +4,7 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:rich="http://richfaces.org/rich">
     <h:outputStylesheet library="css" name="../resources/css/default.css"/>
     <h:form>
         <h4>Menu</h4>
@@ -58,7 +57,11 @@
                                 <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-
+                        
+                        <rich:panelMenuItem rendered="#{login.admin}">
+                            <h:commandLink value="Zarządzanie spółkami" action="#{SpolkiMg.list}"/>
+                        </rich:panelMenuItem>
+                        
                         <rich:panelMenuItem rendered="#{login.kierownik}">
                             <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
                         </rich:panelMenuItem>
@@ -80,13 +83,19 @@
                                 <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-                        <rich:panelMenuItem rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
+
+                        <rich:panelMenuItem 
+                            rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@') or fn:contains(login.zalogowany.userId.extId, 'FN')) 
+                                        and login.zalogowany!=null}">
                             <h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink>
                         </rich:panelMenuItem>
                         <rich:panelMenuItem>
                             <a target="_top" href="../logout.jsp">Wyjście</a>
                         </rich:panelMenuItem>
                         <rich:panelMenuItem>
+                            Zalogowany jako: #{login.zalogowany.userId.fullname}, <br/>spółka: #{login.zalogowany.userId.spolkaId.nazwa}
+                        </rich:panelMenuItem>
+                        <rich:panelMenuItem rendered="#{fn:length(login.zalogowany.userId.wnLimity.ulimit)!=0}">
                             Dostępny urlop:<br/>
                             <strong>#{login.zalogowany.userId.wnLimity.ulimit}</strong>
                         </rich:panelMenuItem>
