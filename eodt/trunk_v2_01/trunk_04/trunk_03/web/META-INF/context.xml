@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/eodt_v2">
-  <Realm className="org.apache.catalina.realm.JDBCRealm" connectionURL="jdbc:derby://10.151.64.147:1527/eod_v2" debug="99" digest="md5" driverName="org.apache.derby.jdbc.ClientDriver" password="eod" resourceName="eod" roleNameCol="role_name" userCredCol="password" userNameCol="username" userRoleTable="eod.user_roles_view" userTable="eod.userpass" username="eod"/>
-  <Resource auth="Container" 
-            driverClassName="org.apache.derby.jdbc.ClientDriver" 
-            maxActive="10" maxIdle="3" maxWait="10000" 
-            name="jdbc/eod_v2" password="eod" 
-            prepared-statement-cache-size="16" removeAbandoned="true" removeAbandonedTimeout="100" type="javax.sql.DataSource" url="jdbc:derby://10.151.64.147:1527/eod_v2" username="eod"/>
-</Context>
