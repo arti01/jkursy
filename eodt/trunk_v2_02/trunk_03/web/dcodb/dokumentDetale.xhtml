@@ -1,0 +1,139 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+        <h3>Detale dokumentu #{AkceptOdb.obiekt.nazwa}</h3>
+        <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        <h:form>
+            <rich:tabPanel >
+                <rich:tab header="Informacje podstawowe">
+
+               <h:panelGrid columns="2" id="dodajGrid">
+                    <h:outputLabel for="nameD" value="nazwa: "/>
+                    <h:outputText id="nameD" value="#{AkceptOdb.obiekt.nazwa}" />
+
+                    <h:outputLabel for="opisD" value="opis: "/>
+                    <h:outputText id="opisD" value="#{AkceptOdb.obiekt.opis}"  />
+
+                    <h:outputLabel for="dataD" value="Data dokumentu:"/>
+                    <h:outputText id="dataD" value="#{AkceptOdb.obiekt.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+
+                    <h:outputLabel for="rodzajD" value="rodzaj: "/>
+                    <h:outputText id="rodzajD" value="#{AkceptOdb.obiekt.rodzajId.nazwa}"/>
+
+                    <h:outputLabel for="zrodloD" value="źródło: "/>
+                    <h:outputText id="zrodloD" value="#{AkceptOdb.obiekt.zrodloId.nazwa}" />
+
+                    <h:outputLabel for="projektD" value="projekt: "/>
+                    <h:outputText id="projektD" value="#{AkceptOdb.obiekt.projektId.nazwa}"/>
+
+                </h:panelGrid>                    
+                    
+                    <h:panelGrid id="infoDod" columns="3">
+                        <h:outputLabel for="status" value="aktualny status: "/>
+                        <h:outputText id="status" value="#{AkceptOdb.obiekt.dokStatusId.nazwa}" style="font-weight: bold"/>
+                        <rich:tooltip target="status">
+                            #{AkceptOdb.obiekt.dokStatusId.opis}
+                        </rich:tooltip>
+                        <h:outputLabel for="rodzDyst" value="rodzaj dystrybucji: "/>
+                        <h:outputText id="rodzDyst" value="#{AkceptOdb.obiekt.rodzajId.idTypFlow.nazwa}"  style="font-weight: bold"/>
+                        <rich:tooltip target="rodzDyst">
+                            #{AkceptOdb.obiekt.rodzajId.idTypFlow.opis}
+                        </rich:tooltip>
+                    </h:panelGrid>
+                </rich:tab>
+
+                <rich:tab header="Załączniki" id="tabPliki">
+                    <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
+                                     addLabel="dodaj plik" listHeight="40px"  rendered="#{AkceptOdb.obiekt.dokStatusId.id==1}">
+                        <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
+                    </rich:fileUpload>
+                    <hr/>
+                    <rich:dataTable value="#{AkceptOdb.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <rich:column sortBy="#{item.id}" sortOrder="descending">
+                            <f:facet name="header">nazwa</f:facet>
+                                #{item.nazwa}
+                        </rich:column>
+                        <rich:column >
+                            <f:facet name="header">data dodania</f:facet>
+                            <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
+                        </rich:column>
+                        <rich:column style="width: 50px">
+                            <a4j:commandLink execute="@this" render="@none"
+                                             oncomplete="#{rich:component('confirmPane')}.show()">
+                                <h:graphicImage value="/images/delete.png" alt="delete" />
+                                <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
+                            </a4j:commandLink>
+                            <h:commandLink action="#{fileUploadBean.download}" >
+                                <h:graphicImage value="/images/detail.png" alt="detale" />
+                                <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
+                            </h:commandLink>
+                        </rich:column>
+                    </rich:dataTable>
+
+                </rich:tab>
+                <rich:tab header="Proces akceptacji">
+                    <rich:dataTable id="dok_kroki" value="#{AkceptOdb.obiekt.dcDokKrok}" var="krok">
+                        <rich:column sortBy="#{krok.lp}" sortOrder="ascending">
+                            <f:facet name="header">lp</f:facet>
+                                #{krok.lp}
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">typ kroku</f:facet>
+                                #{krok.dcAckeptTypKroku.nazwa}
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">status akceptacji</f:facet>
+                                #{krok.akcept.nazwa}
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">członkowie kroku</f:facet>
+                            <rich:dataTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
+                                <rich:column style="width: 60%">
+                                    #{krokUser.idUser.fullname}    
+                                </rich:column>
+                                <rich:column style="width: 20%">
+                                    #{krokUser.akcept.nazwa}
+                                </rich:column>
+                                <rich:column style="width: 20%">
+                                    <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:tab>
+                <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
+                                oncomplete="#{rich:component('confirmPane')}.hide();" />
+                <rich:popupPanel id="confirmPane" autosized="true">
+                    Na pewno chcesz skasować?
+                    <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                            return false;" />
+                    <a4j:commandButton value="Tak" onclick="remove();
+                            return false;" />
+                </rich:popupPanel>
+            </rich:tabPanel>
+            <rich:panel id="wyslij">
+                <h:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" rendered="#{AkceptOdb.obiekt.dokStatusId.id==2}" />
+            </rich:panel>
+            <rich:popupPanel id="statPane" autosized="true">
+                <h:graphicImage value="/images/ai.gif" alt="ai" />
+                Proszę czekać...
+            </rich:popupPanel>
+        </h:form>
+        <hr/>
+
+    </ui:define>
+
+</ui:composition>
+

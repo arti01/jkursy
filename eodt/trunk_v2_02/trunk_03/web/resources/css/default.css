@@ -1,0 +1,50 @@
+body
+{
+    margin: 0 auto;
+    padding: 0px;
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    background-color: #A7D1FF;
+}
+
+a:link, a:visited {
+  color: black;
+  font-weight : normal;
+  text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+  color: gray;
+  font-weight : normal;
+  text-decoration : none;
+}
+
+.error{
+    color: red;
+    font-weight: bold;
+}
+
+.rf-cp-hdr {
+    border: 0px;
+}
+
+.rf-ntf-cnt{
+    background-color: whitesmoke;
+}
+.rf-dt{
+	border: 1px solid black;
+	width: 620px;
+}
+.rf-trn-lbl {
+	font-size: 12px;
+}
+.rf-dt-c {
+    font-size: 13px;
+}
+
+.rf-cp-b {
+    font-size: 13px;
+}
+
+input.rf-au-inp{
+    font-size: 13px;
+}

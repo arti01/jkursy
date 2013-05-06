@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+    <h:form>
+        <h4>Menu</h4>
+        <table
+            style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+            <tr>
+                <td width="100%">
+                    <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                                    groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
+                                    topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
+
+                        <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}" expanded="#{login.menuDcCfgExp}" actionListener="#{login.menuDcCfgExpList}">
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Rodzaje" action="#{RodzajeCfg.list}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Grupy rodzajów" action="#{RodzajeGrupyCfg.list}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Projekty" action="#{ProjektyCfg.list}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Żródła" action="#{ZrodlaCfg.list}"/>
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+
+                        <rich:panelMenuGroup label="Dokumenty - rejestracja" rendered="#{login.dcRej}" expanded="#{login.menuDcRejExp}" actionListener="#{login.menuDcRejExpList}">
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Rejestracja" action="#{RejestracjaRej.list}"/>
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+                        
+                        <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Akceptacja" action="#{AkceptOdb.list}"/>
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+
+                        <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Lista pracowników" action="#{UsersM.lista}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+
+                        <rich:panelMenuItem rendered="#{login.kierownik}">
+                            <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
+                        </rich:panelMenuItem>
+                        <rich:panelMenuItem rendered="#{login.admin}">
+                            <h:commandLink value="Lista wszystkich wniosków" action="#{UrlopAll.list}" />
+                        </rich:panelMenuItem>
+
+                        <rich:panelMenuGroup label="Obsługa urlopów" rendered="#{login.urlop}"  expanded="#{login.menuUrlopExp}" actionListener="#{login.menuUrlopExpList}">
+                            <rich:panelMenuItem>
+                                <h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" >
+                                <h:commandLink value="Wnioski do akceptacji" action="#{UrlopM.listPodwl}"/>
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem rendered="#{login.zalogowany.stKier}">
+                                <h:commandLink value="Historia wniosków" action="#{UrlopM.listPodwlHist}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem rendered="#{login.zalogowany.przyjmowanieWnioskow}">
+                                <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
+                            </rich:panelMenuItem>
+                        </rich:panelMenuGroup>
+                        <rich:panelMenuItem rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@')) and login.zalogowany!=null}">
+                            <h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink>
+                        </rich:panelMenuItem>
+                        <rich:panelMenuItem>
+                            <a target="_top" href="../logout.jsp">Wyjście</a>
+                        </rich:panelMenuItem>
+                        <rich:panelMenuItem>
+                            Dostępny urlop:<br/>
+                            <strong>#{login.zalogowany.userId.wnLimity.ulimit}</strong>
+                        </rich:panelMenuItem>
+                    </rich:panelMenu>
+                </td>
+            </tr>
+        </table>
+
+        <h:panelGroup rendered="#{fn:length(login.menuLinki)>0}">
+            <h4>do pobrania</h4>
+            <ul>
+                <ui:repeat value="#{login.menuLinki}" var="menuLinki">
+                    <li><rich:panel>
+                            <h:outputLink value="#{menuLinki.link}">
+                                <h:outputText value="#{menuLinki.nazwa}"/>
+                            </h:outputLink>
+                            <rich:tooltip id="tt1" layout="block">
+                                <h:outputText value="#{menuLinki.opis}"/>
+                            </rich:tooltip>
+                        </rich:panel>
+                    </li>
+                </ui:repeat>
+            </ul>
+        </h:panelGroup>
+
+    </h:form>
+</html>
