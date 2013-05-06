@@ -329,17 +329,14 @@ public class StrukturaJpaController implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Struktura> getFindBezSzefa(boolean admin) {
+    public List<Struktura> getFindBezSzefa() {
         EntityManager em = getEntityManager();
         try {
             Query q;
-            List<Struktura> wynik=new ArrayList<Struktura>();
-            if (admin) {
-                q = em.createNamedQuery("Struktura.findBezSzefa");
-                wynik=q.getResultList();
-            } else {
-                wynik.add(findGeneryczny());
-            }
+            List<Struktura> wynik;
+            q = em.createNamedQuery("Struktura.findBezSzefa");
+            q.setHint("eclipselink.refresh", true);
+            wynik = q.getResultList();
             return wynik;
         } finally {
             em.close();

@@ -17,7 +17,6 @@ import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 
-
 /**
  *
  * @author 103039
@@ -25,49 +24,47 @@ import pl.eod.encje.UzytkownikJpaController;
 @ManagedBean(name = "StruktOsM")
 @SessionScoped
 public class StruktOsM implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
     UzytkownikJpaController userC;
     StrukturaJpaController struktC;
     DzialJpaController dzialC;
-    private List<Struktura> srcRoots=new ArrayList<Struktura>();
+    private List<Struktura> srcRoots = new ArrayList<Struktura>();
     @ManagedProperty(value = "#{login}")
     private Login login;
-     
+
     @PostConstruct
-    public void init(){
-        userC=new UzytkownikJpaController();
-        struktC =new StrukturaJpaController();
-        dzialC=new DzialJpaController();
+    public void init() {
+        userC = new UzytkownikJpaController();
+        struktC = new StrukturaJpaController();
+        dzialC = new DzialJpaController();
     }
-    
-    public String lista(){
+
+    public String lista() {
         return "/all/strukturaOs";
     }
-    
 
-   public synchronized List<Struktura> getSourceRoots() {
-      Struktura firma=new Struktura();
-      Uzytkownik uFirma=new Uzytkownik();
-      uFirma.setFullname("Organizacja - wg pracowników");
-      firma.setUserId(uFirma);
-      srcRoots.clear();
-      srcRoots.addAll(struktC.getFindBezSzefa(login.isAdmin()));
-      firma.setBezpPod(srcRoots);
-      List<Struktura> wynik=new ArrayList<Struktura>();
-      
-      if(login.isAdmin())wynik.add(firma);
-      else {
-          for(Struktura s:srcRoots.get(0).getBezpPod()){
-              if(s.getUserId().getSpolkaId().equals(login.zalogowany.getUserId().getSpolkaId())){
-                  wynik.add(s);
-              }
-          }
-      }
-      return wynik;
+    public synchronized List<Struktura> getSourceRoots() {
+        Struktura firma = new Struktura();
+        Uzytkownik uFirma = new Uzytkownik();
+        List<Struktura> wynik = new ArrayList<Struktura>();
+        uFirma.setFullname("Organizacja - wg pracowników");
+        firma.setUserId(uFirma);
+        srcRoots.clear();
+        if (login.isAdmin()) {
+            srcRoots.addAll(struktC.getFindBezSzefa());
+            firma.setBezpPod(srcRoots);
+            wynik.add(firma);
+        } else {
+            for (Struktura s : struktC.findGeneryczny().getBezpPod()) {
+                if (s.getUserId().getSpolkaId().equals(login.zalogowany.getUserId().getSpolkaId())) {
+                    wynik.add(s);
+                }
+            }
+        }
+        return wynik;
+    }
 
-   }
-    
     public DzialJpaController getDzialC() {
         return dzialC;
     }
@@ -83,6 +80,4 @@ public class StruktOsM implements Serializable {
     public void setLogin(Login login) {
         this.login = login;
     }
-    
-    
 }

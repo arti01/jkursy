@@ -43,6 +43,7 @@
                     <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
                         <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
                     </h:selectOneMenu>
+                    <rich:message for="przelozonyEK" styleClass="error" />
                     
                     <h:outputLabel for="sec_user_id" value="Zastępuje go (podaj email)"/>
                     <rich:autocomplete id="sec_user_id" value="#{UsersM.strukt.secUserId}" mode="lazyClient" autocompleteList="#{UsersM.users}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">

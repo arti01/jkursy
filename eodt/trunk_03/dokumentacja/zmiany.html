@@ -6,6 +6,18 @@
     </head>
     <body>
         <div>
+            <h3>2012-05-05</h3>
+            <h4>Filtrowanie wg społek - drzewko osobowe</h4>
+            <ul>
+                <li>
+                    user o uprawnieniach adm ma podglad calego drzewka (firma->generyczny->prezesi i admini poza struktura),
+                    user o innych uprawnieniach tylko do swojej spolki (prezes i poniżej, bez generycznego).
+                    Uwaga - jeśli user ma uprawnienia adm a nalezy do jakiejś spółki, to mimo, że widzi na drzewku
+                    całą firmę, to już w liście pracowników ich nie zobaczy (czyli nie wyedytuje).
+                    Czyli - dostęp do wszystkich pracowników wymaga uprawnienia adm oraz umieszczenia najwyżej w hierarchii,
+                    bez ustawionej spółki.
+                </li>
+            </ul>
             
             <h3>2012-05-04</h3>
             <h4>Filtrowanie wg społek</h4>
@@ -26,6 +38,10 @@
             jest użytkownik generyczny.
             Uwaga - użytkownik generyczny jest wybierany wg następujących warunków:
             <ul>
+                <li>zalozyc tabele:
+                CREATE TABLE spolki (id INTEGER NOT NULL, nazwa VARCHAR(255) NOT NULL, opis VARCHAR(255), PRIMARY KEY (id))
+                </li>
+                <li>zmodyfikowac tabele uzytkownik dodajac spolka_id INTEGER</li>
                 <li>nie ma przełożonego (szefId is null)</li>
                 <li>ma przynajmniej jednego podwładnego - dlatego, że aby można było dodać
                 jeszcze konta administracyjne poza strukturą. W każdym razie trzeba sprawdzić,
