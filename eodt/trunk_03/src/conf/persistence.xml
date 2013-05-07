@@ -23,9 +23,9 @@
       <property name="eclipselink.ddl-generation" value="create-tables"/>
       -->
       <property name="javax.persistence.validation.group.pre-update" value="true"/>
-      <property name="eclipselink.logging.parameters" value="false"/>
-      <property name="eclipselink.logging.level.sql" value="INFO"/>
-      <property name="eclipselink.logging.level.cache" value="INFO"/>
+      <property name="eclipselink.logging.parameters" value="true"/>
+      <property name="eclipselink.logging.level.sql" value="finest"/>
+      <property name="eclipselink.logging.level.cache" value="finest"/>
     </properties>
   </persistence-unit>
 </persistence>

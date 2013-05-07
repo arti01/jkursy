@@ -16,7 +16,10 @@
             <h4>Wszystkie wnioski</h4>
             <h:form id="form1">
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopAll.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey" >
+                    <rich:extendedDataTable value="#{UrlopAll.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey" rows="5">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5" /></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+
                         <rich:column filterValue="#{UrlopAll.nameFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopAll.nameFilter)}" >
                             <f:facet name="header">
@@ -113,7 +116,7 @@
                             </f:facet>
                             <h:outputText value="#{urlop.statusId.opis}"/>
                         </rich:column>
-                    </rich:dataTable>
+                    </rich:extendedDataTable>
                 </a4j:outputPanel>
 
             </h:form>
