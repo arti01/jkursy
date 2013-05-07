@@ -16,9 +16,9 @@
             <h4>Wszystkie wnioski</h4>
             <h:form id="form1">
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopAll.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey">
+                    <rich:dataTable value="#{UrlopAll.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey" >
                         <rich:column filterValue="#{UrlopAll.nameFilter}"
-                                     filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopAll.nameFilter)}">
+                                     filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopAll.nameFilter)}" >
                             <f:facet name="header">
                                 <h:panelGroup>
                                     <h:outputText value="Wniosek osoby &lt;br/&gt; (do filtrowania użyj TAB)" escape="false"/><br/>
