@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import java.util.List;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.IdValidation;
@@ -76,29 +77,29 @@ public class Uzytkownik implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private Hasla hasla;
     @JoinColumn(name = "adr_email", referencedColumnName = "username")
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<UserRoles> role;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik", orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uzytkownik", orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopList;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "akceptant")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "akceptant", fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListDoAkceptu;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zmieniajacy", fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant", fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaListAkceptant;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy",fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<DcDokument> dcDokumentList;
-    @ManyToMany(mappedBy = "uzytkownikList")
+    @ManyToMany(mappedBy = "uzytkownikList", fetch = FetchType.LAZY)
     private List<DcAkceptKroki> dcAkceptKrokiList;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idUser", orphanRemoval = false)
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idUser", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikList;
     @Transient

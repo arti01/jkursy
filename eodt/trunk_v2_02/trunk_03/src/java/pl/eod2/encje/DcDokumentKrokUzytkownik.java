@@ -41,11 +41,9 @@ public class DcDokumentKrokUzytkownik implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDcDokumentKrokUzytkownik")
     @SequenceGenerator(name = "SEQDcDokumentKrokUzytkownik", sequenceName = "SEQDcDokumentKrokUzytkownik")
-    @Basic(optional = false)
     @NotNull
     @Column(name = "ID", nullable = false)
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "data_akcept", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAkcept;

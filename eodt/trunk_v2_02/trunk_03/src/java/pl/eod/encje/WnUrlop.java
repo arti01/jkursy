@@ -74,7 +74,7 @@ public class WnUrlop implements Serializable {
     private String infoDod;
     
     @OrderBy(value = "id ASC")
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "urlopId", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WnHistoria> wnHistoriaList;
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
