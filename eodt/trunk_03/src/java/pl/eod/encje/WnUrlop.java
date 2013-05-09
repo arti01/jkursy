@@ -42,6 +42,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "WnUrlop.findByDataDo", query = "SELECT w FROM WnUrlop w WHERE w.dataDo = :dataDo"),
     @NamedQuery(name = "WnUrlop.findByNrWniosku", query = "SELECT w FROM WnUrlop w WHERE w.nrWniosku = :nrWniosku"),
     @NamedQuery(name = "WnUrlop.findDoEskalacji", query = "SELECT w FROM WnUrlop w WHERE w.statusId.id=:statusId"),
+    @NamedQuery(name = "WnUrlop.findFiltr", query = "SELECT w FROM WnUrlop w WHERE w.statusId.id=:statusId and w.uzytkownik.fullname like :fullname"),
     @NamedQuery(name = "WnUrlop.findByDataWprowadzenia", query = "SELECT w FROM WnUrlop w WHERE w.dataWprowadzenia = :dataWprowadzenia")})
 public class WnUrlop implements Serializable {
 

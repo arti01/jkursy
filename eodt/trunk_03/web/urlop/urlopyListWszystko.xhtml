@@ -18,7 +18,7 @@
                 <a4j:outputPanel id="formTab" layout="block">
                     <rich:dataTable value="#{UrlopAll.dataModel}" var="urlop" id="table" rowKeyVar="rowkey" rows="2" >
                         <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
-                        <ui:param name="property" value="uzytkownik.fullname" />
+                        <ui:param name="property" value="fullname" />
                         <rich:column filterValue="#{UrlopAll.filterValues[property]}" filterExpression="#{property}">
                             <f:facet name="header">
                                 <h:panelGroup>
@@ -97,16 +97,17 @@
                             <br/>
                             <h:outputText value="#{urlop.dataDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" locale="#{UrlopAll.locale}" timeZone="CET"/></h:outputText>
                         </rich:column>
-                        <rich:column style="background-color: #{urlop.statusId.kolor}; text-align: center">
+                        <ui:param name="property" value="opis" />
+                        <rich:column filterValue="#{UrlopAll.filterValues[property]}" filterExpression="#{property}" style="background-color: #{urlop.statusId.kolor}; text-align: center">
                             <f:facet name="header">
                                 Status<br/>
-                                <h:selectOneMenu id="dzialF" value="#{UrlopAll.statusFilter}" converter="#{WnStatusyConv}" rendered="#{UrlopAll.statusFilter.id==0}">
+                                <h:selectOneMenu id="dzialF" value="#{UrlopAll.filterValues[property]}" converter="#{WnStatusyConv}" rendered="#{UrlopAll.statusFilter.id==0}">
                                     <f:selectItem itemValue="#{null}" itemLabel="wybierz status" />
                                     <f:selectItems value="#{UrlopAll.wnStatusyC.findWnStatusyEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.opis}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie statusy" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTab" execute="@this" />
                                 </h:selectOneMenu>
-                                <h:selectOneMenu id="dzialFbez" value="#{UrlopAll.statusFilter}" converter="#{WnStatusyConv}" rendered="#{UrlopAll.statusFilter.id!=0}">
+                                <h:selectOneMenu id="dzialFbez" value="#{UrlopAll.filterValues[property]}" converter="#{WnStatusyConv}" rendered="#{UrlopAll.statusFilter.id!=0}">
                                     <f:selectItems value="#{UrlopAll.wnStatusyC.findWnStatusyEntities}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.opis}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie statusy" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTab" execute="@this" />

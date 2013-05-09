@@ -28,6 +28,7 @@ import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
 import pl.eod.encje.WnUrlop;
+import pl.eod.encje.WnUrlopDataModel;
 import pl.eod.encje.WnUrlopJpaController;
 import pl.eod.managed.Login;
 
@@ -36,17 +37,6 @@ import pl.eod.managed.Login;
 public class UrlopM implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final class WnUrlopDataModel extends JPADataModel<WnUrlop> {
-
-        private WnUrlopDataModel() {
-            super(WnUrlop.class);
-        }
-
-        @Override
-        protected Object getId(WnUrlop t) {
-            return t.getId();
-        }
-    }
     
     private WnUrlop urlop;
     private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();

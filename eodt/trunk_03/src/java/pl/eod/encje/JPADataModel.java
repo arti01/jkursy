@@ -79,7 +79,7 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         return criteriaQuery;
     }
 
-    private CriteriaQuery<T> createSelectCriteriaQuery() {
+    public CriteriaQuery<T> createSelectCriteriaQuery() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
         Root<T> root = criteriaQuery.from(entityClass);
@@ -151,7 +151,7 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         return criteriaBuilder.gt(locator, 0);
     }
 
-    private Expression<Boolean> createFilterCriteria(CriteriaBuilder criteriaBuilder, Root<T> root) {
+    public Expression<Boolean> createFilterCriteria(CriteriaBuilder criteriaBuilder, Root<T> root) {
         Expression<Boolean> filterCriteria = null;
         List<FilterField> filterFields = arrangeableState.getFilterFields();
         if (filterFields != null && !filterFields.isEmpty()) {
@@ -234,6 +234,12 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         throw new UnsupportedOperationException();
     }
 
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    
+    
     // TODO - implement using metadata
     protected abstract Object getId(T t);
 }
