@@ -4,11 +4,13 @@
  */
 package pl.eod.managwn;
 
+import com.google.common.collect.Maps;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import pl.eod.encje.JPADataModel;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
 import pl.eod.encje.Struktura;
@@ -33,6 +36,18 @@ import pl.eod.managed.Login;
 public class UrlopM implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final class WnUrlopDataModel extends JPADataModel<WnUrlop> {
+
+        private WnUrlopDataModel() {
+            super(WnUrlop.class);
+        }
+
+        @Override
+        protected Object getId(WnUrlop t) {
+            return t.getId();
+        }
+    }
+    
     private WnUrlop urlop;
     private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();
     private DataModel<WnUrlop> urlopyAkcept = new ListDataModel<WnUrlop>();
@@ -46,7 +61,8 @@ public class UrlopM implements Serializable {
     String nameAkceptHistFilter;
     String nameObceFilter;
     String namePodwFilter;
-
+    private Map<String, String> filterValues = Maps.newHashMap();
+    
     public String list() {
         initUrlop();
         return "/urlop/urlopyList";
@@ -417,14 +433,6 @@ public class UrlopM implements Serializable {
         this.urlop = urlop;
     }
 
-    public DataModel<WnUrlop> getUrlopyList() {
-        return urlopyList;
-    }
-
-    public void setUrlopyList(DataModel<WnUrlop> urlopyList) {
-        this.urlopyList = urlopyList;
-    }
-
     public WnRodzajeJpaController getRodzajeC() {
         return rodzajeC;
     }
@@ -486,5 +494,12 @@ public class UrlopM implements Serializable {
         this.urlopC = urlopC;
     }
     
+    public Object getDataModel() {
+        return new WnUrlopDataModel();
+    }
+    
+     public Map<String, String> getFilterValues() {
+        return filterValues;
+    }
     
 }

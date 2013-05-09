@@ -13,23 +13,23 @@ import pl.eod.encje.WnUrlopJpaController;
 
 @ManagedBean(name = "UrlopAll")
 @SessionScoped
-public class UrlopAll extends UrlopM{
+public class UrlopAll extends UrlopM {
+
     WnStatusy statusFilter;
     String nameFilter;
     WnStatusyJpaController wnStatusyC;
     
+
     @PostConstruct
     @Override
     public void init() {
-    setWnStatusyC(new WnStatusyJpaController());
-    setUrlopC(new WnUrlopJpaController());
-    getUrlopyList().setWrappedData(getUrlopC().findWnUrlopEntities());
+        setWnStatusyC(new WnStatusyJpaController());
+        setUrlopC(new WnUrlopJpaController());
     }
-    
+
     @Override
-    public String list(){
-        System.err.println("ssssssssssssss");
-        statusFilter=new WnStatusy(new Long(0));
+    public String list() {
+        statusFilter = new WnStatusy(new Long(0));
         wnStatusyC.getFindWnStatusyEntities();
         return "/urlop/urlopyListWszystko";
     }
@@ -57,7 +57,4 @@ public class UrlopAll extends UrlopM{
     public void setNameFilter(String nameFilter) {
         this.nameFilter = nameFilter;
     }
-
-    
-
 }
