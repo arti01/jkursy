@@ -20,7 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.JPADataModel;
+import org.richfaces.component.SortOrder;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
 import pl.eod.encje.Struktura;
@@ -52,6 +52,7 @@ public class UrlopM implements Serializable {
     String nameObceFilter;
     String namePodwFilter;
     private Map<String, String> filterValues = Maps.newHashMap();
+    private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
     
     public String list() {
         initUrlop();
@@ -355,7 +356,7 @@ public class UrlopM implements Serializable {
         //urlop.setNrWniosku("ddddddddddd");
         urlop.setDataWprowadzenia(new Date());
 
-        String error = null;
+        String error;
         if (urlop.getId() == null) {
             urlop.setWnHistoriaList(new ArrayList<WnHistoria>());
             WnHistoria wnh = new WnHistoria();
@@ -390,11 +391,11 @@ public class UrlopM implements Serializable {
         rodzajeC = new WnRodzajeJpaController();
         KomKolC = new KomKolejkaJpaController();
         initUrlop();
+        sortOrders.put("id", SortOrder.descending);
     }
 
     private void initUrlop() {
         urlop = new WnUrlop();
-        login.refresh();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
 
@@ -421,6 +422,14 @@ public class UrlopM implements Serializable {
 
     public void setUrlop(WnUrlop urlop) {
         this.urlop = urlop;
+    }
+
+    public DataModel<WnUrlop> getUrlopyList() {
+        return urlopyList;
+    }
+
+    public void setUrlopyList(DataModel<WnUrlop> urlopyList) {
+        this.urlopyList = urlopyList;
     }
 
     public WnRodzajeJpaController getRodzajeC() {
@@ -491,5 +500,7 @@ public class UrlopM implements Serializable {
      public Map<String, String> getFilterValues() {
         return filterValues;
     }
-    
+     public Map<String, SortOrder> getSortOrders() {
+        return sortOrders;
+    }
 }

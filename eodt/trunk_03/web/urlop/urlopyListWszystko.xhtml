@@ -19,7 +19,9 @@
                     <rich:dataTable value="#{UrlopAll.dataModel}" var="urlop" id="table" rowKeyVar="rowkey" rows="2" >
                         <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <ui:param name="property" value="fullname" />
-                        <rich:column filterValue="#{UrlopAll.filterValues[property]}" filterExpression="#{property}">
+                        <ui:param name="propSort" value="id" />
+                        <rich:column filterValue="#{UrlopAll.filterValues[property]}" filterExpression="#{property}" 
+                                     sortBy="#{propSort}" sortOrder="#{UrlopAll.sortOrders[propSort]}">
                             <f:facet name="header">
                                 <h:panelGroup>
                                     <h:outputText value="Wniosek osoby &lt;br/&gt; (do filtrowania użyj TAB)" escape="false"/><br/>

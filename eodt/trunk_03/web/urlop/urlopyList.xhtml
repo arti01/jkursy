@@ -62,8 +62,7 @@
                 <hr/>
 
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopM.dataModel}" var="urlop" id="table" rowKeyVar="rowkey" rows="2">
-                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <rich:dataTable value="#{UrlopM.urlopyList}" var="urlop" id="table" rowKeyVar="rowkey">
                         <rich:column >
                             <f:facet name="header">
                                 Wniosek złożony przez

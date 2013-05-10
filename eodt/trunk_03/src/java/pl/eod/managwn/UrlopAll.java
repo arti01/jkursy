@@ -7,6 +7,7 @@ package pl.eod.managwn;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.richfaces.component.SortOrder;
 import pl.eod.encje.WnStatusy;
 import pl.eod.encje.WnStatusyJpaController;
 import pl.eod.encje.WnUrlopJpaController;
@@ -25,6 +26,7 @@ public class UrlopAll extends UrlopM {
     public void init() {
         setWnStatusyC(new WnStatusyJpaController());
         setUrlopC(new WnUrlopJpaController());
+        getSortOrders().put("id", SortOrder.descending);
     }
 
     @Override

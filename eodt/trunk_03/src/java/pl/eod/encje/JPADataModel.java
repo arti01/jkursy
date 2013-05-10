@@ -30,13 +30,14 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.Join;
 
-public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Arrangeable {
+public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> implements Arrangeable {
 
-    private EntityManager entityManager;
+    public EntityManager entityManager;
     private Object rowKey;
-    private ArrangeableState arrangeableState;
-    private Class<T> entityClass;
+    public ArrangeableState arrangeableState;
+    public Class<T> entityClass;
 
     public JPADataModel(Class<T> entityClass) {
         super();
@@ -100,7 +101,7 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         return criteriaQuery;
     }
 
-    private List<Order> createOrders(CriteriaBuilder criteriaBuilder, Root<T> root) {
+    public List<Order> createOrders(CriteriaBuilder criteriaBuilder, Root<T> root) {
         List<Order> orders = Lists.newArrayList();
         List<SortField> sortFields = arrangeableState.getSortFields();
         if (sortFields != null && !sortFields.isEmpty()) {
@@ -137,7 +138,7 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         return entityClass;
     }
 
-    protected Expression<Boolean> createFilterCriteriaForField(String propertyName, Object filterValue, Root<T> root,
+    public Expression<Boolean> createFilterCriteriaForField(String propertyName, Object filterValue, Root<T> root,
             CriteriaBuilder criteriaBuilder) {
         String stringFilterValue = (String) filterValue;
         if (Strings.isNullOrEmpty(stringFilterValue)) {
@@ -151,6 +152,33 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
         return criteriaBuilder.gt(locator, 0);
     }
 
+    public Expression<Boolean> createFilterCriteriaForFieldJoin1(String propertyName, Object filterValue, Join<T,Z> root,
+            CriteriaBuilder criteriaBuilder) {
+        String stringFilterValue = (String) filterValue;
+        if (Strings.isNullOrEmpty(stringFilterValue)) {
+            return null;
+        }
+
+        stringFilterValue = stringFilterValue.toLowerCase(arrangeableState.getLocale());
+
+        Path<String> expression = root.get(propertyName);
+        Expression<Integer> locator = criteriaBuilder.locate(criteriaBuilder.lower(expression), stringFilterValue, 1);
+        return criteriaBuilder.gt(locator, 0);
+    }
+    public Expression<Boolean> createFilterCriteriaForFieldJoin2(String propertyName, Object filterValue, Join<T,X> root,
+            CriteriaBuilder criteriaBuilder) {
+        String stringFilterValue = (String) filterValue;
+        if (Strings.isNullOrEmpty(stringFilterValue)) {
+            return null;
+        }
+
+        stringFilterValue = stringFilterValue.toLowerCase(arrangeableState.getLocale());
+
+        Path<String> expression = root.get(propertyName);
+        Expression<Integer> locator = criteriaBuilder.locate(criteriaBuilder.lower(expression), stringFilterValue, 1);
+        return criteriaBuilder.gt(locator, 0);
+    }
+    
     public Expression<Boolean> createFilterCriteria(CriteriaBuilder criteriaBuilder, Root<T> root) {
         Expression<Boolean> filterCriteria = null;
         List<FilterField> filterFields = arrangeableState.getFilterFields();
@@ -182,7 +210,6 @@ public abstract class JPADataModel<T> extends ExtendedDataModel<T> implements Ar
 
     @Override
     public void walk(FacesContext context, DataVisitor visitor, Range range, Object argument) {
-        System.err.println("walkkkkkkkkkkkkkkkkkkkkkkkkk");
         CriteriaQuery<T> criteriaQuery = createSelectCriteriaQuery();
         TypedQuery<T> query = entityManager.createQuery(criteriaQuery);
 
