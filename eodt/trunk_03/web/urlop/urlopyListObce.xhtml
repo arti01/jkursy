@@ -68,7 +68,9 @@
 
                 <hr/>
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopObceM.urlopyList}" var="urlop" id="table" rowKeyVar="row">
+                    <rich:dataTable value="#{UrlopObceM.urlopyList}" var="urlop" id="table" rowKeyVar="row" rows="10">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <rich:column filterValue="#{UrlopM.nameObceFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameObceFilter)}">
                             <f:facet name="header">

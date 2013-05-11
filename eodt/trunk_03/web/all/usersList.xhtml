@@ -16,9 +16,13 @@
             <h4>Lista pracowników</h4>
             <h:form>
                 <a4j:outputPanel id="formTabNew" layout="block" >
-                    <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row">
-                        <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:60%" filterValue="#{UsersM.nameFilter}"
-                                     filterExpression="#{fn:containsIgnoreCase(strukt.userId.fullname,UsersM.nameFilter)}">
+                    <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row" rows="10">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <ui:param name="property" value="fullname" />
+                        <ui:param name="propSort" value="fullname" />
+                        <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:60%" filterValue="#{UsersM.filterValues[property]}"
+                                     filterExpression="#{property}">
                             <f:facet name="header">
                                 <h:panelGroup>
                                     <h:outputText value="Imię i nazwisko (do filtrowania użyj TAB)"/><br/>

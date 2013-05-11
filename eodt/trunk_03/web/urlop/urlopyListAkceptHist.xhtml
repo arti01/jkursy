@@ -17,7 +17,9 @@
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopM.urlopyAkceptHist}" var="urlop" id="table">
+                    <rich:dataTable value="#{UrlopM.urlopyAkceptHist}" var="urlop" id="table" rows="10">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <rich:column filterValue="#{UrlopM.nameAkceptHistFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameAkceptHistFilter)}">
                             <f:facet name="header">
