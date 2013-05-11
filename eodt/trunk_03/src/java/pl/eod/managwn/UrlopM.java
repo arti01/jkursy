@@ -395,6 +395,7 @@ public class UrlopM implements Serializable {
     }
 
     private void initUrlop() {
+        login.refresh();
         urlop = new WnUrlop();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
