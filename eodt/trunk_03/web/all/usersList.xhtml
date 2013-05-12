@@ -16,22 +16,19 @@
             <h4>Lista pracowników</h4>
             <h:form>
                 <a4j:outputPanel id="formTabNew" layout="block" >
-                    <rich:dataTable value="#{UsersM.struktury}" var="strukt" id="table" rowKeyVar="row" rows="10">
+                    <rich:dataTable value="#{UsersM.dataModel}" var="strukt" id="table" rowKeyVar="row" rows="10">
                         <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <ui:param name="property" value="fullname" />
                         <ui:param name="propSort" value="fullname" />
-                        <rich:column sortOrder="ascending" sortBy="#{strukt.userId.fullname}" style="width:60%" filterValue="#{UsersM.filterValues[property]}"
-                                     filterExpression="#{property}">
+                        <rich:column  style="width:60%" filterValue="#{UsersM.filterValues[property]}" filterExpression="#{property}"
+                                       sortBy="#{strukt.userId.fullname}" sortOrder="ascending">
                             <f:facet name="header">
                                 <h:panelGroup>
-                                    <h:outputText value="Imię i nazwisko (do filtrowania użyj TAB)"/><br/>
-                                    <h:inputText value="#{UsersM.nameFilter}">
+                                    <h:outputText value="Imię i nazwisko (do filtrowania użyj TAB), aby wyświetlić wszystkich pozostaw puste miejsce"/><br/>
+                                    <h:inputText value="#{UsersM.filterValues[property]}">
                                         <a4j:ajax event="blur" render="formTabNew" execute="@this" />
                                     </h:inputText>
-                                    <a4j:commandLink value=" (wyczyść)" rendered="#{UsersM.nameFilter!=null and UsersM.nameFilter!=''}" render="formTabNew" action="#{UsersM.listaFiltr}">
-                                        <f:setPropertyActionListener  target="#{UsersM.nameFilter}" value="#{null}"/>
-                                    </a4j:commandLink>
                                 </h:panelGroup>
                             </f:facet>
 
@@ -87,17 +84,12 @@
 
                             </rich:collapsiblePanel>
                         </rich:column>
-
-                        <rich:column id="colKier" style="width:30%; text-align: center" filterExpression="#{strukt.dzialId==UsersM.dzialFilter or UsersM.dzialFilter==null}">
+    
+                        <ui:param name="property" value="nazwa" />
+                        <rich:column id="colKier" style="width:30%; text-align: center" filterValue="#{UsersM.filterValues[property]}" filterExpression="#{property}">
                             <f:facet name="header">
                                 <h:outputText value="Dział"/><br/>
-                                <h:selectOneMenu id="dzialF" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id==0}">
-                                    <f:selectItem itemValue="#{null}" itemLabel="wybierz dział" />
-                                    <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
-                                    <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
-                                    <a4j:ajax event="change" render="formTabNew" execute="@this" />
-                                </h:selectOneMenu>
-                                <h:selectOneMenu id="dzialFbez" value="#{UsersM.dzialFilter}" converter="#{DzialConv}" rendered="#{UsersM.dzialFilter.id!=0}">
+                                <h:selectOneMenu id="dzialFbez" value="#{UsersM.filterValues[property]}" converter="#{DzialConv}">
                                     <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
                                     <a4j:ajax event="change" render="formTabNew" execute="@this" />

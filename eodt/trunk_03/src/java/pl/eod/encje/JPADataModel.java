@@ -5,7 +5,7 @@
 package pl.eod.encje;
 
 import java.util.List;
- 
+
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -15,7 +15,7 @@ import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
- 
+
 import org.ajax4jsf.model.DataVisitor;
 import org.ajax4jsf.model.ExtendedDataModel;
 import org.ajax4jsf.model.Range;
@@ -25,7 +25,7 @@ import org.richfaces.model.Arrangeable;
 import org.richfaces.model.ArrangeableState;
 import org.richfaces.model.FilterField;
 import org.richfaces.model.SortField;
- 
+
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import javax.persistence.EntityManagerFactory;
@@ -110,20 +110,23 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
 
             for (SortField sortField : sortFields) {
                 String propertyName = (String) sortField.getSortBy().getValue(facesContext.getELContext());
+                if (propertyName != null) {
 
-                Path<Object> expression = root.get(propertyName);
 
-                Order jpaOrder;
-                SortOrder sortOrder = sortField.getSortOrder();
-                if (sortOrder == SortOrder.ascending) {
-                    jpaOrder = criteriaBuilder.asc(expression);
-                } else if (sortOrder == SortOrder.descending) {
-                    jpaOrder = criteriaBuilder.desc(expression);
-                } else {
-                    throw new IllegalArgumentException(sortOrder.toString());
+                    Path<Object> expression = root.get(propertyName);
+
+                    Order jpaOrder;
+                    SortOrder sortOrder = sortField.getSortOrder();
+                    if (sortOrder == SortOrder.ascending) {
+                        jpaOrder = criteriaBuilder.asc(expression);
+                    } else if (sortOrder == SortOrder.descending) {
+                        jpaOrder = criteriaBuilder.desc(expression);
+                    } else {
+                        throw new IllegalArgumentException(sortOrder.toString());
+                    }
+
+                    orders.add(jpaOrder);
                 }
-
-                orders.add(jpaOrder);
             }
         }
 
@@ -152,7 +155,7 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
         return criteriaBuilder.gt(locator, 0);
     }
 
-    public Expression<Boolean> createFilterCriteriaForFieldJoin1(String propertyName, Object filterValue, Join<T,Z> root,
+    public Expression<Boolean> createFilterCriteriaForFieldJoin1(String propertyName, Object filterValue, Join<T, Z> root,
             CriteriaBuilder criteriaBuilder) {
         String stringFilterValue = (String) filterValue;
         if (Strings.isNullOrEmpty(stringFilterValue)) {
@@ -165,7 +168,8 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
         Expression<Integer> locator = criteriaBuilder.locate(criteriaBuilder.lower(expression), stringFilterValue, 1);
         return criteriaBuilder.gt(locator, 0);
     }
-    public Expression<Boolean> createFilterCriteriaForFieldJoin2(String propertyName, Object filterValue, Join<T,X> root,
+
+    public Expression<Boolean> createFilterCriteriaForFieldJoin2(String propertyName, Object filterValue, Join<T, X> root,
             CriteriaBuilder criteriaBuilder) {
         String stringFilterValue = (String) filterValue;
         if (Strings.isNullOrEmpty(stringFilterValue)) {
@@ -178,7 +182,7 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
         Expression<Integer> locator = criteriaBuilder.locate(criteriaBuilder.lower(expression), stringFilterValue, 1);
         return criteriaBuilder.gt(locator, 0);
     }
-    
+
     public Expression<Boolean> createFilterCriteria(CriteriaBuilder criteriaBuilder, Root<T> root) {
         Expression<Boolean> filterCriteria = null;
         List<FilterField> filterFields = arrangeableState.getFilterFields();
@@ -188,7 +192,7 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
             for (FilterField filterField : filterFields) {
                 System.err.println(filterField.getFilterExpression().getValue(facesContext.getELContext()));
                 System.err.println(facesContext.getELContext());
-                
+
                 String propertyName = (String) filterField.getFilterExpression().getValue(facesContext.getELContext());
                 Object filterValue = filterField.getFilterValue();
 
@@ -265,8 +269,6 @@ public abstract class JPADataModel<T, Z, X> extends ExtendedDataModel<T> impleme
         return entityManager;
     }
 
-    
-    
     // TODO - implement using metadata
     protected abstract Object getId(T t);
 }

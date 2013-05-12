@@ -28,6 +28,7 @@ public StrukturaDataModel() {
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
             for (FilterField filterField : filterFields) {
+                System.err.println(filterField.getFilterExpression().getValue(facesContext.getELContext()));
                 String propertyName = (String) filterField.getFilterExpression().getValue(facesContext.getELContext());
                 Object filterValue = filterField.getFilterValue();
 
@@ -35,10 +36,10 @@ public StrukturaDataModel() {
                 if(filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("fullname")){
                     predicate = createFilterCriteriaForFieldJoin1(propertyName, filterValue, juser, criteriaBuilder);
                 }
-                if(filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("opis")){
-                    WnStatusy filterValueS=(WnStatusy) filterValue;
+                if(filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("nazwa")){
+                    Dzial filterValueS=(Dzial) filterValue;
                     if(filterValueS!=null){
-                        predicate = createFilterCriteriaForFieldJoin2(propertyName, filterValueS.getOpis(), jstatus, criteriaBuilder);
+                        predicate = createFilterCriteriaForFieldJoin2(propertyName, filterValueS.getNazwa(), jstatus, criteriaBuilder);
                     }
                 }
 

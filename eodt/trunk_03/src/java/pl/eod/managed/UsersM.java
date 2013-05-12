@@ -71,6 +71,7 @@ public class UsersM implements Serializable {
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
         urC=new UserRolesJpaController();
+        sortOrders.put("fullname", SortOrder.descending);
     }
 
     private void initUser() {
