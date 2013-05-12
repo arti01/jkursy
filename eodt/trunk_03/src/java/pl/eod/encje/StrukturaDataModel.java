@@ -4,11 +4,13 @@
  */
 package pl.eod.encje;
 
+import com.google.common.collect.Lists;
 import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 import org.richfaces.model.FilterField;
 
@@ -28,7 +30,7 @@ public StrukturaDataModel() {
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
             for (FilterField filterField : filterFields) {
-                System.err.println(filterField.getFilterExpression().getValue(facesContext.getELContext()));
+                //System.err.println(filterField.getFilterExpression().getValue(facesContext.getELContext()));
                 String propertyName = (String) filterField.getFilterExpression().getValue(facesContext.getELContext());
                 Object filterValue = filterField.getFilterValue();
 
@@ -55,6 +57,43 @@ public StrukturaDataModel() {
             }
         }
         return filterCriteria;
+    }
+    
+@Override
+       public List<Order> createOrders(CriteriaBuilder criteriaBuilder, Root<Struktura> root) {
+        List<Order> orders = Lists.newArrayList();
+        Join<Struktura, Uzytkownik>juser=root.join(Struktura_.userId);
+        //List<SortField> sortFields = arrangeableState.getSortFields();
+        Order jpaOrder;
+        jpaOrder=criteriaBuilder.asc(juser.get(Uzytkownik_.fullname));
+        orders.add(jpaOrder);
+        /*if (sortFields != null && !sortFields.isEmpty()) {
+
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+
+            for (SortField sortField : sortFields) {
+                String propertyName = (String) sortField.getSortBy().getValue(facesContext.getELContext());
+                if (propertyName != null) {
+
+
+                    Path<Object> expression = root.get(propertyName);
+
+                    Order jpaOrder;
+                    SortOrder sortOrder = sortField.getSortOrder();
+                    if (sortOrder == SortOrder.ascending) {
+                        jpaOrder = criteriaBuilder.asc(expression);
+                    } else if (sortOrder == SortOrder.descending) {
+                        jpaOrder = criteriaBuilder.desc(expression);
+                    } else {
+                        throw new IllegalArgumentException(sortOrder.toString());
+                    }
+
+                    orders.add(jpaOrder);
+                }
+            }
+        }*/
+
+        return orders;
     }
     
     @Override

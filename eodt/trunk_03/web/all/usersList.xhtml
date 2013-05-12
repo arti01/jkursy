@@ -20,14 +20,14 @@
                         <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <ui:param name="property" value="fullname" />
-                        <ui:param name="propSort" value="fullname" />
+                        <ui:param name="propSort" value="userId.fullname" />
                         <rich:column  style="width:60%" filterValue="#{UsersM.filterValues[property]}" filterExpression="#{property}"
-                                       sortBy="#{strukt.userId.fullname}" sortOrder="ascending">
+                                       sortBy="#{propSort}" sortOrder="#{UsersM.sortOrders[propSort]}">
                             <f:facet name="header">
                                 <h:panelGroup>
                                     <h:outputText value="Imię i nazwisko (do filtrowania użyj TAB), aby wyświetlić wszystkich pozostaw puste miejsce"/><br/>
                                     <h:inputText value="#{UsersM.filterValues[property]}">
-                                        <a4j:ajax event="blur" render="formTabNew" execute="@this" />
+                                        <a4j:ajax event="blur" render="formTabNew" execute="@this"/>
                                     </h:inputText>
                                 </h:panelGroup>
                             </f:facet>
@@ -92,7 +92,7 @@
                                 <h:selectOneMenu id="dzialFbez" value="#{UsersM.filterValues[property]}" converter="#{DzialConv}">
                                     <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
-                                    <a4j:ajax event="change" render="formTabNew" execute="@this" />
+                                    <a4j:ajax event="change" render="formTabNew" execute="@this"/>
                                 </h:selectOneMenu>
                             </f:facet>
                             <br/>

@@ -64,6 +64,7 @@ public class UsersM implements Serializable {
     boolean sprawdzacUnikEmail;
     private Map<String, String> filterValues = Maps.newHashMap();
     private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
+    private StrukturaDataModel dataModel=new StrukturaDataModel();
 
     @PostConstruct
     public void init() {
@@ -71,7 +72,7 @@ public class UsersM implements Serializable {
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
         urC=new UserRolesJpaController();
-        sortOrders.put("fullname", SortOrder.descending);
+        sortOrders.put("userId.fullname", SortOrder.descending);
     }
 
     private void initUser() {
@@ -331,7 +332,8 @@ public class UsersM implements Serializable {
     }
   
       public Object getDataModel() {
-        return new StrukturaDataModel();
+        //return new StrukturaDataModel();
+          return dataModel;
     }
 
     public Map<String, String> getFilterValues() {

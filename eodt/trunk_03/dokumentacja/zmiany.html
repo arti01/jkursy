@@ -6,6 +6,27 @@
     </head>
     <body>
         <div>
+            <h3>2012-05-11</h3>
+            <h4>zmiany optymalizacyjne</h4>
+            <ul>
+                <li>
+                    Michał, zadbaj o indeksy, najważniejsze są dla pól z głownie z kluczami obcymi,
+                    najważniejsze to w uzytkownik: spolka_id, w struktura usuniety, st_kier, dzial_id,
+                    szef_id, user_id, w wn_historia akceptant, urlop_id, status_id, wn_urlop akceptant_id,
+                    przyjmujacy, uid, w kom_kolejka status
+                </li>
+                <li>
+                    Porcjowanie wyników w listach (server-side)
+                </li>
+                <li>
+                    wykasowanie opcji "wybierz dział" lub "wybierz status" dla list - teraz
+                    domyślny jest brak filtrowania (ale za to jest porcjowanie wyników, więc i tak powinno być
+                    lepiej)
+                </li>
+                <li>usunięcie z pola filtrowania username przycisku wyczyść (zastąpienie informacją, że aby usunuąc fitrowanie
+                nalezy wyczyścić pole)</li>
+            </ul>
+            
             <h3>2012-05-07</h3>
             <h4>zmiany optymalizacyjne</h4>
             <ul>
