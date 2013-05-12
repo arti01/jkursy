@@ -11,12 +11,15 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Order;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.richfaces.model.FilterField;
 
 public class StrukturaDataModel extends JPADataModel<Struktura, Uzytkownik, Dzial> {
-public StrukturaDataModel() {
+    Spolki spolka;
+public StrukturaDataModel(Spolki spolka) {
         super(Struktura.class);
+        this.spolka=spolka;
     }
 
     @Override
@@ -26,6 +29,13 @@ public StrukturaDataModel() {
         List<FilterField> filterFields = getArrangeableState().getFilterFields();
         Join<Struktura, Uzytkownik>juser=root.join(Struktura_.userId);
         Join<Struktura, Dzial> jstatus=root.join(Struktura_.dzialId);
+        
+        if(spolka!=null){
+        Predicate spolkiP ;
+        spolkiP = criteriaBuilder.and(criteriaBuilder.equal(juser.get(Uzytkownik_.spolkaId), spolka),criteriaBuilder.isNotNull(juser.get(Uzytkownik_.spolkaId)));
+        filterCriteria = criteriaBuilder.and(spolkiP);
+        }
+        
         if (filterFields != null && !filterFields.isEmpty()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
 

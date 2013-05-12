@@ -105,7 +105,7 @@ public class UzytkownikJpaController implements Serializable {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Uzytkownik> findUzytkownikEntities(Spolki spolka) {
+    public List<Uzytkownik> findUzytkownikEntities(Spolki spolka, boolean emaile) {
         EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -113,8 +113,16 @@ public class UzytkownikJpaController implements Serializable {
             Root<Uzytkownik> user = cq.from(Uzytkownik.class);
             cq.select(user);
             Predicate nadrz = cb.and(cb.equal(user.get(Uzytkownik_.spolkaId), spolka), cb.isNotNull(user.get(Uzytkownik_.spolkaId)));
+            Predicate emaileP=null;
+             if (emaile) {
+                emaileP = cb.and(cb.isNotNull(user.get(Uzytkownik_.adrEmail)), cb. notEqual(user.get(Uzytkownik_.adrEmail), ""));
+                nadrz = cb.and(nadrz, emaileP);
+            }
             if (spolka != null) {
                 cq.where(nadrz);
+            }
+            else if(emaile){
+                cq.where(emaileP);
             }
             Query q = em.createQuery(cq);
             //System.err.println(q.getResultList());

@@ -27,6 +27,8 @@ import pl.eod.managed.Login;
  */
 public class StrukturaJpaController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public StrukturaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
@@ -367,6 +369,7 @@ public class StrukturaJpaController implements Serializable {
             cq.select(struktura);
             Predicate nadrz = cb.and(cb.equal(userzy.get(Uzytkownik_.spolkaId), spolka),
                     cb.isNotNull(userzy.get(Uzytkownik_.spolkaId)));
+           
             //dla adminow
             if (spolka != null) {
                 cq.where(nadrz);
