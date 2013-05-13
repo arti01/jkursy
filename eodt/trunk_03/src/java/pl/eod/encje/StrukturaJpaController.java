@@ -141,10 +141,11 @@ public class StrukturaJpaController implements Serializable {
             Predicate nadrz = cb.isNull(user.get(Struktura_.szefId));
             cq.where(nadrz);
             Query q = em.createQuery(cq);
-            if (q.getResultList().isEmpty()) {
+            List<Struktura> wynik=q.getResultList();
+            if (wynik.isEmpty()) {
                 return null;
             } else {
-                for (Struktura s : (List<Struktura>) q.getResultList()) {
+                for (Struktura s :  wynik) {
                     if (s.bezpPod.size() > 0) {
                         return s;
                     }

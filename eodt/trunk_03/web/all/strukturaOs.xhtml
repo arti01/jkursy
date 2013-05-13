@@ -18,16 +18,16 @@
                         <rich:treeNode>
                             #{strukt.userId.fullname}
                             <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.dzialId.nazwa!=null}">
-                                <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
-                                <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{null}"/>
+                                <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>
+                                <f:setPropertyActionListener target="#{UsersM.filterValues['nazwa']}" value="#{null}"/>
                             </h:commandLink>
                         </rich:treeNode>
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
                             <rich:treeNode>
                                 #{strukt.userId.fullname}
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
-                                    <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
-                                    <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{null}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.filterValues['nazwa']}" value="#{null}"/>
                                 </h:commandLink>
                             </rich:treeNode>
                         </rich:treeModelAdaptor>

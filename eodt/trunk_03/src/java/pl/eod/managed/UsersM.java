@@ -93,8 +93,8 @@ public class UsersM implements Serializable {
 
     public String lista() {
         edytuj = false;
-        nameFilter=null;
-        dzialFilter=new Dzial(new Long(0));
+        //nameFilter=null;
+        //dzialFilter=new Dzial(new Long(0));
         initUser();
         return "/all/usersList";
     }
