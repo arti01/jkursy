@@ -108,9 +108,7 @@ public class UsersM implements Serializable {
     }
     
     public String edycja() {
-        System.err.println("eeeee1");
         rolesKlon=strukt.getUserId().getRole();
-        System.err.println("eeeee2");
         return "/all/usersEdit";
     }
     
@@ -126,8 +124,9 @@ public class UsersM implements Serializable {
     
     public String listaFiltr() {
         edytuj = false;
+        initUser();
         //System.err.println("c"+nameFilter+"c");
-        return "usersList";
+        return "/all/usersList";
     }
 
     public void dodaj() throws NonexistentEntityException, Exception {

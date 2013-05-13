@@ -25,7 +25,7 @@
                                        sortBy="#{propSort}" sortOrder="#{UsersM.sortOrders[propSort]}">
                             <f:facet name="header">
                                 <h:panelGroup>
-                                    <h:outputText value="Imię i nazwisko (do filtrowania użyj TAB), aby wyświetlić wszystkich pozostaw puste miejsce"/><br/>
+                                    <h:outputText value="Imię i nazwisko  &lt;br/&gt; (do filtrowania użyj TAB), aby wyświetlić wszystkich pozostaw puste miejsce" escape="false"/><br/>
                                     <h:inputText value="#{UsersM.filterValues[property]}">
                                         <a4j:ajax event="blur" render="formTabNew" execute="@this"/>
                                     </h:inputText>

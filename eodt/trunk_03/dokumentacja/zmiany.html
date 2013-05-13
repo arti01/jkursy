@@ -6,6 +6,12 @@
     </head>
     <body>
         <div>
+            <h3>2012-05-13</h3>
+            <h4>zmiany optymalizacyjne</h4>
+            Aby w logach pojawiały się SQL należy w persistence.xml zamienić odpowiedni fragment na (w widoku html się nie pokaże, użyj notatnika :):
+            <property name="eclipselink.logging.parameters" value="true"/>
+            <property name="eclipselink.logging.level.sql" value="finest"/>
+            <property name="eclipselink.logging.level.cache" value="finest"/>
             <h3>2012-05-11</h3>
             <h4>zmiany optymalizacyjne</h4>
             <ul>

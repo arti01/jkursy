@@ -75,7 +75,7 @@
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameObceFilter)}">
                             <f:facet name="header">
                                 <h:panelGroup>
-                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:outputText value="Wniosek osoby  &lt;br/&gt; (do filtrowania użyj TAB)" escape="false"/><br/>
                                     <h:inputText value="#{UrlopM.nameObceFilter}">
                                         <a4j:ajax event="blur" render="formTab" execute="@this" />
                                     </h:inputText>

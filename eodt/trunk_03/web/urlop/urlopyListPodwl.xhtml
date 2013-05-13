@@ -21,15 +21,10 @@
                         <rich:column filterValue="#{UrlopM.namePodwFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.namePodwFilter)}">
                             <f:facet name="header">
-                                <h:panelGroup>
-                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB), wszyscy - pozostaw puste pole"/><br/>
+                                    <h:outputText value="Wniosek osoby  &lt;br/&gt; (do filtrowania użyj TAB), wszyscy - pozostaw puste pole" escape="false"/><br/>
                                     <h:inputText value="#{UrlopM.namePodwFilter}">
                                         <a4j:ajax event="blur" render="formTab" execute="@this" />
                                     </h:inputText>
-                                    <a4j:commandLink value="wszyscy" rendered="#{UrlopM.namePodwFilter!=null and UrlopM.namePodwFilter!=''}" render="formTab" action="#{UrlopM.listPodwl}">
-                                        <f:setPropertyActionListener  target="#{UrlopM.namePodwFilter}" value="#{null}"/>
-                                    </a4j:commandLink>
-                                </h:panelGroup>
                             </f:facet>
                             <h:outputText value="#{urlop.uzytkownik.fullname}"/>
                         </rich:column>
