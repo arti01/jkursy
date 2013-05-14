@@ -54,13 +54,15 @@
                             #{item.opis}
                     </rich:column>
                     <rich:column style="width: 45px">
+                        <rich:tooltip target="imgDe" value="usuń" layout="block"/>
+                        <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <a4j:commandLink execute="@this" render="@none"
                                          oncomplete="#{rich:component('confirmPane')}.show()">
-                            <h:graphicImage value="/images/delete.png" alt="delete" />
+                            <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{ZrodlaCfg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
                         <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
-                            <h:graphicImage value="/images/edit.png" alt="edit" />
+                            <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
                             <f:setPropertyActionListener target="#{ZrodlaCfg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
                     </rich:column>
