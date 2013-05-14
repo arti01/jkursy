@@ -30,7 +30,7 @@ public class WnStatusyConv implements Converter, Serializable {
             //nfe.printStackTrace();
             wynik=null;
         }
-        System.out.println(wynik+"asobiekt");
+        //System.out.println(wynik+"asobiekt");
         return wynik;
     }
 

@@ -117,19 +117,25 @@ public class WnUrlopJpaController implements Serializable {
     }
 
     public void eskalujCron() {
-        Date dataWyk;
         Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("CET"), new Locale("pl", "PL"));
         ConfigJpaController cfgC = new ConfigJpaController();
         Config cfg = cfgC.findConfigNazwa("eskalujPoMinutach");
         //System.out.println(cfg.getWartosc());
         cal.add(Calendar.MINUTE, -(new Long(cfg.getWartosc()).intValue()));
-        for (WnUrlop u : findWnUrlopEntities()) {
+         EntityManager em = getEntityManager();
+        try{
+        Query q = em.createNamedQuery("WnUrlop.findDoEskalacji");
+            q.setParameter("statusId", 2);
+        for (WnUrlop u : (List<WnUrlop>)q.getResultList()) {
             //System.out.println(cal.getTime());
             //System.out.println(u.getDataOstZmiany());
             //System.out.println(u.getDataOstZmiany().before(cal.getTime()));
-            if (u.getDataOstZmiany().before(cal.getTime()) && u.getStatusId().getId() == 2) {
+            if (u.getDataOstZmiany().before(cal.getTime())) {
                 eskaluj(u);
             }
+        }
+        } finally {
+            em.close();
         }
     }
 

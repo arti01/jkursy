@@ -17,12 +17,14 @@
 
             <h:form>
                 <a4j:outputPanel id="formTab" layout="block">
-                    <rich:dataTable value="#{UrlopM.urlopyAkceptHist}" var="urlop" id="table">
+                    <rich:dataTable value="#{UrlopM.urlopyAkceptHist}" var="urlop" id="table" rows="10">
+                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <rich:column filterValue="#{UrlopM.nameAkceptHistFilter}"
                                      filterExpression="#{fn:containsIgnoreCase(urlop.uzytkownik.fullname, UrlopM.nameAkceptHistFilter)}">
                             <f:facet name="header">
                                 <h:panelGroup>
-                                    <h:outputText value="Wniosek osoby (do filtrowania użyj TAB)"/><br/>
+                                    <h:outputText value="Wniosek osoby  &lt;br/&gt; (do filtrowania użyj TAB)" escape="false"/><br/>
                                     <h:inputText value="#{UrlopM.nameAkceptHistFilter}">
                                         <a4j:ajax event="blur" render="formTab" execute="@this" />
                                     </h:inputText>

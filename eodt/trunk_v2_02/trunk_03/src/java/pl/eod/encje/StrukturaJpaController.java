@@ -27,6 +27,8 @@ import pl.eod.managed.Login;
  */
 public class StrukturaJpaController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public StrukturaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
@@ -139,10 +141,11 @@ public class StrukturaJpaController implements Serializable {
             Predicate nadrz = cb.isNull(user.get(Struktura_.szefId));
             cq.where(nadrz);
             Query q = em.createQuery(cq);
-            if (q.getResultList().isEmpty()) {
+            List<Struktura> wynik=q.getResultList();
+            if (wynik.isEmpty()) {
                 return null;
             } else {
-                for (Struktura s : (List<Struktura>) q.getResultList()) {
+                for (Struktura s :  wynik) {
                     if (s.bezpPod.size() > 0) {
                         return s;
                     }
@@ -367,6 +370,7 @@ public class StrukturaJpaController implements Serializable {
             cq.select(struktura);
             Predicate nadrz = cb.and(cb.equal(userzy.get(Uzytkownik_.spolkaId), spolka),
                     cb.isNotNull(userzy.get(Uzytkownik_.spolkaId)));
+           
             //dla adminow
             if (spolka != null) {
                 cq.where(nadrz);

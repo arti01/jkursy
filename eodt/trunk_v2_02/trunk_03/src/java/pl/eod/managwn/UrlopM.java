@@ -4,11 +4,13 @@
  */
 package pl.eod.managwn;
 
+import com.google.common.collect.Maps;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import org.richfaces.component.SortOrder;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
 import pl.eod.encje.Struktura;
@@ -25,6 +28,7 @@ import pl.eod.encje.WnHistoria;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
 import pl.eod.encje.WnUrlop;
+import pl.eod.encje.WnUrlopDataModel;
 import pl.eod.encje.WnUrlopJpaController;
 import pl.eod.managed.Login;
 
@@ -33,6 +37,7 @@ import pl.eod.managed.Login;
 public class UrlopM implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
     private WnUrlop urlop;
     private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();
     private DataModel<WnUrlop> urlopyAkcept = new ListDataModel<WnUrlop>();
@@ -46,7 +51,9 @@ public class UrlopM implements Serializable {
     String nameAkceptHistFilter;
     String nameObceFilter;
     String namePodwFilter;
-
+    private Map<String, String> filterValues = Maps.newHashMap();
+    private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
+    
     public String list() {
         initUrlop();
         return "/urlop/urlopyList";
@@ -349,7 +356,7 @@ public class UrlopM implements Serializable {
         //urlop.setNrWniosku("ddddddddddd");
         urlop.setDataWprowadzenia(new Date());
 
-        String error = null;
+        String error;
         if (urlop.getId() == null) {
             urlop.setWnHistoriaList(new ArrayList<WnHistoria>());
             WnHistoria wnh = new WnHistoria();
@@ -384,11 +391,12 @@ public class UrlopM implements Serializable {
         rodzajeC = new WnRodzajeJpaController();
         KomKolC = new KomKolejkaJpaController();
         initUrlop();
+        sortOrders.put("id", SortOrder.descending);
     }
 
     private void initUrlop() {
-        urlop = new WnUrlop();
         login.refresh();
+        urlop = new WnUrlop();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
 
@@ -486,5 +494,14 @@ public class UrlopM implements Serializable {
         this.urlopC = urlopC;
     }
     
+    public Object getDataModel() {
+        return new WnUrlopDataModel();
+    }
     
+     public Map<String, String> getFilterValues() {
+        return filterValues;
+    }
+     public Map<String, SortOrder> getSortOrders() {
+        return sortOrders;
+    }
 }

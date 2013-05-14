@@ -101,8 +101,7 @@ public class KomKolejkaJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb=em.getCriteriaBuilder();
-            CriteriaQuery cq;
-            cq = cb.createQuery();
+            CriteriaQuery<KomKolejka> cq = cb.createQuery(KomKolejka.class);
             Root<KomKolejka> kk = cq.from(KomKolejka.class);
             cq.select(kk);
             cq.where(cb.equal(kk.get(KomKolejka_.status), 0));

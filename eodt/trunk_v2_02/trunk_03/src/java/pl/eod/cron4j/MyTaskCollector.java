@@ -31,7 +31,7 @@ import it.sauronsoftware.cron4j.TaskTable;
 public class MyTaskCollector implements TaskCollector {
 
 	public TaskTable getTasks() {
-		SchedulingPattern pattern = new SchedulingPattern("* * * * *");
+		SchedulingPattern pattern = new SchedulingPattern("*/5 * * * *");
                 Task taskm=new EskalacjeTask();
                 Task taskw=new MailWysylkaTask();
 		TaskTable ret = new TaskTable();

@@ -4,9 +4,11 @@
  */
 package pl.eod.managed;
 
+import com.google.common.collect.Maps;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -19,14 +21,17 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import org.richfaces.component.SortOrder;
 import pl.eod.encje.Dzial;
 import pl.eod.encje.DzialJpaController;
 import pl.eod.encje.Struktura;
+import pl.eod.encje.StrukturaDataModel;
 import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.UserRoles;
 import pl.eod.encje.UserRolesJpaController;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
+import pl.eod.encje.WnUrlopDataModel;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -39,11 +44,10 @@ public class UsersM implements Serializable {
 
     private static final long serialVersionUID = 1L;
     List<Uzytkownik> users = new ArrayList<Uzytkownik>();
-    List<Struktura> strukturyOld = new ArrayList<Struktura>();
     List<UserRoles>roleAll=new ArrayList<UserRoles>();
     List<Dzial>dzialyAll=new ArrayList<Dzial>();
     List<Struktura>kierownicyAll=new ArrayList<Struktura>();
-    DataModel<Struktura> struktury = new ListDataModel<Struktura>();
+    //DataModel<Struktura> struktury = new ListDataModel<Struktura>();
     UzytkownikJpaController userC;
     Uzytkownik user;
     List<UserRoles> rolesKlon;
@@ -57,6 +61,9 @@ public class UsersM implements Serializable {
     @ManagedProperty(value = "#{login}")
     private Login login;
     boolean sprawdzacUnikEmail;
+    private Map<String, String> filterValues = Maps.newHashMap();
+    private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
+    private StrukturaDataModel dataModel;
 
     @PostConstruct
     public void init() {
@@ -64,6 +71,8 @@ public class UsersM implements Serializable {
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
         urC=new UserRolesJpaController();
+        dataModel=new StrukturaDataModel(login.zalogowany.getUserId().getSpolkaId());
+        sortOrders.put("userId.fullname", SortOrder.descending);
     }
 
     private void initUser() {
@@ -73,18 +82,19 @@ public class UsersM implements Serializable {
         strukt.setUserId(user);
         Dzial dzial = new Dzial();
         strukt.setDzialId(dzial);
-        struktury = new ListDataModel<Struktura>();
-        struktury.setWrappedData(struktC.findStrukturaWidoczni(login.zalogowany.getUserId().getSpolkaId()));
+        //struktury = new ListDataModel<Struktura>();
+        //struktury.setWrappedData(struktC.findStrukturaWidoczni(login.zalogowany.getUserId().getSpolkaId()));
         roleAll=urC.findDostepneDoEdycji();
         dzialyAll=dzialC.findDzialEntities(login.zalogowany.getUserId().getSpolkaId());
         kierownicyAll=struktC.getFindKierownicy(login.zalogowany.getUserId().getSpolkaId());
+        users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId(), true);
         //System.out.println(struktury.getRowCount()+"initUser");
     }
 
     public String lista() {
         edytuj = false;
-        nameFilter=null;
-        dzialFilter=new Dzial(new Long(0));
+        //nameFilter=null;
+        //dzialFilter=new Dzial(new Long(0));
         initUser();
         return "/all/usersList";
     }
@@ -114,8 +124,9 @@ public class UsersM implements Serializable {
     
     public String listaFiltr() {
         edytuj = false;
+        initUser();
         //System.err.println("c"+nameFilter+"c");
-        return "usersList";
+        return "/all/usersList";
     }
 
     public void dodaj() throws NonexistentEntityException, Exception {
@@ -217,28 +228,11 @@ public class UsersM implements Serializable {
     }
     
     public List<Uzytkownik> getUsers() {
-        users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId());
         return users;
     }
 
     public void setUsers(List<Uzytkownik> users) {
         this.users = users;
-    }
-
-    public List<Struktura> getStrukturyOld() {
-        return strukturyOld;
-    }
-
-    public void setStrukturyOld(List<Struktura> strukturyOld) {
-        this.strukturyOld = strukturyOld;
-    }
-
-    public DataModel<Struktura> getStruktury() {
-        return struktury;
-    }
-
-    public void setStruktury(DataModel<Struktura> struktury) {
-        this.struktury = struktury;
     }
 
     public Uzytkownik getUser() {
@@ -321,5 +315,27 @@ public class UsersM implements Serializable {
     public void setKierownicyAll(List<Struktura> kierownicyAll) {
         this.kierownicyAll = kierownicyAll;
     }
-    
+  
+      public Object getDataModel() {
+        //return new StrukturaDataModel();
+          return dataModel;
+    }
+
+    public Map<String, String> getFilterValues() {
+        return filterValues;
+    }
+
+    public void setFilterValues(Map<String, String> filterValues) {
+        this.filterValues = filterValues;
+    }
+
+    public Map<String, SortOrder> getSortOrders() {
+        return sortOrders;
+    }
+
+    public void setSortOrders(Map<String, SortOrder> sortOrders) {
+        this.sortOrders = sortOrders;
+    }
+      
+      
 }
