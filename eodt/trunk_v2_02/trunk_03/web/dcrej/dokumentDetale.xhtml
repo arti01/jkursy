@@ -51,13 +51,15 @@
                             <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
                         </rich:column>
                         <rich:column style="width: 50px">
+                            <rich:tooltip target="imgDe" value="usuń" layout="block"/>
+                            <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
                             <a4j:commandLink execute="@this" render="@none"
-                                             oncomplete="#{rich:component('confirmPane')}.show()">
-                                <h:graphicImage value="/images/delete.png" alt="delete" />
+                                             oncomplete="#{rich:component('confirmPane')}.show()"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
+                                <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
                                 <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
                             </a4j:commandLink>
                             <h:commandLink action="#{fileUploadBean.download}" >
-                                <h:graphicImage value="/images/detail.png" alt="detale" />
+                                <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
                                 <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
                             </h:commandLink>
                         </rich:column>

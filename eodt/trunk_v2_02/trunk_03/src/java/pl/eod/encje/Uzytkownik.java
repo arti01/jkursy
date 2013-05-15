@@ -104,7 +104,7 @@ public class Uzytkownik implements Serializable {
     private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikList;
     @Transient
     private List<DcDokumentKrokUzytkownik> dcDoAkceptuKrokiList;
-
+    
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
     @ManyToOne()
     private Spolki spolkaId;

@@ -39,8 +39,13 @@
                         
                         <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">
                             <rich:panelMenuItem >
-                                <h:commandLink value="Akceptacja" action="#{AkceptOdb.list}"/>
+                                <h:commandLink value="Do akceptacji" action="#{AkceptOdb.list}"/>
                             </rich:panelMenuItem>
+                            <h:commandLink action="#{HistOdb.list}">
+                            <rich:panelMenuItem >
+                               Historia akceptacji
+                            </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">

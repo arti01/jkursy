@@ -5,13 +5,11 @@
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/templates/template.xhtml"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Detale dokumentu #{AkceptOdb.obiekt.nazwa}</h3>
+        <h3>Detale dokumentu #{managedBean.obiekt.nazwa}</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:tabPanel >
@@ -19,46 +17,46 @@
 
                <h:panelGrid columns="2" id="dodajGrid">
                     <h:outputLabel for="nameD" value="nazwa: "/>
-                    <h:outputText id="nameD" value="#{AkceptOdb.obiekt.nazwa}" />
+                    <h:outputText id="nameD" value="#{managedBean.obiekt.nazwa}" />
 
                     <h:outputLabel for="opisD" value="opis: "/>
-                    <h:outputText id="opisD" value="#{AkceptOdb.obiekt.opis}"  />
+                    <h:outputText id="opisD" value="#{managedBean.obiekt.opis}"  />
 
                     <h:outputLabel for="dataD" value="Data dokumentu:"/>
-                    <h:outputText id="dataD" value="#{AkceptOdb.obiekt.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                    <h:outputText id="dataD" value="#{managedBean.obiekt.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
 
                     <h:outputLabel for="rodzajD" value="rodzaj: "/>
-                    <h:outputText id="rodzajD" value="#{AkceptOdb.obiekt.rodzajId.nazwa}"/>
+                    <h:outputText id="rodzajD" value="#{managedBean.obiekt.rodzajId.nazwa}"/>
 
                     <h:outputLabel for="zrodloD" value="źródło: "/>
-                    <h:outputText id="zrodloD" value="#{AkceptOdb.obiekt.zrodloId.nazwa}" />
+                    <h:outputText id="zrodloD" value="#{managedBean.obiekt.zrodloId.nazwa}" />
 
                     <h:outputLabel for="projektD" value="projekt: "/>
-                    <h:outputText id="projektD" value="#{AkceptOdb.obiekt.projektId.nazwa}"/>
+                    <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
 
                 </h:panelGrid>                    
                     
                     <h:panelGrid id="infoDod" columns="3">
                         <h:outputLabel for="status" value="aktualny status: "/>
-                        <h:outputText id="status" value="#{AkceptOdb.obiekt.dokStatusId.nazwa}" style="font-weight: bold"/>
+                        <h:outputText id="status" value="#{managedBean.obiekt.dokStatusId.nazwa}" style="font-weight: bold"/>
                         <rich:tooltip target="status">
-                            #{AkceptOdb.obiekt.dokStatusId.opis}
+                            #{managedBean.obiekt.dokStatusId.opis}
                         </rich:tooltip>
                         <h:outputLabel for="rodzDyst" value="rodzaj dystrybucji: "/>
-                        <h:outputText id="rodzDyst" value="#{AkceptOdb.obiekt.rodzajId.idTypFlow.nazwa}"  style="font-weight: bold"/>
+                        <h:outputText id="rodzDyst" value="#{managedBean.obiekt.rodzajId.idTypFlow.nazwa}"  style="font-weight: bold"/>
                         <rich:tooltip target="rodzDyst">
-                            #{AkceptOdb.obiekt.rodzajId.idTypFlow.opis}
+                            #{managedBean.obiekt.rodzajId.idTypFlow.opis}
                         </rich:tooltip>
                     </h:panelGrid>
                 </rich:tab>
 
                 <rich:tab header="Załączniki" id="tabPliki">
                     <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
-                                     addLabel="dodaj plik" listHeight="40px"  rendered="#{AkceptOdb.obiekt.dokStatusId.id==1}">
+                                     addLabel="dodaj plik" listHeight="40px"  rendered="#{managedBean.obiekt.dokStatusId.id==1}">
                         <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
                     </rich:fileUpload>
                     <hr/>
-                    <rich:dataTable value="#{AkceptOdb.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
+                    <rich:dataTable value="#{managedBean.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
                         <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                         <rich:column sortBy="#{item.id}" sortOrder="descending">
@@ -70,13 +68,9 @@
                             <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
                         </rich:column>
                         <rich:column style="width: 50px">
-                            <a4j:commandLink execute="@this" render="@none"
-                                             oncomplete="#{rich:component('confirmPane')}.show()">
-                                <h:graphicImage value="/images/delete.png" alt="delete" />
-                                <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
-                            </a4j:commandLink>
+                        <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
                             <h:commandLink action="#{fileUploadBean.download}" >
-                                <h:graphicImage value="/images/detail.png" alt="detale" />
+                                <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
                                 <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
                             </h:commandLink>
                         </rich:column>
@@ -84,7 +78,7 @@
 
                 </rich:tab>
                 <rich:tab header="Proces akceptacji">
-                    <rich:dataTable id="dok_kroki" value="#{AkceptOdb.obiekt.dcDokKrok}" var="krok">
+                    <rich:dataTable id="dok_kroki" value="#{managedBean.obiekt.dcDokKrok}" var="krok">
                         <rich:column sortBy="#{krok.lp}" sortOrder="ascending">
                             <f:facet name="header">lp</f:facet>
                                 #{krok.lp}
@@ -124,7 +118,7 @@
                 </rich:popupPanel>
             </rich:tabPanel>
             <rich:panel id="wyslij">
-                <h:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" rendered="#{AkceptOdb.obiekt.dokStatusId.id==2}" />
+                <h:commandButton value="zaakceptuj" action="#{managedBean.akceptuj}" rendered="#{managedBean==AkceptOdb}" />
             </rich:panel>
             <rich:popupPanel id="statPane" autosized="true">
                 <h:graphicImage value="/images/ai.gif" alt="ai" />
@@ -132,8 +126,5 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
-    </ui:define>
-
 </ui:composition>
 

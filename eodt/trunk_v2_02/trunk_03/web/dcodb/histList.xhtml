@@ -11,12 +11,14 @@
 
     <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Dokumenty do akceptu</h3>
+        <h3>Dokumenty w których byłeś akceptantem</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        
+        <ui:param name="managedBean" value="#{HistOdb}"/>
+        
         <h:form>
-
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{AkceptOdb.login.zalogowany.userId.dcDoAkceptuKrokiList}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{managedBean.login.zalogowany.userId.dcDokumentKrokUzytkownikList}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <rich:column sortBy="#{item.idDokumentKrok.idDok.id}" sortOrder="descending">
@@ -42,9 +44,6 @@
                         <f:facet name="header">status</f:facet>
                         <h:outputText id="statusList" value="#{item.idDokumentKrok.idDok.dokStatusId.nazwa}"/>
                         <br/>
-                        <a4j:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" render="listPanel" rendered="#{item.idDokumentKrok.idDok.dokStatusId.id==2}" execute="@this">
-                            <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
-                        </a4j:commandButton>
                         <rich:tooltip target="statusList">
                             #{item.idDokumentKrok.idDok.dokStatusId.opis}
                         </rich:tooltip>
@@ -63,9 +62,9 @@
 
                     <rich:column style="width: 70px">
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
-                        <a4j:commandLink execute="@this" action="#{AkceptOdb.detale}">
+                        <a4j:commandLink execute="@this" action="#{managedBean.detale}">
                             <h:graphicImage id="imgDt" value="/images/detail.png" alt="details" />
-                            <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
+                            <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item.idDokumentKrok.idDok}" />
                         </a4j:commandLink>
                     </rich:column>
                 </rich:dataTable>

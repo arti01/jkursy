@@ -31,7 +31,7 @@ public class Akcept {
     }
 
     public String detale() {
-        return "/dcodb/dokumentDetale?faces-redirect=true";
+        return "/dcodb/akcDetale?faces-redirect=true";
     }
 
     public String akceptuj() {
