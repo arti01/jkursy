@@ -15,7 +15,7 @@
             <h:form>
                 <rich:tree toggleType="client" var="strukt" >
                     <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
-                        <rich:treeNode expanded="#{true}">
+                        <rich:treeNode expanded="#{StruktOsM.rozwin}">
                             #{strukt.userId.fullname}
                             <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.dzialId.nazwa!=null}">
                                 <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>
@@ -23,7 +23,7 @@
                             </h:commandLink>
                         </rich:treeNode>
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
-                            <rich:treeNode expanded="#{true}">
+                            <rich:treeNode expanded="#{StruktOsM.rozwin}">
                                 #{strukt.userId.fullname}
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
                                     <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>

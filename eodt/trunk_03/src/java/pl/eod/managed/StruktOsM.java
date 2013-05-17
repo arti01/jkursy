@@ -32,6 +32,11 @@ public class StruktOsM implements Serializable {
     private List<Struktura> srcRoots = new ArrayList<Struktura>();
     @ManagedProperty(value = "#{login}")
     private Login login;
+    private boolean rozwin;
+
+    public StruktOsM() {
+        this.rozwin = true;
+    }
 
     @PostConstruct
     public void init() {
@@ -80,4 +85,13 @@ public class StruktOsM implements Serializable {
     public void setLogin(Login login) {
         this.login = login;
     }
+
+    public boolean isRozwin() {
+        return rozwin;
+    }
+
+    public void setRozwin(boolean rozwin) {
+        this.rozwin = rozwin;
+    }
+    
 }

@@ -69,7 +69,7 @@
                                     
                                     <h:outputLabel for="roles" value="uprawnienia:"/>
                                 <ui:repeat id="roles" value="#{strukt.userId.role}" var="rola">
-                                    #{rola.rolename},
+                                    #{rola.opis},
                                 </ui:repeat>
                                 </h:panelGrid>
                                 <h:panelGrid columns="1" rendered="#{fn:length(strukt.bezpPodWidoczni)>0}">
