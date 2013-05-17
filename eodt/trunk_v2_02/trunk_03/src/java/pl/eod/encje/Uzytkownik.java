@@ -67,7 +67,8 @@ public class Uzytkownik implements Serializable {
     private String adrEmail;
     @Column(name = "ext_id", nullable = false)
     private String extId;
-    @OneToOne(mappedBy = "username", cascade = {CascadeType.REFRESH})
+    @Transient
+    //@OneToOne(mappedBy = "username")
     WnLimity wnLimity;
     @OneToMany(mappedBy = "secUserId")
     List<Struktura> strukturaSec;

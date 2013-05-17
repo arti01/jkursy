@@ -29,9 +29,7 @@
             </web-module-libraries>
             <web-module-additional-libraries/>
             <source-roots>
-                <root id="src.ap-source-output.dir"/>
-                <root id="src.java.dir"/>
-                <root id="src.generated-sources.dir"/>
+                <root id="src.java2.dir"/>
             </source-roots>
             <test-roots>
                 <root id="test.src.dir"/>

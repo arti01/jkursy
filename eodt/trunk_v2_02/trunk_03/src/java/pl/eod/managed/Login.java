@@ -19,6 +19,7 @@ import pl.eod.encje.MenuLinkiJpaController;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.StrukturaJpaController;
 import pl.eod.encje.UzytkownikJpaController;
+import pl.eod.encje.WnLimity;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
 @ManagedBean(name = "login")
@@ -110,6 +111,7 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
+        
         //obsluga zewnetrzne id
         if (zalogowany == null) {
             zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());
@@ -122,6 +124,9 @@ public class Login implements Serializable {
         }catch(NullPointerException ex){
             System.err.println("brak użytkownika w bazie - user zewnętrzny");
         }
+        //wyszukiwanie limitu
+        WnLimity limit=uzytC.findLimit(zalogowany.getUserId());
+        zalogowany.getUserId().setWnLimity(limit);
         //return zalogowany;
     }
     

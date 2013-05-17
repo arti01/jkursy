@@ -13,21 +13,21 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h:form>
-                <rich:tree toggleType="ajax" var="strukt" selectionType="client">
+                <rich:tree toggleType="client" var="strukt" selectionType="client">
                     <rich:treeModelRecursiveAdaptor roots="#{StruktDzialM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
-                        <rich:treeNode>
+                        <rich:treeNode expanded="#{StruktOsM.rozwin}">
                             #{strukt.dzialId.nazwa}
                             <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.userId!=null}">
-                                <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{strukt.dzialId}"/>
-                                <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
+                                <f:setPropertyActionListener target="#{UsersM.filterValues['nazwa']}" value="#{strukt.dzialId}"/>
+                                <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{null}"/>
                             </h:commandLink>
                         </rich:treeNode>
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwladKier}">
-                            <rich:treeNode>
+                            <rich:treeNode expanded="#{StruktOsM.rozwin}">
                                 <h:outputText value="#{strukt.dzialId.nazwa}"/>
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
-                                    <f:setPropertyActionListener target="#{UsersM.nameFilter}" value="#{strukt.userId.fullname}"/>
-                                    <f:setPropertyActionListener target="#{UsersM.dzialFilter}" value="#{strukt.dzialId}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{null}"/>
+                                    <f:setPropertyActionListener target="#{UsersM.filterValues['nazwa']}" value="#{strukt.dzialId}"/>
                                 </h:commandLink>
                             </rich:treeNode>
                         </rich:treeModelAdaptor>
