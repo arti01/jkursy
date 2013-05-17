@@ -43,6 +43,9 @@ public class UserRoles implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "ROLE_NAME", unique = true)
     private String rolename;
+    
+    @Column(name = "OPIS")
+    private String opis;
 
     
     @ManyToMany(mappedBy = "role")
@@ -79,7 +82,13 @@ public class UserRoles implements Serializable {
         this.uzytkownik = uzytkownik;
     }
 
-    
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
     
     @Override
     public int hashCode() {

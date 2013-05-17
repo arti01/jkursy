@@ -74,10 +74,10 @@ INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usu
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1);
 INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (4, 1, 4, 1, NULL, 4, NULL, 1);
 
-INSERT INTO user_roles (id, role_name) VALUES (2, 'eodstru');
-INSERT INTO user_roles (id, role_name) VALUES (1, 'eodurlop');
-INSERT INTO user_roles (id, role_name) VALUES (3, 'eoduser');
-INSERT INTO user_roles (id, role_name) VALUES (4, 'eodadm');
+INSERT INTO user_roles (id, role_name, opis) VALUES (2, 'eodstru', 'struktura organizacyjna');
+INSERT INTO user_roles (id, role_name, opis) VALUES (1, 'eodurlop', 'wnioski urlopowe');
+INSERT INTO user_roles (id, role_name, opis) VALUES (3, 'eoduser', 'dostęp do systemu');
+INSERT INTO user_roles (id, role_name, opis) VALUES (4, 'eodadm', 'admnistrator systemu');
 
 
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (1, 1);

@@ -13,9 +13,9 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h:form>
-                <rich:tree toggleType="ajax" var="strukt">
+                <rich:tree toggleType="client" var="strukt" >
                     <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
-                        <rich:treeNode>
+                        <rich:treeNode expanded="#{true}">
                             #{strukt.userId.fullname}
                             <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)" rendered="#{strukt.dzialId.nazwa!=null}">
                                 <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>
@@ -23,7 +23,7 @@
                             </h:commandLink>
                         </rich:treeNode>
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
-                            <rich:treeNode>
+                            <rich:treeNode expanded="#{true}">
                                 #{strukt.userId.fullname}
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
                                     <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{strukt.userId.fullname}"/>

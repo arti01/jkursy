@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -108,7 +109,7 @@ public class UsersM implements Serializable {
     }
     
     public String edycja() {
-        rolesKlon=strukt.getUserId().getRole();
+        rolesKlon=new CopyOnWriteArrayList<UserRoles>( strukt.getUserId().getRole());
         return "/all/usersEdit";
     }
     
@@ -159,8 +160,17 @@ public class UsersM implements Serializable {
 
     public String zapisz() throws NonexistentEntityException, Exception {
         //pozostają role nieedytowalne
-        rolesKlon.removeAll(roleAll);
-        strukt.getUserId().getRole().addAll(rolesKlon);
+        System.err.println(rolesKlon);
+        System.err.println(strukt.getUserId().getRole());
+        System.err.println(roleAll);
+        
+        
+        //obsluga dla readonly roli w formularzu
+        if(!strukt.getUserId().getRole().equals(rolesKlon)) {
+            rolesKlon.removeAll(roleAll);
+            System.err.println(rolesKlon);
+            strukt.getUserId().getRole().addAll(rolesKlon);
+        }
         String error = struktC.editArti(strukt);
         if (error == null) {
             initUser();
@@ -172,7 +182,7 @@ public class UsersM implements Serializable {
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         context.addMessage(zapisz.getClientId(context), message);
         edytuj = true;
-        //new Login().refresh();
+        dataModel=new StrukturaDataModel(login.zalogowany.getUserId().getSpolkaId());
         return "/all/usersEdit";
     }
 

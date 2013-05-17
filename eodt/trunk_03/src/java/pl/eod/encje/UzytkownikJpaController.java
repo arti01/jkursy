@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -23,6 +24,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class UzytkownikJpaController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public UzytkownikJpaController() {
         if (this.emf == null) {
@@ -35,6 +37,21 @@ public class UzytkownikJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
+    public WnLimity findLimit(Uzytkownik user){
+        EntityManager em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Object> cq = cb.createQuery();
+            Root<WnLimity> limity = cq.from(WnLimity.class);
+            cq.select(limity);
+            Predicate username = cb.equal(limity.get(WnLimity_.username), user);
+            cq.where(username);
+             Query q = em.createQuery(cq).setMaxResults(1);
+        @SuppressWarnings("unchecked")
+             List<WnLimity>wynik=(List<WnLimity>)q.getResultList();
+             if(wynik==null)return null;
+             else return wynik.get(0);
+    }
+    
     public Uzytkownik create(Uzytkownik uzytkownik) {
         EntityManager em = null;
         try {
