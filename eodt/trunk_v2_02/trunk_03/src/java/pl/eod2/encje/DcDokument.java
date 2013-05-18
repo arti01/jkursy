@@ -59,6 +59,10 @@ public class DcDokument implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Size(max = 10485760)
+    @Lob
+    @Column(name = "opis_dlugi")
+    private String opisDlugi;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprow", nullable = false)
@@ -194,6 +198,14 @@ public class DcDokument implements Serializable {
 
     public void setDcDokKrok(List<DcDokumentKrok> dcDokKrok) {
         this.dcDokKrok = dcDokKrok;
+    }
+
+    public String getOpisDlugi() {
+        return opisDlugi;
+    }
+
+    public void setOpisDlugi(String opisDlugi) {
+        this.opisDlugi = opisDlugi;
     }
 
     @Override

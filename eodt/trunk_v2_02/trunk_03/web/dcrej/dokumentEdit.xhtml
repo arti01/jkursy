@@ -39,6 +39,10 @@
                     </h:selectOneMenu>
                     <rich:message for="projektD" styleClass="error" />
 
+                    <h:outputLabel for="opisDlugiD" value="długi opis: "/>
+                    <rich:editor id="editor" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em"/>
+                    <rich:message for="opisDlugiD" styleClass="error" />
+                    
                 </h:panelGrid>
                 <rich:message for="zapisz" styleClass="error" />
                 <rich:message for="dodaj" styleClass="error" />

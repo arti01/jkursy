@@ -48,7 +48,7 @@ public class UzytkownikJpaController implements Serializable {
              Query q = em.createQuery(cq).setMaxResults(1);
         @SuppressWarnings("unchecked")
              List<WnLimity>wynik=(List<WnLimity>)q.getResultList();
-             if(wynik==null)return null;
+             if(wynik==null||wynik.isEmpty())return null;
              else return wynik.get(0);
     }
     
