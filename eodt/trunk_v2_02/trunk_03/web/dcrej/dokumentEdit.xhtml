@@ -3,7 +3,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j">
 
                 <h:panelGrid columns="3" id="dodajGrid">
                     <h:outputLabel for="nameD" value="nazwa: "/>
@@ -40,7 +41,11 @@
                     <rich:message for="projektD" styleClass="error" />
 
                     <h:outputLabel for="opisDlugiD" value="długi opis: "/>
-                    <rich:editor id="editor" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em"/>
+                    <rich:collapsiblePanel header="dodatkowy opis  (naciśnij przycisk ZAPISZ na dole strony po modyfikacji)" expanded="false" switchType="client">
+                        <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em">
+                            <a4j:ajax event="save" oncomplete="alert('sssssssssss');" />
+                        </rich:editor>
+                    </rich:collapsiblePanel>
                     <rich:message for="opisDlugiD" styleClass="error" />
                     
                 </h:panelGrid>
