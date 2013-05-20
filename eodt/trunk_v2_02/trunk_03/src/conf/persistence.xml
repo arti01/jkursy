@@ -25,6 +25,7 @@
     <class>pl.eod2.encje.DcTypFlow</class>
     <class>pl.eod2.encje.DcAkceptKroki</class>
     <class>pl.eod2.encje.DcAkceptTypKroku</class>
+    <class>pl.eod2.encje.DcKontrahenci</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

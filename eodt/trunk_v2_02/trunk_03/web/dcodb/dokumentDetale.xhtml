@@ -33,6 +33,11 @@
 
                     <h:outputLabel for="projektD" value="projekt: "/>
                     <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
+                    
+                    <h:outputLabel for="opisDlugiD" value=" "/>
+                    <rich:collapsiblePanel header="dodatkowy opis" expanded="false" switchType="client" >
+                        <h:outputText value="#{managedBean.obiekt.opisDlugi}" escape="false"/>
+                    </rich:collapsiblePanel>
 
                 </h:panelGrid>                    
                     

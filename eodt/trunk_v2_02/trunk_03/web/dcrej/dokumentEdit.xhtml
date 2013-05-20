@@ -40,11 +40,10 @@
                     </h:selectOneMenu>
                     <rich:message for="projektD" styleClass="error" />
 
-                    <h:outputLabel for="opisDlugiD" value="długi opis: "/>
-                    <rich:collapsiblePanel header="dodatkowy opis  (naciśnij przycisk ZAPISZ na dole strony po modyfikacji)" expanded="false" switchType="client">
-                        <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em">
-                            <a4j:ajax event="save" oncomplete="alert('sssssssssss');" />
-                        </rich:editor>
+                    <h:outputLabel for="opisDlugiD" value=" "/>
+                    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na dole strony)" expanded="false" switchType="client" >
+                        <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}"/>
+                        <h:outputText value="#{RejestracjaRej.obiekt.opisDlugi}" escape="false" rendered="#{RejestracjaRej.obiekt.dokStatusId.id!=1}"/>
                     </rich:collapsiblePanel>
                     <rich:message for="opisDlugiD" styleClass="error" />
                     
