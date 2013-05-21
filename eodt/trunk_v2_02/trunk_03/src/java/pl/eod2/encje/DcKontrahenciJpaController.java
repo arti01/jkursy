@@ -19,11 +19,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  *
  * @author arti01
  */
-public class DcPlikJpaController implements Serializable {
+public class DcKontrahenciJpaController implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    public DcPlikJpaController() {
-       if (this.emf == null) {
+    public DcKontrahenciJpaController() {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -33,15 +33,13 @@ public class DcPlikJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DcPlik dcPlik) {
+    public void create(DcKontrahenci dcKontrahenci) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(dcPlik);
+            em.persist(dcKontrahenci);
             em.getTransaction().commit();
-        }catch(Exception ex){
-            ex.printStackTrace();
         } finally {
             if (em != null) {
                 em.close();
@@ -49,34 +47,19 @@ public class DcPlikJpaController implements Serializable {
         }
     }
 
-    public void edit(DcPlik dcPlik) throws NonexistentEntityException, Exception {
+    public void edit(DcKontrahenci dcKontrahenci) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DcPlik persistentDcPlik = em.find(DcPlik.class, dcPlik.getId());
-            DcDokument idDokOld = persistentDcPlik.getIdDok();
-            DcDokument idDokNew = dcPlik.getIdDok();
-            if (idDokNew != null) {
-                idDokNew = em.getReference(idDokNew.getClass(), idDokNew.getId());
-                dcPlik.setIdDok(idDokNew);
-            }
-            dcPlik = em.merge(dcPlik);
-            if (idDokOld != null && !idDokOld.equals(idDokNew)) {
-                idDokOld.getDcPlikList().remove(dcPlik);
-                idDokOld = em.merge(idDokOld);
-            }
-            if (idDokNew != null && !idDokNew.equals(idDokOld)) {
-                idDokNew.getDcPlikList().add(dcPlik);
-                idDokNew = em.merge(idDokNew);
-            }
+            dcKontrahenci = em.merge(dcKontrahenci);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = dcPlik.getId();
-                if (findDcPlik(id) == null) {
-                    throw new NonexistentEntityException("The dcPlik with id " + id + " no longer exists.");
+                Integer id = dcKontrahenci.getId();
+                if (findDcKontrahenci(id) == null) {
+                    throw new NonexistentEntityException("The dcKontrahenci with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -92,19 +75,14 @@ public class DcPlikJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DcPlik dcPlik;
+            DcKontrahenci dcKontrahenci;
             try {
-                dcPlik = em.getReference(DcPlik.class, id);
-                dcPlik.getId();
+                dcKontrahenci = em.getReference(DcKontrahenci.class, id);
+                dcKontrahenci.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The dcPlik with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The dcKontrahenci with id " + id + " no longer exists.", enfe);
             }
-            DcDokument idDok = dcPlik.getIdDok();
-            if (idDok != null) {
-                idDok.getDcPlikList().remove(dcPlik);
-                idDok = em.merge(idDok);
-            }
-            em.remove(dcPlik);
+            em.remove(dcKontrahenci);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -113,19 +91,19 @@ public class DcPlikJpaController implements Serializable {
         }
     }
 
-    public List<DcPlik> findDcPlikEntities() {
-        return findDcPlikEntities(true, -1, -1);
+    public List<DcKontrahenci> findEntities() {
+        return findDcKontrahenciEntities(true, -1, -1);
     }
 
-    public List<DcPlik> findDcPlikEntities(int maxResults, int firstResult) {
-        return findDcPlikEntities(false, maxResults, firstResult);
+    public List<DcKontrahenci> findDcKontrahenciEntities(int maxResults, int firstResult) {
+        return findDcKontrahenciEntities(false, maxResults, firstResult);
     }
 
-    private List<DcPlik> findDcPlikEntities(boolean all, int maxResults, int firstResult) {
+    private List<DcKontrahenci> findDcKontrahenciEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(DcPlik.class));
+            cq.select(cq.from(DcKontrahenci.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -137,20 +115,20 @@ public class DcPlikJpaController implements Serializable {
         }
     }
 
-    public DcPlik findDcPlik(Integer id) {
+    public DcKontrahenci findDcKontrahenci(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(DcPlik.class, id);
+            return em.find(DcKontrahenci.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getDcPlikCount() {
+    public int getDcKontrahenciCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<DcPlik> rt = cq.from(DcPlik.class);
+            Root<DcKontrahenci> rt = cq.from(DcKontrahenci.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

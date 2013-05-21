@@ -17,19 +17,22 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 @SessionScoped
 public class Projekty {
 
-    private DataModel<DcProjekt> lista = new ListDataModel<DcProjekt>();
+    private DataModel<DcProjekt> lista;
     private DcProjektJpaController dcC;
     private DcProjekt obiekt;
     private String error;
+    private String link;
     
     @PostConstruct
     void init() {
-        dcC = new DcProjektJpaController();
+        this.lista = new ListDataModel<DcProjekt>();
+        this.dcC = new DcProjektJpaController();
+        this.link = "/dccfg/projekty";
         refresh();
     }
 
     void refresh() {
-        lista.setWrappedData(dcC.findDcProjektEntities());
+        lista.setWrappedData(dcC.findEntities());
         obiekt = new DcProjekt();
         error = null;
     }
@@ -53,7 +56,7 @@ public class Projekty {
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
-            lista.setWrappedData(dcC.findDcProjektEntities());
+            lista.setWrappedData(dcC.findEntities());
         } else {
             refresh();
         }
@@ -65,13 +68,10 @@ public class Projekty {
         refresh();
     }
 
-    public void test() {
-        System.err.println("test" + lista.getRowData().getNazwa());
-    }
-
     public String list() {
         refresh();
-        return "/dccfg/projekty";
+        System.err.println(link+"ddddddddddd");
+        return link;
     }
 
     public DataModel<DcProjekt> getLista() {

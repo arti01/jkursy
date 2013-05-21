@@ -29,6 +29,11 @@
                             <rich:panelMenuItem >
                                 <h:commandLink value="Żródła" action="#{ZrodlaCfg.list}"/>
                             </rich:panelMenuItem>
+                            <h:commandLink action="#{KontrahenciCfg.list}">
+                                <rich:panelMenuItem >
+                                    Kontrahenci
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - rejestracja" rendered="#{login.dcRej}" expanded="#{login.menuDcRejExp}" actionListener="#{login.menuDcRejExpList}">
@@ -36,15 +41,15 @@
                                 <h:commandLink value="Rejestracja" action="#{RejestracjaRej.list}"/>
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">
                             <rich:panelMenuItem >
                                 <h:commandLink value="Do akceptacji" action="#{AkceptOdb.list}"/>
                             </rich:panelMenuItem>
                             <h:commandLink action="#{HistOdb.list}">
-                            <rich:panelMenuItem >
-                               Historia akceptacji
-                            </rich:panelMenuItem>
+                                <rich:panelMenuItem >
+                                    Historia akceptacji
+                                </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
@@ -62,11 +67,11 @@
                                 <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
                             </rich:panelMenuItem>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuItem rendered="#{login.admin}">
                             <h:commandLink value="Zarządzanie spółkami" action="#{SpolkiMg.list}"/>
                         </rich:panelMenuItem>
-                        
+
                         <rich:panelMenuItem rendered="#{login.kierownik}">
                             <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
                         </rich:panelMenuItem>

@@ -149,7 +149,7 @@ public class DcProjektJpaController implements Serializable {
         }
     }
 
-    public List<DcProjekt> findDcProjektEntities() {
+    public List<DcProjekt> findEntities() {
         return findDcProjektEntities(true, -1, -1);
     }
 
