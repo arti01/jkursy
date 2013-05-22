@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -33,22 +34,32 @@ public class DcKontrahenciJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DcKontrahenci dcKontrahenci) {
-        EntityManager em = null;
+    public String create(DcKontrahenci dcKontrahenci) {
+       EntityManager em = null;
+        if ((findDcKontrahenci(dcKontrahenci.getNazwa())) != null) {
+            return "nazwa już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(dcKontrahenci);
             em.getTransaction().commit();
+        }catch(Exception ex){
+            return "blad";
         } finally {
             if (em != null) {
                 em.close();
             }
         }
+        return null;
     }
 
-    public void edit(DcKontrahenci dcKontrahenci) throws NonexistentEntityException, Exception {
+    public String edit(DcKontrahenci dcKontrahenci) throws NonexistentEntityException, Exception {
         EntityManager em = null;
+        DcKontrahenci old=findDcKontrahenci(dcKontrahenci.getId());
+        if (findDcKontrahenci(dcKontrahenci.getNazwa()) != null && findDcKontrahenci(dcKontrahenci.getNazwa()).getId()!=old.getId()) {
+            return "nazwa już istnieje";
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -68,6 +79,7 @@ public class DcKontrahenciJpaController implements Serializable {
                 em.close();
             }
         }
+        return null;
     }
 
     public void destroy(Integer id) throws NonexistentEntityException {
@@ -115,6 +127,25 @@ public class DcKontrahenciJpaController implements Serializable {
         }
     }
 
+    public DcKontrahenci findDcKontrahenci(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcKontrahenci.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            DcKontrahenci u = (DcKontrahenci) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
     public DcKontrahenci findDcKontrahenci(Integer id) {
         EntityManager em = getEntityManager();
         try {

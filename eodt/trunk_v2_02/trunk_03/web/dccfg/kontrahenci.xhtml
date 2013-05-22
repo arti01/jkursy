@@ -21,7 +21,7 @@
                     <rich:message for="nameD" styleClass="error" />
 
                     <h:outputLabel for="opisD" value="opis: "/>
-                    <h:inputTextarea id="opisD" value="#{KontrahenciCfg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
+                    <h:inputTextarea id="opisD" value="#{KontrahenciCfg.obiekt.infoDod}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
                 </h:panelGrid>
                 <rich:message for="zapisz" styleClass="error" />
@@ -51,7 +51,7 @@
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">opis</f:facet>
-                            #{item.opis}
+                            #{item.infoDod}
                     </rich:column>
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>

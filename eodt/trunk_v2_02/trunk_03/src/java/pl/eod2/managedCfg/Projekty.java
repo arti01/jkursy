@@ -70,7 +70,6 @@ public class Projekty {
 
     public String list() {
         refresh();
-        System.err.println(link+"ddddddddddd");
         return link;
     }
 

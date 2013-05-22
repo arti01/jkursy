@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pl.eod2.encje;
 
 import java.io.Serializable;
@@ -41,7 +38,6 @@ import org.hibernate.validator.constraints.Email;
     @NamedQuery(name = "DcKontrahenci.findByAdres", query = "SELECT d FROM DcKontrahenci d WHERE d.adres = :adres"),
     @NamedQuery(name = "DcKontrahenci.findByInfoDod", query = "SELECT d FROM DcKontrahenci d WHERE d.infoDod = :infoDod")})
 public class DcKontrahenci implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCKONTRAH")
