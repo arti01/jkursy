@@ -51,10 +51,14 @@
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
                         <a4j:commandLink execute="@this" render="@none"
-                                         oncomplete="#{rich:component('confirmPaneRodzaj')}.show()">
+                                         oncomplete="#{rich:component('confirmPaneRodzaj')}.show()" rendered="#{fn:length(item.dcDokumentList)==0}">
                             <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
                         </a4j:commandLink>
+                        <h:graphicImage id="imgB"  value="/images/delete.png" alt="delete" rendered="#{fn:length(item.dcDokumentList)>0}"/>
+                        <rich:tooltip id="ttbl" layout="block"  rendered="#{fn:length(item.dcDokumentList)>0}" target="imgB">
+                            nie można usunąć - rodzaj posiada już dokumenty
+                        </rich:tooltip>
                         <a4j:commandLink render="dodajPaneRodzaj" execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
                             <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
