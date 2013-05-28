@@ -57,9 +57,12 @@ public class DcKontrahenci implements Serializable {
     @Size(max = 255)
     @Column(name = "osoba_kontak", length = 255)
     private String osobaKontak;
-    @Size(max = 2147483647)
-    @Column(name = "www", length = 2147483647)
+    @Size(max = 255)
+    @Column(name = "www", length = 255)
     private String www;
+    @Size(max = 255)
+    @Column(name = "tel", length = 255)
+    private String tel;
     @Email
     @Size(max = 255)
     @Column(name = "email", length = 255)
@@ -148,6 +151,14 @@ public class DcKontrahenci implements Serializable {
 
     public void setInfoDod(String infoDod) {
         this.infoDod = infoDod;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
     }
 
     @Override

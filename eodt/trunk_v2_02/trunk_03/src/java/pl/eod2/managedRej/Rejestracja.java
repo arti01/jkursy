@@ -16,6 +16,7 @@ import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcDokumentStatusJpaController;
+import pl.eod2.encje.DcKontrahenci;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
@@ -28,7 +29,6 @@ public class Rejestracja {
     private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
     private DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
-    private DcDokumentStatusJpaController dcDokStatC;
     private DcDokument obiekt;
     private DcPlik plik;
     private String error;
@@ -39,7 +39,6 @@ public class Rejestracja {
     void init() {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
-        dcDokStatC=new DcDokumentStatusJpaController();
         refresh(true);
     }
 
@@ -51,8 +50,6 @@ public class Rejestracja {
 
     public void dodaj() {
         obiekt.setUserId(login.getZalogowany().getUserId());
-        DcDokumentStatus dokSt= dcDokStatC.findDcDokumentStatus(1);
-        obiekt.setDokStatusId(dokSt);
         error = dcC.create(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);

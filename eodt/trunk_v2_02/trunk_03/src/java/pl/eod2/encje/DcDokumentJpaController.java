@@ -70,6 +70,15 @@ public class DcDokumentJpaController implements Serializable {
     }
 
     public String create(DcDokument dcDokument) {
+        if(dcDokument.getKontrahentId()==null) {
+            DcKontrahenciJpaController dcKonC=new DcKontrahenciJpaController();
+            DcKontrahenci dokKon= dcKonC.findDcKontrahenci(1);
+            dcDokument.setKontrahentId(dokKon);
+        }
+        
+        DcDokumentStatusJpaController dcDokStatC=new DcDokumentStatusJpaController();
+        DcDokumentStatus dokSt= dcDokStatC.findDcDokumentStatus(1);
+        dcDokument.setDokStatusId(dokSt);
         if (dcDokument.getDcPlikList() == null) {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }

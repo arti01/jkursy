@@ -50,6 +50,15 @@
                         <f:facet name="header">data dokumentu</f:facet>
                         <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                     </rich:column>
+                    
+                    <rich:column>
+                        <f:facet name="header">kontrahent</f:facet>
+                        <h:outputText id="kontrahentList" value="#{item.kontrahentId.nazwa}"/>
+                        <rich:tooltip target="kontrahentList">
+                            #{item.kontrahentId.adres} #{item.kontrahentId.adres} #{item.kontrahentId.nipRegon}
+                        </rich:tooltip>
+                    </rich:column>
+                    
                     <rich:column>
                         <f:facet name="header">żródło</f:facet>
                             #{item.zrodloId.nazwa}
