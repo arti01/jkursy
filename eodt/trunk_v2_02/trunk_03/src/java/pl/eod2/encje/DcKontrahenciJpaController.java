@@ -12,8 +12,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import pl.eod.encje.Config;
+import pl.eod.encje.Config_;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -150,6 +153,21 @@ public class DcKontrahenciJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             return em.find(DcKontrahenci.class, id);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public DcKontrahenci findConfigNazwa(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<DcKontrahenci> cfg = cq.from(DcKontrahenci.class);
+            cq.select(cfg);
+            cq.where(cb.equal(cfg.get(DcKontrahenci_.nazwa), nazwa));
+            Query q = em.createQuery(cq);
+            return (DcKontrahenci)q.getSingleResult();
         } finally {
             em.close();
         }

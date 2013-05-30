@@ -39,6 +39,15 @@
                         <f:selectItems value="#{ProjektyCfg.lista}" var="projekt" itemValue="#{projekt}" itemLabel="#{projekt.nazwa}"/>
                     </h:selectOneMenu>
                     <rich:message for="projektD" styleClass="error" />
+                    
+                    <h:outputLabel for="kontrahentD" value="podaj kontrahenta (wprowadz min. 3 znaki)"/>
+                    <rich:autocomplete id="kontrahentD" value="#{RejestracjaRej.obiekt.kontrahentId}" mode="lazyClient"
+                                       minChars="3" fetchValue="#{kontrahent.nazwa}" converter="#{DcKontrahenciConv}"
+                                       var="kontrahent" autocompleteList="#{KontrahenciCfg.lista.wrappedData}">
+                            #{kontrahent.nazwa}
+                            #{kontrahent.adres}
+                        </rich:autocomplete>
+                        <rich:message for="kontrahentD" styleClass="error" />
 
                     <h:outputLabel for="opisDlugiD" value=" "/>
                     <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na dole strony)" expanded="false" switchType="client" >

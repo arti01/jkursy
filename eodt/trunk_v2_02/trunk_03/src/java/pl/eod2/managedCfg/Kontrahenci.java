@@ -22,12 +22,18 @@ public class Kontrahenci {
     private DcKontrahenci obiekt;
     private String error;
     private String link;
+    private String filtrNazwa;
+    private String filtrNip;
+    private String filtrAdres;
 
     @PostConstruct
     void init() {
         this.lista = new ListDataModel<DcKontrahenci>();
         this.dcC = new DcKontrahenciJpaController();
         this.link = "/dccfg/kontrahenci";
+        this.filtrNazwa="";
+        this.filtrNip="";
+        this.filtrAdres="";
         refresh();
     }
 
@@ -96,4 +102,29 @@ public class Kontrahenci {
     public void setError(String error) {
         this.error = error;
     }
+
+    public String getFiltrNazwa() {
+        return filtrNazwa;
+    }
+
+    public void setFiltrNazwa(String filtrNazwa) {
+        this.filtrNazwa = filtrNazwa;
+    }
+
+    public String getFiltrNip() {
+        return filtrNip;
+    }
+
+    public void setFiltrNip(String filtrNip) {
+        this.filtrNip = filtrNip;
+    }
+
+    public String getFiltrAdres() {
+        return filtrAdres;
+    }
+
+    public void setFiltrAdres(String filtrAdres) {
+        this.filtrAdres = filtrAdres;
+    }
+    
 }
