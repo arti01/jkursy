@@ -195,6 +195,13 @@ public class DcDokumentJpaController implements Serializable {
 
     public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
+        
+        if(dcDokument.getKontrahentId()==null) {
+            DcKontrahenciJpaController dcKonC=new DcKontrahenciJpaController();
+            DcKontrahenci dokKon= dcKonC.findDcKontrahenci(1);
+            dcDokument.setKontrahentId(dokKon);
+        }
+        
         try {
             em = getEntityManager();
             em.getTransaction().begin();

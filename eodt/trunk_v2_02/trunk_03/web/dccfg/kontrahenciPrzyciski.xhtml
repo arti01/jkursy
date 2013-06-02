@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    template="/templates/template.xhtml"
+    xmlns:a4j="http://richfaces.org/a4j">
+
+                    <rich:tooltip target="imgDe" value="usuń" layout="block"/>
+                    <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
+                    <a4j:commandLink execute="@this" render="@none" rendered="#{item.id!=1}"
+                                     oncomplete="#{rich:component('confirmPane')}.show()">
+                        <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
+                        <f:setPropertyActionListener target="#{KontrahenciCfg.obiekt}" value="#{item}" />
+                    </a4j:commandLink>
+                    <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
+                        <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
+                        <f:setPropertyActionListener target="#{KontrahenciCfg.obiekt}" value="#{item}" />
+                    </a4j:commandLink>
+
+</html>
+
