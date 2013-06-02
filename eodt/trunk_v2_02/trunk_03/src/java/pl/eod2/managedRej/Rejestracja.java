@@ -118,6 +118,11 @@ public class Rejestracja {
         edytujZdetale();
     }
 
+    public String kontrahentList() {
+        refresh(true);
+        return "/dcrej/kontrahenci";
+    }
+    
     public String list() {
         refresh(true);
         return "/dcrej/dokumentList";

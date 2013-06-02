@@ -11,10 +11,9 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        <h3>Kontrahenci</h3>
+        <h3>Kontrahenci do rejestracji</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
-            <ui:include src="./kontrahenciEdit.xhtml"/>
             <ui:param name="przyciski" value="./kontrahenciPrzyciski.xhtml"/>
             <ui:include src="./kontrahenciList.xhtml"/>
             <a4j:jsFunction name="remove" action="#{KontrahenciCfg.usun}" render="table" execute="@this"
@@ -32,6 +31,7 @@
                 Proszę czekać
             </rich:popupPanel>
             <hr/>
+
         </h:form>
     </ui:define>
 
