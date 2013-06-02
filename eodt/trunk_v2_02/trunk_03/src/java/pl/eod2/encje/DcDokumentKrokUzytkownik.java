@@ -6,7 +6,6 @@ package pl.eod2.encje;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import pl.eod.encje.Uzytkownik;
 
 /**
@@ -47,6 +47,9 @@ public class DcDokumentKrokUzytkownik implements Serializable {
     @Column(name = "data_akcept", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataAkcept;
+    @Size(max = 255)
+    @Column(name = "informacja", length = 255)
+    private String informacja;
     @JoinColumn(name = "ID_USER", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik idUser;
@@ -113,6 +116,14 @@ public class DcDokumentKrokUzytkownik implements Serializable {
 
     public void setDataAkcept(Date dataAkcept) {
         this.dataAkcept = dataAkcept;
+    }
+
+    public String getInformacja() {
+        return informacja;
+    }
+
+    public void setInformacja(String informacja) {
+        this.informacja = informacja;
     }
 
     @Override

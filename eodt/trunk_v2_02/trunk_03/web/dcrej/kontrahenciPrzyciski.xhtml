@@ -5,14 +5,13 @@
     xmlns:rich="http://richfaces.org/rich"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
-    template="/templates/template.xhtml"
-    xmlns:a4j="http://richfaces.org/a4j">
+    template="/templates/template.xhtml">
 
-                    <rich:tooltip target="imgEd" value="wybierz" layout="block"/>
-                    <a4j:commandLink render="dodajPane" execute="@this" >
-                        <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
-                        <f:setPropertyActionListener target="#{KontrahenciCfg.obiekt}" value="#{item}" />
-                    </a4j:commandLink>
+    <rich:tooltip target="imgEd" value="wybierz" layout="block"/>
+    <h:commandLink action="#{RejestracjaRej.list}">
+        <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
+        <f:setPropertyActionListener target="#{RejestracjaRej.kontrahent}" value="#{item}" />
+    </h:commandLink>
 
 </html>
 

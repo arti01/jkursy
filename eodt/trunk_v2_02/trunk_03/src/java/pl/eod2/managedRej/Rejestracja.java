@@ -14,6 +14,7 @@ import javax.faces.model.ListDataModel;
 import pl.eod.managed.Login;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
+import pl.eod2.encje.DcKontrahenci;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
@@ -31,11 +32,13 @@ public class Rejestracja {
     private String error;
     @ManagedProperty(value = "#{login}")
     private Login login;
+    private DcKontrahenci kontrahent;
 
     @PostConstruct
     void init() {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
+        kontrahent=new DcKontrahenci();
         refresh(true);
     }
 
@@ -125,6 +128,8 @@ public class Rejestracja {
     
     public String list() {
         refresh(true);
+        if(kontrahent.getId()!=null) obiekt.setKontrahentId(kontrahent);
+        kontrahent=new DcKontrahenci();
         return "/dcrej/dokumentList";
     }
     
@@ -186,6 +191,14 @@ public class Rejestracja {
 
     public void setPlik(DcPlik plik) {
         this.plik = plik;
+    }
+
+    public DcKontrahenci getKontrahent() {
+        return kontrahent;
+    }
+
+    public void setKontrahent(DcKontrahenci kontrahent) {
+        this.kontrahent = kontrahent;
     }
     
 }
