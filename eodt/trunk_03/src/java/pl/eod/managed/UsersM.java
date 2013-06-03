@@ -121,7 +121,7 @@ public class UsersM implements Serializable {
     
     public String ustawZastepceZapisz() throws NonexistentEntityException, Exception {
         zapisz();
-        return "/logowanie/index";
+        return "/logowanie/index?faces-redirect=true";
     }
     
     public String listaFiltr() {
@@ -161,15 +161,15 @@ public class UsersM implements Serializable {
 
     public String zapisz() throws NonexistentEntityException, Exception {
         //pozostają role nieedytowalne
-        System.err.println(rolesKlon);
+       /* System.err.println(rolesKlon);
         System.err.println(strukt.getUserId().getRole());
-        System.err.println(roleAll);
+        System.err.println(roleAll);*/
         
         
         //obsluga dla readonly roli w formularzu
-        if(!strukt.getUserId().getRole().equals(rolesKlon)) {
+        if(!strukt.getUserId().getRole().equals(rolesKlon)&&rolesKlon!=null) {
             rolesKlon.removeAll(roleAll);
-            System.err.println(rolesKlon);
+           // System.err.println(rolesKlon);
             strukt.getUserId().getRole().addAll(rolesKlon);
         }
         String error = struktC.editArti(strukt);
