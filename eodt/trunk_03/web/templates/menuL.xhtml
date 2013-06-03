@@ -16,54 +16,88 @@
                                     groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                                     topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
                         <rich:panelMenuGroup id="pgSt" label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
-                            <rich:panelMenuItem >
-                                <h:commandLink value="Nowy pracownik" action="#{UsersM.nowy}"/>
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Lista pracowników" action="#{UsersM.lista}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Struktura osobowa" action="#{StruktOsM.lista}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Struktura działów" action="#{StruktDzialM.lista}" />
-                            </rich:panelMenuItem>
+                            <h:commandLink action="#{UsersM.nowy}">
+                                <rich:panelMenuItem >
+                                    Nowy pracownik
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{UsersM.lista}" >
+                                <rich:panelMenuItem>
+                                    Lista pracowników
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{StruktOsM.lista}" >
+                                <rich:panelMenuItem>
+                                    Struktura osobowa
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{StruktDzialM.lista}" >
+                                <rich:panelMenuItem>
+                                    Struktura działów
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
-                        
-                        <rich:panelMenuItem rendered="#{login.admin}">
-                            <h:commandLink value="Zarządzanie spółkami" action="#{SpolkiMg.list}"/>
-                        </rich:panelMenuItem>
-                        
-                        <rich:panelMenuItem rendered="#{login.kierownik}">
-                            <h:commandLink value="Ustaw swojego zastępcę" action="#{UsersM.ustawZastepce}" />
-                        </rich:panelMenuItem>
-                        <rich:panelMenuItem rendered="#{login.admin}">
-                            <h:commandLink value="Lista wszystkich wniosków" action="#{UrlopAll.list}" />
-                        </rich:panelMenuItem>
+
+
+                        <h:commandLink action="#{SpolkiMg.list}" rendered="#{login.admin}">
+                            <rich:panelMenuItem>
+                                Zarządzanie spółkami
+                            </rich:panelMenuItem>
+                        </h:commandLink>
+
+                        <h:commandLink action="#{UsersM.ustawZastepce}"  rendered="#{login.kierownik}">
+                            <rich:panelMenuItem>
+                                Ustaw swojego zastępcę
+                            </rich:panelMenuItem>
+                        </h:commandLink>
+
+                        <h:commandLink action="#{UrlopAll.list}" rendered="#{login.admin}">
+                            <rich:panelMenuItem >
+                                Lista wszystkich wniosków
+                            </rich:panelMenuItem>
+                        </h:commandLink>
 
                         <rich:panelMenuGroup label="Obsługa urlopów" rendered="#{login.urlop}" expanded="#{login.menuUrlopExp}" actionListener="#{login.menuUrlopExpList}">
-                            <rich:panelMenuItem>
-                                <h:commandLink value="Twoje wnioski" action="#{UrlopM.list}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" >
-                                <h:commandLink value="Wnioski do akceptacji" action="#{UrlopM.listPodwl}"/>
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem rendered="#{login.zalogowany.stKier}">
-                                <h:commandLink value="Historia wniosków" action="#{UrlopM.listPodwlHist}" />
-                            </rich:panelMenuItem>
-                            <rich:panelMenuItem rendered="#{login.zalogowany.przyjmowanieWnioskow}">
-                                <h:commandLink value="Obce wnioski" action="#{UrlopObceM.list}" />
-                            </rich:panelMenuItem>
+                            <h:commandLink action="#{UrlopM.list}" >
+                                <rich:panelMenuItem>
+                                    Twoje wnioski
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{UrlopM.listPodwl}" rendered="#{login.zalogowany.stKier or fn:length(login.zalogowany.userId.strukturaSec)>0}" >
+                                <rich:panelMenuItem >
+                                    Wnioski do akceptacji
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{UrlopM.listPodwlHist}" rendered="#{login.zalogowany.stKier}">
+                                <rich:panelMenuItem >
+                                    Historia wniosków
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+
+                            <h:commandLink action="#{UrlopObceM.list}" rendered="#{login.zalogowany.przyjmowanieWnioskow}">    
+                                <rich:panelMenuItem >
+                                    Obce wnioski
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
-                        <rich:panelMenuItem 
-                            rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@') or fn:contains(login.zalogowany.userId.extId, 'FN')) 
-                                        and login.zalogowany!=null}">
-                            <h:outputLink value="../logowanie/zmianaHasla.xhtml">Zmiana hasła</h:outputLink>
-                        </rich:panelMenuItem>
-                        <rich:panelMenuItem>
-                            <a target="_top" href="../logout.jsp">Wyjście</a>
-                        </rich:panelMenuItem>
+                        <h:outputLink value="../logowanie/zmianaHasla.xhtml" rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@') or fn:contains(login.zalogowany.userId.extId, 'FN')) 
+                                                                                         and login.zalogowany!=null}">
+                            <rich:panelMenuItem >
+                                Zmiana hasła
+                            </rich:panelMenuItem>
+                        </h:outputLink>
+                        <a target="_top" href="../logout.jsp">
+                            <rich:panelMenuItem>
+                                Wyjście
+                            </rich:panelMenuItem>
+                        </a>
+
                         <rich:panelMenuItem>
                             Zalogowany jako: #{login.zalogowany.userId.fullname}, <br/>spółka: #{login.zalogowany.userId.spolkaId.nazwa}
                         </rich:panelMenuItem>

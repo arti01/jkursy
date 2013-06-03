@@ -73,6 +73,7 @@ public class UsersM implements Serializable {
         dzialC = new DzialJpaController();
         urC=new UserRolesJpaController();
         dataModel=new StrukturaDataModel(login.zalogowany.getUserId().getSpolkaId());
+        users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId(), true);
         sortOrders.put("userId.fullname", SortOrder.descending);
     }
 
