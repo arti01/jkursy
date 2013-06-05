@@ -57,7 +57,11 @@ public class StruktOsM implements Serializable {
         firma.setUserId(uFirma);
         srcRoots.clear();
         if (login.isAdmin()) {
-            srcRoots.addAll(struktC.getFindBezSzefa());
+            List<Struktura>bezSzefa=struktC.getFindBezSzefa();
+            for(Struktura s:bezSzefa){
+                if(!s.isSysSdmin()||login.getZalogowany().isSysSdmin()) srcRoots.add(s);
+            }
+            //srcRoots.addAll(bezSzefa);
             firma.setBezpPod(srcRoots);
             wynik.add(firma);
         } else {

@@ -88,6 +88,8 @@ public class Struktura implements Serializable {
     List<Struktura> obceWnioski;
     @Transient
     String[] rolaString;
+    @Transient
+    boolean sysSdmin;
 
     public Struktura() {
     }
@@ -310,6 +312,13 @@ public class Struktura implements Serializable {
         this.extraemail = extraemail;
     }
 
+    public boolean isSysSdmin() {
+                if(this.bezpPod.isEmpty()&&this.userId.getSpolkaId()==null&&this.szefId==null) return true;
+        else return false;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
