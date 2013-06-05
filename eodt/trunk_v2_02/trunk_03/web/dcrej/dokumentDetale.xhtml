@@ -81,7 +81,7 @@
                                 #{krok.akcept.nazwa}
                         </rich:column>
                         <rich:column>
-                            <f:facet name="header">członkowie kroku</f:facet>
+                            <f:facet name="header">Proces akceptacji</f:facet>
                             <rich:dataTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
                                 <rich:column style="width: 60%">
                                     #{krokUser.idUser.fullname}    
@@ -92,6 +92,9 @@
                                 <rich:column style="width: 20%">
                                     <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                                 </rich:column>
+                                <rich:column >
+                                #{krokUser.informacja}
+                            </rich:column>
                             </rich:dataTable>
                         </rich:column>
                     </rich:dataTable>
