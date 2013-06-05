@@ -26,4 +26,5 @@ INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (3, 'częściowa akceptacja');
 INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (4, 'zaakceptowany');
 
 INSERT INTO dc_projekt (id, nazwa, opis ) VALUES (1, 'brak projektu', 'brak projektu');
+INSERT INTO dc_zrodlo (id, nazwa, opis ) VALUES (1, 'brak źródła', 'brak źródła');
 INSERT INTO dc_kontrahenci (id, nazwa, nip_regon, osoba_kontak, www, email, adres, info_dod) VALUES (1, 'brak', null, null, null, null, null, 'brak kontrahenta');

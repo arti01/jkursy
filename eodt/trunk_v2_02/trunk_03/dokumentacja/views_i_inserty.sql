@@ -1,19 +1,15 @@
-CREATE VIEW user_roles_view AS 
+/*CREATE VIEW user_roles_view AS 
  SELECT u.adr_email AS username, ur.role_name
    FROM user_roles ur
    JOIN uzytkownik_user_roles uur ON ur.id = uur.role_id
    JOIN uzytkownik u ON u.id = uur.uzytkownik_id;
-
-ALTER TABLE user_roles_view
-  OWNER TO eod;
 
 CREATE VIEW userpass AS 
  SELECT u.adr_email AS username, p.pass AS password
    FROM uzytkownik u
    JOIN passwords p ON p.id = u.haslo_id;
 
-ALTER TABLE userpass
-  OWNER TO eod;
+*/
 
 INSERT INTO config VALUES (1, 'eskalujPoMinutach', 'eskaluj wniosek po uplywie minut', '3');
 INSERT INTO config VALUES (2, 'mail_smtp_host', 'mail_smtp_host', 'smtp.gmail.com');
@@ -101,6 +97,6 @@ INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (3, 4);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (4, 4);
 
 -- Uwaga, należy dostosować tabelę i nazwy pól w def. tego widoku
-CREATE VIEW wn_limity AS 
+/*CREATE VIEW wn_limity AS 
  SELECT DISTINCT extpass.login AS username, extpass.ulimit
-   FROM extpass;
+   FROM extpass;*/

@@ -14,7 +14,6 @@
         <h3>Dokumenty do akceptu</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
-
             <rich:panel id="listPanel">
                 <rich:dataTable value="#{AkceptOdb.login.zalogowany.userId.dcDoAkceptuKrokiList}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
@@ -41,8 +40,12 @@
                     <rich:column>
                         <f:facet name="header">status</f:facet>
                         <h:outputText id="statusList" value="#{item.idDokumentKrok.idDok.dokStatusId.nazwa}"/>
+                        <hr/>
+                        <h:outputLabel for="akceptOpis" value="uwagi do akceptu:"/>
                         <br/>
-                        <a4j:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" render="listPanel" rendered="#{item.idDokumentKrok.idDok.dokStatusId.id==2}" execute="@this">
+                        <h:inputTextarea id="akceptOpis" value="#{AkceptOdb.akceptOpis}" cols="15"/>
+                        <br/>
+                        <a4j:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" render="listPanel" rendered="#{item.idDokumentKrok.idDok.dokStatusId.id==2}" execute="@this, akceptOpis">
                             <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
                         </a4j:commandButton>
                         <rich:tooltip target="statusList">

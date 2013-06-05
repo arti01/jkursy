@@ -8,14 +8,14 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Detale dokumentu #{managedBean.obiekt.nazwa}</h3>
-        <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <h:form>
-            <rich:tabPanel >
-                <rich:tab header="Informacje podstawowe">
+    <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+    <h3>Detale dokumentu #{managedBean.obiekt.nazwa}</h3>
+    <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+    <h:form>
+        <rich:tabPanel >
+            <rich:tab header="Informacje podstawowe">
 
-               <h:panelGrid columns="2" id="dodajGrid">
+                <h:panelGrid columns="2" id="dodajGrid">
                     <h:outputLabel for="nameD" value="nazwa: "/>
                     <h:outputText id="nameD" value="#{managedBean.obiekt.nazwa}" />
 
@@ -33,103 +33,165 @@
 
                     <h:outputLabel for="projektD" value="projekt: "/>
                     <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
-                    
+
                     <h:outputLabel for="opisDlugiD" value=" "/>
                     <rich:collapsiblePanel header="dodatkowy opis" expanded="false" switchType="client" >
-                        <h:outputText value="#{managedBean.obiekt.opisDlugi}" escape="false"/>
+                        <h:outputText id="opisDlugiD" value="#{managedBean.obiekt.opisDlugi}" escape="false"/>
                     </rich:collapsiblePanel>
 
                 </h:panelGrid>                    
-                    
-                    <h:panelGrid id="infoDod" columns="3">
-                        <h:outputLabel for="status" value="aktualny status: "/>
-                        <h:outputText id="status" value="#{managedBean.obiekt.dokStatusId.nazwa}" style="font-weight: bold"/>
-                        <rich:tooltip target="status">
-                            #{managedBean.obiekt.dokStatusId.opis}
-                        </rich:tooltip>
-                        <h:outputLabel for="rodzDyst" value="rodzaj dystrybucji: "/>
-                        <h:outputText id="rodzDyst" value="#{managedBean.obiekt.rodzajId.idTypFlow.nazwa}"  style="font-weight: bold"/>
-                        <rich:tooltip target="rodzDyst">
-                            #{managedBean.obiekt.rodzajId.idTypFlow.opis}
-                        </rich:tooltip>
-                    </h:panelGrid>
-                </rich:tab>
 
-                <rich:tab header="Załączniki" id="tabPliki">
-                    <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
-                                     addLabel="dodaj plik" listHeight="40px"  rendered="#{managedBean.obiekt.dokStatusId.id==1}">
-                        <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
-                    </rich:fileUpload>
-                    <hr/>
-                    <rich:dataTable value="#{managedBean.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
-                        <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
-                        <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
-                        <rich:column sortBy="#{item.id}" sortOrder="descending">
-                            <f:facet name="header">nazwa</f:facet>
-                                #{item.nazwa}
+                <h:panelGrid id="infoDod" columns="3">
+                    <h:outputLabel for="status" value="aktualny status: "/>
+                    <h:outputText id="status" value="#{managedBean.obiekt.dokStatusId.nazwa}" style="font-weight: bold"/>
+                    <rich:tooltip target="status">
+                        #{managedBean.obiekt.dokStatusId.opis}
+                    </rich:tooltip>
+                    <h:outputLabel for="rodzDyst" value="rodzaj dystrybucji: "/>
+                    <h:outputText id="rodzDyst" value="#{managedBean.obiekt.rodzajId.idTypFlow.nazwa}"  style="font-weight: bold"/>
+                    <rich:tooltip target="rodzDyst">
+                        #{managedBean.obiekt.rodzajId.idTypFlow.opis}
+                    </rich:tooltip>
+                </h:panelGrid>
+            </rich:tab>
+
+            <rich:tab header="Załączniki" id="tabPliki">
+                <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
+                                 addLabel="dodaj plik" listHeight="40px"  rendered="#{managedBean.obiekt.dokStatusId.id==1}">
+                    <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
+                </rich:fileUpload>
+                <hr/>
+                <rich:dataTable value="#{managedBean.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">
+                    <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <rich:column sortBy="#{item.id}" sortOrder="descending">
+                        <f:facet name="header">nazwa</f:facet>
+                            #{item.nazwa}
+                    </rich:column>
+                    <rich:column >
+                        <f:facet name="header">data dodania</f:facet>
+                        <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
+                    </rich:column>
+                    <rich:column style="width: 50px">
+                        <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
+                        <h:commandLink action="#{fileUploadBean.download}" >
+                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
+                            <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
+                        </h:commandLink>
+                    </rich:column>
+                </rich:dataTable>
+
+            </rich:tab>
+            <rich:tab header="Proces akceptacji">
+                <rich:dataTable id="dok_kroki_old" value="#{managedBean.obiekt.dcDokKrok}" var="krok">
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column rowspan="2">lp</rich:column>
+                            <rich:column rowspan="2">typ kroku</rich:column>
+                            <rich:column rowspan="2">status akceptacji</rich:column>
+                            <rich:column colspan="4" rowspan="1">
+                                akceptacje
+                            </rich:column>
+                            <rich:column breakRowBefore="true">osoba</rich:column>
+                            <rich:column >akcja</rich:column>
+                            <rich:column >data</rich:column>
+                            <rich:column >info dod</rich:column>
+                        </rich:columnGroup>
+                    </f:facet>
+
+                    <rich:column sortBy="#{krok.lp}" sortOrder="ascending" colspan="1">
+                        #{krok.lp}
+                    </rich:column>
+                    <rich:column>
+                        #{krok.dcAckeptTypKroku.nazwa}
+                    </rich:column>
+                    <rich:column>
+                        #{krok.akcept.nazwa}
+                    </rich:column>
+                    <rich:collapsibleSubTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
+                        <rich:column  breakRowBefore="true">
+                            #{krokUser.idUser.fullname}    
                         </rich:column>
                         <rich:column >
-                            <f:facet name="header">data dodania</f:facet>
-                            <h:outputText value="#{item.dataDodania}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
+                            #{krokUser.akcept.nazwa}
                         </rich:column>
-                        <rich:column style="width: 50px">
-                        <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
-                            <h:commandLink action="#{fileUploadBean.download}" >
-                                <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
-                                <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
-                            </h:commandLink>
+                        <rich:column >
+                            <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                         </rich:column>
-                    </rich:dataTable>
+                        <rich:column >
+                            #{krokUser.informacja}
+                        </rich:column>
+                    </rich:collapsibleSubTable>
+                </rich:dataTable>
 
-                </rich:tab>
-                <rich:tab header="Proces akceptacji">
-                    <rich:dataTable id="dok_kroki" value="#{managedBean.obiekt.dcDokKrok}" var="krok">
-                        <rich:column sortBy="#{krok.lp}" sortOrder="ascending">
-                            <f:facet name="header">lp</f:facet>
-                                #{krok.lp}
-                        </rich:column>
-                        <rich:column>
-                            <f:facet name="header">typ kroku</f:facet>
-                                #{krok.dcAckeptTypKroku.nazwa}
-                        </rich:column>
-                        <rich:column>
-                            <f:facet name="header">status akceptacji</f:facet>
-                                #{krok.akcept.nazwa}
-                        </rich:column>
-                        <rich:column>
-                            <f:facet name="header">członkowie kroku</f:facet>
-                            <rich:dataTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser">
-                                <rich:column style="width: 60%">
-                                    #{krokUser.idUser.fullname}    
-                                </rich:column>
-                                <rich:column style="width: 20%">
-                                    #{krokUser.akcept.nazwa}
-                                </rich:column>
-                                <rich:column style="width: 20%">
-                                    <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
-                                </rich:column>
-                            </rich:dataTable>
-                        </rich:column>
-                    </rich:dataTable>
-                </rich:tab>
-                <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
-                                oncomplete="#{rich:component('confirmPane')}.hide();" />
-                <rich:popupPanel id="confirmPane" autosized="true">
-                    Na pewno chcesz skasować?
-                    <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-                            return false;" />
-                    <a4j:commandButton value="Tak" onclick="remove();
-                            return false;" />
-                </rich:popupPanel>
-            </rich:tabPanel>
-            <rich:panel id="wyslij">
-                <h:commandButton value="zaakceptuj" action="#{managedBean.akceptuj}" rendered="#{managedBean==AkceptOdb}" />
-            </rich:panel>
-            <rich:popupPanel id="statPane" autosized="true">
-                <h:graphicImage value="/images/ai.gif" alt="ai" />
-                Proszę czekać...
+                <rich:dataTable id="dok_kroki" value="#{managedBean.obiekt.dcDokKrok}" var="krok">
+                    <f:facet name="header">
+                        <rich:columnGroup>
+                            <rich:column rowspan="2">lp</rich:column>
+                            <rich:column rowspan="2">typ kroku</rich:column>
+                            <rich:column rowspan="2">status akceptacji</rich:column>
+                            <rich:column colspan="4">
+                                akceptacje
+                            </rich:column>
+                            <rich:column breakRowBefore="true">osoba</rich:column>
+                            <rich:column >akcja</rich:column>
+                            <rich:column >data</rich:column>
+                            <rich:column >info dod</rich:column>
+                        </rich:columnGroup>
+                    </f:facet>
+
+                    <rich:column sortBy="#{krok.lp}" sortOrder="ascending">
+                        #{krok.lp}
+                    </rich:column>
+                    <rich:column>
+                        #{krok.dcAckeptTypKroku.nazwa}
+                    </rich:column>
+                    <rich:column>
+                        #{krok.akcept.nazwa}
+                    </rich:column>
+                    <rich:column breakRowBefore="true">
+                        <rich:collapsibleSubTable value="#{krok.dcKrokUzytkownikaList}" var="krokUser" >
+                            <rich:column >
+                                <f:facet name="footer">ddffffffffffd</f:facet>
+                                ccc
+                            </rich:column>
+                            <rich:column >
+                                <f:facet name="footer">ddd</f:facet>
+                                ccc
+                            </rich:column>
+                            <rich:column >
+                                <f:facet name="footer">ddd</f:facet>
+                                vvv
+                            </rich:column>
+                            <rich:column >
+                                <f:facet name="footer">ddd</f:facet>
+                                ccc
+                            </rich:column>
+                        </rich:collapsibleSubTable>
+                    </rich:column>
+                </rich:dataTable>
+            </rich:tab>
+
+            <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+            <rich:popupPanel id="confirmPane" autosized="true">
+                Na pewno chcesz skasować?
+                <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                        return false;" />
+                <a4j:commandButton value="Tak" onclick="remove();
+                        return false;" />
             </rich:popupPanel>
-        </h:form>
-        <hr/>
+        </rich:tabPanel>
+        <h:panelGrid id="wyslij" columns="2" rendered="#{managedBean==AkceptOdb}">
+            <h:outputLabel for="akceptOpis" value="uwagi do akceptu:"/>
+            <h:inputTextarea id="akceptOpis" value="#{AkceptOdb.akceptOpis}"/>
+            <h:commandButton value="zaakceptuj" action="#{managedBean.akceptuj}"/>
+        </h:panelGrid>
+        <rich:popupPanel id="statPane" autosized="true">
+            <h:graphicImage value="/images/ai.gif" alt="ai" />
+            Proszę czekać...
+        </rich:popupPanel>
+    </h:form>
+    <hr/>
 </ui:composition>
 

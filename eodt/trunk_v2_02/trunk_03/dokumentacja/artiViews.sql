@@ -7,14 +7,8 @@ CREATE TABLE extpass
   ulimit character varying(50),
   CONSTRAINT extpass_pkey PRIMARY KEY (id )
 )
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE extpass
-  OWNER TO eod;
 
-
-CREATE OR REPLACE VIEW userpass AS 
+CREATE VIEW userpass AS 
          SELECT u.adr_email AS username, p.pass AS password
            FROM uzytkownik u
       JOIN passwords p ON p.id = u.haslo_id
@@ -22,10 +16,8 @@ UNION
          SELECT extpass.login AS username, extpass.pass AS password
            FROM extpass;
 
-ALTER TABLE userpass
-  OWNER TO eod;
 
-CREATE OR REPLACE VIEW user_roles_view AS 
+CREATE VIEW user_roles_view AS 
          SELECT u.adr_email AS username, ur.role_name
            FROM user_roles ur
       JOIN uzytkownik_user_roles uur ON ur.id = uur.role_id

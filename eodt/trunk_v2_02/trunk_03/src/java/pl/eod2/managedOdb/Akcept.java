@@ -9,8 +9,6 @@ import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentKrok;
 import pl.eod2.encje.DcDokumentKrokUzytkownik;
-import pl.eod2.encje.DcDokumentStatusJpaController;
-import pl.eod2.encje.DcPlikJpaController;
 
 @ManagedBean(name = "AkceptOdb")
 @SessionScoped
@@ -20,6 +18,7 @@ public class Akcept {
     private DcDokumentJpaController dcC;
     @ManagedProperty(value = "#{login}")
     private Login login;
+    private String akceptOpis = "";
 
     @PostConstruct
     void init() {
@@ -35,17 +34,23 @@ public class Akcept {
     }
 
     public String akceptuj() {
-        DcDokumentKrokUzytkownik dkuDoZmiany=null;
+        DcDokumentKrokUzytkownik dkuDoZmiany = new DcDokumentKrokUzytkownik();
         for (DcDokumentKrok dk : obiekt.getDcDokKrok()) {
             if (dk.getAkcept().getId() == 2 || dk.getAkcept().getId() == 3) {
                 for (DcDokumentKrokUzytkownik dku : dk.getDcKrokUzytkownikaList()) {
                     if (dku.getIdUser() == login.getZalogowany().getUserId()) {
-                        dkuDoZmiany=dku;
+                        dkuDoZmiany = dku;
                     }
                 }
             }
         }
+        try {
+            dkuDoZmiany.setInformacja(akceptOpis);
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
+        }
         dcC.akceptuj(dkuDoZmiany);
+        akceptOpis = "";
         return "/dcodb/akcList?faces-redirect=true";
     }
 
@@ -65,6 +70,12 @@ public class Akcept {
     public void setLogin(Login login) {
         this.login = login;
     }
-    
-    
+
+    public String getAkceptOpis() {
+        return akceptOpis;
+    }
+
+    public void setAkceptOpis(String akceptOpis) {
+        this.akceptOpis = akceptOpis;
+    }
 }
