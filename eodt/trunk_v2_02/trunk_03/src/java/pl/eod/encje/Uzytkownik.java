@@ -31,6 +31,8 @@ import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
 import pl.eod2.encje.DcAkceptKroki;
+import pl.eod2.encje.DcDokDoWiadCel;
+import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentKrokUzytkownik;
 
@@ -103,6 +105,12 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "idUser", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikList;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "wprowadzil", orphanRemoval = false, fetch = FetchType.LAZY)
+    @OrderBy(value = "id DESC")
+    private List<DcDokDoWiadomosci> dcDoWiadList;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userid", orphanRemoval = false, fetch = FetchType.LAZY)
+    @OrderBy(value = "id DESC")
+    private List<DcDokDoWiadCel> dcDoWiadCelList;
     @Transient
     private List<DcDokumentKrokUzytkownik> dcDoAkceptuKrokiList;
     
@@ -207,8 +215,23 @@ public class Uzytkownik implements Serializable {
     }
 
     public void setSpolkaId(Spolki spolkaId) {
-        
         this.spolkaId = spolkaId;
+    }
+
+    public List<DcDokDoWiadomosci> getDcDoWiadList() {
+        return dcDoWiadList;
+    }
+
+    public void setDcDoWiadList(List<DcDokDoWiadomosci> dcDoWiadList) {
+        this.dcDoWiadList = dcDoWiadList;
+    }
+
+    public List<DcDokDoWiadCel> getDcDoWiadCelList() {
+        return dcDoWiadCelList;
+    }
+
+    public void setDcDoWiadCelList(List<DcDokDoWiadCel> dcDoWiadCelList) {
+        this.dcDoWiadCelList = dcDoWiadCelList;
     }
 
     public boolean isEodstru() {

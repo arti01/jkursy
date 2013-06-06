@@ -26,6 +26,8 @@
     <class>pl.eod2.encje.DcAkceptKroki</class>
     <class>pl.eod2.encje.DcAkceptTypKroku</class>
     <class>pl.eod2.encje.DcKontrahenci</class>
+    <class>pl.eod2.encje.DcDokDoWiadCel</class>
+    <class>pl.eod2.encje.DcDokDoWiadomosci</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>

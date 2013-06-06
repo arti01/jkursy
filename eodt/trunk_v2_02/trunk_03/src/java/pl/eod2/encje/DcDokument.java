@@ -90,9 +90,13 @@ public class DcDokument implements Serializable {
     private DcDokumentStatus dokStatusId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokumentKrok> dcDokKrok;
+    
     @JoinColumn(name = "kontrahent_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcKontrahenci kontrahentId;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DcDokDoWiadomosci> dcDokDoWiadList;
 
     public DcDokument() {
     }
@@ -219,6 +223,14 @@ public class DcDokument implements Serializable {
         this.kontrahentId = kontrahentId;
     }
 
+    public List<DcDokDoWiadomosci> getDcDokDoWiadList() {
+        return dcDokDoWiadList;
+    }
+
+    public void setDcDokDoWiadList(List<DcDokDoWiadomosci> dcDokDoWiadList) {
+        this.dcDokDoWiadList = dcDokDoWiadList;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
