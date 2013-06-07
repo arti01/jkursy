@@ -1,6 +1,7 @@
 package pl.eod2.managedOdb;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,7 +12,6 @@ import javax.faces.context.FacesContext;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
 import pl.eod.managed.Login;
-import pl.eod2.encje.DcAkceptKroki;
 import pl.eod2.encje.DcDokDoWiadCel;
 import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
@@ -85,6 +85,7 @@ public class Akcept {
         DcDokDoWiadCel cel=new DcDokDoWiadCel();
         //userDoWiad=Uc.findUzytkownik(userDoWiad.getId());
         cel.setUserid(userDoWiad);
+        cel.setIdDokDoWiad(doWiad);
         doWiad.getDcDokDoWiadCelList().add(cel);
         //usersLista.remove(user);
         userDoWiad = new Uzytkownik();
@@ -95,8 +96,18 @@ public class Akcept {
     }
     
     public void dodajDoWiad() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        obiekt.getDcDokDoWiadList().add(doWiad);
-        error = dcC.edit(obiekt);
+        System.out.println(obiekt);
+        System.out.println(obiekt.getDcDokKrok().get(0).getAkcept().getNazwa());
+
+        if (obiekt.getDcDokDoWiadList() == null) {
+            obiekt.setDcDokDoWiadList(new ArrayList<DcDokDoWiadomosci>());
+        }
+        doWiad.setWprowadzil(login.getZalogowany().getUserId());
+        doWiad.setDataWprow(new Date());
+        doWiad.setDokid(obiekt);
+        error = dcC.editDoWiad(obiekt, doWiad);
+        System.out.println(obiekt.getDcDokDoWiadList());
+
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();

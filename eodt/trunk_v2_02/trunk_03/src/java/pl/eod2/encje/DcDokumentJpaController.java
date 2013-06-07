@@ -70,14 +70,14 @@ public class DcDokumentJpaController implements Serializable {
     }
 
     public String create(DcDokument dcDokument) {
-        if(dcDokument.getKontrahentId()==null) {
-            DcKontrahenciJpaController dcKonC=new DcKontrahenciJpaController();
-            DcKontrahenci dokKon= dcKonC.findDcKontrahenci(1);
+        if (dcDokument.getKontrahentId() == null) {
+            DcKontrahenciJpaController dcKonC = new DcKontrahenciJpaController();
+            DcKontrahenci dokKon = dcKonC.findDcKontrahenci(1);
             dcDokument.setKontrahentId(dokKon);
         }
-        
-        DcDokumentStatusJpaController dcDokStatC=new DcDokumentStatusJpaController();
-        DcDokumentStatus dokSt= dcDokStatC.findDcDokumentStatus(1);
+
+        DcDokumentStatusJpaController dcDokStatC = new DcDokumentStatusJpaController();
+        DcDokumentStatus dokSt = dcDokStatC.findDcDokumentStatus(1);
         dcDokument.setDokStatusId(dokSt);
         if (dcDokument.getDcPlikList() == null) {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
@@ -171,17 +171,17 @@ public class DcDokumentJpaController implements Serializable {
                 }
             }
             //jesli nie ma kolejnego kroku a biezacy jest zaakceptowany zmien status dokumentu 
-            if (dkNext == null&&dku.getIdDokumentKrok().getAkcept().getId() == 4) {
+            if (dkNext == null && dku.getIdDokumentKrok().getAkcept().getId() == 4) {
                 dku.getIdDokumentKrok().getIdDok().setDokStatusId(new DcDokumentStatus(3));
                 em.merge(dku.getIdDokumentKrok().getIdDok());
             } //jesli jest kolejny, to zmien  mu status z poczatkowy na brak akceptu
-            else if(dkNext != null){
+            else if (dkNext != null) {
                 dkNext.setAkcept(aS2);
                 em.merge(dkNext);
             }
             //a jesli nie ma kolejnego, a obecny nie jest zaakceptowany to nic nie rob ;)
             em.getTransaction().commit();
-        dok=new DcDokumentJpaController().findDcDokument(dok.getId());
+            dok = new DcDokumentJpaController().findDcDokument(dok.getId());
         } catch (Exception ex) {
             ex.printStackTrace();
             //return "blad";
@@ -193,15 +193,35 @@ public class DcDokumentJpaController implements Serializable {
         return dok;
     }
 
+    public String editDoWiad(DcDokument dcDokument, DcDokDoWiadomosci doWiad) {
+        EntityManager em = null;
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(doWiad);
+            dcDokument.getDcDokDoWiadList().add(doWiad);
+            em.merge(dcDokument);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return null;
+    }
+
     public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
-        
-        if(dcDokument.getKontrahentId()==null) {
-            DcKontrahenciJpaController dcKonC=new DcKontrahenciJpaController();
-            DcKontrahenci dokKon= dcKonC.findDcKontrahenci(1);
+
+        if (dcDokument.getKontrahentId() == null) {
+            DcKontrahenciJpaController dcKonC = new DcKontrahenciJpaController();
+            DcKontrahenci dokKon = dcKonC.findDcKontrahenci(1);
             dcDokument.setKontrahentId(dokKon);
         }
-        
+
         try {
             em = getEntityManager();
             em.getTransaction().begin();

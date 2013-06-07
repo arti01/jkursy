@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+        <h3>Dokumenty, które dostałeś do wiadomości</h3>
+        <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        
+        <ui:param name="managedBean" value="#{DoWiadOdb}"/>
+        
+        <h:form>
+            <rich:panel id="listPanel">
+                <rich:dataTable value="#{managedBean.login.zalogowany.userId.dcDoWiadCelList}" var="cel" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                    <ui:param name="item" value="#{cel.idDokDoWiad.dokid}"/>            
+                    <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <rich:column sortBy="#{item.idDokumentKrok.idDok.id}" sortOrder="descending">
+                        <f:facet name="header">data rejestracji</f:facet>
+                        <h:outputText value="#{item.idDokumentKrok.idDok.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">nazwa</f:facet>
+                        <h:outputText id="nazwaList" value="#{item.idDokumentKrok.idDok.nazwa}"/>
+                        <rich:tooltip target="nazwaList">
+                            #{item.idDokumentKrok.idDok.opis}
+                        </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">data dokumentu</f:facet>
+                        <h:outputText value="#{item.idDokumentKrok.idDok.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">żródło</f:facet>
+                            #{item.idDokumentKrok.idDok.zrodloId.nazwa}
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">status</f:facet>
+                        <h:outputText id="statusList" value="#{item.idDokumentKrok.idDok.dokStatusId.nazwa}"/>
+                        <br/>
+                        <rich:tooltip target="statusList">
+                            #{item.idDokumentKrok.idDok.dokStatusId.opis}
+                        </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">wprowadził</f:facet>
+                            #{item.idDokumentKrok.idDok.userId.fullname}
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">rodzaj</f:facet>
+                        <h:outputText id="rodzajList" value="#{item.idDokumentKrok.idDok.rodzajId.nazwa}"/>
+                        <rich:tooltip target="rodzajList">
+                            #{item.idDokumentKrok.idDok.rodzajId.opis} z grupy:#{item.idDokumentKrok.idDok.rodzajId.idRodzajGrupa.nazwa}
+                        </rich:tooltip>
+                    </rich:column>
+
+                    <rich:column style="width: 70px">
+                        <rich:tooltip target="imgDt" value="detale" layout="block"/>
+                        <a4j:commandLink execute="@this" action="#{managedBean.detale}">
+                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="details" />
+                            <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item.idDokumentKrok.idDok}" />
+                        </a4j:commandLink>
+                    </rich:column>
+                </rich:dataTable>
+            </rich:panel>
+            <rich:popupPanel id="statPane" autosized="true">
+                <h:graphicImage value="/images/ai.gif" alt="ai" />
+                Proszę czekać
+            </rich:popupPanel>
+        </h:form>
+        <hr/>
+
+    </ui:define>
+
+</ui:composition>
+
