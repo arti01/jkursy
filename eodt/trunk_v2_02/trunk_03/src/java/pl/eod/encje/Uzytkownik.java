@@ -113,6 +113,8 @@ public class Uzytkownik implements Serializable {
     private List<DcDokDoWiadCel> dcDoWiadCelList;
     @Transient
     private List<DcDokumentKrokUzytkownik> dcDoAkceptuKrokiList;
+    @Transient
+    private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikListHist;
     
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
     @ManyToOne()
@@ -320,6 +322,20 @@ public class Uzytkownik implements Serializable {
         }
         return wynik;
     }
+
+    public List<DcDokumentKrokUzytkownik> getDcDokumentKrokUzytkownikListHist() {
+        List<DcDokumentKrokUzytkownik> wynik = new ArrayList<DcDokumentKrokUzytkownik>();
+        for (DcDokumentKrokUzytkownik dku : getDcDokumentKrokUzytkownikList()) {
+            //krok danego użytkownika musi być bez akceptu
+            //krok dokumentu musi być do akceptu lub częsciowa akceptacja
+            if (dku.getAkcept().getId() == 4) {
+                wynik.add(dku);
+            }
+        }
+        return wynik;
+    }
+    
+    
 
     @Override
     public boolean equals(Object object) {

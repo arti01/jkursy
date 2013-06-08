@@ -89,6 +89,7 @@ public class Akcept {
         doWiad.getDcDokDoWiadCelList().add(cel);
         //usersLista.remove(user);
         userDoWiad = new Uzytkownik();
+        System.err.println(cel.getId()+"-"+cel.getIdDokDoWiad()+"-"+cel.getUserid());
     }
     
     public void usunDoWiadUser() {
@@ -96,9 +97,6 @@ public class Akcept {
     }
     
     public void dodajDoWiad() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        System.out.println(obiekt);
-        System.out.println(obiekt.getDcDokKrok().get(0).getAkcept().getNazwa());
-
         if (obiekt.getDcDokDoWiadList() == null) {
             obiekt.setDcDokDoWiadList(new ArrayList<DcDokDoWiadomosci>());
         }

@@ -56,7 +56,7 @@ public class DcDokDoWiadomosci implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprow", nullable = false)
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dataWprow;
     @JoinColumn(name = "wprowadzil", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
