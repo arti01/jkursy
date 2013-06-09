@@ -68,7 +68,7 @@ public class Uzytkownik implements Serializable {
     //@OneToOne(mappedBy = "username")
     WnLimity wnLimity;
     
-    @OneToMany(mappedBy = "secUserId")
+    @OneToMany(mappedBy = "secUserId", cascade = CascadeType.REFRESH)
     List<Struktura> strukturaSec;
     
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.ALL})
