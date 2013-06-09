@@ -26,6 +26,7 @@
       <property name="eclipselink.logging.parameters" value="false"/>
       <property name="eclipselink.logging.level.sql" value="info"/>
       <property name="eclipselink.logging.level.cache" value="info"/>
+      <property name="eclipselink.ddl-generation" value="create-tables"/>
     </properties>
   </persistence-unit>
 </persistence>

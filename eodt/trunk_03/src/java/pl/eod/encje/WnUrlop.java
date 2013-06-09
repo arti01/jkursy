@@ -97,6 +97,15 @@ public class WnUrlop implements Serializable {
     @JoinColumn(name = "przyjmujacy", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Uzytkownik przyjmujacy;
+    @Size(max = 255)
+    @Column(name = "miejsce")
+    private String miejsce;
+    @Size(max = 255)
+    @Column(name = "cel")
+    private String cel;
+    @Size(max = 255)
+    @Column(name = "srodek_lok")
+    private String srodekLok;
     @Transient
     private Date dataOstZmiany;
 
@@ -235,6 +244,30 @@ public class WnUrlop implements Serializable {
 
     public void setInfoDod(String infoDod) {
         this.infoDod = infoDod;
+    }
+
+    public String getMiejsce() {
+        return miejsce;
+    }
+
+    public void setMiejsce(String miejsce) {
+        this.miejsce = miejsce;
+    }
+
+    public String getCel() {
+        return cel;
+    }
+
+    public void setCel(String cel) {
+        this.cel = cel;
+    }
+
+    public String getSrodekLok() {
+        return srodekLok;
+    }
+
+    public void setSrodekLok(String srodekLok) {
+        this.srodekLok = srodekLok;
     }
 
     @Override
