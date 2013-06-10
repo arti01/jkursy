@@ -7,14 +7,22 @@
     <body>
         <div>
             <h3>2012-06-09</h3>
-            <h4>realizacja zgłoszonych poprawek</h4>
+            <h4>Delegacje, wymuszenie zastępcy, kontrola dni urlopu</h4>
             <ul>
+                <li>
+                    ALTER TABLE struktura ADD COLUMN mus_zast integer;
+                    update struktura set mus_zast=1;
+                    ALTER TABLE struktura ALTER COLUMN mus_zast SET NOT NULL;
+                    
+                    Sprawdzenie zastępcy działa przy rejestracji wniosku, przy jego wysyłce i podczas akceptu (w razie, gdyby jakiś mistrz swiata
+                    cwaniaków ustawił zastępce, wysłał wniosek a potem go skasował przed akceptem)
+                </li>
                 <li>
                     INSERT INTO wn_rodzaje VALUES (3, 'Delegacja krajowa');
                     INSERT INTO wn_rodzaje VALUES (4, 'Delegacja zagraniczna');
                 </li>
             </ul>
-            
+
             <h3>2012-05-16</h3>
             <h4>realizacja zgłoszonych poprawek</h4>
             <ul>

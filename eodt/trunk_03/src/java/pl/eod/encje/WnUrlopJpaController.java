@@ -44,6 +44,10 @@ public class WnUrlopJpaController implements Serializable {
         if (wnUrlop.getDataDo().before(wnUrlop.getDataOd())) {
             return "Data końca nie może być przed datą początku";
         }
+        if(wnUrlop.getUzytkownik().getStruktura().isMusZast()&&wnUrlop.getUzytkownik().getStruktura().getSecUserId()==null){
+            return "Przed wystawieniem wniosku konieczny jest ustawiony zastępca";
+        }
+        
         if (wnUrlop.getWnHistoriaList() == null) {
             wnUrlop.setWnHistoriaList(new ArrayList<WnHistoria>());
         }

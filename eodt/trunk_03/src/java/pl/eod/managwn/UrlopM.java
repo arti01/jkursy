@@ -131,7 +131,7 @@ public class UrlopM implements Serializable {
 
     public void wyslij() {
         String info = "";
-        String error=null;
+        String error = null;
         try {
             WnStatusy st = new WnStatusy();
             st.setId(new Long(2));
@@ -150,7 +150,7 @@ public class UrlopM implements Serializable {
 
             urlop.getWnHistoriaList().add(wnh);
 
-             error= urlopC.createEdit(urlop);
+            error = urlopC.createEdit(urlop);
 
             if (error == null) {
                 //wysylanie maila
@@ -188,11 +188,12 @@ public class UrlopM implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             FacesMessage message = new FacesMessage();
-            if(error!=null){
+            if (error != null) {
                 message.setSeverity(FacesMessage.SEVERITY_ERROR);
                 message.setSummary(error);
+            } else {
+                message.setSummary(info);
             }
-            else message.setSummary(info);
             context.addMessage(zapisz.getClientId(context), message);
         }
     }
@@ -214,37 +215,40 @@ public class UrlopM implements Serializable {
         wnh.setOpisZmiany("Wniosek zaakceptowany");
 
         urlop.getWnHistoriaList().add(wnh);
+        String error;
+        error = urlopC.createEdit(urlop);
+        if (error == null) {
+            if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Wniosek o urlop zaakceptowany");
+                kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+                KomKolC.create(kk);
+            }
 
-        urlopC.createEdit(urlop);
-
-        if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
-            kk.setStatus(0);
-            kk.setIdDokumenu(urlop.getId().intValue());
-            kk.setTemat("Wniosek o urlop zaakceptowany");
-            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
-            KomKolC.create(kk);
+            if (urlop.getPrzyjmujacy() != null) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Wniosek o urlop zaakceptowany");
+                kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+                KomKolC.create(kk);
+            }
         }
-
-        if (urlop.getPrzyjmujacy() != null) {
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
-            kk.setStatus(0);
-            kk.setIdDokumenu(urlop.getId().intValue());
-            kk.setTemat("Wniosek o urlop zaakceptowany");
-            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
-            KomKolC.create(kk);
-        }
-
         initUrlop();
-
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         FacesMessage message = new FacesMessage();
-        message.setSummary("Wniosek zaakceptowany");
+        if (error != null) {
+            message.setSummary(error);
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        } else {
+            message.setSummary("Wniosek zaakceptowany");
+        }
         context.addMessage(zapisz.getClientId(context), message);
-        System.out.println(urlop);
     }
 
     public void odrzuc() {
@@ -316,7 +320,7 @@ public class UrlopM implements Serializable {
         urlop.getWnHistoriaList().add(wnh);
 
         System.err.println(urlopC.createEdit(urlop));
-        
+
         if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
