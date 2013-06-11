@@ -23,6 +23,10 @@
                     <h:outputLabel for="opisD" value="opis: "/>
                     <h:inputTextarea id="opisD" value="#{SpolkiMg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
+                    
+                    <h:outputLabel for="symbolD" value="symbol: "/>
+                    <h:inputText id="symbolD" value="#{SpolkiMg.obiekt.symbol}" size="5" ><rich:validator/></h:inputText>
+                    <rich:message for="symbolD" styleClass="error" />
                 </h:panelGrid>
                 <rich:message for="zapisz" styleClass="error" />
                 <rich:message for="dodaj" styleClass="error" />
@@ -51,6 +55,10 @@
                     <rich:column>
                         <f:facet name="header">opis</f:facet>
                             #{item.opis}
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">symbol</f:facet>
+                            #{item.symbol}
                     </rich:column>
                     <rich:column style="width: 45px">
                         <a4j:commandLink execute="@this" render="@none"

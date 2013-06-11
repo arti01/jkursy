@@ -10,10 +10,20 @@
             <h4>Delegacje, wymuszenie zastępcy, kontrola dni urlopu</h4>
             <ul>
                 <li>
+                    ALTER TABLE wn_rodzaje ADD COLUMN symbol varchar(5);
+                    następnie wypełnić dla już istniejących
+                    ALTER TABLE wn_rodzaje ALTER COLUMN symbol SET NOT NULL;
+                </li>
+                <li>
+                    ALTER TABLE spolki ADD COLUMN symbol varchar(5);
+                    następnie wypełnić dla już istniejących
+                    ALTER TABLE spolki ALTER COLUMN symbol SET NOT NULL;
+                </li>
+                <li>
                     ALTER TABLE struktura ADD COLUMN mus_zast integer;
                     update struktura set mus_zast=1;
                     ALTER TABLE struktura ALTER COLUMN mus_zast SET NOT NULL;
-                    
+
                     Sprawdzenie zastępcy działa przy rejestracji wniosku, przy jego wysyłce i podczas akceptu (w razie, gdyby jakiś mistrz swiata
                     cwaniaków ustawił zastępce, wysłał wniosek a potem go skasował przed akceptem)
                 </li>

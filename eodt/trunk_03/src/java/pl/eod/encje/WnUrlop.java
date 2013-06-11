@@ -75,7 +75,6 @@ public class WnUrlop implements Serializable {
     private Date dataWprowadzenia;
     @Column(name = "extraemail", nullable = true)
     private Integer extraemail;
-    
     @Column(name = "info_dod", nullable = true)
     private String infoDod;
     

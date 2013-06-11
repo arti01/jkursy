@@ -81,10 +81,13 @@ public class WnUrlopJpaController implements Serializable {
             em.merge(u);
             //em.getTransaction().commit();
             //nadawanie numeru wniosku;
-            String nrWniosku = wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
-            nrWniosku = nrWniosku + "/" + (getWnUrlopCountRokBiezacy() + 1) + "/";
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-            nrWniosku = nrWniosku + sdf.format(new Date());
+            String nrWniosku =wnUrlop.getUzytkownik().getSpolkaId().getSymbol(); 
+            nrWniosku=nrWniosku+"/"+wnUrlop.getRodzajId().getSymbol().toUpperCase();
+            //nrWniosku = nrWniosku + "/" + (getWnUrlopCountRokBiezacy() + 1) + "/";
+            nrWniosku = nrWniosku + "/" + (getWnUrlopCountMiesiacBiezacy() + 1) + "/";
+            SimpleDateFormat sdfr = new SimpleDateFormat("yyyy");
+            SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+            nrWniosku = nrWniosku + sdfr.format(new Date())+"/"+ sdfr.format(new Date());
             if (wnUrlop.getStatusId().getId() == 1) {
                 wnUrlop.setNrWniosku(nrWniosku);
             }
@@ -213,6 +216,30 @@ public class WnUrlopJpaController implements Serializable {
     public int getWnUrlopCountRokBiezacy() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<WnUrlop> rt = cq.from(WnUrlop.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            cq.where(cb.greaterThan(rt.get(WnUrlop_.dataWprowadzenia), cal.getTime()));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public int getWnUrlopCountMiesiacBiezacy() {
+        Calendar cal = Calendar.getInstance();
+        //cal.set(Calendar.MONTH, Calendar.JANUARY);
         cal.set(Calendar.DATE, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);

@@ -111,7 +111,6 @@ public class UrlopM implements Serializable {
                 kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " anulował urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
             }
-
             info = "Wniosek anulowany";
 
         } catch (Exception ex) {

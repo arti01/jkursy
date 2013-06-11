@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -40,6 +41,12 @@ public class WnRodzaje implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "opis", unique = true)
     private String opis;
+    @Basic(optional = false)
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 5)
+    @Column(name = "symbol", nullable = false, length = 5)
+    private String symbol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rodzajId")
     private List<WnUrlop> wnUrlopList;
 
@@ -77,6 +84,14 @@ public class WnRodzaje implements Serializable {
 
     public void setWnUrlopList(List<WnUrlop> wnUrlopList) {
         this.wnUrlopList = wnUrlopList;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     @Override
