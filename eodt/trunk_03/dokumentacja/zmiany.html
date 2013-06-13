@@ -10,6 +10,22 @@
             <h4>Delegacje, wymuszenie zastępcy, kontrola dni urlopu</h4>
             <ul>
                 <li>
+                    sprawdzanie, czy tworzony lub wysyłany wniosek nie dotyczy zakresu dat już wysłanego
+                    lub zaakceptowanego wniosku
+                </li>
+                <li>
+                    Oprogramowanie blokady na złożenie i wysłanie wniosku, gdy brak zastępcy.
+                    Konieczność posiadania zastępcy definiowana przy dodawaniu i edycji pracownika
+                </li>
+                <li>
+                    Dodana inforacja o zastępcy przy mailu generowanym po wysłaniu wniosku
+                </li>
+                <li>
+                    Zmieniłem numerację wszystkich wniosków, obecnie ma postać
+                symbol spolki/symbol rodzaju urlopu/nr kolejny w miesiącu/miesiąc/rok
+                gdzie symbol spółki i symbol urlopu jest definiowany w odpowiednych tabelach (poniżej altery)
+                </li>
+                <li>
                     ALTER TABLE wn_rodzaje ADD COLUMN symbol varchar(5);
                     następnie wypełnić dla już istniejących
                     ALTER TABLE wn_rodzaje ALTER COLUMN symbol SET NOT NULL;

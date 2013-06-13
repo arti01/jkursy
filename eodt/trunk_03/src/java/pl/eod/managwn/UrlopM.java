@@ -150,7 +150,7 @@ public class UrlopM implements Serializable {
             urlop.getWnHistoriaList().add(wnh);
 
             error = urlopC.createEdit(urlop);
-
+            String tresc;
             if (error == null) {
                 //wysylanie maila
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -160,7 +160,15 @@ public class UrlopM implements Serializable {
                     kk.setStatus(0);
                     kk.setIdDokumenu(urlop.getId().intValue());
                     kk.setTemat("Informacja o wniosku urlopowym");
-                    kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                    tresc = "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+                    if(!urlop.getInfoDod().isEmpty()){
+                            tresc=tresc+ ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    }
+                    if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                        tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                    }
+                    kk.setTresc(tresc);
+
                     KomKolC.create(kk);
                 }
 
@@ -170,7 +178,15 @@ public class UrlopM implements Serializable {
                     kk.setStatus(0);
                     kk.setIdDokumenu(urlop.getId().intValue());
                     kk.setTemat("Prośba o akceptację wniosku urlopowego");
-                    kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                    tresc = "Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+                    
+                    if(!urlop.getInfoDod().isEmpty()){
+                            tresc=tresc+ ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    }
+                    if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                        tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                    }
+                    kk.setTresc(tresc);
                     KomKolC.create(kk);
                 }
                 info = "Wniosek wysłany";

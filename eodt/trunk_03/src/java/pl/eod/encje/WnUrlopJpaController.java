@@ -62,14 +62,21 @@ public class WnUrlopJpaController implements Serializable {
                     if (ur.getStatusId().getId() != 2 && ur.getStatusId().getId() != 3) {
                         continue;
                     }
+
                     if ((wnUrlop.getDataDo().after(ur.getDataOd()) || wnUrlop.getDataDo().equals(ur.getDataOd()))
                             && (wnUrlop.getDataDo().before(ur.getDataDo()) || wnUrlop.getDataDo().equals(ur.getDataDo()))) {
                         return "data końca zawiera się w już wysłanym wniosku";
                     }
-                    if ((wnUrlop.getDataOd().after(ur.getDataOd()) || wnUrlop.getDataDo().equals(ur.getDataOd()))
-                            && (wnUrlop.getDataOd().before(ur.getDataDo()) || wnUrlop.getDataDo().equals(ur.getDataDo()))) {
+                    if ((wnUrlop.getDataOd().after(ur.getDataOd()) || wnUrlop.getDataOd().equals(ur.getDataOd()))
+                            && (wnUrlop.getDataOd().before(ur.getDataDo()) || wnUrlop.getDataOd().equals(ur.getDataDo()))) {
                         return "data początku zawiera się w już wysłanym wniosku";
                     }
+                    
+                    if (ur.getDataDo().after(wnUrlop.getDataOd())
+                            && ur.getDataDo().before(wnUrlop.getDataDo())) {
+                        return "już wysłany wniosek leży w tym zakresie";
+                    }
+                    
                 }
             }
 

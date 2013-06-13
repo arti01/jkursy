@@ -31,6 +31,7 @@
                         <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopObceM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
                             <f:selectItems value="#{UrlopObceM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
+                            <a4j:ajax render="form" execute="rodzajW"/>
                         </h:selectOneMenu>
                         <rich:message for="rodzajW" styleClass="error" />
 
@@ -56,6 +57,18 @@
                         <h:inputTextarea id="infoDod" value="#{UrlopObceM.urlop.infoDod}" cols="52"/>
                         <rich:message for="infoDod" styleClass="error" />
 
+                        <h:outputLabel for="miejsce" value="delegacja - miejsce: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:inputText id="miejsce" value="#{UrlopObceM.urlop.miejsce}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+
+                        <h:outputLabel for="cel" value="delegacja - miejsce: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:inputText id="cel" value="#{UrlopObceM.urlop.cel}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <rich:message for="cel" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+
+                        <h:outputLabel for="srodekLok" value="delegacja - srodek lokomocji: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:inputText id="srodekLok" value="#{UrlopObceM.urlop.srodekLok}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <rich:message for="srodekLok" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
