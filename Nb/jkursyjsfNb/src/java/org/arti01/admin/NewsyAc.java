@@ -34,6 +34,7 @@ public class NewsyAc implements Serializable {
     private static final long serialVersionUID = 1L;
     Logger logger = Logger.getLogger(NewsyAc.class);
     private DataModel<Newsy> allNewsy = new ListDataModel<Newsy>();
+    private DataModel<Newsy> czteryNewsy = new ListDataModel<Newsy>();
     private Newsy news;
     @EJB
     NewsyImp newsyImp;
@@ -158,6 +159,12 @@ public class NewsyAc implements Serializable {
 
     public DataModel<Newsy> getAllNewsy() {
         allNewsy.setWrappedData(newsyImp.getAll());
+        return allNewsy;
+    }
+    
+     public DataModel<Newsy> getCzteryNewsy() {
+        if(newsyImp.getAll().size()>4) allNewsy.setWrappedData(newsyImp.getAll().subList(0, 4));
+        else allNewsy.setWrappedData(newsyImp.getAll());
         return allNewsy;
     }
 

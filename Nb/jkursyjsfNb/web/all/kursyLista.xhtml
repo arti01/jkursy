@@ -16,6 +16,7 @@
                                        rendered="#{kursyAc.ascdesc=='ascending'}"/>
                     <a4j:commandButton value="malejąco" action="#{kursyAc.zmienSortDesc}" render="form1" 
                                        rendered="#{kursyAc.ascdesc=='descending'}"/>
+                    
                     <rich:dataTable value="#{kursyAc.allKursy}" var="kurs" id="tabkursy">
                         <rich:column id="nazwa" style="background-color: #{kurs.typykursu.kolor}">
                             <h:commandLink action="#{kursyAc.detale}">
@@ -51,7 +52,8 @@
                                         <f:setPropertyActionListener target="#{indexAc.pz}" value="#{kurs.poziomyzaawansowania}" />
                                         <a4j:mediaOutput id="poziomimg" element="img" createContent="#{kursyAc.paintFota}"
                                                          value="#{kurs.poziomyzaawansowania.plik}" />
-                                    </h:commandLink> <rich:tooltip id="tt1" layout="block" target="poziomimg">
+                                    </h:commandLink> 
+                                    <rich:tooltip id="tt1" layout="block" target="poziomimg">
                                         <h:outputText value="poziom zaawansowania: #{kurs.poziomyzaawansowania.nazwa}" />
                                     </rich:tooltip>
                                 </li>

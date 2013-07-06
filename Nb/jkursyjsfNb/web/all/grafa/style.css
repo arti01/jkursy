@@ -414,12 +414,13 @@ body
     margin: 0 0 10px 0;
     padding: 10px;
     width: 180px;
-    background-color: #eeeeee;        
+    background-color: #eeeeee;
 }
 #info img
 {
     max-width: 160px;
-    margin: 5px;
+    display: block;
+    margin: auto;
 }
 #info a
 {
@@ -439,7 +440,6 @@ body
 {
     size: 1px;
     width: 140px;
-    align: left;
     color: #888888;
 }
 
@@ -815,7 +815,7 @@ body
 #tabela2 th
 {
     font-size: 1.1em;
-    background-color: #EEEEEE;  
+    background-color: #FFFFFF; 
     text-align: left;
     padding: 10px 20px;
     border-right: 3px solid #FFFFFF;

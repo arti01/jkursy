@@ -5,7 +5,7 @@
       xmlns:rich="http://richfaces.org/rich" xmlns:a4j="http://richfaces.org/a4j">
     <ui:composition template="/templates/templateadm.xhtml">
         <ui:define name="body">
-            <body>
+            <h:body id="body">
 
                 <table>
                     <tr>
@@ -73,7 +73,11 @@
                                     <h:selectManyCheckbox value="#{adminUsersAc.rolesName}">
                                         <f:selectItems value="#{adminUsersAc.allRolesName}" var="role" itemValue="#{role}" />
                                     </h:selectManyCheckbox>
-                                    <h:commandButton value="wyślij" action="#{adminUsersAc.dodaj}" />
+                                    
+                                    <rich:message for="bledy" styleClass="error"/>
+                                    <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
+                                    
+                                    <h:commandButton id="wyslij" value="wyślij" action="#{adminUsersAc.dodaj}" />
                                 </h:panelGroup>
                             </h:form></td>
                         <td>
@@ -189,7 +193,7 @@
                             </script></td>
                     </tr>
                 </table>
-            </body>
+            </h:body>
         </ui:define>
     </ui:composition>
 </html>

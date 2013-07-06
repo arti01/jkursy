@@ -137,7 +137,7 @@ public class UsersAc {
 	public String dodaj() {
 		pokazTabele=true;
 		if(!user.getUserpass().equals(userpass1)){
-			errorText="r����ne has��a";
+			errorText="różne hasła";
 			return "usersForm";	
 		}
 		user.setDataZmiany(new Date());
@@ -163,7 +163,7 @@ public class UsersAc {
 				user.getUsername();
 				if (userImp.insert(user)) {
 					listAll();
-					errorText="U��ytkownik dodany - przypisz go do kurs��w";
+					errorText="Użytkownik dodany - przypisz go do kursów";
 					return "usersForm";
 				}
 			}

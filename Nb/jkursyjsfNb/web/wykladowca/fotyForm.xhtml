@@ -42,12 +42,12 @@
                             </rich:dataGrid>
                         </rich:panel>
                         <br />
-                        <h:commandButton action="#{wykladImageUploadBean.clearUploadData}" render="info, upload"
+                        <a4j:commandButton action="#{wykladImageUploadBean.clearUploadData}" render="info, upload"
                                          value="Clear Uploaded Data" rendered="#{wykladImageUploadBean.size>0}" />
-                        <h:commandButton action="#{wykladImageUploadBean.akceptuj}" render="info, upload, foty" value="Akceptuj"
+                        <a4j:commandButton action="#{wykladImageUploadBean.akceptuj}" render="info, upload, foty" value="Akceptuj"
                                          rendered="#{wykladImageUploadBean.size>0}">
                             <f:setPropertyActionListener target="#{wykladImageUploadBean.lekcja}" value="#{wykladKursyAc.lekcja}" />
-                        </h:commandButton>
+                        </a4j:commandButton>
                     </h:panelGroup>
                 </h:panelGrid>
             </h:form>
@@ -68,14 +68,14 @@
                     <h:column>
                         <h:inputTextarea id="opis" value="#{fota.opis}" />
                         <br />
-                        <h:commandButton action="#{wykladImageUploadBean.akceptujOpis}" render="foty" value="akceptuj opis">
+                        <a4j:commandButton action="#{wykladImageUploadBean.akceptujOpis}" render="foty" value="akceptuj opis">
                             <f:setPropertyActionListener target="#{wykladImageUploadBean.fota}" value="#{fota}" />
-                        </h:commandButton>
+                        </a4j:commandButton>
                     </h:column>
                     <h:column>
-                        <h:commandButton action="#{wykladImageUploadBean.usun}" render="foty" value="usun zdjęcie">
+                        <a4j:commandButton action="#{wykladImageUploadBean.usun}" render="foty" value="usun zdjęcie">
                             <f:setPropertyActionListener target="#{wykladImageUploadBean.fota}" value="#{fota}" />
-                        </h:commandButton>
+                        </a4j:commandButton>
                     </h:column>
                 </h:dataTable>
             </h:form>

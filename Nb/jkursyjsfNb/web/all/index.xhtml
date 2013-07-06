@@ -1,11 +1,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:a4j="http://richfaces.org/a4j" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="body">
+            <script src="../resources/politykacookies.pl.js"></script> 
+            <script type="text/javascript"> cookiesPolicy(); </script>
             <table>
-                <ui:repeat var="news" value="#{adminNewsyAc.allNewsy}" size="4">
+                <ui:repeat var="news" value="#{adminNewsyAc.czteryNewsy}">
                     <tr>
                         <td>
                             <h3>
