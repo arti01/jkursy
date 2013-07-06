@@ -9,129 +9,132 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * The persistent class for the kursy_rezerwacje database table.
- * 
+ *
  */
 @Entity
 @Table(name = "kursy_rezerwacje")
 public class KursyRezerwacje implements Serializable {
-	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
-	private Integer idkursyrezerwacje;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
+    private Integer idkursyrezerwacje;
+    @Column(nullable = false)
+    private Boolean aktywna;
+    @Column(nullable = false)
+    private Boolean wykonana;
+    @Temporal(TemporalType.DATE)
+    @Column(nullable = false)
+    private Date datarezerwacji;
+    private double wplata;
+    @Size(max = 250)
+    private String polecajacy;
+    @Column(name = "infodod", length = 1024)
+    @Size(max = 1024)
+    private String infodod;
+    @Temporal(TemporalType.DATE)
+    private Date datawplaty;
+    @ManyToOne
+    @JoinColumn(name = "idkursy")
+    private Kursy kursy;
+    @ManyToOne
+    @JoinColumn(name = "username")
+    private User user;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "kursyRezerwacje")
+    private Rachunki rachunki;
 
-	@Column(nullable = false)
-	private Boolean aktywna;
+    public KursyRezerwacje() {
+    }
 
-	@Column(nullable = false)
-	private Boolean wykonana;
+    public Integer getIdkursyrezerwacje() {
+        return this.idkursyrezerwacje;
+    }
 
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
-	private Date datarezerwacji;
+    public void setIdkursyrezerwacje(Integer idkursyrezerwacje) {
+        this.idkursyrezerwacje = idkursyrezerwacje;
+    }
 
-	private double wplata;
-	
-	@Size(max=250)
-	private String polecajacy;
+    public Boolean getAktywna() {
+        return this.aktywna;
+    }
 
-	@Temporal(TemporalType.DATE)
-	private Date datawplaty;
+    public void setAktywna(Boolean aktywna) {
+        this.aktywna = aktywna;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "idkursy")
-	private Kursy kursy;
+    public Boolean getWykonana() {
+        return this.wykonana;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "username")
-	private User user;
+    public void setWykonana(Boolean wykonana) {
+        this.wykonana = wykonana;
+    }
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "kursyRezerwacje")
-	private Rachunki rachunki;
+    @XmlTransient
+    public Kursy getKursy() {
+        return kursy;
+    }
 
-	public KursyRezerwacje() {
-	}
+    public void setKursy(Kursy kursy) {
+        this.kursy = kursy;
+    }
 
-	public Integer getIdkursyrezerwacje() {
-		return this.idkursyrezerwacje;
-	}
+    public Rachunki getRachunki() {
+        return rachunki;
+    }
 
-	public void setIdkursyrezerwacje(Integer idkursyrezerwacje) {
-		this.idkursyrezerwacje = idkursyrezerwacje;
-	}
+    public void setRachunki(Rachunki rachunki) {
+        this.rachunki = rachunki;
+    }
 
-	public Boolean getAktywna() {
-		return this.aktywna;
-	}
+    @XmlTransient
+    public User getUser() {
+        return user;
+    }
 
-	public void setAktywna(Boolean aktywna) {
-		this.aktywna = aktywna;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public Boolean getWykonana() {
-		return this.wykonana;
-	}
+    public Date getDatarezerwacji() {
+        return datarezerwacji;
+    }
 
-	public void setWykonana(Boolean wykonana) {
-		this.wykonana = wykonana;
-	}
+    public void setDatarezerwacji(Date datarezerwacji) {
+        this.datarezerwacji = datarezerwacji;
+    }
 
-@XmlTransient	
-        public Kursy getKursy() {
-		return kursy;
-	}
+    public double getWplata() {
+        return wplata;
+    }
 
-	public void setKursy(Kursy kursy) {
-		this.kursy = kursy;
-	}
+    public void setWplata(double wplata) {
+        this.wplata = wplata;
+    }
 
-	public Rachunki getRachunki() {
-		return rachunki;
-	}
+    public Date getDatawplaty() {
+        return datawplaty;
+    }
 
-	public void setRachunki(Rachunki rachunki) {
-		this.rachunki = rachunki;
-	}
-@XmlTransient
-	public User getUser() {
-		return user;
-	}
+    public void setDatawplaty(Date datawplaty) {
+        this.datawplaty = datawplaty;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public String getPolecajacy() {
+        return polecajacy;
+    }
 
-	public Date getDatarezerwacji() {
-		return datarezerwacji;
-	}
+    public void setPolecajacy(String polecajacy) {
+        this.polecajacy = polecajacy;
+    }
 
-	public void setDatarezerwacji(Date datarezerwacji) {
-		this.datarezerwacji = datarezerwacji;
-	}
+    public String getInfodod() {
+        return infodod;
+    }
 
-	public double getWplata() {
-		return wplata;
-	}
-
-	public void setWplata(double wplata) {
-		this.wplata = wplata;
-	}
-
-	public Date getDatawplaty() {
-		return datawplaty;
-	}
-
-	public void setDatawplaty(Date datawplaty) {
-		this.datawplaty = datawplaty;
-	}
-
-	public String getPolecajacy() {
-		return polecajacy;
-	}
-
-	public void setPolecajacy(String polecajacy) {
-		this.polecajacy = polecajacy;
-	}
-
+    public void setInfodod(String infodod) {
+        this.infodod = infodod;
+    }
+    
 }

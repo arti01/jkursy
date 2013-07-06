@@ -35,6 +35,10 @@ public class Lekcjafotykursant implements Serializable {
     private String opis;
     private byte[] plik;
     private byte[] plikmini;
+  
+    @Column(name="zgoda_na_publik", nullable = false)
+    private boolean zgodaNaPublik;
+    
     @ManyToOne
     @JoinColumn(name = "idlekcja")
     private Lekcja lekcja;
@@ -123,6 +127,14 @@ public class Lekcjafotykursant implements Serializable {
         this.user = user;
     }
 
+    public boolean isZgodaNaPublik() {
+        return zgodaNaPublik;
+    }
+
+    public void setZgodaNaPublik(boolean zgodaNaPublik) {
+        this.zgodaNaPublik = zgodaNaPublik;
+    }
+    
     public String getDatadodaniaS() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         //System.out.println(getDatadodania());
