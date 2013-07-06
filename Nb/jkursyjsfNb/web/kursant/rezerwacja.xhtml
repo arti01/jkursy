@@ -1,55 +1,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:a4j="http://richfaces.org/a4j" xmlns:rich="http://richfaces.org/rich">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j" >
 
-<ui:composition template="/templates/templatekursant.xhtml">
-	<ui:define name="body">
-		<h3>
-			rezerwujesz kurs:
-			<h:outputText value="#{kursantKursyAc.kurs.nazwa}" />
-		</h3>
-		<h:form id="form">
-			<h:outputLabel for="rachTak" value="czy potrzebujesz rachunek/fakturę" />
-			<h:selectBooleanCheckbox value="#{kursantKursyAc.rachTak}" id="rachTak">
-				<a4j:ajax event="change" execute="@this" render="formatka, form" />
-			</h:selectBooleanCheckbox>
-			<br/>
-			<h:outputLabel value="polecający:"/>
-<h:inputText value="#{kursantKursyAc.polecajacy}"/>
-<hr/>
-			<h:panelGrid id="formatka" columns="3" rendered="#{kursantKursyAc.rachTak}">
-				<h3>
-					<h:outputText value="w razie potrzeby zmień dane" />
-				</h3>
-				<h:message for="imieNazwisko" styleClass="error" />
-				<h:outputLabel value="imie i nazwisko" />
-				<h:inputText id="imieNazwisko" value="#{kursantKursyAc.rachunek.imienazwisko}" immediate="true" size="50" />
+    <ui:composition template="/templates/templatekursant.xhtml">
+        <ui:define name="body">
+            <h3>
+                rezerwujesz kurs:
+                <h:outputText value="#{kursantKursyAc.kurs.nazwa}" />
+            </h3>
+            <h:form id="form">
+                <h:outputLabel for="rachTak" value="czy potrzebujesz rachunek/fakturę" rendered="false"/>
+                <h:selectBooleanCheckbox value="#{kursantKursyAc.rachTak}" id="rachTak" rendered="false">
+                    <a4j:ajax event="change" execute="@this" render="formatka, form" />
+                </h:selectBooleanCheckbox>
+                <br/>
+                <h:outputLabel value="polecający:"/>
+                <br/>
+                <h:inputText value="#{kursantKursyAc.polecajacy}"/>
+                <br/><br/>
+                <h:outputLabel value="informacje dodatkowe:" />
+                <br/>
+                <h:inputTextarea id="infoDod" value="#{kursantKursyAc.infodod}" cols="75" rows="15"/>
+                <hr/>
+                <h:panelGrid id="formatka" columns="3" rendered="#{kursantKursyAc.rachTak}">
+                    <h3>
+                        <h:outputText value="w razie potrzeby zmień dane" />
+                    </h3>
+                    <h:message for="imieNazwisko" styleClass="error" />
+                    <h:outputLabel value="imie i nazwisko" />
+                    <h:inputText id="imieNazwisko" value="#{kursantKursyAc.rachunek.imienazwisko}" immediate="true" size="50" />
 
-				<h:message for="miasto" styleClass="error" />
-				<h:outputLabel value="miasto" />
-				<h:inputText id="miasto" value="#{kursantKursyAc.rachunek.miasto}" immediate="true" size="50" />
+                    <h:message for="miasto" styleClass="error" />
+                    <h:outputLabel value="miasto" />
+                    <h:inputText id="miasto" value="#{kursantKursyAc.rachunek.miasto}" immediate="true" size="50" />
 
-				<h:message for="kodpocztowy" styleClass="error" />
-				<h:outputLabel value="kod pocztowy" />
-				<h:inputText id="kodpocztowy" value="#{kursantKursyAc.rachunek.kodpocztowy}" immediate="true" size="10" />
+                    <h:message for="kodpocztowy" styleClass="error" />
+                    <h:outputLabel value="kod pocztowy" />
+                    <h:inputText id="kodpocztowy" value="#{kursantKursyAc.rachunek.kodpocztowy}" immediate="true" size="10" />
 
-				<h:message for="ulica" styleClass="error" />
-				<h:outputLabel value="ulica, nr domu/mieszkanie" />
-				<h:inputText id="ulica" value="#{kursantKursyAc.rachunek.ulica}" immediate="true" size="50" />
+                    <h:message for="ulica" styleClass="error" />
+                    <h:outputLabel value="ulica, nr domu/mieszkanie" />
+                    <h:inputText id="ulica" value="#{kursantKursyAc.rachunek.ulica}" immediate="true" size="50" />
 
-				<h:message for="nip" styleClass="error" />
-				<h:outputLabel value="nip" />
-				<h:inputText id="nip" value="#{kursantKursyAc.rachunek.nip}" immediate="true" size="50" />
-				
-				<h:message for="adreskoresp" styleClass="error" />
-				<h:outputLabel value="adres do korespondencji" />
-				<h:inputTextarea id="adreskoresp" value="#{kursantKursyAc.rachunek.adreskoresp}" immediate="true" cols="55" rows="5"/>
-		</h:panelGrid>
-			
-			<h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwuj}"/>
-		</h:form>
-	</ui:define>
-</ui:composition>
+                    <h:message for="nip" styleClass="error" />
+                    <h:outputLabel value="nip" />
+                    <h:inputText id="nip" value="#{kursantKursyAc.rachunek.nip}" immediate="true" size="50" />
+
+                    <h:message for="adreskoresp" styleClass="error" />
+                    <h:outputLabel value="adres do korespondencji" />
+                    <h:inputTextarea id="adreskoresp" value="#{kursantKursyAc.rachunek.adreskoresp}" immediate="true" cols="55" rows="5"/>
+                </h:panelGrid>
+                <h:commandButton value="rezerwuj" action="#{kursantKursyAc.rezerwuj}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
 
 </html>

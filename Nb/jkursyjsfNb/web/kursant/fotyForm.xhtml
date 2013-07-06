@@ -12,9 +12,10 @@
                                      rendered="#{kursantLekcjaAc.zalogowany.fotDoDodania>0}" addLabel="wybierz plik" uploadLabel="wyślij" clearAllLabel="wyczyść" clearLabel="usuń">
                         <a4j:ajax event="uploadcomplete" execute="@none" render="foty, informacje, uploadpg" />
                     </rich:fileUpload>
+                    <h:selectBooleanCheckbox value=""/>
                     <h4>
-                    <h:outputText value="nie możesz dodać już więcej zdjęć"
-                                  rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}" />
+                        <h:outputText value="nie możesz dodać już więcej zdjęć"
+                                      rendered="#{0>=kursantLekcjaAc.zalogowany.fotDoDodania}" />
                     </h4>
                 </h:form>
             </h:panelGroup>

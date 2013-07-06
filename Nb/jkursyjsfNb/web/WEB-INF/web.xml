@@ -94,7 +94,7 @@
     </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
-        <realm-name>aaatest</realm-name>
+        <realm-name>aaa</realm-name>
         <form-login-config>
             <form-login-page>/all/login.xhtml?faces-redirect=true</form-login-page>
             <form-error-page>/loginerr.jsp</form-error-page>

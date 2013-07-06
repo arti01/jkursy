@@ -20,165 +20,178 @@ import org.arti01.utility.Login;
 @ManagedBean(name = "kursantKursyAc")
 @SessionScoped
 public class KursyAc implements Serializable {
-	private static final long serialVersionUID = 1L;
-	Logger logger = Logger.getLogger(KursyAc.class);
 
-	private Kursy kurs;
-	private DataModel<Lekcja> lekcje = new ListDataModel<Lekcja>();
-	private DataModel<KursyRezerwacje> kurRez = new ListDataModel<KursyRezerwacje>();
-	@EJB KursyImp kursyImp;
-	private Newsykursy news;
-	private boolean rachTak;
-	@ManagedProperty(value = "#{login}") private Login loginBean;
-	private Rachunki rachunek = new Rachunki();
-	private String errorText;
-	private User kursant;
-	private String polecajacy;
+    private static final long serialVersionUID = 1L;
+    Logger logger = Logger.getLogger(KursyAc.class);
+    private Kursy kurs;
+    private DataModel<Lekcja> lekcje = new ListDataModel<Lekcja>();
+    private DataModel<KursyRezerwacje> kurRez = new ListDataModel<KursyRezerwacje>();
+    @EJB
+    KursyImp kursyImp;
+    private Newsykursy news;
+    private boolean rachTak;
+    @ManagedProperty(value = "#{login}")
+    private Login loginBean;
+    private Rachunki rachunek = new Rachunki();
+    private String errorText;
+    private User kursant;
+    private String polecajacy;
+    private String infodod;
 
-	public String rezerwacja() {
-		rachunek.setImienazwisko(loginBean.getZalogowany().getImieNazwisko());
-		rachunek.setMiasto(loginBean.getZalogowany().getMiasto());
-		rachunek.setKodpocztowy(loginBean.getZalogowany().getKodpocztowy());
-		rachunek.setUlica(loginBean.getZalogowany().getUlica());
-		rachunek.setNip(loginBean.getZalogowany().getNip());
-		return "/kursant/rezerwacja";
-	}
+    public String rezerwacja() {
+        rachunek.setImienazwisko(loginBean.getZalogowany().getImieNazwisko());
+        rachunek.setMiasto(loginBean.getZalogowany().getMiasto());
+        rachunek.setKodpocztowy(loginBean.getZalogowany().getKodpocztowy());
+        rachunek.setUlica(loginBean.getZalogowany().getUlica());
+        rachunek.setNip(loginBean.getZalogowany().getNip());
+        return "/kursant/rezerwacja";
+    }
 
-	public String rezerwuj() {
-		KursyRezerwacje kr = new KursyRezerwacje();
-		kr.setPolecajacy(polecajacy);
-		kr.setAktywna(true);
-		kr.setWykonana(false);
-		kr.setKursy(kurs);
-		kr.setUser(loginBean.getZalogowany());
-		if(rachTak)kr.setRachunki(rachunek);
-		for (Kursy k : loginBean.getZalogowany().getKursyZarezerwowane()) {
-			if (k.getIdkursy() == kurs.getIdkursy()) {
-				errorText = "Masz ju�� rezerwacj�� na ten kurs";
-				return "info";
-			}
-		}
-		kursyImp.rezerwuj(kr);
-		errorText = "Rezerwacja wykonana";
-		return "info";
-	}
+    public String rezerwuj() {
+        KursyRezerwacje kr = new KursyRezerwacje();
+        kr.setPolecajacy(polecajacy);
+        kr.setInfodod(infodod);
+        kr.setAktywna(true);
+        kr.setWykonana(false);
+        kr.setKursy(kurs);
+        kr.setUser(loginBean.getZalogowany());
+        if (rachTak) {
+            kr.setRachunki(rachunek);
+        }
+        for (Kursy k : loginBean.getZalogowany().getKursyZarezerwowane()) {
+            if (k.getIdkursy() == kurs.getIdkursy()) {
+                errorText = "Masz ju�� rezerwacj�� na ten kurs";
+                return "info";
+            }
+        }
+        kursyImp.rezerwuj(kr);
+        errorText = "Rezerwacja wykonana";
+        return "info";
+    }
 
-	public String rezerwacjeLista() {
-		return "rezerwacjeLista";
-	}
+    public String rezerwacjeLista() {
+        return "rezerwacjeLista";
+    }
 
-	public String pokazKursanta(){
-		return "pokazKursanta";
-	}
-	
-	public String kasujRezerwacje(){
-		KursyRezerwacje kr=kurRez.getRowData();
-		kr.setAktywna(false);
-		kursyImp.updateRezerwacje(kr);
-		return "rezerwacjeLista";
-	}
-	
-	public String lekcjaLista() {
-		kurs = kursyImp.find(kurs);
-		lekcje.setWrappedData(kurs.getLekcjeWidoczne());
-		return "lekcjaLista";
-	}
+    public String pokazKursanta() {
+        return "pokazKursanta";
+    }
 
-	public String newsWiecej() {
-		return "news";
-	}
+    public String kasujRezerwacje() {
+        KursyRezerwacje kr = kurRez.getRowData();
+        kr.setAktywna(false);
+        kursyImp.updateRezerwacje(kr);
+        return "rezerwacjeLista";
+    }
 
-	public Kursy getKursy() {
-		return kurs;
-	}
+    public String lekcjaLista() {
+        kurs = kursyImp.find(kurs);
+        lekcje.setWrappedData(kurs.getLekcjeWidoczne());
+        return "lekcjaLista";
+    }
 
-	public void setKurs(Kursy kurs) {
-		this.kurs = kurs;
-	}
+    public String newsWiecej() {
+        return "news";
+    }
 
-	public DataModel<Lekcja> getLekcje() {
-		return lekcje;
-	}
+    public Kursy getKursy() {
+        return kurs;
+    }
 
-	public void setLekcje(DataModel<Lekcja> lekcje) {
-		this.lekcje = lekcje;
-	}
+    public void setKurs(Kursy kurs) {
+        this.kurs = kurs;
+    }
 
-	public KursyImp getKursyImp() {
-		return kursyImp;
-	}
+    public DataModel<Lekcja> getLekcje() {
+        return lekcje;
+    }
 
-	public void setKursyImp(KursyImp kursyImp) {
-		this.kursyImp = kursyImp;
-	}
+    public void setLekcje(DataModel<Lekcja> lekcje) {
+        this.lekcje = lekcje;
+    }
 
-	public Kursy getKurs() {
-		return kurs;
-	}
+    public KursyImp getKursyImp() {
+        return kursyImp;
+    }
 
-	public Newsykursy getNews() {
-		return news;
-	}
+    public void setKursyImp(KursyImp kursyImp) {
+        this.kursyImp = kursyImp;
+    }
 
-	public void setNews(Newsykursy news) {
-		this.news = news;
-	}
+    public Kursy getKurs() {
+        return kurs;
+    }
 
-	public boolean isRachTak() {
-		return rachTak;
-	}
+    public Newsykursy getNews() {
+        return news;
+    }
 
-	public void setRachTak(boolean rachTak) {
-		this.rachTak = rachTak;
-	}
+    public void setNews(Newsykursy news) {
+        this.news = news;
+    }
 
-	public Login getLoginBean() {
-		return loginBean;
-	}
+    public boolean isRachTak() {
+        return rachTak;
+    }
 
-	public void setLoginBean(Login loginBean) {
-		this.loginBean = loginBean;
-	}
+    public void setRachTak(boolean rachTak) {
+        this.rachTak = rachTak;
+    }
 
-	public Rachunki getRachunek() {
-		return rachunek;
-	}
+    public Login getLoginBean() {
+        return loginBean;
+    }
 
-	public void setRachunek(Rachunki rachunek) {
-		this.rachunek = rachunek;
-	}
+    public void setLoginBean(Login loginBean) {
+        this.loginBean = loginBean;
+    }
 
-	public String getErrorText() {
-		return errorText;
-	}
+    public Rachunki getRachunek() {
+        return rachunek;
+    }
 
-	public void setErrorText(String errorText) {
-		this.errorText = errorText;
-	}
+    public void setRachunek(Rachunki rachunek) {
+        this.rachunek = rachunek;
+    }
 
-	public DataModel<KursyRezerwacje> getKurRez() {
-		kurRez.setWrappedData(loginBean.getZalogowany().getRezerwacje());
-		return kurRez;
-	}
+    public String getErrorText() {
+        return errorText;
+    }
 
-	public void setKurRez(DataModel<KursyRezerwacje> kurRez) {
-		this.kurRez = kurRez;
-	}
+    public void setErrorText(String errorText) {
+        this.errorText = errorText;
+    }
 
-	public User getKursant() {
-		return kursant;
-	}
+    public DataModel<KursyRezerwacje> getKurRez() {
+        kurRez.setWrappedData(loginBean.getZalogowany().getRezerwacje());
+        return kurRez;
+    }
 
-	public void setKursant(User kursant) {
-		this.kursant = kursant;
-	}
+    public void setKurRez(DataModel<KursyRezerwacje> kurRez) {
+        this.kurRez = kurRez;
+    }
 
-	public String getPolecajacy() {
-		return polecajacy;
-	}
+    public User getKursant() {
+        return kursant;
+    }
 
-	public void setPolecajacy(String polecajacy) {
-		this.polecajacy = polecajacy;
-	}
+    public void setKursant(User kursant) {
+        this.kursant = kursant;
+    }
 
+    public String getPolecajacy() {
+        return polecajacy;
+    }
+
+    public void setPolecajacy(String polecajacy) {
+        this.polecajacy = polecajacy;
+    }
+
+    public String getInfodod() {
+        return infodod;
+    }
+
+    public void setInfodod(String infodod) {
+        this.infodod = infodod;
+    }
 }
