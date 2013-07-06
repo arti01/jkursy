@@ -28,7 +28,7 @@ public class User implements Serializable {
     @Column(unique = true, nullable = false, length = 50)
     @Size(min = 2, max = 50)
     private String username;
-    @Temporal( TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "data_zmiany", nullable = false)
     private Date dataZmiany;
     @Column(nullable = false, length = 100)
@@ -72,7 +72,7 @@ public class User implements Serializable {
     //bi-directional many-to-many association to Role
     @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
-		name = "_users__roles", joinColumns = {
+            name = "_users__roles", joinColumns = {
         @JoinColumn(name = "username", nullable = false)
     }, inverseJoinColumns = {
         @JoinColumn(name = "roles_rola", nullable = false)
@@ -81,21 +81,18 @@ public class User implements Serializable {
     //bi-directional many-to-many association to Kursy
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(
-		name = "kursy_users", joinColumns = {
+            name = "kursy_users", joinColumns = {
         @JoinColumn(name = "username", nullable = false)
     }, inverseJoinColumns = {
         @JoinColumn(name = "idkursy", nullable = false)
     })
     private List<Kursy> kursies;
-    
     @ManyToMany(cascade = {CascadeType.MERGE})
     @JoinTable(name = "kursy_rezerwacje", joinColumns = {
-        @JoinColumn(name = "username", nullable = false),
-    }, inverseJoinColumns = {
+        @JoinColumn(name = "username", nullable = false),}, inverseJoinColumns = {
         @JoinColumn(name = "idkursy", nullable = false)
     })
     private List<Kursy> kursyZarezerwowane;
-    
     @OneToMany(mappedBy = "user")
     @OrderBy("datadodania")
     private List<Lekcjakoment> lekcjakoments;
@@ -108,39 +105,34 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @OrderBy("datadodania")
     private List<Absolwforposty> absolwforposty;
-    @OneToMany(mappedBy = "user", orphanRemoval=true)
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
     @OrderBy("lp")
     private List<Userfoty> userfoty;
-    
     @OneToMany(mappedBy = "user")
     @OrderBy("idkursyrezerwacje DESC")
     private List<KursyRezerwacje> rezerwacje;
-    
     @Transient
     private List<KursyRezerwacje> rezerwacjeZaakceptowane;
 
     public List<KursyRezerwacje> getRezerwacjeZaakceptowane() {
-        rezerwacjeZaakceptowane=new ArrayList<KursyRezerwacje>();
-        for(KursyRezerwacje kr:getRezerwacje()){
-            if(kr.getWykonana()) {
+        rezerwacjeZaakceptowane = new ArrayList<KursyRezerwacje>();
+        for (KursyRezerwacje kr : getRezerwacje()) {
+            if (kr.getWykonana()) {
                 rezerwacjeZaakceptowane.add(kr);
             }
         }
         return rezerwacjeZaakceptowane;
     }
-    
     @Transient
-    private List<Kursy>kursyZaakceptowane;
+    private List<Kursy> kursyZaakceptowane;
 
     public List<Kursy> getKursyZaakceptowane() {
-        kursyZaakceptowane=new ArrayList<Kursy>();
-        for(KursyRezerwacje kr:getRezerwacjeZaakceptowane()){
+        kursyZaakceptowane = new ArrayList<Kursy>();
+        for (KursyRezerwacje kr : getRezerwacjeZaakceptowane()) {
             kursyZaakceptowane.add(kr.getKursy());
         }
         return kursyZaakceptowane;
     }
-    
-    
     @Transient
     private List<Userfoty> userfotyakcept;
     @Transient

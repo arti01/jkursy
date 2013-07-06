@@ -1,6 +1,5 @@
 package org.arti01.sesBean;
 
-import bb.BoksycfgImpRemote;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -12,7 +11,7 @@ import org.arti01.entit.Boksycfg;
 
 @Stateless
 @LocalBean
-public class BoksycfgImp implements BoksycfgImpRemote{
+public class BoksycfgImp {
 	//Logger logger = Logger.getLogger(StatyczneImp.class);
 	@PersistenceContext
 	EntityManager em;
