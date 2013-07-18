@@ -128,7 +128,7 @@ public class KursyAc implements Serializable {
     public String wykladList() {
         Role rola = new Role();
         rola.setRola(Role.WYKLADOWCA);
-        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsersByNazwisko()));
         return "wykladLista";
     }
 
@@ -148,7 +148,7 @@ public class KursyAc implements Serializable {
     public String wykladDetale() {
         Role rola = new Role();
         rola.setRola(Role.WYKLADOWCA);
-        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsers()));
+        allWykladowcy.setWrappedData(new ArrayList<User>(roleImp.find(rola).getUsersByNazwisko()));
         /*FacesContext fs = FacesContext.getCurrentInstance();
          Map<String,String> params = fs.getExternalContext().getRequestParameterMap();
          String username = params.get("username");

@@ -23,11 +23,11 @@
                             <ul>
                                 <ui:repeat var="kurs" value="#{wyklad.kursies}">
                                     <h:panelGroup rendered="#{kurs.widoczny}">
-                                    <li><h:commandLink action="#{kursyAc.detale}">
-                                            <f:param name="idkursy" value="#{kurs.idkursy}" />
-                                            <h:outputText value="#{kurs.nazwa}" />
-                                        </h:commandLink></li>
-                                        </h:panelGroup>
+                                        <li><h:commandLink action="#{kursyAc.detale}">
+                                                <f:param name="idkursy" value="#{kurs.idkursy}" />
+                                                <h:outputText value="#{kurs.nazwa}" />
+                                            </h:commandLink></li>
+                                    </h:panelGroup>
                                 </ui:repeat>
                             </ul>
                         </h:column>
