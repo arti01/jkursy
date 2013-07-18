@@ -113,6 +113,9 @@ public class User implements Serializable {
     private List<KursyRezerwacje> rezerwacje;
     @Transient
     private List<KursyRezerwacje> rezerwacjeZaakceptowane;
+    
+    @Transient
+    private String nazwiskoImie;
 
     public List<KursyRezerwacje> getRezerwacjeZaakceptowane() {
         rezerwacjeZaakceptowane = new ArrayList<KursyRezerwacje>();
@@ -442,4 +445,14 @@ public class User implements Serializable {
     public void setPolecajacy(String polecajacy) {
         this.polecajacy = polecajacy;
     }
+
+    public String getNazwiskoImie() {
+        nazwiskoImie="";
+        String[] u=getImieNazwisko().split(" ");
+        for(int i=u.length-1; i>=0; i=i-1){
+          nazwiskoImie=nazwiskoImie+u[i]+" ";  
+        }
+        return nazwiskoImie;
+    }
+    
 }

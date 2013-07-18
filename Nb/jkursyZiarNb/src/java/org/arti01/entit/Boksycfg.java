@@ -34,7 +34,7 @@ public class Boksycfg implements Serializable {
 
 	@Column(nullable=false)
 	private Boolean widoczny;
-	
+	@OrderBy(value = "idboksy DESC")
 	@OneToMany(mappedBy="boksycfg", cascade={CascadeType.MERGE}, fetch=FetchType.LAZY, orphanRemoval=true)
 	private List<Boksy> boksy;
 
