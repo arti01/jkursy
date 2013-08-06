@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="/templates/template.xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:form>
+        <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
+            <rich:panel rendered="#{ZarzInstancje.obiekt.id!=null}">
+                <h3>System: #{ZarzInstancje.obiekt.systemy.nazwa}</h3>
+            </rich:panel>
+
+            <h:panelGrid columns="3" id="dodajGrid">
+                <h:outputLabel for="systemyD" value="system: " rendered="#{ZarzInstancje.obiekt.id==null}"/>
+                <h:selectOneMenu id="systemyD" value="#{ZarzInstancje.obiekt.systemy}" converter="#{SystemyConv}" rendered="#{ZarzInstancje.obiekt.id==null}">
+                    <f:selectItems value="#{CfgSystemy.dcC.findAllOrderNazwa()}" var="system" itemValue="#{system}" itemLabel="#{system.nazwa}"/>
+                </h:selectOneMenu>
+                <rich:message for="systemyD" styleClass="error"  rendered="#{ZarzInstancje.obiekt.id==null}"/>
+                
+                <h:outputLabel for="adresipD" value="adres ip: "/>
+                <h:inputText id="adresipD" value="#{ZarzInstancje.obiekt.adresip}" size="90"><rich:validator/></h:inputText>
+                <rich:message for="adresipD" styleClass="error" />
+
+                <h:outputLabel for="nazwaserweraD" value="nazwa serwera: "/>
+                <h:inputText id="nazwaserweraD" value="#{ZarzInstancje.obiekt.nazwaserwera}" size="90"><rich:validator/></h:inputText>
+                <rich:message for="nazwaserweraD" styleClass="error" />
+
+                <h:outputLabel for="zestawyTestoweD" value="zestaw testowy: "/>
+                <h:selectOneMenu id="zestawyTestoweD" value="#{ZarzInstancje.obiekt.zestawyTestowe}" converter="#{ZestawyTestoweConv}">
+                    <f:selectItems value="#{CfgZestTest.dcC.findAllOrderNazwa()}" var="zt" itemValue="#{zt}" itemLabel="#{zt.nazwa}"/>
+                </h:selectOneMenu>
+                <rich:message for="zestawyTestoweD" styleClass="error" />
+            </h:panelGrid>
+            <hr/>
+            <rich:message for="zapisz" styleClass="error" />
+            <rich:message for="dodaj" styleClass="error" />
+
+            <a4j:commandButton id="dodaj" value="Dodaj" action="#{ZarzInstancje.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
+                               rendered="#{ZarzInstancje.obiekt.id==null}"/>
+            <a4j:commandButton id="zapisz" value="Zapisz" action="#{ZarzInstancje.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
+                               rendered="#{ZarzInstancje.obiekt.id!=null}"/>
+            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                    return false;" />
+        </rich:popupPanel>
+
+        <a4j:jsFunction name="remove" action="#{ZarzInstancje.usun}" render="listPanel" execute="@this"
+                        oncomplete="#{rich:component('confirmPane')}.hide();" />
+        <rich:popupPanel id="confirmPane" autosized="true">
+            Na pewno chcesz skasować?
+            <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                    return false;" />
+            <a4j:commandButton value="Tak" onclick="remove();
+                    return false;" />
+        </rich:popupPanel>
+    </h:form>
+</html>
+

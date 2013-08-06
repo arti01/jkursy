@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:form>
+        <h4>Menu</h4>
+        <table
+            style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+            <tr>
+                <td width="100%">
+                    <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                                    groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
+                                    topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc" expandSingle="false">
+                        <rich:panelMenuGroup label="Konfiguracja" expanded="true">
+                            <h:commandLink action="#{CfgZespAdm.list}">
+                                <rich:panelMenuItem >
+                                    Zespoły Adminów
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{CfgSystemy.list}">
+                                <rich:panelMenuItem >
+                                    Systemy
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{CfgZestTest.list}">
+                                <rich:panelMenuItem >
+                                    Zestawy Testowe
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{CfgInterfRodz.list}">
+                                <rich:panelMenuItem >
+                                    Rodzaje Interfejsów
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                        <rich:panelMenuGroup label="Zarządzanie" expanded="true">
+                            <h:commandLink action="#{ZarzInstancje.list}">
+                                <rich:panelMenuItem >
+                                    Instancje
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{ZarzInterSys.list}">
+                                <rich:panelMenuItem >
+                                    Interfejsy Systemów
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                    </rich:panelMenu>
+                </td>
+            </tr>
+        </table>
+    </h:form>
+</html>
