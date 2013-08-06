@@ -1,0 +1,111 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package encje;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+/**
+ *
+ * @author arti01
+ */
+@Entity
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"NAZWA"})})
+public class Systemy implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQSystemy")
+    @SequenceGenerator(name = "SEQSystemy", sequenceName = "SEQSystemy")
+    private Long id;
+    @NotNull
+    @Size(min = 1, max = 200)
+    private String nazwa;
+    @ManyToOne
+    private ZespolyAdminow zespolyAdminow;
+    //@OrderBy(value = "nazwa ASC")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "systemy", orphanRemoval = true)
+    private List<Instancje> instancjeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "systemy", orphanRemoval = true)
+    private List<InterfejsySystemy> interfejsySystemyList;
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public ZespolyAdminow getZespolyAdminow() {
+        return zespolyAdminow;
+    }
+
+    public void setZespolyAdminow(ZespolyAdminow zespolyAdminow) {
+        this.zespolyAdminow = zespolyAdminow;
+    }
+
+    public List<Instancje> getInstancjeList() {
+        return instancjeList;
+    }
+
+    public void setInstancjeList(List<Instancje> instancjeList) {
+        this.instancjeList = instancjeList;
+    }
+
+    public List<InterfejsySystemy> getInterfejsySystemyList() {
+        return interfejsySystemyList;
+    }
+
+    public void setInterfejsySystemyList(List<InterfejsySystemy> interfejsySystemyList) {
+        this.interfejsySystemyList = interfejsySystemyList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Systemy)) {
+            return false;
+        }
+        Systemy other = (Systemy) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "encje.Systemy[ id=" + id + " ]";
+    }
+}
