@@ -68,7 +68,7 @@ public class CfgZestTest implements Serializable {
         }
     }
 
-    public void usun() {
+    public void usun() throws DatabaseEx {
         dcC.remove(obiekt);
     }
 
