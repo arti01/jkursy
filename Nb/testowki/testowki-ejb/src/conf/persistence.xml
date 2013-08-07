@@ -7,7 +7,7 @@
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <property name="eclipselink.ddl-generation" value="create-tables"/>
-        <property name="javax.persistence.validation.group.pre-update" value="true"/>
+      <property name="javax.persistence.validation.group.pre-update" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>
