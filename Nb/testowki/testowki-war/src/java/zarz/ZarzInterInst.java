@@ -37,7 +37,7 @@ public class ZarzInterInst implements Serializable {
     @PostConstruct
     void init() {
         l = Logger.getLogger(this.getClass().getName());
-        this.link = "/zarzad/interInst.xhtml?faces-redirect=true";
+        this.link = "/zarzad/interInst.xhtml";
         refresh();
     }
 

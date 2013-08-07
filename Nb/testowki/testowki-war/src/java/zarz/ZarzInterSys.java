@@ -33,7 +33,7 @@ public class ZarzInterSys implements Serializable {
     @PostConstruct
     void init() {
         l = Logger.getLogger(this.getClass().getName());
-        this.link = "/zarzad/interfejsySystemy.xhtml?faces-redirect=true";
+        this.link = "/zarzad/interfejsySystemy.xhtml";
         refresh();
     }
 

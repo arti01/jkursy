@@ -33,7 +33,7 @@ public class ZarzInstancje implements Serializable {
     @PostConstruct
     void init() {
         l = Logger.getLogger(this.getClass().getName());
-        this.link = "/zarzad/instancje.xhtml?faces-redirect=true";
+        this.link = "/zarzad/instancje.xhtml";
         refresh();
     }
 

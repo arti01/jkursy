@@ -44,6 +44,16 @@
                     </rich:column>
                     
                     <rich:column
+                        filterExpression="#{fn:containsIgnoreCase(item.interfejsySystemy.interfejsyRodzaje.nazwa,CfgInterfRodz.filtrNazwa)}"
+                        sortBy="#{item.interfejsySystemy.interfejsyRodzaje.nazwa}" sortOrder="ascending">
+                        <f:facet name="header">rodzaj
+                            <h:inputText value="#{CfgInterfRodz.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        </f:facet>
+                        #{item.interfejsySystemy.interfejsyRodzaje.nazwa}<br/>
+                    </rich:column>
+                    #{ZarzInterInst.obiekt.interfejsySystemy.interfejsyRodzaje.nazwa}
+                    <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.interfejsySystemy.nazwa,ZarzInterSys.filtrNazwa)}"
                         sortBy="#{item.interfejsySystemy.nazwa}" sortOrder="ascending">
                         <f:facet name="header">interfejs
