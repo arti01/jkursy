@@ -7,11 +7,8 @@ package ses;
 import encje.Instancje;
 import encje.InterfejsyInstancje;
 import encje.InterfejsySystemy;
-import encje.Systemy;
 import excep.DatabaseEx;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,11 +50,13 @@ public class InstancjeFacade extends AbstractFacade<Instancje> {
         }
         instancje.getSystemy().getInstancjeList().add(instancje);
         sF.edit(instancje.getSystemy());
+        em.flush();
     }
     
     @Override
     public void remove(Instancje i) throws DatabaseEx{
         i.getSystemy().getInstancjeList().remove(i);
         sF.edit(i.getSystemy());
+        em.flush();
     }
 }

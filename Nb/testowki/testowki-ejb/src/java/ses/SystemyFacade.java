@@ -48,8 +48,10 @@ public class SystemyFacade extends AbstractFacade<Systemy> {
             //zAF.edit(old.getZespolyAdminow());
             systemy.getZespolyAdminow().getSystemyList().add(systemy);
             zAF.edit(systemy.getZespolyAdminow());
+            em.flush();
         } else {
             em.merge(systemy);
+            em.flush();
         }
     }
 
@@ -67,15 +69,16 @@ public class SystemyFacade extends AbstractFacade<Systemy> {
     @Override
     public void create(Systemy systemy) throws DatabaseEx {
         em.persist(systemy);
+        em.flush();
         for(ZestawyTestowe zt:zTF.findAllOrderNazwa()){
             Instancje i=new Instancje();
             i.setAdresip("ip dla "+zt.getNazwa());
             i.setNazwaserwera("nazwa serwera dla "+zt.getNazwa());
             i.setZestawyTestowe(zt);
             i.setSystemy(systemy);
-            iF.create(i);
+                iF.create(i);
+            }
         }
-    }
 
     public SystemyFacade() {
         super(Systemy.class);

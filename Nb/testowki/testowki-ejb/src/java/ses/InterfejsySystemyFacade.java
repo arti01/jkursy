@@ -10,8 +10,6 @@ import encje.InterfejsySystemy;
 import encje.Systemy;
 import excep.DatabaseEx;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -54,6 +52,7 @@ public class InterfejsySystemyFacade extends AbstractFacade<InterfejsySystemy> {
         }
         s.getInterfejsySystemyList().add(is);
         sF.edit(s);
+        em.flush();
     }
     
     @Override
