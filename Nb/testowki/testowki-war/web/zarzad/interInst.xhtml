@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h3>Zarządzanie interfejsami instancji testowych</h3>
+        <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        <ui:include src="./interInstEdit.xhtml"/>
+        <h:form>
+            <rich:panel id="listPanel">
+
+                <rich:dataTable style="width: 100%">
+                    <f:facet name="header"><rich:dataScroller id="scroH" for="table" fastControls="hide" maxPages="5"/></f:facet>
+                </rich:dataTable>
+
+                <rich:dataTable value="#{ZarzInterInst.dcC.findAll()}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                    <rich:column
+                        filterExpression="#{fn:containsIgnoreCase(item.interfejsySystemy.systemy.nazwa,CfgSystemy.filtrNazwa)}"
+                        sortBy="#{item.interfejsySystemy.systemy.nazwa}" sortOrder="ascending">
+                        <f:facet name="header">system
+                            <h:inputText value="#{CfgSystemy.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        </f:facet>
+                        #{item.interfejsySystemy.systemy.nazwa}<br/>
+                        #{item.instancje.adresip} - #{item.instancje.nazwaserwera}
+                    </rich:column>
+                    
+                    <rich:column
+                        filterExpression="#{fn:containsIgnoreCase(item.instancje.zestawyTestowe.nazwa,CfgZestTest.filtrNazwa)}"
+                        sortBy="#{item.instancje.zestawyTestowe.nazwa}" sortOrder="ascending">
+                        <f:facet name="header">zestaw testowy
+                            <h:inputText value="#{CfgZestTest.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        </f:facet>
+                        #{item.instancje.zestawyTestowe.nazwa}<br/>
+                        #{item.instancje.zestawyTestowe.funkcja}
+                    </rich:column>
+                    
+                    <rich:column
+                        filterExpression="#{fn:containsIgnoreCase(item.interfejsySystemy.nazwa,ZarzInterSys.filtrNazwa)}"
+                        sortBy="#{item.interfejsySystemy.nazwa}" sortOrder="ascending">
+                        <f:facet name="header">interfejs
+                            <h:inputText value="#{ZarzInterSys.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        </f:facet>
+                        #{item.interfejsySystemy.nazwa}<br/>
+                        #{item.interfejsySystemy.opis}<br/>
+                    </rich:column>
+                    
+                    <rich:column>
+                        <f:facet name="header">informacje
+                        </f:facet>
+                        #{item.namiary}<br/>
+                    </rich:column>
+                    
+                    <rich:column style="width: 60px">
+                        <rich:tooltip target="imgDe" value="usuń" layout="block"/>
+                        <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
+
+                        <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
+                            <h:graphicImage id="imgEd" value="/resources/images/edit.png" alt="edit" />
+                            <f:setPropertyActionListener target="#{ZarzInterInst.obiekt}" value="#{item}" />
+                        </a4j:commandLink>
+                    </rich:column>
+                </rich:dataTable>
+                <rich:dataTable style="width: 100%">
+                    <f:facet name="header"><rich:dataScroller id="scroF" for="table" fastControls="hide" maxPages="5"/></f:facet>
+                </rich:dataTable>
+            </rich:panel>
+
+            <rich:notifyMessages stayTime="2000" nonblocking="true" />
+
+            <a4j:jsFunction name="remove" action="#{ZarzInterInst.usun}" render="table" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+            <rich:popupPanel id="confirmPane" autosized="true">
+                Na pewno chcesz skasować?
+                <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                        return false;" />
+                <a4j:commandButton value="Tak" onclick="remove();
+                        return false;" />
+            </rich:popupPanel>
+
+            <rich:popupPanel id="statPane" autosized="true">
+                <h:graphicImage value="/resources/images/ai.gif" alt="ai" />
+                Proszę czekać
+            </rich:popupPanel>
+        </h:form>
+        <hr/>
+    </ui:define>
+</ui:composition>

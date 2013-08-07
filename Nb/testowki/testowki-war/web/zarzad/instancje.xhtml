@@ -28,12 +28,12 @@
                     <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.systemy.nazwa,CfgSystemy.filtrNazwa)}"
                         sortBy="#{item.systemy.nazwa}" sortOrder="ascending">
-                        <f:facet name="header">system
-                            <h:inputText value="#{CfgSystemy.filtrNazwa}" size="10"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        <f:facet id="headerS" name="header">system
+                            <h:inputText value="#{CfgSystemy.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
                         #{item.systemy.nazwa}
                     </rich:column>
-
                     <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.zestawyTestowe.nazwa,CfgZestTest.filtrNazwa)}"
                         sortBy="#{item.zestawyTestowe.nazwa}" sortOrder="ascending">

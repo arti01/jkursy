@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      template="/templates/template.xhtml"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:form>
+        <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
+            <rich:panel>
+                <h3>#{ZarzInterInst.obiekt.interfejsySystemy.nazwa}</h3>
+                <h4>#{ZarzInterInst.obiekt.instancje.zestawyTestowe.nazwa}</h4>
+            </rich:panel>
+
+            <h:panelGrid columns="3" id="dodajGrid">
+                
+                <h:outputLabel for="namiaryD" value="detale interfejsu na danym środowisku testowym: "/>
+                <h:inputTextarea id="adresipD" value="#{ZarzInterInst.obiekt.namiary}" cols="90" rows="30"><rich:validator/></h:inputTextarea>
+                <rich:message for="namiaryD" styleClass="error" />
+
+            </h:panelGrid>
+            <hr/>
+            <rich:message for="zapisz" styleClass="error" />
+            <rich:message for="dodaj" styleClass="error" />
+
+            <a4j:commandButton id="zapisz" value="Zapisz" action="#{ZarzInterInst.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
+                               rendered="#{ZarzInterInst.obiekt.id!=null}"/>
+            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                    return false;" />
+        </rich:popupPanel>
+
+        <a4j:jsFunction name="remove" action="#{ZarzInstancje.usun}" render="listPanel" execute="@this"
+                        oncomplete="#{rich:component('confirmPane')}.hide();" />
+        <rich:popupPanel id="confirmPane" autosized="true">
+            Na pewno chcesz skasować?
+            <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
+                    return false;" />
+            <a4j:commandButton value="Tak" onclick="remove();
+                    return false;" />
+        </rich:popupPanel>
+    </h:form>
+</html>
+
