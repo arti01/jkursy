@@ -7,7 +7,7 @@ body
 }
 
 a:link, a:visited {
-  color: black;
+  color: #6666ff;
   font-weight : normal;
   text-decoration: none;
 }

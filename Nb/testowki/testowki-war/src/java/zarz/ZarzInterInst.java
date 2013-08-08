@@ -30,7 +30,7 @@ public class ZarzInterInst implements Serializable {
     private InterfejsyInstancje obiekt;
     private String error;
     private String link;
-    private String filtrAdresip;
+    private String filtrNamiary;
     private String filtrNazwaserwera;
     private Logger l;
 
@@ -100,12 +100,12 @@ public class ZarzInterInst implements Serializable {
         this.link = link;
     }
 
-    public String getFiltrAdresip() {
-        return filtrAdresip;
+    public String getFiltrNamiary() {
+        return filtrNamiary;
     }
 
-    public void setFiltrAdresip(String filtrAdresip) {
-        this.filtrAdresip = filtrAdresip;
+    public void setFiltrNamiary(String filtrNamiary) {
+        this.filtrNamiary = filtrNamiary;
     }
 
     public String getFiltrNazwaserwera() {
