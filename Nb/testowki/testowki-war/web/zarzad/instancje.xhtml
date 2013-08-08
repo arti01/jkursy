@@ -40,12 +40,12 @@
                         <f:facet name="header">zestaw testowy
                             <h:inputText value="#{CfgZestTest.filtrNazwa}" size="10"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
-                        <rich:tooltip target="zestTest" value="#{item.zestawyTestowe.funkcja}" layout="block"/>
                         <rich:tooltip target="zestTestinfodod" layout="block">
                             <h:outputText value="#{item.zestawyTestowe.infodod}" escape="false"/>
                         </rich:tooltip>
                         <rich:collapsiblePanel header="#{item.zestawyTestowe.nazwa} - interfejsy" expanded="false" switchType="client">
                             <h:outputText id="zestTest" value="#{item.zestawyTestowe.nazwa}" style="font-weight: bold;"/>
+                             - #{item.zestawyTestowe.funkcja}
                             <h:outputText id="zestTestinfodod" value=" (info dod)" style="font-weight: bold;"/>
                             <hr/>
                             <a4j:repeat value="#{item.interfejsyInstancjeList}" var="ii">
@@ -78,7 +78,12 @@
                         <f:facet name="header">zespoł adm
                             <h:inputText value="#{CfgZespAdm.filtrNazwa}" size="10"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
-                        #{item.systemy.zespolyAdminow.nazwa} (#{item.systemy.zespolyAdminow.telefony})
+                        <rich:collapsiblePanel header="#{item.systemy.zespolyAdminow.nazwa} (#{item.systemy.zespolyAdminow.telefony})" expanded="false" switchType="client">
+                            <a4j:repeat value="#{item.systemy.zespolyAdminow.adminiList}" var="admin">
+                                #{admin.nazwa} - #{admin.telefon}
+                                <br/>
+                            </a4j:repeat>
+                        </rich:collapsiblePanel>
                     </rich:column>
 
                     <rich:column style="width: 60px">

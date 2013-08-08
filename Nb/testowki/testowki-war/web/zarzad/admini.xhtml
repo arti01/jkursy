@@ -10,76 +10,69 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
     <ui:define name="content">
-        <h3>Zarządzanie interfejsami systemów</h3>
+        <h3>Zarządzanie administratorami</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <ui:include src="./interfejsySystemyEdit.xhtml"/>
+        <ui:include src="./adminiEdit.xhtml"/>
         <h:form>
             <rich:panel id="listPanel">
-                <a4j:commandLink action="#{ZarzInterSys.refresh}" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" render="dodajPane">
+                <a4j:commandLink action="#{ZarzAdmini.refresh}" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" render="dodajPane">
                     <h4>[dodaj]</h4>
                 </a4j:commandLink>
 
                 <rich:dataTable style="width: 100%">
-                <f:facet name="header"><rich:dataScroller id="scroH" for="table" fastControls="hide" maxPages="5"/></f:facet>
+                    <f:facet name="header"><rich:dataScroller id="scroH" for="table" fastControls="hide" maxPages="5"/></f:facet>
                 </rich:dataTable>
-                <rich:dataTable value="#{ZarzInterSys.dcC.findAll()}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+
+                <rich:dataTable value="#{ZarzAdmini.dcC.findAllOrderNazwa()}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
 
                     <rich:column
-                        filterExpression="#{fn:containsIgnoreCase(item.nazwa,ZarzInterSys.filtrNazwa)}">
-                        <f:facet name="header">nazwa interfejsu
-                            <h:inputText value="#{ZarzInterSys.filtrNazwa}"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        filterExpression="#{fn:containsIgnoreCase(item.nazwa,ZarzAdmini.filtrNazwa)}"
+                        sortBy="#{item.nazwa}" sortOrder="ascending">
+                        <f:facet id="headerS" name="header">nazwisko imię
+                            <h:inputText value="#{ZarzAdmini.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
                         #{item.nazwa}
                     </rich:column>
                     
                     <rich:column
-                        filterExpression="#{fn:containsIgnoreCase(item.interfejsyRodzaje.nazwa,ZarzInterSys.filtrRodzaj)}">
-                        <f:facet name="header">rodzaj interfejsu
-                            <h:inputText value="#{ZarzInterSys.filtrRodzaj}"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        filterExpression="#{fn:containsIgnoreCase(item.nazwa,ZarzAdmini.filtrTelefon)}">
+                        <f:facet id="headerS" name="header">telefon
+                            <h:inputText value="#{ZarzAdmini.filtrTelefon}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
-                        #{item.interfejsyRodzaje.nazwa}
+                        #{item.telefon}
                     </rich:column>
-
+                    
                     <rich:column
-                        filterExpression="#{fn:containsIgnoreCase(item.systemy.nazwa,CfgSystemy.filtrNazwa)}"
-                        sortBy="#{item.systemy.nazwa}" sortOrder="ascending">
-                        <f:facet name="header">system
-                            <h:inputText value="#{CfgSystemy.filtrNazwa}"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
+                        filterExpression="#{fn:containsIgnoreCase(item.zespolyAdminow.nazwa,CfgZespAdm.filtrNazwa)}">
+                        <f:facet id="headerS" name="header">zespół
+                            <h:inputText value="#{CfgZespAdm.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
-                        #{item.systemy.nazwa}
-                    </rich:column>
-
-                    <rich:column
-                        filterExpression="#{fn:containsIgnoreCase(item.systemy.zespolyAdminow.nazwa,CfgZespAdm.filtrNazwa)}">
-                        <f:facet name="header">zespoł adm
-                            <h:inputText value="#{CfgZespAdm.filtrNazwa}"><a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
-                        </f:facet>
-                        <rich:collapsiblePanel header="#{item.systemy.zespolyAdminow.nazwa} (#{item.systemy.zespolyAdminow.telefony})" expanded="false" switchType="client">
-                            <a4j:repeat value="#{item.systemy.zespolyAdminow.adminiList}" var="admin">
-                                #{admin.nazwa} - #{admin.telefon}
-                                <br/>
-                            </a4j:repeat>
-                        </rich:collapsiblePanel>
+                        #{item.zespolyAdminow.nazwa}<br/>
+                        tel. zespołu: #{item.zespolyAdminow.telefony}
                     </rich:column>
                     
                     <rich:column>
-                        <f:facet name="header">opis
+                        <f:facet id="headerS" name="header">zarządza systemami
                         </f:facet>
-                        #{item.opis}
+                        <a4j:repeat value="#{item.zespolyAdminow.systemyList}" var="sys">
+                            #{sys.nazwa}<br/>
+                        </a4j:repeat>
                     </rich:column>
-
                     <rich:column style="width: 60px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <a4j:commandLink execute="@this" render="@none"
                                          oncomplete="#{rich:component('confirmPane')}.show()">
                             <h:graphicImage id="imgDe" value="/resources/images/delete.png" alt="delete" />
-                            <f:setPropertyActionListener target="#{ZarzInterSys.obiekt}" value="#{item}" />
+                            <f:setPropertyActionListener target="#{ZarzAdmini.obiekt}" value="#{item}" />
                         </a4j:commandLink>
 
                         <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
                             <h:graphicImage id="imgEd" value="/resources/images/edit.png" alt="edit" />
-                            <f:setPropertyActionListener target="#{ZarzInterSys.obiekt}" value="#{item}" />
+                            <f:setPropertyActionListener target="#{ZarzAdmini.obiekt}" value="#{item}" />
                         </a4j:commandLink>
                     </rich:column>
                 </rich:dataTable>
@@ -90,7 +83,7 @@
 
             <rich:notifyMessages stayTime="2000" nonblocking="true" />
 
-            <a4j:jsFunction name="remove" action="#{ZarzInterSys.usun}" render="table" execute="@this"
+            <a4j:jsFunction name="remove" action="#{ZarzAdmini.usun}" render="table" execute="@this"
                             oncomplete="#{rich:component('confirmPane')}.hide();" />
             <rich:popupPanel id="confirmPane" autosized="true">
                 Na pewno chcesz skasować?

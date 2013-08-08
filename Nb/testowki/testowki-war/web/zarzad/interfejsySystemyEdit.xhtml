@@ -12,7 +12,11 @@
             <rich:panel rendered="#{ZarzInterSys.obiekt.id!=null}">
                 <h3>System: #{ZarzInterSys.obiekt.systemy.nazwa}</h3>
             </rich:panel>
-
+            <rich:tooltip id="infoT" target="info">
+                <h:outputText value="#{ZarzInterSys.obiekt.interfejsyRodzaje.instrukcja}" escape="false"/>
+            </rich:tooltip>
+            <h:outputText id="info" value="(instrukcja - zmienia się dla każdego rodzaju interfejsu)"/>
+            
             <h:panelGrid columns="3" id="dodajGrid">
                 <h:outputLabel for="nazwaD" value="nazwa: "/>
                 <h:inputText id="nazwaD" value="#{ZarzInterSys.obiekt.nazwa}" size="90"><rich:validator/></h:inputText>
@@ -31,6 +35,7 @@
                 <h:outputLabel for="interfejsyRodzajeD" value="rodzaj interfejsu: "/>
                 <h:selectOneMenu id="interfejsyRodzajeD" value="#{ZarzInterSys.obiekt.interfejsyRodzaje}" converter="#{InterfejsyRodzajeConv}">
                     <f:selectItems value="#{CfgInterfRodz.dcC.findAllOrderNazwa()}" var="zt" itemValue="#{zt}" itemLabel="#{zt.nazwa}"/>
+                    <a4j:ajax event="change" render="infoT"/>
                 </h:selectOneMenu>
                 <rich:message for="interfejsyRodzajeD" styleClass="error" />
             </h:panelGrid>
