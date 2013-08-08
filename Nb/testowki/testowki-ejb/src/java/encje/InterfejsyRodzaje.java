@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -35,6 +36,10 @@ public class InterfejsyRodzaje implements Serializable {
     @Size(min = 1, max = 200)
     private String nazwa;
     
+    @Size(max=1024)
+    @Lob
+    private String instrukcja;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "interfejsyRodzaje", orphanRemoval = true)
     List<InterfejsySystemy> interfejsySystemyList;
 
@@ -54,6 +59,14 @@ public class InterfejsyRodzaje implements Serializable {
         this.nazwa = nazwa;
     }
 
+    public String getInstrukcja() {
+        return instrukcja;
+    }
+
+    public void setInstrukcja(String instrukcja) {
+        this.instrukcja = instrukcja;
+    }
+    
     public List<InterfejsySystemy> getInterfejsySystemyList() {
         return interfejsySystemyList;
     }

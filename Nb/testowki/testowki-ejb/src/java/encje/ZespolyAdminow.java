@@ -43,6 +43,10 @@ public class ZespolyAdminow implements Serializable {
     @OrderBy(value = "nazwa ASC")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zespolyAdminow",orphanRemoval = true)
     private List<Systemy> systemyList;
+    
+    @OrderBy(value = "nazwa ASC")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "zespolyAdminow",orphanRemoval = true)
+    private List<Admini> adminiList;
 
     public Long getId() {
         return id;
@@ -77,6 +81,14 @@ public class ZespolyAdminow implements Serializable {
 
     public void setSystemyList(List<Systemy> SystemyList) {
         this.systemyList = SystemyList;
+    }
+
+    public List<Admini> getAdminiList() {
+        return adminiList;
+    }
+
+    public void setAdminiList(List<Admini> adminiList) {
+        this.adminiList = adminiList;
     }
 
     @Override
