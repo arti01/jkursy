@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -47,6 +48,9 @@ public class ZespolyAdminow implements Serializable {
     @OrderBy(value = "nazwa ASC")
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "zespolyAdminow",orphanRemoval = true)
     private List<Admini> adminiList;
+    
+    @Transient
+    private String systemyRazem;
 
     public Long getId() {
         return id;
@@ -89,6 +93,14 @@ public class ZespolyAdminow implements Serializable {
 
     public void setAdminiList(List<Admini> adminiList) {
         this.adminiList = adminiList;
+    }
+
+    public String getSystemyRazem() {
+        String wynik = null;
+        for(Systemy s:getSystemyList()){
+            wynik=wynik+s.getNazwa()+" ";
+        }
+        return wynik;
     }
 
     @Override
