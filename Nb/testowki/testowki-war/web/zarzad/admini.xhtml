@@ -11,13 +11,15 @@
 
     <ui:define name="content">
         <h3>Zarządzanie administratorami</h3>
+        <h:form>
+            <a4j:commandLink action="#{ZarzAdmini.refresh}" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" render="dodajPane">
+                <p style="text-align: center; font-weight: bold; font-size: larger">[dodaj]</p>
+            </a4j:commandLink>
+        </h:form>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <ui:include src="./adminiEdit.xhtml"/>
         <h:form>
             <rich:panel id="listPanel">
-                <a4j:commandLink action="#{ZarzAdmini.refresh}" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" render="dodajPane">
-                    <h4>[dodaj]</h4>
-                </a4j:commandLink>
 
                 <rich:dataTable style="width: 100%">
                     <f:facet name="header"><rich:dataScroller id="scroH" for="table" fastControls="hide" maxPages="5"/></f:facet>
@@ -34,7 +36,7 @@
                         </f:facet>
                         #{item.nazwa}
                     </rich:column>
-                    
+
                     <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.nazwa,ZarzAdmini.filtrTelefon)}">
                         <f:facet id="headerS" name="header">telefon
@@ -43,7 +45,7 @@
                         </f:facet>
                         #{item.telefon}
                     </rich:column>
-                    
+
                     <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.zespolyAdminow.nazwa,CfgZespAdm.filtrNazwa)}">
                         <f:facet id="headerS" name="header">zespół
@@ -53,12 +55,17 @@
                         #{item.zespolyAdminow.nazwa}<br/>
                         tel. zespołu: #{item.zespolyAdminow.telefony}
                     </rich:column>
-                    
-                    <rich:column>
+
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.zespolyAdminow.systemyRazem,CfgSystemy.filtrNazwa)}">
                         <f:facet id="headerS" name="header">zarządza systemami
+                            <h:inputText value="#{CfgSystemy.filtrNazwa}" size="10">
+                                <a4j:ajax event="keyup" render="table@body, scroH, scroF" execute="@this" /></h:inputText>
                         </f:facet>
                         <a4j:repeat value="#{item.zespolyAdminow.systemyList}" var="sys">
-                            #{sys.nazwa}<br/>
+                            <h:commandLink action="#{ZarzInterSys.list}">
+                                <f:setPropertyActionListener value="#{sys.nazwa}" target="#{CfgSystemy.filtrNazwa}"/>
+                                [#{sys.nazwa}]<br/>
+                            </h:commandLink>
                         </a4j:repeat>
                     </rich:column>
                     <rich:column style="width: 60px">

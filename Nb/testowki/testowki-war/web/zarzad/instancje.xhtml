@@ -43,15 +43,20 @@
                         <rich:tooltip target="zestTestinfodod" layout="block">
                             <h:outputText value="#{item.zestawyTestowe.infodod}" escape="false"/>
                         </rich:tooltip>
+
                         <rich:collapsiblePanel header="#{item.zestawyTestowe.nazwa} - interfejsy" expanded="false" switchType="client">
                             <h:outputText id="zestTest" value="#{item.zestawyTestowe.nazwa}" style="font-weight: bold;"/>
-                             - #{item.zestawyTestowe.funkcja}
-                            <h:outputText id="zestTestinfodod" value=" (info dod)" style="font-weight: bold;"/>
+                            - #{item.zestawyTestowe.funkcja}
+                            <h:outputText id="zestTestinfodod" value=" (info dod)" rendered="#{fn:length(item.zestawyTestowe.infodod)>0}" style="font-weight: bold;"/>
                             <hr/>
                             <a4j:repeat value="#{item.interfejsyInstancjeList}" var="ii">
+                                <rich:tooltip target="zestTestInterInfodod" layout="block">
+                                    <h:outputText value="#{ii.interfejsySystemy.opis}" escape="false"/>
+                                </rich:tooltip>
                                 #{ii.interfejsySystemy.nazwa}, rodzaj: #{ii.interfejsySystemy.interfejsyRodzaje.nazwa}
                                 <br/>
-                                <h:outputText value="#{ii.namiary}" rendered="#{fn:length(ii.namiary)>0}"/>
+                                <h:outputText value="#{ii.namiary}" rendered="#{fn:length(ii.namiary)>0}"/> 
+                                <h:outputText id="zestTestInterInfodod" value=" (info dod)" rendered="#{fn:length(ii.interfejsySystemy.opis)>0}"/>
                                 <hr width="80%"/>
                             </a4j:repeat>
                         </rich:collapsiblePanel>

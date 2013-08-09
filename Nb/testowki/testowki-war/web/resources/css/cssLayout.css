@@ -49,9 +49,11 @@
 
 #left tbody h4 {
     font-size: 12px;
-    padding: 0;
-    margin: 0;
+    padding: 1px;
+    margin: 1px;
+    text-align: center;
 }
+
 #left li a
 {
     color: black;

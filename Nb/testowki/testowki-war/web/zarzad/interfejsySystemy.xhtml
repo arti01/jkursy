@@ -31,6 +31,12 @@
                         </f:facet>
                         #{item.nazwa}
                     </rich:column>
+                                        
+                    <rich:column>
+                        <f:facet name="header">opis
+                        </f:facet>
+                        #{item.opis}
+                    </rich:column>
                     
                     <rich:column
                         filterExpression="#{fn:containsIgnoreCase(item.interfejsyRodzaje.nazwa,ZarzInterSys.filtrRodzaj)}">
@@ -60,12 +66,6 @@
                                 <br/>
                             </a4j:repeat>
                         </rich:collapsiblePanel>
-                    </rich:column>
-                    
-                    <rich:column>
-                        <f:facet name="header">opis
-                        </f:facet>
-                        #{item.opis}
                     </rich:column>
 
                     <rich:column style="width: 60px">
