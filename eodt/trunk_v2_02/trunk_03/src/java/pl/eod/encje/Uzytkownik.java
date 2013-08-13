@@ -72,7 +72,7 @@ public class Uzytkownik implements Serializable {
     @Transient
     //@OneToOne(mappedBy = "username")
     WnLimity wnLimity;
-    @OneToMany(mappedBy = "secUserId")
+    @OneToMany(mappedBy = "secUserId", cascade = CascadeType.REFRESH)
     List<Struktura> strukturaSec;
     @OneToOne(mappedBy = "userId", cascade = {CascadeType.ALL})
     Struktura struktura;

@@ -8,7 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.richfaces.component.SortOrder;
-import pl.eod.encje.WnStatusy;
 import pl.eod.encje.WnStatusyJpaController;
 import pl.eod.encje.WnUrlopJpaController;
 

@@ -55,6 +55,10 @@
                     <h:outputLabel for="przyjwnioski" value="Czy uprawniona do innych przyjmowania wniosków?: "/>
                     <h:selectBooleanCheckbox id="przyjwnioski" value="#{UsersM.strukt.przyjmowanieWnioskow}"/>
                     <rich:message for="przyjwnioski" styleClass="error" />
+                    
+                    <h:outputLabel for="musZast" value="Czy musi mieć ustawionego zastępcę?: "/>
+                    <h:selectBooleanCheckbox id="musZast" value="#{UsersM.strukt.musZast}"/>
+                    <rich:message for="musZast" styleClass="error" />
 
                     <h:outputLabel for="extid" value="Zewnętrzne Id:"/>
                     <h:inputText id="extid" value="#{UsersM.strukt.userId.extId}" size="10"/>

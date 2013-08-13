@@ -23,6 +23,8 @@ import javax.persistence.criteria.Order;
  */
 public class WnUrlopJpaController implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     public WnUrlopJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
@@ -38,24 +40,60 @@ public class WnUrlopJpaController implements Serializable {
         if (wnUrlop.getDataDo().before(wnUrlop.getDataOd())) {
             return "Data końca nie może być przed datą początku";
         }
+        if(wnUrlop.getUzytkownik().getStruktura().isMusZast()&&wnUrlop.getUzytkownik().getStruktura().getSecUserId()==null){
+            return "Przed wystawieniem wniosku konieczny jest ustawiony zastępca";
+        }
+        
         if (wnUrlop.getWnHistoriaList() == null) {
             wnUrlop.setWnHistoriaList(new ArrayList<WnHistoria>());
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
+
+            //sprawdzenie, czy urlop się nie pokrywa z już wysłanym lub zaakceptowanym            
             Uzytkownik u = em.find(Uzytkownik.class, wnUrlop.getUzytkownik().getId());
+            if (wnUrlop.getStatusId().getId() == 1 || wnUrlop.getStatusId().getId() == 2) {
+                for (WnUrlop ur : u.getWnUrlopList()) {
+                    if (ur.getStatusId().getId() != 2 && ur.getStatusId().getId() != 3) {
+                        continue;
+                    }
+
+                    if ((wnUrlop.getDataDo().after(ur.getDataOd()) || wnUrlop.getDataDo().equals(ur.getDataOd()))
+                            && (wnUrlop.getDataDo().before(ur.getDataDo()) || wnUrlop.getDataDo().equals(ur.getDataDo()))) {
+                        return "data końca zawiera się w już wysłanym wniosku";
+                    }
+                    if ((wnUrlop.getDataOd().after(ur.getDataOd()) || wnUrlop.getDataOd().equals(ur.getDataOd()))
+                            && (wnUrlop.getDataOd().before(ur.getDataDo()) || wnUrlop.getDataOd().equals(ur.getDataDo()))) {
+                        return "data początku zawiera się w już wysłanym wniosku";
+                    }
+                    
+                    if (ur.getDataDo().after(wnUrlop.getDataOd())
+                            && ur.getDataDo().before(wnUrlop.getDataDo())) {
+                        return "już wysłany wniosek leży w tym zakresie";
+                    }
+                    
+                }
+            }
+
             u.getWnUrlopList().add(0, wnUrlop);
             em.getTransaction().begin();
-            if(wnUrlop.getId()==null) em.persist(wnUrlop);
+            if (wnUrlop.getId() == null) {
+                em.persist(wnUrlop);
+            }
             em.merge(u);
             //em.getTransaction().commit();
             //nadawanie numeru wniosku;
-            String nrWniosku=wnUrlop.getRodzajId().getOpis().substring(0, 3).toUpperCase();
-            nrWniosku=nrWniosku+"/"+(getWnUrlopCountRokBiezacy()+1)+"/";
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
-            nrWniosku=nrWniosku+sdf.format(new Date());
-            if(wnUrlop.getStatusId().getId()==1) wnUrlop.setNrWniosku(nrWniosku);
+            String nrWniosku =wnUrlop.getUzytkownik().getSpolkaId().getSymbol().toUpperCase(); 
+            nrWniosku=nrWniosku+"/"+wnUrlop.getRodzajId().getSymbol().toUpperCase();
+            //nrWniosku = nrWniosku + "/" + (getWnUrlopCountRokBiezacy() + 1) + "/";
+            nrWniosku = nrWniosku + "/" + (getWnUrlopCountMiesiacBiezacy() + 1) + "/";
+            SimpleDateFormat sdfr = new SimpleDateFormat("yyyy");
+            SimpleDateFormat sdfm = new SimpleDateFormat("MM");
+            nrWniosku = nrWniosku + sdfm.format(new Date())+"/"+ sdfr.format(new Date());
+            if (wnUrlop.getStatusId().getId() == 1) {
+                wnUrlop.setNrWniosku(nrWniosku);
+            }
             //em.getTransaction().begin();
             em.merge(wnUrlop);
             em.getTransaction().commit();
@@ -104,7 +142,7 @@ public class WnUrlopJpaController implements Serializable {
         wnh.setOpisZmiany("Wniosek eskalowany automatycznie");
         urlop.getWnHistoriaList().add(wnh);
         createEdit(urlop);
-        
+
         KomKolejkaJpaController KomKolC = new KomKolejkaJpaController();
         KomKolejka kk = new KomKolejka();
         kk.setAdresList(urlop.getAkceptant().getAdrEmail());
@@ -122,18 +160,18 @@ public class WnUrlopJpaController implements Serializable {
         Config cfg = cfgC.findConfigNazwa("eskalujPoMinutach");
         //System.out.println(cfg.getWartosc());
         cal.add(Calendar.MINUTE, -(new Long(cfg.getWartosc()).intValue()));
-         EntityManager em = getEntityManager();
-        try{
-        Query q = em.createNamedQuery("WnUrlop.findDoEskalacji");
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("WnUrlop.findDoEskalacji");
             q.setParameter("statusId", 2);
-        for (WnUrlop u : (List<WnUrlop>)q.getResultList()) {
-            //System.out.println(cal.getTime());
-            //System.out.println(u.getDataOstZmiany());
-            //System.out.println(u.getDataOstZmiany().before(cal.getTime()));
-            if (u.getDataOstZmiany().before(cal.getTime())) {
-                eskaluj(u);
+            for (WnUrlop u : (List<WnUrlop>) q.getResultList()) {
+                //System.out.println(cal.getTime());
+                //System.out.println(u.getDataOstZmiany());
+                //System.out.println(u.getDataOstZmiany().before(cal.getTime()));
+                if (u.getDataOstZmiany().before(cal.getTime())) {
+                    eskaluj(u);
+                }
             }
-        }
         } finally {
             em.close();
         }
@@ -154,10 +192,10 @@ public class WnUrlopJpaController implements Serializable {
             CriteriaQuery<WnUrlop> queryDefinition = queryBuilder.createQuery(WnUrlop.class);
             Root<WnUrlop> urlop = queryDefinition.from(WnUrlop.class);
             Order o;
-            o=queryBuilder.desc(urlop.get("id"));
+            o = queryBuilder.desc(urlop.get("id"));
             queryDefinition.select(urlop).orderBy(o);
             CriteriaQuery cq = queryBuilder.createQuery();
-            Query q=em.createQuery(queryDefinition);
+            Query q = em.createQuery(queryDefinition);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
@@ -179,17 +217,17 @@ public class WnUrlopJpaController implements Serializable {
 
     @SuppressWarnings("unchecked")
     public int getWnUrlopCountRokBiezacy() {
-        Calendar cal= Calendar.getInstance();
+        Calendar cal = Calendar.getInstance();
         cal.set(Calendar.MONTH, Calendar.JANUARY);
         cal.set(Calendar.DATE, 1);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
-        
+
         EntityManager em = getEntityManager();
         try {
-            CriteriaBuilder cb=em.getCriteriaBuilder();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery();
             Root<WnUrlop> rt = cq.from(WnUrlop.class);
             cq.select(em.getCriteriaBuilder().count(rt));
@@ -201,6 +239,30 @@ public class WnUrlopJpaController implements Serializable {
         }
     }
     
+    @SuppressWarnings("unchecked")
+    public int getWnUrlopCountMiesiacBiezacy() {
+        Calendar cal = Calendar.getInstance();
+        //cal.set(Calendar.MONTH, Calendar.JANUARY);
+        cal.set(Calendar.DATE, 1);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<WnUrlop> rt = cq.from(WnUrlop.class);
+            cq.select(em.getCriteriaBuilder().count(rt));
+            cq.where(cb.greaterThan(rt.get(WnUrlop_.dataWprowadzenia), cal.getTime()));
+            Query q = em.createQuery(cq);
+            return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
     public int getWnUrlopCount() {
         EntityManager em = getEntityManager();
         try {

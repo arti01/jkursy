@@ -30,9 +30,10 @@ INSERT INTO config VALUES (11, 'email_unikalny', '1-nie, 0-tak', '1');
 -- Data for Name: wn_rodzaje; Type: TABLE DATA; Schema: public; Owner: eod
 --
 
-INSERT INTO wn_rodzaje VALUES (2, 'Okolicznościowy');
-INSERT INTO wn_rodzaje VALUES (1, 'Wypoczynkowy');
-
+INSERT INTO wn_rodzaje VALUES (2, 'Okolicznościowy', 'OKO');
+INSERT INTO wn_rodzaje VALUES (1, 'Wypoczynkowy', 'WYP');
+INSERT INTO wn_rodzaje VALUES (3, 'Krajowa Delegacja', 'KRJ');
+INSERT INTO wn_rodzaje VALUES (4, 'Zagraniczna delegacja', 'ZAG');
 
 --
 -- TOC entry 1930 (class 0 OID 28952)
@@ -53,7 +54,7 @@ INSERT INTO dzial (id, nazwa) VALUES (2, 'admin-md5');
 INSERT INTO dzial (id, nazwa) VALUES (1, 'Cala Firma');
 INSERT INTO dzial (id, nazwa) VALUES (4, 'Przezes Spółka 1');
 
-INSERT INTO spolki (id, nazwa, opis) VALUES (1, 'Spółka1', 'Spółka1');
+INSERT INTO spolki (id, nazwa, opis, symbol) VALUES (1, 'Spółka1', 'Spółka1', 'SP1');
 
 INSERT INTO passwords (id, pass) VALUES (3, 'a');
 INSERT INTO passwords (id, pass) VALUES (2, '0cc175b9c0f1b6a831c399e269772661');

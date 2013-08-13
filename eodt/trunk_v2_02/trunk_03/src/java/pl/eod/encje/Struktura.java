@@ -74,6 +74,8 @@ public class Struktura implements Serializable {
     private Integer usuniety;
     @Column(name = "extraemail", nullable = true)
     private String extraemail;
+    @Column(name = "mus_zast", nullable = false)
+    private Integer musZast;
     @Transient
     List<Struktura> bezpPodzPodwlad;
     @Transient
@@ -177,7 +179,7 @@ public class Struktura implements Serializable {
     public List<Struktura> getBezpPodzPodwlad() {
         List<Struktura> tree = new ArrayList<Struktura>();
         for (Struktura s : getBezpPodWidoczni()) {
-            if (s.getBezpPod().size() > 0 ) {
+            if (s.getBezpPod().size() > 0) {
                 tree.add(s);
             }
         }
@@ -313,12 +315,31 @@ public class Struktura implements Serializable {
     }
 
     public boolean isSysSdmin() {
-                if(this.bezpPod.isEmpty()&&this.userId.getSpolkaId()==null&&this.szefId==null) return true;
-        else return false;
+        if (this.bezpPod.isEmpty() && this.userId.getSpolkaId() == null && this.szefId == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    
-    
+    public boolean isMusZast() {
+        boolean wynik;
+        if (this.musZast==null||this.musZast != 0) {
+            wynik = false;
+        } else {
+            wynik = true;
+        }
+        return wynik;
+    }
+
+    public void setMusZast(boolean musZast) {
+        if (musZast) {
+            this.musZast = 0;
+        } else {
+            this.musZast = 1;
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -23,6 +22,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -46,12 +46,19 @@ public class Spolki implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
+    @NotEmpty
     @Size(min = 1, max = 255)
     @Column(name = "nazwa", nullable = false, length = 255)
     private String nazwa;
     @Size(max = 255)
     @Column(name = "opis", length = 255)
     private String opis;
+    @Basic(optional = false)
+    @NotNull
+    @NotEmpty
+    @Size(min = 1, max = 5)
+    @Column(name = "symbol", nullable = false, length = 5)
+    private String symbol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spolkaId", orphanRemoval = true)
     @OrderBy(value = "id DESC")
     private List<Uzytkownik> userList;
@@ -98,6 +105,14 @@ public class Spolki implements Serializable {
 
     public void setUserList(List<Uzytkownik> userList) {
         this.userList = userList;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     @Override

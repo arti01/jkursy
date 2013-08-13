@@ -37,7 +37,6 @@ import pl.eod.managed.Login;
 public class UrlopM implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
     private WnUrlop urlop;
     private DataModel<WnUrlop> urlopyList = new ListDataModel<WnUrlop>();
     private DataModel<WnUrlop> urlopyAkcept = new ListDataModel<WnUrlop>();
@@ -53,7 +52,7 @@ public class UrlopM implements Serializable {
     String namePodwFilter;
     private Map<String, String> filterValues = Maps.newHashMap();
     private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
-    
+
     public String list() {
         initUrlop();
         return "/urlop/urlopyList";
@@ -76,7 +75,7 @@ public class UrlopM implements Serializable {
             st.setId(new Long(6));
             urlop.setStatusId(st);
             //urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-            
+
             WnHistoria wnh = new WnHistoria();
             wnh.setDataZmiany(new Date());
             WnStatusy st1 = new WnStatusy();
@@ -112,9 +111,8 @@ public class UrlopM implements Serializable {
                 kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " anulował urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
                 KomKolC.create(kk);
             }
-
             info = "Wniosek anulowany";
-            
+
         } catch (Exception ex) {
             //if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
             //else 
@@ -129,15 +127,16 @@ public class UrlopM implements Serializable {
             context.addMessage(zapisz.getClientId(context), message);
         }
     }
-    
+
     public void wyslij() {
         String info = "";
+        String error = null;
         try {
             WnStatusy st = new WnStatusy();
             st.setId(new Long(2));
             urlop.setStatusId(st);
             urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-            
+
             WnHistoria wnh = new WnHistoria();
             wnh.setDataZmiany(new Date());
             WnStatusy st1 = new WnStatusy();
@@ -150,42 +149,66 @@ public class UrlopM implements Serializable {
 
             urlop.getWnHistoriaList().add(wnh);
 
-            urlopC.createEdit(urlop);
+            error = urlopC.createEdit(urlop);
+            String tresc;
+            if (error == null) {
+                //wysylanie maila
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if (urlop.isExtraemail()) {
+                    KomKolejka kk = new KomKolejka();
+                    kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                    kk.setStatus(0);
+                    kk.setIdDokumenu(urlop.getId().intValue());
+                    kk.setTemat("Informacja o wniosku urlopowym");
+                    tresc = "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+                    if (!urlop.getInfoDod().isEmpty()) {
+                        tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    }
+                    if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                        tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                    }
+                    kk.setTresc(tresc);
 
-            //wysylanie maila
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            if (urlop.isExtraemail()) {
-                KomKolejka kk = new KomKolejka();
-                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
-                kk.setStatus(0);
-                kk.setIdDokumenu(urlop.getId().intValue());
-                kk.setTemat("Informacja o wniosku urlopowym");
-                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
-                KomKolC.create(kk);
+                    KomKolC.create(kk);
+                }
+
+                if (!urlop.getAkceptant().getAdrEmail().equals("")) {
+                    KomKolejka kk = new KomKolejka();
+                    kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+                    kk.setStatus(0);
+                    kk.setIdDokumenu(urlop.getId().intValue());
+                    kk.setTemat("Prośba o akceptację wniosku urlopowego");
+                    tresc = "Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+
+                    if (!urlop.getInfoDod().isEmpty()) {
+                        tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    }
+                    if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                        tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                    }
+                    kk.setTresc(tresc);
+                    KomKolC.create(kk);
+                }
+                info = "Wniosek wysłany";
             }
-
-            if (!urlop.getAkceptant().getAdrEmail().equals("")) {
-                KomKolejka kk = new KomKolejka();
-                kk.setAdresList(urlop.getAkceptant().getAdrEmail());
-                kk.setStatus(0);
-                kk.setIdDokumenu(urlop.getId().intValue());
-                kk.setTemat("Prośba o akceptację wniosku urlopowego");
-                kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
-                KomKolC.create(kk);
-            }
-
-            info = "Wniosek wysłany";
-            
         } catch (Exception ex) {
-            if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
-            else info = "Coś poszło nie tak";
+            if (login.getZalogowany().getSzefId() == null) {
+                info = "nie można ustawić akceptanta, brak przełożonego";
+            } else {
+                info = "Coś poszło nie tak";
+            }
             ex.printStackTrace();
         } finally {
             initUrlop();
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             FacesMessage message = new FacesMessage();
-            message.setSummary(info);
+            if (error != null) {
+                message.setSeverity(FacesMessage.SEVERITY_ERROR);
+                message.setSummary(error);
+            } else {
+                message.setSummary(info);
+            }
             context.addMessage(zapisz.getClientId(context), message);
         }
     }
@@ -207,37 +230,40 @@ public class UrlopM implements Serializable {
         wnh.setOpisZmiany("Wniosek zaakceptowany");
 
         urlop.getWnHistoriaList().add(wnh);
+        String error;
+        error = urlopC.createEdit(urlop);
+        if (error == null) {
+            if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Wniosek o urlop zaakceptowany");
+                kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+                KomKolC.create(kk);
+            }
 
-        urlopC.createEdit(urlop);
-
-        if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(urlop.getUzytkownik().getAdrEmail());
-            kk.setStatus(0);
-            kk.setIdDokumenu(urlop.getId().intValue());
-            kk.setTemat("Wniosek o urlop zaakceptowany");
-            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
-            KomKolC.create(kk);
+            if (urlop.getPrzyjmujacy() != null) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Wniosek o urlop zaakceptowany");
+                kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
+                KomKolC.create(kk);
+            }
         }
-
-        if (urlop.getPrzyjmujacy() != null) {
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
-            kk.setStatus(0);
-            kk.setIdDokumenu(urlop.getId().intValue());
-            kk.setTemat("Wniosek o urlop zaakceptowany");
-            kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
-            KomKolC.create(kk);
-        }
-
         initUrlop();
-
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         FacesMessage message = new FacesMessage();
-        message.setSummary("Wniosek zaakceptowany");
+        if (error != null) {
+            message.setSummary(error);
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+        } else {
+            message.setSummary("Wniosek zaakceptowany");
+        }
         context.addMessage(zapisz.getClientId(context), message);
-        System.out.println(urlop);
     }
 
     public void odrzuc() {
@@ -308,7 +334,7 @@ public class UrlopM implements Serializable {
 
         urlop.getWnHistoriaList().add(wnh);
 
-        urlopC.createEdit(urlop);
+        System.err.println(urlopC.createEdit(urlop));
 
         if (!urlop.getUzytkownik().getAdrEmail().equals("")) {
             KomKolejka kk = new KomKolejka();
@@ -378,7 +404,6 @@ public class UrlopM implements Serializable {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
         } else {
             initUrlop();
-
             message.setSummary("wniosek zapisany");
             message.setSeverity(FacesMessage.SEVERITY_INFO);
         }
@@ -493,15 +518,16 @@ public class UrlopM implements Serializable {
     public void setUrlopC(WnUrlopJpaController urlopC) {
         this.urlopC = urlopC;
     }
-    
+
     public Object getDataModel() {
         return new WnUrlopDataModel();
     }
-    
-     public Map<String, String> getFilterValues() {
+
+    public Map<String, String> getFilterValues() {
         return filterValues;
     }
-     public Map<String, SortOrder> getSortOrders() {
+
+    public Map<String, SortOrder> getSortOrders() {
         return sortOrders;
     }
 }

@@ -1,0 +1,7 @@
+2013-08-13
+1. Poprawiłem wylogowanie i zmianę hasła - sprawdz, proszę, czy działa
+2. Domyślny kontrahent (przy braku wyboru) - brany jest kontrahent o id=1 - w insertach był taki insert, tylko pewnie przez identity się nie dodał
+    - w każdym razie wystarczy założyć takiego i będzie dobrze
+3. Uwaga - zaktualizowałem o zmiany w Urlopach (delegacja zagraniczna itd) - trzeba albo zainstalować od nowa, albo dodać pola do tabel wg instrukcji
+    z 2012-06-09 (zmiany.html)
+4.

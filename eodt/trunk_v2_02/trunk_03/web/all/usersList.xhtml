@@ -60,6 +60,9 @@
 
                                     <h:outputLabel for="przyjwnioski" value="Czy uprawniony do przyjmowania wniosków innych osób?: "/>
                                     <h:selectBooleanCheckbox id="przyjwnioski" value="#{strukt.przyjmowanieWnioskow}" readonly="true"/>
+                                    
+                                    <h:outputLabel for="musZast" value="Czy musi mieć ustawionego zastępcę?: "/>
+                                    <h:selectBooleanCheckbox id="musZast" value="#{strukt.musZast}" readonly="true"/>
 
                                     <h:outputLabel for="extid" value="Zewnętrzny identyfikator:"/>
                                     <h:outputText id="extid" value="#{strukt.userId.extId}"/>

@@ -106,7 +106,8 @@
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="[  Akceptuj  ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <rich:message for="akcLink" styleClass="error"/>
+                            <a4j:commandLink id="akcLink" value="[  Akceptuj  ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
@@ -116,6 +117,7 @@
                         </rich:column>
                     </rich:dataTable>
                 </a4j:outputPanel>
+                <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
             </h:form>
         </div>
     </ui:define>

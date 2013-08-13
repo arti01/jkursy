@@ -52,7 +52,7 @@ public class UrlopObceM {
             st.setId(new Long(6));
             urlop.setStatusId(st);
             //urlop.setAkceptant(login.getZalogowany().getSzefId().getUserId());
-            
+
             WnHistoria wnh = new WnHistoria();
             wnh.setDataZmiany(new Date());
             WnStatusy st1 = new WnStatusy();
@@ -68,6 +68,7 @@ public class UrlopObceM {
             urlopC.createEdit(urlop);
 
             //wysylanie maila
+            String tresc;
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             if (urlop.isExtraemail()) {
                 KomKolejka kk = new KomKolejka();
@@ -85,12 +86,13 @@ public class UrlopObceM {
                 kk.setStatus(0);
                 kk.setIdDokumenu(urlop.getId().intValue());
                 kk.setTemat("Informacja o anulowaniu wniosku urlopowego");
-                kk.setTresc("Uprawniona osoba anulowała urlop pracownika " + urlop.getUzytkownik().getFullname() + ". Urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                tresc = "Uprawniona osoba anulowała urlop pracownika " + urlop.getUzytkownik().getFullname() + ". Urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                kk.setTresc(tresc);
                 KomKolC.create(kk);
             }
 
             info = "Wniosek anulowany";
-            
+
         } catch (Exception ex) {
             //if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
             //else 
@@ -105,13 +107,14 @@ public class UrlopObceM {
             context.addMessage(zapisz.getClientId(context), message);
         }
     }
-    
+
     public void wyslij() {
+        String error;
         WnStatusy st = new WnStatusy();
         st.setId(new Long(2));
         urlop.setStatusId(st);
         urlop.setAkceptant(urlop.getUzytkownik().getStruktura().getSzefId().getUserId());
-        
+
         WnHistoria wnh = new WnHistoria();
         wnh.setDataZmiany(new Date());
         WnStatusy st1 = new WnStatusy();
@@ -121,20 +124,29 @@ public class UrlopObceM {
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(urlop.getUzytkownik().getStruktura().getSzefId().getUserId());
         wnh.setOpisZmiany("uprawniona osoba wysłała wniosek do akceptu przełożonemu");
-        
+
         urlop.getWnHistoriaList().add(wnh);
 
-        urlopC.createEdit(urlop);
-        
-        //wysylanie maila
-       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        error = urlopC.createEdit(urlop);
+
+        if (error == null) {
+            //wysylanie maila
+            String tresc;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             if (urlop.isExtraemail()) {
                 KomKolejka kk = new KomKolejka();
                 kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
                 kk.setStatus(0);
                 kk.setIdDokumenu(urlop.getId().intValue());
                 kk.setTemat("Informacja o wniosku urlopowym");
-                kk.setTresc("Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                tresc = "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+                if (!urlop.getInfoDod().isEmpty()) {
+                    tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                }
+                if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                    tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                }
+                kk.setTresc(tresc);
                 KomKolC.create(kk);
             }
 
@@ -144,20 +156,31 @@ public class UrlopObceM {
                 kk.setStatus(0);
                 kk.setIdDokumenu(urlop.getId().intValue());
                 kk.setTemat("Prośba o akceptację wniosku urlopowego");
-                kk.setTresc("Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                tresc = "Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+                if (!urlop.getInfoDod().isEmpty()) {
+                    tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                }
+                if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                    tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                }
+                kk.setTresc(tresc);
                 KomKolC.create(kk);
             }
-        
+        }
         initUrlop();
-        
         FacesContext context = FacesContext.getCurrentInstance();
-        UIComponent zapisz = UIComponent.getCurrentComponent(context); 
+        UIComponent zapisz = UIComponent.getCurrentComponent(context);
         FacesMessage message = new FacesMessage();
-        message.setSummary("uprawniona osoba wysłała wniosek");
+        if (error != null) {
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            message.setSummary(error);
+        } else {
+            message.setSummary("uprawniona osoba wysłała wniosek");
+        }
         context.addMessage(zapisz.getClientId(context), message);
 
     }
-  
+
     public void usun() {
         urlopC.destroy(urlop);
         FacesContext context = FacesContext.getCurrentInstance();
@@ -172,8 +195,8 @@ public class UrlopObceM {
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
         FacesMessage message = new FacesMessage();
-        
-        if(urlop.getUzytkownik()==null){
+
+        if (urlop.getUzytkownik() == null) {
             message.setSummary("wybierz pracownika");
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
             context.addMessage(zapisz.getClientId(context), message);
@@ -206,19 +229,18 @@ public class UrlopObceM {
             message.setSeverity(FacesMessage.SEVERITY_ERROR);
         } else {
             initUrlop();
-            
+
             message.setSummary("wniosek zapisany");
             message.setSeverity(FacesMessage.SEVERITY_INFO);
         }
         context.addMessage(zapisz.getClientId(context), message);
     }
-    
 
     @PostConstruct
     public void init() {
         urlopC = new WnUrlopJpaController();
         rodzajeC = new WnRodzajeJpaController();
-        KomKolC=new KomKolejkaJpaController();
+        KomKolC = new KomKolejkaJpaController();
         initUrlop();
     }
 
@@ -260,6 +282,5 @@ public class UrlopObceM {
     public Locale getLocale() {
         locale = new Locale("pl", "PL");
         return locale;
-    }    
-    
+    }
 }
