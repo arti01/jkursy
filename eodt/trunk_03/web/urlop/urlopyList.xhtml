@@ -51,17 +51,17 @@
                         <h:inputTextarea id="infoDod" value="#{UrlopM.urlop.infoDod}" cols="52"/>
                         <rich:message for="infoDod" styleClass="error" />
 
-                        <h:outputLabel for="miejsce" value="delegacja - miejsce: " rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="miejsce" value="#{UrlopM.urlop.miejsce}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="miejsce" value="delegacja - miejsce: " rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="miejsce" value="#{UrlopM.urlop.miejsce}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
 
-                        <h:outputLabel for="cel" value="delegacja - miejsce: " rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="cel" value="#{UrlopM.urlop.cel}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="cel" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="cel" value="delegacja - miejsce: " rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="cel" value="#{UrlopM.urlop.cel}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="cel" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
 
-                        <h:outputLabel for="srodekLok" value="delegacja - srodek lokomocji: " rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="srodekLok" value="#{UrlopM.urlop.srodekLok}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="srodekLok" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==3 or UrlopM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="srodekLok" value="delegacja - srodek lokomocji: " rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="srodekLok" value="#{UrlopM.urlop.srodekLok}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="srodekLok" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
 
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
@@ -132,7 +132,7 @@
                                 Rodzaj
                             </f:facet>
                             <h:outputText value="#{urlop.rodzajId.opis}"/>
-                            <rich:collapsiblePanel header="szczegóły" expanded="false" switchType="client" rendered="#{urlop.rodzajId.id==3 or urlop.rodzajId.id==4}">
+                            <rich:collapsiblePanel header="szczegóły" expanded="false" switchType="client" rendered="#{urlop.rodzajId.id==5 or urlop.rodzajId.id==6}">
                                 <h:panelGrid columns="2">
                                     <h:outputLabel for="miejsce" value="miejsce: " />
                                     <h:outputText id="miejsce" value="#{urlop.miejsce}" />

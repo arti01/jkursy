@@ -255,5 +255,12 @@ public class Login implements Serializable {
         this.menuUrlopExp = menuUrlopExp;
     }
     
+    public String htmlLogout(){
+        return "/logout.jsp";
+    }
+    
+    public String htmlZmianaHasla(){
+        return "/logowanie/zmianaHasla.xhtml?faces-redirect=true";
+    }
     
 }

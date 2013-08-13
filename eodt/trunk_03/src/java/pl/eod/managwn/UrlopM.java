@@ -161,8 +161,8 @@ public class UrlopM implements Serializable {
                     kk.setIdDokumenu(urlop.getId().intValue());
                     kk.setTemat("Informacja o wniosku urlopowym");
                     tresc = "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
-                    if(!urlop.getInfoDod().isEmpty()){
-                            tresc=tresc+ ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    if (!urlop.getInfoDod().isEmpty()) {
+                        tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
                     }
                     if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
                         tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
@@ -179,9 +179,9 @@ public class UrlopM implements Serializable {
                     kk.setIdDokumenu(urlop.getId().intValue());
                     kk.setTemat("Prośba o akceptację wniosku urlopowego");
                     tresc = "Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
-                    
-                    if(!urlop.getInfoDod().isEmpty()){
-                            tresc=tresc+ ". Dodatkowe informacje: " + urlop.getInfoDod();
+
+                    if (!urlop.getInfoDod().isEmpty()) {
+                        tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
                     }
                     if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
                         tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
