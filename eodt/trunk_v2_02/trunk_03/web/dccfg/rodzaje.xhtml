@@ -50,23 +50,20 @@
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
-                        <a4j:commandLink execute="@this" render="@none"
+                        <a4j:commandButton id="imgDe" execute="@this" render="@none" image="/images/delete.png"
                                          oncomplete="#{rich:component('confirmPaneRodzaj')}.show()" rendered="#{fn:length(item.dcDokumentList)==0}">
-                            <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                         <h:graphicImage id="imgB"  value="/images/delete.png" alt="delete" rendered="#{fn:length(item.dcDokumentList)>0}"/>
                         <rich:tooltip id="ttbl" layout="block"  rendered="#{fn:length(item.dcDokumentList)>0}" target="imgB">
                             nie można usunąć - rodzaj posiada już dokumenty
                         </rich:tooltip>
-                        <a4j:commandLink render="dodajPaneRodzaj" execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
-                            <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
+                        <a4j:commandButton id="imgEd" render="dodajPaneRodzaj" execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
-                        </a4j:commandLink>
-                        <a4j:commandLink execute="@this" action="#{RodzajeCfg.krokiLista}">
-                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="details" />
+                        </a4j:commandButton>
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{RodzajeCfg.krokiLista}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>

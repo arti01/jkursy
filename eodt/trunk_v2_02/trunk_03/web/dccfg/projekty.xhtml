@@ -56,15 +56,13 @@
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
-                        <a4j:commandLink execute="@this" render="@none"
-                                         oncomplete="#{rich:component('confirmPane')}.show()">
-                            <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
+                        <a4j:commandButton id="imgDe" execute="@this" render="@none"
+                                           oncomplete="#{rich:component('confirmPane')}.show()" image="/images/delete.png">
                             <f:setPropertyActionListener target="#{ProjektyCfg.obiekt}" value="#{item}" />
-                        </a4j:commandLink>
-                        <a4j:commandLink render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()">
-                            <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
+                        </a4j:commandButton>
+                        <a4j:commandButton id="imgEd" render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{ProjektyCfg.obiekt}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>
