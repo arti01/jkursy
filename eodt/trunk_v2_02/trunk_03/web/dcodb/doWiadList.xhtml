@@ -16,7 +16,7 @@
         
         <h:form>
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{DoWiadOdb.login.zalogowany.userId.dcDoWiadCelList}" var="cel" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{DoWiadOdb.login.zalogowany.userId.dcDoWiadCelListFiltr}" var="cel" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <ui:param name="itemDoWiad" value="#{cel.idDokDoWiad.dokid}"/>            
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>

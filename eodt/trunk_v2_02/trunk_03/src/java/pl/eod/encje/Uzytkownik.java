@@ -94,7 +94,7 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "akceptant", fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnHistoria> wnHistoriaListAkceptant;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy",fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "przyjmujacy", fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<WnUrlop> wnUrlopListPrzyjmujacy;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userId", orphanRemoval = false, fetch = FetchType.LAZY)
@@ -112,17 +112,17 @@ public class Uzytkownik implements Serializable {
     @OrderBy(value = "id DESC")
     private List<DcDokDoWiadCel> dcDoWiadCelList;
     @Transient
+    private List<DcDokDoWiadCel> dcDoWiadCelListFiltr;
+    @Transient
     private List<DcDokumentKrokUzytkownik> dcDoAkceptuKrokiList;
     @Transient
     private List<DcDokumentKrokUzytkownik> dcDokumentKrokUzytkownikListHist;
-    
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
     @ManyToOne()
     private Spolki spolkaId;
-    
     @Transient
     boolean eodstru;
-    
+
     public Uzytkownik() {
         this.extId = "";
     }
@@ -237,9 +237,11 @@ public class Uzytkownik implements Serializable {
     }
 
     public boolean isEodstru() {
-        eodstru=false;
-        for(UserRoles rola : this.getRole()){
-            if(rola.getRolename().equals("eodstru")) eodstru=true;
+        eodstru = false;
+        for (UserRoles rola : this.getRole()) {
+            if (rola.getRolename().equals("eodstru")) {
+                eodstru = true;
+            }
         }
         return eodstru;
     }
@@ -317,7 +319,10 @@ public class Uzytkownik implements Serializable {
             //krok danego użytkownika musi być bez akceptu
             //krok dokumentu musi być do akceptu lub częsciowa akceptacja
             if (dku.getAkcept().getId() == 2 && (dku.getIdDokumentKrok().getAkcept().getId() == 2 || dku.getIdDokumentKrok().getAkcept().getId() == 3)) {
-                wynik.add(dku);
+                if (dku.getIdDokumentKrok().getIdDok().getDokStatusId().getId() != 4) {
+                    wynik.add(dku);
+                }
+
             }
         }
         return wynik;
@@ -334,8 +339,17 @@ public class Uzytkownik implements Serializable {
         }
         return wynik;
     }
-    
-    
+
+    public List<DcDokDoWiadCel> getDcDoWiadCelListFiltr() {
+        List<DcDokDoWiadCel> wynik = new ArrayList<DcDokDoWiadCel>();
+        for (DcDokDoWiadCel dC : this.getDcDoWiadCelList()) {
+            if (dC.getIdDokDoWiad().getDokid().getDokStatusId().getId() == 1 || dC.getIdDokDoWiad().getDokid().getDokStatusId().getId() == 4) {
+                continue;
+            }
+            wynik.add(dC);
+        }
+        return wynik;
+    }
 
     @Override
     public boolean equals(Object object) {

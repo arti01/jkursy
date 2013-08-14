@@ -34,11 +34,15 @@ a:link:hover, a:visited:hover  {
 	border: 1px solid black;
 	width: 620px;
 }
-.rf-trn-lbl {
-	font-size: 12px;
+.rf-dt-r:nth-child(even){
+	background-color: rgb(233, 239, 239);
 }
 .rf-dt-c {
     font-size: 13px;
+}
+
+.rf-trn-lbl {
+	font-size: 12px;
 }
 
 .rf-cp-b {

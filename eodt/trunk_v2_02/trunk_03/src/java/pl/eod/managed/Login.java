@@ -355,7 +355,7 @@ public class Login implements Serializable {
         this.menuDcOdbExp = menuDcOdbExp;
     }
     public String htmlLogout(){
-        return "/logout.jsp";
+        return "/logowanie/logout.jsp?faces-redirect=true";
     }
     
     public String htmlZmianaHasla(){

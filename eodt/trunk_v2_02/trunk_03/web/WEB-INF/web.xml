@@ -122,12 +122,25 @@
         <description>eodadm</description>
         <role-name>eodadm</role-name>
     </security-role>
+    <security-role>
+        <description>eoddok_cfg</description>
+        <role-name>eoddok_cfg</role-name>
+    </security-role>
+    <security-role>
+        <description>eoddok_odb</description>
+        <role-name>eoddok_odb</role-name>
+    </security-role>
+    <security-role>
+        <description>eoddok_rej</description>
+        <role-name>eoddok_rej</role-name>
+    </security-role>
+    
     <error-page>
         <error-code>500</error-code>
-        <location>/500.xhtml</location>
+        <location>/error/500.xhtml</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/403.xhtml</location>
+        <location>/error/403.xhtml</location>
     </error-page>
 </web-app>

@@ -93,93 +93,92 @@
                                     <h:outputText value="#{krokUser.dataAkcept}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                                 </rich:column>
                                 <rich:column >
-                                #{krokUser.informacja}
-                            </rich:column>
+                                    #{krokUser.informacja}
+                                </rich:column>
                             </rich:dataTable>
                         </rich:column>
                     </rich:dataTable>
                 </rich:tab>
-                
-                 <rich:tab header="Do wiadomości" id="doWiad">
-                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneWiad')}.show()">
-                    <h4>[dodaj do wiadomości]</h4>
-                </a4j:commandLink>
 
-                <rich:dataTable id="doWiadList" value="#{managedBean.obiekt.dcDokDoWiadList}" var="doWiad">
-                    <f:facet name="header">
-                        <rich:columnGroup>
-                            <rich:column>wprowadził</rich:column>
-                            <rich:column>data wysłania</rich:column>
-                            <rich:column>wysłane do</rich:column>
-                            <rich:column>informacja</rich:column>
-                        </rich:columnGroup>
-                    </f:facet>
-                    <rich:column  sortBy="#{doWiad.id}" sortOrder="descending">
-                        #{doWiad.wprowadzil.fullname}
-                    </rich:column>
-                    <rich:column>
-                        <h:outputText value="#{doWiad.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
-                    </rich:column>
-                    <rich:column>
-                        <rich:list value="#{doWiad.dcDokDoWiadCelList}" var="cel">
-                            #{cel.userid.fullname}
-                        </rich:list>
-                    </rich:column>
-                    <rich:column>
-                        #{doWiad.tresc}
-                    </rich:column>
-                </rich:dataTable>
+                <rich:tab header="Do wiadomości" id="doWiad">
+                    <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneWiad')}.show()">
+                        <h4>[dodaj do wiadomości]</h4>
+                    </a4j:commandLink>
 
-                <rich:popupPanel header="Wprowadź dane" id="dodajPaneWiad"  autosized="true" domElementAttachment="parent">
-                    <h:outputLabel value="wprowadz krótką notatkę: "/>
-                    <h:inputText value="#{managedBean.doWiad.tresc}" size="90"/>
-                    <h:panelGrid id="doWiadForm" columns="2">
-                        <rich:panel id="doWiadFormLista">
-                            <f:facet name="header">lista odbiorców</f:facet>
-                            <rich:list id="user_list" value="#{managedBean.doWiad.dcDokDoWiadCelList}" var="cel">
-                                #{cel.userid.fullname} #{cel.userid.adrEmail}
-                                <a4j:commandLink id="usunUser" action="#{managedBean.usunDoWiadUser}" render="doWiadFormLista" execute="user_list">
-                                    <h:graphicImage value="/images/delete.png" alt="delete" />
-                                    <f:setPropertyActionListener target="#{managedBean.doWiadCel}" value="#{cel}" />
-                                </a4j:commandLink>
+                    <rich:dataTable id="doWiadList" value="#{RejestracjaRej.obiekt.dcDokDoWiadList}" var="doWiad">
+                        <f:facet name="header">
+                            <rich:columnGroup>
+                                <rich:column>wprowadził</rich:column>
+                                <rich:column>data wysłania</rich:column>
+                                <rich:column>wysłane do</rich:column>
+                                <rich:column>informacja</rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+                        <rich:column  sortBy="#{doWiad.id}" sortOrder="descending">
+                            #{doWiad.wprowadzil.fullname}
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="#{doWiad.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd hh:mm:ss" timeZone="CET"/></h:outputText>
+                        </rich:column>
+                        <rich:column>
+                            <rich:list value="#{doWiad.dcDokDoWiadCelList}" var="cel">
+                                #{cel.userid.fullname}
                             </rich:list>
+                        </rich:column>
+                        <rich:column>
+                            #{doWiad.tresc}
+                        </rich:column>
+                    </rich:dataTable>
+                    <rich:popupPanel header="Wprowadź dane" id="dodajPaneWiad"  autosized="true" domElementAttachment="parent">
+                        <h:outputLabel value="wprowadz krótką notatkę: "/>
+                        <h:inputText value="#{RejestracjaRej.doWiad.tresc}" size="90"/>
+                        <h:panelGrid id="doWiadForm" columns="2">
+                            <rich:panel id="doWiadFormLista">
+                                <f:facet name="header">lista odbiorców</f:facet>
+                                <rich:list id="user_list" value="#{RejestracjaRej.doWiad.dcDokDoWiadCelList}" var="cel">
+                                    #{cel.userid.fullname} #{cel.userid.adrEmail}
+                                    <a4j:commandLink id="usunUser" action="#{RejestracjaRej.usunDoWiadUser}" render="doWiadFormLista" execute="user_list">
+                                        <h:graphicImage value="/images/delete.png" alt="delete" />
+                                        <f:setPropertyActionListener target="#{RejestracjaRej.doWiadCel}" value="#{cel}" />
+                                    </a4j:commandLink>
+                                </rich:list>
+                            </rich:panel>
+                            <rich:panel id="doWiadFormForm">
+                                <f:facet name="header"></f:facet>
+                                <h:panelGrid id="doWiadForm2" columns="3">
+                                    <h:outputLabel for="cel" value="podaj email (wprowadz min. 3 znaki)"/>
+                                    <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
+                                        #{user.adrEmail}
+                                        #{user.fullname}
+                                    </rich:autocomplete>
+                                    <rich:message for="user_id" styleClass="error" />
+                                    <a4j:commandButton value="dodaj" execute="doWiadForm2" action="#{RejestracjaRej.dodajDoWiadUser}" render="doWiadForm, wyslijDoPrzyciski"/>
+                                </h:panelGrid>
+                            </rich:panel>
+                        </h:panelGrid>
+                        <rich:panel id="wyslijDoPrzyciski">
+                            <a4j:commandButton id="wyslijDoWiad" action="#{RejestracjaRej.dodajDoWiad}" value="Wyślij" render="dodajPaneWiad, doWiadList" execute="dodajPaneWiad"
+                                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneWiad')}.hide();} else {#{rich:component('dodajPaneWiad')}.show();}" 
+                                               rendered="#{fn:length(RejestracjaRej.doWiad.dcDokDoWiadCelList)>0}"/>
+                            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneWiad')}.hide();
+                                    return false;" />
                         </rich:panel>
-                        <rich:panel id="doWiadFormForm">
-                            <f:facet name="header"></f:facet>
-                            <h:panelGrid id="doWiadForm2" columns="3">
-                                <h:outputLabel for="cel" value="podaj email (wprowadz min. 3 znaki)"/>
-                                <rich:autocomplete id="cel" value="#{managedBean.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
-                                    #{user.adrEmail}
-                                    #{user.fullname}
-                                </rich:autocomplete>
-                                <rich:message for="user_id" styleClass="error" />
-                                <a4j:commandButton value="dodaj" execute="doWiadForm2" action="#{managedBean.dodajDoWiadUser}" render="doWiadForm, wyslijDoPrzyciski"/>
-                            </h:panelGrid>
-                        </rich:panel>
-                    </h:panelGrid>
-                    <rich:panel id="wyslijDoPrzyciski">
-                        <a4j:commandButton id="wyslijDoWiad" action="#{managedBean.dodajDoWiad}" value="Wyślij" render="dodajPaneWiad, doWiadList" execute="dodajPaneWiad"
-                                           oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneWiad')}.hide();} else {#{rich:component('dodajPaneWiad')}.show();}" 
-                                           rendered="#{fn:length(managedBean.doWiad.dcDokDoWiadCelList)>0}"/>
-                        <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneWiad')}.hide();
-                                return false;" />
-                    </rich:panel>
-                </rich:popupPanel>
+                    </rich:popupPanel>
 
-                <rich:dataTable id="doWiadTab" value="#{managedBean.obiekt.dcDokDoWiadList}" var="doWiad">
-                    #{doWiad.dataWprow}
-                </rich:dataTable>
-            </rich:tab>
+                    <rich:dataTable id="doWiadTab" value="#{RejestracjaRej.obiekt.dcDokDoWiadList}" var="doWiad">
+                        #{doWiad.dataWprow}
+                    </rich:dataTable>
+                </rich:tab>
 
-                
+
                 <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
                                 oncomplete="#{rich:component('confirmPane')}.hide();" />
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Na pewno chcesz skasować?
                     <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-                            return false;" />
+                                    return false;" />
                     <a4j:commandButton value="Tak" onclick="remove();
-                            return false;" />
+                                    return false;" />
                 </rich:popupPanel>
 
             </rich:tabPanel>

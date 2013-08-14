@@ -7,7 +7,7 @@
     xmlns:f="http://java.sun.com/jsf/core"
     template="/templates/template.xhtml">
 
-    <rich:tooltip target="imgEd" value="wybierz" layout="block"/>
+    <rich:tooltip target="imgEd" value="zarejestruj dokument dla tego kontrahenta" layout="block"/>
     <h:commandLink action="#{RejestracjaRej.list}">
         <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
         <f:setPropertyActionListener target="#{RejestracjaRej.kontrahent}" value="#{item}" />
