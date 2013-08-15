@@ -18,6 +18,7 @@ import javax.faces.convert.Converter;
 @ManagedBean(name = "UzytkownikConv")
 @SessionScoped
 public class UzytkownikConv implements Converter, Serializable {
+    private static final long serialVersionUID = 1L;
     
     private Object object;
     UzytkownikJpaController uC=new UzytkownikJpaController();

@@ -146,11 +146,12 @@
                             <rich:panel id="doWiadFormForm">
                                 <f:facet name="header"></f:facet>
                                 <h:panelGrid id="doWiadForm2" columns="3">
+
                                     <h:outputLabel for="cel" value="podaj email (wprowadz min. 3 znaki)"/>
-                                    <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
-                                        #{user.adrEmail}
-                                        #{user.fullname}
-                                    </rich:autocomplete>
+                                    <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="client" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" autofill="true">
+                                            #{user.adrEmail}
+                                            #{user.fullname}
+                                        </rich:autocomplete>
                                     <rich:message for="user_id" styleClass="error" />
                                     <a4j:commandButton value="dodaj" execute="doWiadForm2" action="#{RejestracjaRej.dodajDoWiadUser}" render="doWiadForm, wyslijDoPrzyciski"/>
                                 </h:panelGrid>

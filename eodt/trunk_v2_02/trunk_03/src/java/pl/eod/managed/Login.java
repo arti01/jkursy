@@ -12,7 +12,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import pl.eod.encje.ConfigJpaController;
 import pl.eod.encje.MenuLinki;
 import pl.eod.encje.MenuLinkiJpaController;
@@ -41,11 +43,11 @@ public class Login implements Serializable {
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
-    boolean menuStrukturaExp=false;
-    boolean menuUrlopExp=false;
-    boolean menuDcCfgExp=false;
-    boolean menuDcRejExp=false;
-    boolean menuDcOdbExp=false;
+    boolean menuStrukturaExp = false;
+    boolean menuUrlopExp = false;
+    boolean menuDcCfgExp = false;
+    boolean menuDcRejExp = false;
+    boolean menuDcOdbExp = false;
 
     @PostConstruct
     public void init() {
@@ -58,6 +60,19 @@ public class Login implements Serializable {
     public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        HttpServletResponse response=(HttpServletResponse) context.getExternalContext().getResponse();
+
+        Cookie[] cookies = request.getCookies();
+        for (int i = 0; i < cookies.length; i++) {
+            Cookie cookie = cookies[i];
+            System.out.println("NAZWA:>" + cookie.getName() + "<");
+            //if((cookie.getName( )).indexOf("JSESSIONIDSSO") == 0 ){
+
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            response.addCookie(cookie);
+
+        }//}
         request.getSession().invalidate();
         //return "../index.html?faces-redirect=true";
         return "../index.html?faces-redirect=true";
@@ -111,68 +126,83 @@ public class Login implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
-        
+
         //obsluga zewnetrzne id
         if (zalogowany == null) {
             zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());
         }
-        try{
-        if (zalogowany.isUsuniety()) {
-            this.wyloguj();
-            //return null;
-        }
-        }catch(NullPointerException ex){
+        try {
+            if (zalogowany.isUsuniety()) {
+                this.wyloguj();
+                //return null;
+            }
+        } catch (NullPointerException ex) {
             System.err.println("brak użytkownika w bazie - user zewnętrzny");
         }
         //wyszukiwanie limitu
-        WnLimity limit=uzytC.findLimit(zalogowany.getUserId());
+        WnLimity limit = uzytC.findLimit(zalogowany.getUserId());
         zalogowany.getUserId().setWnLimity(limit);
         //return zalogowany;
     }
-    
-    public void menuStrukturaExpList(ActionEvent event){
-        if(menuStrukturaExp) menuStrukturaExp=false;
-        else menuStrukturaExp=true;
-        menuUrlopExp=false;
-        menuDcRejExp=false;
-        menuDcCfgExp=false;
-        menuDcOdbExp=false;
+
+    public void menuStrukturaExpList(ActionEvent event) {
+        if (menuStrukturaExp) {
+            menuStrukturaExp = false;
+        } else {
+            menuStrukturaExp = true;
+        }
+        menuUrlopExp = false;
+        menuDcRejExp = false;
+        menuDcCfgExp = false;
+        menuDcOdbExp = false;
     }
-    
-    public void menuUrlopExpList(ActionEvent event){
-        if(menuUrlopExp) menuUrlopExp=false;
-        else menuUrlopExp=true;
-        menuStrukturaExp=false;
-        menuDcRejExp=false;
-        menuDcCfgExp=false;
-        menuDcOdbExp=false;
+
+    public void menuUrlopExpList(ActionEvent event) {
+        if (menuUrlopExp) {
+            menuUrlopExp = false;
+        } else {
+            menuUrlopExp = true;
+        }
+        menuStrukturaExp = false;
+        menuDcRejExp = false;
+        menuDcCfgExp = false;
+        menuDcOdbExp = false;
     }
-    
-    public void menuDcCfgExpList(ActionEvent event){
-        if(menuDcCfgExp) menuDcCfgExp=false;
-        else menuDcCfgExp=true;
-        menuStrukturaExp=false;
-        menuUrlopExp=false;
-        menuDcRejExp=false;
-        menuDcOdbExp=false;
+
+    public void menuDcCfgExpList(ActionEvent event) {
+        if (menuDcCfgExp) {
+            menuDcCfgExp = false;
+        } else {
+            menuDcCfgExp = true;
+        }
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
     }
-    
-    public void menuDcRejExpList(ActionEvent event){
-        if(menuDcRejExp) menuDcRejExp=false;
-        else menuDcRejExp=true;
-        menuStrukturaExp=false;
-        menuUrlopExp=false;
-        menuDcCfgExp=false;
-        menuDcOdbExp=false;
+
+    public void menuDcRejExpList(ActionEvent event) {
+        if (menuDcRejExp) {
+            menuDcRejExp = false;
+        } else {
+            menuDcRejExp = true;
+        }
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcOdbExp = false;
     }
-    
-    public void menuDcOdbExpList(ActionEvent event){
-        if(menuDcOdbExp) menuDcOdbExp=false;
-        else menuDcOdbExp=true;
-        menuStrukturaExp=false;
-        menuUrlopExp=false;
-        menuDcCfgExp=false;
-        menuDcRejExp=false;
+
+    public void menuDcOdbExpList(ActionEvent event) {
+        if (menuDcOdbExp) {
+            menuDcOdbExp = false;
+        } else {
+            menuDcOdbExp = true;
+        }
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
     }
 
     public Struktura getZalogowany() {
@@ -274,8 +304,6 @@ public class Login implements Serializable {
         }
         return dcCfg;
     }
-    
-    
 
     public boolean isAdmin() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -301,8 +329,6 @@ public class Login implements Serializable {
 
     }
 
-    
-    
     public String getTypLogowania() {
         return typLogowania;
     }
@@ -354,12 +380,13 @@ public class Login implements Serializable {
     public void setMenuDcOdbExp(boolean menuDcOdbExp) {
         this.menuDcOdbExp = menuDcOdbExp;
     }
-    public String htmlLogout(){
-        return "/logowanie/logout.jsp?faces-redirect=true";
+
+    public String htmlLogout() {
+        wyloguj();
+        return "../index.html";
     }
-    
-    public String htmlZmianaHasla(){
+
+    public String htmlZmianaHasla() {
         return "/logowanie/zmianaHasla.xhtml?faces-redirect=true";
     }
-    
 }

@@ -144,11 +144,11 @@
                                 Zmiana hasła
                             </rich:panelMenuItem>
                         </h:commandLink>
-                        <h:commandLink action="#{login.htmlLogout}">
                             <rich:panelMenuItem>
-                                Wyjście
+                                <h:outputLink value="../logowanie/logout.jsp">
+                                    Wyjście
+                                </h:outputLink>
                             </rich:panelMenuItem>
-                        </h:commandLink>
                         <rich:panelMenuItem>
                             Zalogowany jako: #{login.zalogowany.userId.fullname}, <br/>spółka: #{login.zalogowany.userId.spolkaId.nazwa}
                         </rich:panelMenuItem>

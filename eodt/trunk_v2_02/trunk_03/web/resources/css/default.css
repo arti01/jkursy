@@ -4,19 +4,26 @@ body
     padding: 0px;
     font-family: arial,tahoma,verdana,helvetica,sans-serif;
     background-color: #A7D1FF;
+    font-size: 12px;
 }
 
 a:link, a:visited {
-  color: black;
-  font-weight : normal;
-  text-decoration: none;
+    color: black;
+    font-weight : normal;
+    text-decoration: none;
 }
 
 a:link:hover, a:visited:hover  {
-  color: gray;
-  font-weight : normal;
-  text-decoration : none;
+    color: gray;
+    font-weight : normal;
+    text-decoration : none;
 }
+
+input{
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    font-size: 12px;
+}
+
 
 .error{
     color: red;
@@ -31,18 +38,15 @@ a:link:hover, a:visited:hover  {
     background-color: whitesmoke;
 }
 .rf-dt{
-	border: 1px solid black;
-	width: 620px;
+    border: 1px solid black;
+    width: 620px;
 }
 .rf-dt-r:nth-child(even){
-	background-color: rgb(233, 239, 239);
-}
-.rf-dt-c {
-    font-size: 13px;
+    background-color: rgb(233, 239, 239);
 }
 
 .rf-trn-lbl {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 .rf-cp-b {

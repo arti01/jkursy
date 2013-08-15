@@ -13,8 +13,19 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <h3>Rejestracja dokumentów</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        
+        <h:form>
+            #{RodzajeCfg.usersLista}
+            <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" tokens=",">
+                                    #{user.adrEmail}
+                                    #{user.fullname}
+                                </rich:autocomplete>
+        </h:form>
+        
         <h:form>
 
+            
+            
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent">
                 <ui:include src="./dokumentEdit.xhtml"/>
                 <a4j:commandButton id="dodaj" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
