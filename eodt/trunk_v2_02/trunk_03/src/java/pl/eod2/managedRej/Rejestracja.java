@@ -19,6 +19,7 @@ import pl.eod2.encje.DcDokDoWiadCel;
 import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
+import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcKontrahenci;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikJpaController;
@@ -41,6 +42,7 @@ public class Rejestracja {
     private DcDokDoWiadomosci doWiad;
     private DcDokDoWiadCel doWiadCel;
     private Uzytkownik userDoWiad;
+    private String filtrdataWprow;
 
     @PostConstruct
     void init() {
@@ -127,6 +129,30 @@ public class Rejestracja {
         refresh(true);
     }
 
+    public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
+        DcDokumentStatus ds=new DcDokumentStatus(4);
+        obiekt.setDokStatusId(ds);
+        try {
+            error = dcC.edit(obiekt);
+        } catch (IllegalOrphanException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //System.err.println(error);
+        if (error != null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            lista.setWrappedData(dcC.findDcDokumentEntities());
+        } else {
+            refresh(true);
+        }
+    }
+    
     public void usunPlik() throws IllegalOrphanException, NonexistentEntityException {
         dcPlikC.destroy(plik.getId());
         obiekt.getDcPlikList().remove(plik);
@@ -278,4 +304,13 @@ public class Rejestracja {
     public void setUserDoWiad(Uzytkownik userDoWiad) {
         this.userDoWiad = userDoWiad;
     }
+
+    public String getFiltrdataWprow() {
+        return filtrdataWprow;
+    }
+
+    public void setFiltrdataWprow(String filtrdataWprow) {
+        this.filtrdataWprow = filtrdataWprow;
+    }
+    
 }

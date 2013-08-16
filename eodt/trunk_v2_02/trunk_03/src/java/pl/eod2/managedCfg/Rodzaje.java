@@ -245,4 +245,9 @@ public class Rodzaje {
     public void setUsersLista(List<Uzytkownik> usersLista) {
         this.usersLista = usersLista;
     }
+
+    public UzytkownikJpaController getuC() {
+        return uC;
+    }
+    
 }

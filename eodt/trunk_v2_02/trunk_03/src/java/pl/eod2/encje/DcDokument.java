@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -25,6 +26,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import pl.eod.encje.Uzytkownik;
@@ -97,7 +99,13 @@ public class DcDokument implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosci> dcDokDoWiadList;
+    
+    @Transient
+    private String dataWprowStr;
 
+    @Transient
+    private String dataDokStr;
+    
     public DcDokument() {
     }
 
@@ -229,6 +237,16 @@ public class DcDokument implements Serializable {
 
     public void setDcDokDoWiadList(List<DcDokDoWiadomosci> dcDokDoWiadList) {
         this.dcDokDoWiadList = dcDokDoWiadList;
+    }
+
+    public String getDataWprowStr() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(getDataWprow());
+    }
+
+    public String getDataDokStr() {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(getDataDok());
     }
     
     @Override

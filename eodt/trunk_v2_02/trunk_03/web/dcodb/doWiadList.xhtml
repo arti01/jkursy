@@ -40,6 +40,13 @@
                             #{itemDoWiad.zrodloId.nazwa}
                     </rich:column>
                     <rich:column>
+                        <f:facet name="header">kontrahent</f:facet>
+                        <h:outputText id="kontrahentList" value="#{itemDoWiad.kontrahentId.nazwa}"/>
+                        <rich:tooltip target="kontrahentList">
+                            #{itemDoWiad.kontrahentId.adres} #{itemDoWiad.kontrahentId.adres} #{itemDoWiad.kontrahentId.nipRegon}
+                        </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
                         <f:facet name="header">status</f:facet>
                         <h:outputText id="statusList" value="#{itemDoWiad.dokStatusId.nazwa}"/>
                         <br/>
@@ -61,10 +68,9 @@
 
                     <rich:column style="width: 70px">
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
-                        <a4j:commandLink execute="@this" action="#{DoWiadOdb.detale}">
-                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="details" />
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{DoWiadOdb.detale}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{DoWiadOdb.obiekt}" value="#{itemDoWiad}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>

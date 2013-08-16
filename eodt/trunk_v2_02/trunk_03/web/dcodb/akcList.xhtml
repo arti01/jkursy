@@ -38,6 +38,13 @@
                             #{item.idDokumentKrok.idDok.zrodloId.nazwa}
                     </rich:column>
                     <rich:column>
+                        <f:facet name="header">kontrahent</f:facet>
+                        <h:outputText id="kontrahentList" value="#{item.kontrahentId.nazwa}"/>
+                        <rich:tooltip target="kontrahentList">
+                            #{item.kontrahentId.adres} #{item.kontrahentId.adres} #{item.kontrahentId.nipRegon}
+                        </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
                         <f:facet name="header">status</f:facet>
                         <h:outputText id="statusList" value="#{item.idDokumentKrok.idDok.dokStatusId.nazwa}"/>
                         <hr/>
@@ -66,10 +73,9 @@
 
                     <rich:column style="width: 70px">
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
-                        <a4j:commandLink execute="@this" action="#{AkceptOdb.detale}">
-                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="details" />
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{AkceptOdb.detale}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>
