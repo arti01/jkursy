@@ -30,7 +30,7 @@
                         </rich:tooltip>
                     </h:panelGrid>
                     <hr/>
-                    <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytujZdetale}" execute="@form" render="infoDod"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}"/>
+                    <a4j:commandButton id="zapiszD" value="Zapisz" action="#{RejestracjaRej.edytujZdetale}" execute="@form" render="infoDod"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}"/>
                 </rich:tab>
 
                 <rich:tab header="Załączniki" id="tabPliki">
@@ -148,7 +148,7 @@
                                 <h:panelGrid id="doWiadForm2" columns="3">
 
                                     <h:outputLabel for="cel" value="podaj email (wprowadz min. 3 znaki)"/>
-                                    <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="client" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" autofill="true">
+                                    <rich:autocomplete id="cel" value="#{RejestracjaRej.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" autofill="true">
                                             #{user.adrEmail}
                                             #{user.fullname}
                                         </rich:autocomplete>

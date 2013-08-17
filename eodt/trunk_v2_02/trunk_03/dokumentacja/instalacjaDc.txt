@@ -18,4 +18,5 @@ wn_limit (też taki jak w poprzedniej wersji)
 17. Wymyślić inną nazwę dla kroku i członka, bo pojawia się członek kroku, a to głupio brzmi ;-)
 18. Dodać żrodło dokumentu (np kancelaria, Zespół transportu - sam nie wiem)
 19. dodać kontrahenta/kontrahentów
+20. Założyć index na pole adr_email w tabeli uzytkownik
 

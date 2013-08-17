@@ -45,6 +45,7 @@ import pl.eod.encje.Uzytkownik;
     @NamedQuery(name = "DcDokument.findByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
     @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok")})
 public class DcDokument implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCDOKUMENT")
@@ -92,20 +93,16 @@ public class DcDokument implements Serializable {
     private DcDokumentStatus dokStatusId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokumentKrok> dcDokKrok;
-    
     @JoinColumn(name = "kontrahent_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcKontrahenci kontrahentId;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosci> dcDokDoWiadList;
-    
     @Transient
     private String dataWprowStr;
-
     @Transient
     private String dataDokStr;
-    
+
     public DcDokument() {
     }
 
@@ -240,15 +237,19 @@ public class DcDokument implements Serializable {
     }
 
     public String getDataWprowStr() {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(getDataWprow());
     }
 
     public String getDataDokStr() {
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-        return sdf.format(getDataDok());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (getDataDok() == null) {
+            return "";
+        } else {
+            return sdf.format(getDataDok());
+        }
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -273,5 +274,4 @@ public class DcDokument implements Serializable {
     public String toString() {
         return "pl.eod2.encje.DcDokument[ id=" + id + " ]";
     }
-    
 }

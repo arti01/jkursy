@@ -37,11 +37,23 @@
                         <f:facet name="header">żródło</f:facet>
                             #{item.idDokumentKrok.idDok.zrodloId.nazwa}
                     </rich:column>
+                    
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.idDokumentKrok.idDok.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
+                        <f:facet name="header">projekt
+                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="10">
+                                <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                        </f:facet>
+                        <h:outputText id="projekt" value="#{item.idDokumentKrok.idDok.projektId.nazwa}"/>
+                        <rich:tooltip target="projekt">
+                            #{item.idDokumentKrok.idDok.projektId.opis}
+                        </rich:tooltip>
+                    </rich:column>
+                    
                     <rich:column>
                         <f:facet name="header">kontrahent</f:facet>
-                        <h:outputText id="kontrahentList" value="#{item.kontrahentId.nazwa}"/>
+                        <h:outputText id="kontrahentList" value="#{item.idDokumentKrok.idDok.kontrahentId.nazwa}"/>
                         <rich:tooltip target="kontrahentList">
-                            #{item.kontrahentId.adres} #{item.kontrahentId.adres} #{item.kontrahentId.nipRegon}
+                            #{item.idDokumentKrok.idDok.kontrahentId.adres} #{item.idDokumentKrok.idDok.kontrahentId.adres} #{item.idDokumentKrok.idDok.kontrahentId.nipRegon}
                         </rich:tooltip>
                     </rich:column>
                     <rich:column>

@@ -4,4 +4,5 @@
     - w każdym razie wystarczy założyć takiego i będzie dobrze
 3. Uwaga - zaktualizowałem o zmiany w Urlopach (delegacja zagraniczna itd) - trzeba albo zainstalować od nowa, albo dodać pola do tabel wg instrukcji
     z 2012-06-09 (zmiany.html)
-4.
+4. INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (4, 'anulowany', 'dokument anulowany'); - dodano nowy status
+5. Założyć index na pole adr_email w tabeli uzytkownik

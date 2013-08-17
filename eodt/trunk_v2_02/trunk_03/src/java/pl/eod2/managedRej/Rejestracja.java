@@ -43,6 +43,14 @@ public class Rejestracja {
     private DcDokDoWiadCel doWiadCel;
     private Uzytkownik userDoWiad;
     private String filtrdataWprow;
+    private String filtrNazwa;
+    private String filtrdataDok;
+    private String filtrKontrahent;
+    private String filtrZrodlo;
+    private String filtrStatus;
+    private String filtrWprowadzil;
+    private String filtrRodzaj;
+    private String filtrProjekt;
 
     @PostConstruct
     void init() {
@@ -311,6 +319,70 @@ public class Rejestracja {
 
     public void setFiltrdataWprow(String filtrdataWprow) {
         this.filtrdataWprow = filtrdataWprow;
+    }
+
+    public String getFiltrNazwa() {
+        return filtrNazwa;
+    }
+
+    public void setFiltrNazwa(String filtrNazwa) {
+        this.filtrNazwa = filtrNazwa;
+    }
+
+    public String getFiltrdataDok() {
+        return filtrdataDok;
+    }
+
+    public void setFiltrdataDok(String filtrdataDok) {
+        this.filtrdataDok = filtrdataDok;
+    }
+
+    public String getFiltrKontrahent() {
+        return filtrKontrahent;
+    }
+
+    public void setFiltrKontrahent(String filtrKontrahent) {
+        this.filtrKontrahent = filtrKontrahent;
+    }
+
+    public String getFiltrZrodlo() {
+        return filtrZrodlo;
+    }
+
+    public void setFiltrZrodlo(String filtrZrodlo) {
+        this.filtrZrodlo = filtrZrodlo;
+    }
+
+    public String getFiltrStatus() {
+        return filtrStatus;
+    }
+
+    public void setFiltrStatus(String filtrStatus) {
+        this.filtrStatus = filtrStatus;
+    }
+
+    public String getFiltrWprowadzil() {
+        return filtrWprowadzil;
+    }
+
+    public void setFiltrWprowadzil(String filtrWprowadzil) {
+        this.filtrWprowadzil = filtrWprowadzil;
+    }
+
+    public String getFiltrRodzaj() {
+        return filtrRodzaj;
+    }
+
+    public void setFiltrRodzaj(String filtrRodzaj) {
+        this.filtrRodzaj = filtrRodzaj;
+    }
+
+    public String getFiltrProjekt() {
+        return filtrProjekt;
+    }
+
+    public void setFiltrProjekt(String filtrProjekt) {
+        this.filtrProjekt = filtrProjekt;
     }
     
 }

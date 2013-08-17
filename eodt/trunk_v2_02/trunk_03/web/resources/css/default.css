@@ -21,9 +21,22 @@ a:link:hover, a:visited:hover  {
 
 input{
     font-family: arial,tahoma,verdana,helvetica,sans-serif;
-    font-size: 12px;
+    font-size: 11px;
 }
 
+option{
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+}
+
+select{
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+}
+textarea{
+    font-family: arial,tahoma,verdana,helvetica,sans-serif;
+    font-size: 11px;
+}
 
 .error{
     color: red;
@@ -46,13 +59,13 @@ input{
 }
 
 .rf-trn-lbl {
-    font-size: 12px;
+    
 }
 
 .rf-cp-b {
-    font-size: 13px;
+    
 }
 
 input.rf-au-inp{
-    font-size: 13px;
+    
 }
