@@ -3,8 +3,7 @@
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:rich="http://richfaces.org/rich"
     xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:a4j="http://richfaces.org/a4j">
+    xmlns:f="http://java.sun.com/jsf/core">
 
     <h:panelGrid columns="3" id="dodajGrid">
         <h:outputLabel for="nameD" value="nazwa: "/>
@@ -52,14 +51,6 @@
         <rich:message for="kontrahentD" styleClass="error" />
     </h:panelGrid>
     
-    <a4j:commandButton id="dodaj1" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
-                       oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
-                       rendered="#{RejestracjaRej.obiekt.id==null}"/>
-    <a4j:commandButton id="zapisz1" value="Zapisz" action="#{RejestracjaRej.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
-                       oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
-                       rendered="#{RejestracjaRej.obiekt.id!=null}"/>
-    <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
-                        return false;" />
     <hr style="width: 30%;"/>
     <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony)" expanded="false" switchType="client" >
         <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}"/>
@@ -67,18 +58,7 @@
     </rich:collapsiblePanel>
     <rich:message for="opisDlugiD" styleClass="error" />
 
-    <a4j:commandButton id="dodaj" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
-                       oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
-                       rendered="#{RejestracjaRej.obiekt.id==null}"/>
-    <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
-                       oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
-                       rendered="#{RejestracjaRej.obiekt.id!=null}"/>
-    <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
-                        return false;" />
-
     <rich:message for="zapisz" styleClass="error" />
     <rich:message for="dodaj" styleClass="error" />
-    <rich:message for="zapisz1" styleClass="error" />
-    <rich:message for="dodaj1" styleClass="error" />
     <hr/>
 </html>

@@ -17,20 +17,28 @@
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
-                                        return false;">
+                            return false;">
                         <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
                     </h:outputLink>
                 </f:facet>
                 <ui:include src="./dokumentEdit.xhtml"/>
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RejestracjaRej.obiekt.id==null}"/>
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RejestracjaRej.obiekt.id!=null}"/>
+                <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                            return false;" />
 
             </rich:popupPanel>
 
             <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <script language="javascript">
-                                    window.onload = function() {
-                                        test();
-                                        return;
-                                    }
+                        window.onload = function() {
+                            test();
+                            return;
+                        }
             </script>
 
             <rich:panel id="listPanel">
@@ -44,8 +52,8 @@
 
                     <rich:column sortBy="#{item.id}" sortOrder="descending"
                                  filterExpression="#{fn:containsIgnoreCase(item.dataWprowStr,RejestracjaRej.filtrdataWprow)}">
-                        <f:facet name="header">data rejestracji<br/>(do filtrowania użyj TAB)
-                            <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="10">
+                        <f:facet name="header">data rejestracji<br/>(użyj TAB)
+                            <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{item.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
@@ -53,7 +61,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)}">    
                         <f:facet name="header">nazwa
-                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="nazwaList" value="#{item.nazwa}"/>
@@ -64,7 +72,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.dataDokStr,RejestracjaRej.filtrdataDok)}">    
                         <f:facet name="header">data dokumentu
-                            <h:inputText value="#{RejestracjaRej.filtrdataDok}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrdataDok}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
@@ -72,7 +80,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.kontrahentId.nazwa,RejestracjaRej.filtrKontrahent)}">    
                         <f:facet name="header">kontrahent
-                            <h:inputText value="#{RejestracjaRej.filtrKontrahent}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrKontrahent}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="kontrahentList" value="#{item.kontrahentId.nazwa}"/>
@@ -83,7 +91,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.zrodloId.nazwa,RejestracjaRej.filtrZrodlo)}">    
                         <f:facet name="header">żródło
-                            <h:inputText value="#{RejestracjaRej.filtrZrodlo}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrZrodlo}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         #{item.zrodloId.nazwa}
@@ -91,7 +99,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
                         <f:facet name="header">projekt
-                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="projekt" value="#{item.projektId.nazwa}"/>
@@ -99,10 +107,10 @@
                             #{item.projektId.opis}
                         </rich:tooltip>
                     </rich:column>
-                    
+
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
                         <f:facet name="header">status
-                            <h:inputText value="#{RejestracjaRej.filtrStatus}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
@@ -117,7 +125,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.userId.fullname,RejestracjaRej.filtrWprowadzil)}">    
                         <f:facet name="header">wprowadził
-                            <h:inputText value="#{RejestracjaRej.filtrWprowadzil}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrWprowadzil}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         #{item.userId.fullname}
@@ -125,7 +133,7 @@
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.rodzajId.nazwa,RejestracjaRej.filtrRodzaj)}">    
                         <f:facet name="header">rodzaj
-                            <h:inputText value="#{RejestracjaRej.filtrRodzaj}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrRodzaj}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="rodzajList" value="#{item.rodzajId.nazwa}"/>
@@ -134,7 +142,7 @@
                         </rich:tooltip>
                     </rich:column>
 
-                    <rich:column style="width: 70px">
+                    <rich:column style="width: 75px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
@@ -152,7 +160,7 @@
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                         <a4j:commandButton id="imgAn" execute="@this" render="@none"
-                                           oncomplete="#{rich:component('anulujPane')}.show()" rendered="#{item.dokStatusId.id!=1 and item.dokStatusId.id!=4}"
+                                           oncomplete="#{rich:component('anulujPane')}.show()" rendered="#{item.dokStatusId.id==2}"
                                            image="/images/anuluj.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
@@ -166,9 +174,9 @@
             <rich:popupPanel id="confirmPane" autosized="true">
                 Na pewno chcesz skasować?
                 <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-                                        return false;" />
+                            return false;" />
                 <a4j:commandButton value="Tak" onclick="remove();
-                                        return false;" />
+                            return false;" />
             </rich:popupPanel>
 
             <a4j:jsFunction name="anuluj" action="#{RejestracjaRej.anuluj}" render="table" execute="@this"
@@ -176,9 +184,9 @@
             <rich:popupPanel id="anulujPane" autosized="true">
                 Na pewno chcesz anulować?
                 <a4j:commandButton value="Nie" onclick="#{rich:component('anulujPane')}.hide();
-                                        return false;" />
+                            return false;" />
                 <a4j:commandButton value="Tak" onclick="anuluj();
-                                        return false;" />
+                            return false;" />
             </rich:popupPanel>
 
             <rich:popupPanel id="statPane" autosized="true">

@@ -40,7 +40,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.idDokumentKrok.idDok.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
                         <f:facet name="header">projekt
-                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="projekt" value="#{item.idDokumentKrok.idDok.projektId.nazwa}"/>

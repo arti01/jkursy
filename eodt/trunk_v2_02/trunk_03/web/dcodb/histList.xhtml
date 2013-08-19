@@ -25,7 +25,7 @@
                     
                     <rich:column sortBy="#{itemHist.id}" sortOrder="descending" filterExpression="#{fn:containsIgnoreCase(itemHist.dataWprowStr,RejestracjaRej.filtrdataWprow)}">    
                         <f:facet name="header">data rejestracji
-                            <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{itemHist.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
@@ -33,7 +33,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.nazwa,RejestracjaRej.filtrNazwa)}">    
                         <f:facet name="header">nazwa
-                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="nazwaList" value="#{itemHist.nazwa}"/>
@@ -44,7 +44,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.dataDokStr,RejestracjaRej.filtrdataDok)}">    
                         <f:facet name="header">data dokumentu
-                            <h:inputText value="#{RejestracjaRej.filtrdataDok}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrdataDok}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{itemHist.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
@@ -52,7 +52,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.zrodloId.nazwa,RejestracjaRej.filtrZrodlo)}">    
                         <f:facet name="header">żródło
-                            <h:inputText value="#{RejestracjaRej.filtrZrodlo}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrZrodlo}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                             #{itemHist.zrodloId.nazwa}
@@ -60,7 +60,7 @@
                     
                      <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
                         <f:facet name="header">projekt
-                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="projekt" value="#{itemHist.projektId.nazwa}"/>
@@ -71,7 +71,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.kontrahentId.nazwa,RejestracjaRej.filtrKontrahent)}">    
                         <f:facet name="header">kontrahent
-                            <h:inputText value="#{RejestracjaRej.filtrKontrahent}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrKontrahent}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="kontrahentList" value="#{itemHist.kontrahentId.nazwa}"/>
@@ -82,7 +82,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
                         <f:facet name="header">status
-                            <h:inputText value="#{RejestracjaRej.filtrStatus}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="statusList" value="#{itemHist.dokStatusId.nazwa}"/>
@@ -94,7 +94,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.userId.fullname,RejestracjaRej.filtrWprowadzil)}">    
                         <f:facet name="header">wprowadził
-                            <h:inputText value="#{RejestracjaRej.filtrWprowadzil}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrWprowadzil}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                             #{itemHist.userId.fullname}
@@ -102,7 +102,7 @@
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.rodzajId.nazwa,RejestracjaRej.filtrRodzaj)}">    
                         <f:facet name="header">rodzaj
-                            <h:inputText value="#{RejestracjaRej.filtrRodzaj}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrRodzaj}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="rodzajList" value="#{itemHist.rodzajId.nazwa}"/>
