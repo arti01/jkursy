@@ -61,7 +61,7 @@
                         <h:inputText id="miejsce" value="#{UrlopObceM.urlop.miejsce}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
                         <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
 
-                        <h:outputLabel for="cel" value="delegacja - miejsce: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="cel" value="delegacja - cel: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
                         <h:inputText id="cel" value="#{UrlopObceM.urlop.cel}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
                         <rich:message for="cel" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
 
@@ -148,6 +148,18 @@
                                 Rodzaj
                             </f:facet>
                             <h:outputText value="#{urlop.rodzajId.opis}"/>
+                            <rich:collapsiblePanel header="szczegóły" expanded="false" switchType="client" rendered="#{urlop.rodzajId.id==5 or urlop.rodzajId.id==6}">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="miejsce" value="miejsce: " />
+                                    <h:outputText id="miejsce" value="#{urlop.miejsce}" />
+
+                                    <h:outputLabel for="cel" value="cel: " />
+                                    <h:outputText id="cel" value="#{urlop.cel}" />
+
+                                    <h:outputLabel for="srodekLok" value="srodek lokomocji: " />
+                                    <h:outputText id="srodekLok" value="#{urlop.srodekLok}"/>
+                                </h:panelGrid>
+                            </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">

@@ -87,16 +87,17 @@
                         </rich:panelMenuGroup>
 
                         <h:commandLink action="#{login.htmlZmianaHasla}" rendered="#{(login.zalogowany.userId.extId=='' or fn:contains(login.zalogowany.userId.extId, '@') or fn:contains(login.zalogowany.userId.extId, 'FN')) 
-                                                                                         and login.zalogowany!=null}">
+                                                 and login.zalogowany!=null}">
                             <rich:panelMenuItem >
                                 Zmiana hasła
                             </rich:panelMenuItem>
                         </h:commandLink>
-                        <h:commandLink action="#{login.htmlLogout}">
-                            <rich:panelMenuItem>
+                        <rich:panelMenuItem>
+                            <h:outputLink value="../logowanie/logout.jsp">
                                 Wyjście
-                            </rich:panelMenuItem>
-                        </h:commandLink>
+                            </h:outputLink>
+                        </rich:panelMenuItem>
+
 
                         <rich:panelMenuItem>
                             Zalogowany jako: #{login.zalogowany.userId.fullname}, <br/>spółka: #{login.zalogowany.userId.spolkaId.nazwa}

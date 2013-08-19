@@ -77,6 +77,18 @@
                                 Rodzaj
                             </f:facet>
                             <h:outputText value="#{urlop.rodzajId.opis}"/>
+                            <rich:collapsiblePanel header="szczegóły" expanded="false" switchType="client" rendered="#{urlop.rodzajId.id==5 or urlop.rodzajId.id==6}">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="miejsce" value="miejsce: " />
+                                    <h:outputText id="miejsce" value="#{urlop.miejsce}" />
+
+                                    <h:outputLabel for="cel" value="cel: " />
+                                    <h:outputText id="cel" value="#{urlop.cel}" />
+
+                                    <h:outputLabel for="srodekLok" value="srodek lokomocji: " />
+                                    <h:outputText id="srodekLok" value="#{urlop.srodekLok}"/>
+                                </h:panelGrid>
+                            </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">

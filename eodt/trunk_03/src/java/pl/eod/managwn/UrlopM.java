@@ -252,6 +252,15 @@ public class UrlopM implements Serializable {
                 kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został zaakceptowany");
                 KomKolC.create(kk);
             }
+            if (urlop.isExtraemail()) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " zaakceptowany");
+                kk.setTresc("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " nr wniosku: " + urlop.getNrWniosku() + " został zaakceptowany");
+                KomKolC.create(kk);
+            }
         }
         initUrlop();
         FacesContext context = FacesContext.getCurrentInstance();
@@ -306,6 +315,16 @@ public class UrlopM implements Serializable {
             KomKolC.create(kk);
         }
 
+        if (urlop.isExtraemail()) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+            kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
+            kk.setTemat("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " odrzucony");
+            kk.setTresc("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " nr wniosku: " + urlop.getNrWniosku() + " został odrzucony");
+            KomKolC.create(kk);
+        }
+
         initUrlop();
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -353,6 +372,16 @@ public class UrlopM implements Serializable {
             kk.setIdDokumenu(urlop.getId().intValue());
             kk.setTemat("Wniosek o urlop cofnięty");
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
+            KomKolC.create(kk);
+        }
+        
+        if (urlop.isExtraemail()) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+            kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
+            kk.setTemat("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " cofnięty");
+            kk.setTresc("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " nr wniosku: " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
         }
 
@@ -423,6 +452,9 @@ public class UrlopM implements Serializable {
         login.refresh();
         urlop = new WnUrlop();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
+        if(!login.getZalogowany().getExtraemail().isEmpty()){
+            urlop.setExtraemail(true);
+        }
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
 
         ArrayList<WnUrlop> akceptL = new ArrayList<WnUrlop>();

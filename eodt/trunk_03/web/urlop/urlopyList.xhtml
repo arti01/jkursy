@@ -55,7 +55,7 @@
                         <h:inputText id="miejsce" value="#{UrlopM.urlop.miejsce}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
                         <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
 
-                        <h:outputLabel for="cel" value="delegacja - miejsce: " rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
+                        <h:outputLabel for="cel" value="delegacja - cel: " rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
                         <h:inputText id="cel" value="#{UrlopM.urlop.cel}" size="50" rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
                         <rich:message for="cel" styleClass="error"  rendered="#{UrlopM.urlop.rodzajId.id==5 or UrlopM.urlop.rodzajId.id==6}"/>
 
@@ -137,7 +137,7 @@
                                     <h:outputLabel for="miejsce" value="miejsce: " />
                                     <h:outputText id="miejsce" value="#{urlop.miejsce}" />
 
-                                    <h:outputLabel for="cel" value="miejsce: " />
+                                    <h:outputLabel for="cel" value="cel: " />
                                     <h:outputText id="cel" value="#{urlop.cel}" />
 
                                     <h:outputLabel for="srodekLok" value="srodek lokomocji: " />
