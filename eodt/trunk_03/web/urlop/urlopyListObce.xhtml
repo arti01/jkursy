@@ -14,19 +14,24 @@
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <div id="tabela">
             <h4>Obce wnioski</h4>
-             <h:panelGrid columns="2" rendered="#{fn:length(login.zalogowany.userId.wnLimity.ulimit)!=0}" id="limit">
+            <h:panelGrid columns="2" rendered="#{fn:length(login.zalogowany.userId.wnLimity.ulimit)!=0}" id="limit">
                 Dostępny urlop:<strong>#{UrlopObceM.urlop.uzytkownik.wnLimity.ulimit}</strong>
             </h:panelGrid>
+
+            <a4j:jsFunction name="sendInfo" render="extraemailB">
+                <a4j:param assignTo="#{UrlopObceM.urlop.extraemail}" name="name"/>
+            </a4j:jsFunction>
+
             <h:form>
                 <a4j:outputPanel id="formWprow" layout="block">
                     <h:panelGrid columns="3" id="form">
                         <h:outputLabel for="name" value="Imię i nazwisko: "/>
-                        <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}">
+                        <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}" onchange="sendInfo('true'); return true;">
                             <f:selectItem itemLabel="wybierz" noSelectionOption="true"/>
                             <f:selectItems value="#{login.zalogowany.obceWnioski}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
                             <a4j:ajax event="change" execute="@this" render="formWprow"/>
                         </h:selectOneMenu>
-                        
+
                         <h:outputLabel for="rodzajW" value=" "/>
                         <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopObceM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
@@ -48,27 +53,26 @@
                                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
                             <rich:validator /></rich:calendar>
                         <rich:message for="data_do" styleClass="error" />
-
                         <h:outputLabel for="extraemail" value="czy wysłać informacje na dodatkowe e-maile?" rendered="#{fn:length(UrlopObceM.urlop.uzytkownik.struktura.extraemail)>0}"/>
-                        <h:selectBooleanCheckbox value="#{UrlopObceM.urlop.extraemail}" rendered="#{fn:length(UrlopObceM.urlop.uzytkownik.struktura.extraemail)>0}"/>
+                        <h:selectBooleanCheckbox id="extraemailB" value="#{UrlopObceM.urlop.extraemail}" rendered="#{fn:length(UrlopObceM.urlop.uzytkownik.struktura.extraemail)>0}"/>
                         <h:outputText id="extraemail" value="#{UrlopObceM.urlop.uzytkownik.struktura.extraemail}" rendered="#{fn:length(UrlopObceM.urlop.uzytkownik.struktura.extraemail)>0}"/>
 
                         <h:outputLabel for="infoDod" value="informacje dodatkowe"/>
                         <h:inputTextarea id="infoDod" value="#{UrlopObceM.urlop.infoDod}" cols="52"/>
                         <rich:message for="infoDod" styleClass="error" />
 
-                        <h:outputLabel for="miejsce" value="delegacja - miejsce: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="miejsce" value="#{UrlopObceM.urlop.miejsce}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="miejsce" value="delegacja - miejsce: " rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="miejsce" value="#{UrlopObceM.urlop.miejsce}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="miejsce" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
 
-                        <h:outputLabel for="cel" value="delegacja - cel: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="cel" value="#{UrlopObceM.urlop.cel}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="cel" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
+                        <h:outputLabel for="cel" value="delegacja - cel: " rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="cel" value="#{UrlopObceM.urlop.cel}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="cel" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
 
-                        <h:outputLabel for="srodekLok" value="delegacja - srodek lokomocji: " rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <h:inputText id="srodekLok" value="#{UrlopObceM.urlop.srodekLok}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        <rich:message for="srodekLok" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==3 or UrlopObceM.urlop.rodzajId.id==4}"/>
-                        
+                        <h:outputLabel for="srodekLok" value="delegacja - srodek lokomocji: " rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <h:inputText id="srodekLok" value="#{UrlopObceM.urlop.srodekLok}" size="50" rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+                        <rich:message for="srodekLok" styleClass="error"  rendered="#{UrlopObceM.urlop.rodzajId.id==5 or UrlopObceM.urlop.rodzajId.id==6}"/>
+
                         <rich:message for="dodaj" styleClass="error"/>
                         <br/>
                         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
@@ -217,9 +221,9 @@
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Czy na pewno chcesz usunąć?
                     <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide();
-                            return false;" />
+                                return false;" />
                     <a4j:commandButton value="TAK" onclick="remove();
-                            return false;" />
+                                return false;" />
                 </rich:popupPanel>   
             </h:form>
         </div>

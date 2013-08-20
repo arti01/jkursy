@@ -110,20 +110,20 @@
                             </f:facet>
                             <h:outputText value="#{urlop.statusId.opis}"/>
                         </rich:column>
-                        <rich:column >
+                        <rich:column style="width: 80px">
                             <f:facet name="header">
                                 Akcje
                             </f:facet>
-                            <a4j:commandLink value="[  Cofnij  ]" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[ Cofnij ]" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
                             <rich:message for="akcLink" styleClass="error"/>
-                            <a4j:commandLink id="akcLink" value="[  Akceptuj  ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink id="akcLink" value="[ Akceptuj ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="[  Odrzuć  ]" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[ Odrzuć ]" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>
