@@ -303,6 +303,7 @@ public class StrukturaJpaController implements Serializable {
                 em.close();
             }
         }
+        System.err.println(struktura.getExtraemail()+"contrrrrrrrrrrrrr");
         return null;
     }
 

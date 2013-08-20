@@ -24,20 +24,19 @@ import it.sauronsoftware.cron4j.TaskCollector;
 import it.sauronsoftware.cron4j.TaskTable;
 
 /**
- * The custom TaskCollector used to retrieve the task list. This sample
- * implementation returns always the same task that the scheduler executes once
- * a minute.
+ * The custom TaskCollector used to retrieve the task list. This sample implementation returns always the same task that
+ * the scheduler executes once a minute.
  */
 public class MyTaskCollector implements TaskCollector {
 
-	public TaskTable getTasks() {
-		SchedulingPattern pattern = new SchedulingPattern("*/5 * * * *");
-                Task taskm=new EskalacjeTask();
-                Task taskw=new MailWysylkaTask();
-		TaskTable ret = new TaskTable();
-		ret.add(pattern, taskm);
-                ret.add(pattern, taskw);
-		return ret;
-	}
-
+    @Override
+    public TaskTable getTasks() {
+        SchedulingPattern pattern = new SchedulingPattern("*/1 * * * *");
+        Task taskm = new EskalacjeTask();
+        Task taskw = new MailWysylkaTask();
+        TaskTable ret = new TaskTable();
+        ret.add(pattern, taskm);
+        ret.add(pattern, taskw);
+        return ret;
+    }
 }

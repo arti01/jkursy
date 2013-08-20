@@ -44,10 +44,10 @@ public class WnUrlopJpaController implements Serializable {
         if (wnUrlop.getDataDo().before(wnUrlop.getDataOd())) {
             return "Data końca nie może być przed datą początku";
         }
-        if(wnUrlop.getUzytkownik().getStruktura().isMusZast()&&wnUrlop.getUzytkownik().getStruktura().getSecUserId()==null){
+        if (wnUrlop.getUzytkownik().getStruktura().isMusZast() && wnUrlop.getUzytkownik().getStruktura().getSecUserId() == null) {
             return "Przed wystawieniem wniosku konieczny jest ustawiony zastępca";
         }
-        
+
         if (wnUrlop.getWnHistoriaList() == null) {
             wnUrlop.setWnHistoriaList(new ArrayList<WnHistoria>());
         }
@@ -62,6 +62,9 @@ public class WnUrlopJpaController implements Serializable {
                     if (ur.getStatusId().getId() != 2 && ur.getStatusId().getId() != 3) {
                         continue;
                     }
+                    if (ur.getId().equals( wnUrlop.getId())) {
+                        continue;
+                    }
 
                     if ((wnUrlop.getDataDo().after(ur.getDataOd()) || wnUrlop.getDataDo().equals(ur.getDataOd()))
                             && (wnUrlop.getDataDo().before(ur.getDataDo()) || wnUrlop.getDataDo().equals(ur.getDataDo()))) {
@@ -71,12 +74,12 @@ public class WnUrlopJpaController implements Serializable {
                             && (wnUrlop.getDataOd().before(ur.getDataDo()) || wnUrlop.getDataOd().equals(ur.getDataDo()))) {
                         return "data początku zawiera się w już wysłanym wniosku";
                     }
-                    
+
                     if (ur.getDataDo().after(wnUrlop.getDataOd())
                             && ur.getDataDo().before(wnUrlop.getDataDo())) {
                         return "już wysłany wniosek leży w tym zakresie";
                     }
-                    
+
                 }
             }
 
@@ -88,13 +91,13 @@ public class WnUrlopJpaController implements Serializable {
             em.merge(u);
             //em.getTransaction().commit();
             //nadawanie numeru wniosku;
-            String nrWniosku =wnUrlop.getUzytkownik().getSpolkaId().getSymbol().toUpperCase(); 
-            nrWniosku=nrWniosku+"/"+wnUrlop.getRodzajId().getSymbol().toUpperCase();
+            String nrWniosku = wnUrlop.getUzytkownik().getSpolkaId().getSymbol().toUpperCase();
+            nrWniosku = nrWniosku + "/" + wnUrlop.getRodzajId().getSymbol().toUpperCase();
             //nrWniosku = nrWniosku + "/" + (getWnUrlopCountRokBiezacy() + 1) + "/";
             nrWniosku = nrWniosku + "/" + (getWnUrlopCountMiesiacBiezacy() + 1) + "/";
             SimpleDateFormat sdfr = new SimpleDateFormat("yyyy");
             SimpleDateFormat sdfm = new SimpleDateFormat("MM");
-            nrWniosku = nrWniosku + sdfm.format(new Date())+"/"+ sdfr.format(new Date());
+            nrWniosku = nrWniosku + sdfm.format(new Date()) + "/" + sdfr.format(new Date());
             if (wnUrlop.getStatusId().getId() == 1) {
                 wnUrlop.setNrWniosku(nrWniosku);
             }
@@ -137,6 +140,7 @@ public class WnUrlopJpaController implements Serializable {
             System.err.println("Podczas eskalacji nie można ustawić akceptanta dla wniosku o id " + urlop.getId());
             return;
         }
+        //System.err.println("proba eskalacji");
         WnHistoria wnh = new WnHistoria();
         wnh.setStatusId(urlop.getStatusId());
         wnh.setDataZmiany(new Date());
@@ -145,17 +149,20 @@ public class WnUrlopJpaController implements Serializable {
         wnh.setAkceptant(urlop.getAkceptant());
         wnh.setOpisZmiany("Wniosek eskalowany automatycznie");
         urlop.getWnHistoriaList().add(wnh);
-        createEdit(urlop);
-
-        KomKolejkaJpaController KomKolC = new KomKolejkaJpaController();
-        KomKolejka kk = new KomKolejka();
-        kk.setAdresList(urlop.getAkceptant().getAdrEmail());
-        kk.setStatus(0);
-        kk.setIdDokumenu(urlop.getId().intValue());
-        kk.setTemat("Prośba o akceptację wniosku urlopowego - eskalacja");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        kk.setTresc("Proszę o akceptację wniosku urlopowego, który nie został zaakceptowany przez bezpośredniego przełożonego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
-        KomKolC.create(kk);
+        String error = createEdit(urlop);
+        if (error != null) {
+            System.err.println(createEdit(urlop));
+        } else {
+            KomKolejkaJpaController KomKolC = new KomKolejkaJpaController();
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getAkceptant().getAdrEmail());
+            kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
+            kk.setTemat("Prośba o akceptację wniosku urlopowego - eskalacja");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            kk.setTresc("Proszę o akceptację wniosku urlopowego, który nie został zaakceptowany przez bezpośredniego przełożonego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+            KomKolC.create(kk);
+        }
     }
 
     public void eskalujCron() {
@@ -242,7 +249,7 @@ public class WnUrlopJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public int getWnUrlopCountMiesiacBiezacy() {
         Calendar cal = Calendar.getInstance();
