@@ -65,6 +65,7 @@ public class UsersM implements Serializable {
     private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
     private StrukturaDataModel dataModel;
     private KomKolejkaJpaController KomKolC;
+    String error;
 
     @PostConstruct
     public void init() {
@@ -118,21 +119,30 @@ public class UsersM implements Serializable {
 
     public String ustawZastepce() {
         strukt = login.getZalogowany();
+        rolesKlon = new CopyOnWriteArrayList<UserRoles>(strukt.getUserId().getRole());
         return "/common/ustawZastepce";
     }
 
     public String ustawZastepceZapisz() throws NonexistentEntityException, Exception {
-        if (strukt.getSecUserId()!=null) {
-            KomKolejka kk = new KomKolejka();
-            kk.setAdresList(strukt.getSecUserId().getAdrEmail());
-            kk.setStatus(0);
-            kk.setIdDokumenu(0);
-            kk.setTemat("Informacja o ustanowieniu zastępcy");
-            kk.setTresc("Pracownik " + login.getZalogowany().getUserId().getFullname()+" ustanowił Cię zastępcą. Możesz wykonywać w jego imieniu operacje na wnioskach urlopowych.");
-            KomKolC.create(kk);
-        }
         zapisz();
-        return "/logowanie/index?faces-redirect=true";
+        if (error == null) {
+            if (strukt.getSecUserId() != null) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(strukt.getSecUserId().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(0);
+                kk.setTemat("Informacja o ustanowieniu zastępcy");
+                kk.setTresc("Pracownik " + login.getZalogowany().getUserId().getFullname() + " ustanowił Cię zastępcą. Możesz wykonywać w jego imieniu operacje na wnioskach urlopowych.");
+                KomKolC.create(kk);
+            }
+            return "/logowanie/index?faces-redirect=true";
+        } else {
+            /*FacesMessage message = new FacesMessage(error);
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);*/
+            return "/common/ustawZastepce";
+        }
     }
 
     public String listaFiltr() {
@@ -184,7 +194,7 @@ public class UsersM implements Serializable {
             // System.err.println(rolesKlon);
             strukt.getUserId().getRole().addAll(rolesKlon);
         }
-        String error = struktC.editArti(strukt);
+        error = struktC.editArti(strukt);
         if (error == null) {
             initUser();
             //error = "Zmiana wykonana";

@@ -31,7 +31,7 @@ public class MyTaskCollector implements TaskCollector {
 
     @Override
     public TaskTable getTasks() {
-        SchedulingPattern pattern = new SchedulingPattern("*/1 * * * *");
+        SchedulingPattern pattern = new SchedulingPattern("*/7 * * * *");
         Task taskm = new EskalacjeTask();
         Task taskw = new MailWysylkaTask();
         TaskTable ret = new TaskTable();
