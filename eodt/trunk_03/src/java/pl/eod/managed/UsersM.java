@@ -124,11 +124,16 @@ public class UsersM implements Serializable {
     }
 
     public String ustawZastepceZapisz() throws NonexistentEntityException, Exception {
+        boolean czyWyslac=strukt.getSecUserId() != null;
+        String adresMail="";
+        if(czyWyslac) {
+            adresMail=strukt.getSecUserId().getAdrEmail();
+        }
         zapisz();
         if (error == null) {
-            if (strukt.getSecUserId() != null) {
+            if (czyWyslac) {
                 KomKolejka kk = new KomKolejka();
-                kk.setAdresList(strukt.getSecUserId().getAdrEmail());
+                kk.setAdresList(adresMail);
                 kk.setStatus(0);
                 kk.setIdDokumenu(0);
                 kk.setTemat("Informacja o ustanowieniu zastępcy");
