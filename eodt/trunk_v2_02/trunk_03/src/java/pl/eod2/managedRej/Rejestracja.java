@@ -173,11 +173,13 @@ public class Rejestracja {
     }
 
     public String list() {
+        System.err.println("list1");
         refresh(true);
         if (kontrahent.getId() != null) {
             obiekt.setKontrahentId(kontrahent);
         }
         kontrahent = new DcKontrahenci();
+        System.err.println("list2");
         return "/dcrej/dokumentList";
     }
 

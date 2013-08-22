@@ -193,6 +193,41 @@ public class DcDokumentJpaController implements Serializable {
         return dok;
     }
 
+    public DcDokument odrzuc(DcDokumentKrokUzytkownik dku) {
+        EntityManager em = null;
+        DcDokument dok = dku.getIdDokumentKrok().getIdDok();
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            DcAkceptStatus aS5 = new DcAkceptStatusJpaController().findDcAkceptStatus(5);
+            DcAkceptStatus aS4 = new DcAkceptStatusJpaController().findDcAkceptStatus(4);
+            DcAkceptStatus aS3 = new DcAkceptStatusJpaController().findDcAkceptStatus(3);
+            DcAkceptStatus aS2 = new DcAkceptStatusJpaController().findDcAkceptStatus(2);
+            //zmiana statusu akceptacji usera na zaakceptowany
+            dku.setAkcept(aS5);
+            dku.setDataAkcept(new Date());
+            em.merge(dku);
+            //bezwzgledna zmiana statusu
+            dku.getIdDokumentKrok().setAkcept(aS4);
+            em.merge(dku.getIdDokumentKrok());
+
+            //bezwzgledna zmiana statusu dokumentu
+            dku.getIdDokumentKrok().getIdDok().setDokStatusId(new DcDokumentStatus(5));
+            em.merge(dku.getIdDokumentKrok().getIdDok());
+            em.getTransaction().commit();
+
+            dok = new DcDokumentJpaController().findDcDokument(dok.getId());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return dok;
+    }
+
     public String editDoWiad(DcDokument dcDokument, DcDokDoWiadomosci doWiad) {
         EntityManager em = null;
         try {

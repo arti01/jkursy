@@ -77,6 +77,18 @@
                                 Rodzaj
                             </f:facet>
                             <h:outputText value="#{urlop.rodzajId.opis}"/>
+                            <rich:collapsiblePanel header="szczegóły" expanded="false" switchType="client" rendered="#{urlop.rodzajId.id==5 or urlop.rodzajId.id==6}">
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="miejsce" value="miejsce: " />
+                                    <h:outputText id="miejsce" value="#{urlop.miejsce}" />
+
+                                    <h:outputLabel for="cel" value="cel: " />
+                                    <h:outputText id="cel" value="#{urlop.cel}" />
+
+                                    <h:outputLabel for="srodekLok" value="srodek lokomocji: " />
+                                    <h:outputText id="srodekLok" value="#{urlop.srodekLok}"/>
+                                </h:panelGrid>
+                            </rich:collapsiblePanel>
                         </rich:column>
                         <rich:column >
                             <f:facet name="header">
@@ -98,20 +110,20 @@
                             </f:facet>
                             <h:outputText value="#{urlop.statusId.opis}"/>
                         </rich:column>
-                        <rich:column >
+                        <rich:column style="width: 80px">
                             <f:facet name="header">
                                 Akcje
                             </f:facet>
-                            <a4j:commandLink value="[  Cofnij  ]" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[ Cofnij ]" action="#{UrlopM.cofnij}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
                             <rich:message for="akcLink" styleClass="error"/>
-                            <a4j:commandLink id="akcLink" value="[  Akceptuj  ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink id="akcLink" value="[ Akceptuj ]" action="#{UrlopM.akcept}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                             <hr/>
-                            <a4j:commandLink value="[  Odrzuć  ]" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
+                            <a4j:commandLink value="[ Odrzuć ]" action="#{UrlopM.odrzuc}" render="formTab" rendered="#{urlop.statusId.id==2}">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
                         </rich:column>

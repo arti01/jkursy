@@ -78,6 +78,27 @@ public class Akcept {
         return "/dcodb/akcList?faces-redirect=true";
     }
 
+    public String odrzuc() {
+        DcDokumentKrokUzytkownik dkuDoZmiany = new DcDokumentKrokUzytkownik();
+        for (DcDokumentKrok dk : obiekt.getDcDokKrok()) {
+            if (dk.getAkcept().getId() == 2 || dk.getAkcept().getId() == 3) {
+                for (DcDokumentKrokUzytkownik dku : dk.getDcKrokUzytkownikaList()) {
+                    if (dku.getIdUser() == login.getZalogowany().getUserId()) {
+                        dkuDoZmiany = dku;
+                    }
+                }
+            }
+        }
+        try {
+            dkuDoZmiany.setInformacja(akceptOpis);
+        } catch (NullPointerException npe) {
+            npe.printStackTrace();
+        }
+        dcC.odrzuc(dkuDoZmiany);
+        akceptOpis = "";
+        return "/dcodb/akcList?faces-redirect=true";
+    }
+    
     public void dodajDoWiadUser(){
         if (doWiad.getDcDokDoWiadCelList() == null) {
             doWiad.setDcDokDoWiadCelList(new ArrayList<DcDokDoWiadCel>());

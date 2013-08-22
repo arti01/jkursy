@@ -17,6 +17,7 @@ INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (1, 'nowy', 'dokument p
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (2, 'w trakcie', 'dokument w trakcie akceptacji lub dystrybucji');
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (3, 'zamknięty', 'dokument zamknięty');
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (4, 'anulowany', 'dokument anulowany');
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (5, 'odrzucony', 'dokument odrzucony');
 
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (1, 'wszyscy muszą zaakceptować');
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (2, 'wystarczy jeden do akceptacji');
@@ -25,6 +26,7 @@ INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (1, 'początkowy');
 INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (2, 'brak akceptu');
 INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (3, 'częściowa akceptacja');
 INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (4, 'zaakceptowany');
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa ) VALUES (5, 'odrzucony');
 
 INSERT INTO dc_projekt (id, nazwa, opis ) VALUES (1, 'brak projektu', 'brak projektu');
 INSERT INTO dc_zrodlo (id, nazwa, opis ) VALUES (1, 'brak źródła', 'brak źródła');

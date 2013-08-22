@@ -1,3 +1,8 @@
+2013-08-21
+1. odrzucanie dokumentu
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa) values (5, 'odrzucony');
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (5, 'odrzucony', 'dokument odrzucony');
+
 2013-08-13
 1. Poprawiłem wylogowanie i zmianę hasła - sprawdz, proszę, czy działa
 2. Domyślny kontrahent (przy braku wyboru) - brany jest kontrahent o id=1 - w insertach był taki insert, tylko pewnie przez identity się nie dodał

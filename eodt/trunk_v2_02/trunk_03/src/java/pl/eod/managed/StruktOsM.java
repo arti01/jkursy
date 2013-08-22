@@ -57,17 +57,26 @@ public class StruktOsM implements Serializable {
         firma.setUserId(uFirma);
         srcRoots.clear();
         if (login.isAdmin()) {
-            List<Struktura>bezSzefa=struktC.getFindBezSzefa();
-            for(Struktura s:bezSzefa){
-                if(!s.isSysSdmin()||login.getZalogowany().isSysSdmin()) srcRoots.add(s);
+            List<Struktura> bezSzefa = struktC.getFindBezSzefa();
+            for (Struktura s : bezSzefa) {
+                if (!s.isSysSdmin() || login.getZalogowany().isSysSdmin()) {
+                    srcRoots.add(s);
+                }
             }
             //srcRoots.addAll(bezSzefa);
             firma.setBezpPod(srcRoots);
             wynik.add(firma);
         } else {
+
             for (Struktura s : struktC.findGeneryczny().getBezpPod()) {
-                if (s.getUserId().getSpolkaId().equals(login.zalogowany.getUserId().getSpolkaId())) {
-                    wynik.add(s);
+                try {
+                    if (s.getUserId().getSpolkaId().equals(login.zalogowany.getUserId().getSpolkaId())) {
+                        wynik.add(s);
+                    }
+                } catch (NullPointerException ex) {
+                    System.err.println("Problem w strukturze - istnieje podwładny generycznego(szefa wszystkich szefów), który ma ID_spolki NULL, a nie powinien");
+                    ex.printStackTrace();
+                    continue;
                 }
             }
         }
@@ -97,5 +106,4 @@ public class StruktOsM implements Serializable {
     public void setRozwin(boolean rozwin) {
         this.rozwin = rozwin;
     }
-    
 }

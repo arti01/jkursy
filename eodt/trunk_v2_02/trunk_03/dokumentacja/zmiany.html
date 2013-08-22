@@ -6,6 +6,41 @@
     </head>
     <body>
         <div>
+            <h3>2012-08-19</h3>
+            <h4>kilka bledów</h4>
+            <ul>
+                <li>
+                    oprogramowany wyjątek NullPointer przy sytuacji, gdy istnieje
+                    podwladny użytkownika generycznego (szefa wszystkich szefow), ktory ma id_spolki NULL.
+                    Sytuacja taka nie powinna się zdażyć w normalnym dodawaniu userów przez aplikację, ale
+                    gdy wykonuje się zmiany z reki na bazie to się może sypać.
+                    Błąd pojawiał się w drzewkach struktury
+                </li>
+                <li>
+                    poprawka na zapętlenie moj zastępca ustawil mnie jako zastępce
+                </li>
+            </ul>
+            <h3>2012-08-19</h3>
+            <h4>Obsługa uwag zgłoszonych w mailu</h4>
+            <ul>
+                <li>
+                    Informacja o ustanowieniu zastępcy. Chyba nie było tego
+                    opisanego w specyfikacji, ale zrobiłem - po usawieniu zastępcy wysyłany
+                    jest email z informacją. Działa tylko jak się skorzysta z opcji 
+                    w menu "Ustaw swojego zastępcę" (ale nie, jak się ustawi w edycji struktury)
+                </li>
+                <li>
+                    Dodałem informacje o delegacjach (pola cel, miejsce, śr. lokomocji) na wszystkich
+                    listach - nie było
+                </li>
+                <li>
+                    domyślnie zaznaczony ptaszek przy "wyslij extraEmail", jeśli extraEmail jest wypełniony
+                </li>
+                <li>
+                    wszelkie zmiany we wniosku (wysłanie, cofnięcie, akceptacja, odrzucenie idą również na extraemail)
+                </li>
+            </ul>
+
             <h3>2012-06-09</h3>
             <h4>Delegacje, wymuszenie zastępcy, kontrola dni urlopu</h4>
             <ul>
@@ -22,8 +57,8 @@
                 </li>
                 <li>
                     Zmieniłem numerację wszystkich wniosków, obecnie ma postać
-                symbol spolki/symbol rodzaju urlopu/nr kolejny w miesiącu/miesiąc/rok
-                gdzie symbol spółki i symbol urlopu jest definiowany w odpowiednych tabelach (poniżej altery)
+                    symbol spolki/symbol rodzaju urlopu/nr kolejny w miesiącu/miesiąc/rok
+                    gdzie symbol spółki i symbol urlopu jest definiowany w odpowiednych tabelach (poniżej altery)
                 </li>
                 <li>
                     ALTER TABLE wn_urlop ADD COLUMN cel character varying(255);
@@ -49,8 +84,8 @@
                     cwaniaków ustawił zastępce, wysłał wniosek a potem go skasował przed akceptem)
                 </li>
                 <li>
-                    INSERT INTO wn_rodzaje VALUES (3, 'Delegacja krajowa');
-                    INSERT INTO wn_rodzaje VALUES (4, 'Delegacja zagraniczna');
+                    INSERT INTO wn_rodzaje VALUES (5, 'Delegacja krajowa');
+                    INSERT INTO wn_rodzaje VALUES (6, 'Delegacja zagraniczna');
                 </li>
             </ul>
 

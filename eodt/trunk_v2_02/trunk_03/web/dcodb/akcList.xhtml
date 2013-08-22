@@ -67,6 +67,9 @@
                         <a4j:commandButton value="zaakceptuj" action="#{AkceptOdb.akceptuj}" render="listPanel" rendered="#{item.idDokumentKrok.idDok.dokStatusId.id==2}" execute="@this, akceptOpis">
                             <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
                         </a4j:commandButton>
+                        <a4j:commandButton value="odrzuć" action="#{AkceptOdb.odrzuc}" render="listPanel" rendered="#{item.idDokumentKrok.idDok.dokStatusId.id==2}" execute="@this, akceptOpis">
+                            <f:setPropertyActionListener target="#{AkceptOdb.obiekt}" value="#{item.idDokumentKrok.idDok}" />
+                        </a4j:commandButton>
                         <rich:tooltip target="statusList">
                             #{item.idDokumentKrok.idDok.dokStatusId.opis}
                         </rich:tooltip>
