@@ -208,7 +208,7 @@ public class DcDokumentJpaController implements Serializable {
             dku.setDataAkcept(new Date());
             em.merge(dku);
             //bezwzgledna zmiana statusu
-            dku.getIdDokumentKrok().setAkcept(aS4);
+            dku.getIdDokumentKrok().setAkcept(aS5);
             em.merge(dku.getIdDokumentKrok());
 
             //bezwzgledna zmiana statusu dokumentu

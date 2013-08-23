@@ -2,6 +2,7 @@ package pl.eod2.managedRej;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -36,6 +37,7 @@ public class Rejestracja {
     private DcDokument obiekt;
     private DcPlik plik;
     private String error;
+    private Locale locale;
     @ManagedProperty(value = "#{login}")
     private Login login;
     private DcKontrahenci kontrahent;
@@ -386,5 +388,9 @@ public class Rejestracja {
     public void setFiltrProjekt(String filtrProjekt) {
         this.filtrProjekt = filtrProjekt;
     }
-    
+
+    public Locale getLocale() {
+        locale = new Locale("pl", "PL");
+        return locale;
+    }
 }

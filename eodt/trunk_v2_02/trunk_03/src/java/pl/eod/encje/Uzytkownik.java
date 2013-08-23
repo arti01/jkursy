@@ -333,7 +333,7 @@ public class Uzytkownik implements Serializable {
         for (DcDokumentKrokUzytkownik dku : getDcDokumentKrokUzytkownikList()) {
             //krok danego użytkownika musi być bez akceptu
             //krok dokumentu musi być do akceptu lub częsciowa akceptacja
-            if (dku.getAkcept().getId() == 4) {
+            if (dku.getAkcept().getId() == 4||dku.getAkcept().getId() == 5) {
                 wynik.add(dku);
             }
         }

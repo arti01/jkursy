@@ -17,7 +17,7 @@
     
     <h:panelGrid columns="6" id="dodajGrid6">
         <h:outputLabel for="dataD" value="Data dokumentu:"/>
-        <rich:calendar value="#{RejestracjaRej.obiekt.dataDok}" id="dataD" locale="#{UrlopM.locale}"
+        <rich:calendar value="#{RejestracjaRej.obiekt.dataDok}" id="dataD" locale="#{RejestracjaRej.locale}"
                        popup="true" datePattern="yyyy-MM-dd"
                        showApplyButton="#{calendarBean.showApply}" style="width:200px">
             <rich:validator /></rich:calendar>
