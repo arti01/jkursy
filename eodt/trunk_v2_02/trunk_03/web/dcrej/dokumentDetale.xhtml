@@ -53,15 +53,13 @@
                         <rich:column style="width: 50px">
                             <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                             <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
-                            <a4j:commandLink execute="@this" render="@none"
+                            <a4j:commandButton id="imgDe" execute="@this" render="@none" image="/images/delete.png"
                                              oncomplete="#{rich:component('confirmPane')}.show()"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
-                                <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
                                 <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
-                            </a4j:commandLink>
-                            <h:commandLink action="#{fileUploadBean.download}" >
-                                <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
+                            </a4j:commandButton>
+                            <h:commandButton id="imgDt" action="#{fileUploadBean.download}" image="/images/detail.png">
                                 <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
-                            </h:commandLink>
+                            </h:commandButton>
                         </rich:column>
                     </rich:dataTable>
 
@@ -137,10 +135,9 @@
                                 <f:facet name="header">lista odbiorców</f:facet>
                                 <rich:list id="user_list" value="#{RejestracjaRej.doWiad.dcDokDoWiadCelList}" var="cel">
                                     #{cel.userid.fullname} #{cel.userid.adrEmail}
-                                    <a4j:commandLink id="usunUser" action="#{RejestracjaRej.usunDoWiadUser}" render="doWiadFormLista" execute="user_list">
-                                        <h:graphicImage value="/images/delete.png" alt="delete" />
+                                    <a4j:commandButton id="usunUser" action="#{RejestracjaRej.usunDoWiadUser}" render="doWiadFormLista" execute="user_list" image="/images/delete.png">
                                         <f:setPropertyActionListener target="#{RejestracjaRej.doWiadCel}" value="#{cel}" />
-                                    </a4j:commandLink>
+                                    </a4j:commandButton>
                                 </rich:list>
                             </rich:panel>
                             <rich:panel id="doWiadFormForm">

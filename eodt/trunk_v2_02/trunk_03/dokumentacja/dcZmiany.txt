@@ -1,3 +1,15 @@
+2013-08-24
+1. Usunięcie ramek wokół ikon w opcjach popup (kurde, ale tego było ;)
+2. W historii pojawiały się zdublowane dokumenty, w przypadku, gdy uzytkownik był członkiem więcej niż jednego kroku akceptacji - poprawiłem
+3. W opcjach odbioru (akcept, historia) w detalach dokumentu kontrahent w rozwijalnym panelu, aby akceptant mogł przeczytać wszystkie detale
+kontrahenta (wcześniej była tylko nazwa)
+4. Dokument wychodzący/przychdzący - proponuję wykorzystać już istniejący "Grupa Rodzajów" - to będzie bardziej uniwersalny mechanizm.
+    Po prostu zdefiniuje się (w wersji instalacyjnej dołoże dwa inserty, w już istniejącej trzeba z ręki zmodyfikować i dodać ewenualnie rekordy
+    w dc_rodzaj_grupa) oraz dorobię filtrowanie po rodzaju grupy
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (1, 'wychodzące', 'dokumenty wychodzące');
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (2, 'przychodzące', 'dokumenty przychodzące');
+
+
 2013-08-21
 1. odrzucanie dokumentu
 INSERT INTO DC_AKCEPT_STATUS (id, nazwa) values (5, 'odrzucony');

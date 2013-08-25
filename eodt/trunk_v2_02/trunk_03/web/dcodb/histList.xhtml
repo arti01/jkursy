@@ -18,10 +18,9 @@
         
         <h:form>
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{managedBean.login.zalogowany.userId.dcDokumentKrokUzytkownikListHist}" var="krok" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{managedBean.login.zalogowany.userId.dcDokumentListHist}" var="itemHist" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
-                    <ui:param name="itemHist" value="#{krok.idDokumentKrok.idDok}"/>
                     
                     <rich:column sortBy="#{itemHist.id}" sortOrder="descending" filterExpression="#{fn:containsIgnoreCase(itemHist.dataWprowStr,RejestracjaRej.filtrdataWprow)}">    
                         <f:facet name="header">data rejestracji

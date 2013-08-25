@@ -19,32 +19,31 @@
                 <h:panelGrid columns="2" id="dodajGridCalosc">
                     <rich:panel>
                         <f:facet name="header">wybierz typ kroku</f:facet>
-                    <h:panelGrid columns="2" id="dodajGrid">
+                        <h:panelGrid columns="2" id="dodajGrid">
                             <h:selectOneMenu id="typ" value="#{RodzajeCfg.akcKrok.dcAckeptTypKroku}" converter="#{DcAkceptTypKrokuConv}" >
                                 <f:selectItems value="#{RodzajeCfg.typKrokuLista}" var="typ" itemValue="#{typ}" itemLabel="#{typ.nazwa}"/>
                             </h:selectOneMenu>
                             <rich:message for="typ" styleClass="error" />
                         </h:panelGrid>
                     </rich:panel> 
-                    
+
                     <rich:panel>
                         <f:facet name="header">członkowie kroku</f:facet>
-                    <h:panelGrid columns="3" id="dodajGridCzlon">
-                        <h:outputLabel for="user_id" value="podaj email (wprowadz min. 3 znaki)"/>
-                        <rich:autocomplete id="user_id" value="#{RodzajeCfg.user}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
-                            #{user.adrEmail}
-                            #{user.fullname}
-                        </rich:autocomplete>
-                        <rich:message for="user_id" styleClass="error" />
-                        <a4j:commandButton value="dodaj członka" execute="user_id" action="#{RodzajeCfg.dodajUser}" render="user_list, user_id"/>
-                        <rich:list id="user_list" value="#{RodzajeCfg.akcKrok.uzytkownikList}" var="user">
-                            #{user.fullname}
-                            <a4j:commandLink id="usunUser" action="#{RodzajeCfg.usunUser}" render="user_list, user_id" execute="@this">
-                                <h:graphicImage value="/images/delete.png" alt="delete" />
-                                <f:setPropertyActionListener target="#{RodzajeCfg.user}" value="#{user}" />
-                            </a4j:commandLink>
-                        </rich:list>
-                    </h:panelGrid>
+                        <h:panelGrid columns="3" id="dodajGridCzlon">
+                            <h:outputLabel for="user_id" value="podaj email (wprowadz min. 3 znaki)"/>
+                            <rich:autocomplete id="user_id" value="#{RodzajeCfg.user}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
+                                #{user.adrEmail}
+                                #{user.fullname}
+                            </rich:autocomplete>
+                            <rich:message for="user_id" styleClass="error" />
+                            <a4j:commandButton value="dodaj członka" execute="user_id" action="#{RodzajeCfg.dodajUser}" render="user_list, user_id"/>
+                            <rich:list id="user_list" value="#{RodzajeCfg.akcKrok.uzytkownikList}" var="user">
+                                #{user.fullname}
+                                <a4j:commandButton id="usunUser" action="#{RodzajeCfg.usunUser}" render="user_list, user_id" execute="@this" image="/images/delete.png">
+                                    <f:setPropertyActionListener target="#{RodzajeCfg.user}" value="#{user}" />
+                                </a4j:commandButton>
+                            </rich:list>
+                        </h:panelGrid>
                     </rich:panel>
                 </h:panelGrid>
 
@@ -82,28 +81,25 @@
                         </rich:list>
                     </rich:column>
                     <rich:column style="width: 45px">
-                        <a4j:commandLink action="#{RodzajeCfg.upKrok}" execute="@this" render="tableKroki" rendered="#{item.lp>1}">
-                            <h:graphicImage id="imgUp" value="/images/go-up.png" alt="gora" />
+                        <a4j:commandButton id="imgUp" action="#{RodzajeCfg.upKrok}" execute="@this" render="tableKroki" rendered="#{item.lp>1}" image="/images/go-up.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                         <rich:tooltip target="imgUp" value="do góry" layout="block"/>
-                        <a4j:commandLink action="#{RodzajeCfg.downKrok}" execute="@this" render="tableKroki" rendered="#{item.lp&lt;fn:length(RodzajeCfg.obiekt.dcAkceptKroki)}">
-                            <h:graphicImage id="imgDw" value="/images/go-down.png" alt="dol" />
+                        <a4j:commandButton id="imgDw" action="#{RodzajeCfg.downKrok}" execute="@this" render="tableKroki" 
+                                           rendered="#{item.lp&lt;fn:length(RodzajeCfg.obiekt.dcAkceptKroki)}" image="/images/go-down.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                         <rich:tooltip target="imgDw" value="w dół" layout="block"/>
                     </rich:column>
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
-                        <a4j:commandLink execute="@this" render="@none" oncomplete="#{rich:component('confirmPane')}.show();" >
-                            <h:graphicImage id="imgDe" value="/images/delete.png" alt="delete" />
+                        <a4j:commandButton id="imgDe" execute="@this" render="@none" oncomplete="#{rich:component('confirmPane')}.show();"  image="/images/delete.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
-                        </a4j:commandLink>
-                        <a4j:commandLink execute="@this" oncomplete="edit();">
-                            <h:graphicImage id="imgEd" value="/images/edit.png" alt="edit" />
+                        </a4j:commandButton>
+                        <a4j:commandButton id="imgEd" execute="@this" oncomplete="edit();" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.akcKrok}" value="#{item}" />
-                        </a4j:commandLink>
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>

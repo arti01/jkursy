@@ -35,7 +35,30 @@
                     <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
                     
                     <h:outputLabel for="kontrahentD" value="kontrahent: "/>
-                    <h:outputText id="kontrahentD" value="#{managedBean.obiekt.kontrahentId.nazwa}"/>
+                    <rich:collapsiblePanel header="#{managedBean.obiekt.kontrahentId.nazwa}" expanded="false" switchType="client">
+                        <h:panelGrid columns="2" style="border-spacing:0px;">
+                            <h:outputLabel for="nipRegon" value="osoba nip/regon: "/>
+                            <h:outputText id="nipRegon" value="#{managedBean.obiekt.kontrahentId.nipRegon}"/>
+                            
+                            <h:outputLabel for="adres" value="osoba adres: "/>
+                            <h:outputText id="adres" value="#{managedBean.obiekt.kontrahentId.adres}"/>
+                            
+                            <h:outputLabel for="infoDodK" value="Dane dodatkowe: "/>
+                            <h:outputText id="infoDodK" value="#{managedBean.obiekt.kontrahentId.infoDod}"/>
+                            
+                            <h:outputLabel for="osKon" value="osoba kontaktowa: "/>
+                            <h:outputText id="osKon" value="#{managedBean.obiekt.kontrahentId.osobaKontak}"/>
+
+                            <h:outputLabel for="tel" value="tel.: "/>
+                            <h:outputText id="tel" value="#{managedBean.obiekt.kontrahentId.tel}"/>
+
+                            <h:outputLabel for="email" value="e-mail: "/>
+                            <h:outputText id="email" value="#{managedBean.obiekt.kontrahentId.email}"/>
+
+                            <h:outputLabel for="www" value="www: "/>
+                            <h:outputText id="www" value="#{managedBean.obiekt.kontrahentId.www}"/>
+                        </h:panelGrid>
+                    </rich:collapsiblePanel>
 
                     <h:outputLabel for="opisDlugiD" value=" "/>
                     <rich:collapsiblePanel header="dodatkowy opis" expanded="false" switchType="client" rendered="#{managedBean.obiekt.opisDlugi!=''}">
@@ -77,10 +100,9 @@
                     </rich:column>
                     <rich:column style="width: 50px">
                         <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
-                        <h:commandLink action="#{fileUploadBean.download}" >
-                            <h:graphicImage id="imgDt" value="/images/detail.png" alt="detale" />
+                        <h:commandButton id="imgDt" action="#{fileUploadBean.download}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.plik}" value="#{item}" />
-                        </h:commandLink>
+                        </h:commandButton>
                     </rich:column>
                 </rich:dataTable>
 
@@ -156,10 +178,9 @@
                             <f:facet name="header">lista odbiorców</f:facet>
                             <rich:list id="user_list" value="#{managedBean.doWiad.dcDokDoWiadCelList}" var="cel">
                                 #{cel.userid.fullname} #{cel.userid.adrEmail}
-                                <a4j:commandLink id="usunUser" action="#{managedBean.usunDoWiadUser}" render="doWiadFormLista" execute="user_list">
-                                    <h:graphicImage value="/images/delete.png" alt="delete" />
+                                <a4j:commandButton id="usunUser" action="#{managedBean.usunDoWiadUser}" render="doWiadFormLista" execute="user_list" image="/images/delete.png">
                                     <f:setPropertyActionListener target="#{managedBean.doWiadCel}" value="#{cel}" />
-                                </a4j:commandLink>
+                                </a4j:commandButton>
                             </rich:list>
                         </rich:panel>
                         <rich:panel id="doWiadFormForm">
@@ -204,6 +225,7 @@
             <h:outputLabel for="akceptOpis" value="uwagi do akceptu:"/>
             <h:inputTextarea id="akceptOpis" value="#{AkceptOdb.akceptOpis}"/>
             <h:commandButton value="zaakceptuj" action="#{managedBean.akceptuj}"/>
+            <h:commandButton value="odrzuć" action="#{managedBean.odrzuc}"/>
         </h:panelGrid>
         <rich:popupPanel id="statPane" autosized="true">
             <h:graphicImage value="/images/ai.gif" alt="ai" />
