@@ -92,13 +92,13 @@ public class PDFHandler {
     }
 
     //public ByteArrayOutputStream getXMLSource(EmployeeData data) throws Exception {
-    public ByteArrayOutputStream getXMLSource(Wydruk data) throws Exception {
+    public ByteArrayOutputStream getXMLSource(DcDokPocztaList data) throws Exception {
         JAXBContext context;
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         try {
-            context = JAXBContext.newInstance(Wydruk.class);
+            context = JAXBContext.newInstance(DcDokPocztaList.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             m.marshal(data, outStream);

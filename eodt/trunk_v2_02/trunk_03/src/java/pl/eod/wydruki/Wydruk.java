@@ -6,6 +6,7 @@ package pl.eod.wydruki;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -13,24 +14,26 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.fop.apps.FopFactory;
+import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.managedRej.Rejestracja;
 
 
 @ManagedBean(name = "wydruk")
 @SessionScoped
-@XmlRootElement(name="TestData")
-@XmlSeeAlso({DcDokument.class})
+
 public class Wydruk {
     private String test;
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rej;
-    private List<DcDokument> dokumentList;
+    
 
     @PostConstruct
     public void init(){
@@ -40,14 +43,14 @@ public class Wydruk {
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
         System.err.println(absolutePath);
-        String templateFilePath = "./web/resources/wydruki/";
-        dokumentList=(List<DcDokument>) getRej().getLista().getWrappedData();
+        String templateFilePath = absolutePath+"../../../../../../resources/wydruki/";
+        System.err.println(templateFilePath);
+        //C:/Documents and Settings/bialoa01/Moje dokumenty/NetBeansProjects/eodt/trunk_02/build/web/WEB-INF/classes/pl/eod/wydruki
         
+        DcDokPocztaList pocztaList=new DcDokPocztaList((List<DcDokument>)rej.getLista().getWrappedData());
         PDFHandler handler = new PDFHandler();
-
         try {
-            ByteArrayOutputStream streamSource = handler.getXMLSource(this);
-
+            ByteArrayOutputStream streamSource = handler.getXMLSource(pocztaList);
             handler.createPDFFile(streamSource, templateFilePath);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -70,13 +73,4 @@ public class Wydruk {
     public void setRej(Rejestracja rej) {
         this.rej = rej;
     }
-
-    public List<DcDokument> getDokumentList() {
-        return dokumentList;
-    }
-
-    public void setDokumentList(List<DcDokument> dokumentList) {
-        this.dokumentList = dokumentList;
-    }
-
 }

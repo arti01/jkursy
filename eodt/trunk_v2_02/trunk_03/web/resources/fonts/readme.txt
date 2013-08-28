@@ -1,0 +1,1 @@
+Katalog z danymi na potrzeby FOPa (mechanizm generowania PDFów).
