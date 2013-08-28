@@ -35,7 +35,7 @@ import org.apache.fop.apps.MimeConstants;
 public class PDFHandler {
 
     public static final String EXTENSION = ".pdf";
-    public String PRESCRIPTION_URL = "template.xsl";
+    public String PRESCRIPTION_URL = "template1.xsl";
 
     public String createPDFFile(ByteArrayOutputStream xmlSource, String templateFilePath) throws IOException {
         //File file = File.createTempFile("" + System.currentTimeMillis(), EXTENSION);
@@ -91,13 +91,14 @@ public class PDFHandler {
         return file.getPath();
     }
 
-    public ByteArrayOutputStream getXMLSource(EmployeeData data) throws Exception {
+    //public ByteArrayOutputStream getXMLSource(EmployeeData data) throws Exception {
+    public ByteArrayOutputStream getXMLSource(Wydruk data) throws Exception {
         JAXBContext context;
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         try {
-            context = JAXBContext.newInstance(EmployeeData.class);
+            context = JAXBContext.newInstance(Wydruk.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             m.marshal(data, outStream);

@@ -4,12 +4,15 @@
  */
 package pl.eod.wydruki;
 
+import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.transform.Source;
@@ -33,7 +36,23 @@ public class Wydruk {
     public void init(){
         String myString="ddddddddddd";
         test="test wydrukow";
+        
+        String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
+        System.err.println(absolutePath);
+        String templateFilePath = "./web/resources/wydruki/";
         dokumentList=(List<DcDokument>) getRej().getLista().getWrappedData();
+        
+        PDFHandler handler = new PDFHandler();
+
+        try {
+            ByteArrayOutputStream streamSource = handler.getXMLSource(this);
+
+            handler.createPDFFile(streamSource, templateFilePath);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public String getTest() {
