@@ -72,7 +72,8 @@ public class Struktura implements Serializable {
     List<Struktura> bezpPod;
     @Column(name = "usuniety", nullable = true)
     private Integer usuniety;
-    @Column(name = "extraemail", nullable = true)
+    @NotNull
+    @Column(name = "extraemail", nullable = false)
     private String extraemail;
     @Column(name = "mus_zast", nullable = false)
     private Integer musZast;
