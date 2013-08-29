@@ -13,8 +13,8 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="simple">
                 <fo:flow flow-name="xsl-region-body">
- <fo:block>Dokuemnty do wysyłki</fo:block>
-                    <fo:block font-family="Arial" font-size="7pt" font-weight="normal">
+ <fo:block font-family="Helvetica" font-weight="bold">Dokumnty do wysyŁłki</fo:block>
+                    <fo:block font-family="helvetica" font-size="7pt" font-weight="normal">
                         <fo:table>
                             <fo:table-column column-number="1" column-width="3cm" />
                             <fo:table-column column-number="2" column-width="2cm" />

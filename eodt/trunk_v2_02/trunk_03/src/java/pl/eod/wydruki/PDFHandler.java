@@ -25,19 +25,22 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
-
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.xml.sax.SAXException;
 
 public class PDFHandler {
 
     public static final String EXTENSION = ".pdf";
     public String PRESCRIPTION_URL = "template1.xsl";
 
-    public String createPDFFile(ByteArrayOutputStream xmlSource, String templateFilePath) throws IOException {
+    public String createPDFFile(ByteArrayOutputStream xmlSource, String templateFilePath) throws IOException, SAXException, ConfigurationException {
         //File file = File.createTempFile("" + System.currentTimeMillis(), EXTENSION);
         File file = new File("D:\\tmp\\1\\cos"+EXTENSION);
         
@@ -47,6 +50,11 @@ public class PDFHandler {
         // create an instance of fop factory
         FopFactory fopFactory = FopFactory.newInstance();
         // a user agent is needed for transformation
+        
+        DefaultConfigurationBuilder cfgBuilder = new DefaultConfigurationBuilder();
+Configuration cfg = cfgBuilder.buildFromFile(new File("D:\\tmp\\1\\fop-xconf.xml"));
+fopFactory.setUserConfig(cfg);
+        
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // to store output
         ByteArrayOutputStream pdfoutStream = new ByteArrayOutputStream();
