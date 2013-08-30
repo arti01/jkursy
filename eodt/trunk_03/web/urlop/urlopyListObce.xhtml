@@ -18,18 +18,14 @@
                 Dostępny urlop:<strong>#{UrlopObceM.urlop.uzytkownik.wnLimity.ulimit}</strong>
             </h:panelGrid>
 
-            <a4j:jsFunction id="sendInfo" name="sendInfo" render="extraemailB">
-                <a4j:param assignTo="#{UrlopObceM.urlop.extraemail}" name="name"/>
-            </a4j:jsFunction>
-
             <h:form>
                 <a4j:outputPanel id="formWprow" layout="block">
                     <h:panelGrid columns="3" id="form">
                         <h:outputLabel for="name" value="Imię i nazwisko: "/>
-                        <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}">
+                        <h:selectOneMenu id="name" value="#{UrlopObceM.urlop.uzytkownik}" converter="#{UzytkownikConv}" valueChangeListener="#{UrlopObceM.changeUser}">
                             <f:selectItem itemLabel="wybierz" noSelectionOption="true"/>
                             <f:selectItems value="#{login.zalogowany.obceWnioski}" var="struktura" itemValue="#{struktura.userId}" itemLabel="#{struktura.userId.fullname}"/>
-                            <a4j:ajax event="change" execute="@this" render="formWprow" oncomplete="sendInfo(#{fn:length(UrlopObceM.urlop.uzytkownik.struktura.extraemail)>0}); return true;"/>
+                            <a4j:ajax event="change" execute="@this" render="formWprow"/>
                         </h:selectOneMenu>
 
                         <h:outputLabel for="rodzajW" value=" "/>
@@ -221,9 +217,9 @@
                 <rich:popupPanel id="confirmPane" autosized="true">
                     Czy na pewno chcesz usunąć?
                     <a4j:commandButton value="NIE" onclick="#{rich:component('confirmPane')}.hide();
-                                return false;" />
+                            return false;" />
                     <a4j:commandButton value="TAK" onclick="remove();
-                                return false;" />
+                            return false;" />
                 </rich:popupPanel>   
             </h:form>
         </div>

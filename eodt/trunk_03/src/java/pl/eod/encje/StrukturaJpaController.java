@@ -66,6 +66,7 @@ public class StrukturaJpaController implements Serializable {
 
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
+        if(struktura.getExtraemail()==null) struktura.setExtraemail("");
         ConfigJpaController confC = new ConfigJpaController();
         boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
 

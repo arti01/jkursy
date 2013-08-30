@@ -15,6 +15,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.KomKolejka;
@@ -236,6 +237,13 @@ public class UrlopObceM {
         context.addMessage(zapisz.getClientId(context), message);
     }
 
+    public void changeUser(ValueChangeEvent e){
+        Uzytkownik u=(Uzytkownik) e.getNewValue();
+        //System.out.println(u.getStruktura().getExtraemail()+"fffffffff");
+        urlop.setUzytkownik(u);
+        if(!getUrlop().getUzytkownik().getStruktura().getExtraemail().isEmpty()) urlop.setExtraemail(true);
+    }
+    
     @PostConstruct
     public void init() {
         urlopC = new WnUrlopJpaController();
