@@ -35,26 +35,26 @@ import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.xml.sax.SAXException;
 
-public class PDFHandler {
+public class PDFHandlerTest {
 
     public static final String EXTENSION = ".pdf";
-    public String PRESCRIPTION_URL = "template1.xsl";
+    public String PRESCRIPTION_URL = "template.xsl";
 
-    public String createPDFFile(ByteArrayOutputStream xmlSource, String templateFilePath, String cfgFop) throws IOException, SAXException, ConfigurationException {
+    public String createPDFFile(ByteArrayOutputStream xmlSource, String templateFilePath) throws IOException, SAXException, ConfigurationException {
         //File file = File.createTempFile("" + System.currentTimeMillis(), EXTENSION);
-        File file = new File("D:\\tmp\\1\\cos" + EXTENSION);
-
+        File file = new File("D:\\tmp\\1\\cos"+EXTENSION);
+        
         URL url = new File(templateFilePath + PRESCRIPTION_URL).toURI().toURL();
         // creation of transform source
         StreamSource transformSource = new StreamSource(url.openStream());
         // create an instance of fop factory
         FopFactory fopFactory = FopFactory.newInstance();
         // a user agent is needed for transformation
-
+        
         DefaultConfigurationBuilder cfgBuilder = new DefaultConfigurationBuilder();
-        Configuration cfg = cfgBuilder.buildFromFile(new File(cfgFop));
-        fopFactory.setUserConfig(cfg);
-
+Configuration cfg = cfgBuilder.buildFromFile(new File("D:\\tmp\\1\\fop-xconf.xml"));
+fopFactory.setUserConfig(cfg);
+        
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
         // to store output
         ByteArrayOutputStream pdfoutStream = new ByteArrayOutputStream();
@@ -100,13 +100,13 @@ public class PDFHandler {
     }
 
     //public ByteArrayOutputStream getXMLSource(EmployeeData data) throws Exception {
-    public ByteArrayOutputStream getXMLSource(DcDokPocztaList data) throws Exception {
+    public ByteArrayOutputStream getXMLSource(EmployeeData data) throws Exception {
         JAXBContext context;
 
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
         try {
-            context = JAXBContext.newInstance(DcDokPocztaList.class);
+            context = JAXBContext.newInstance(EmployeeData.class);
             Marshaller m = context.createMarshaller();
             m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             m.marshal(data, outStream);

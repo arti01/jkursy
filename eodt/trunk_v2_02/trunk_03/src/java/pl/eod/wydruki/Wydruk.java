@@ -43,7 +43,7 @@ public class Wydruk {
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));
         System.err.println(absolutePath);
-        String templateFilePath = absolutePath+"../../../../../../resources/wydruki/";
+        String templateFilePath = absolutePath+"/../../../../../resources/wydruki/";
         System.err.println(templateFilePath);
         //C:/Documents and Settings/bialoa01/Moje dokumenty/NetBeansProjects/eodt/trunk_02/build/web/WEB-INF/classes/pl/eod/wydruki
         
@@ -51,7 +51,7 @@ public class Wydruk {
         PDFHandler handler = new PDFHandler();
         try {
             ByteArrayOutputStream streamSource = handler.getXMLSource(pocztaList);
-            handler.createPDFFile(streamSource, templateFilePath);
+            handler.createPDFFile(streamSource, templateFilePath, absolutePath+"/../../../fop-xconf.xml");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

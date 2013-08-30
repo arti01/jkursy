@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 
 <fop version="1.0">
-
-  <base>file:///D:/tmp/1/fonts</base>
-                
-  <!--
-  <base>file:///D:/java/tomcat7/erica_data/fonts</base> 
+                    
+<font-base>d:\tmp\1\fonts</font-base>
+<!--
+<base>file:///D:/java/tomcat7/erica_data/fonts</base> 
   <base>file:///opt/SUNWwbsvr/https-proplus/data/fonts</base>
   file:///D:/java/app/1_4/proplus_np2167/bin/fonts
   -->
@@ -14,12 +13,11 @@
   
     <renderer mime="application/pdf">
       <fonts>
+<!--
+        <directory recursive="true">file:\\\D:\\tmp\\1\\fonts</directory>
+-->
 
-        <!--
-        <directory recursive="true">D:\tmp\fonts</directory>
-        -->
-
-        <font embed-url="arial.ttf">
+        <font embed-url="./fonts/arial.ttf">
           <font-triplet name="Arial" style="normal" weight="normal"/>
           <font-triplet name="ArialMT" style="normal" weight="normal"/>
         </font>

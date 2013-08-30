@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!-- was: <?xml version="1.0" encoding="iso-8859-1"?> -->
 <xsl:stylesheet version="1.1"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:barcode="org.krysalis.barcode4j.xalan.BarcodeExt" xmlns:common="http://exslt.org/common"
@@ -12,8 +13,8 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="simple">
                 <fo:flow flow-name="xsl-region-body">
- 
-                    <fo:block font-family="Arial" font-size="7pt" font-weight="normal">
+ <fo:block font-family="Arial" font-weight="bold">Dokumnty do wysyŁłki</fo:block>
+                    <fo:block font-size="7pt" font-weight="normal">
                         <fo:table>
                             <fo:table-column column-number="1" column-width="3cm" />
                             <fo:table-column column-number="2" column-width="2cm" />
