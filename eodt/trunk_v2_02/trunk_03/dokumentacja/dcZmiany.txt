@@ -4,10 +4,15 @@
 3. W opcjach odbioru (akcept, historia) w detalach dokumentu kontrahent w rozwijalnym panelu, aby akceptant mogł przeczytać wszystkie detale
 kontrahenta (wcześniej była tylko nazwa)
 4. Dokument wychodzący/przychdzący - proponuję wykorzystać już istniejący "Grupa Rodzajów" - to będzie bardziej uniwersalny mechanizm.
-    Po prostu zdefiniuje się (w wersji instalacyjnej dołoże dwa inserty, w już istniejącej trzeba z ręki zmodyfikować i dodać ewenualnie rekordy
+    Po prostu zdefiniuje się (w wersji instalacyjnej dołoże trzy inserty, w już istniejącej trzeba z ręki zmodyfikować i dodać ewenualnie rekordy
     w dc_rodzaj_grupa) oraz dorobię filtrowanie po rodzaju grupy
     INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (1, 'wychodzące', 'dokumenty wychodzące');
     INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (2, 'przychodzące', 'dokumenty przychodzące');
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (3, 'wewnętrzne', 'dokumenty wewnętrzne');
+5. Wydruki raportów - w menu Rejestracja jest nowa opcja "Raport pocztowy" - tam trzeba wybrać filtry, następnie kliknąć "wyszukaj" no a potem "wydrukuj"
+6. Należy zainstalować fonty, czyli:
+    - Rozpakować fonty w dowolnym katalogu
+    - w pliku WAR wyedytować plik ./WEB-INF/classes/fop-xconf.xml i ustawić właściwą ścieżkę do fontów <font-base>  - w windows może być w konwencji D:\cos tam\cos
 
 
 2013-08-21

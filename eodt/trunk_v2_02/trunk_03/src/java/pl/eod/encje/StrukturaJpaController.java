@@ -237,14 +237,13 @@ public class StrukturaJpaController implements Serializable {
             Struktura oldStruktura = em.find(struktura.getClass(), struktura.getId());
             Struktura oldSecUser = null;
             //kontrola czy zastępca nie ma ustawionego usera jako zastępcy - zapętlenie
-            try{
+            try {
                 Uzytkownik secUser = em.find(Uzytkownik.class, struktura.getSecUserId().getId());
                 if (secUser.getStruktura().getSecUserId().getId().equals(struktura.getUserId().getId())) {
                     return "Wprowadzony zastępca ma jako osobę zastępującą ustawionego " + secUser.getStruktura().getSecUserId().getFullname()
                             + " (email: " + secUser.getStruktura().getSecUserId().getAdrEmail() + ") - zmiana niemożliwa";
                 }
-            }catch (NullPointerException ex){
-
+            } catch (NullPointerException ex) {
             }
             Dzial oldDzial = oldStruktura.getDzialId();
             boolean oldKier = oldStruktura.isStKier();
@@ -294,7 +293,7 @@ public class StrukturaJpaController implements Serializable {
             if (idOldSzef != null) {
                 em.refresh(em.find(struktura.getClass(), idOldSzef));
             }
-            
+
             if (struktura.getSecUserId() != null) {
                 em.refresh(em.find(struktura.getClass(), struktura.getSecUserId().getStruktura().getId()));
             }

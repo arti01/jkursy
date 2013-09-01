@@ -10,12 +10,19 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Predicate;
+import pl.eod.encje.Struktura;
 import pl.eod.encje.Uzytkownik;
+import pl.eod.encje.Uzytkownik_;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -24,6 +31,8 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author 103039
  */
 public class DcDokumentJpaController implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public DcDokumentJpaController() {
         if (this.emf == null) {
@@ -464,6 +473,57 @@ public class DcDokumentJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<DcDokument> findRaport(DcRodzajGrupa rodzGrupa, Date dataRejOd, Date dataRejDo, DcZrodlo zrodlo) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<DcDokument> cq = cb.createQuery(DcDokument.class);
+            Root<DcDokument> dokument = cq.from(DcDokument.class);
+            cq.select(dokument);
+            Predicate warunek;
+            Predicate warRodzaj;
+            Predicate warZrodlo;
+            Predicate warDataOd;
+            Predicate warDataDo;
+
+            DcDokumentStatus status = new DcDokumentStatus(3);
+            Expression<DcDokumentStatus> statusE = dokument.get(DcDokument_.dokStatusId);
+            Predicate warStatus = cb.equal(statusE, status);
+            warunek = warStatus;
+
+            if (rodzGrupa != null) {
+                Expression<DcRodzaj> rodzaj = dokument.get(DcDokument_.rodzajId);
+                warRodzaj = rodzaj.in(rodzGrupa.getDcRodzajList());
+                warunek = cb.and(warRodzaj, warunek);
+            }
+            if (dataRejOd != null) {
+                Expression<Date> dataRej = dokument.get(DcDokument_.dataWprow);
+                warDataOd = cb.greaterThanOrEqualTo(dataRej, dataRejOd);
+                warunek = cb.and(warDataOd, warunek);
+            }
+            if (dataRejDo != null) {
+                Calendar c = Calendar.getInstance();
+                c.setTime(dataRejDo);
+                c.add(Calendar.DATE, 1);
+                dataRejDo = c.getTime();
+                Expression<Date> dataRej = dokument.get(DcDokument_.dataWprow);
+                warDataDo = cb.lessThanOrEqualTo(dataRej, dataRejDo);
+                warunek = cb.and(warDataDo, warunek);
+            }
+            if (zrodlo != null) {
+                Expression<DcZrodlo> zrodloE = dokument.get(DcDokument_.zrodloId);
+                warZrodlo = cb.equal(zrodloE, zrodlo);
+                warunek = cb.and(warZrodlo, warunek);
+            }
+            //Predicate warunek = cb.equal(dokument.get(DcDokument_.nazwa), example.getNazwa());
+            cq.where(warunek);
+            Query q = em.createQuery(cq);
+            return q.getResultList();
         } finally {
             em.close();
         }

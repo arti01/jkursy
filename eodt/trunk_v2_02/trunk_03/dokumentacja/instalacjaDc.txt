@@ -19,4 +19,6 @@ wn_limit (też taki jak w poprzedniej wersji)
 18. Dodać żrodło dokumentu (np kancelaria, Zespół transportu - sam nie wiem)
 19. dodać kontrahenta/kontrahentów
 20. Założyć index na pole adr_email w tabeli uzytkownik
+21. Rozpakować fonty w dowolnym katalogu
+22. w pliku WAR wyedytować plik ./WEB-INF/classes/fop-xconf.xml i ustawić właściwą ścieżkę do fontów <font-base>  - w windows może być w konwencji D:\cos tam\cos
 

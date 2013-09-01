@@ -25,10 +25,12 @@ public class WnUrlopDataModel extends JPADataModel<WnUrlop, Uzytkownik, WnStatus
     @Override
     public Expression<Boolean> createFilterCriteria(CriteriaBuilder criteriaBuilder, Root<WnUrlop> root) {
         Expression<Boolean> filterCriteria = null;
-        if(getArrangeableState().getFilterFields()==null) return null;
+        if (getArrangeableState().getFilterFields() == null) {
+            return null;
+        }
         List<FilterField> filterFields = getArrangeableState().getFilterFields();
-        Join<WnUrlop, Uzytkownik>juser=root.join(WnUrlop_.uzytkownik);
-        Join<WnUrlop, WnStatusy> jstatus=root.join(WnUrlop_.statusId);
+        Join<WnUrlop, Uzytkownik> juser = root.join(WnUrlop_.uzytkownik);
+        Join<WnUrlop, WnStatusy> jstatus = root.join(WnUrlop_.statusId);
         if (filterFields != null && !filterFields.isEmpty()) {
             FacesContext facesContext = FacesContext.getCurrentInstance();
 
@@ -36,13 +38,13 @@ public class WnUrlopDataModel extends JPADataModel<WnUrlop, Uzytkownik, WnStatus
                 String propertyName = (String) filterField.getFilterExpression().getValue(facesContext.getELContext());
                 Object filterValue = filterField.getFilterValue();
 
-                Expression<Boolean> predicate=null;
-                if(filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("fullname")){
+                Expression<Boolean> predicate = null;
+                if (filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("fullname")) {
                     predicate = createFilterCriteriaForFieldJoin1(propertyName, filterValue, juser, criteriaBuilder);
                 }
-                if(filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("opis")){
-                    WnStatusy filterValueS=(WnStatusy) filterValue;
-                    if(filterValueS!=null){
+                if (filterField.getFilterExpression().getValue(facesContext.getELContext()).equals("opis")) {
+                    WnStatusy filterValueS = (WnStatusy) filterValue;
+                    if (filterValueS != null) {
                         predicate = createFilterCriteriaForFieldJoin2(propertyName, filterValueS.getOpis(), jstatus, criteriaBuilder);
                     }
                 }
@@ -60,7 +62,7 @@ public class WnUrlopDataModel extends JPADataModel<WnUrlop, Uzytkownik, WnStatus
         }
         return filterCriteria;
     }
-    
+
     @Override
     protected Object getId(WnUrlop t) {
         return t.getId();

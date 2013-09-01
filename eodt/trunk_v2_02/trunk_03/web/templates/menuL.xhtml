@@ -47,6 +47,11 @@
                                     Lista kontrahentów
                                 </rich:panelMenuItem>
                             </h:commandLink>
+                            <h:commandLink action="#{RaportyRej.raportPocz}">
+                                <rich:panelMenuItem >
+                                    Raport pocztowy
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">

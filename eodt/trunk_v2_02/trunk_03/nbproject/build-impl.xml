@@ -1000,7 +1000,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.cron4j-2.2.5.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.eclipseLink2.4.1.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${libs.rf4.3.1.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${libs.FOP1.0.classpath}" todir="${build.web.dir}/WEB-INF/classes"/>
+        <copyfiles files="${libs.FOP1.0.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>
