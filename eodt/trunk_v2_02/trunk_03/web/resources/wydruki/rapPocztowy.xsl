@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.1"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format"
                 xmlns:barcode="org.krysalis.barcode4j.xalan.BarcodeExt" xmlns:common="http://exslt.org/common"
-                xmlns:xalan="http://xml.apache.org" exclude-result-prefixes="barcode common xalan">
+                xmlns:xalan="http://xml.apache.org" exclude-result-prefixes="barcode common xalan" xmlns:rx="http://www.renderx.com/XSL/Extensions">
     <xsl:template match="DcDokPocztaList">
         <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:layout-master-set>
@@ -14,8 +14,28 @@
                 <fo:flow flow-name="xsl-region-body">
                     <fo:block font-family="Arial" font-weight="bold"  text-align="right" margin-right="1cm">Od:<xsl:value-of select="./dataOd" /> Do:<xsl:value-of select="./dataDo" /></fo:block>
                     <fo:block font-family="Arial" font-weight="bold" margin-top="1cm" margin-bottom="1cm">Nazwa oraz adres Nadawcy</fo:block>
+                    <fo:block>
+                    <fo:table rx:table-omit-initial-header="true">
+                            <fo:table-header>
+                                <fo:table-cell>
+                                    <fo:block font-weight="bold"
+                                              font-size="12pt" text-align="center" 
+                                              space-after="6pt">Sample Table (Cont)</fo:block>
+                                </fo:table-cell>
+                            </fo:table-header>    
+                    </fo:table>
+                    </fo:block>
+
                     <fo:block font-family="Arial" font-size="11pt" font-weight="normal">
                         <fo:table>
+                            <fo:table-header>
+                                <fo:table-cell>
+                                    <fo:block font-weight="bold"
+                                              font-size="12pt" text-align="center" 
+                                              space-after="6pt">Sample Table (Cont)</fo:block>
+                                </fo:table-cell>
+                            </fo:table-header>                           
+
                             <fo:table-column column-number="1" column-width="1cm" />
                             <fo:table-column column-number="2" column-width="4cm" />
                             <fo:table-column column-number="3" column-width="4cm" />
@@ -29,7 +49,7 @@
                             <fo:table-column column-number="11" column-width="1cm" />
                             <fo:table-column column-number="12" column-width="2cm" />
                             <fo:table-column column-number="13" column-width="1cm" />
-                            
+                           
                             <fo:table-body  height="28cm">
                                 <fo:table-row border-top="solid">
                                     <fo:table-cell text-align="center" margin-left="0.2cm" border-left="solid">
