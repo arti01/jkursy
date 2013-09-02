@@ -40,7 +40,7 @@ public class PDFHandler {
     public ByteArrayOutputStream createPDFStream(ByteArrayOutputStream xmlSource, String templateFile, String cfgFop) throws IOException, SAXException, ConfigurationException {
         //File file = File.createTempFile("" + System.currentTimeMillis(), EXTENSION);
         //File file = new File("D:\\tmp\\1\\cos" + EXTENSION);
-        File file = new File("/tmp/1/cos" + EXTENSION);
+        //File file = new File("/tmpgg/1/cos" + EXTENSION);
 
         URL url = new File(templateFile).toURI().toURL();
         // creation of transform source
@@ -76,12 +76,12 @@ public class PDFHandler {
                     xslfoTransformer.transform(source, res);
 
                     // if you want to save PDF file use the following code
-                    OutputStream out = new java.io.FileOutputStream(file);
-                    out = new java.io.BufferedOutputStream(out);
-                    FileOutputStream str = new FileOutputStream(file);
-                    str.write(pdfoutStream.toByteArray());
-                    str.close();
-                    out.close();
+                    //OutputStream out = new java.io.FileOutputStream(file);
+                    //out = new java.io.BufferedOutputStream(out);
+                    //FileOutputStream str = new FileOutputStream(file);
+                    //str.write(pdfoutStream.toByteArray());
+                    //str.close();
+                    //out.close();
 
                 } catch (TransformerException e) {
                     e.printStackTrace();

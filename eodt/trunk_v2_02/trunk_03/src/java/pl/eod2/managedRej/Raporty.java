@@ -37,6 +37,7 @@ public class Raporty {
     private DcZrodlo filtrZrodlo;
     String templateFilePath;
     String fopConf;
+    boolean pokazDruk=false;
 
     @PostConstruct
     void init() {
@@ -53,14 +54,19 @@ public class Raporty {
 
     public void pokazRap() {
         lista.setWrappedData(dcC.findRaport(filtrRodzGrupa, filtrDataRejOd, filtrDataRejDo, filtrZrodlo));
+        if(lista.getRowCount()>0) pokazDruk=true;
+        else pokazDruk=false;
     }
 
     @SuppressWarnings("unchecked")
     public void druk() {
         DcDokPocztaList pocztaList = new DcDokPocztaList((List<DcDokument>) lista.getWrappedData());
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
-        pocztaList.setDataOd(sdf.format(filtrDataRejOd));
-        pocztaList.setDataDo(sdf.format(filtrDataRejDo));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            pocztaList.setDataOd(sdf.format(filtrDataRejOd));
+            pocztaList.setDataDo(sdf.format(filtrDataRejDo));
+        } catch (java.lang.NullPointerException npe) {
+        }
         PDFHandler handler = new PDFHandler();
         try {
             ByteArrayOutputStream streamSource = handler.getXMLSource(pocztaList);
@@ -122,4 +128,13 @@ public class Raporty {
     public void setFiltrZrodlo(DcZrodlo filtrZrodlo) {
         this.filtrZrodlo = filtrZrodlo;
     }
+
+    public boolean isPokazDruk() {
+        return pokazDruk;
+    }
+
+    public void setPokazDruk(boolean pokazDruk) {
+        this.pokazDruk = pokazDruk;
+    }
+    
 }

@@ -40,11 +40,11 @@
                 <f:selectItems value="#{ZrodlaCfg.lista}" var="zrodlo" itemValue="#{zrodlo}" itemLabel="#{zrodlo.nazwa}"/>
             </h:selectOneMenu>
             <rich:message for="zrodloD" styleClass="error" />
-
             <hr/>
-            <a4j:commandButton value="wyszukaj" action="#{RaportyRej.pokazRap}" render="table"/>
-            <hr/>
-            <h:commandButton value="wydrukuj" action="#{RaportyRej.druk}"/>
+            <a4j:commandButton value="wyszukaj" action="#{RaportyRej.pokazRap}" render="table, druk"/>
+            <h:panelGroup id="druk">
+                <h:commandButton value="wydrukuj" action="#{RaportyRej.druk}" rendered="#{RaportyRej.pokazDruk}"/>
+            </h:panelGroup>
 
             <rich:panel>
                 <rich:dataTable value="#{RaportyRej.lista}" var="item" iterationStatusVar="it" id="table" style="width: 100%">
