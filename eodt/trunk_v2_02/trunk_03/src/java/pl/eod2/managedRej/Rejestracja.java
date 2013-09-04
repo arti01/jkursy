@@ -61,14 +61,16 @@ public class Rejestracja {
         kontrahent = new DcKontrahenci();
         userDoWiad=new Uzytkownik();
         doWiad=new DcDokDoWiadomosci();
-        refresh(true);
+        refreshObiekt();
     }
 
-    void refresh(boolean obiektTak) {
+    public void refreshObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
-        if (obiektTak) {
             obiekt = new DcDokument();
-        }
+        error = null;
+    }
+    void refreshBezObiekt() {
+        lista.setWrappedData(dcC.findDcDokumentEntities());
         error = null;
     }
 
@@ -81,13 +83,13 @@ public class Rejestracja {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
-            refresh(true);
+            refreshObiekt();
         }
     }
 
     public void wyslijDoAkceptacji() {
         obiekt = dcC.wyslijDoAkceptacji(obiekt);
-        refresh(false);
+        refreshBezObiekt();
     }
 
     public void edytuj() {
@@ -108,7 +110,7 @@ public class Rejestracja {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findDcDokumentEntities());
         } else {
-            refresh(true);
+            refreshObiekt();
         }
     }
 
@@ -130,13 +132,13 @@ public class Rejestracja {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findDcDokumentEntities());
         } else {
-            refresh(false);
+            refreshBezObiekt();
         }
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {
         dcC.destroy(obiekt.getId());
-        refresh(true);
+        refreshObiekt();
     }
 
     public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -159,7 +161,7 @@ public class Rejestracja {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findDcDokumentEntities());
         } else {
-            refresh(true);
+            refreshObiekt();
         }
     }
     
@@ -170,18 +172,16 @@ public class Rejestracja {
     }
 
     public String kontrahentList() {
-        refresh(true);
+        refreshObiekt();
         return "/dcrej/kontrahenci";
     }
 
     public String list() {
-        System.err.println("list1");
-        refresh(true);
+        refreshObiekt();
         if (kontrahent.getId() != null) {
             obiekt.setKontrahentId(kontrahent);
         }
         kontrahent = new DcKontrahenci();
-        System.err.println("list2");
         return "/dcrej/dokumentList";
     }
 

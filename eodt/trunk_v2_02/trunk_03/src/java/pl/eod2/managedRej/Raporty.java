@@ -21,7 +21,6 @@ import pl.eod.wydruki.DcDokPocztaList;
 import pl.eod.wydruki.PDFHandler;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
-import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcRodzajGrupa;
 import pl.eod2.encje.DcZrodlo;
 

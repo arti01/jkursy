@@ -496,10 +496,13 @@ public class DcDokumentJpaController implements Serializable {
             Predicate warStatus = cb.equal(statusE, status);
             warunek = warStatus;
 
-            if (rodzGrupa != null) {
+            if (rodzGrupa != null&&rodzGrupa.getDcRodzajList()!=null&&!rodzGrupa.getDcRodzajList().isEmpty()) {
                 Expression<DcRodzaj> rodzaj = dokument.get(DcDokument_.rodzajId);
                 warRodzaj = rodzaj.in(rodzGrupa.getDcRodzajList());
                 warunek = cb.and(warRodzaj, warunek);
+            }
+            else{
+                return null;
             }
             if (dataRejOd != null) {
                 Expression<Date> dataRej = dokument.get(DcDokument_.dataWprow);

@@ -35,7 +35,7 @@
                     <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
                     
                     <h:outputLabel for="kontrahentD" value="kontrahent: "/>
-                    <rich:collapsiblePanel header="#{managedBean.obiekt.kontrahentId.nazwa}" expanded="false" switchType="client">
+                    <rich:collapsiblePanel id="kontrahentD" header="#{managedBean.obiekt.kontrahentId.nazwa}" expanded="false" switchType="client">
                         <h:panelGrid columns="2" style="border-spacing:0px;">
                             <h:outputLabel for="nipRegon" value="osoba nip/regon: "/>
                             <h:outputText id="nipRegon" value="#{managedBean.obiekt.kontrahentId.nipRegon}"/>

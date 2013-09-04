@@ -33,6 +33,7 @@ import org.apache.fop.apps.FOUserAgent;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 public class PDFHandlerTest {
@@ -52,7 +53,13 @@ public class PDFHandlerTest {
         // a user agent is needed for transformation
         
         DefaultConfigurationBuilder cfgBuilder = new DefaultConfigurationBuilder();
-Configuration cfg = cfgBuilder.buildFromFile(new File("D:\\tmp\\1\\fop-xconf.xml"));
+//Configuration cfg = cfgBuilder.buildFromFile(new File("D:\\tmp\\1\\fop-xconf.xml"));
+        String myConfig;
+        myConfig="<?xml version=\"1.0\"?><fop version=\"1.0\"><font-base>D:\\tmp\\1\\fonts</font-base>";
+        myConfig+="<renderers><renderer mime=\"application/pdf\"><fonts>";
+        myConfig+="<font embed-url=\"arial.ttf\"><font-triplet name=\"Arial\" style=\"normal\" weight=\"normal\"/><font-triplet name=\"ArialMT\" style=\"normal\" weight=\"normal\"/></font>";
+        myConfig+="</fonts></renderer></renderers></fop>";
+        Configuration cfg = cfgBuilder.build(new ByteArrayInputStream(myConfig.getBytes()));
 fopFactory.setUserConfig(cfg);
         
         FOUserAgent foUserAgent = fopFactory.newFOUserAgent();
