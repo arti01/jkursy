@@ -20,10 +20,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class DcPlikJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public DcPlikJpaController() {
-       if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -40,7 +41,7 @@ public class DcPlikJpaController implements Serializable {
             em.getTransaction().begin();
             em.persist(dcPlik);
             em.getTransaction().commit();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
             if (em != null) {
@@ -158,5 +159,5 @@ public class DcPlikJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

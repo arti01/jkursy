@@ -34,9 +34,11 @@ public class MyTaskCollector implements TaskCollector {
         SchedulingPattern pattern = new SchedulingPattern("*/7 * * * *");
         Task taskm = new EskalacjeTask();
         Task taskw = new MailWysylkaTask();
+        Task taskS=new ImportSkanTask();
         TaskTable ret = new TaskTable();
         ret.add(pattern, taskm);
         ret.add(pattern, taskw);
+        ret.add(pattern, taskS);
         return ret;
     }
 }

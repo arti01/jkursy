@@ -35,6 +35,7 @@ import javax.servlet.ServletContextListener;
  */
 public class SchedulerServletContextListener implements ServletContextListener {
 
+        @Override
 	public void contextInitialized(ServletContextEvent event) {
 		ServletContext context = event.getServletContext();
 		// 1. Creates the scheduler.
@@ -48,6 +49,7 @@ public class SchedulerServletContextListener implements ServletContextListener {
 		context.setAttribute(Constants.SCHEDULER, scheduler);
 	}
 
+        @Override
 	public void contextDestroyed(ServletContextEvent event) {
 		ServletContext context = event.getServletContext();
 		// 1. Retrieves the scheduler from the context.

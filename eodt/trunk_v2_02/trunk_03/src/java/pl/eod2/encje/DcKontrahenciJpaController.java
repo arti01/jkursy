@@ -15,8 +15,6 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import pl.eod.encje.Config;
-import pl.eod.encje.Config_;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 /**

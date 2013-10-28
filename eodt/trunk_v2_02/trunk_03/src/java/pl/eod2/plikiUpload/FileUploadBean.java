@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.managedRej.ImpPlik;
 import pl.eod2.managedRej.Rejestracja;
 
 /**
@@ -35,7 +36,8 @@ public class FileUploadBean implements Serializable {
     //private boolean useFlash = false;
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rejRej;
-
+    @ManagedProperty(value = "#{RejImpPlik}")
+    private ImpPlik impPlik;
     /*public int getSize() {
      if (getFiles().size() > 0) {
      return getFiles().size();
@@ -47,9 +49,10 @@ public class FileUploadBean implements Serializable {
      public void paint(OutputStream stream, Object object) throws IOException {
      stream.write(getFiles().get((Integer) object).getData());
      }*/
-    public void listener(FileUploadEvent event)  {
+
+    public void listener(FileUploadEvent event) {
         UploadedFile item = event.getUploadedFile();
-         DcPlik dcPlik = new DcPlik();
+        DcPlik dcPlik = new DcPlik();
         //file.setLength(item.getData().length);
         dcPlik.setNazwa(item.getName());
         dcPlik.setPlik(item.getData());
@@ -57,7 +60,7 @@ public class FileUploadBean implements Serializable {
         dcPlik.setDataDodania(new Date());
         rejRej.getDcPlikC().create(dcPlik);
         rejRej.getObiekt().getDcPlikList().add(dcPlik);
-        String error=null;
+        String error = null;
         try {
             error = rejRej.getDcC().edit(rejRej.getObiekt());
         } catch (IllegalOrphanException ex) {
@@ -71,9 +74,9 @@ public class FileUploadBean implements Serializable {
         //uploadsAvailable--;
     }
 
-     public void download() {
+    public void download() {
         final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        response.setHeader("Content-Disposition", "attachment;filename=\""+rejRej.getPlik().getNazwa()+"\""); // or whatever type you're sending back
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + rejRej.getPlik().getNazwa() + "\""); // or whatever type you're sending back
         try {
             response.getOutputStream().write(rejRej.getPlik().getPlik()); // from the UploadDetails bean
             response.setContentLength(rejRej.getPlik().getPlik().length);
@@ -84,7 +87,21 @@ public class FileUploadBean implements Serializable {
         }
         FacesContext.getCurrentInstance().responseComplete();
     }
-    
+
+    public void downloadImport() {
+        final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + impPlik.getPlkImp().getNazwa() + "\""); // or whatever type you're sending back
+        try {
+            response.getOutputStream().write(impPlik.getPlkImp().getPlik()); // from the UploadDetails bean
+            response.setContentLength(impPlik.getPlkImp().getPlik().length);
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        FacesContext.getCurrentInstance().responseComplete();
+    }
+
     /*public String clearUploadData() {
      files.clear();
      setUploadsAvailable(5);
@@ -132,4 +149,13 @@ public class FileUploadBean implements Serializable {
     public void setRejRej(Rejestracja rejRej) {
         this.rejRej = rejRej;
     }
+
+    public ImpPlik getImpPlik() {
+        return impPlik;
+    }
+
+    public void setImpPlik(ImpPlik impPlik) {
+        this.impPlik = impPlik;
+    }
+    
 }
