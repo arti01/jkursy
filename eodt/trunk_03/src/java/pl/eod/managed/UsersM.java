@@ -112,6 +112,22 @@ public class UsersM implements Serializable {
         return "/all/usersAdd";
     }
 
+    public String zmienPrzelozonego() {
+        return "/all/usersPrzeniesPodw";
+    }
+    
+    public String zmienPrzelozonegoDo() throws NonexistentEntityException, NullPointerException, Exception  {
+        for(Struktura s:strukt.getBezpPod()){
+            s.setSzefId(strukt.getSzefId());
+            struktC.editArti(s);
+        }
+        edytuj = false;
+        //nameFilter=null;
+        //dzialFilter=new Dzial(new Long(0));
+        initUser();
+        return "/all/usersList";
+    }
+    
     public String edycja() {
         rolesKlon = new CopyOnWriteArrayList<UserRoles>(strukt.getUserId().getRole());
         return "/all/usersEdit";

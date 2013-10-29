@@ -182,6 +182,9 @@
                             <a4j:commandLink value="edytuj" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formWprow" execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
                             </a4j:commandLink>
+                            <a4j:commandLink value="wycofaj aby poprawić" action="#{UrlopM.cofnij}" rendered="#{urlop.statusId.id==2}" render="formTab, formWprow" execute="@this">
+                                <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>
+                            </a4j:commandLink>
                             <hr/>
                             <a4j:commandLink value="wyślij" action="#{UrlopM.wyslij}" rendered="#{urlop.statusId.id==1 or urlop.statusId.id==5}" render="formTab, formWprow" limitRender="true" execute="@this">
                                 <f:setPropertyActionListener target="#{UrlopM.urlop}" value="#{urlop}"/>

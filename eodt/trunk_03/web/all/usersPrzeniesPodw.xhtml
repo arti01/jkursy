@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+        <h4>Przenieś podwładnych do innego przełozonego</h4>
+        <h:form>
+            <a4j:outputPanel id="formWprow" layout="block">
+                <h3>Obecny przełożony: <h:outputText id="name" value="#{UsersM.strukt.userId.fullname}" /></h3>
+                <h3>Nowy przełożony</h3>    
+                <h:selectOneMenu id="przelozonyEK" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}">
+                        <f:selectItems value="#{UsersM.strukt.mozliwiSzefowie}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
+                    </h:selectOneMenu>
+                    <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
+                    <a4j:commandLink id="zapisz" value="[  Zapisz  ]" action="#{UsersM.zmienPrzelozonegoDo}" render="formWprow" execute="formWprow"/>
+            </a4j:outputPanel>
+        </h:form>
+        <hr/>
+
+    </ui:define>
+
+</ui:composition>

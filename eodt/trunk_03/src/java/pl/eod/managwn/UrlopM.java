@@ -349,7 +349,7 @@ public class UrlopM implements Serializable {
         wnh.setZmieniajacy(login.getZalogowany().getUserId());
         wnh.setUrlopId(urlop);
         wnh.setAkceptant(null);
-        wnh.setOpisZmiany("Wniosek cofnięty do wystawcy");
+        wnh.setOpisZmiany("Wniosek cofnięty do poprawy");
 
         urlop.getWnHistoriaList().add(wnh);
 

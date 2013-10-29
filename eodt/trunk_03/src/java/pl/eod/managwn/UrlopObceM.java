@@ -46,6 +46,67 @@ public class UrlopObceM {
         return "/urlop/urlopyListObce";
     }
 
+    public void cofnij() {
+        String info = "";
+        try {
+            WnStatusy st = new WnStatusy();
+            st.setId(new Long(5));
+            urlop.setStatusId(st);
+
+            WnHistoria wnh = new WnHistoria();
+            wnh.setDataZmiany(new Date());
+            WnStatusy st1 = new WnStatusy();
+            st1.setId(new Long(5));
+            wnh.setStatusId(st1);
+            wnh.setZmieniajacy(login.getZalogowany().getUserId());
+            wnh.setUrlopId(urlop);
+            wnh.setOpisZmiany("uprawniona osoba cofneła wniosek do poprawy");
+
+            urlop.getWnHistoriaList().add(wnh);
+
+            urlopC.createEdit(urlop);
+
+            //wysylanie maila
+            String tresc;
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (urlop.isExtraemail()) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Informacja o wycofaniu wniosku urlopowego");
+                kk.setTresc("Uprawniona osoba cofneła wniosek do poprawy pracownika " + urlop.getUzytkownik().getFullname() + ". Urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod());
+                KomKolC.create(kk);
+            }
+
+            if (!urlop.getUzytkownik().getStruktura().getSzefId().getUserId().getAdrEmail().equals("")) {
+                KomKolejka kk = new KomKolejka();
+                kk.setAdresList(urlop.getUzytkownik().getStruktura().getSzefId().getUserId().getAdrEmail());
+                kk.setStatus(0);
+                kk.setIdDokumenu(urlop.getId().intValue());
+                kk.setTemat("Informacja o wycofaniu wniosku urlopowego");
+                tresc = "Uprawniona osoba cofneła wniosek do poprawy pracownika " + urlop.getUzytkownik().getFullname() + ". Urlop " + urlop.getRodzajId().getOpis() + " wnioskowany w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku() + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                kk.setTresc(tresc);
+                KomKolC.create(kk);
+            }
+
+            info = "Wniosek cofnięty";
+
+        } catch (Exception ex) {
+            //if(login.getZalogowany().getSzefId()==null) info = "nie można ustawić akceptanta, brak przełożonego";
+            //else 
+            info = "Coś poszło nie tak";
+            ex.printStackTrace();
+        } finally {
+            initUrlop();
+            FacesContext context = FacesContext.getCurrentInstance();
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            FacesMessage message = new FacesMessage();
+            message.setSummary(info);
+            context.addMessage(zapisz.getClientId(context), message);
+        }
+    }
+    
     public void anuluj() {
         String info = "";
         try {

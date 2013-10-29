@@ -83,6 +83,9 @@
                                             <li>#{podwl.userId.fullname}</li>
                                         </ui:repeat>
                                     </ul>
+                                    <h:commandLink value="zmień ww podwładnym przełożonego" action="#{UsersM.zmienPrzelozonego}">
+                                        <f:setPropertyActionListener target="#{UsersM.strukt}" value="#{strukt}"/>
+                                    </h:commandLink>
                                 </h:panelGrid>
 
                             </rich:collapsiblePanel>
