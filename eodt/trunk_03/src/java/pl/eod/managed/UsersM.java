@@ -127,7 +127,7 @@ public class UsersM implements Serializable {
         //nameFilter=null;
         //dzialFilter=new Dzial(new Long(0));
         initUser();
-        return "/all/usersList";
+        return "/all/usersList?faces-redirect=true";
     }
     
     public String edycja() {
