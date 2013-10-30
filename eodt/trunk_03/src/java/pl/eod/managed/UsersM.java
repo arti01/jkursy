@@ -121,6 +121,8 @@ public class UsersM implements Serializable {
             s.setSzefId(strukt.getSzefId());
             struktC.editArti(s);
         }
+        struktC.editArti(struktC.findStruktura(strukt.getId()));
+        strukt.setBezpPod(new ArrayList<Struktura>());
         edytuj = false;
         //nameFilter=null;
         //dzialFilter=new Dzial(new Long(0));
