@@ -226,6 +226,19 @@ public class Login implements Serializable {
         }
 
     }
+    
+    public boolean isMusZast() {
+        try {
+            if (getZalogowany().isMusZast()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+
+    }
 
     public String getTypLogowania() {
         return typLogowania;

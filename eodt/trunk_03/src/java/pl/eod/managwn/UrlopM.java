@@ -375,6 +375,16 @@ public class UrlopM implements Serializable {
             KomKolC.create(kk);
         }
         
+         if (!urlop.getAkceptant().getAdrEmail().equals("")) {
+            KomKolejka kk = new KomKolejka();
+            kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
+            kk.setStatus(0);
+            kk.setIdDokumenu(urlop.getId().intValue());
+            kk.setTemat("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " został cofnięty do poprawy");
+            kk.setTresc("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " nr wniosku: " + urlop.getNrWniosku() + " został cofnięty do poprawy");
+            KomKolC.create(kk);
+         }
+        
         if (urlop.isExtraemail()) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
