@@ -190,7 +190,27 @@ public class UrlopM implements Serializable {
                     KomKolC.create(kk);
                 }
                 info = "Wniosek wysłany";
+            
+            if ((urlop.getAkceptant().getStruktura().getSecUserId()!=null)&&(!urlop.getAkceptant().getStruktura().getSecUserId().getAdrEmail().equals(""))) {
+                    KomKolejka kk = new KomKolejka();
+                    kk.setAdresList(urlop.getAkceptant().getStruktura().getSecUserId().getAdrEmail());
+                    kk.setStatus(0);
+                    kk.setIdDokumenu(urlop.getId().intValue());
+                    kk.setTemat("Prośba o akceptację wniosku urlopowego");
+                    tresc = "Proszę o akceptację wniosku urlopowego. " + "Pracownik " + urlop.getUzytkownik().getFullname() + " wnioskuje o urlop " + urlop.getRodzajId().getOpis() + " w dniach od:" + sdf.format(urlop.getDataOd()) + " do:" + sdf.format(urlop.getDataDo()) + ". Numer wniosku: " + urlop.getNrWniosku();
+
+                    if (!urlop.getInfoDod().isEmpty()) {
+                        tresc = tresc + ". Dodatkowe informacje: " + urlop.getInfoDod();
+                    }
+                    if (urlop.getUzytkownik().getStruktura().getSecUserId() != null) {
+                        tresc = tresc + ". Na czas nieobecności pracownika, zastępuje go " + urlop.getUzytkownik().getStruktura().getSecUserId().getFullname() + " (email: " + urlop.getUzytkownik().getStruktura().getSecUserId().getAdrEmail() + ")";
+                    }
+                    kk.setTresc(tresc);
+                    KomKolC.create(kk);
+                }
+                info = "Wniosek wysłany";
             }
+        
         } catch (Exception ex) {
             if (login.getZalogowany().getSzefId() == null) {
                 info = "nie można ustawić akceptanta, brak przełożonego";
