@@ -4,28 +4,32 @@
  */
 package pl.eod.wydruki;
 
-import org.apache.commons.codec.binary.Base64;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 import pl.eod2.encje.DcDokument;
+import pl.eod2.encje.DcDokumentKrok;
 
-/**
- *
- * @author 103039
- */
+@XmlRootElement(name="DcDokPoczta")
 public class DcDokPoczta {
     int id;
     String nazwa;
     String kontrahentNazwa;
     String kontrahentAdres;
-    String obraz=null;
+    private List<DcDokKrokWydr> dcDokKrokWydrList=new ArrayList<DcDokKrokWydr>();;
 
-    DcDokPoczta(DcDokument doc){
+    public DcDokPoczta(DcDokument doc){
         id=doc.getId();
         nazwa=doc.getNazwa();
         kontrahentNazwa=doc.getKontrahentId().getNazwa();
         kontrahentAdres =doc.getKontrahentId().getAdres();
-        /*if(doc.getDcPlikList()!=null&&!doc.getDcPlikList().isEmpty()){
-            obraz=""+ Base64.encodeBase64String(doc.getDcPlikList().get(0).getPlik());
-        }*/
+        for(DcDokumentKrok krok:doc.getDcDokKrok()){
+            DcDokKrokWydr dKr=new DcDokKrokWydr(krok);
+            dcDokKrokWydrList.add(dKr);
+        }
+        //dcDokKrokWydrList=doc.getDcDokKrok();
     }
     
     DcDokPoczta(){
@@ -63,12 +67,14 @@ public class DcDokPoczta {
         this.kontrahentAdres = kontrahentAdres;
     }
 
-    public String getObraz() {
-        return obraz;
+    @XmlElementWrapper(name = "krokList")
+    @XmlElement(name = "dcDokKrokWyd")
+    public List<DcDokKrokWydr> getDcDokKrokWydrList() {
+        return dcDokKrokWydrList;
     }
 
-    public void setObraz(String obraz) {
-        this.obraz = obraz;
+    public void setDcDokKrokWydrList(List<DcDokKrokWydr> dcDokKrokWydrList) {
+        this.dcDokKrokWydrList = dcDokKrokWydrList;
     }
-    
+
 }

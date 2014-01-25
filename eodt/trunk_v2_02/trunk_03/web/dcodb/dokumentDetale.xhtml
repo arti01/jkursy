@@ -33,19 +33,19 @@
 
                     <h:outputLabel for="projektD" value="projekt: "/>
                     <h:outputText id="projektD" value="#{managedBean.obiekt.projektId.nazwa}"/>
-                    
+
                     <h:outputLabel for="kontrahentD" value="kontrahent: "/>
                     <rich:collapsiblePanel id="kontrahentD" header="#{managedBean.obiekt.kontrahentId.nazwa}" expanded="false" switchType="client">
                         <h:panelGrid columns="2" style="border-spacing:0px;">
                             <h:outputLabel for="nipRegon" value="osoba nip/regon: "/>
                             <h:outputText id="nipRegon" value="#{managedBean.obiekt.kontrahentId.nipRegon}"/>
-                            
+
                             <h:outputLabel for="adres" value="osoba adres: "/>
                             <h:outputText id="adres" value="#{managedBean.obiekt.kontrahentId.adres}"/>
-                            
+
                             <h:outputLabel for="infoDodK" value="Dane dodatkowe: "/>
                             <h:outputText id="infoDodK" value="#{managedBean.obiekt.kontrahentId.infoDod}"/>
-                            
+
                             <h:outputLabel for="osKon" value="osoba kontaktowa: "/>
                             <h:outputText id="osKon" value="#{managedBean.obiekt.kontrahentId.osobaKontak}"/>
 
@@ -108,6 +108,11 @@
 
             </rich:tab>
             <rich:tab header="Proces akceptacji">
+                <h:panelGroup id="druk">
+                        <h:commandButton value="wydrukuj" action="#{HistOdb.druk}">
+                            <f:setPropertyActionListener target="#{HistOdb.obiekt}" value="#{managedBean.obiekt}" />
+                        </h:commandButton>
+                    </h:panelGroup>
                 <rich:dataTable id="dok_kroki" value="#{managedBean.obiekt.dcDokKrok}" var="krok">
                     <rich:column sortBy="#{krok.lp}" sortOrder="ascending">
                         <f:facet name="header">lp</f:facet>
