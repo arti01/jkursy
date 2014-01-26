@@ -6,28 +6,32 @@
     <xsl:template match="DcDokPoczta">
         <fo:root xmlns:fo="http://www.w3.org/1999/XSL/Format">
             <fo:layout-master-set>
-                <fo:simple-page-master master-name="A4-landscape"  margin-left="0.5cm" margin-right="0.5cm" page-height="21cm" page-width="29.7cm">
+                <fo:simple-page-master master-name="A4-portrait"  margin-left="0.5cm" margin-right="0.5cm" page-height="29.7cm" page-width="21cm">
                     <fo:region-body margin-top="0.5cm" />
                 </fo:simple-page-master>
             </fo:layout-master-set>
-            <fo:page-sequence master-reference="A4-landscape">
+            <fo:page-sequence master-reference="A4-portrait">
                 <fo:flow flow-name="xsl-region-body">
                     <fo:block font-family="Arial" font-size="11pt" font-weight="normal">
                         <fo:table>
                             <fo:table-column column-number="1" column-width="1cm" />
                             <fo:table-column column-number="2" column-width="5cm" />
                             <fo:table-column column-number="3" column-width="3cm" />
+                            <fo:table-column column-number="4" column-width="10cm" />
                             
                             <fo:table-header>                                
                                 <fo:table-row>
-                                    <fo:table-cell text-align="center" margin-left="0.2cm" border-left="solid">
+                                    <fo:table-cell text-align="center" margin-left="0.2cm" >
                                         <fo:block>lp.</fo:block>
                                     </fo:table-cell>
-                                    <fo:table-cell text-align="center" margin-left="0.2cm" border-left="solid">
+                                    <fo:table-cell text-align="center" margin-left="0.2cm" >
                                         <fo:block>typ</fo:block>
                                     </fo:table-cell>
-                                    <fo:table-cell text-align="center" margin-left="0.2cm" border-left="solid">
+                                    <fo:table-cell text-align="center" margin-left="0.2cm" >
                                         <fo:block>status</fo:block>
+                                    </fo:table-cell>
+                                    <fo:table-cell text-align="center" margin-left="0.2cm" >
+                                        <fo:block>akceptanci</fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
                             </fo:table-header>                           
@@ -41,16 +45,43 @@
                                                 <xsl:value-of select="lp" />.
                                             </fo:block>
                                         </fo:table-cell>
-                                        <fo:table-cell text-align="right" border="solid 0.3mm black" margin-left="0.2cm">
+                                        <fo:table-cell text-align="center" border="solid 0.3mm black" margin-left="0.2cm">
                                             <fo:block>
-                                                <xsl:value-of select="typNazwa" />.
+                                                <xsl:value-of select="typNazwa" />
                                             </fo:block>
                                         </fo:table-cell>
-                                        <fo:table-cell text-align="right" border="solid 0.3mm black" margin-left="0.2cm">
+                                        <fo:table-cell text-align="center" border="solid 0.3mm black" margin-left="0.2cm">
                                             <fo:block>
-                                                <xsl:value-of select="status" />.
+                                                <xsl:value-of select="status" />
                                             </fo:block>
                                         </fo:table-cell>
+                                        
+                                        <fo:table-cell text-align="left" border="solid 0.3mm black" margin-left="0.2cm">
+                                            <fo:block>
+                                                <fo:table>
+                                                    <fo:table-column column-number="1" column-width="9.5cm" />
+                                                    <fo:table-body>
+                                                        <xsl:for-each select="KrokiUserList/krokUser">
+                                                            <fo:table-row border-bottom ="solid 0.1mm black">
+                                                                <fo:table-cell text-align="right" border="solid 0.0mm black" margin-left="0.2cm">
+                                                                    <fo:block>
+                                                                        <xsl:value-of select="fullname" />
+                                                                    </fo:block>                        
+                                                                    <fo:block>
+                                                                        <xsl:value-of select="akcept" />:
+                                                                        <xsl:value-of select="data" />
+                                                                    </fo:block>
+                                                                    <fo:block>
+                                                                        <xsl:value-of select="info" />
+                                                                    </fo:block>
+                                                                </fo:table-cell>
+                                                            </fo:table-row>
+                                                        </xsl:for-each>
+                                                    </fo:table-body>
+                                                </fo:table>
+                                            </fo:block>
+                                        </fo:table-cell>
+                                        
                                     </fo:table-row>
                                 </xsl:for-each>
                             </fo:table-body>

@@ -18,7 +18,7 @@ public class DcDokPoczta {
     String nazwa;
     String kontrahentNazwa;
     String kontrahentAdres;
-    private List<DcDokKrokWydr> dcDokKrokWydrList=new ArrayList<DcDokKrokWydr>();;
+    private List<DcDokKrokWydr> dcDokKrokWydrList=new ArrayList<DcDokKrokWydr>();
 
     public DcDokPoczta(DcDokument doc){
         id=doc.getId();

@@ -48,7 +48,7 @@ public class Historia extends Akcept {
         try {
             ByteArrayOutputStream streamSource = handler.getXMLSource(dcDokPoczta);
             ByteArrayOutputStream pdf = handler.createPDFStream(streamSource, templateFilePath + "historiaAkcept.xsl", fopConf);
-            System.err.println(pdf);
+            //System.err.println(pdf);
             final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.setHeader("Content-Disposition", "attachment;filename=\"" + "wydruk.pdf" + "\""); // or whatever type you're sending back
             try {
