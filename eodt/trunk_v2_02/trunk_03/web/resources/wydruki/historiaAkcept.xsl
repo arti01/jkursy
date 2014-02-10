@@ -12,7 +12,11 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="A4-portrait">
                 <fo:flow flow-name="xsl-region-body">
-                    <fo:block font-family="Arial" font-size="11pt" font-weight="normal">
+                    <fo:block font-family="Arial" font-size="13pt" font-weight="normal" linefeed-treatment="preserve">
+                        Nazwa dokumentu: <xsl:value-of select="nazwa" />
+                    </fo:block>
+                    <fo:block>&#0160;</fo:block>
+                    <fo:block font-family="Arial" font-size="11pt" font-weight="normal" linefeed-treatment="preserve">
                         <fo:table>
                             <fo:table-column column-number="1" column-width="1cm" />
                             <fo:table-column column-number="2" column-width="5cm" />
