@@ -12,6 +12,7 @@
             </fo:layout-master-set>
             <fo:page-sequence master-reference="A4-portrait">
                 <fo:flow flow-name="xsl-region-body">
+                    <fo:block>data wydruku: <xsl:value-of select="dataWydruku" /></fo:block>
                     <fo:block font-family="Arial" font-size="13pt" font-weight="normal" linefeed-treatment="preserve">
                         Nazwa dokumentu: <xsl:value-of select="nazwa" />
                     </fo:block>
@@ -26,16 +27,16 @@
                             <fo:table-header>                                
                                 <fo:table-row>
                                     <fo:table-cell text-align="center" margin-left="0.2cm" >
-                                        <fo:block>lp.</fo:block>
+                                        <fo:block>LP</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell text-align="center" margin-left="0.2cm" >
-                                        <fo:block>typ</fo:block>
+                                        <fo:block>Typ akceptacji</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell text-align="center" margin-left="0.2cm" >
-                                        <fo:block>status</fo:block>
+                                        <fo:block>Status</fo:block>
                                     </fo:table-cell>
                                     <fo:table-cell text-align="center" margin-left="0.2cm" >
-                                        <fo:block>akceptanci</fo:block>
+                                        <fo:block>Szczegóły</fo:block>
                                     </fo:table-cell>
                                 </fo:table-row>
                             </fo:table-header>                           
@@ -67,7 +68,7 @@
                                                     <fo:table-body>
                                                         <xsl:for-each select="KrokiUserList/krokUser">
                                                             <fo:table-row border-bottom ="solid 0.1mm black">
-                                                                <fo:table-cell text-align="right" border="solid 0.0mm black" margin-left="0.2cm">
+                                                                <fo:table-cell text-align="left" border="solid 0.0mm black" margin-left="0.2cm">
                                                                     <fo:block>
                                                                         <xsl:value-of select="fullname" />
                                                                     </fo:block>                        
@@ -75,9 +76,9 @@
                                                                         <xsl:value-of select="akcept" />:
                                                                         <xsl:value-of select="data" />
                                                                     </fo:block>
-                                                                    <fo:block>
-                                                                        <xsl:value-of select="info" />
-                                                                    </fo:block>
+                                                                    <fo:block font-weight="bold">
+                                                                       <xsl:value-of select="info" />
+                                                                  </fo:block>
                                                                 </fo:table-cell>
                                                             </fo:table-row>
                                                         </xsl:for-each>

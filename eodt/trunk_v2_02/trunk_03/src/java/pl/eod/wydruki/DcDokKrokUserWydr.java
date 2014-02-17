@@ -20,7 +20,11 @@ public class DcDokKrokUserWydr {
         id = krokUser.getId();
         fullname = krokUser.getIdUser().getFullname();
         akcept = krokUser.getAkcept().getNazwa();
-        data = sdf.format(krokUser.getDataAkcept());
+        try {
+            data = sdf.format(krokUser.getDataAkcept());
+        } catch (NullPointerException ex) {
+            data = "brak daty";
+        }
         info = krokUser.getInformacja();
     }
 
@@ -66,5 +70,4 @@ public class DcDokKrokUserWydr {
     public void setInfo(String info) {
         this.info = info;
     }
-    
 }
