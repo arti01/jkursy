@@ -79,7 +79,8 @@
                         </rich:tooltip>
                     </rich:column>
                     
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(itemHist.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
+                    <rich:column  style="background-color: #{itemHist.dokStatusId.kolor} ; text-align: center"
+                        filterExpression="#{fn:containsIgnoreCase(itemHist.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
                         <f:facet name="header">status
                             <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>

@@ -43,6 +43,9 @@ public class DcDokumentStatus implements Serializable {
     @Size(max = 255)
     @Column(name = "opis", length = 255)
     private String opis;
+    @Size(max = 10)
+    @Column(name = "kolor", length = 10)
+    private String kolor;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokStatusId", fetch = FetchType.LAZY, orphanRemoval = false)
     private List<DcDokument> dcDokumentList;
 
@@ -75,6 +78,14 @@ public class DcDokumentStatus implements Serializable {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public String getKolor() {
+        return kolor;
+    }
+
+    public void setKolor(String kolor) {
+        this.kolor = kolor;
     }
 
     public List<DcDokument> getDcDokumentList() {
