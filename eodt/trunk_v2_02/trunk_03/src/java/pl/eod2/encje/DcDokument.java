@@ -6,6 +6,7 @@ package pl.eod2.encje;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -102,7 +103,11 @@ public class DcDokument implements Serializable {
     private String dataWprowStr;
     @Transient
     private String dataDokStr;
-
+    @Transient
+    private String procentWykonania;
+    @Transient
+    private boolean alertAkceptacja;
+    
     public DcDokument() {
     }
 
@@ -250,6 +255,33 @@ public class DcDokument implements Serializable {
         }
     }
 
+    public String getProcentWykonania() {
+        if(getDokStatusId().getId()==3){
+            return "100";
+        }
+        int krokiAll=getDcDokKrok().size();
+        int krokiZaakceptowane=0;
+        if(krokiAll==0) return "brak";
+        for(DcDokumentKrok krok: getDcDokKrok()){
+            if(krok.getAkcept().getId()==4){
+                krokiZaakceptowane++;
+            }
+        }
+        return (krokiZaakceptowane*100)/krokiAll+"";
+    }
+
+    public boolean isAlertAkceptacja() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.DATE, -getRodzajId().getLimitCzaasuAkceptacji());
+        if(getDataWprow().before(c.getTime())) return true;
+        else return false;
+    }
+
+    public void setAlertAkceptacja(boolean alertAkceptacja) {
+        this.alertAkceptacja = alertAkceptacja;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

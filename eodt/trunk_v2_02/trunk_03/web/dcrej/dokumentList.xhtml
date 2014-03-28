@@ -57,6 +57,8 @@
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{item.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                        <br/>
+                        <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.alertAkceptacja}"/>
                     </rich:column>
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)}">    
@@ -114,6 +116,9 @@
                             <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
+                        <h:outputLabel for="procentWykonania" value="akceptacja w procentach: "/>
+                        <h:outputText id="procentWykonania" value="#{item.procentWykonania}"/>
+                        <br/>
                         <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
                         <br/>
                         <a4j:commandButton value="wyślij do akceptacji" action="#{RejestracjaRej.wyslijDoAkceptacji}" render="listPanel" rendered="#{item.dokStatusId.id==1}" execute="@this">

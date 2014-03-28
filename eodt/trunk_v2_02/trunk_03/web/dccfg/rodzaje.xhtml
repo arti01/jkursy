@@ -40,6 +40,10 @@
                         </rich:tooltip>
                     </rich:column>
                     <rich:column>
+                        <f:facet name="header">limit czasu akceptacji:</f:facet>
+                        <h:outputText value="#{item.limitCzaasuAkceptacji}"/>
+                    </rich:column>
+                    <rich:column>
                         <f:facet name="header">grupa</f:facet>
                         <h:outputText value="#{item.idRodzajGrupa.nazwa}" id="grupa"/>
                         <rich:tooltip id="tt2" layout="block" target="grupa">

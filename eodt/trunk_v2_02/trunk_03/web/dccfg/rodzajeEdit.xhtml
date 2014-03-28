@@ -28,6 +28,12 @@
                 <h:selectOneMenu id="typFlowD" value="#{RodzajeCfg.obiekt.idTypFlow}" converter="#{DcTypFlowConv}" >
                     <f:selectItems value="#{RodzajeCfg.typFlowLista}" var="typ" itemValue="#{typ}" itemLabel="#{typ.nazwa}"/>
                 </h:selectOneMenu>
+                <rich:message for="typFlowD" styleClass="error" />
+                
+                <h:outputLabel for="limitCzaasuAkceptacjiD" value="limit czasu akceptacji (dni): "/>
+                <h:inputText id="limitCzaasuAkceptacjiD" value="#{RodzajeCfg.obiekt.limitCzaasuAkceptacji}" size="2"><rich:validator/></h:inputText>
+                <rich:message for="limitCzaasuAkceptacjiD" styleClass="error" />
+                
             </h:panelGrid>
             <hr/>
             <rich:message for="zapisz" styleClass="error" />

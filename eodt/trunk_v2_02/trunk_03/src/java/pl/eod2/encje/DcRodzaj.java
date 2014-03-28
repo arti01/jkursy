@@ -53,6 +53,8 @@ public class DcRodzaj implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Column(name = "limit_czasu_akceptacji")
+    private int limitCzaasuAkceptacji;
     @JoinColumn(name = "id_rodzaj_grupa", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcRodzajGrupa idRodzajGrupa;
@@ -94,6 +96,14 @@ public class DcRodzaj implements Serializable {
 
     public String getOpis() {
         return opis;
+    }
+
+    public int getLimitCzaasuAkceptacji() {
+        return limitCzaasuAkceptacji;
+    }
+
+    public void setLimitCzaasuAkceptacji(int limitCzaasuAkceptacji) {
+        this.limitCzaasuAkceptacji = limitCzaasuAkceptacji;
     }
 
     public void setOpis(String opis) {
