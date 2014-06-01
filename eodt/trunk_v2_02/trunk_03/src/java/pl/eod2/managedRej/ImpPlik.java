@@ -25,6 +25,7 @@ DcPlikImport plkImp;
     }
 
     public String list() {
+        lista=dcpiC.findDcPlikImportEntities();
         return "/dcrej/pliki";
     }
 
