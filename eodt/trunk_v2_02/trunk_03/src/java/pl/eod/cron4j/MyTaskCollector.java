@@ -36,9 +36,9 @@ public class MyTaskCollector implements TaskCollector {
         Task taskw = new MailWysylkaTask();
         Task taskS=new ImportSkanTask();
         TaskTable ret = new TaskTable();
-        ret.add(pattern, taskm);
+        /*ret.add(pattern, taskm);
         ret.add(pattern, taskw);
-        ret.add(pattern, taskS);
+        ret.add(pattern, taskS);*/
         return ret;
     }
 }

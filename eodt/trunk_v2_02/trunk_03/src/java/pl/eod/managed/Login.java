@@ -56,6 +56,10 @@ public class Login implements Serializable {
         menuLinkiC = new MenuLinkiJpaController();
         menuLinki = menuLinkiC.findMenuLinkiEntities();
     }
+    
+    public String przekroczenieLicencji(){
+        return "../brakLicencji.html?faces-redirect=true";
+    }
 
     public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -63,16 +67,14 @@ public class Login implements Serializable {
         HttpServletResponse response=(HttpServletResponse) context.getExternalContext().getResponse();
 
         Cookie[] cookies = request.getCookies();
-        for (int i = 0; i < cookies.length; i++) {
-            Cookie cookie = cookies[i];
+        for (Cookie cookie : cookies) {
             System.out.println("NAZWA:>" + cookie.getName() + "<");
             //if((cookie.getName( )).indexOf("JSESSIONIDSSO") == 0 ){
 
             cookie.setMaxAge(0);
             cookie.setPath("/");
             response.addCookie(cookie);
-
-        }//}
+        }
         request.getSession().invalidate();
         //return "../index.html?faces-redirect=true";
         return "../index.html?faces-redirect=true";
@@ -146,11 +148,7 @@ public class Login implements Serializable {
     }
 
     public void menuStrukturaExpList(ActionEvent event) {
-        if (menuStrukturaExp) {
-            menuStrukturaExp = false;
-        } else {
-            menuStrukturaExp = true;
-        }
+        menuStrukturaExp = !menuStrukturaExp;
         menuUrlopExp = false;
         menuDcRejExp = false;
         menuDcCfgExp = false;
@@ -158,11 +156,7 @@ public class Login implements Serializable {
     }
 
     public void menuUrlopExpList(ActionEvent event) {
-        if (menuUrlopExp) {
-            menuUrlopExp = false;
-        } else {
-            menuUrlopExp = true;
-        }
+        menuUrlopExp = !menuUrlopExp;
         menuStrukturaExp = false;
         menuDcRejExp = false;
         menuDcCfgExp = false;
@@ -170,11 +164,7 @@ public class Login implements Serializable {
     }
 
     public void menuDcCfgExpList(ActionEvent event) {
-        if (menuDcCfgExp) {
-            menuDcCfgExp = false;
-        } else {
-            menuDcCfgExp = true;
-        }
+        menuDcCfgExp = !menuDcCfgExp;
         menuStrukturaExp = false;
         menuUrlopExp = false;
         menuDcRejExp = false;
@@ -182,11 +172,7 @@ public class Login implements Serializable {
     }
 
     public void menuDcRejExpList(ActionEvent event) {
-        if (menuDcRejExp) {
-            menuDcRejExp = false;
-        } else {
-            menuDcRejExp = true;
-        }
+        menuDcRejExp = !menuDcRejExp;
         menuStrukturaExp = false;
         menuUrlopExp = false;
         menuDcCfgExp = false;
@@ -194,11 +180,7 @@ public class Login implements Serializable {
     }
 
     public void menuDcOdbExpList(ActionEvent event) {
-        if (menuDcOdbExp) {
-            menuDcOdbExp = false;
-        } else {
-            menuDcOdbExp = true;
-        }
+        menuDcOdbExp = !menuDcOdbExp;
         menuStrukturaExp = false;
         menuUrlopExp = false;
         menuDcCfgExp = false;
@@ -253,76 +235,48 @@ public class Login implements Serializable {
     public boolean isUrlop() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eodurlop")) {
-            urlop = true;
-        } else {
-            urlop = false;
-        }
+        urlop = request.isUserInRole("eodurlop");
         return urlop;
     }
 
     public boolean isStruktura() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eodstru")) {
-            struktura = true;
-        } else {
-            struktura = false;
-        }
+        struktura = request.isUserInRole("eodstru");
         return struktura;
     }
 
     public boolean isDcRej() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eoddok_rej")) {
-            dcRej = true;
-        } else {
-            dcRej = false;
-        }
+        dcRej = request.isUserInRole("eoddok_rej");
         return dcRej;
     }
 
     public boolean isDcOdb() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eoddok_odb")) {
-            dcOdb = true;
-        } else {
-            dcOdb = false;
-        }
+        dcOdb = request.isUserInRole("eoddok_odb");
         return dcOdb;
     }
 
     public boolean isDcCfg() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eoddok_cfg")) {
-            dcCfg = true;
-        } else {
-            dcCfg = false;
-        }
+        dcCfg = request.isUserInRole("eoddok_cfg");
         return dcCfg;
     }
 
     public boolean isAdmin() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (request.isUserInRole("eodadm")) {
-            admin = true;
-        } else {
-            admin = false;
-        }
+        admin = request.isUserInRole("eodadm");
         return admin;
     }
 
     public boolean isKierownik() {
         try {
-            if (getZalogowany().isStKier()) {
-                return true;
-            } else {
-                return false;
-            }
+            return getZalogowany().isStKier();
         } catch (Exception ex) {
             return false;
         }
