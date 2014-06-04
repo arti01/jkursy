@@ -16,7 +16,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import javax.persistence.criteria.Subquery;
 import pl.eod.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -265,6 +264,21 @@ public class UzytkownikJpaController implements Serializable {
         } catch (NoResultException ex) {
             //ex.printStackTrace();
             return null;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int iluZprawami() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Uzytkownik.zPrawami");
+            //em.refresh(u);
+            //em.refresh(u.getStruktura());
+            return q.getResultList().size();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return 0;
         } finally {
             em.close();
         }

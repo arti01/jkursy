@@ -48,6 +48,7 @@ import pl.eod2.encje.DcDokumentKrokUzytkownik;
     @NamedQuery(name = "Uzytkownik.findByFullname", query = "SELECT u FROM Uzytkownik u WHERE u.fullname = :fullname"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmail", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail"),
     @NamedQuery(name = "Uzytkownik.findByAdrEmailAndFullname", query = "SELECT u FROM Uzytkownik u WHERE u.adrEmail = :adrEmail AND u.fullname = :fullname and (u.struktura.usuniety<>1 or u.struktura.usuniety is null)"),
+    @NamedQuery(name = "Uzytkownik.zPrawami", query = "SELECT u FROM Uzytkownik u JOIN u.role r WHERE r.rolename!='eoduser' group by u"),
     @NamedQuery(name = "Uzytkownik.findByExtId", query = "SELECT u FROM Uzytkownik u WHERE u.extId = :extId and (u.struktura.usuniety<>1 or u.struktura.usuniety is null)")})
 @PrimaryKey(validation = IdValidation.NULL)
 public class Uzytkownik implements Serializable {
