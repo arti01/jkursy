@@ -44,6 +44,8 @@ public class Login implements Serializable {
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
+    boolean bladLicencj = false;
+
     boolean menuStrukturaExp = false;
     boolean menuUrlopExp = false;
     boolean menuDcCfgExp = false;
@@ -58,7 +60,7 @@ public class Login implements Serializable {
         menuLinki = menuLinkiC.findMenuLinkiEntities();
     }
 
-    public String wyloguj(boolean licencja) throws IOException {
+    public String wyloguj() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
@@ -73,14 +75,7 @@ public class Login implements Serializable {
             response.addCookie(cookie);
         }
         request.getSession().invalidate();
-        //return "../index.html?faces-redirect=true";
-        if (licencja) {
-            response.sendRedirect("/logowanie/brakLicencji.html");
-            context.responseComplete();
-            return "";
-        } else {
-            return "../index.html?faces-redirect=true";
-        }
+        return "../index.html?faces-redirect=true";
     }
 
     public String zmienHaslo() throws NonexistentEntityException, Exception {
@@ -127,23 +122,22 @@ public class Login implements Serializable {
         zalogowany = user;
     }
 
-    public void refresh() throws IOException {
+    public void refresh(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         System.out.println(uzytC.iluZprawami() + "prawa");
-        if (uzytC.iluZprawami() > 8) {
-            this.wyloguj(true);
-        }
+        
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
 
         //obsluga zewnetrzne id
         if (zalogowany == null) {
             zalogowany = uzytC.findStrukturaExtid(request.getUserPrincipal().getName());
         }
+        
         try {
             if (zalogowany.isUsuniety()) {
-                this.wyloguj(false);
+                this.wyloguj();
                 //return null;
             }
         } catch (NullPointerException ex) {
@@ -152,7 +146,16 @@ public class Login implements Serializable {
         //wyszukiwanie limitu
         WnLimity limit = uzytC.findLimit(zalogowany.getUserId());
         zalogowany.getUserId().setWnLimity(limit);
-        //return zalogowany;
+        ConfigJpaController confC = new ConfigJpaController();
+        
+        String klucz=confC.findConfigNazwa("licencjaStanowiska").getWartosc();
+        int licencja;
+        
+        if (uzytC.iluZprawami() > 7) {
+            zalogowany = null;
+            this.setBladLicencj(true);
+        }
+        
     }
 
     public void menuStrukturaExpList(ActionEvent event) {
@@ -195,7 +198,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
     }
 
-    public Struktura getZalogowany() throws IOException {
+    public Struktura getZalogowany() {
         if (zalogowany == null) {
             refresh();
         }
@@ -222,6 +225,17 @@ public class Login implements Serializable {
             e.printStackTrace();
         }
         return md5;
+    }
+    
+    public static boolean md5Test(String input) {
+        String md5 = null;
+        if (null == input) {
+            return false;
+        }
+            //Create MessageDigest object for MD5
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            
+        return digest;
     }
 
     public String getUsername() {
@@ -343,8 +357,16 @@ public class Login implements Serializable {
         this.menuDcOdbExp = menuDcOdbExp;
     }
 
+    public boolean isBladLicencj() {
+        return bladLicencj;
+    }
+
+    public void setBladLicencj(boolean bladLicencj) {
+        this.bladLicencj = bladLicencj;
+    }
+
     public String htmlLogout() throws IOException {
-        wyloguj(false);
+        wyloguj();
         return "../index.html";
     }
 

@@ -5,6 +5,7 @@
 package pl.eod.managed;
 
 import com.google.common.collect.Maps;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class UsersM implements Serializable {
     String error;
 
     @PostConstruct
-    public void init() {
+    public void init() throws IOException {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
@@ -117,7 +118,7 @@ public class UsersM implements Serializable {
         return "/all/usersEdit";
     }
 
-    public String ustawZastepce() {
+    public String ustawZastepce() throws IOException {
         strukt = login.getZalogowany();
         rolesKlon = new CopyOnWriteArrayList<UserRoles>(strukt.getUserId().getRole());
         return "/common/ustawZastepce";

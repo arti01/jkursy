@@ -1,3 +1,32 @@
+2014-06-06
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'licencjaStanowiska', 'LicencjaStanowiska', '7');
+
+
+2014-03-29
+1. Limit czasu na akceptacje
+ALTER TABLE dc_rodzaj ADD COLUMN limit_czasu_akceptacji integer;
+ALTER TABLE dc_rodzaj ALTER COLUMN limit_czasu_akceptacji SET NOT NULL;
+ALTER TABLE dc_rodzaj ALTER COLUMN limit_czasu_akceptacji SET DEFAULT 0;
+
+I zdefiniować limit dla już istniejących rodzajów w konfiguracja/rodzaje
+Po przekroczeniu limitu na czasu na liście w rejestracji przeterminowane będą miały przy dacie rejestracji
+podswietloną na czerwono informacje.
+
+2. Status dla kolorów
+ALTER TABLE dc_dokument_status ADD COLUMN kolor character varying(10);
+I wypełnić pole kolor znacznikami html (#FFFFFF, #123456 itp)
+
+3. Prezentacja procentowego stopnia realizacji.
+Jest to liczone wg wzoru ilość kroków zaakceptowanych/wszystkie kroki i wyświetlane w rejestracji przy statusie
+Przy czym uwaga - ponieważ krok może być typu "wszyscy muszą zaakceptować" to krok jest traktowany
+jako "niezaakceptowany" nawet jeśli dwie osoby już zaakceptowały a trzecia jeszcze nie.
+Mogę to zmienić i się zagłębić na poziom kroków użytkownika i je iterować ale nie wiem, czy to kiedyś nie będzie
+jakimś tam klockiem dodatkowo obciążającym wyświetlanie.
+
+
+
+
 2013-08-24
 1. Usunięcie ramek wokół ikon w opcjach popup (kurde, ale tego było ;)
 2. W historii pojawiały się zdublowane dokumenty, w przypadku, gdy uzytkownik był członkiem więcej niż jednego kroku akceptacji - poprawiłem

@@ -35,3 +35,6 @@ INSERT INTO dc_kontrahenci (id, nazwa, nip_regon, osoba_kontak, www, email, adre
 INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (1, 'wychodzące', 'dokumenty wychodzące');
 INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (2, 'przychodzące', 'dokumenty przychodzące');
 INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (3, 'wewnętrzne', 'dokumenty wewnętrzne');
+
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'licencjaStanowiska', 'LicencjaStanowiska', '7');

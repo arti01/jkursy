@@ -4,6 +4,7 @@
  */
 package pl.eod.managed;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class StruktOsM implements Serializable {
         return "/all/strukturaOs";
     }
 
-    public synchronized List<Struktura> getSourceRoots() {
+    public synchronized List<Struktura> getSourceRoots() throws IOException {
         Struktura firma = new Struktura();
         Uzytkownik uFirma = new Uzytkownik();
         List<Struktura> wynik = new ArrayList<Struktura>();
