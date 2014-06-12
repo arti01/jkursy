@@ -146,12 +146,8 @@ public class Login implements Serializable {
         //wyszukiwanie limitu
         WnLimity limit = uzytC.findLimit(zalogowany.getUserId());
         zalogowany.getUserId().setWnLimity(limit);
-        ConfigJpaController confC = new ConfigJpaController();
         
-        String klucz=confC.findConfigNazwa("licencjaStanowiska").getWartosc();
-        int licencja;
-        
-        if (uzytC.iluZprawami() > 7) {
+        if (uzytC.iluZprawami() > eodt.lib.NewClass.LICZ) {
             zalogowany = null;
             this.setBladLicencj(true);
         }
@@ -225,17 +221,6 @@ public class Login implements Serializable {
             e.printStackTrace();
         }
         return md5;
-    }
-    
-    public static boolean md5Test(String input) {
-        String md5 = null;
-        if (null == input) {
-            return false;
-        }
-            //Create MessageDigest object for MD5
-            MessageDigest digest = MessageDigest.getInstance("MD5");
-            
-        return digest;
     }
 
     public String getUsername() {

@@ -1,6 +1,6 @@
 2014-06-06
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
-INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'licencjaStanowiska', 'LicencjaStanowiska', '7');
+
 
 
 2014-03-29

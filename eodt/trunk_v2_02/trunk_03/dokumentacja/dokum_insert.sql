@@ -37,4 +37,4 @@ INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (2, 'przychodzące', 'dokum
 INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (3, 'wewnętrzne', 'dokumenty wewnętrzne');
 
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
-INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'licencjaStanowiska', 'LicencjaStanowiska', '7');
+
