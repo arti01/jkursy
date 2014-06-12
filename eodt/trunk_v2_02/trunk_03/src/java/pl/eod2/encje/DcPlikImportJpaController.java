@@ -146,6 +146,7 @@ public class DcPlikImportJpaController implements Serializable {
     }
     public void importFromDir() throws IOException {
         Config cfgDir = new ConfigJpaController().findConfigNazwa("dirImportSkan");
+        Config cfgDirBak = new ConfigJpaController().findConfigNazwa("dirImportSkanBak");
         File dir = new File(cfgDir.getWartosc());
         for (File f : dir.listFiles()) {
             if (f.setLastModified(new Date().getTime() - 10000)&&f.isFile()) {
@@ -165,6 +166,7 @@ public class DcPlikImportJpaController implements Serializable {
                         if (ous != null) {
                             ous.close();
                         }
+                        
                     } catch (IOException e) {
                     }
 
@@ -172,6 +174,8 @@ public class DcPlikImportJpaController implements Serializable {
                         if (ios != null) {
                             ios.close();
                         }
+                        //przenoszenie pliku
+                        f.renameTo(new File(cfgDirBak.getWartosc()+"/"+f.getName()));
                     } catch (IOException e) {
                     }
                 }
