@@ -1,6 +1,8 @@
 2014-06-06
+Wymyślić lokalizację
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
-
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'dirImportSkanBak', 'katalog importu dokumentow', '/home/arti01/tmp/1/bak');
+Założyć katalogi
 
 
 2014-03-29

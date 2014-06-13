@@ -69,7 +69,7 @@ public class UsersM implements Serializable {
     String error;
 
     @PostConstruct
-    public void init() throws IOException {
+    public void init()  {
         userC = new UzytkownikJpaController();
         struktC = new StrukturaJpaController();
         dzialC = new DzialJpaController();
