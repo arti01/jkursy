@@ -7,10 +7,10 @@
     xmlns:f="http://java.sun.com/jsf/core"
     template="/templates/template.xhtml">
 
-    <rich:tooltip target="imgEd" value="zarejestruj dokument dla tego kontrahenta" layout="block"/>
+    <rich:tooltip target="imgEd" value="zarejestruj dokument dla tego pliku" layout="block"/>
     <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
     <h:commandButton id="imgEd" action="#{RejestracjaRej.list}" image="/images/edit.png">
-        <f:setPropertyActionListener target="#{RejestracjaRej.kontrahent}" value="#{item}" />
+        <f:setPropertyActionListener target="#{RejestracjaRej.plikImport}" value="#{item}" />
     </h:commandButton>
     <h:commandButton id="imgDt" action="#{fileUploadBean.downloadImport}" image="/images/detail.png">
         <f:setPropertyActionListener target="#{RejImpPlik.plkImp}" value="#{item}" />

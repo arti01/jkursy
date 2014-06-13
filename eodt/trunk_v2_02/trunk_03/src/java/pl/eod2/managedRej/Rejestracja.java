@@ -23,6 +23,7 @@ import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcKontrahenci;
 import pl.eod2.encje.DcPlik;
+import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -36,6 +37,7 @@ public class Rejestracja {
     private DcPlikJpaController dcPlikC;
     private DcDokument obiekt;
     private DcPlik plik;
+    private DcPlikImport plikImport;
     private String error;
     private Locale locale;
     @ManagedProperty(value = "#{login}")
@@ -182,8 +184,15 @@ public class Rejestracja {
             obiekt.setKontrahentId(kontrahent);
         }
         kontrahent = new DcKontrahenci();
+        if (plikImport != null) {
+            plik=new DcPlik();
+            plik.setDataDodania(plikImport.getDataDodania());
+            plik.setNazwa(plikImport.getNazwa());
+            obiekt.getDcPlikList().add(plik);
+        }
         return "/dcrej/dokumentList";
     }
+    
 
     public String detale() {
         return "/dcrej/dokumentDetale?faces-redirect=true";
@@ -393,4 +402,13 @@ public class Rejestracja {
         locale = new Locale("pl", "PL");
         return locale;
     }
+
+    public DcPlikImport getPlikImport() {
+        return plikImport;
+    }
+
+    public void setPlikImport(DcPlikImport plikImport) {
+        this.plikImport = plikImport;
+    }
+    
 }

@@ -33,7 +33,7 @@
 
             </rich:popupPanel>
 
-            <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
+            <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='' or #{RejestracjaRej.obiekt.dcPlikList.size()}>0) {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <script language="javascript">
                         window.onload = function() {
                             test();
