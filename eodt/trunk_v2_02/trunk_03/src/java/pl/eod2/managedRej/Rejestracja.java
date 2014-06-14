@@ -27,6 +27,7 @@ import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.plikiUpload.FileUploadBean;
 
 @ManagedBean(name = "RejestracjaRej")
 @SessionScoped
@@ -61,22 +62,23 @@ public class Rejestracja {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
         kontrahent = new DcKontrahenci();
-        userDoWiad=new Uzytkownik();
-        doWiad=new DcDokDoWiadomosci();
+        userDoWiad = new Uzytkownik();
+        doWiad = new DcDokDoWiadomosci();
         refreshObiekt();
     }
 
     public void refreshObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
-            obiekt = new DcDokument();
+        obiekt = new DcDokument();
         error = null;
     }
+
     void refreshBezObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
         error = null;
     }
 
-    public void dodaj() {
+    public void dodaj() throws Exception {
         obiekt.setUserId(login.getZalogowany().getUserId());
         error = dcC.create(obiekt);
         if (error != null) {
@@ -144,7 +146,7 @@ public class Rejestracja {
     }
 
     public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        DcDokumentStatus ds=new DcDokumentStatus(4);
+        DcDokumentStatus ds = new DcDokumentStatus(4);
         obiekt.setDokStatusId(ds);
         try {
             error = dcC.edit(obiekt);
@@ -166,7 +168,7 @@ public class Rejestracja {
             refreshObiekt();
         }
     }
-    
+
     public void usunPlik() throws IllegalOrphanException, NonexistentEntityException {
         dcPlikC.destroy(plik.getId());
         obiekt.getDcPlikList().remove(plik);
@@ -185,14 +187,20 @@ public class Rejestracja {
         }
         kontrahent = new DcKontrahenci();
         if (plikImport != null) {
-            plik=new DcPlik();
-            plik.setDataDodania(plikImport.getDataDodania());
-            plik.setNazwa(plikImport.getNazwa());
-            obiekt.getDcPlikList().add(plik);
+            DcPlik dcPlik = new DcPlik();
+            dcPlik.setNazwa(plikImport.getNazwa());
+            dcPlik.setPlik(plikImport.getPlik());
+            //dcPlik.setIdDok(rejRej.getObiekt());
+            dcPlik.setDataDodania(new Date());
+            //getDcPlikC().create(dcPlik);
+            System.err.println(obiekt);
+            System.err.println(obiekt.getDcPlikList());
+            obiekt.setDcPlikList(new ArrayList<DcPlik>());
+            obiekt.getDcPlikList().add(dcPlik);
         }
+        plikImport=null;
         return "/dcrej/dokumentList";
     }
-    
 
     public String detale() {
         return "/dcrej/dokumentDetale?faces-redirect=true";
@@ -410,5 +418,5 @@ public class Rejestracja {
     public void setPlikImport(DcPlikImport plikImport) {
         this.plikImport = plikImport;
     }
-    
+
 }

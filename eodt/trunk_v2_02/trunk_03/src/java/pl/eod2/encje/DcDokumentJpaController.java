@@ -75,7 +75,9 @@ public class DcDokumentJpaController implements Serializable {
         return dcDokument;
     }
 
-    public String create(DcDokument dcDokument) {
+    public String create(DcDokument dcDokument) throws NonexistentEntityException, Exception {
+        List<DcPlik>pliki=dcDokument.getDcPlikList();
+        dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         if (dcDokument.getKontrahentId() == null) {
             DcKontrahenciJpaController dcKonC = new DcKontrahenciJpaController();
             DcKontrahenci dokKon = dcKonC.findDcKontrahenci(1);
@@ -106,6 +108,27 @@ public class DcDokumentJpaController implements Serializable {
                 em.close();
             }
         }
+        
+          if(pliki!=null){
+            for(DcPlik plik:pliki){
+                plik.setIdDok(dcDokument);
+                dcDokument.getDcPlikList().add(plik);
+            }
+            try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(dcDokument);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        }
+        
         return null;
     }
 

@@ -33,10 +33,12 @@
 
             </rich:popupPanel>
 
-            <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='' or #{RejestracjaRej.obiekt.dcPlikList.size()}>0) {#{rich:component('dodajPane')}.show();} else {return;}"/>
+            <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
+            <a4j:jsFunction name="test1" onbegin="if(#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}) {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <script language="javascript">
                         window.onload = function() {
                             test();
+                            test1();
                             return;
                         };
             </script>
@@ -116,7 +118,7 @@
                             <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
-                        <h:outputLabel for="procentWykonania" value="akceptacja w procentach: "/>
+                        <h:outputLabel for="procentWykonania" value="proces akceptacji: "/>
                         <h:outputText id="procentWykonania" value="#{item.procentWykonania}"/>
                         <br/>
                         <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
