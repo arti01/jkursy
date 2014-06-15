@@ -412,17 +412,7 @@ public class DcDokumentJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The dcDokument with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<DcPlik> dcPlikListOrphanCheck = dcDokument.getDcPlikList();
-            for (DcPlik dcPlikListOrphanCheckDcPlik : dcPlikListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This DcDokument (" + dcDokument + ") cannot be destroyed since the DcPlik " + dcPlikListOrphanCheckDcPlik + " in its dcPlikList field has a non-nullable idDok field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
+            
             Uzytkownik userId = dcDokument.getUserId();
             if (userId != null) {
                 userId.getDcDokumentList().remove(dcDokument);

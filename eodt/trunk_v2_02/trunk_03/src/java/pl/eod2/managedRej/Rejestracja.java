@@ -24,6 +24,7 @@ import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcKontrahenci;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikImport;
+import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -39,6 +40,7 @@ public class Rejestracja {
     private DcDokument obiekt;
     private DcPlik plik;
     private DcPlikImport plikImport;
+    private DcPlikImportJpaController plikImpC;
     private String error;
     private Locale locale;
     @ManagedProperty(value = "#{login}")
@@ -64,6 +66,7 @@ public class Rejestracja {
         kontrahent = new DcKontrahenci();
         userDoWiad = new Uzytkownik();
         doWiad = new DcDokDoWiadomosci();
+        plikImpC = new DcPlikImportJpaController();
         refreshObiekt();
     }
 
@@ -87,6 +90,13 @@ public class Rejestracja {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
         } else {
+            System.err.println(obiekt.getDcPlikList());
+            if (!obiekt.getDcPlikList().isEmpty()) {
+                System.err.println("usuwanie plikow");
+                System.err.println(plikImport.getId());
+                plikImpC.destroy(plikImport.getId());
+                plikImport=null;
+            }
             refreshObiekt();
         }
     }
@@ -190,15 +200,10 @@ public class Rejestracja {
             DcPlik dcPlik = new DcPlik();
             dcPlik.setNazwa(plikImport.getNazwa());
             dcPlik.setPlik(plikImport.getPlik());
-            //dcPlik.setIdDok(rejRej.getObiekt());
             dcPlik.setDataDodania(new Date());
-            //getDcPlikC().create(dcPlik);
-            System.err.println(obiekt);
-            System.err.println(obiekt.getDcPlikList());
             obiekt.setDcPlikList(new ArrayList<DcPlik>());
             obiekt.getDcPlikList().add(dcPlik);
         }
-        plikImport=null;
         return "/dcrej/dokumentList";
     }
 

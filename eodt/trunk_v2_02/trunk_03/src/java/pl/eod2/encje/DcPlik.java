@@ -54,8 +54,8 @@ public class DcPlik implements Serializable {
     private Date dataDodania;
     @Lob
     private byte[] plik;
-    @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = true)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokument idDok;
 
     public DcPlik() {

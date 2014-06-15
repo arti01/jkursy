@@ -271,11 +271,11 @@ public class DcDokument implements Serializable {
     }
 
     public boolean isAlertAkceptacja() {
+        if(this.getDokStatusId().getId()!=2) return false;
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, -getRodzajId().getLimitCzaasuAkceptacji());
-        if(getDataWprow().before(c.getTime())) return true;
-        else return false;
+        return getDataWprow().before(c.getTime());
     }
 
     public void setAlertAkceptacja(boolean alertAkceptacja) {
