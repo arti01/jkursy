@@ -1,5 +1,6 @@
 package pl.eod.managed;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -34,6 +35,7 @@ public class Login implements Serializable {
     StrukturaJpaController strukC;
     String username;
     String password;
+    String template="../templates/template.xhtml";
     boolean urlop;
     boolean struktura;
     boolean admin;
@@ -58,6 +60,19 @@ public class Login implements Serializable {
         typLogowania = confC.findConfigNazwa("realm_szyfrowanie").getWartosc();
         menuLinkiC = new MenuLinkiJpaController();
         menuLinki = menuLinkiC.findMenuLinkiEntities();
+        
+        //licencje
+        String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+        absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));        
+        System.err.println(absolutePath);
+        String eodtljar=absolutePath+"/../../../../lib/eodtl.jar";
+        System.err.println(new File(eodtljar).length());
+        UzytkownikJpaController uzytC = new UzytkownikJpaController();
+        if (uzytC.iluZprawami() > eodt.lib.NewClass.LICZ) {
+            zalogowany = null;
+            this.setBladLicencj(true);
+            template="../templates/template_login.xhtml";
+        }
     }
 
     public String wyloguj() {
@@ -126,7 +141,7 @@ public class Login implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
-        System.out.println(uzytC.iluZprawami() + "prawa");
+        //System.out.println(uzytC.iluZprawami() + "prawa");
         
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());
 
@@ -138,19 +153,15 @@ public class Login implements Serializable {
         try {
             if (zalogowany.isUsuniety()) {
                 this.wyloguj();
+                template="../templates/template_login.xhtml";
                 //return null;
             }
         } catch (NullPointerException ex) {
             System.err.println("brak użytkownika w bazie - user zewnętrzny");
         }
-        //wyszukiwanie limitu
+       //wyszukiwanie limitu
         WnLimity limit = uzytC.findLimit(zalogowany.getUserId());
         zalogowany.getUserId().setWnLimity(limit);
-        
-        if (uzytC.iluZprawami() > eodt.lib.NewClass.LICZ) {
-            zalogowany = null;
-            this.setBladLicencj(true);
-        }
         
     }
 
@@ -358,4 +369,14 @@ public class Login implements Serializable {
     public String htmlZmianaHasla() {
         return "/logowanie/zmianaHasla.xhtml?faces-redirect=true";
     }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+    
+    
 }

@@ -2,10 +2,18 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns="http://www.w3.org/1999/xhtml"
-                template="../templates/template.xhtml">
+                template="#{login.template}">
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        
+        <h:panelGroup rendered="#{login.bladLicencj}">
+            <h1>przekroczono warunki licencji</h1>
+            <h:outputLink value="../logowanie/logout.jsp">
+                Wyjście
+            </h:outputLink>
+        </h:panelGroup>
+        
         <h:panelGroup rendered="#{login.zalogowany!=null}">
             <center>
                 <img src="../images/EOD.jpg" alt="eSK.EOD" border="0"/>
@@ -15,10 +23,9 @@
         <h:panelGroup rendered="#{login.zalogowany==null}">
             <h1>Elektroniczny Obieg Dokumentów</h1>
             <h2>Konto NIEaktywne</h2>
-        </h:panelGroup>
-
-        <h:panelGroup rendered="#{login.bladLicencj}">
-            <h1>przekroczono warunki licencji</h1>
+            <h:outputLink value="../logowanie/logout.jsp">
+                Wyjście
+            </h:outputLink>
         </h:panelGroup>
 
     </ui:define>
