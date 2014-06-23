@@ -1,12 +1,19 @@
 package pl.eod.managed;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -36,6 +43,7 @@ public class Login implements Serializable {
     String username;
     String password;
     String template="../templates/template.xhtml";
+    String licencjaDla;
     boolean urlop;
     boolean struktura;
     boolean admin;
@@ -67,6 +75,23 @@ public class Login implements Serializable {
         System.err.println(absolutePath);
         String eodtljar=absolutePath+"/../../../../lib/eodtl.jar";
         System.err.println(new File(eodtljar).length());
+        System.err.println(new File(eodtljar).getAbsoluteFile());
+        String md5="";
+        String klucz="e52ca669830327034355c4d3268fd6a5";
+        try {
+            FileInputStream fis = new FileInputStream(new File(eodtljar));
+            md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis);
+        System.err.println(md5);
+        } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(!md5.equals(klucz)){
+            zalogowany = null;
+            this.setBladLicencj(true);
+            template="../templates/template_login.xhtml";
+        }
+        
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
         if (uzytC.iluZprawami() > eodt.lib.NewClass.LICZ) {
             zalogowany = null;
@@ -376,6 +401,11 @@ public class Login implements Serializable {
 
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public String getLicencjaDla() {
+        licencjaDla=eodt.lib.NewClass.FIRMA;
+        return licencjaDla;
     }
     
     
