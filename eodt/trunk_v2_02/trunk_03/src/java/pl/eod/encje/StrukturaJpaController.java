@@ -66,8 +66,22 @@ public class StrukturaJpaController implements Serializable {
 
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
+        
+        //sprawdzenie licencji
+        UzytkownikJpaController uzytC = new UzytkownikJpaController();
+        System.err.println(uzytC.iluZprawami() > eodt.lib.NewClass.LICZ);
+        System.err.println(uzytC.iluZprawami());
+        System.err.println(struktura.getUserId().getRole().size());
+        //jeśli więcej niż jedna rola (eoduser)
+        if(struktura.getUserId().getRole().size()>1){
+            //jesli już jest rowna liczba licencji
+            if(uzytC.iluZprawami() >= eodt.lib.NewClass.LICZ){
+                return "Przekroczenie licencji, aktualna liczba użytkowników to:" +uzytC.iluZprawami()+ "- zmiana niewykonana";
+            }
+        }
+        
         ConfigJpaController confC = new ConfigJpaController();
-        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
+        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0"));
 
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
@@ -131,6 +145,7 @@ public class StrukturaJpaController implements Serializable {
         return null;
     }
 
+    @SuppressWarnings("unchecked")
     public Struktura findGeneryczny() {
         EntityManager em = getEntityManager();
         try {
@@ -225,7 +240,21 @@ public class StrukturaJpaController implements Serializable {
 
     public String editArti(Struktura struktura) throws NonexistentEntityException, Exception, NullPointerException {
         ConfigJpaController confC = new ConfigJpaController();
-        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0")) ? true : false;
+        
+        //sprawdzenie licencji
+        UzytkownikJpaController uzytC = new UzytkownikJpaController();
+        System.err.println(uzytC.iluZprawami() > eodt.lib.NewClass.LICZ);
+        System.err.println(uzytC.iluZprawami());
+        System.err.println(struktura.getUserId().getRole().size());
+        //jeśli więcej niż jedna rola (eoduser)
+        if(struktura.getUserId().getRole().size()>1){
+            //jesli już jest rowna liczba licencji
+            if(uzytC.iluZprawami() >= eodt.lib.NewClass.LICZ){
+                return "Przekroczenie licencji, aktualna liczba użytkowników to:" +uzytC.iluZprawami()+ "- zmiana niewykonana";
+            }
+        }
+        
+        boolean sprawdzacUnikEmail = (confC.findConfigNazwa("email_unikalny").getWartosc().equals("0"));
         if (struktura.getUserId().getExtId() != null) {
             if (struktura.getUserId().getExtId().equals("")) {
                 struktura.getUserId().setExtId(null);
@@ -279,7 +308,7 @@ public class StrukturaJpaController implements Serializable {
                     }
                 }
             }
-
+            
             em.getTransaction().begin();
             em.merge(struktura);
             /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {

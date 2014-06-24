@@ -12,12 +12,7 @@
             <h:outputLink value="../logowanie/logout.jsp">
                 Wyjście
             </h:outputLink>
-        </h:panelGroup>
-        
-        <h:panelGroup rendered="#{login.zalogowany!=null}">
-            <center>
-                <img src="../images/EOD.jpg" alt="eSK.EOD" border="0"/>
-            </center>
+            <hr/>
         </h:panelGroup>
 
         <h:panelGroup rendered="#{login.zalogowany==null}">
@@ -26,8 +21,15 @@
             <h:outputLink value="../logowanie/logout.jsp">
                 Wyjście
             </h:outputLink>
+            <hr/>
         </h:panelGroup>
 
+        <h:panelGroup rendered="#{login.zalogowany!=null}">
+            <center>
+                <img src="../images/EOD.jpg" alt="eSK.EOD" border="0"/>
+            </center>
+        </h:panelGroup>
+        
     </ui:define>
 
 </ui:composition>

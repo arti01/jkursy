@@ -72,12 +72,9 @@ public class Login implements Serializable {
         //licencje
         String absolutePath = getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
         absolutePath = absolutePath.substring(0, absolutePath.lastIndexOf("/"));        
-        System.err.println(absolutePath);
         String eodtljar=absolutePath+"/../../../../lib/eodtl.jar";
-        System.err.println(new File(eodtljar).length());
-        System.err.println(new File(eodtljar).getAbsoluteFile());
         String md5="";
-        String klucz="e52ca669830327034355c4d3268fd6a5";
+        String klucz=confC.findConfigNazwa("kluczLicencji").getWartosc();
         try {
             FileInputStream fis = new FileInputStream(new File(eodtljar));
             md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis);
@@ -150,8 +147,6 @@ public class Login implements Serializable {
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        //System.err.println(request.getUserPrincipal().getName());
-        //strukC=new StrukturaJpaController();
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
 
         zalogowany = uzytC.findStruktura(request.getUserPrincipal().getName());

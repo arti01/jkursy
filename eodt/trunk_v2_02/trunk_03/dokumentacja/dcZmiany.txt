@@ -1,3 +1,11 @@
+2014-06-23
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (14, 'kluczLicencji', 'kluczLicencji', 'kluczLicencji');
+1. Wpisać wartosci (liczba licencji i nazwa licencji) do NewClass.java, przekompilować do eodtl.jar, wrzucić do wara.
+2. Wyliczyc md5sum dla tego jar'a i wpisać do tabeli config, rekord kluczLicencji
+3. Tradycyjnie zmiany z reki w bazie wymagają restartu aplikacji, więc należy najpierw wpisać klucz a potem deplojować
+lub restartować aplikację.
+
+
 2014-06-06
 Wymyślić lokalizację
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
