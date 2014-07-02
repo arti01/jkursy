@@ -1,6 +1,7 @@
 INSERT INTO user_roles (id, role_name, opis) VALUES (5, 'eoddok_rej','dokumenty-rejestracja');
 INSERT INTO user_roles (id, role_name, opis) VALUES (6, 'eoddok_odb','dokumenty-odbiór');
 INSERT INTO user_roles (id, role_name, opis) VALUES (7, 'eoddok_cfg','dokumenty-konfiguracja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty-archiwizacja');
 
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (5, 3);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (6, 3);

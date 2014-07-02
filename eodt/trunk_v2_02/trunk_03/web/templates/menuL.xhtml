@@ -77,6 +77,14 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
+                        <rich:panelMenuGroup label="Dokumenty - archiwum" rendered="#{login.dcArc}" expanded="#{login.menuDcArcExp}" actionListener="#{login.menuDcArcExpList(event)}">
+                            <h:commandLink action="#{AkceptOdb.list}">
+                                <rich:panelMenuItem >
+                                    Do archiwum
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                        
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
                             <h:commandLink action="#{UsersM.nowy}">
                                 <rich:panelMenuItem >

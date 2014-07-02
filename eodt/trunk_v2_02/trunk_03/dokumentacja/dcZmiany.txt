@@ -1,3 +1,6 @@
+2014-07-01
+INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty-archiwizacja');
+
 2014-06-23
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (14, 'kluczLicencji', 'kluczLicencji', 'kluczLicencji');
 1. Wpisać wartosci (liczba licencji i nazwa licencji) do NewClass.java, przekompilować do eodtl.jar, wrzucić do wara.

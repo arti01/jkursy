@@ -2,13 +2,9 @@ package pl.eod.managed;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -51,6 +47,7 @@ public class Login implements Serializable {
     boolean dcRej;
     boolean dcOdb;
     boolean dcCfg;
+    boolean dcArc;
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
@@ -61,6 +58,7 @@ public class Login implements Serializable {
     boolean menuDcCfgExp = false;
     boolean menuDcRejExp = false;
     boolean menuDcOdbExp = false;
+    boolean menuDcArcExp = false;
 
     @PostConstruct
     public void init() {
@@ -191,6 +189,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcCfgExp = false;
         menuDcOdbExp = false;
+        menuDcArcExp = false;
     }
 
     public void menuUrlopExpList(ActionEvent event) {
@@ -199,6 +198,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcCfgExp = false;
         menuDcOdbExp = false;
+        menuDcArcExp = false;
     }
 
     public void menuDcCfgExpList(ActionEvent event) {
@@ -207,6 +207,7 @@ public class Login implements Serializable {
         menuUrlopExp = false;
         menuDcRejExp = false;
         menuDcOdbExp = false;
+        menuDcArcExp = false;
     }
 
     public void menuDcRejExpList(ActionEvent event) {
@@ -215,6 +216,7 @@ public class Login implements Serializable {
         menuUrlopExp = false;
         menuDcCfgExp = false;
         menuDcOdbExp = false;
+        menuDcArcExp = false;
     }
 
     public void menuDcOdbExpList(ActionEvent event) {
@@ -223,6 +225,16 @@ public class Login implements Serializable {
         menuUrlopExp = false;
         menuDcCfgExp = false;
         menuDcRejExp = false;
+        menuDcArcExp = false;
+    }
+    
+    public void menuDcArcExpList(ActionEvent event) {
+        menuDcArcExp = !menuDcArcExp;
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
     }
 
     public Struktura getZalogowany() {
@@ -305,6 +317,14 @@ public class Login implements Serializable {
         return dcCfg;
     }
 
+    public boolean isDcArc() {
+        return dcArc;
+    }
+
+    public void setDcArc(boolean dcArc) {
+        this.dcArc = dcArc;
+    }
+
     public boolean isAdmin() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -371,6 +391,14 @@ public class Login implements Serializable {
 
     public void setMenuDcOdbExp(boolean menuDcOdbExp) {
         this.menuDcOdbExp = menuDcOdbExp;
+    }
+
+    public boolean isMenuDcArcExp() {
+        return menuDcArcExp;
+    }
+
+    public void setMenuDcArcExp(boolean menuDcArcExp) {
+        this.menuDcArcExp = menuDcArcExp;
     }
 
     public boolean isBladLicencj() {
