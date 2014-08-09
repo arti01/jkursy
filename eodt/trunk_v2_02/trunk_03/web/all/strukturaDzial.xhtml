@@ -25,6 +25,7 @@
                         <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwladKier}">
                             <rich:treeNode expanded="#{StruktOsM.rozwin}">
                                 <h:outputText value="#{strukt.dzialId.nazwa}"/>
+                                <h:outputText value=" (#{strukt.dzialId.symbol})"/>
                                 <h:commandLink action="#{UsersM.listaFiltr}" value="(edytuj)">
                                     <f:setPropertyActionListener target="#{UsersM.filterValues['fullname']}" value="#{null}"/>
                                     <f:setPropertyActionListener target="#{UsersM.filterValues['nazwa']}" value="#{strukt.dzialId}"/>

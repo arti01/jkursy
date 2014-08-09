@@ -77,7 +77,7 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
-                        <rich:panelMenuGroup label="Dokumenty - archiwum" rendered="#{login.dcArc}" expanded="#{login.menuDcArcExp}" actionListener="#{login.menuDcArcExpList(event)}">
+                        <rich:panelMenuGroup label="Dokumenty - archiwum" rendered="#{login.dcArc}" expanded="#{login.menuDcArcExp}" actionListener="#{login.menuDcArcExpList}">
                             <h:commandLink action="#{AkceptOdb.list}">
                                 <rich:panelMenuItem >
                                     Do archiwum

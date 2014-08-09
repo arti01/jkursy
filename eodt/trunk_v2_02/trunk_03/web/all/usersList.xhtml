@@ -91,7 +91,7 @@
                         <ui:param name="property" value="nazwa" />
                         <rich:column id="colKier" style="width:30%; text-align: center" filterValue="#{UsersM.filterValues[property]}" filterExpression="#{property}">
                             <f:facet name="header">
-                                <h:outputText value="Dział"/><br/>
+                                <h:outputText value="Dział (symbol)"/><br/>
                                 <h:selectOneMenu id="dzialFbez" value="#{UsersM.filterValues[property]}" converter="#{DzialConv}">
                                     <f:selectItems value="#{UsersM.dzialyAll}" var="dzial1" itemValue="#{dzial1}" itemLabel="#{dzial1.nazwa}"/>
                                     <f:selectItem itemValue="#{null}" itemLabel="wszystkie" noSelectionOption="false"/>
@@ -100,6 +100,8 @@
                             </f:facet>
                             <br/>
                             <h:outputText id="dzialE" value="#{strukt.dzialId.nazwa}"/>
+                            <br/>
+                            <h:outputText id="dzialES" value="(#{strukt.dzialId.symbol})"/>
                         </rich:column>
 
                         <rich:column   style="width:10%">

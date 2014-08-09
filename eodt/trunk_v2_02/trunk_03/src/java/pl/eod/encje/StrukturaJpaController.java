@@ -62,21 +62,17 @@ public class StrukturaJpaController implements Serializable {
             }
         }
     }
-    private static final Logger LOG = Logger.getLogger(StrukturaJpaController.class.getName());
 
     @SuppressWarnings("empty-statement")
     public String create(Struktura struktura) throws Exception {
         
         //sprawdzenie licencji
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
-        System.err.println(uzytC.iluZprawami() > eodt.lib.NewClass.LICZ);
-        System.err.println(uzytC.iluZprawami());
-        System.err.println(struktura.getUserId().getRole().size());
-        //jeśli więcej niż jedna rola (eoduser)
-        if(struktura.getUserId().getRole().size()>1){
+        //jeśli jest rola (eoduser jest dodawane pozniej)
+        if(struktura.getUserId().getRole().size()>0){
             //jesli już jest rowna liczba licencji
             if(uzytC.iluZprawami() >= eodt.lib.NewClass.LICZ){
-                return "Przekroczenie licencji, aktualna liczba użytkowników to:" +uzytC.iluZprawami()+ "- zmiana niewykonana";
+                return "Przekroczenie licencji, aktualna liczba użytkowników to: " +uzytC.iluZprawami()+ " - zmiana niewykonana";
             }
         }
         
@@ -243,14 +239,11 @@ public class StrukturaJpaController implements Serializable {
         
         //sprawdzenie licencji
         UzytkownikJpaController uzytC = new UzytkownikJpaController();
-        System.err.println(uzytC.iluZprawami() > eodt.lib.NewClass.LICZ);
-        System.err.println(uzytC.iluZprawami());
-        System.err.println(struktura.getUserId().getRole().size());
         //jeśli więcej niż jedna rola (eoduser)
         if(struktura.getUserId().getRole().size()>1){
             //jesli już jest rowna liczba licencji
             if(uzytC.iluZprawami() >= eodt.lib.NewClass.LICZ){
-                return "Przekroczenie licencji, aktualna liczba użytkowników to:" +uzytC.iluZprawami()+ "- zmiana niewykonana";
+                return "Przekroczenie licencji, aktualna liczba użytkowników to: " +uzytC.iluZprawami()+ " - zmiana niewykonana";
             }
         }
         
@@ -310,6 +303,7 @@ public class StrukturaJpaController implements Serializable {
             }
             
             em.getTransaction().begin();
+            System.err.println(struktura.getDzialId().getNazwa());
             em.merge(struktura);
             /*if (struktura.isStKier() == true && oldStruktura.isStKier() == false) {
              em.merge(struktura.getDzialId());   

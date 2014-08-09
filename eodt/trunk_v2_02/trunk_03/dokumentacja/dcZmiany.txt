@@ -1,3 +1,11 @@
+2014-08-08
+Symbol Dokumentu
+ALTER TABLE dzial ADD COLUMN symbol character varying(5);
+ALTER TABLE dzial ADD CONSTRAINT unq_dzial_0 UNIQUE(symbol);
+ALTER TABLE dc_dokument ADD COLUMN symbol_sp_dzial character varying(50);
+CREATE INDEX ix_dc_dokument_symbol_sp_dzial ON dc_dokument;
+
+
 2014-07-01
 INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty-archiwizacja');
 

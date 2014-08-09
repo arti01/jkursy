@@ -67,6 +67,9 @@ public class DcDokument implements Serializable {
     @Lob
     @Column(name = "opis_dlugi")
     private String opisDlugi;
+    @Size(max = 50)
+    @Column(name = "symbol_sp_dzial")
+    private String symbolSpDzial;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprow", nullable = false)
@@ -219,6 +222,14 @@ public class DcDokument implements Serializable {
 
     public String getOpisDlugi() {
         return opisDlugi;
+    }
+
+    public String getSymbolSpDzial() {
+        return symbolSpDzial;
+    }
+
+    public void setSymbolSpDzial(String symbolSpDzial) {
+        this.symbolSpDzial = symbolSpDzial;
     }
 
     public void setOpisDlugi(String opisDlugi) {

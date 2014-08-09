@@ -69,6 +69,8 @@
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText id="nazwaList" value="#{item.nazwa}"/>
+                        <br/>
+                        <h:outputText id="symbolSpDzial" value="#{item.symbolSpDzial}"/>
                         <rich:tooltip target="nazwaList">
                             #{item.opis}
                         </rich:tooltip>

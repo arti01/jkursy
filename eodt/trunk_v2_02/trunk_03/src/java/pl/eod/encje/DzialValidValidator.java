@@ -20,7 +20,7 @@ public class DzialValidValidator implements ConstraintValidator<DzialValid, Dzia
     
     @Override
     public boolean isValid(Dzial value, ConstraintValidatorContext context) {
-       if(value.equals(null)) return false;
+       if(value == null) return false;
         System.err.println(value+"dzial walid");
        return true;
        /*DzialJpaController uC=new DzialJpaController();

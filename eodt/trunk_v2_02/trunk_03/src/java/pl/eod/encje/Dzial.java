@@ -46,6 +46,10 @@ public class Dzial implements Serializable {
     @Column(name = "nazwa", nullable = false, unique = true)
     private String nazwa;
     
+    @Size(min=0, max=5)
+    @Column(name = "symbol", nullable = false, unique = true)
+    private String symbol;
+    
     @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY)
     private List<Struktura> strukturaList;
     
@@ -73,6 +77,15 @@ public class Dzial implements Serializable {
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        System.err.println(symbol+"setter");
+        this.symbol = symbol;
     }
 
     public List<Struktura> getStrukturaList() {

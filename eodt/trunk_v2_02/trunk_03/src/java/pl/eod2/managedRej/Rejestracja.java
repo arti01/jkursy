@@ -83,6 +83,7 @@ public class Rejestracja {
 
     public void dodaj() throws Exception {
         obiekt.setUserId(login.getZalogowany().getUserId());
+        obiekt.setSymbolSpDzial(obiekt.getUserId().getSpolkaId().getSymbol()+"/"+obiekt.getUserId().getStruktura().getDzialId().getSymbol());
         error = dcC.create(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);

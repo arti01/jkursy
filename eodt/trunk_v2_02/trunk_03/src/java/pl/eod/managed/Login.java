@@ -76,7 +76,6 @@ public class Login implements Serializable {
         try {
             FileInputStream fis = new FileInputStream(new File(eodtljar));
             md5 = org.apache.commons.codec.digest.DigestUtils.md5Hex(fis);
-        System.err.println(md5);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -84,6 +83,7 @@ public class Login implements Serializable {
         if(!md5.equals(klucz)){
             zalogowany = null;
             this.setBladLicencj(true);
+            System.err.println(klucz+"licencja");
             template="../templates/template_login.xhtml";
         }
         
@@ -91,6 +91,7 @@ public class Login implements Serializable {
         if (uzytC.iluZprawami() > eodt.lib.NewClass.LICZ) {
             zalogowany = null;
             this.setBladLicencj(true);
+            System.err.println(uzytC.iluZprawami()+"licencja"+eodt.lib.NewClass.LICZ);
             template="../templates/template_login.xhtml";
         }
     }
