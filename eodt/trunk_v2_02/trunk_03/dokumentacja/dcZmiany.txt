@@ -1,13 +1,15 @@
 2014-08-08
 Symbol Dokumentu
+
+Po poniższych alterach trzeba uzupełnić symbole - dla spółek (tylko grzebiąc w bazie), działów, rodzajów dokumentów
 ALTER TABLE dzial ADD COLUMN symbol character varying(5);
 ALTER TABLE dzial ADD CONSTRAINT unq_dzial_0 UNIQUE(symbol);
-ALTER TABLE dc_dokument ADD COLUMN symbol_sp_dzial character varying(50);
+ALTER TABLE dc_dokument ADD COLUMN symbol_sp_dzial_rok character varying(50);
 CREATE INDEX ix_dc_dokument_symbol_sp_dzial ON dc_dokument;
+ALTER TABLE dc_dokument ADD COLUMN symbol_nr_kol integer;
+CREATE INDEX ix_dc_dokument_symbol_sp_dzialON dc_dokument;
 
-
-2014-07-01
-INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty-archiwizacja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
 
 2014-06-23
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (14, 'kluczLicencji', 'kluczLicencji', 'kluczLicencji');

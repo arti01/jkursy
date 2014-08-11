@@ -13,6 +13,10 @@
                 <h:outputLabel for="nameD" value="nazwa: "/>
                 <h:inputText id="nameD" value="#{RodzajeCfg.obiekt.nazwa}"  size="90" ><rich:validator/></h:inputText>
                 <rich:message for="nameD" styleClass="error" />
+                
+                <h:outputLabel for="symbolD" value="symbol: "/>
+                <h:inputText id="symbolD" value="#{RodzajeCfg.obiekt.symbol}"  size="5" ><rich:validator/></h:inputText>
+                <rich:message for="symbolD" styleClass="error" />
 
                 <h:outputLabel for="opisD" value="opis: "/>
                 <h:inputTextarea id="opisD" value="#{RodzajeCfg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>

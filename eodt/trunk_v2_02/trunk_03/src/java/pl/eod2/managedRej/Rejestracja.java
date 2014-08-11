@@ -28,7 +28,6 @@ import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
-import pl.eod2.plikiUpload.FileUploadBean;
 
 @ManagedBean(name = "RejestracjaRej")
 @SessionScoped
@@ -82,9 +81,7 @@ public class Rejestracja {
     }
 
     public void dodaj() throws Exception {
-        obiekt.setUserId(login.getZalogowany().getUserId());
-        obiekt.setSymbolSpDzial(obiekt.getUserId().getSpolkaId().getSymbol()+"/"+obiekt.getUserId().getStruktura().getDzialId().getSymbol());
-        error = dcC.create(obiekt);
+        error = dcC.create(obiekt, login.getZalogowany());
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -103,7 +100,7 @@ public class Rejestracja {
     }
 
     public void wyslijDoAkceptacji() {
-        obiekt = dcC.wyslijDoAkceptacji(obiekt);
+        obiekt = dcC.wyslijDoAkceptacji(obiekt);;
         refreshBezObiekt();
     }
 

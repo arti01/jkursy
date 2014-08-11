@@ -5,21 +5,25 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import pl.eod.encje.Struktura;
 import pl.eod.encje.Uzytkownik;
+import pl.eod.managed.Login;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -75,7 +79,9 @@ public class DcDokumentJpaController implements Serializable {
         return dcDokument;
     }
 
-    public String create(DcDokument dcDokument) throws NonexistentEntityException, Exception {
+    public String create(DcDokument dcDokument, Struktura struktura) throws NonexistentEntityException, Exception {
+        dcDokument.setUserId(struktura.getUserId());
+        
         List<DcPlik>pliki=dcDokument.getDcPlikList();
         dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         if (dcDokument.getKontrahentId() == null) {
@@ -91,7 +97,11 @@ public class DcDokumentJpaController implements Serializable {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }
         dcDokument.setDataWprow(new Date());
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
+        dcDokument.setSymbolSpDzialRok(dcDokument.getUserId().getSpolkaId().getSymbol()+"/"+dcDokument.getUserId().getStruktura().getDzialId().getSymbol()+"/"+sdf.format(dcDokument.getDataWprow()));
         dcDokument.setDokStatusId(new DcDokumentStatus(1));
+        dcDokument.setSymbolNrKol(this.findMaxNrKol(dcDokument));
+        
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -537,6 +547,27 @@ public class DcDokumentJpaController implements Serializable {
             cq.where(warunek);
             Query q = em.createQuery(cq);
             return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public int findMaxNrKol(DcDokument dokument) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcDokument.findMaxNrKol");
+            q.setParameter("symbolSpDzialRok", dokument.getSymbolSpDzialRok());
+            int u =  (Integer) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u+1;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return 1;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return 1;
+        } catch(NullPointerException exnp){
+            return 1;
         } finally {
             em.close();
         }

@@ -23,8 +23,10 @@
                         <h:outputText value="#{item.idDokumentKrok.idDok.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                     </rich:column>
                     <rich:column>
-                        <f:facet name="header">nazwa</f:facet>
+                        <f:facet name="header">nazwa i symbol</f:facet>
                         <h:outputText id="nazwaList" value="#{item.idDokumentKrok.idDok.nazwa}"/>
+                        <br/>
+                        <h:outputText id="symbolList" value="#{item.idDokumentKrok.idDok.symbolDok}"/>
                         <rich:tooltip target="nazwaList">
                             #{item.idDokumentKrok.idDok.opis}
                         </rich:tooltip>

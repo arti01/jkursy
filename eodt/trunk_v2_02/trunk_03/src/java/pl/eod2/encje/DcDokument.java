@@ -44,7 +44,9 @@ import pl.eod.encje.Uzytkownik;
     @NamedQuery(name = "DcDokument.findByNazwa", query = "SELECT d FROM DcDokument d WHERE d.nazwa = :tytul"),
     @NamedQuery(name = "DcDokument.findByOpis", query = "SELECT d FROM DcDokument d WHERE d.opis = :opis"),
     @NamedQuery(name = "DcDokument.findByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
-    @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok")})
+    @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok"),
+    @NamedQuery(name = "DcDokument.findMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
+})
 public class DcDokument implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -68,8 +70,10 @@ public class DcDokument implements Serializable {
     @Column(name = "opis_dlugi")
     private String opisDlugi;
     @Size(max = 50)
-    @Column(name = "symbol_sp_dzial")
-    private String symbolSpDzial;
+    @Column(name = "symbol_sp_dzial_rok")
+    private String symbolSpDzialRok;
+    @Column(name = "symbol_nr_kol")
+    private int symbolNrKol;
     @Basic(optional = false)
     @NotNull
     @Column(name = "data_wprow", nullable = false)
@@ -110,6 +114,8 @@ public class DcDokument implements Serializable {
     private String procentWykonania;
     @Transient
     private boolean alertAkceptacja;
+    @Transient
+    private String symbolDok;
     
     public DcDokument() {
     }
@@ -224,12 +230,12 @@ public class DcDokument implements Serializable {
         return opisDlugi;
     }
 
-    public String getSymbolSpDzial() {
-        return symbolSpDzial;
+    public String getSymbolSpDzialRok() {
+        return symbolSpDzialRok;
     }
 
-    public void setSymbolSpDzial(String symbolSpDzial) {
-        this.symbolSpDzial = symbolSpDzial;
+    public void setSymbolSpDzialRok(String symbolSpDzialRok) {
+        this.symbolSpDzialRok = symbolSpDzialRok;
     }
 
     public void setOpisDlugi(String opisDlugi) {
@@ -292,6 +298,25 @@ public class DcDokument implements Serializable {
     public void setAlertAkceptacja(boolean alertAkceptacja) {
         this.alertAkceptacja = alertAkceptacja;
     }
+
+    public String getSymbolDok() {
+        try{
+        symbolDok=this.symbolNrKol+"/"+this.symbolSpDzialRok+"/"+this.getRodzajId().getSymbol();
+        }catch (NullPointerException ex){
+            return null;
+        }
+        return symbolDok;
+    }
+
+    public int getSymbolNrKol() {
+        return symbolNrKol;
+    }
+
+    public void setSymbolNrKol(int symbolNrKol) {
+        this.symbolNrKol = symbolNrKol;
+    }
+    
+    
     
     @Override
     public int hashCode() {

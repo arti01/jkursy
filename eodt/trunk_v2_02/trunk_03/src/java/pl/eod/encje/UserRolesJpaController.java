@@ -46,12 +46,14 @@ public class UserRolesJpaController implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<UserRoles> findDostepneDoEdycji() {
         String rola1="eodstru";
         String rola2="eodurlop";
         String rola3="eoddok_rej";
         String rola4="eoddok_odb";
         String rola5="eoddok_cfg";
+        String rola6="eoddok_arc";
         EntityManager em = getEntityManager();
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -65,8 +67,10 @@ public class UserRolesJpaController implements Serializable {
                     cb.equal(cfg.get(UserRoles_.rolename), rola2),
                     cb.equal(cfg.get(UserRoles_.rolename), rola3),
                     cb.equal(cfg.get(UserRoles_.rolename), rola4),
-                    cb.equal(cfg.get(UserRoles_.rolename), rola5)
+                    cb.equal(cfg.get(UserRoles_.rolename), rola5),
+                    cb.equal(cfg.get(UserRoles_.rolename), rola6)
                     ));
+            @SuppressWarnings("unchecked")
             Query q = em.createQuery(cq);
             return q.getResultList();
         } finally {

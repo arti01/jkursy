@@ -50,6 +50,9 @@ public class DcRodzaj implements Serializable {
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256)
     private String nazwa;
+    @Size(max = 5)
+    @Column(nullable = false, length = 5)
+    private String symbol;
     @Size(max = 10485760)
     @Lob
     private String opis;
@@ -92,6 +95,14 @@ public class DcRodzaj implements Serializable {
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 
     public String getOpis() {

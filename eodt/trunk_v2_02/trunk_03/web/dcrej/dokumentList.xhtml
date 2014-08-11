@@ -54,7 +54,7 @@
 
                     <rich:column sortBy="#{item.id}" sortOrder="descending"
                                  filterExpression="#{fn:containsIgnoreCase(item.dataWprowStr,RejestracjaRej.filtrdataWprow)}">
-                        <f:facet name="header">data rejestracji<br/>(użyj TAB)
+                        <f:facet name="header">data<br/> rejestracji<br/>(użyj TAB)
                             <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
@@ -63,21 +63,23 @@
                         <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.alertAkceptacja}"/>
                     </rich:column>
 
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)}">    
-                        <f:facet name="header">nazwa
-                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="9">
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)||fn:containsIgnoreCase(item.symbolDok,RejestracjaRej.filtrNazwa)}">
+                        <f:facet name="header">nazwa i symbol
+                            <h:inputText value="#{RejestracjaRej.filtrNazwa}" size="15">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
-                        <h:outputText id="nazwaList" value="#{item.nazwa}"/>
+
+                        <h:outputText id="nazwaList" value="#{item.nazwa}" style="font-size: small"/>
                         <br/>
-                        <h:outputText id="symbolSpDzial" value="#{item.symbolSpDzial}"/>
+                        <h:outputText id="symbolDok" value="#{item.symbolDok}" style="font-size: small"/>
+                        
                         <rich:tooltip target="nazwaList">
                             #{item.opis}
                         </rich:tooltip>
                     </rich:column>
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.dataDokStr,RejestracjaRej.filtrdataDok)}">    
-                        <f:facet name="header">data dokumentu
+                        <f:facet name="header">data <br/>dokumentu
                             <h:inputText value="#{RejestracjaRej.filtrdataDok}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
@@ -116,7 +118,7 @@
 
                     <rich:column style="background-color: #{item.dokStatusId.kolor} ; text-align: center"
                         filterExpression="#{fn:containsIgnoreCase(item.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
-                        <f:facet name="header">status
+                        <f:facet name="header">status<br/>
                             <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
