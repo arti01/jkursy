@@ -90,6 +90,14 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
                         
+                        <rich:panelMenuGroup label="Ogłoszenia" rendered="#{login.ogl}" expanded="#{login.menuOglExp}" actionListener="#{login.menuOglExpList}">
+                            <h:commandLink action="#{OgloszeniaMg.list}">
+                                <rich:panelMenuItem >
+                                    Lista
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                        
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
                             <h:commandLink action="#{UsersM.nowy}">
                                 <rich:panelMenuItem >

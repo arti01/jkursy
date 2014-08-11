@@ -48,6 +48,7 @@ public class Login implements Serializable {
     boolean dcOdb;
     boolean dcCfg;
     boolean dcArc;
+    boolean ogl;
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
@@ -59,6 +60,7 @@ public class Login implements Serializable {
     boolean menuDcRejExp = false;
     boolean menuDcOdbExp = false;
     boolean menuDcArcExp = false;
+    boolean menuOglExp = false;
 
     @PostConstruct
     public void init() {
@@ -191,6 +193,7 @@ public class Login implements Serializable {
         menuDcCfgExp = false;
         menuDcOdbExp = false;
         menuDcArcExp = false;
+        menuOglExp=false;
     }
 
     public void menuUrlopExpList(ActionEvent event) {
@@ -200,6 +203,7 @@ public class Login implements Serializable {
         menuDcCfgExp = false;
         menuDcOdbExp = false;
         menuDcArcExp = false;
+        menuOglExp=false;
     }
 
     public void menuDcCfgExpList(ActionEvent event) {
@@ -209,6 +213,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcOdbExp = false;
         menuDcArcExp = false;
+        menuOglExp=false;
     }
 
     public void menuDcRejExpList(ActionEvent event) {
@@ -218,6 +223,7 @@ public class Login implements Serializable {
         menuDcCfgExp = false;
         menuDcOdbExp = false;
         menuDcArcExp = false;
+        menuOglExp=false;
     }
 
     public void menuDcOdbExpList(ActionEvent event) {
@@ -227,10 +233,22 @@ public class Login implements Serializable {
         menuDcCfgExp = false;
         menuDcRejExp = false;
         menuDcArcExp = false;
+        menuOglExp=false;
     }
     
     public void menuDcArcExpList(ActionEvent event) {
         menuDcArcExp = !menuDcArcExp;
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
+        menuOglExp=false;
+    }
+    
+    public void menuOglExpList(ActionEvent event) {
+        menuOglExp = !menuOglExp;
+        menuDcArcExp = false;
         menuStrukturaExp = false;
         menuUrlopExp = false;
         menuDcCfgExp = false;
@@ -325,6 +343,13 @@ public class Login implements Serializable {
         return dcArc;
     }
 
+    public boolean isOgl() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        ogl = request.isUserInRole("eod_ogl");
+        return ogl;
+    }
+    
     public boolean isAdmin() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -399,6 +424,14 @@ public class Login implements Serializable {
 
     public void setMenuDcArcExp(boolean menuDcArcExp) {
         this.menuDcArcExp = menuDcArcExp;
+    }
+
+    public boolean isMenuOglExp() {
+        return menuOglExp;
+    }
+
+    public void setMenuOglExp(boolean menuOglExp) {
+        this.menuOglExp = menuOglExp;
     }
 
     public boolean isBladLicencj() {

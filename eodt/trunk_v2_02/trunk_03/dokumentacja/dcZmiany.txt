@@ -1,3 +1,9 @@
+2014-08-10
+Tablica Ogloszen
+w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
+
+INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');
+
 2014-08-08
 Symbol Dokumentu
 

@@ -35,6 +35,7 @@ import pl.eod2.encje.DcDokDoWiadCel;
 import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentKrokUzytkownik;
+import pl.eod2.encje.Ogloszenia;
 
 /**
  *
@@ -121,6 +122,9 @@ public class Uzytkownik implements Serializable {
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
     @ManyToOne()
     private Spolki spolkaId;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "wprowadzil", orphanRemoval = false, fetch = FetchType.LAZY)
+    @OrderBy(value = "id DESC")
+    private List<Ogloszenia> ogloszeniaList;
     @Transient
     boolean eodstru;
 
@@ -352,6 +356,14 @@ public class Uzytkownik implements Serializable {
             wynik.add(dC);
         }
         return wynik;
+    }
+
+    public List<Ogloszenia> getOgloszeniaList() {
+        return ogloszeniaList;
+    }
+
+    public void setOgloszeniaList(List<Ogloszenia> ogloszeniaList) {
+        this.ogloszeniaList = ogloszeniaList;
     }
 
     @Override

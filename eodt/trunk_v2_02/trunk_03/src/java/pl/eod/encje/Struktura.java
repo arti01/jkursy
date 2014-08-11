@@ -13,10 +13,12 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,6 +28,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import pl.eod2.encje.Ogloszenia;
 
 /**
  *
@@ -77,6 +80,8 @@ public class Struktura implements Serializable {
     private String extraemail;
     @Column(name = "mus_zast", nullable = false)
     private Integer musZast;
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Ogloszenia> ogloszeniaList;
     @Transient
     List<Struktura> bezpPodzPodwlad;
     @Transient
@@ -339,6 +344,14 @@ public class Struktura implements Serializable {
         } else {
             this.musZast = 1;
         }
+    }
+
+    public List<Ogloszenia> getOgloszeniaList() {
+        return ogloszeniaList;
+    }
+
+    public void setOgloszeniaList(List<Ogloszenia> ogloszeniaList) {
+        this.ogloszeniaList = ogloszeniaList;
     }
 
     @Override

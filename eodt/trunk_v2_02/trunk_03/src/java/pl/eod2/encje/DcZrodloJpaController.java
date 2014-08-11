@@ -23,6 +23,7 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author 103039
  */
 public class DcZrodloJpaController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public DcZrodloJpaController() {
         if (this.emf == null) {
