@@ -57,6 +57,8 @@ public class Rejestracja {
     private String filtrWprowadzil;
     private String filtrRodzaj;
     private String filtrProjekt;
+    private String filtrArchiwisci;
+    private String filtrArchLokal;
 
     @PostConstruct
     void init() {
@@ -407,6 +409,22 @@ public class Rejestracja {
 
     public void setFiltrProjekt(String filtrProjekt) {
         this.filtrProjekt = filtrProjekt;
+    }
+
+    public String getFiltrArchiwisci() {
+        return filtrArchiwisci;
+    }
+
+    public void setFiltrArchiwisci(String filtrArchiwisci) {
+        this.filtrArchiwisci = filtrArchiwisci;
+    }
+
+    public String getFiltrArchLokal() {
+        return filtrArchLokal;
+    }
+
+    public void setFiltrArchLokal(String filtrArchLokal) {
+        this.filtrArchLokal = filtrArchLokal;
     }
 
     public Locale getLocale() {

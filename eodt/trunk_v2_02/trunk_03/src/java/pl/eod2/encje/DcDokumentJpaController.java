@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -168,6 +169,27 @@ public class DcDokumentJpaController implements Serializable {
         return dcDokument;
     }
 
+    public DcDokument wyslijDoArchiwum(DcDokument dcDokument) {
+        EntityManager em = null;
+        try {
+            DcDokumentStatus dS6 = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
+            em = getEntityManager();
+            em.getTransaction().begin();
+            dcDokument.setDokStatusId(dS6);
+            dcDokument.setArchData(new Date());
+            em.merge(dcDokument);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            //return "blad";
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+        return dcDokument;
+    }
+    
     public DcDokument akceptuj(DcDokumentKrokUzytkownik dku) {
         EntityManager em = null;
         DcDokument dok = dku.getIdDokumentKrok().getIdDok();
@@ -568,6 +590,21 @@ public class DcDokumentJpaController implements Serializable {
             return 1;
         } catch(NullPointerException exnp){
             return 1;
+        } finally {
+            em.close();
+        }
+    }
+    
+    @SuppressWarnings({"unchecked", "unchecked"})
+    public List<DcDokument>  findStatus(int statusId) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcDokument.findByStatus");
+            q.setParameter("statusId", statusId);
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return Collections.EMPTY_LIST;
         } finally {
             em.close();
         }

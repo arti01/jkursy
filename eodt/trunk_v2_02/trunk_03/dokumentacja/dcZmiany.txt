@@ -11,6 +11,17 @@ CREATE INDEX ix_dc_dokument_symbol_sp_dzialON dc_dokument;
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
 
+ALTER TABLE dc_dokument ADD COLUMN arch_data timestamp without time zone;
+ALTER TABLE dc_dokument ADD COLUMN arch_osoba_zdajaca character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_osoba_odpowiadajaca character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_pokoj character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_regal character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_polka character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_karton character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_teczka character varying(256);
+
+INSERT INTO dc_dokument_status (id, nazwa, opis,  kolor) VALUES (6, 'w archiwum', 'dokument w archiwum', 'brown');
+
 2014-06-23
 INSERT INTO config (id, nazwa, opis, wartosc) VALUES (14, 'kluczLicencji', 'kluczLicencji', 'kluczLicencji');
 1. Wpisać wartosci (liczba licencji i nazwa licencji) do NewClass.java, przekompilować do eodtl.jar, wrzucić do wara.

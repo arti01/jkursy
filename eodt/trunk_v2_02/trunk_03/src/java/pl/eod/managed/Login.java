@@ -319,11 +319,10 @@ public class Login implements Serializable {
     }
 
     public boolean isDcArc() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        dcArc = request.isUserInRole("eoddok_arc");
         return dcArc;
-    }
-
-    public void setDcArc(boolean dcArc) {
-        this.dcArc = dcArc;
     }
 
     public boolean isAdmin() {
