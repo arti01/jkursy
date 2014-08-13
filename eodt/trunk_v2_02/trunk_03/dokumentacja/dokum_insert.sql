@@ -1,7 +1,8 @@
-INSERT INTO user_roles (id, role_name, opis) VALUES (5, 'eoddok_rej','dokumenty-rejestracja');
-INSERT INTO user_roles (id, role_name, opis) VALUES (6, 'eoddok_odb','dokumenty-odbiór');
-INSERT INTO user_roles (id, role_name, opis) VALUES (7, 'eoddok_cfg','dokumenty-konfiguracja');
-INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty-archiwizacja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (5, 'eoddok_rej','dokumenty - rejestracja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (6, 'eoddok_odb','dokumenty - odbiór');
+INSERT INTO user_roles (id, role_name, opis) VALUES (7, 'eoddok_cfg','dokumenty - konfiguracja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
+INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');
 
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (5, 3);
 INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (6, 3);
@@ -19,6 +20,7 @@ INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (2, 'w trakcie', 'dokum
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (3, 'zamknięty', 'dokument zamknięty');
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (4, 'anulowany', 'dokument anulowany');
 INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (5, 'odrzucony', 'dokument odrzucony');
+INSERT INTO dc_dokument_status (id, nazwa, opis,  kolor) VALUES (6, 'w archiwum', 'dokument w archiwum', 'brown');
 
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (1, 'wszyscy muszą zaakceptować');
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (2, 'wystarczy jeden do akceptacji');

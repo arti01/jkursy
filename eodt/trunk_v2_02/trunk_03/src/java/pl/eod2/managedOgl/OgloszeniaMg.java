@@ -40,7 +40,7 @@ private String filtrWprow;
     }
 
     public void refresh() {
-        lista.setWrappedData(dcC.findOgloszeniaEntities());
+        lista.setWrappedData(dcC.findBySpolka(login.getZalogowany().getUserId().getSpolkaId()));
         obiekt = new Ogloszenia();
         error = null;
     }
@@ -64,7 +64,7 @@ private String filtrWprow;
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
-            lista.setWrappedData(dcC.findOgloszeniaEntities());
+            lista.setWrappedData(dcC.findBySpolka(login.getZalogowany().getUserId().getSpolkaId()));
         } else {
             refresh();
         }

@@ -154,6 +154,11 @@ public class Login implements Serializable {
         return "/all/index";
     }
 
+    public String stronaIndex(){
+        refresh();
+        return "../logowanie/index.xhtml";
+    }
+    
     public void setZalogowany(Struktura user) {
         zalogowany = user;
     }

@@ -24,7 +24,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.Uzytkownik;
-import pl.eod.managed.Login;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 

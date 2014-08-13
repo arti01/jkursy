@@ -4,6 +4,9 @@ w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tab
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');
 
+Dostęp do listy ogłoszeń (czyli dodawania i edytowania ogłoszeń) jest w ramach spółki - czyli osoba o uprawnieniach do tej
+opcji widzi wszystkie ogłoszenia ze swojej spółki
+
 2014-08-08
 Symbol Dokumentu
 

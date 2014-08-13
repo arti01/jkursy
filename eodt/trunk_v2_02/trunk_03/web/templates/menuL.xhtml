@@ -7,18 +7,16 @@
       xmlns:rich="http://richfaces.org/rich">
     <h:outputStylesheet library="css" name="../resources/css/default.css"/>
     <h:form>
-        <h:outputLink value="../logowanie/index.xhtml">
-            <h3>
-                Start</h3>
-            </h:outputLink>
         <table
-            style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
+            style="width: 100%; font-size: 11px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
             <tr>
                 <td width="100%">
                     <rich:panelMenu itemMode="ajax" groupMode="ajax" groupExpandedLeftIcon="triangleUp"
                                     groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                                     topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
-
+                        <rich:panelMenuItem>
+                            <h:commandLink value="Start" action="#{login.stronaIndex}" style="font-size: 13px; font-weight: bold"/>
+                        </rich:panelMenuItem>
                         <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}" expanded="#{login.menuDcCfgExp}" actionListener="#{login.menuDcCfgExpList}">
                             <rich:panelMenuItem >
                                 <h:commandLink value="Rodzaje" action="#{RodzajeCfg.list}"/>

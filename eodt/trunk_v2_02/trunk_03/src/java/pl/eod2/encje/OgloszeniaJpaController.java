@@ -12,10 +12,12 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import pl.eod.encje.Spolki;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.Uzytkownik;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -201,4 +203,22 @@ public class OgloszeniaJpaController implements Serializable {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Ogloszenia> findBySpolka(Spolki spolka) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("Ogloszenia.findBySpolka");
+            q.setParameter("spolkaId", spolka);
+            //em.refresh(u.getStruktura());
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch(NullPointerException exnp){
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
 }

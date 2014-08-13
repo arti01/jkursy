@@ -20,7 +20,7 @@
                     <rich:column>
                             #{odbiorca.userId.fullname}
                             <rich:tooltip target="imgDelOdb" value="usuń odbiorcę" layout="block"/>
-                            <a4j:commandButton id="imgDelOdb" action="#{OgloszeniaMg.usunOdb}" execute="imgDelOdb" render="pgOdb"  image="/images/delete.png">
+                            <a4j:commandButton id="imgDelOdb" action="#{OgloszeniaMg.usunOdb}" execute="imgDelOdb" render="pgOdb"  image="/images/delete.png" style="width: 16px; height: 16px">
                                 <f:setPropertyActionListener target="#{OgloszeniaMg.obiekt}" value="#{item}" />
                                 <f:setPropertyActionListener target="#{OgloszeniaMg.struktura}" value="#{odbiorca}" />
                             </a4j:commandButton>

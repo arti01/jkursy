@@ -27,9 +27,9 @@
     background-color: #e9efef;
     color: black;
     padding: 0,0,0,0;
-    width: 160px;
+    width: 150px;
     min-height: 520px;
-    font-size: 12px;
+    font-size: 11px;
     font-family: Arial, tahoma,sans;
     border: 1px solid black;
 }
@@ -50,7 +50,7 @@
 }
 
 #left tbody h4 {
-	font-size: 12px;
+	font-size: 11px;
 	padding: 0,0,0,0;
 	margin: 0,0,0,0;
 }
@@ -72,12 +72,12 @@
 #right {
     float: right;
     background-color: #6666ff;
-    padding: 5px;
+    padding: 3px;
     width: 150px;
 }
 
 #content {
-	font-size: 12px;
+	font-size: 11px;
 	position: relative;
    float: top;
 }
@@ -93,8 +93,8 @@
 	width: 100px;
 	border: 1px solid black;
 	background-color: orange;
-	padding: 5px, 2px, 5px, 2px;
-	margin: 5px, 2px, 5px, 2px;	
+	padding: 4px, 2px, 4px, 2px;
+	margin: 4px, 2px, 4px, 2px;	
 }
 .pole_wpis{
 	width: 100%;
@@ -102,7 +102,7 @@
 }
 #contentPrawy {
     float: left;
-    padding: 5px;
+    padding: 4px;
     width: 700px;
     min-height: 500px;
     margin: 5px;
@@ -115,7 +115,7 @@
 	height: 100px;
 	border: 0px solid black;
 	font-family: Arial,Tahoma, sans;
-	font-size: 14px;	
+	font-size: 13px;	
 }
 .linia_top{
 	color: gray;
@@ -131,12 +131,12 @@
 	
     background-color: white;
     padding: 1px;
-    margin-left: 165px;
-    height: 620px;
-    width: 1010px;
+    margin-left: 155px;
+    height: 650px;
+    width: 1060px;
     overflow: auto;
     border: 1px solid black;
-    font-size: 14px;
+    font-size: 11px;
     font-family: arial, tahoma, sans;
 }
 .login_content {
@@ -150,7 +150,7 @@
 .right_content {
 	
     background-color: #C1DFFF;
-    padding: 5px;
+    padding: 4px;
     margin: 0px 170px 0px 170px;
 }
 
@@ -171,7 +171,7 @@
 {
     width: 100%;
     table-layout: auto;
-    font-size: 12px;
+    font-size: 11px;
     font-style: normal;
     line-height: 1.3em;
     text-align: left;
@@ -204,7 +204,7 @@
 
 #tabela th
 {
-    font-size: 12px;
+    font-size: 11px;
     background-color:#e2e8fa;  
     text-align: center;
     padding: 2px 2px;
@@ -223,7 +223,7 @@
 #tabela table td
 {
     max-width: 800px;
-    padding: 2px 2px;
+    padding: 1px 1px;
      border-bottom: 1px solid darkblue;
     /*border: 0px solid #FFFFFF;*/
 }
@@ -237,11 +237,11 @@
 {       
     table-layout: auto;
     width: 200px;
-    padding: 2px;
+    padding: 1px;
     background-color: #FFFFFF;
     border-width: 0px;
   	
-    font-size: 12px;
+    font-size: 11px;
     font-family: arial,tahoma, sans;
    
     
@@ -263,7 +263,7 @@
 #tabela a:hover
 {
     color: gray;
-    text-shadow: 0px 0px 2px #FFFFFF;
+    text-shadow: 0px 0px 1px #FFFFFF;
 }
 #tabela li a
 {
@@ -287,7 +287,7 @@
 }
 #tabela tbody p
 {
-    font-size:0.9em ;
+    font-size:0.8em ;
     font-style: italic;
 }
 

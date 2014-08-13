@@ -20,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -32,6 +34,8 @@ import pl.eod.encje.Uzytkownik;
 
 @Entity
 @Table(name = "ogloszenia")
+@NamedQueries({
+    @NamedQuery(name = "Ogloszenia.findBySpolka", query = "SELECT d FROM Ogloszenia d WHERE d.wprowadzil.spolkaId=:spolkaId")})
 public class Ogloszenia implements Serializable {
 
     private static final long serialVersionUID = 1L;
