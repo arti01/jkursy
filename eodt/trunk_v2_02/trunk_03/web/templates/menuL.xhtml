@@ -7,7 +7,10 @@
       xmlns:rich="http://richfaces.org/rich">
     <h:outputStylesheet library="css" name="../resources/css/default.css"/>
     <h:form>
-        <h4>Menu</h4>
+        <h:outputLink value="../logowanie/index.xhtml">
+            <h3>
+                Start</h3>
+            </h:outputLink>
         <table
             style="width: 100%; font-size: 12px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
             <tr>
@@ -89,7 +92,7 @@
                                 </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Ogłoszenia" rendered="#{login.ogl}" expanded="#{login.menuOglExp}" actionListener="#{login.menuOglExpList}">
                             <h:commandLink action="#{OgloszeniaMg.list}">
                                 <rich:panelMenuItem >
@@ -97,7 +100,7 @@
                                 </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
                             <h:commandLink action="#{UsersM.nowy}">
                                 <rich:panelMenuItem >

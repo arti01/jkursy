@@ -11,6 +11,18 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <h:outputStylesheet>
+            .rf-ind-drag{
+            font-size:11px;
+            cursor:pointer;
+            width:100px;
+            border:1px solid gray;
+            padding:2px;
+            z-index: 7;
+            }
+            .rf-ind-acpt{border:2px solid green}
+            .rf-ind-rejt{border:2px solid red}
+        </h:outputStylesheet>
         <h3>Obsługa ogłoszeń</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
@@ -21,9 +33,9 @@
             <rich:popupPanel id="confirmPane" autosized="true">
                 Na pewno chcesz skasować?
                 <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-                return false;" />
+                        return false;" />
                 <a4j:commandButton value="Tak" onclick="remove();
-                return false;" />
+                        return false;" />
             </rich:popupPanel>
 
             <rich:popupPanel id="statPane" autosized="true">
@@ -31,6 +43,10 @@
                 Proszę czekać
             </rich:popupPanel>
             <hr/>
+
+
+            
+
         </h:form>
     </ui:define>
 

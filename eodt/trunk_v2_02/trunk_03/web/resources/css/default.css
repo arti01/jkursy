@@ -53,6 +53,7 @@ textarea{
 .rf-dt{
     border: 1px solid black;
     width: 620px;
+    font-size: small;
 }
 .rf-dt-r:nth-child(even){
     background-color: rgb(233, 239, 239);

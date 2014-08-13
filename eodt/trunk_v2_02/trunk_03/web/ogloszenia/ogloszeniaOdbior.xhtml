@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html  
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:h="http://java.sun.com/jsf/html"
+    template="/templates/template.xhtml"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:f="http://java.sun.com/jsf/core">
+
+    <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń">
+        <h:panelGrid id="pgOdb" columns="2">
+            <rich:panel >
+                <f:facet name="header">
+                    lista odbiorców ogłoszenia
+                </f:facet>
+                <rich:dropTarget acceptedTypes="ludek"  dropListener="#{OgloszeniaMg.drop}"
+                                 render="pgOdb" dropValue="#{item}"/>
+                <rich:dataTable value="#{item.adresaciList}" var="odbiorca" style="width: auto; border: white thick">
+                    <rich:column>
+                            #{odbiorca.userId.fullname}
+                            <rich:tooltip target="imgDelOdb" value="usuń odbiorcę" layout="block"/>
+                            <a4j:commandButton id="imgDelOdb" action="#{OgloszeniaMg.usunOdb}" execute="imgDelOdb" render="pgOdb"  image="/images/delete.png">
+                                <f:setPropertyActionListener target="#{OgloszeniaMg.obiekt}" value="#{item}" />
+                                <f:setPropertyActionListener target="#{OgloszeniaMg.struktura}" value="#{odbiorca}" />
+                            </a4j:commandButton>
+                        
+                    </rich:column>
+                </rich:dataTable>
+            </rich:panel>
+
+            <rich:panel>
+                <f:facet name="header">
+                    struktura osobowa
+                </f:facet>
+                <rich:tree toggleType="client" var="strukt" >
+                    <rich:treeModelRecursiveAdaptor roots="#{StruktOsM.sourceRoots}" nodes="#{strukt.bezpPodzPodwlad}">
+                        <rich:treeNode expanded="#{StruktOsM.rozwin}">
+                            <a4j:outputPanel >
+                                <h:outputText id="szef" value="#{strukt.userId.fullname}"/>
+                                <rich:dragSource dragValue="#{strukt}" type="ludek"/>
+                            </a4j:outputPanel>
+                            <h:outputText value=" (weź podwładnych)"/>
+                            <rich:dragSource dragValue="#{strukt.wszyscyPodwladni}" type="ludek"/>
+                        </rich:treeNode>
+                        <rich:treeModelAdaptor nodes="#{strukt.bezpPodBezPodwlad}">
+                            <rich:treeNode expanded="#{StruktOsM.rozwin}">
+                                #{strukt.userId.fullname}
+                                <rich:dragSource dragValue="#{strukt}" type="ludek"/>
+                            </rich:treeNode>
+                        </rich:treeModelAdaptor>
+                    </rich:treeModelRecursiveAdaptor>
+                </rich:tree>
+            </rich:panel>
+        </h:panelGrid>
+    </rich:collapsiblePanel>
+</html>
+

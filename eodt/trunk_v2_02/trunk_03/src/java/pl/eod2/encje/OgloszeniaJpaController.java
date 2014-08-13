@@ -79,7 +79,9 @@ public class OgloszeniaJpaController implements Serializable {
             List<Struktura> attachedAdresaciListNew = new ArrayList<Struktura>();
             for (Struktura adresaciListNewStrukturaToAttach : adresaciListNew) {
                 adresaciListNewStrukturaToAttach = em.getReference(adresaciListNewStrukturaToAttach.getClass(), adresaciListNewStrukturaToAttach.getId());
-                attachedAdresaciListNew.add(adresaciListNewStrukturaToAttach);
+                if (!attachedAdresaciListNew.contains(adresaciListNewStrukturaToAttach)) {
+                    attachedAdresaciListNew.add(adresaciListNewStrukturaToAttach);
+                }
             }
             adresaciListNew = attachedAdresaciListNew;
             ogloszenia.setAdresaciList(adresaciListNew);

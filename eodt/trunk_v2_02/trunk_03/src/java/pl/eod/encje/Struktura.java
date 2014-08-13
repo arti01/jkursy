@@ -80,7 +80,7 @@ public class Struktura implements Serializable {
     private String extraemail;
     @Column(name = "mus_zast", nullable = false)
     private Integer musZast;
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "adresaciList", fetch = FetchType.LAZY)
     private List<Ogloszenia> ogloszeniaList;
     @Transient
     List<Struktura> bezpPodzPodwlad;

@@ -2,11 +2,13 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns="http://www.w3.org/1999/xhtml"
-                template="#{login.template}">
+                template="#{login.template}"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:f="http://java.sun.com/jsf/core">
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        
+
         <h:panelGroup rendered="#{login.bladLicencj}">
             <h1>przekroczono warunki licencji</h1>
             <h:outputLink value="../logowanie/logout.jsp">
@@ -23,13 +25,44 @@
             </h:outputLink>
             <hr/>
         </h:panelGroup>
-
+        <h:form>
         <h:panelGroup rendered="#{login.zalogowany!=null}">
             <center>
-                <img src="../images/EOD.jpg" alt="eSK.EOD" border="0"/>
+                <h:panelGrid columns="2">
+                    <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" toggleListener="#{login.refresh}" expanded="false">
+                        <rich:dataTable value="#{login.zalogowany.ogloszeniaList}" var="ogloszenie">
+                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                <f:facet name="header">
+                                    tytuł
+                                </f:facet>
+                                #{ogloszenie.tytul}
+                            </rich:column>
+                            <rich:column >
+                                <f:facet name="header">
+                                    tresc
+                                </f:facet>
+                                <rich:collapsiblePanel switchType="client" expanded="false" >
+                                    <h:outputText value="#{ogloszenie.tresc}" escape="false"/>
+                                </rich:collapsiblePanel>
+                            </rich:column>
+                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                <f:facet name="header">
+                                    data
+                                </f:facet>
+                                <h:outputText value="#{ogloszenie.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                            </rich:column>
+                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                <f:facet name="header">
+                                    wprowadził
+                                </f:facet>
+                                #{ogloszenie.wprowadzil.fullname}
+                            </rich:column>
+                        </rich:dataTable>
+                    </rich:collapsiblePanel>
+                </h:panelGrid>
             </center>
         </h:panelGroup>
-        
+</h:form>
     </ui:define>
 
 </ui:composition>

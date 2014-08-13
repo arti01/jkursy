@@ -32,10 +32,10 @@
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
       <jta-data-source>java:comp/env/jdbc/eod_v2</jta-data-source>
-      <!-- automatyczne zakladanie tabel      -->
+      <!-- automatyczne zakladanie tabel
       <property name="eclipselink.ddl-generation" value="create-tables"/>
+      -->
 
-      
       <property name="javax.persistence.validation.group.pre-update" value="true"/>
       <property name="eclipselink.logging.parameters" value="false"/>
       <property name="eclipselink.logging.level.sql" value="info"/>

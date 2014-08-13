@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.eod2.encje;
 
 import java.io.Serializable;
@@ -34,6 +33,7 @@ import pl.eod.encje.Uzytkownik;
 @Entity
 @Table(name = "ogloszenia")
 public class Ogloszenia implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQOGLOSZENIA")
@@ -54,10 +54,10 @@ public class Ogloszenia implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataWprow;
     @ManyToOne()
-    private Uzytkownik  wprowadzil;
-    @JoinColumn(name = "id", referencedColumnName = "id",nullable = false)
+    private Uzytkownik wprowadzil;
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
     @ManyToMany()
-    private List<Struktura>  adresaciList;
+    private List<Struktura> adresaciList;
 
     public Integer getId() {
         return id;
@@ -106,6 +106,5 @@ public class Ogloszenia implements Serializable {
     public void setDataWprow(Date dataWprow) {
         this.dataWprow = dataWprow;
     }
-    
-    
+
 }
