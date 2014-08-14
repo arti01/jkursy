@@ -1,0 +1,102 @@
+2014-08-10
+Tablica Ogloszen
+w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
+
+INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');
+
+Dostęp do listy ogłoszeń (czyli dodawania i edytowania ogłoszeń) jest w ramach spółki - czyli osoba o uprawnieniach do tej
+opcji widzi wszystkie ogłoszenia ze swojej spółki
+
+2014-08-08
+Symbol Dokumentu
+
+Po poniższych alterach trzeba uzupełnić symbole - dla spółek (tylko grzebiąc w bazie), działów, rodzajów dokumentów
+ALTER TABLE dzial ADD COLUMN symbol character varying(5);
+ALTER TABLE dzial ADD CONSTRAINT unq_dzial_0 UNIQUE(symbol);
+ALTER TABLE dc_dokument ADD COLUMN symbol_sp_dzial_rok character varying(50);
+CREATE INDEX ix_dc_dokument_symbol_sp_dzial ON dc_dokument;
+ALTER TABLE dc_dokument ADD COLUMN symbol_nr_kol integer;
+CREATE INDEX ix_dc_dokument_symbol_sp_dzialON dc_dokument;
+
+INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
+
+ALTER TABLE dc_dokument ADD COLUMN arch_data timestamp without time zone;
+ALTER TABLE dc_dokument ADD COLUMN arch_osoba_zdajaca character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_osoba_odpowiadajaca character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_pokoj character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_regal character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_polka character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_karton character varying(256);
+ALTER TABLE dc_dokument ADD COLUMN arch_teczka character varying(256);
+
+INSERT INTO dc_dokument_status (id, nazwa, opis,  kolor) VALUES (6, 'w archiwum', 'dokument w archiwum', 'brown');
+
+2014-06-23
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (14, 'kluczLicencji', 'kluczLicencji', 'kluczLicencji');
+1. Wpisać wartosci (liczba licencji i nazwa licencji) do NewClass.java, przekompilować do eodtl.jar, wrzucić do wara.
+2. Wyliczyc md5sum dla tego jar'a i wpisać do tabeli config, rekord kluczLicencji
+3. Tradycyjnie zmiany z reki w bazie wymagają restartu aplikacji, więc należy najpierw wpisać klucz a potem deplojować
+lub restartować aplikację.
+
+
+2014-06-06
+Wymyślić lokalizację
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (12, 'dirImportSkan', 'katalog importu dokumentow', '/home/arti01/tmp/1');
+INSERT INTO config (id, nazwa, opis, wartosc) VALUES (13, 'dirImportSkanBak', 'katalog importu dokumentow', '/home/arti01/tmp/1/bak');
+Założyć katalogi
+
+
+2014-03-29
+1. Limit czasu na akceptacje
+ALTER TABLE dc_rodzaj ADD COLUMN limit_czasu_akceptacji integer;
+ALTER TABLE dc_rodzaj ALTER COLUMN limit_czasu_akceptacji SET NOT NULL;
+ALTER TABLE dc_rodzaj ALTER COLUMN limit_czasu_akceptacji SET DEFAULT 0;
+
+I zdefiniować limit dla już istniejących rodzajów w konfiguracja/rodzaje
+Po przekroczeniu limitu na czasu na liście w rejestracji przeterminowane będą miały przy dacie rejestracji
+podswietloną na czerwono informacje.
+
+2. Status dla kolorów
+ALTER TABLE dc_dokument_status ADD COLUMN kolor character varying(10);
+I wypełnić pole kolor znacznikami html (#FFFFFF, #123456 itp)
+
+3. Prezentacja procentowego stopnia realizacji.
+Jest to liczone wg wzoru ilość kroków zaakceptowanych/wszystkie kroki i wyświetlane w rejestracji przy statusie
+Przy czym uwaga - ponieważ krok może być typu "wszyscy muszą zaakceptować" to krok jest traktowany
+jako "niezaakceptowany" nawet jeśli dwie osoby już zaakceptowały a trzecia jeszcze nie.
+Mogę to zmienić i się zagłębić na poziom kroków użytkownika i je iterować ale nie wiem, czy to kiedyś nie będzie
+jakimś tam klockiem dodatkowo obciążającym wyświetlanie.
+
+
+
+
+2013-08-24
+1. Usunięcie ramek wokół ikon w opcjach popup (kurde, ale tego było ;)
+2. W historii pojawiały się zdublowane dokumenty, w przypadku, gdy uzytkownik był członkiem więcej niż jednego kroku akceptacji - poprawiłem
+3. W opcjach odbioru (akcept, historia) w detalach dokumentu kontrahent w rozwijalnym panelu, aby akceptant mogł przeczytać wszystkie detale
+kontrahenta (wcześniej była tylko nazwa)
+4. Dokument wychodzący/przychdzący - proponuję wykorzystać już istniejący "Grupa Rodzajów" - to będzie bardziej uniwersalny mechanizm.
+    Po prostu zdefiniuje się (w wersji instalacyjnej dołoże trzy inserty, w już istniejącej trzeba z ręki zmodyfikować i dodać ewenualnie rekordy
+    w dc_rodzaj_grupa) oraz dorobię filtrowanie po rodzaju grupy
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (1, 'wychodzące', 'dokumenty wychodzące');
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (2, 'przychodzące', 'dokumenty przychodzące');
+    INSERT INTO dc_rodzaj_grupa (id, nazwa, opis) VALUES (3, 'wewnętrzne', 'dokumenty wewnętrzne');
+5. Wydruki raportów - w menu Rejestracja jest nowa opcja "Raport pocztowy" - tam trzeba wybrać filtry, następnie kliknąć "wyszukaj" no a potem "wydrukuj"
+6. Należy zainstalować fonty, czyli:
+    - Rozpakować fonty w dowolnym katalogu
+    - w pliku WAR wyedytować plik ./WEB-INF/classes/fop-xconf.xml i ustawić właściwą ścieżkę do fontów <font-base>  - w windows może być w konwencji D:\cos tam\cos
+
+
+2013-08-21
+1. odrzucanie dokumentu
+INSERT INTO DC_AKCEPT_STATUS (id, nazwa) values (5, 'odrzucony');
+INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (5, 'odrzucony', 'dokument odrzucony');
+
+2013-08-13
+1. Poprawiłem wylogowanie i zmianę hasła - sprawdz, proszę, czy działa
+2. Domyślny kontrahent (przy braku wyboru) - brany jest kontrahent o id=1 - w insertach był taki insert, tylko pewnie przez identity się nie dodał
+    - w każdym razie wystarczy założyć takiego i będzie dobrze
+3. Uwaga - zaktualizowałem o zmiany w Urlopach (delegacja zagraniczna itd) - trzeba albo zainstalować od nowa, albo dodać pola do tabel wg instrukcji
+    z 2012-06-09 (zmiany.html)
+4. INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (4, 'anulowany', 'dokument anulowany'); - dodano nowy status
+5. Założyć index na pole adr_email w tabeli uzytkownik
