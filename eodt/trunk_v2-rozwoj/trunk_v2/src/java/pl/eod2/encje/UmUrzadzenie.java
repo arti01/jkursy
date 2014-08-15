@@ -1,0 +1,166 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package pl.eod2.encje;
+
+import java.io.Serializable;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import pl.eod.encje.Uzytkownik;
+
+/**
+ *
+ * @author arti01
+ */
+@Entity
+public class UmUrzadzenie implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQUMURZADZENIE")
+    @SequenceGenerator(name = "SEQUMURZADZENIE", sequenceName = "SEQUMURZADZENIE")
+    private Long id;
+    @Size(min = 1, max = 256)
+    @Column(name = "nazwa", nullable = false, length = 256, unique = true)
+    private String nazwa;
+    @Size(min = 0, max = 256)
+    @Column(name = "nr_ser", nullable = true, length = 256, unique = true)
+    private String nrSer;
+    @Size(min = 0, max = 256)
+    @Column(name = "nr_inw", nullable = true, length = 256, unique = true)
+    private String nrInw;
+    @Size(min = 0, max = 256)
+    @Column(name = "osob_odp", nullable = true, length = 256, unique = true)
+    private String osobOdp;
+    @Size(min = 0, max = 256)
+    @Column(name = "lokalizacja", nullable = true, length = 256, unique = true)
+    private String lokalizacja;
+    @Size(min = 0, max = 256)
+    @Column(name = "firma_serw", nullable = true, length = 256, unique = true)
+    private String firmaSerw;
+    @Size(max = 10485760)
+    @Lob
+    private String notatka;
+    @Column(name = "data_wprow")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataPrzegl;
+    @ManyToOne()
+    private UmGrupa grupa;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public String getNrSer() {
+        return nrSer;
+    }
+
+    public void setNrSer(String nrSer) {
+        this.nrSer = nrSer;
+    }
+
+    public String getNrInw() {
+        return nrInw;
+    }
+
+    public void setNrInw(String nrInw) {
+        this.nrInw = nrInw;
+    }
+
+    public String getOsobOdp() {
+        return osobOdp;
+    }
+
+    public void setOsobOdp(String osobOdp) {
+        this.osobOdp = osobOdp;
+    }
+
+    public String getLokalizacja() {
+        return lokalizacja;
+    }
+
+    public void setLokalizacja(String lokalizacja) {
+        this.lokalizacja = lokalizacja;
+    }
+
+    public String getFirmaSerw() {
+        return firmaSerw;
+    }
+
+    public void setFirmaSerw(String firmaSerw) {
+        this.firmaSerw = firmaSerw;
+    }
+
+    public String getNotatka() {
+        return notatka;
+    }
+
+    public void setNotatka(String notatka) {
+        this.notatka = notatka;
+    }
+
+    public Date getDataPrzegl() {
+        return dataPrzegl;
+    }
+
+    public void setDataPrzegl(Date dataPrzegl) {
+        this.dataPrzegl = dataPrzegl;
+    }
+
+    public UmGrupa getGrupa() {
+        return grupa;
+    }
+
+    public void setGrupa(UmGrupa grupa) {
+        this.grupa = grupa;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof UmUrzadzenie)) {
+            return false;
+        }
+        UmUrzadzenie other = (UmUrzadzenie) object;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
+    }
+
+    @Override
+    public String toString() {
+        return "pl.eod2.encje.UmUrzadzenie[ id=" + id + " ]";
+    }
+
+}
