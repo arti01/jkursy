@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -25,6 +26,7 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
+@Table(name = "UM_GRUPA")
 public class UmGrupa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
