@@ -1,5 +1,24 @@
+2014-08-17
+Serwis Urządzen Medycznych
+
+w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
+
+INSERT INTO user_roles (id, role_name, opis) VALUES (10, 'eod_um_cfg','urzadzenia med-grupy i mastergrupy');
+INSERT INTO user_roles (id, role_name, opis) VALUES (11, 'eod_um_sprz','urzadzenia med-sprzet');
+
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (8, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (9, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (10, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (11, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (8, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (9, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (10, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (11, 2);
+
+
 2014-08-10
 Tablica Ogloszen
+
 w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');

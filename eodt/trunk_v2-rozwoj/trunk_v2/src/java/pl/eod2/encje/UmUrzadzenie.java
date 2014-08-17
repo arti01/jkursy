@@ -60,7 +60,7 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "data_wprow")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataPrzegl;
-    @ManyToOne()
+    @ManyToOne
     private UmGrupa grupa;
 
     public Long getId() {
