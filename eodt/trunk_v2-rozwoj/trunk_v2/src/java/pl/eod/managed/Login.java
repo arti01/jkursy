@@ -86,7 +86,7 @@ public class Login implements Serializable {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(!md5.equals(klucz)){
+        if(!md5.equalsIgnoreCase(klucz)){
             zalogowany = null;
             this.setBladLicencj(true);
             System.err.println(klucz+"licencja");
