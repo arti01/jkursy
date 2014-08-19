@@ -191,7 +191,7 @@ public class UmMasterGrupaJpaController implements Serializable {
     public UmMasterGrupa findUmMasterGrupa(String nazwa) {
         EntityManager em = getEntityManager();
         try {
-            Query q = em.createNamedQuery("findUmMasterGrupa.findByNazwa");
+            Query q = em.createNamedQuery("UmMasterGrupa.findByNazwa");
             q.setParameter("nazwa", nazwa);
             UmMasterGrupa u = (UmMasterGrupa) q.getResultList().get(0);
             //em.refresh(u.getStruktura());

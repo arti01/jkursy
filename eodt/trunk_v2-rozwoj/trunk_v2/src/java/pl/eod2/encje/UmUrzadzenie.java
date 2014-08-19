@@ -41,19 +41,16 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "nazwa", nullable = false, length = 256, unique = true)
     private String nazwa;
     @Size(min = 0, max = 256)
-    @Column(name = "nr_ser", nullable = true, length = 256, unique = true)
+    @Column(name = "nr_ser", nullable = true, length = 256, unique = false)
     private String nrSer;
     @Size(min = 0, max = 256)
-    @Column(name = "nr_inw", nullable = true, length = 256, unique = true)
+    @Column(name = "nr_inw", nullable = true, length = 256, unique = false)
     private String nrInw;
     @Size(min = 0, max = 256)
-    @Column(name = "osob_odp", nullable = true, length = 256, unique = true)
-    private String osobOdp;
-    @Size(min = 0, max = 256)
-    @Column(name = "lokalizacja", nullable = true, length = 256, unique = true)
+    @Column(name = "lokalizacja", nullable = true, length = 256, unique = false)
     private String lokalizacja;
     @Size(min = 0, max = 256)
-    @Column(name = "firma_serw", nullable = true, length = 256, unique = true)
+    @Column(name = "firma_serw", nullable = true, length = 256, unique = false)
     private String firmaSerw;
     @Size(max = 10485760)
     @Lob
@@ -98,14 +95,6 @@ public class UmUrzadzenie implements Serializable {
 
     public void setNrInw(String nrInw) {
         this.nrInw = nrInw;
-    }
-
-    public String getOsobOdp() {
-        return osobOdp;
-    }
-
-    public void setOsobOdp(String osobOdp) {
-        this.osobOdp = osobOdp;
     }
 
     public String getLokalizacja() {

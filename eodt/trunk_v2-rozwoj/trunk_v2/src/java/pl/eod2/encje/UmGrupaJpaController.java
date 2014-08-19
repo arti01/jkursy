@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.eod2.encje;
 
 import java.io.Serializable;
@@ -24,6 +23,7 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class UmGrupaJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public UmGrupaJpaController() {
@@ -37,10 +37,12 @@ public class UmGrupaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public String create(UmGrupa umGrupa) {
+    public String create(UmGrupa umGrupa) throws NonexistentEntityException, Exception {
+        if(umGrupa.getMasterGrp()==null) return "brak master grupy";
         if (umGrupa.getUrzadzenieList() == null) {
             umGrupa.setUrzadzenieList(new ArrayList<UmUrzadzenie>());
         }
+        String blad = null;
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -71,15 +73,28 @@ public class UmGrupaJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            String msg = ex.getLocalizedMessage();
+            if (msg == null || msg.length() == 0) {
+                Long id = umGrupa.getId();
+                if (findUmGrupa(id) == null) {
+                    throw new NonexistentEntityException("The umGrupa with id " + id + " no longer exists.");
+                }
+            }
+            umGrupa.setId(null);
+            blad="nazwa już istnieje";
+            ex.printStackTrace();
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return null;
+        return blad;
     }
 
     public String edit(UmGrupa umGrupa) throws NonexistentEntityException, Exception {
+        if(umGrupa.getMasterGrp()==null) return "brak master grupy";
+        String blad=null;
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -135,13 +150,15 @@ public class UmGrupaJpaController implements Serializable {
                     throw new NonexistentEntityException("The umGrupa with id " + id + " no longer exists.");
                 }
             }
-            throw ex;
+            ex.printStackTrace();
+            blad="nazwa już istnieje";
+            //throw ex;
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return null;
+        return blad;
     }
 
     public void destroy(Long id) throws NonexistentEntityException {
@@ -193,7 +210,7 @@ public class UmGrupaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public List<UmGrupa> findUmGrupaEntities() {
         return findUmGrupaEntities(true, -1, -1);
     }
@@ -239,5 +256,5 @@ public class UmGrupaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

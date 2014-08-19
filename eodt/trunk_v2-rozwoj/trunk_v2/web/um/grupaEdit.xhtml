@@ -19,12 +19,12 @@
                 <rich:message for="opisD" styleClass="error" /> 
 
                 <h:outputLabel for="masterD" value="rodzaj: "/>
-                <h:selectOneMenu id="masterD" value="#{UGrupaMg.obiekt.masterGrp}" converter="#{UmMasterGrpConv}" >
+                <rich:select id="masterD" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{UGrupaMg.obiekt.masterGrp}" converter="#{UmMasterGrpConv}" >
                     <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}"/>
-                </h:selectOneMenu>
+                </rich:select>
                 <rich:message for="masterD" styleClass="error" />
             </h:panelGrid>
-
+            
             <hr/>
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />

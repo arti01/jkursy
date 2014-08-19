@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.eod2.encje;
 
 import java.io.Serializable;
@@ -22,10 +21,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class UmUrzadzenieJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public UmUrzadzenieJpaController() {
-          if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -36,6 +36,9 @@ public class UmUrzadzenieJpaController implements Serializable {
     }
 
     public String create(UmUrzadzenie umUrzadzenie) {
+        if(umUrzadzenie.getGrupa()==null) return "brak grupy";
+        if(umUrzadzenie.getUserOdpow()==null) return "brak osoby odpowiedzialnej";
+        String blad = null;
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -51,16 +54,22 @@ public class UmUrzadzenieJpaController implements Serializable {
                 grupa = em.merge(grupa);
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            blad = "nazwa już istnieje";
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return null;
+        return blad;
     }
 
     public String edit(UmUrzadzenie umUrzadzenie) throws NonexistentEntityException, Exception {
+        String blad = null;
         EntityManager em = null;
+        if(umUrzadzenie.getGrupa()==null) return "brak grupy";
+        if(umUrzadzenie.getUserOdpow()==null) return "brak osoby odpowiedzialnej";
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -82,20 +91,15 @@ public class UmUrzadzenieJpaController implements Serializable {
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
-            String msg = ex.getLocalizedMessage();
-            if (msg == null || msg.length() == 0) {
-                Long id = umUrzadzenie.getId();
-                if (findUmUrzadzenie(id) == null) {
-                    throw new NonexistentEntityException("The umUrzadzenie with id " + id + " no longer exists.");
-                }
-            }
-            throw ex;
+            ex.printStackTrace();
+            umUrzadzenie.setId(null);
+            blad = "nazwa już istnieje";
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return null;
+        return blad;
     }
 
     public void destroy(Long id) throws NonexistentEntityException {
@@ -169,5 +173,5 @@ public class UmUrzadzenieJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

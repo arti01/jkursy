@@ -32,7 +32,15 @@
                         <f:facet name="header">opis</f:facet>
                             #{item.opis}
                     </rich:column>
-                    
+                    <rich:column>
+                        <f:facet name="header">grupy</f:facet>
+                        <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń">
+                            <rich:dataTable value="#{item.grupaList}" var="grupa" style="width: auto; border: white thick">
+                                <rich:column>#{grupa.nazwa}</rich:column>
+                            </rich:dataTable>
+                        </rich:collapsiblePanel>
+                    </rich:column>
+
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>

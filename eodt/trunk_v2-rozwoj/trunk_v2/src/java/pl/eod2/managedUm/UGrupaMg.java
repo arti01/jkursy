@@ -38,13 +38,14 @@ public class UGrupaMg {
         error = null;
     }
 
-    public void dodaj() {
+    public void dodaj() throws Exception {
         error = dcC.create(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
+            System.err.println(obiekt.getId());
         } else {
             refresh();
         }
