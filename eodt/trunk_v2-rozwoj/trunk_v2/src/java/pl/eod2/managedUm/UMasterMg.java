@@ -39,6 +39,7 @@ public class UMasterMg {
     }
 
     public void dodaj() {
+        obiekt.setSpolkaId(login.getZalogowany().getUserId().getSpolkaId());
         error = dcC.create(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
@@ -71,5 +72,39 @@ public class UMasterMg {
     public String list() {
         refresh();
         return "/um/master";
-    }  
+    }
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
+    public DataModel<UmMasterGrupa> getLista() {
+        return lista;
+    }
+
+    public void setLista(DataModel<UmMasterGrupa> lista) {
+        this.lista = lista;
+    }
+
+    public UmMasterGrupa getObiekt() {
+        return obiekt;
+    }
+
+    public void setObiekt(UmMasterGrupa obiekt) {
+        this.obiekt = obiekt;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+    
+    
 }

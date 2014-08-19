@@ -36,6 +36,7 @@ import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentKrokUzytkownik;
 import pl.eod2.encje.Ogloszenia;
+import pl.eod2.encje.UmUrzadzenie;
 
 /**
  *
@@ -125,6 +126,9 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "wprowadzil", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<Ogloszenia> ogloszeniaList;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userOdpow", orphanRemoval = false, fetch = FetchType.LAZY)
+    @OrderBy(value = "id DESC")
+    private List<UmUrzadzenie> urzadzenieList;
     @Transient
     boolean eodstru;
 
@@ -364,6 +368,14 @@ public class Uzytkownik implements Serializable {
 
     public void setOgloszeniaList(List<Ogloszenia> ogloszeniaList) {
         this.ogloszeniaList = ogloszeniaList;
+    }
+
+    public List<UmUrzadzenie> getUrzadzenieList() {
+        return urzadzenieList;
+    }
+
+    public void setUrzadzenieList(List<UmUrzadzenie> urzadzenieList) {
+        this.urzadzenieList = urzadzenieList;
     }
 
     @Override

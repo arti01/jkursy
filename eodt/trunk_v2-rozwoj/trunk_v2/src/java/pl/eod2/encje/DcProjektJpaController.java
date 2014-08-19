@@ -38,7 +38,7 @@ public class DcProjektJpaController implements Serializable {
 
     public String create(DcProjekt dcProjekt) {
         EntityManager em = null;
-        if ((findDcProjekt(dcProjekt.getNazwa())) != null) {
+        if (findDcProjekt(dcProjekt.getNazwa()) != null) {
             return "nazwa już istnieje";
         }
         try {
@@ -59,7 +59,7 @@ public class DcProjektJpaController implements Serializable {
     public String edit(DcProjekt dcProjekt) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         DcProjekt old=findDcProjekt(dcProjekt.getId());
-        if (findDcProjekt(dcProjekt.getNazwa()) != null && findDcProjekt(dcProjekt.getNazwa()).getId()!=old.getId()) {
+        if (findDcProjekt(dcProjekt.getNazwa()) != null && findDcProjekt(dcProjekt.getNazwa()).getId().equals(old.getId())) {
             return "nazwa już istnieje";
         }
         try {

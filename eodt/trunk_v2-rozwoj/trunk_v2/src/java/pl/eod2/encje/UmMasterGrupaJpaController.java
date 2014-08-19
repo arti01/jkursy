@@ -3,19 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.eod2.encje;
 
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 /**
@@ -23,10 +23,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  * @author arti01
  */
 public class UmMasterGrupaJpaController implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     public UmMasterGrupaJpaController() {
-       if (this.emf == null) {
+        if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
     }
@@ -37,6 +38,10 @@ public class UmMasterGrupaJpaController implements Serializable {
     }
 
     public String create(UmMasterGrupa umMasterGrupa) {
+        if (findUmMasterGrupa(umMasterGrupa.getNazwa()) != null) {
+            return "nazwa już istnieje";
+        }
+
         if (umMasterGrupa.getGrupaList() == null) {
             umMasterGrupa.setGrupaList(new ArrayList<UmGrupa>());
         }
@@ -70,6 +75,10 @@ public class UmMasterGrupaJpaController implements Serializable {
     }
 
     public String edit(UmMasterGrupa umMasterGrupa) throws NonexistentEntityException, Exception {
+        UmMasterGrupa old = findUmMasterGrupa(umMasterGrupa.getId());
+        if (findUmMasterGrupa(umMasterGrupa.getNazwa()) != null && findUmMasterGrupa(umMasterGrupa.getNazwa()).getId().equals(old.getId())) {
+            return "nazwa już istnieje";
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -179,6 +188,25 @@ public class UmMasterGrupaJpaController implements Serializable {
         }
     }
 
+    public UmMasterGrupa findUmMasterGrupa(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("findUmMasterGrupa.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            UmMasterGrupa u = (UmMasterGrupa) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     public int getUmMasterGrupaCount() {
         EntityManager em = getEntityManager();
         try {
@@ -191,5 +219,5 @@ public class UmMasterGrupaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

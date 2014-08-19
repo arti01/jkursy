@@ -3,6 +3,8 @@ Serwis Urządzen Medycznych
 
 w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
 
+Urządzenia są ograniczone w ramach spółki (mastergrupy też)
+
 INSERT INTO user_roles (id, role_name, opis) VALUES (10, 'eod_um_cfg','urzadzenia med-grupy i mastergrupy');
 INSERT INTO user_roles (id, role_name, opis) VALUES (11, 'eod_um_sprz','urzadzenia med-sprzet');
 

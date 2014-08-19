@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -174,6 +175,25 @@ public class UmGrupaJpaController implements Serializable {
         }
     }
 
+    public UmGrupa findUmGrupa(String nazwa) {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("findUmGrupa.findByNazwa");
+            q.setParameter("nazwa", nazwa);
+            UmGrupa u = (UmGrupa) q.getResultList().get(0);
+            //em.refresh(u.getStruktura());
+            return u;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<UmGrupa> findUmGrupaEntities() {
         return findUmGrupaEntities(true, -1, -1);
     }

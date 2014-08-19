@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -60,8 +61,12 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "data_wprow")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataPrzegl;
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private UmGrupa grupa;
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Uzytkownik userOdpow;
 
     public Long getId() {
         return id;
@@ -141,6 +146,14 @@ public class UmUrzadzenie implements Serializable {
 
     public void setGrupa(UmGrupa grupa) {
         this.grupa = grupa;
+    }
+
+    public Uzytkownik getUserOdpow() {
+        return userOdpow;
+    }
+
+    public void setUserOdpow(Uzytkownik userOdpow) {
+        this.userOdpow = userOdpow;
     }
 
     @Override

@@ -9,22 +9,16 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.Struktura;
 import pl.eod.managed.Login;
-import pl.eod2.encje.Ogloszenia;
-import pl.eod2.encje.OgloszeniaJpaController;
 import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmGrupaJpaController;
-import pl.eod2.encje.UmUrzadzenie;
-import pl.eod2.encje.UmUrzadzenieJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 @ManagedBean(name = "UGrupaMg")
 @SessionScoped
 public class UGrupaMg {
-
-    @ManagedProperty(value = "#{login}")
+@ManagedProperty(value = "#{login}")
     private Login login;
     private DataModel<UmGrupa> lista = new ListDataModel<UmGrupa>();
     private UmGrupaJpaController dcC;
@@ -40,6 +34,7 @@ public class UGrupaMg {
     public void refresh() {
         lista.setWrappedData(dcC.findUmGrupaEntities());
         obiekt = new UmGrupa();
+        login.refresh();
         error = null;
     }
 
@@ -75,7 +70,7 @@ public class UGrupaMg {
 
     public String list() {
         refresh();
-        return "/ogloszenia/ogloszenia";
+        return "/um/grupa";
     }
 
     public Login getLogin() {
@@ -109,7 +104,7 @@ public class UGrupaMg {
     public void setError(String error) {
         this.error = error;
     }
-
+    
     
 }
 

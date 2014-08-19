@@ -23,6 +23,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
+import pl.eod2.encje.UmMasterGrupa;
 
 /**
  *
@@ -62,6 +63,9 @@ public class Spolki implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spolkaId", orphanRemoval = true)
     @OrderBy(value = "id DESC")
     private List<Uzytkownik> userList;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "spolkaId", orphanRemoval = false)
+    @OrderBy(value = "id DESC")
+    private List<UmMasterGrupa> umMasterGrupaList;
 
     public Spolki() {
     }
@@ -113,6 +117,14 @@ public class Spolki implements Serializable {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public List<UmMasterGrupa> getUmMasterGrupaList() {
+        return umMasterGrupaList;
+    }
+
+    public void setUmMasterGrupaList(List<UmMasterGrupa> umMasterGrupaList) {
+        this.umMasterGrupaList = umMasterGrupaList;
     }
 
     @Override
