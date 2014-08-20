@@ -91,7 +91,6 @@ public class UsersM implements Serializable {
         //struktury = new ListDataModel<Struktura>();
         //struktury.setWrappedData(struktC.findStrukturaWidoczni(login.zalogowany.getUserId().getSpolkaId()));
         roleAll = urC.findDostepneDoEdycji();
-        System.err.println(dzialC.findDzial(new Long(551)).getSymbol()+"find");
         dzialyAll = dzialC.findDzialEntities(login.zalogowany.getUserId().getSpolkaId());
         kierownicyAll = struktC.getFindKierownicy(login.zalogowany.getUserId().getSpolkaId());
         users = userC.findUzytkownikEntities(login.zalogowany.getUserId().getSpolkaId(), true);
@@ -203,9 +202,7 @@ public class UsersM implements Serializable {
         }
         error = struktC.editArti(strukt);
         if (error == null) {
-            System.err.println(dzialC.findDzial(new Long(551)).getSymbol()+"find");
             initUser();
-            System.err.println(dzialC.findDzial(new Long(551)).getSymbol()+"find");
             //error = "Zmiana wykonana";
             return "/all/usersList?faces-redirect=true";
         }

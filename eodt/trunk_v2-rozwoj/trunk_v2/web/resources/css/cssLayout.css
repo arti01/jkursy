@@ -4,7 +4,7 @@
     background-color: #C1DFFF;
     color: black;
     padding: 0px;
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 5px 0px;
     text-align: center;
     font-family: Times New Roman, sans;
     
@@ -132,7 +132,7 @@
     background-color: white;
     padding: 1px;
     margin-left: 155px;
-    height: 650px;
+    height: 720px;
     width: 1060px;
     overflow: auto;
     border: 1px solid black;
@@ -190,7 +190,7 @@
 
 #tabela table tr > td:first child
 {
-    max-width: 350px;
+    max-width: 450px;
 
 }
 #tabela hr
@@ -222,7 +222,7 @@
 
 #tabela table td
 {
-    max-width: 800px;
+    max-width: 900px;
     padding: 1px 1px;
      border-bottom: 1px solid darkblue;
     /*border: 0px solid #FFFFFF;*/
