@@ -6,12 +6,14 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
@@ -35,10 +37,11 @@ public class UmUrzadzenieJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public String create(UmUrzadzenie umUrzadzenie) {
-        if(umUrzadzenie.getGrupa()==null) return "brak grupy";
-        if(umUrzadzenie.getUserOdpow()==null) return "brak osoby odpowiedzialnej";
-        String blad = null;
+    public Map<String, String> create(UmUrzadzenie umUrzadzenie) {
+        Map<String, String> bledy=new HashMap<String, String>();
+        if(umUrzadzenie.getGrupa()==null) bledy.put("grupaD", "brak grupy");
+        if(umUrzadzenie.getUserOdpow()==null) bledy.put("userOdpowD", "brak osoby odpowiedzialnej");
+        if(!bledy.isEmpty()) return bledy;
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -56,20 +59,23 @@ public class UmUrzadzenieJpaController implements Serializable {
             em.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            blad = "nazwa już istnieje";
+            umUrzadzenie.setId(null);
+            bledy.put("nameD", "nazwa już istnieje");
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return blad;
+        return bledy;
     }
 
-    public String edit(UmUrzadzenie umUrzadzenie) throws NonexistentEntityException, Exception {
-        String blad = null;
+    public Map<String, String>  edit(UmUrzadzenie umUrzadzenie) throws NonexistentEntityException, Exception {
+        Map<String, String> bledy=new HashMap<String, String>();
+        if(umUrzadzenie.getGrupa()==null) bledy.put("grupaD", "brak grupy");
+        if(umUrzadzenie.getUserOdpow()==null) bledy.put("userOdpowD", "brak osoby odpowiedzialnej");
+        if(!bledy.isEmpty()) return bledy;
+        
         EntityManager em = null;
-        if(umUrzadzenie.getGrupa()==null) return "brak grupy";
-        if(umUrzadzenie.getUserOdpow()==null) return "brak osoby odpowiedzialnej";
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -93,13 +99,13 @@ public class UmUrzadzenieJpaController implements Serializable {
         } catch (Exception ex) {
             ex.printStackTrace();
             umUrzadzenie.setId(null);
-            blad = "nazwa już istnieje";
+            bledy.put("nameD", "nazwa już istnieje");
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-        return blad;
+        return bledy;
     }
 
     public void destroy(Long id) throws NonexistentEntityException {

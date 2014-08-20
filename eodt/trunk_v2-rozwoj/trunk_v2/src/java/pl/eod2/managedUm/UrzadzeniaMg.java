@@ -1,7 +1,9 @@
 package pl.eod2.managedUm;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,7 +31,7 @@ public class UrzadzeniaMg {
     @ManagedProperty(value = "#{login}")
     private Login login;
     private DataModel<UmUrzadzenie> lista = new ListDataModel<UmUrzadzenie>();
-    private List<UmGrupa> grupyList=new ArrayList<UmGrupa>();
+    private List<UmGrupa> grupyList = new ArrayList<UmGrupa>();
     private UmUrzadzenieJpaController dcC;
     private UmUrzadzenie obiekt;
     private String error;
@@ -45,32 +47,50 @@ public class UrzadzeniaMg {
         lista.setWrappedData(dcC.findUmUrzadzenieEntities());
         obiekt = new UmUrzadzenie();
         grupyList.clear();
-        for(UmMasterGrupa mg:login.getZalogowany().getUserId().getSpolkaId().getUmMasterGrupaList()){
+        for (UmMasterGrupa mg : login.getZalogowany().getUserId().getSpolkaId().getUmMasterGrupaList()) {
             grupyList.addAll(mg.getGrupaList());
         }
         error = null;
     }
 
     public void dodaj() {
-        error = dcC.create(obiekt);
-        if (error != null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+        Map<String, String> errorMap = dcC.create(obiekt);
+        if (!errorMap.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
+            //przycisk zapisz/dodaj
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
-            context.addMessage(zapisz.getClientId(context), message);
+            for (Map.Entry<String, String> entry : errorMap.entrySet()) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, entry.getValue(), entry.getValue());
+                UIComponent input = zapisz.getParent().findComponent(entry.getKey());
+                context.addMessage(input.getClientId(context), message);
+            }
+            /*error = dcC.create(obiekt);
+             if (error != null) {
+             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+             FacesContext context = FacesContext.getCurrentInstance();
+
+             UIComponent zapisz = UIComponent.getCurrentComponent(context);
+             System.err.println(zapisz.getParent().getClientId());
+             UIComponent osoba = zapisz.getParent().findComponent("userOdpowD");
+             System.err.println(osoba.getClientId());
+             context.addMessage(zapisz.getClientId(context), message);
+             context.addMessage(osoba.getClientId(context), message);*/
         } else {
             refresh();
         }
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        error=dcC.edit(obiekt);
-        if (error != null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
+        Map<String, String> errorMap = dcC.edit(obiekt);
+        if (!errorMap.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
+            //przycisk zapisz/dodaj
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
-            context.addMessage(zapisz.getClientId(context), message);
-            lista.setWrappedData(dcC.findUmUrzadzenieEntities());
+            for (Map.Entry<String, String> entry : errorMap.entrySet()) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, entry.getValue(), entry.getValue());
+                UIComponent input = zapisz.getParent().findComponent(entry.getKey());
+                context.addMessage(input.getClientId(context), message);
+            }
         } else {
             refresh();
         }
@@ -125,6 +145,5 @@ public class UrzadzeniaMg {
     public void setGrupyList(List<UmGrupa> grupyList) {
         this.grupyList = grupyList;
     }
-    
-}
 
+}
