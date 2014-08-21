@@ -77,7 +77,6 @@ public class StruktOsM implements Serializable {
                 } catch (NullPointerException ex) {
                     System.err.println("Problem w strukturze - istnieje podwładny generycznego(szefa wszystkich szefów), który ma ID_spolki NULL, a nie powinien");
                     ex.printStackTrace();
-                    continue;
                 }
             }
         }

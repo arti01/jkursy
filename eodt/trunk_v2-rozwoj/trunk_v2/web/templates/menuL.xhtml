@@ -118,6 +118,11 @@
                                     Grupy
                                 </rich:panelMenuItem>
                             </h:commandLink>
+                            <h:commandLink action="#{UStruktMg.list}">
+                                <rich:panelMenuItem >
+                                    Drzewo
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
                         
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">

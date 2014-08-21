@@ -39,6 +39,8 @@ CREATE INDEX ix_dc_dokument_symbol_sp_dzial ON dc_dokument;
 ALTER TABLE dc_dokument ADD COLUMN symbol_nr_kol integer;
 CREATE INDEX ix_dc_dokument_symbol_sp_dzialON dc_dokument;
 
+ALTER TABLE dc_rodzaj ADD COLUMN symbol character varying(5);
+
 INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
 
 ALTER TABLE dc_dokument ADD COLUMN arch_data timestamp without time zone;
