@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import pl.eod.encje.Uzytkownik;
@@ -64,6 +65,8 @@ public class UmUrzadzenie implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Uzytkownik userOdpow;
+    @Transient
+    private boolean dataNizDzis;
 
     public Long getId() {
         return id;
@@ -143,6 +146,17 @@ public class UmUrzadzenie implements Serializable {
 
     public void setUserOdpow(Uzytkownik userOdpow) {
         this.userOdpow = userOdpow;
+    }
+
+    public boolean isDataNizDzis() {
+        dataNizDzis = false;
+        if (dataPrzegl == null) {
+            return dataNizDzis;
+        }
+        if (this.dataPrzegl.before(new Date())) {
+            dataNizDzis = true;
+        }
+        return dataNizDzis;
     }
 
     @Override

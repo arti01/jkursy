@@ -36,7 +36,10 @@
                         <f:facet name="header">grupy</f:facet>
                         <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń">
                             <rich:dataTable value="#{item.grupaList}" var="grupa" style="width: auto; border: white thick">
-                                <rich:column>#{grupa.nazwa}</rich:column>
+                                <rich:column>
+                                    <rich:tooltip target="grupaN" value="#{grupa.opis}" layout="block"/>
+                                    <h:outputText id="grupaN" value="#{grupa.nazwa}"/>
+                                    </rich:column>
                             </rich:dataTable>
                         </rich:collapsiblePanel>
                     </rich:column>

@@ -35,6 +35,13 @@ public class UrzadzeniaMg {
     private UmUrzadzenieJpaController dcC;
     private UmUrzadzenie obiekt;
     private String error;
+    private String filtrNazwa;
+    private String filtrNrSer;
+    private String filtrNrInw;
+    private String filtrLokal;
+    private String filtrOsobOdp;
+    private String filtrFirmaSerw;
+    private String filtrGrupa;
 
     @PostConstruct
     void init() {
@@ -110,6 +117,16 @@ public class UrzadzeniaMg {
         return login;
     }
 
+    public void clearFiltr() {
+        filtrNazwa = null;
+        filtrNrSer = null;
+        filtrNrInw = null;
+        filtrLokal = null;
+        filtrOsobOdp = null;
+        filtrFirmaSerw = null;
+        filtrGrupa = null;
+    }
+
     public void setLogin(Login login) {
         this.login = login;
     }
@@ -144,6 +161,62 @@ public class UrzadzeniaMg {
 
     public void setGrupyList(List<UmGrupa> grupyList) {
         this.grupyList = grupyList;
+    }
+
+    public String getFiltrNazwa() {
+        return filtrNazwa;
+    }
+
+    public void setFiltrNazwa(String filtrNazwa) {
+        this.filtrNazwa = filtrNazwa;
+    }
+
+    public String getFiltrNrSer() {
+        return filtrNrSer;
+    }
+
+    public void setFiltrNrSer(String filtrNrSer) {
+        this.filtrNrSer = filtrNrSer;
+    }
+
+    public String getFiltrNrInw() {
+        return filtrNrInw;
+    }
+
+    public void setFiltrNrInw(String filtrNrInw) {
+        this.filtrNrInw = filtrNrInw;
+    }
+
+    public String getFiltrLokal() {
+        return filtrLokal;
+    }
+
+    public void setFiltrLokal(String filtrLokal) {
+        this.filtrLokal = filtrLokal;
+    }
+
+    public String getFiltrOsobOdp() {
+        return filtrOsobOdp;
+    }
+
+    public void setFiltrOsobOdp(String filtrOsobOdp) {
+        this.filtrOsobOdp = filtrOsobOdp;
+    }
+
+    public String getFiltrFirmaSerw() {
+        return filtrFirmaSerw;
+    }
+
+    public void setFiltrFirmaSerw(String filtrFirmaSerw) {
+        this.filtrFirmaSerw = filtrFirmaSerw;
+    }
+
+    public String getFiltrGrupa() {
+        return filtrGrupa;
+    }
+
+    public void setFiltrGrupa(String filtrGrupa) {
+        this.filtrGrupa = filtrGrupa;
     }
 
 }
