@@ -11,20 +11,19 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        <div id="tabela">
-            <h:form>
-                <rich:tree toggleType="client" var="master">
-                    <rich:treeModelRecursiveAdaptor roots="#{UStruktMg.masterList}" nodes="#{master.grupaList}">
-                        <rich:treeNode>
-                            #{master.nazwa}[[[[[[
-                        </rich:treeNode>
-                        <rich:treeModelAdaptor nodes="#{master.grupaList}">
-                            <rich:treeNode>#{master}</rich:treeNode>
-                        </rich:treeModelAdaptor>
-                    </rich:treeModelRecursiveAdaptor>
-                </rich:tree>
-            </h:form>
-        </div>
+        <h:form>
+            <rich:tree id="tree" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="client">
+                <rich:treeNode type="master">
+                    #{node.name}
+                </rich:treeNode>
+                <rich:treeNode type="grupa">
+                    #{node.name}
+                </rich:treeNode>
+                <rich:treeNode type="urzadz">
+                    #{node.name}
+                </rich:treeNode>
+            </rich:tree>
+        </h:form>
     </ui:define>
 
 </ui:composition>
