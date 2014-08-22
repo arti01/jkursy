@@ -27,12 +27,12 @@ public class DrzGrupa extends NamedNode implements TreeNode{
     
     @Override
     public TreeNode getChildAt(int childIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return drzUrzad.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return drzUrzad.size();
     }
 
     @Override

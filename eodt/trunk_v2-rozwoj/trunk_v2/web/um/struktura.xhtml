@@ -11,18 +11,32 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <rich:dragIndicator id="ind">
+            Drag the item to proper area..
+        </rich:dragIndicator>
         <h:form>
-            <rich:tree id="tree" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="client">
-                <rich:treeNode type="master">
-                    #{node.name}
-                </rich:treeNode>
-                <rich:treeNode type="grupa">
-                    #{node.name}
-                </rich:treeNode>
-                <rich:treeNode type="urzadz">
-                    #{node.name}
-                </rich:treeNode>
-            </rich:tree>
+            <rich:panel id="panelDrz">
+                <rich:tree id="tree" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="client" rowKeyVar="row">
+                    <rich:treeNode type="master">
+                        <a4j:outputPanel layout="block" id="panelTr_#{row}">
+                            #{node.name}
+                            <rich:dropTarget acceptedTypes="urzadz"  dropListener="#{UStruktMg.drop}" 
+                                             render="panelTr_#{row}, panelSr_#{row}" dropValue="#{node}"/>
+                        </a4j:outputPanel>
+                    </rich:treeNode>
+                    <rich:treeNode type="grupa">
+                        #{node.name}
+                        <rich:dropTarget acceptedTypes="urzadz"  dropListener="#{UStruktMg.drop}" 
+                                         render="panelDrz" dropValue="#{node}"/>
+                    </rich:treeNode>
+                    <rich:treeNode type="urzadz">
+                        <a4j:outputPanel id="panelSr_#{row}" layout="block">
+                            #{node.name}
+                            <rich:dragSource dragValue="#{node}" type="urzadz" dragIndicator="ind"/>
+                        </a4j:outputPanel>
+                    </rich:treeNode>
+                </rich:tree>
+            </rich:panel>
         </h:form>
     </ui:define>
 

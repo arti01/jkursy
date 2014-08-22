@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package pl.eod2.managedUm;
 
 import com.google.common.collect.Iterators;
@@ -16,27 +15,28 @@ import javax.swing.tree.TreeNode;
  *
  * @author arti01
  */
-public class DrzMaster extends NamedNode implements TreeNode{
+public class DrzMaster extends NamedNode implements TreeNode {
+
     private static final long serialVersionUID = 1L;
-    private List<DrzGrupa>drzGrupa=new ArrayList<DrzGrupa>();
+    private List<DrzGrupa> drzGrupa = new ArrayList<DrzGrupa>();
 
     public DrzMaster() {
         setType("master");
     }
-    
+
     @Override
     public TreeNode getChildAt(int childIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return drzGrupa.get(childIndex);
     }
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return drzGrupa.size();
     }
 
     @Override
     public TreeNode getParent() {
-       return null;
+        return null;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class DrzMaster extends NamedNode implements TreeNode{
 
     @Override
     public Enumeration<DrzGrupa> children() {
-       return Iterators.asEnumeration(drzGrupa.iterator());
+        return Iterators.asEnumeration(drzGrupa.iterator());
     }
 
     public List<DrzGrupa> getDrzGrupa() {
@@ -66,5 +66,5 @@ public class DrzMaster extends NamedNode implements TreeNode{
     public void setDrzGrupa(List<DrzGrupa> drzGrupa) {
         this.drzGrupa = drzGrupa;
     }
-    
+
 }

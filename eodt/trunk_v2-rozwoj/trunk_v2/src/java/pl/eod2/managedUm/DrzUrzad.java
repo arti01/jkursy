@@ -29,7 +29,7 @@ public class DrzUrzad extends NamedNode implements TreeNode{
 
     @Override
     public int getChildCount() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return 0;
     }
 
     @Override

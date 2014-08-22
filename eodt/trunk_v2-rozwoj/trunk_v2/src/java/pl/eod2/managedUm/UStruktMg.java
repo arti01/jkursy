@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.swing.tree.TreeNode;
+import org.richfaces.event.DropEvent;
 import pl.eod.managed.Login;
 import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmMasterGrupa;
@@ -60,6 +61,22 @@ public class UStruktMg {
         return "/um/struktura";
     }
 
+    @SuppressWarnings("unchecked")
+    public void drop(DropEvent event) throws Exception{
+         System.err.println(event.getDragValue());
+         System.err.println(event.getDropValue());
+         /*if(event.getDragValue().getClass().equals(ArrayList.class)){
+             odbiorcyList.addAll((List<Struktura>) event.getDragValue());
+             odbiorcyList.add(odbiorcyList.get(0).getSzefId());
+         }else {
+             odbiorcyList.add((Struktura) event.getDragValue());
+         }*/
+         //struktura=(Struktura) event.getDragValue();
+         //Ogloszenia ogl=(Ogloszenia) event.getDropValue();
+         //ogl.getAdresaciList().addAll(odbiorcyList);
+         //error=dcC.edit(ogl);
+    }
+    
     public Login getLogin() {
         return login;
     }
