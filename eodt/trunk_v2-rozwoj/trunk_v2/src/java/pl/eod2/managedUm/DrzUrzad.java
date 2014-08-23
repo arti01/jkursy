@@ -6,7 +6,6 @@
 
 package pl.eod2.managedUm;
 
-import com.google.common.collect.Iterators;
 import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
 
@@ -18,8 +17,9 @@ public class DrzUrzad extends NamedNode implements TreeNode{
     private static final long serialVersionUID = 1L;
     private DrzGrupa drzGrupa;
 
-    public DrzUrzad() {
-        setType("urzadz");
+    public DrzUrzad(String name, Long id, String opis) {
+        super(name, id, opis);
+        type="urzadz";
     }
     
     @Override

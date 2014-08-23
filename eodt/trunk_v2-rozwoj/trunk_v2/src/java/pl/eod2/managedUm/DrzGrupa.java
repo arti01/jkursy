@@ -19,10 +19,12 @@ import javax.swing.tree.TreeNode;
 public class DrzGrupa extends NamedNode implements TreeNode{
     private static final long serialVersionUID = 1L;
     private DrzMaster drzMaster;
+    private Long id;
     private List<DrzUrzad>drzUrzad=new ArrayList<DrzUrzad>();
 
-    public DrzGrupa() {
-        setType("grupa");
+    public DrzGrupa(String name, Long id, String opis) {
+        super(name, id, opis);
+        type="grupa";
     }
     
     @Override

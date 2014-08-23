@@ -20,9 +20,12 @@ public class DrzMaster extends NamedNode implements TreeNode {
     private static final long serialVersionUID = 1L;
     private List<DrzGrupa> drzGrupa = new ArrayList<DrzGrupa>();
 
-    public DrzMaster() {
-        setType("master");
+    public DrzMaster(String name, Long id, String opis) {
+        super(name, id, opis);
+        type="master";
     }
+
+
 
     @Override
     public TreeNode getChildAt(int childIndex) {

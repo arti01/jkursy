@@ -7,12 +7,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.swing.tree.TreeNode;
+import org.richfaces.component.UITree;
+import org.richfaces.component.UITreeNode;
 import org.richfaces.event.DropEvent;
+import org.richfaces.event.TreeToggleEvent;
 import pl.eod.managed.Login;
 import pl.eod2.encje.UmGrupa;
+import pl.eod2.encje.UmGrupaJpaController;
 import pl.eod2.encje.UmMasterGrupa;
 import pl.eod2.encje.UmMasterGrupaJpaController;
 import pl.eod2.encje.UmUrzadzenie;
+import pl.eod2.encje.UmUrzadzenieJpaController;
 
 @ManagedBean(name = "UStruktMg")
 @SessionScoped
@@ -21,11 +26,15 @@ public class UStruktMg {
     @ManagedProperty(value = "#{login}")
     private Login login;
     private UmMasterGrupaJpaController dcC;
+    private UmGrupaJpaController dcG;
+    private UmUrzadzenieJpaController dcU;
     private List<TreeNode> rootNodes = new ArrayList<TreeNode>();
 
     @PostConstruct
     void init() {
         dcC = new UmMasterGrupaJpaController();
+        dcG = new UmGrupaJpaController();
+        dcU = new UmUrzadzenieJpaController();
         refresh();
     }
 
@@ -34,23 +43,18 @@ public class UStruktMg {
         List<UmMasterGrupa> masterList = login.getZalogowany().getUserId().getSpolkaId().getUmMasterGrupaList();
         rootNodes.clear();
         for (UmMasterGrupa mg : masterList) {
-            DrzMaster drMa = new DrzMaster();
-            drMa.setName(mg.getNazwa());
+            DrzMaster drMa = new DrzMaster(mg.getNazwa(), mg.getId(), mg.getOpis());
             
             for (UmGrupa gr : mg.getGrupaList()) {
-                DrzGrupa drGr = new DrzGrupa();
-                drGr.setName(gr.getNazwa());
+                DrzGrupa drGr = new DrzGrupa(gr.getNazwa(), gr.getId(), gr.getOpis());
             
                 for(UmUrzadzenie uz:gr.getUrzadzenieList()){
-                    DrzUrzad drzU=new DrzUrzad();
-                    drzU.setName(uz.getNazwa());
+                    DrzUrzad drzU=new DrzUrzad(uz.getNazwa(), uz.getId(), uz.getNrInw()+uz.getNrSer()+uz.getNotatka());
                     drGr.getDrzUrzad().add(drzU);
                 }
                 drMa.getDrzGrupa().add(drGr);
             }
-            
             rootNodes.add(drMa);
-
         }
         //srcRoots.get(0).getGrupaList();
         //srcRoots.get(0).getGrupaList().get(0).getUrzadzenieList();
@@ -63,20 +67,33 @@ public class UStruktMg {
 
     @SuppressWarnings("unchecked")
     public void drop(DropEvent event) throws Exception{
-         System.err.println(event.getDragValue());
-         System.err.println(event.getDropValue());
-         /*if(event.getDragValue().getClass().equals(ArrayList.class)){
-             odbiorcyList.addAll((List<Struktura>) event.getDragValue());
-             odbiorcyList.add(odbiorcyList.get(0).getSzefId());
-         }else {
-             odbiorcyList.add((Struktura) event.getDragValue());
-         }*/
-         //struktura=(Struktura) event.getDragValue();
-         //Ogloszenia ogl=(Ogloszenia) event.getDropValue();
-         //ogl.getAdresaciList().addAll(odbiorcyList);
-         //error=dcC.edit(ogl);
+
+         //przeniesienie urządzenia
+         if(event.getDragValue().getClass().equals(pl.eod2.managedUm.DrzUrzad.class)){
+             DrzUrzad drU=(DrzUrzad) event.getDragValue();
+             UmUrzadzenie uz=dcU.findUmUrzadzenie(drU.getId());
+             
+             DrzGrupa drG=(DrzGrupa) event.getDropValue();
+             UmGrupa gr=dcG.findUmGrupa(drG.getId());
+             
+             uz.setGrupa(gr);
+             dcU.edit(uz);
+         }
+         
+         //przeniesienie grupy
+         if(event.getDragValue().getClass().equals(pl.eod2.managedUm.DrzGrupa.class)){
+             DrzGrupa drU=(DrzGrupa) event.getDragValue();
+             UmGrupa uz=dcG.findUmGrupa(drU.getId());
+             
+             DrzMaster drG=(DrzMaster) event.getDropValue();
+             UmMasterGrupa gr=dcC.findUmMasterGrupa(drG.getId());
+             uz.setMasterGrp(gr);
+             dcG.edit(uz);
+         }
+         
+         refresh();
     }
-    
+        
     public Login getLogin() {
         return login;
     }
