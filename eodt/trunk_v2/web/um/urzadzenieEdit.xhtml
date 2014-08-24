@@ -11,27 +11,27 @@
         <rich:popupPanel header="Wprowadź dane" id="dodajPaneRodzaj"  autosized="true" domElementAttachment="parent" >
             <h:panelGrid columns="3" id="dodajGrid">
                 <h:outputLabel for="nameD" value="nazwa: "/>
-                <h:inputText id="nameD" value="#{UrzadzeniaMg.obiekt.nazwa}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="nameD" value="#{UrzadzeniaMg.obiekt.nazwa}"  size="80" ><rich:validator/></h:inputText>
                 <rich:message for="nameD" styleClass="error" />
 
                 <h:outputLabel for="opisD" value="opis: "/>
-                <h:inputTextarea id="opisD" value="#{UrzadzeniaMg.obiekt.notatka}"  cols="90" ><rich:validator/></h:inputTextarea>
+                <h:inputTextarea id="opisD" value="#{UrzadzeniaMg.obiekt.notatka}"  cols="80" ><rich:validator/></h:inputTextarea>
                 <rich:message for="opisD" styleClass="error" /> 
 
                 <h:outputLabel for="nrInwD" value="nr inwentarzowy: "/>
-                <h:inputText id="nrInwD" value="#{UrzadzeniaMg.obiekt.nrInw}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="nrInwD" value="#{UrzadzeniaMg.obiekt.nrInw}"  size="80" ><rich:validator/></h:inputText>
                 <rich:message for="nrInwD" styleClass="error" />
 
                 <h:outputLabel for="nrSerD" value="nr seryjny: "/>
-                <h:inputText id="nrSerD" value="#{UrzadzeniaMg.obiekt.nrSer}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="nrSerD" value="#{UrzadzeniaMg.obiekt.nrSer}"  size="80" ><rich:validator/></h:inputText>
                 <rich:message for="nrSerD" styleClass="error" />
 
                 <h:outputLabel for="lokalizacjaD" value="lokalizacja: "/>
-                <h:inputText id="lokalizacjaD" value="#{UrzadzeniaMg.obiekt.lokalizacja}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="lokalizacjaD" value="#{UrzadzeniaMg.obiekt.lokalizacja}"  size="80" ><rich:validator/></h:inputText>
                 <rich:message for="lokalizacjaD" styleClass="error" />
 
                 <h:outputLabel for="firmaSerwD" value="firma serwisująca: "/>
-                <h:inputText id="firmaSerwD" value="#{UrzadzeniaMg.obiekt.firmaSerw}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="firmaSerwD" value="#{UrzadzeniaMg.obiekt.firmaSerw}"  size="80" ><rich:validator/></h:inputText>
                 <rich:message for="firmaSerwD" styleClass="error" />
 
                 <h:outputLabel for="dataD" value="data przedlądu: "/>
@@ -41,13 +41,25 @@
                     <rich:validator /></rich:calendar>
                 <rich:message for="dataD" styleClass="error" />
 
-                <h:outputLabel for="grupaD" value="grupa: "/>
+                <h:outputLabel for="grupaD" value="grupa: ">
+                    <rich:tooltip target="imgCl_1" value="wyczyść wybór" layout="block"/>
+                    <a4j:commandButton id="imgCl_1" render="grupaD" image="/images/clear.png">
+                        <a4j:param assignTo="#{UrzadzeniaMg.obiekt.grupa}" value="#{null}"/>
+                    </a4j:commandButton>
+                </h:outputLabel>
                 <rich:select id="grupaD" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{UrzadzeniaMg.obiekt.grupa}" converter="#{UmGrupaConv}"  >
                     <f:selectItems value="#{UrzadzeniaMg.grupyList}" var="grupa" itemValue="#{grupa}" itemLabel="#{grupa.nazwa}"/>
                 </rich:select>
                 <rich:message for="grupaD" styleClass="error" />
-                
-                <h:outputLabel for="userOdpowD" value="osoba odpowiedzialna: "/>
+
+                <h:panelGrid columns="2" style="width: 150px">
+                    <h:outputLabel for="userOdpowD" value="osoba odpowiedzialna: ">
+                        <rich:tooltip target="imgCl_2" value="wyczyść wybór" layout="block"/>
+                        <a4j:commandButton id="imgCl_2" render="userOdpowD" image="/images/clear.png">
+                            <a4j:param assignTo="#{UrzadzeniaMg.obiekt.userOdpow}" value="#{null}"/>
+                        </a4j:commandButton>
+                    </h:outputLabel>
+                </h:panelGrid>
                 <rich:select id="userOdpowD" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{UrzadzeniaMg.obiekt.userOdpow}" converter="#{UzytkownikConv}"  >
                     <f:selectItems value="#{UrzadzeniaMg.login.zalogowany.userId.spolkaId.userList}" var="user" itemValue="#{user}" itemLabel="#{user.fullname}"/>
                 </rich:select>

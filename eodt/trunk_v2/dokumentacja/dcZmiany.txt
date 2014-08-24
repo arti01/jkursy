@@ -1,4 +1,6 @@
 2014-08-23
+
+2014-08-23
 Wersja przekazana Michałowi: edycja mastergrup, grup, urządzeń oraz drzewko urządzeń
 
 2014-08-17

@@ -121,9 +121,9 @@ public class Uzytkownik implements Serializable {
     @Transient
     private List<DcDokumentKrokUzytkownik> dcDokumentListHist;
     @JoinColumn(name = "spolka_id", referencedColumnName = "id")
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     private Spolki spolkaId;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "wprowadzil", orphanRemoval = false, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "wprowadzil", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<Ogloszenia> ogloszeniaList;
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userOdpow", orphanRemoval = false, fetch = FetchType.LAZY)

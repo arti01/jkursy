@@ -1,7 +1,6 @@
 package pl.eod2.managedUm;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -13,10 +12,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.encje.Struktura;
 import pl.eod.managed.Login;
-import pl.eod2.encje.Ogloszenia;
-import pl.eod2.encje.OgloszeniaJpaController;
 import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmMasterGrupa;
 import pl.eod2.encje.UmUrzadzenie;

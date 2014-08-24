@@ -8,7 +8,7 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
     <h:form>
-        <rich:popupPanel header="Wprowadź dane" id="dodajPaneRodzaj"  autosized="true" domElementAttachment="parent" >
+        <rich:popupPanel header="Wprowadź dane" id="dodajPaneGrupa"  autosized="true" domElementAttachment="parent" >
             <h:panelGrid columns="3" id="dodajGrid">
                 <h:outputLabel for="nameD" value="nazwa: "/>
                 <h:inputText id="nameD" value="#{UGrupaMg.obiekt.nazwa}"  size="90" ><rich:validator/></h:inputText>
@@ -17,25 +17,31 @@
                 <h:outputLabel for="opisD" value="opis: "/>
                 <h:inputTextarea id="opisD" value="#{UGrupaMg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                 <rich:message for="opisD" styleClass="error" /> 
-
-                <h:outputLabel for="masterD" value="rodzaj: "/>
+                <h:panelGrid columns="2" style="width: 70px">
+                    <h:outputLabel for="masterD" value="master grupa: ">
+                        <rich:tooltip target="imgCl_2" value="wyczyść wybór" layout="block"/>
+                        <a4j:commandButton id="imgCl_2" render="masterD" image="/images/clear.png">
+                            <a4j:param assignTo="#{UGrupaMg.obiekt.masterGrp}" value="#{null}"/>
+                        </a4j:commandButton>
+                    </h:outputLabel>
+                </h:panelGrid>
                 <rich:select id="masterD" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{UGrupaMg.obiekt.masterGrp}" converter="#{UmMasterGrpConv}" >
                     <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}"/>
                 </rich:select>
                 <rich:message for="masterD" styleClass="error" />
             </h:panelGrid>
-            
+
             <hr/>
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
 
-            <a4j:commandButton id="dodaj" value="Dodaj" action="#{UGrupaMg.dodaj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();} else {#{rich:component('dodajPaneRodzaj')}.show();}" 
+            <a4j:commandButton id="dodaj" value="Dodaj" action="#{UGrupaMg.dodaj}" render="listPanel, dodajPaneGrupa" execute="dodajPaneGrupa"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneGrupa')}.hide();} else {#{rich:component('dodajPaneGrupa')}.show();}" 
                                rendered="#{UGrupaMg.obiekt.id==null}"/>
-            <a4j:commandButton id="zapisz" value="Zapisz" action="#{UGrupaMg.edytuj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();}  else {#{rich:component('dodajPaneRodzaj')}.show();}" 
+            <a4j:commandButton id="zapisz" value="Zapisz" action="#{UGrupaMg.edytuj}" render="listPanel, dodajPaneGrupa" execute="dodajPaneGrupa"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneGrupa')}.hide();}  else {#{rich:component('dodajPaneGrupa')}.show();}" 
                                rendered="#{UGrupaMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneRodzaj')}.hide();
+            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneGrupa')}.hide();
                     return false;" />
         </rich:popupPanel>
 
@@ -46,7 +52,7 @@
             <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPaneRodzaj')}.hide();
                     return false;" />
             <a4j:commandButton value="Tak" onclick="removeRodzaj();
-                return false;" />
+                    return false;" />
         </rich:popupPanel>
     </h:form>
 </html>

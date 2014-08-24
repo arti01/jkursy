@@ -10,21 +10,23 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.tree.TreeNode;
+import pl.eod2.encje.UmMasterGrupa;
 
 /**
  *
  * @author arti01
  */
-public class DrzMaster extends NamedNode implements TreeNode {
+public class DrzMaster extends NamedNode<UmMasterGrupa> implements TreeNode {
 
     private static final long serialVersionUID = 1L;
     private List<DrzGrupa> drzGrupa = new ArrayList<DrzGrupa>();
 
-    public DrzMaster(String name, Long id, String opis) {
-        super(name, id, opis);
+    public DrzMaster(UmMasterGrupa obiektDb) {
+        super(obiektDb);
         type="master";
+        name=obiektDb.getNazwa();
+        opis=obiektDb.getOpis();
     }
-
 
 
     @Override

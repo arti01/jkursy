@@ -76,7 +76,7 @@ public class UmMasterGrupaJpaController implements Serializable {
 
     public String edit(UmMasterGrupa umMasterGrupa) throws NonexistentEntityException, Exception {
         UmMasterGrupa old = findUmMasterGrupa(umMasterGrupa.getId());
-        if (findUmMasterGrupa(umMasterGrupa.getNazwa()) != null && findUmMasterGrupa(umMasterGrupa.getNazwa()).getId().equals(old.getId())) {
+        if (findUmMasterGrupa(umMasterGrupa.getNazwa()) != null && !findUmMasterGrupa(umMasterGrupa.getNazwa()).getId().equals(umMasterGrupa.getId())) {
             return "nazwa już istnieje";
         }
         EntityManager em = null;
