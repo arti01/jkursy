@@ -63,7 +63,7 @@ public class Spolki implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "spolkaId", orphanRemoval = true)
     @OrderBy(value = "id DESC")
     private List<Uzytkownik> userList;
-    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "spolkaId", orphanRemoval = false)
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "spolkaId", orphanRemoval = false)
     @OrderBy(value = "id DESC")
     private List<UmMasterGrupa> umMasterGrupaList;
 

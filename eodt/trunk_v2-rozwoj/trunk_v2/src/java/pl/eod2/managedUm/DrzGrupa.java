@@ -11,22 +11,25 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import javax.swing.tree.TreeNode;
+import pl.eod2.encje.UmGrupa;
 
 /**
  *
  * @author arti01
  */
-public class DrzGrupa extends NamedNode implements TreeNode{
+public class DrzGrupa extends NamedNode<UmGrupa> implements TreeNode{
     private static final long serialVersionUID = 1L;
     private DrzMaster drzMaster;
-    private Long id;
     private List<DrzUrzad>drzUrzad=new ArrayList<DrzUrzad>();
 
-    public DrzGrupa(String name, Long id, String opis) {
-        super(name, id, opis);
+    public DrzGrupa(DrzMaster drzMaster, UmGrupa obiektDb) {
+        super(obiektDb);
+        this.drzMaster = drzMaster;
         type="grupa";
+        name=obiektDb.getNazwa();
+        opis=obiektDb.getOpis();
     }
-    
+
     @Override
     public TreeNode getChildAt(int childIndex) {
         return drzUrzad.get(childIndex);

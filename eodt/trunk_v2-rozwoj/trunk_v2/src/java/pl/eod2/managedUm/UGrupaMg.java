@@ -18,8 +18,11 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 @ManagedBean(name = "UGrupaMg")
 @SessionScoped
 public class UGrupaMg {
-@ManagedProperty(value = "#{login}")
+
+    @ManagedProperty(value = "#{login}")
     private Login login;
+    @ManagedProperty(value = "#{UStruktMg}")
+    private UStruktMg uStruktMg;
     private DataModel<UmGrupa> lista = new ListDataModel<UmGrupa>();
     private UmGrupaJpaController dcC;
     private UmGrupa obiekt;
@@ -32,9 +35,9 @@ public class UGrupaMg {
     }
 
     public void refresh() {
+        login.refresh();
         lista.setWrappedData(dcC.findUmGrupaEntities());
         obiekt = new UmGrupa();
-        login.refresh();
         error = null;
     }
 
@@ -52,7 +55,7 @@ public class UGrupaMg {
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        error=dcC.edit(obiekt);
+        error = dcC.edit(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -60,6 +63,7 @@ public class UGrupaMg {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findUmGrupaEntities());
         } else {
+            uStruktMg.refresh();
             refresh();
         }
     }
@@ -105,7 +109,13 @@ public class UGrupaMg {
     public void setError(String error) {
         this.error = error;
     }
-    
-    
-}
 
+    public UStruktMg getuStruktMg() {
+        return uStruktMg;
+    }
+
+    public void setuStruktMg(UStruktMg uStruktMg) {
+        this.uStruktMg = uStruktMg;
+    }
+
+}

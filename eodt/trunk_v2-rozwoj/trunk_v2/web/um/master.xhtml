@@ -17,7 +17,7 @@
         <hr/>
         <h:form>
             <rich:panel id="listPanel">
-                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
+                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneMaster')}.show()">
                     <h4>[dodaj]</h4>
                 </a4j:commandLink>
 
@@ -55,7 +55,7 @@
                         <rich:tooltip id="ttbl" layout="block"  rendered="#{fn:length(item.grupaList)>0}" target="imgB">
                             nie można usunąć - posiada grupy
                         </rich:tooltip>
-                        <a4j:commandButton id="imgEd" render="dodajPaneRodzaj" execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()" image="/images/edit.png">
+                        <a4j:commandButton id="imgEd" render="dodajPaneMaster" execute="@this" oncomplete="#{rich:component('dodajPaneMaster')}.show()" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{UMasterMg.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                     </rich:column>

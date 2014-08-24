@@ -8,18 +8,22 @@ package pl.eod2.managedUm;
 
 import java.util.Enumeration;
 import javax.swing.tree.TreeNode;
+import pl.eod2.encje.UmUrzadzenie;
 
 /**
  *
  * @author arti01
  */
-public class DrzUrzad extends NamedNode implements TreeNode{
+public class DrzUrzad extends NamedNode<UmUrzadzenie> implements TreeNode{
     private static final long serialVersionUID = 1L;
     private DrzGrupa drzGrupa;
 
-    public DrzUrzad(String name, Long id, String opis) {
-        super(name, id, opis);
+    public DrzUrzad(DrzGrupa drzGrupa, UmUrzadzenie obiektDb) {
+        super(obiektDb);
+        this.drzGrupa = drzGrupa;
         type="urzadz";
+        name=obiektDb.getNazwa();
+        opis=obiektDb.getNrInw()+obiektDb.getNrSer()+obiektDb.getNotatka();
     }
     
     @Override

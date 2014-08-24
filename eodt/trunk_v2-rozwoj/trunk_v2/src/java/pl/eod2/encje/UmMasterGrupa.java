@@ -50,7 +50,7 @@ public class UmMasterGrupa implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
-    @OneToMany(mappedBy = "masterGrp", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "masterGrp", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmGrupa> grupaList;
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)

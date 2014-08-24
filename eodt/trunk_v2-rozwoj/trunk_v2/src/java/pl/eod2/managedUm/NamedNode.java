@@ -2,18 +2,17 @@ package pl.eod2.managedUm;
 
 import java.io.Serializable;
 
-public class NamedNode implements Serializable {
+public class NamedNode <T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
     protected String type;
     protected String name;
     protected Long id;
     protected String opis;
+    protected T obiektDb;
 
-    public NamedNode(String name, Long id, String opis) {
-        this.name = name;
-        this.id = id;
-        this.opis = opis;
+    public NamedNode(T obiektDb) {
+        this.obiektDb=obiektDb;
     }
 
     public String getName() {
@@ -47,6 +46,15 @@ public class NamedNode implements Serializable {
     public void setOpis(String opis) {
         this.opis = opis;
     }
+
+    public T getObiektDb() {
+        return obiektDb;
+    }
+
+    public void setObiektDb(T obiektDb) {
+        this.obiektDb = obiektDb;
+    }
+
 
     @Override
     public String toString() {

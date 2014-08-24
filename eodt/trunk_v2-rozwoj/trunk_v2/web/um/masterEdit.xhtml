@@ -7,7 +7,7 @@
       xmlns:a4j="http://richfaces.org/a4j">
 
     <h:form>
-        <rich:popupPanel header="Wprowadź dane" id="dodajPaneRodzaj"  autosized="true" domElementAttachment="parent" >
+        <rich:popupPanel header="Wprowadź dane" id="dodajPaneMaster"  autosized="true" domElementAttachment="parent" >
             <h:panelGrid columns="3" id="dodajGrid">
                 <h:outputLabel for="nameD" value="nazwa: "/>
                 <h:inputText id="nameD" value="#{UMasterMg.obiekt.nazwa}"  size="90" ><rich:validator/></h:inputText>
@@ -22,13 +22,13 @@
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
 
-            <a4j:commandButton id="dodaj" value="Dodaj" action="#{UMasterMg.dodaj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();} else {#{rich:component('dodajPaneRodzaj')}.show();}" 
+            <a4j:commandButton id="dodaj" value="Dodaj" action="#{UMasterMg.dodaj}" render="listPanel, dodajPaneMaster" execute="dodajPaneMaster"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneMaster')}.hide();} else {#{rich:component('dodajPaneMaster')}.show();}" 
                                rendered="#{UMasterMg.obiekt.id==null}"/>
-            <a4j:commandButton id="zapisz" value="Zapisz" action="#{UMasterMg.edytuj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();}  else {#{rich:component('dodajPaneRodzaj')}.show();}" 
+            <a4j:commandButton id="zapisz" value="Zapisz" action="#{UMasterMg.edytuj}" render="listPanel, dodajPaneMaster" execute="dodajPaneMaster"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneMaster')}.hide();}  else {#{rich:component('dodajPaneMaster')}.show();}" 
                                rendered="#{UMasterMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneRodzaj')}.hide();
+            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneMaster')}.hide();
                     return false;" />
         </rich:popupPanel>
 

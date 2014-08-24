@@ -21,6 +21,8 @@ public class UMasterMg {
 
     @ManagedProperty(value = "#{login}")
     private Login login;
+    @ManagedProperty(value = "#{UStruktMg}")
+    private UStruktMg uStruktMg;
     private DataModel<UmMasterGrupa> lista = new ListDataModel<UmMasterGrupa>();
     private UmMasterGrupaJpaController dcC;
     private UmMasterGrupa obiekt;
@@ -60,6 +62,7 @@ public class UMasterMg {
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findUmMasterGrupaEntities());
         } else {
+            uStruktMg.refresh();
             refresh();
         }
     }
@@ -105,6 +108,13 @@ public class UMasterMg {
     public void setError(String error) {
         this.error = error;
     }
-    
-    
+
+    public UStruktMg getuStruktMg() {
+        return uStruktMg;
+    }
+
+    public void setuStruktMg(UStruktMg uStruktMg) {
+        this.uStruktMg = uStruktMg;
+    }
+      
 }

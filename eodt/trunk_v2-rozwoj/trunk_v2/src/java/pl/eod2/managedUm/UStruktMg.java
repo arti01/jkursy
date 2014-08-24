@@ -7,10 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.swing.tree.TreeNode;
-import org.richfaces.component.UITree;
-import org.richfaces.component.UITreeNode;
 import org.richfaces.event.DropEvent;
-import org.richfaces.event.TreeToggleEvent;
 import pl.eod.managed.Login;
 import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmGrupaJpaController;
@@ -24,7 +21,7 @@ import pl.eod2.encje.UmUrzadzenieJpaController;
 public class UStruktMg {
 
     @ManagedProperty(value = "#{login}")
-    private Login login;
+    private Login login;;
     private UmMasterGrupaJpaController dcC;
     private UmGrupaJpaController dcG;
     private UmUrzadzenieJpaController dcU;
@@ -43,13 +40,13 @@ public class UStruktMg {
         List<UmMasterGrupa> masterList = login.getZalogowany().getUserId().getSpolkaId().getUmMasterGrupaList();
         rootNodes.clear();
         for (UmMasterGrupa mg : masterList) {
-            DrzMaster drMa = new DrzMaster(mg.getNazwa(), mg.getId(), mg.getOpis());
+            DrzMaster drMa = new DrzMaster(mg);
             
             for (UmGrupa gr : mg.getGrupaList()) {
-                DrzGrupa drGr = new DrzGrupa(gr.getNazwa(), gr.getId(), gr.getOpis());
+                DrzGrupa drGr = new DrzGrupa(drMa, gr);
             
                 for(UmUrzadzenie uz:gr.getUrzadzenieList()){
-                    DrzUrzad drzU=new DrzUrzad(uz.getNazwa(), uz.getId(), uz.getNrInw()+uz.getNrSer()+uz.getNotatka());
+                    DrzUrzad drzU=new DrzUrzad(drGr, uz);
                     drGr.getDrzUrzad().add(drzU);
                 }
                 drMa.getDrzGrupa().add(drGr);
@@ -71,10 +68,10 @@ public class UStruktMg {
          //przeniesienie urządzenia
          if(event.getDragValue().getClass().equals(pl.eod2.managedUm.DrzUrzad.class)){
              DrzUrzad drU=(DrzUrzad) event.getDragValue();
-             UmUrzadzenie uz=dcU.findUmUrzadzenie(drU.getId());
+             UmUrzadzenie uz=drU.getObiektDb();
              
              DrzGrupa drG=(DrzGrupa) event.getDropValue();
-             UmGrupa gr=dcG.findUmGrupa(drG.getId());
+             UmGrupa gr=drG.getObiektDb();
              
              uz.setGrupa(gr);
              dcU.edit(uz);
@@ -83,10 +80,10 @@ public class UStruktMg {
          //przeniesienie grupy
          if(event.getDragValue().getClass().equals(pl.eod2.managedUm.DrzGrupa.class)){
              DrzGrupa drU=(DrzGrupa) event.getDragValue();
-             UmGrupa uz=dcG.findUmGrupa(drU.getId());
+             UmGrupa uz=drU.getObiektDb();
              
              DrzMaster drG=(DrzMaster) event.getDropValue();
-             UmMasterGrupa gr=dcC.findUmMasterGrupa(drG.getId());
+             UmMasterGrupa gr=drG.getObiektDb();
              uz.setMasterGrp(gr);
              dcG.edit(uz);
          }
