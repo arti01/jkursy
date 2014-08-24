@@ -1,5 +1,29 @@
+2014-08-23
+Wersja przekazana Michałowi: edycja mastergrup, grup, urządzeń oraz drzewko urządzeń
+
+2014-08-17
+Serwis Urządzen Medycznych
+
+w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
+
+Urządzenia są ograniczone w ramach spółki (mastergrupy też)
+
+INSERT INTO user_roles (id, role_name, opis) VALUES (10, 'eod_um_cfg','urzadzenia med-grupy i mastergrupy');
+INSERT INTO user_roles (id, role_name, opis) VALUES (11, 'eod_um_sprz','urzadzenia med-sprzet');
+
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (8, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (9, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (10, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (11, 3);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (8, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (9, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (10, 2);
+INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (11, 2);
+
+
 2014-08-10
 Tablica Ogloszen
+
 w persistence.xml ustawić tworzenie tabel (po deploy powinny stworzyć się tabele ogloszenia i ogloszenia_struktura
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (9, 'eod_ogl','dodawanie ogloszen');
@@ -17,6 +41,8 @@ ALTER TABLE dc_dokument ADD COLUMN symbol_sp_dzial_rok character varying(50);
 CREATE INDEX ix_dc_dokument_symbol_sp_dzial ON dc_dokument;
 ALTER TABLE dc_dokument ADD COLUMN symbol_nr_kol integer;
 CREATE INDEX ix_dc_dokument_symbol_sp_dzialON dc_dokument;
+
+ALTER TABLE dc_rodzaj ADD COLUMN symbol character varying(5);
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (8, 'eoddok_arc','dokumenty - archiwizacja');
 

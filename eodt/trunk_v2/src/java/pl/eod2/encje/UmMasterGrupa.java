@@ -13,11 +13,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.encje.Spolki;
+import pl.eod.encje.Uzytkownik;
 
 /**
  *
@@ -25,6 +32,10 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "UM_MASTERGRUPA")
+@NamedQueries({
+    @NamedQuery(name = "UmMasterGrupa.findAll", query = "SELECT d FROM UmMasterGrupa d"),
+    @NamedQuery(name = "UmMasterGrupa.findById", query = "SELECT d FROM UmMasterGrupa d WHERE d.id = :id"),
+    @NamedQuery(name = "UmMasterGrupa.findByNazwa", query = "SELECT d FROM UmMasterGrupa d WHERE d.nazwa = :nazwa")})
 public class UmMasterGrupa implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -36,8 +47,14 @@ public class UmMasterGrupa implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "nazwa", nullable = false, length = 256, unique = true)
     private String nazwa;
+    @Size(max = 10485760)
+    @Lob
+    private String opis;
     @OneToMany(mappedBy = "masterGrp", cascade = CascadeType.MERGE)
     private List<UmGrupa> grupaList;
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Spolki spolkaId;
 
     public Long getId() {
         return id;
@@ -61,6 +78,44 @@ public class UmMasterGrupa implements Serializable {
 
     public void setGrupaList(List<UmGrupa> grupaList) {
         this.grupaList = grupaList;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
+    }
+
+    public Spolki getSpolkaId() {
+        return spolkaId;
+    }
+
+    public void setSpolkaId(Spolki spolkaId) {
+        this.spolkaId = spolkaId;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + (this.id != null ? this.id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UmMasterGrupa other = (UmMasterGrupa) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
     
     

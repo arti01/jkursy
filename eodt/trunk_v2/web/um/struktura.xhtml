@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j">
+
+    <ui:define name="content">
+        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
+        <h:outputStylesheet>
+            .rf-ind-drag.default{
+            background-position: 3px;
+            background-repeat: no-repeat;
+            border:1px solid grey
+            }
+
+            .rf-ind-drag.accept{
+            background-position: 5px;
+            background-repeat: no-repeat;
+            border:2px solid green
+            }
+
+            .rf-ind-drag.reject{
+            background-position: 5px;
+            background-repeat: no-repeat;
+            border:2px solid red
+            }
+
+        </h:outputStylesheet>
+
+        <rich:dragIndicator id="ind" acceptClass="accept" rejectClass="reject" draggingClass="default">
+            Przenieś do właściwej gałęzi
+        </rich:dragIndicator>
+        <h:form>
+            <rich:panel header="Chwyć i przesuń urządzenie do grupy lub grupę do mastergrupy">
+                <rich:tree id="tree" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="ajax" rowKeyVar="row" keepSaved="true">
+                    <rich:treeNode type="master" >
+                        <a4j:outputPanel layout="block" id="panelMa_#{row}">
+                            <h:outputText id="MasTx" value="#{node.name}"/>
+                            <rich:tooltip target="MasTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>
+                            <rich:dropTarget acceptedTypes="grupa"  dropListener="#{UStruktMg.drop}" 
+                                             render="tree" dropValue="#{node}"/>
+                        </a4j:outputPanel>
+                    </rich:treeNode>
+
+                    <rich:treeNode id="treeNode" type="grupa"  >
+                        <a4j:outputPanel layout="block">
+                            <h:outputText id="GrTx" value="#{node.name}"/>
+                            <rich:tooltip target="GrTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>
+                            <rich:dragSource dragValue="#{node}" type="grupa" dragIndicator="ind"/>
+                            <rich:dropTarget acceptedTypes="urzadz"  dropListener="#{UStruktMg.drop}" 
+                                             render="tree" dropValue="#{node}"/>
+                        </a4j:outputPanel>
+                    </rich:treeNode>
+
+                    <rich:treeNode type="urzadz">
+                        <a4j:outputPanel id="panelUr_#{row}" layout="block">
+                            <h:outputText id="UrTx" value="#{node.name}"/>
+                            <rich:tooltip target="UrTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>
+                            <rich:dragSource dragValue="#{node}" type="urzadz" dragIndicator="ind"/>
+                            <rich:dropTarget acceptedTypes="nic"/>
+                        </a4j:outputPanel>
+                    </rich:treeNode>
+                </rich:tree>
+            </rich:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

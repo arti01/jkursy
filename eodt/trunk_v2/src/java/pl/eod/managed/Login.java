@@ -49,6 +49,8 @@ public class Login implements Serializable {
     boolean dcCfg;
     boolean dcArc;
     boolean ogl;
+    boolean umCfg;
+    boolean umSprz;
     String typLogowania;
     List<MenuLinki> menuLinki;
     MenuLinkiJpaController menuLinkiC;
@@ -61,6 +63,8 @@ public class Login implements Serializable {
     boolean menuDcOdbExp = false;
     boolean menuDcArcExp = false;
     boolean menuOglExp = false;
+    boolean menuUmCfg = false;
+    boolean menuUmSprze = false;
 
     @PostConstruct
     public void init() {
@@ -82,7 +86,7 @@ public class Login implements Serializable {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(!md5.equals(klucz)){
+        if(!md5.equalsIgnoreCase(klucz)){
             zalogowany = null;
             this.setBladLicencj(true);
             System.err.println(klucz+"licencja");
@@ -199,6 +203,8 @@ public class Login implements Serializable {
         menuDcOdbExp = false;
         menuDcArcExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
 
     public void menuUrlopExpList(ActionEvent event) {
@@ -209,6 +215,8 @@ public class Login implements Serializable {
         menuDcOdbExp = false;
         menuDcArcExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
 
     public void menuDcCfgExpList(ActionEvent event) {
@@ -219,6 +227,8 @@ public class Login implements Serializable {
         menuDcOdbExp = false;
         menuDcArcExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
 
     public void menuDcRejExpList(ActionEvent event) {
@@ -229,6 +239,8 @@ public class Login implements Serializable {
         menuDcOdbExp = false;
         menuDcArcExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
 
     public void menuDcOdbExpList(ActionEvent event) {
@@ -239,6 +251,8 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcArcExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
     
     public void menuDcArcExpList(ActionEvent event) {
@@ -249,6 +263,8 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcOdbExp = false;
         menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
     }
     
     public void menuOglExpList(ActionEvent event) {
@@ -259,6 +275,32 @@ public class Login implements Serializable {
         menuDcCfgExp = false;
         menuDcRejExp = false;
         menuDcOdbExp = false;
+        menuUmCfg=false;
+        menuUmSprze=false;
+    }
+    
+    public void menuUmCfgExpList(ActionEvent event) {
+        menuUmCfg=!menuUmCfg;
+        menuOglExp = false;
+        menuDcArcExp = false;
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
+        menuUmSprze=false;
+    }
+    
+    public void menuUmSprzExpList(ActionEvent event) {
+        menuUmSprze=!menuUmSprze;
+        menuOglExp = false;
+        menuDcArcExp = false;
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
+        menuUmCfg=false;
     }
 
     public Struktura getZalogowany() {
@@ -361,6 +403,19 @@ public class Login implements Serializable {
         admin = request.isUserInRole("eodadm");
         return admin;
     }
+     
+    public boolean isUmCfg() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        return request.isUserInRole("eod_um_cfg");
+    }
+   
+     public boolean isUmSprz() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        return request.isUserInRole("eod_um_sprz");
+    }
+   
 
     public boolean isKierownik() {
         try {
@@ -437,6 +492,30 @@ public class Login implements Serializable {
 
     public void setMenuOglExp(boolean menuOglExp) {
         this.menuOglExp = menuOglExp;
+    }
+
+    public void setUmCfg(boolean umCfg) {
+        this.umCfg = umCfg;
+    }
+
+    public void setUmSprz(boolean umSprz) {
+        this.umSprz = umSprz;
+    }
+
+    public boolean isMenuUmCfg() {
+        return menuUmCfg;
+    }
+
+    public void setMenuUmCfg(boolean menuUmCfg) {
+        this.menuUmCfg = menuUmCfg;
+    }
+
+    public boolean isMenuUmSprze() {
+        return menuUmSprze;
+    }
+
+    public void setMenuUmSprze(boolean menuUmSprze) {
+        this.menuUmSprze = menuUmSprze;
     }
 
     public boolean isBladLicencj() {

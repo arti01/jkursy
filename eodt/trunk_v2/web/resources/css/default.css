@@ -57,7 +57,9 @@ textarea{
     width: 14px;
     height: 14px;
 }
-
+.rf-pp-cnt {
+    padding: 20px;
+}
 .rf-ntf-cnt{
     background-color: whitesmoke;
 }

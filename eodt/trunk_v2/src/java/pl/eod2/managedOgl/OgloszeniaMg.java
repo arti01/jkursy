@@ -68,7 +68,6 @@ private String filtrWprow;
         } else {
             refresh();
         }
-        System.err.println(obiekt.getTytul());
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {

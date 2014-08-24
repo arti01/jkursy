@@ -12,12 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import pl.eod.encje.Uzytkownik;
@@ -40,19 +42,16 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "nazwa", nullable = false, length = 256, unique = true)
     private String nazwa;
     @Size(min = 0, max = 256)
-    @Column(name = "nr_ser", nullable = true, length = 256, unique = true)
+    @Column(name = "nr_ser", nullable = true, length = 256, unique = false)
     private String nrSer;
     @Size(min = 0, max = 256)
-    @Column(name = "nr_inw", nullable = true, length = 256, unique = true)
+    @Column(name = "nr_inw", nullable = true, length = 256, unique = false)
     private String nrInw;
     @Size(min = 0, max = 256)
-    @Column(name = "osob_odp", nullable = true, length = 256, unique = true)
-    private String osobOdp;
-    @Size(min = 0, max = 256)
-    @Column(name = "lokalizacja", nullable = true, length = 256, unique = true)
+    @Column(name = "lokalizacja", nullable = true, length = 256, unique = false)
     private String lokalizacja;
     @Size(min = 0, max = 256)
-    @Column(name = "firma_serw", nullable = true, length = 256, unique = true)
+    @Column(name = "firma_serw", nullable = true, length = 256, unique = false)
     private String firmaSerw;
     @Size(max = 10485760)
     @Lob
@@ -60,8 +59,14 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "data_wprow")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataPrzegl;
-    @ManyToOne()
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
     private UmGrupa grupa;
+    @ManyToOne(optional = false)
+    @JoinColumn(nullable = false)
+    private Uzytkownik userOdpow;
+    @Transient
+    private boolean dataNizDzis;
 
     public Long getId() {
         return id;
@@ -93,14 +98,6 @@ public class UmUrzadzenie implements Serializable {
 
     public void setNrInw(String nrInw) {
         this.nrInw = nrInw;
-    }
-
-    public String getOsobOdp() {
-        return osobOdp;
-    }
-
-    public void setOsobOdp(String osobOdp) {
-        this.osobOdp = osobOdp;
     }
 
     public String getLokalizacja() {
@@ -141,6 +138,25 @@ public class UmUrzadzenie implements Serializable {
 
     public void setGrupa(UmGrupa grupa) {
         this.grupa = grupa;
+    }
+
+    public Uzytkownik getUserOdpow() {
+        return userOdpow;
+    }
+
+    public void setUserOdpow(Uzytkownik userOdpow) {
+        this.userOdpow = userOdpow;
+    }
+
+    public boolean isDataNizDzis() {
+        dataNizDzis = false;
+        if (dataPrzegl == null) {
+            return dataNizDzis;
+        }
+        if (this.dataPrzegl.before(new Date())) {
+            dataNizDzis = true;
+        }
+        return dataNizDzis;
     }
 
     @Override

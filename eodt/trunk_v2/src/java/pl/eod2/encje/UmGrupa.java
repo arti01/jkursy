@@ -14,7 +14,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,6 +31,10 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "UM_GRUPA")
+@NamedQueries({
+    @NamedQuery(name = "UmGrupa.findAll", query = "SELECT d FROM UmGrupa d"),
+    @NamedQuery(name = "UmGrupa.findById", query = "SELECT d FROM UmGrupa d WHERE d.id = :id"),
+    @NamedQuery(name = "UmGrupa.findByNazwa", query = "SELECT d FROM UmGrupa d WHERE d.nazwa = :nazwa")})
 public class UmGrupa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,9 +45,13 @@ public class UmGrupa implements Serializable {
     @Size(min = 1, max = 256)
     @Column(name = "nazwa", nullable = false, length = 256, unique = true)
     private String nazwa;
+    @Size(max = 10485760)
+    @Lob
+    private String opis;
     @OneToMany(mappedBy = "grupa", cascade = CascadeType.MERGE)
     private List<UmUrzadzenie> urzadzenieList;
-    @ManyToOne()
+    @ManyToOne(optional=false)
+    @JoinColumn(nullable = false)
     private UmMasterGrupa masterGrp;
 
     public Long getId() {
@@ -72,6 +84,14 @@ public class UmGrupa implements Serializable {
 
     public void setMasterGrp(UmMasterGrupa masterGrp) {
         this.masterGrp = masterGrp;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
 
     @Override

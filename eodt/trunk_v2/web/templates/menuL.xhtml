@@ -99,6 +99,32 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
+                        <rich:panelMenuGroup label="Serwis Urządzeń Medycznych" rendered="#{login.umSprz}" expanded="#{login.menuUmSprze}" actionListener="#{login.menuUmSprzExpList}">
+                            <h:commandLink action="#{UrzadzeniaMg.list}">
+                                <rich:panelMenuItem >
+                                    Lista
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                        
+                        <rich:panelMenuGroup label="Serwis Urządzeń Med - konfiguracja" rendered="#{login.umCfg}" expanded="#{login.menuUmCfg}" actionListener="#{login.menuUmCfgExpList}">
+                            <h:commandLink action="#{UMasterMg.list}">
+                                <rich:panelMenuItem >
+                                    Master Grupy
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{UGrupaMg.list}">
+                                <rich:panelMenuItem >
+                                    Grupy
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{UStruktMg.list}">
+                                <rich:panelMenuItem >
+                                    Drzewo
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                        </rich:panelMenuGroup>
+                        
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
                             <h:commandLink action="#{UsersM.nowy}">
                                 <rich:panelMenuItem >
