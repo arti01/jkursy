@@ -41,6 +41,10 @@ public class UGrupaMg {
         error = null;
     }
 
+    public void newObiekt() {
+        obiekt = new UmGrupa();
+    }
+
     public void dodaj() throws Exception {
         error = dcC.create(obiekt);
         if (error != null) {

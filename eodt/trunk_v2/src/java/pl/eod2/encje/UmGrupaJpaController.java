@@ -116,14 +116,15 @@ public class UmGrupaJpaController implements Serializable {
             urzadzenieListNew = attachedUrzadzenieListNew;
             umGrupa.setUrzadzenieList(urzadzenieListNew);
             umGrupa = em.merge(umGrupa);
-            if (masterGrpOld != null && !masterGrpOld.equals(masterGrpNew)) {
+
+            /*if (masterGrpOld != null && !masterGrpOld.equals(masterGrpNew)) {
                 masterGrpOld.getGrupaList().remove(umGrupa);
                 masterGrpOld = em.merge(masterGrpOld);
             }
             if (masterGrpNew != null && !masterGrpNew.equals(masterGrpOld)) {
                 masterGrpNew.getGrupaList().add(umGrupa);
                 masterGrpNew = em.merge(masterGrpNew);
-            }
+            }*/
             for (UmUrzadzenie urzadzenieListOldUmUrzadzenie : urzadzenieListOld) {
                 if (!urzadzenieListNew.contains(urzadzenieListOldUmUrzadzenie)) {
                     urzadzenieListOldUmUrzadzenie.setGrupa(null);

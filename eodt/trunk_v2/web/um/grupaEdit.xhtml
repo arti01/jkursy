@@ -17,7 +17,7 @@
                 <h:outputLabel for="opisD" value="opis: "/>
                 <h:inputTextarea id="opisD" value="#{UGrupaMg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                 <rich:message for="opisD" styleClass="error" /> 
-                <h:panelGrid columns="2" style="width: 130px">
+                <h:panelGrid columns="2" style="width: 150px">
                     <h:outputLabel for="masterD" value="master grupa: ">
                         <a4j:commandButton id="imgCl_2" render="masterD" value="wyczyść">
                             <a4j:param assignTo="#{UGrupaMg.obiekt.masterGrp}" value="#{null}"/>
@@ -40,7 +40,7 @@
             <a4j:commandButton id="zapisz" value="Zapisz" action="#{UGrupaMg.edytuj}" render="listPanel, dodajPaneGrupa" execute="dodajPaneGrupa"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneGrupa')}.hide();}  else {#{rich:component('dodajPaneGrupa')}.show();}" 
                                rendered="#{UGrupaMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" action="#{UGrupaMg.refresh}" render="listPanel, dodajPaneGrupa" onclick="#{rich:component('dodajPaneGrupa')}.hide();
+            <a4j:commandButton value="Wyjdź" onclick ="#{rich:component('dodajPaneGrupa')}.hide();
                     return false;" />
         </rich:popupPanel>
 

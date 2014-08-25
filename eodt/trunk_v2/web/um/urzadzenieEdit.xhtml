@@ -75,7 +75,7 @@
             <a4j:commandButton id="zapisz" value="Zapisz" action="#{UrzadzeniaMg.edytuj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();}  else {#{rich:component('dodajPaneRodzaj')}.show();}" 
                                rendered="#{UrzadzeniaMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" action="#{UrzadzeniaMg.refresh}" render="listPanel, dodajPaneRodzaj" onclick="#{richoncomplete:component('dodajPaneRodzaj')}.hide();
+            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneRodzaj')}.hide();
                     return false;" />
         </rich:popupPanel>
 

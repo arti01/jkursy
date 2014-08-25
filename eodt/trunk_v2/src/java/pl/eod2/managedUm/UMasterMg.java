@@ -10,6 +10,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.managed.Login;
+import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmMasterGrupa;
 import pl.eod2.encje.UmMasterGrupaJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
@@ -38,6 +39,10 @@ public class UMasterMg {
         lista.setWrappedData(dcC.findUmMasterGrupaEntities());
         obiekt = new UmMasterGrupa();
         error = null;
+    }
+    
+    public void newObiekt() {
+        obiekt = new UmMasterGrupa();
     }
 
     public void dodaj() {

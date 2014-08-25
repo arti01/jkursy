@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -48,9 +49,10 @@ public class UmGrupa implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @OrderBy(value = "nazwa ASC")
     @OneToMany(mappedBy = "grupa", cascade = CascadeType.MERGE)
     private List<UmUrzadzenie> urzadzenieList;
-    @ManyToOne(optional=false)
+    @ManyToOne(optional=false, cascade = CascadeType.MERGE)
     @JoinColumn(nullable = false)
     private UmMasterGrupa masterGrp;
 
