@@ -40,7 +40,7 @@
         <h:form>
             <rich:panel header="Chwyć i przesuń urządzenie do grupy lub grupę do mastergrupy">
                 <rich:tree id="listPanel" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="ajax" rowKeyVar="row" keepSaved="true">
-                    <rich:treeNode type="master" >
+                    <rich:treeNode type="master" iconCollapsed="/images/folders-stack.png" iconExpanded="/images/folders-stack.png" iconLeaf="/images/folders-stack.png">
                         <a4j:outputPanel layout="block" id="panelMa_#{row}">
                             <h:outputText id="MasTx" value="#{node.name}"/>
                             <rich:tooltip target="MasTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>
@@ -52,7 +52,7 @@
                         </a4j:outputPanel>
                     </rich:treeNode>
 
-                    <rich:treeNode id="treeNode" type="grupa"  >
+                    <rich:treeNode id="treeNode" type="grupa" iconCollapsed="/images/folders.png" iconExpanded="/images/folders.png" iconLeaf="/images/folders.png">
                         <a4j:outputPanel layout="block">
                             <h:outputText id="GrTx" value="#{node.name}"/>
                             <rich:tooltip target="GrTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>
@@ -65,7 +65,7 @@
                         </a4j:outputPanel>
                     </rich:treeNode>
 
-                    <rich:treeNode type="urzadz">
+                    <rich:treeNode type="urzadz" iconLeaf="/images/pipette.png">
                         <a4j:outputPanel id="panelUr_#{row}" layout="block">
                             <h:outputText id="UrTx" value="#{node.name}"/>
                             <rich:tooltip target="UrTx" value="#{node.opis}" layout="block" rendered="#{fn:length(node.opis)>0}"/>

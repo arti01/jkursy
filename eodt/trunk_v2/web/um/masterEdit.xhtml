@@ -28,7 +28,7 @@
             <a4j:commandButton id="zapisz" value="Zapisz" action="#{UMasterMg.edytuj}" render="listPanel, dodajPaneMaster" execute="dodajPaneMaster"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneMaster')}.hide();}  else {#{rich:component('dodajPaneMaster')}.show();}" 
                                rendered="#{UMasterMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneMaster')}.hide();
+            <a4j:commandButton value="Wyjdź" action="#{UMasterMg.refresh}" render="listPanel, dodajPaneMaster" onclick="#{rich:component('dodajPaneMaster')}.hide();
                     return false;" />
         </rich:popupPanel>
 

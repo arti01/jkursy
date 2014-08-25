@@ -42,8 +42,7 @@
                 <rich:message for="dataD" styleClass="error" />
 
                 <h:outputLabel for="grupaD" value="grupa: ">
-                    <rich:tooltip target="imgCl_1" value="wyczyść wybór" layout="block"/>
-                    <a4j:commandButton id="imgCl_1" render="grupaD" image="/images/clear.png">
+                    <a4j:commandButton id="imgCl_1" render="grupaD" value="wyczyść">
                         <a4j:param assignTo="#{UrzadzeniaMg.obiekt.grupa}" value="#{null}"/>
                     </a4j:commandButton>
                 </h:outputLabel>
@@ -52,10 +51,9 @@
                 </rich:select>
                 <rich:message for="grupaD" styleClass="error" />
 
-                <h:panelGrid columns="2" style="width: 150px">
+                <h:panelGrid columns="2" style="width: 200px">
                     <h:outputLabel for="userOdpowD" value="osoba odpowiedzialna: ">
-                        <rich:tooltip target="imgCl_2" value="wyczyść wybór" layout="block"/>
-                        <a4j:commandButton id="imgCl_2" render="userOdpowD" image="/images/clear.png">
+                        <a4j:commandButton id="imgCl_2" render="userOdpowD" value="wyczyść">
                             <a4j:param assignTo="#{UrzadzeniaMg.obiekt.userOdpow}" value="#{null}"/>
                         </a4j:commandButton>
                     </h:outputLabel>
@@ -77,7 +75,7 @@
             <a4j:commandButton id="zapisz" value="Zapisz" action="#{UrzadzeniaMg.edytuj}" render="listPanel, dodajPaneRodzaj" execute="dodajPaneRodzaj"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneRodzaj')}.hide();}  else {#{rich:component('dodajPaneRodzaj')}.show();}" 
                                rendered="#{UrzadzeniaMg.obiekt.id!=null}"/>
-            <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneRodzaj')}.hide();
+            <a4j:commandButton value="Wyjdź" action="#{UrzadzeniaMg.refresh}" render="listPanel, dodajPaneRodzaj" onclick="#{richoncomplete:component('dodajPaneRodzaj')}.hide();
                     return false;" />
         </rich:popupPanel>
 
