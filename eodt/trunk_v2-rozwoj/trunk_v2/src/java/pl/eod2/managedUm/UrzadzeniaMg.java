@@ -56,6 +56,10 @@ public class UrzadzeniaMg {
         error = null;
     }
 
+    public void newObiekt() {
+        obiekt = new UmUrzadzenie();
+    }
+    
     public void dodaj() {
         Map<String, String> errorMap = dcC.create(obiekt);
         if (!errorMap.isEmpty()) {

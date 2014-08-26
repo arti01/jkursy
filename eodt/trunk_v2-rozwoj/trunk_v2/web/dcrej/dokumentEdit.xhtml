@@ -15,7 +15,7 @@
         <h:outputLabel for="symbolD" value="" rendered="#{RejestracjaRej.obiekt.id ne null}"/>
         
         <h:outputLabel for="opisD" value="opis: "/>
-        <h:inputTextarea id="opisD" value="#{RejestracjaRej.obiekt.opis}"  cols="95" rows="5" ><rich:validator/></h:inputTextarea>
+        <h:inputTextarea id="opisD" value="#{RejestracjaRej.obiekt.opis}"  cols="95" rows="5"><rich:validator/></h:inputTextarea>
         <rich:message for="opisD" styleClass="error" />
     </h:panelGrid>
     
@@ -57,7 +57,7 @@
     
     <hr style="width: 30%;"/>
     <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony)" expanded="false" switchType="client" >
-        <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}"/>
+        <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
         <h:outputText value="#{RejestracjaRej.obiekt.opisDlugi}" escape="false" rendered="#{RejestracjaRej.obiekt.dokStatusId.id!=1}"/>
     </rich:collapsiblePanel>
     <rich:message for="opisDlugiD" styleClass="error" />

@@ -38,6 +38,10 @@
                 <h:inputText id="limitCzaasuAkceptacjiD" value="#{RodzajeCfg.obiekt.limitCzaasuAkceptacji}" size="2"><rich:validator/></h:inputText>
                 <rich:message for="limitCzaasuAkceptacjiD" styleClass="error" />
                 
+                <h:outputLabel for="szablonD" value="szablon: "/>
+                <h:inputTextarea id="szablonD" value="#{RodzajeCfg.obiekt.szablon}"  cols="90" rows="15"><rich:validator/></h:inputTextarea>
+                <rich:message for="szablonD" styleClass="error" />
+                
             </h:panelGrid>
             <hr/>
             <rich:message for="zapisz" styleClass="error" />

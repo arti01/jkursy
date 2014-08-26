@@ -18,6 +18,7 @@ import javax.faces.convert.Converter;
 @ManagedBean(name = "DzialConv")
 @SessionScoped
 public class DzialConv implements Converter, Serializable {
+    private static final long serialVersionUID = 1L;
     private Object object;
     DzialJpaController dC=new DzialJpaController();
     

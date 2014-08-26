@@ -56,6 +56,9 @@ public class DcRodzaj implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Size(max = 10485760)
+    @Lob
+    private String szablon;
     @Column(name = "limit_czasu_akceptacji")
     private int limitCzaasuAkceptacji;
     @JoinColumn(name = "id_rodzaj_grupa", referencedColumnName = "id", nullable = false)
@@ -151,6 +154,14 @@ public class DcRodzaj implements Serializable {
 
     public void setDcAkceptKroki(List<DcAkceptKroki> dcAkceptKroki) {
         this.dcAkceptKroki = dcAkceptKroki;
+    }
+    
+    public String getSzablon() {
+        return szablon;
+    }
+
+    public void setSzablon(String szablon) {
+        this.szablon = szablon;
     }
     
     @Override

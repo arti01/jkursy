@@ -47,7 +47,7 @@
 
                             <h:selectOneMenu id="przelozonyP" value="#{UsersM.strukt.szefId}" converter="#{StrukturaConv}" valueChangeListener="#{UsersM.dzialListener}" rendered="#{!UsersM.strukt.stKier}">
                                 <f:selectItems value="#{UsersM.kierownicyAll}" var="struktura" itemValue="#{struktura}" itemLabel="#{struktura.userId.fullname}"/>
-                                <a4j:ajax event="change" render="dzial" execute="@this" rendered="#{!UsersM.strukt.stKier}"/>
+                                <a4j:ajax event="change" render="dzial, dzialsymbol" execute="@this" rendered="#{!UsersM.strukt.stKier}"/>
                             </h:selectOneMenu>
                             <rich:message for="przelozonyP" styleClass="error" />
                         </h:panelGroup>

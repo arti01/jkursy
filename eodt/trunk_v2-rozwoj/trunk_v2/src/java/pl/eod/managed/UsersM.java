@@ -260,8 +260,10 @@ public class UsersM implements Serializable {
         if (!strukt.isStKier()) {
             if (str != null) {
                 strukt.getDzialId().setNazwa(str.getDzialId().getNazwa());
+                strukt.getDzialId().setSymbol(str.getDzialId().getSymbol());
             } else {
                 strukt.getDzialId().setNazwa("");
+                strukt.getDzialId().setSymbol("");
             }
         }
     }
