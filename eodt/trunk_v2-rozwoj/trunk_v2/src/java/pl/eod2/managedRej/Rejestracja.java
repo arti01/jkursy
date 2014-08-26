@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.Uzytkownik;
@@ -26,6 +27,7 @@ import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
+import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
@@ -95,7 +97,7 @@ public class Rejestracja {
                 System.err.println("usuwanie plikow");
                 System.err.println(plikImport.getId());
                 plikImpC.destroy(plikImport.getId());
-                plikImport=null;
+                plikImport = null;
             }
             refreshObiekt();
         }
@@ -176,6 +178,13 @@ public class Rejestracja {
             lista.setWrappedData(dcC.findDcDokumentEntities());
         } else {
             refreshObiekt();
+        }
+    }
+
+    public void listenerOpis(ValueChangeEvent vce) {
+        if (obiekt.getOpis().isEmpty()&&obiekt.getOpis()==null) {
+            DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
+            obiekt.setOpis(rodzaj.getSzablon());
         }
     }
 
