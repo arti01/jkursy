@@ -30,8 +30,8 @@ public class OgloszeniaMg {
     private Ogloszenia obiekt;
     private Struktura struktura;
     private String error;
-private String filtrTytul;
-private String filtrWprow;
+    private String filtrTytul;
+    private String filtrWprow;
 
     @PostConstruct
     void init() {
@@ -58,7 +58,7 @@ private String filtrWprow;
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        error=dcC.edit(obiekt);
+        error = dcC.edit(obiekt);
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -81,29 +81,29 @@ private String filtrWprow;
     }
 
     @SuppressWarnings("unchecked")
-    public void drop(DropEvent event) throws NonexistentEntityException, Exception{
-         List<Struktura>odbiorcyList=new ArrayList<Struktura>();
-         
-         if(event.getDragValue().getClass().equals(ArrayList.class)){
-             odbiorcyList.addAll((List<Struktura>) event.getDragValue());
-             odbiorcyList.add(odbiorcyList.get(0).getSzefId());
-         }else {
-             odbiorcyList.add((Struktura) event.getDragValue());
-         }
-         //struktura=(Struktura) event.getDragValue();
-         Ogloszenia ogl=(Ogloszenia) event.getDropValue();
-         ogl.getAdresaciList().addAll(odbiorcyList);
-         error=dcC.edit(ogl);
+    public void drop(DropEvent event) throws NonexistentEntityException, Exception {
+        List<Struktura> odbiorcyList = new ArrayList<Struktura>();
+
+        if (event.getDragValue().getClass().equals(ArrayList.class)) {
+            odbiorcyList.addAll((List<Struktura>) event.getDragValue());
+            odbiorcyList.add(odbiorcyList.get(0).getSzefId());
+        } else {
+            odbiorcyList.add((Struktura) event.getDragValue());
+        }
+        //struktura=(Struktura) event.getDragValue();
+        Ogloszenia ogl = (Ogloszenia) event.getDropValue();
+        ogl.getAdresaciList().addAll(odbiorcyList);
+        error = dcC.edit(ogl);
     }
-    
-    public void usunOdb() throws NonexistentEntityException, Exception{
+
+    public void usunOdb() throws NonexistentEntityException, Exception {
          //System.err.println(obiekt.getTytul());
-         //System.err.println(lista.getRowData().getTytul());
-         //System.err.println(struktura.getUserId().getFullname());
-         lista.getRowData().getAdresaciList().remove(struktura);
-        error=dcC.edit(lista.getRowData());
+        //System.err.println(lista.getRowData().getTytul());
+        //System.err.println(struktura.getUserId().getFullname());
+        lista.getRowData().getAdresaciList().remove(struktura);
+        error = dcC.edit(lista.getRowData());
     }
-    
+
     public DataModel<Ogloszenia> getLista() {
         return lista;
     }
@@ -126,7 +126,7 @@ private String filtrWprow;
 
     public void setError(String error) {
         this.error = error;
-    }    
+    }
 
     public String getFiltrTytul() {
         return filtrTytul;
@@ -160,6 +160,5 @@ private String filtrWprow;
     public void setStruktura(Struktura struktura) {
         this.struktura = struktura;
     }
-    
-}
 
+}

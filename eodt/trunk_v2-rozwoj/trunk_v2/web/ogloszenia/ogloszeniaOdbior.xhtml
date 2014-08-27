@@ -7,16 +7,26 @@
     template="/templates/template.xhtml"
     xmlns:a4j="http://richfaces.org/a4j"
     xmlns:f="http://java.sun.com/jsf/core">
+    <h:outputStylesheet>
+        .columna1 {
+        width: 50%;
+        text-align: right;
+        }
 
-    <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń">
-        <h:panelGrid id="pgOdb" columns="2">
-            <rich:panel >
+        .columna2 {
+        width: 50%;
+        text-align: center;
+        }
+    </h:outputStylesheet>
+    <rich:collapsiblePanel switchType="ajax" expanded="false" header="rozwiń" style="text-align: center;">
+        <h:panelGrid id="pgOdb" columns="2" columnClasses="columna1, columna2" style="width: 100%">
+            <rich:panel>
                 <f:facet name="header">
                     lista odbiorców ogłoszenia
                 </f:facet>
                 <rich:dropTarget acceptedTypes="ludek"  dropListener="#{OgloszeniaMg.drop}"
                                  render="pgOdb" dropValue="#{item}"/>
-                <rich:dataTable value="#{item.adresaciList}" var="odbiorca" style="width: auto; border: white thick">
+                <rich:dataTable value="#{item.adresaciList}" var="odbiorca" style="width: 100%; border: white thick">
                     <rich:column>
                         #{odbiorca.userId.fullname}
                         <rich:tooltip target="imgDelOdb" value="usuń odbiorcę" layout="block"/>
