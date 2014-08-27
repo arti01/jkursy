@@ -182,8 +182,8 @@ public class Rejestracja {
     }
 
     public void listenerOpis(ValueChangeEvent vce) {
-        if (obiekt.getOpis().isEmpty()&&obiekt.getOpis()==null) {
-            DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
+        DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
+        if (!(rodzaj.getSzablon() == null || rodzaj.getSzablon().isEmpty())) {
             obiekt.setOpis(rodzaj.getSzablon());
         }
     }

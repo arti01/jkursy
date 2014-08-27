@@ -54,8 +54,8 @@
     </h:panelGrid>
 
     <h:panelGrid columns="3" id="dodajOpis">
-        <h:outputLabel for="opisD" value="opis (najpierw wybierz rodzaj dokumentu): "/>
-        <h:inputTextarea id="opisD"  binding="#{opisBind}" value="#{RejestracjaRej.obiekt.opis}" cols="95" rows="5"><rich:validator/></h:inputTextarea>
+        <h:outputLabel for="opisD" value="opis <br/>(najpierw wybierz rodzaj dokumentu -<br/>- zmiana rodzaju dokumentu na taki,<br/>który posiada szablon wyczyści to pole): " escape="false"/>
+        <h:inputTextarea id="opisD"  binding="#{opisBind}" value="#{RejestracjaRej.obiekt.opis}" cols="90" rows="15"><rich:validator/></h:inputTextarea>
         <rich:message for="opisD" styleClass="error" />
     </h:panelGrid>
     
