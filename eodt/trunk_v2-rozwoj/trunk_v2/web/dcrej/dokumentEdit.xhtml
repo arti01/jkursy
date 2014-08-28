@@ -54,13 +54,13 @@
     </h:panelGrid>
 
     <h:panelGrid columns="3" id="dodajOpis">
-        <h:outputLabel for="opisD" value="opis <br/>(najpierw wybierz rodzaj dokumentu -<br/>- zmiana rodzaju dokumentu na taki,<br/>który posiada szablon wyczyści to pole): " escape="false"/>
+        <h:outputLabel for="opisD" value="opis&lt;br/&gt;(najpierw wybierz rodzaj dokumentu -&lt;br/&gt;- zmiana rodzaju dokumentu na taki,&lt;br/&gt;który posiada szablon wyczyści to pole): " escape="false"/>
         <h:inputTextarea id="opisD"  binding="#{opisBind}" value="#{RejestracjaRej.obiekt.opis}" cols="90" rows="15"><rich:validator/></h:inputTextarea>
         <rich:message for="opisD" styleClass="error" />
     </h:panelGrid>
     
     <hr style="width: 30%;"/>
-    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony)" expanded="false" switchType="client" >
+    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony)" expanded="false" switchType="client" onswitch="#{rich:component('dodajPane')}.hide();#{rich:component('dodajPane')}.show();">
         <rich:editor id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
         <h:outputText value="#{RejestracjaRej.obiekt.opisDlugi}" escape="false" rendered="#{RejestracjaRej.obiekt.dokStatusId.id!=1}"/>
     </rich:collapsiblePanel>

@@ -74,7 +74,9 @@ textarea{
 .rf-dt-r:nth-child(even){
     background-color: rgb(233, 239, 239);
 }
-
+.rf-pick-btn{
+    font-size: 10px;
+}
 .rf-trn-lbl {
     
 }
