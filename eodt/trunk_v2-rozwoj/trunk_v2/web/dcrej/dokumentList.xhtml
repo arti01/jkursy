@@ -5,11 +5,9 @@
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/templates/template.xhtml"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <h3>Rejestracja dokumentów</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
@@ -22,10 +20,10 @@
                     </h:outputLink>
                 </f:facet>
                 <ui:include src="./dokumentEdit.xhtml"/>
-                <a4j:commandButton id="dodaj" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
-                <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id!=null}"/>
                 <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
@@ -48,7 +46,7 @@
                     <h4>[dodaj]</h4>
                 </a4j:commandLink>
 
-                <rich:dataTable value="#{RejestracjaRej.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{managedBean.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
@@ -207,8 +205,6 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
-    </ui:define>
 
 </ui:composition>
 

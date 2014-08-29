@@ -11,7 +11,7 @@
         <rich:popupPanel header="Wprowadź dane" id="dodajPaneRodzaj"  autosized="true" domElementAttachment="parent">
             <h:panelGrid columns="3" id="dodajGrid">
                 <h:outputLabel for="nameD" value="nazwa: "/>
-                <h:inputText id="nameD" value="#{RodzajeCfg.obiekt.nazwa}"  size="90" ><rich:validator/></h:inputText>
+                <h:inputText id="nameD" value="#{RodzajeCfg.obiekt.nazwa}"  size="110" ><rich:validator/></h:inputText>
                 <rich:message for="nameD" styleClass="error" />
 
                 <h:outputLabel for="symbolD" value="symbol: "/>
@@ -19,12 +19,13 @@
                 <rich:message for="symbolD" styleClass="error" />
 
                 <h:outputLabel for="opisD" value="opis: "/>
-                <h:inputTextarea id="opisD" value="#{RodzajeCfg.obiekt.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
+                <h:inputTextarea id="opisD" value="#{RodzajeCfg.obiekt.opis}"  cols="110" ><rich:validator/></h:inputTextarea>
                 <rich:message for="opisD" styleClass="error" />
 
                 <h:outputLabel for="grupaD" value="grupa: "/>
-                <h:selectOneMenu id="grupaD" value="#{RodzajeCfg.obiekt.idRodzajGrupa}" converter="#{DcRodzajGrupaConv}" >
+                <h:selectOneMenu id="grupaD" value="#{RodzajeCfg.obiekt.idRodzajGrupa}" converter="#{DcRodzajGrupaConv}">
                     <f:selectItems value="#{RodzajeGrupyCfg.lista}" var="grupa" itemValue="#{grupa}" itemLabel="#{grupa.nazwa}"/>
+                    <a4j:ajax event="change" render="bazUzMedD" oncomplete="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();"/>
                 </h:selectOneMenu>
                 <rich:message for="grupaD" styleClass="error" />
 
@@ -39,15 +40,18 @@
                 <rich:message for="limitCzaasuAkceptacjiD" styleClass="error" />
 
                 <h:outputLabel for="szablonD" value="szablon: "/>
-                <h:inputTextarea id="szablonD" value="#{RodzajeCfg.obiekt.szablon}"  cols="90" rows="15"><rich:validator/></h:inputTextarea>
+                <h:inputTextarea id="szablonD" value="#{RodzajeCfg.obiekt.szablon}"  cols="110" rows="15"><rich:validator/></h:inputTextarea>
                 <rich:message for="szablonD" styleClass="error" />
             </h:panelGrid>
-            <rich:collapsiblePanel header="powiązanie z bazą urządzeń" expanded="false" switchType="client" onswitch="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();">
-                <rich:pickList value="#{RodzajeCfg.obiekt.umMasterGrupaList}" sourceCaption="MasterGrupy Urządzeń" targetCaption="wybrane grupy" converter="#{UmMasterGrpConv}"
-                               addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
-                    <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}" />
-                </rich:pickList>
-            </rich:collapsiblePanel>
+            <h:panelGroup id="bazUzMedD">
+                <rich:collapsiblePanel header="powiązanie z bazą urządzeń" expanded="true" switchType="client" rendered="#{RodzajeCfg.obiekt.idRodzajGrupa.urzMed}"
+                                       onswitch="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();">
+                    <rich:pickList value="#{RodzajeCfg.obiekt.umMasterGrupaList}" sourceCaption="MasterGrupy Urządzeń" targetCaption="wybrane grupy" converter="#{UmMasterGrpConv}"
+                                   addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
+                        <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}" />
+                    </rich:pickList>
+                </rich:collapsiblePanel>
+            </h:panelGroup>
             <hr/>
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />

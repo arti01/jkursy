@@ -1,4 +1,9 @@
-2014-08-23
+2014-08-29
+Najpierw w Rodzaje Grupy określić, czy rodzaje tej grupy służą do obsługi bazy urządzeń,
+potem w odpowiednich rodzajach dopisać master grupy sprzętu.
+
+Uwaga - dobrze przetestować operacje na dokumentach (rejestracja, edycja, usuwanie itd)-
+-te mechanizmy zostały uwspólnione z rejestracją dokumentu dla urządzeń medycznych
 
 2014-08-23
 Wersja przekazana Michałowi: edycja mastergrup, grup, urządzeń oraz drzewko urządzeń

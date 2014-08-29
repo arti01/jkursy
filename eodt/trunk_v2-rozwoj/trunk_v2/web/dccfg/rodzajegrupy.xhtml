@@ -24,6 +24,10 @@
                     <h:outputLabel for="opisD" value="opis: "/>
                     <h:inputTextarea id="opisD" value="#{RodzajeGrupyCfg.rodzajGrupa.opis}"  cols="90" ><rich:validator/></h:inputTextarea>
                     <rich:message for="opisD" styleClass="error" />
+                    
+                    <h:outputLabel for="urzMedD" value="czy rodzaje mogą obsługiwać&lt;br/&gt;Bazę Urządzeń Medycznych" escape="false"/>
+                    <h:selectBooleanCheckbox id="urzMedD" value="#{RodzajeGrupyCfg.rodzajGrupa.urzMed}"/>
+                    <rich:message for="urzMedD" styleClass="error" />
                 </h:panelGrid>
                 <rich:message for="zapisz" styleClass="error" />
                 <rich:message for="dodaj" styleClass="error" />

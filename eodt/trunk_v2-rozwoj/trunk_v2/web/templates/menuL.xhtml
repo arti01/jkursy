@@ -18,11 +18,11 @@
                             <h:commandLink value="Start" action="#{login.stronaIndex}" style="font-size: 13px; font-weight: bold"/>
                         </rich:panelMenuItem>
                         <rich:panelMenuGroup label="Dokumenty - konfiguracja" rendered="#{login.dcCfg}" expanded="#{login.menuDcCfgExp}" actionListener="#{login.menuDcCfgExpList}">
-                            <rich:panelMenuItem >
-                                <h:commandLink value="Rodzaje" action="#{RodzajeCfg.list}"/>
-                            </rich:panelMenuItem>
                             <rich:panelMenuItem>
                                 <h:commandLink value="Grupy rodzajów" action="#{RodzajeGrupyCfg.list}" />
+                            </rich:panelMenuItem>
+                            <rich:panelMenuItem >
+                                <h:commandLink value="Rodzaje" action="#{RodzajeCfg.list}"/>
                             </rich:panelMenuItem>
                             <rich:panelMenuItem >
                                 <h:commandLink value="Projekty" action="#{ProjektyCfg.list}"/>
@@ -102,11 +102,16 @@
                         <rich:panelMenuGroup label="Serwis Urządzeń Medycznych" rendered="#{login.umSprz}" expanded="#{login.menuUmSprze}" actionListener="#{login.menuUmSprzExpList}">
                             <h:commandLink action="#{UrzadzeniaMg.list}">
                                 <rich:panelMenuItem >
-                                    Lista
+                                    Lista urządzeń
+                                </rich:panelMenuItem>
+                            </h:commandLink>
+                            <h:commandLink action="#{URejDokMg.list}">
+                                <rich:panelMenuItem >
+                                    Lista dokumentów
                                 </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Serwis Urządzeń Med - konfiguracja" rendered="#{login.umCfg}" expanded="#{login.menuUmCfg}" actionListener="#{login.menuUmCfgExpList}">
                             <h:commandLink action="#{UMasterMg.list}">
                                 <rich:panelMenuItem >
@@ -124,7 +129,7 @@
                                 </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Struktura organizacyjna" rendered="#{login.struktura}" expanded="#{login.menuStrukturaExp}" actionListener="#{login.menuStrukturaExpList}">
                             <h:commandLink action="#{UsersM.nowy}">
                                 <rich:panelMenuItem >

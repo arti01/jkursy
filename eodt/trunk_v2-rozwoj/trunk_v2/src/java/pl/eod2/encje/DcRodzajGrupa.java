@@ -53,6 +53,8 @@ public class DcRodzajGrupa implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Column(nullable = false)
+    private boolean urzMed;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "idRodzajGrupa", fetch = FetchType.LAZY)
     private List<DcRodzaj> dcRodzajList;
 
@@ -98,6 +100,14 @@ public class DcRodzajGrupa implements Serializable {
 
     public void setDcRodzajList(List<DcRodzaj> dcRodzajList) {
         this.dcRodzajList = dcRodzajList;
+    }
+
+    public boolean isUrzMed() {
+        return urzMed;
+    }
+
+    public void setUrzMed(boolean urzMed) {
+        this.urzMed = urzMed;
     }
 
     @Override
