@@ -36,7 +36,7 @@
                                 #{user.fullname}
                             </rich:autocomplete>
                             <rich:message for="user_id" styleClass="error" />
-                            <a4j:commandButton value="dodaj członka" execute="user_id" action="#{RodzajeCfg.dodajUser}" render="user_list, user_id"/>
+                            <a4j:commandButton value="dodaj członka" execute="user_id" action="#{RodzajeCfg.dodajUser}" render="user_list, user_id" oncomplete="#{rich:component('dodajPane')}.hide(); #{rich:component('dodajPane')}.show();"/>
                             <rich:list id="user_list" value="#{RodzajeCfg.akcKrok.uzytkownikList}" var="user">
                                 #{user.fullname}
                                 <a4j:commandButton id="usunUser" action="#{RodzajeCfg.usunUser}" render="user_list, user_id" execute="@this" image="/images/delete.png">

@@ -112,7 +112,7 @@ public class DcDokumentJpaController implements Serializable {
             em.refresh(dcDokument);
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "blad";
+            return "blad - zapewne nie wypełniony rodzaj";
         } finally {
             if (em != null) {
                 em.close();

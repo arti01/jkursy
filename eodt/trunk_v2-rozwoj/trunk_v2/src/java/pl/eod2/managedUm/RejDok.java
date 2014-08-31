@@ -30,6 +30,7 @@ public class RejDok {
     void init() {
     }
 
+    @SuppressWarnings("unchecked")
     void refresh(){
         dcR=new DcRodzajJpaController();
         rodzajLista.setWrappedData(dcR.findDcRodzajUm());
@@ -38,6 +39,7 @@ public class RejDok {
             listD.addAll(rodz.getDcDokumentList());
         }
         lista.setWrappedData(listD);
+        rejestracja.setObiekt(null);
     }
     
     public String list() {
@@ -55,6 +57,10 @@ public class RejDok {
         if (rejestracja.edytujAbst()) {
             refresh();
         }
+    }
+    
+    public String detale() {
+        return "/um/dokumentDetale?faces-redirect=true";
     }
     
     public DataModel<DcDokument> getLista() {

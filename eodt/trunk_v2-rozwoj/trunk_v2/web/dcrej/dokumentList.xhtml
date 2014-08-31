@@ -19,7 +19,9 @@
                         <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
                     </h:outputLink>
                 </f:facet>
-                <ui:include src="./dokumentEdit.xhtml"/>
+                <ui:include src="./dokumentEdit.xhtml">
+                    <ui:param name="detal" value="#{false}"/> 
+                </ui:include>
                 <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
@@ -166,7 +168,7 @@
                                            rendered="#{item.dokStatusId.id==1}" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
-                        <a4j:commandButton id="imgDt" execute="@this" action="#{RejestracjaRej.detale}" image="/images/detail.png">
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{managedBean.detale}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                         <a4j:commandButton id="imgAn" execute="@this" render="@none"

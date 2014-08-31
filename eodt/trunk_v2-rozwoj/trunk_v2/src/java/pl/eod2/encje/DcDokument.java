@@ -115,7 +115,7 @@ public class DcDokument implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcZrodlo zrodloId;
     @JoinColumn(name = "rodzaj_id", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private DcRodzaj rodzajId;
     @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
