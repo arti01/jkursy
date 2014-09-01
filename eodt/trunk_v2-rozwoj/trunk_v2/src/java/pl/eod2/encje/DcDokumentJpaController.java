@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -81,8 +82,8 @@ public class DcDokumentJpaController implements Serializable {
 
     public String create(DcDokument dcDokument, Struktura struktura) throws NonexistentEntityException, Exception {
         dcDokument.setUserId(struktura.getUserId());
-        
-        List<DcPlik>pliki=dcDokument.getDcPlikList();
+
+        List<DcPlik> pliki = dcDokument.getDcPlikList();
         dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         if (dcDokument.getKontrahentId() == null) {
             DcKontrahenciJpaController dcKonC = new DcKontrahenciJpaController();
@@ -97,11 +98,11 @@ public class DcDokumentJpaController implements Serializable {
             dcDokument.setDcPlikList(new ArrayList<DcPlik>());
         }
         dcDokument.setDataWprow(new Date());
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
-        dcDokument.setSymbolSpDzialRok(dcDokument.getUserId().getSpolkaId().getSymbol()+"/"+dcDokument.getUserId().getStruktura().getDzialId().getSymbol()+"/"+sdf.format(dcDokument.getDataWprow()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        dcDokument.setSymbolSpDzialRok(dcDokument.getUserId().getSpolkaId().getSymbol() + "/" + dcDokument.getUserId().getStruktura().getDzialId().getSymbol() + "/" + sdf.format(dcDokument.getDataWprow()));
         dcDokument.setDokStatusId(new DcDokumentStatus(1));
         dcDokument.setSymbolNrKol(this.findMaxNrKol(dcDokument));
-        
+
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -118,27 +119,27 @@ public class DcDokumentJpaController implements Serializable {
                 em.close();
             }
         }
-        
-          if(pliki!=null){
-            for(DcPlik plik:pliki){
+
+        if (pliki != null) {
+            for (DcPlik plik : pliki) {
                 plik.setIdDok(dcDokument);
                 dcDokument.getDcPlikList().add(plik);
             }
             try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.merge(dcDokument);
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return "blad";
-        } finally {
-            if (em != null) {
-                em.close();
+                em = getEntityManager();
+                em.getTransaction().begin();
+                em.merge(dcDokument);
+                em.getTransaction().commit();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return "blad";
+            } finally {
+                if (em != null) {
+                    em.close();
+                }
             }
         }
-        }
-        
+
         return null;
     }
 
@@ -188,7 +189,7 @@ public class DcDokumentJpaController implements Serializable {
         }
         return dcDokument;
     }
-    
+
     public DcDokument akceptuj(DcDokumentKrokUzytkownik dku) {
         EntityManager em = null;
         DcDokument dok = dku.getIdDokumentKrok().getIdDok();
@@ -364,12 +365,21 @@ public class DcDokumentJpaController implements Serializable {
                 dcPlikListNewDcPlikToAttach = em.getReference(dcPlikListNewDcPlikToAttach.getClass(), dcPlikListNewDcPlikToAttach.getId());
                 attachedDcPlikListNew.add(dcPlikListNewDcPlikToAttach);
             }
+            
+            
+            //urzadzenia - USUWANIE duplikatow
+            HashSet hs = new HashSet();
+            hs.addAll(dcDokument.getUrzadzeniaList());
+            dcDokument.getUrzadzeniaList().clear();
+            dcDokument.getUrzadzeniaList().addAll(hs);
+            
             dcPlikListNew = attachedDcPlikListNew;
             dcDokument.setDcPlikList(dcPlikListNew);
 
             dcDokument = this.createKroki(dcDokument);
 
             dcDokument = em.merge(dcDokument);
+            
             if (userIdOld != null && !userIdOld.equals(userIdNew)) {
                 userIdOld.getDcDokumentList().remove(dcDokument);
                 userIdOld = em.merge(userIdOld);
@@ -443,7 +453,7 @@ public class DcDokumentJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The dcDokument with id " + id + " no longer exists.", enfe);
             }
-            
+
             Uzytkownik userId = dcDokument.getUserId();
             if (userId != null) {
                 userId.getDcDokumentList().remove(dcDokument);
@@ -537,12 +547,11 @@ public class DcDokumentJpaController implements Serializable {
             Predicate warStatus = cb.equal(statusE, status);
             warunek = warStatus;
 
-            if (rodzGrupa != null&&rodzGrupa.getDcRodzajList()!=null&&!rodzGrupa.getDcRodzajList().isEmpty()) {
+            if (rodzGrupa != null && rodzGrupa.getDcRodzajList() != null && !rodzGrupa.getDcRodzajList().isEmpty()) {
                 Expression<DcRodzaj> rodzaj = dokument.get(DcDokument_.rodzajId);
                 warRodzaj = rodzaj.in(rodzGrupa.getDcRodzajList());
                 warunek = cb.and(warRodzaj, warunek);
-            }
-            else{
+            } else {
                 return null;
             }
             if (dataRejOd != null) {
@@ -572,30 +581,30 @@ public class DcDokumentJpaController implements Serializable {
             em.close();
         }
     }
-    
+
     public int findMaxNrKol(DcDokument dokument) {
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("DcDokument.findMaxNrKol");
             q.setParameter("symbolSpDzialRok", dokument.getSymbolSpDzialRok());
-            int u =  (Integer) q.getResultList().get(0);
+            int u = (Integer) q.getResultList().get(0);
             //em.refresh(u.getStruktura());
-            return u+1;
+            return u + 1;
         } catch (NoResultException ex) {
             //ex.printStackTrace();
             return 1;
         } catch (ArrayIndexOutOfBoundsException exb) {
             //ex.printStackTrace();
             return 1;
-        } catch(NullPointerException exnp){
+        } catch (NullPointerException exnp) {
             return 1;
         } finally {
             em.close();
         }
     }
-    
+
     @SuppressWarnings({"unchecked", "unchecked"})
-    public List<DcDokument>  findStatus(int statusId) {
+    public List<DcDokument> findStatus(int statusId) {
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("DcDokument.findByStatus");

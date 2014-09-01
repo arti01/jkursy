@@ -19,6 +19,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -132,6 +133,9 @@ public class DcDokument implements Serializable {
     private DcKontrahenci kontrahentId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosci> dcDokDoWiadList;
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private List<UmUrzadzenie> urzadzeniaList;
     @Transient
     private String dataWprowStr;
     @Transient
@@ -405,9 +409,15 @@ public class DcDokument implements Serializable {
     public void setArchTeczka(String archTeczka) {
         this.archTeczka = archTeczka;
     }
-    
-    
-    
+
+    public List<UmUrzadzenie> getUrzadzeniaList() {
+        return urzadzeniaList;
+    }
+
+    public void setUrzadzeniaList(List<UmUrzadzenie> urzadzeniaList) {
+        this.urzadzeniaList = urzadzeniaList;
+    }
+        
     @Override
     public int hashCode() {
         int hash = 0;
