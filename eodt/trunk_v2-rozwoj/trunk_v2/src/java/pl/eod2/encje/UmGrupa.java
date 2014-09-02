@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,7 +53,7 @@ public class UmGrupa implements Serializable {
     @OrderBy(value = "nazwa ASC")
     @OneToMany(mappedBy = "grupa", cascade = CascadeType.MERGE)
     private List<UmUrzadzenie> urzadzenieList;
-    @ManyToOne(optional=false, cascade = CascadeType.MERGE)
+    @ManyToOne(optional=false, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private UmMasterGrupa masterGrp;
 

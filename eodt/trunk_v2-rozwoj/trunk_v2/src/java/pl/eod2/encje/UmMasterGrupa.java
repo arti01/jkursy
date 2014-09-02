@@ -57,7 +57,7 @@ public class UmMasterGrupa implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Spolki spolkaId;
-    @ManyToMany(mappedBy = "umMasterGrupaList", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "umMasterGrupaList", fetch = FetchType.EAGER)
     private List<DcRodzaj> rodzajeDokList;
 
     public Long getId() {

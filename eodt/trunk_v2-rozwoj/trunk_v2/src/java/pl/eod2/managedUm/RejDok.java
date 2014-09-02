@@ -17,6 +17,8 @@ import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.UmGrupa;
 import pl.eod2.encje.UmMasterGrupa;
 import pl.eod2.encje.UmUrzadzenie;
+import pl.eod2.encje.exceptions.IllegalOrphanException;
+import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.managedRej.Rejestracja;
 
 @ManagedBean(name = "URejDokMg")
@@ -29,6 +31,8 @@ public class RejDok {
     private Login login;
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rejestracja;
+    @ManagedProperty(value = "#{UrzadzeniaMg}")
+    private UrzadzeniaMg urzadzeniaMg;
     private DcRodzajJpaController dcR;
     private List<TreeNode> rootNodes = new ArrayList<TreeNode>();
     private UmUrzadzenie urzad;
@@ -54,12 +58,9 @@ public class RejDok {
         rootNodes.clear();
         for (UmMasterGrupa mg : masterList) {
             DrzMaster drMa = new DrzMaster(mg);
-            System.err.println(drMa);
             for (UmGrupa gr : mg.getGrupaList()) {
                 DrzGrupa drGr = new DrzGrupa(drMa, gr);
-System.err.println(drMa.toString()+drGr.toString());
                 for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
-                    System.err.println(drMa.toString()+drGr.toString()+uz.toString());
                     DrzUrzad drzU = new DrzUrzad(drGr, uz);
                     drGr.getDrzUrzad().add(drzU);
                 }
@@ -86,11 +87,28 @@ System.err.println(drMa.toString()+drGr.toString());
         }
     }
 
+    public void usun() throws IllegalOrphanException, NonexistentEntityException {
+        rejestracja.usunAbst();
+        refresh();
+    }
+
     public String detale() {
         zrobDrzewoDlaDet();
         return "/um/dokumentDetale?faces-redirect=true";
     }
 
+    public void nowyDokDlaUrzad(){
+        rejestracja.setObiekt(new DcDokument());
+        rejestracja.setError(null);
+        List<UmUrzadzenie>urzList=new ArrayList<UmUrzadzenie>();
+        urzad=urzadzeniaMg.getDcC().findUmUrzadzenie(urzad.getId());
+        urzList.add(urzad);
+        rejestracja.getObiekt().setUrzadzeniaList(urzList);
+        System.err.println(urzad.getNazwa());
+        System.err.println(urzad.getGrupa().getMasterGrp().getRodzajeDokList());
+        rodzajLista.setWrappedData(urzad.getGrupa().getMasterGrp().getRodzajeDokList());
+    }
+    
     public void drop(DropEvent event) {
 
         //przypisanie urzadzenia do dokumenty
@@ -115,11 +133,11 @@ System.err.println(drMa.toString()+drGr.toString());
         rejestracja.edytujAbst();
     }
 
-    public void usunUrzad(){
+    public void usunUrzad() {
         rejestracja.getObiekt().getUrzadzeniaList().remove(urzad);
         rejestracja.edytujAbst();
     }
-    
+
     public DataModel<DcDokument> getLista() {
         return lista;
     }
@@ -167,4 +185,13 @@ System.err.println(drMa.toString()+drGr.toString());
     public void setUrzad(UmUrzadzenie urzad) {
         this.urzad = urzad;
     }
+
+    public UrzadzeniaMg getUrzadzeniaMg() {
+        return urzadzeniaMg;
+    }
+
+    public void setUrzadzeniaMg(UrzadzeniaMg urzadzeniaMg) {
+        this.urzadzeniaMg = urzadzeniaMg;
+    }
+    
 }

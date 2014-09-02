@@ -33,8 +33,8 @@
                             #{item.opis}
                     </rich:column>
                     <rich:column>
-                        <f:facet name="header">grupy</f:facet>
-                        <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń">
+                        <f:facet name="header">grupy urządzeń</f:facet>
+                        <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń" rendered="#{fn:length(item.grupaList)!=0}">
                             <rich:dataTable value="#{item.grupaList}" var="grupa" style="width: auto; border: white thick">
                                 <rich:column>
                                     <rich:tooltip target="grupaN" value="#{grupa.opis}" layout="block"/>
@@ -44,6 +44,18 @@
                         </rich:collapsiblePanel>
                     </rich:column>
 
+                    <rich:column>
+                        <f:facet name="header">rodzaje dokumentów</f:facet>
+                        <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń" rendered="#{fn:length(item.rodzajeDokList)!=0}">
+                            <rich:dataTable value="#{item.rodzajeDokList}" var="dcRodz" style="width: auto; border: white thick">
+                                <rich:column>
+                                    <rich:tooltip target="dcRodzN" value="#{dcRodz.opis}" layout="block"/>
+                                    <h:outputText id="dcRodzN" value="#{dcRodz.nazwa}"/>
+                                    </rich:column>
+                            </rich:dataTable>
+                        </rich:collapsiblePanel>
+                    </rich:column>
+                    
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>

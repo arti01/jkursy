@@ -16,9 +16,33 @@
         <ui:include src="./urzadzenieEdit.xhtml"/>
         <hr/>
         <h:form>
+            
+            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
+                <f:facet name="controls">
+                    <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
+                            return false;">
+                        <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+                    </h:outputLink>
+                </f:facet>
+                <ui:include src="../dcrej/dokumentEdit.xhtml">
+                    <ui:param name="detal" value="#{false}"/> 
+                    <ui:param name="managedBean" value="#{URejDokMg}"/>
+                </ui:include>
+                <ui:param name="managedBean" value="#{URejDokMg}"/>
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RejestracjaRej.obiekt.id==null}"/>
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RejestracjaRej.obiekt.id!=null}"/>
+                <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                            return false;" />
+            </rich:popupPanel>
+
+            
             <rich:panel id="listPanel">
                 <a4j:commandLink  execute="@form" action="#{UrzadzeniaMg.newObiekt}" render="dodajPaneRodzaj, listPanel" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
-                    <h4>[dodaj]</h4>
+                    <h4>[dodaj urządzenie]</h4>
                 </a4j:commandLink>
 
                 <rich:dataTable id="tableRodzaj" value="#{UrzadzeniaMg.lista}" var="item" iterationStatusVar="it" rows="10" style="width: 100%">
@@ -89,7 +113,13 @@
                         <rich:tooltip target="imgHist">
                             Historia dokumentów
                         </rich:tooltip>
-                        <a4j:commandButton id="imgHist"  execute="@this" oncomplete="#{rich:component('dokHist')}.show()" image="/images/lista.png"/>
+                        <rich:tooltip target="imgAdd">
+                            Nowy dokument
+                        </rich:tooltip>
+                        <a4j:commandButton id="imgHist" execute="@this" oncomplete="#{rich:component('dokHist')}.show()" image="/images/lista.png"/>
+                        <a4j:commandButton id="imgAdd" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" action="#{URejDokMg.nowyDokDlaUrzad}" image="/images/add.png">
+                            <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{item}" />
+                        </a4j:commandButton>
                         <rich:popupPanel  id="dokHist" style="text-align: center;" header="Historia dokumentow"  autosized="true" domElementAttachment="parent" left="77" top="13" >
                             <f:facet name="controls">
                                 <h:outputLink value="#" onclick="#{rich:component('dokHist')}.hide();
@@ -98,8 +128,8 @@
                                 </h:outputLink>
                             </f:facet>
                             <rich:dataTable value="#{item.dokumentyList}" var="dok" iterationStatusVar="it" rows="10" id="tableDok" style="width: 100%">
-                                <f:facet name="header">nazwa/symbol</f:facet>
                                 <rich:column>
+                                    <f:facet name="header">nazwa/symbol</f:facet>
                                     #{dok.nazwa}<br/>
                                     #{dok.symbolDok}
                                 </rich:column>

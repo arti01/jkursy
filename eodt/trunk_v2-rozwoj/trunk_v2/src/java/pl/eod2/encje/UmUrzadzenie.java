@@ -63,7 +63,7 @@ public class UmUrzadzenie implements Serializable {
     @Column(name = "data_wprow")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataPrzegl;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false)
     private UmGrupa grupa;
     @ManyToOne(optional = false)

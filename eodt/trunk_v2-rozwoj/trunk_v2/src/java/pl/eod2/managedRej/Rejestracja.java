@@ -172,10 +172,14 @@ public class Rejestracja {
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {
-        dcC.destroy(obiekt.getId());
+        usunAbst();
         refreshObiekt();
     }
 
+    public void usunAbst() throws IllegalOrphanException, NonexistentEntityException {
+        dcC.destroy(obiekt.getId());
+    }
+    
     public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
         DcDokumentStatus ds = new DcDokumentStatus(4);
         obiekt.setDokStatusId(ds);
