@@ -2,6 +2,8 @@ package pl.eod2.managedUm;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -63,7 +65,7 @@ public class UStruktMg {
     }
 
     @SuppressWarnings("unchecked")
-    public void drop(DropEvent event) throws Exception{
+    public void drop(DropEvent event) {
 
          //przeniesienie urządzenia
          if(event.getDragValue().getClass().equals(pl.eod2.managedUm.DrzUrzad.class)){
@@ -74,7 +76,11 @@ public class UStruktMg {
              UmGrupa gr=drG.getObiektDb();
              
              uz.setGrupa(gr);
-             dcU.edit(uz);
+             try {
+                 dcU.edit(uz);
+             } catch (Exception ex) {
+                 Logger.getLogger(UStruktMg.class.getName()).log(Level.SEVERE, null, ex);
+             }
          }
          
          //przeniesienie grupy
@@ -85,7 +91,11 @@ public class UStruktMg {
              DrzMaster drG=(DrzMaster) event.getDropValue();
              UmMasterGrupa gr=drG.getObiektDb();
              uz.setMasterGrp(gr);
-             dcG.edit(uz);
+             try {
+                 dcG.edit(uz);
+             } catch (Exception ex) {
+                 Logger.getLogger(UStruktMg.class.getName()).log(Level.SEVERE, null, ex);
+             }
          }
          
          refresh();

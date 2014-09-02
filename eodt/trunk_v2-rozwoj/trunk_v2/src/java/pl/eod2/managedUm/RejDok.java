@@ -54,11 +54,12 @@ public class RejDok {
         rootNodes.clear();
         for (UmMasterGrupa mg : masterList) {
             DrzMaster drMa = new DrzMaster(mg);
-
+            System.err.println(drMa);
             for (UmGrupa gr : mg.getGrupaList()) {
                 DrzGrupa drGr = new DrzGrupa(drMa, gr);
-
+System.err.println(drMa.toString()+drGr.toString());
                 for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
+                    System.err.println(drMa.toString()+drGr.toString()+uz.toString());
                     DrzUrzad drzU = new DrzUrzad(drGr, uz);
                     drGr.getDrzUrzad().add(drzU);
                 }

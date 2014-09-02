@@ -368,7 +368,7 @@ public class DcDokumentJpaController implements Serializable {
             
             
             //urzadzenia - USUWANIE duplikatow
-            HashSet hs = new HashSet();
+            HashSet<UmUrzadzenie> hs = new HashSet<UmUrzadzenie>();
             hs.addAll(dcDokument.getUrzadzeniaList());
             dcDokument.getUrzadzeniaList().clear();
             dcDokument.getUrzadzeniaList().addAll(hs);

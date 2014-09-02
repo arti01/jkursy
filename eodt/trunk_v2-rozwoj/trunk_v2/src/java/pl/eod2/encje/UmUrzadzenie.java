@@ -8,6 +8,7 @@ package pl.eod2.encje;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +17,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -68,8 +69,8 @@ public class UmUrzadzenie implements Serializable {
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Uzytkownik userOdpow;
-    @ManyToMany(mappedBy = "urzadzeniaList", fetch = FetchType.LAZY)
-    List<DcDokument> dokumentyList;
+    @ManyToMany(mappedBy = "urzadzeniaList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    private List<DcDokument> dokumentyList;
     @Transient
     private boolean dataNizDzis;
 
@@ -162,6 +163,14 @@ public class UmUrzadzenie implements Serializable {
             dataNizDzis = true;
         }
         return dataNizDzis;
+    }
+
+    public List<DcDokument> getDokumentyList() {
+        return dokumentyList;
+    }
+
+    public void setDokumentyList(List<DcDokument> dokumentyList) {
+        this.dokumentyList = dokumentyList;
     }
 
     @Override

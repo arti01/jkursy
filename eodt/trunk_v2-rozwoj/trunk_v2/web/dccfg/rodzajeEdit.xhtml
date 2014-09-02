@@ -46,7 +46,7 @@
             <h:panelGroup id="bazUzMedD">
                 <rich:collapsiblePanel header="powiązanie z bazą urządzeń" expanded="true" switchType="client" rendered="#{RodzajeCfg.obiekt.idRodzajGrupa.urzMed}"
                                        onswitch="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();">
-                    <rich:pickList value="#{RodzajeCfg.obiekt.umMasterGrupaList}" sourceCaption="MasterGrupy Urządzeń" targetCaption="wybrane grupy" converter="#{UmMasterGrpConv}"
+                    <rich:pickList value="#{RodzajeCfg.obiekt.umMasterGrupaList}" sourceCaption="MasterGrupy Urządzeń" targetCaption="wybrane MasterGrupy" converter="#{UmMasterGrpConv}"
                                    addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
                         <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}" />
                     </rich:pickList>

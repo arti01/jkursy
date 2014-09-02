@@ -13,6 +13,9 @@ Uwaga - dobrze przetestować operacje na dokumentach (rejestracja, edycja, usuwa
 Powinno się samo założyć, ale gdyby jednak nie to:
 ALTER TABLE dc_rodzaj_grupa ADD COLUMN urzmed integer;
 
+Na Lista Dokumentow w Urzadzeniach Medycznych pojawiają się tylko dokumenty, ktore są z rodzaju należącego do grup, ktore mają wybraną opcję
+pozwalającą na laczenie z baza urzadzen
+
 2014-08-23
 Wersja przekazana Michałowi: edycja mastergrup, grup, urządzeń oraz drzewko urządzeń
 
