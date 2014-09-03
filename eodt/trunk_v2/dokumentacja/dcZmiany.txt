@@ -1,4 +1,24 @@
-2014-08-23
+2014-09-03
+Zmieniłem tabelę dc_plik_import wywalajac kolumnę plik i laczą ją z tabela dc_plik_import_bin (kwestia wydajnosci)
+Najlepiej wywalić tabelę dc_plik_import - założy się nowa prawidłowo
+
+2014-08-29
+
+sprawdzić, czy w persistence.xml jest:
+ <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
+Po pierwszym zalogowaniu można ten fragment zaremować.
+
+Najpierw w Rodzaje Grupy określić, czy rodzaje tej grupy służą do obsługi bazy urządzeń,
+potem w odpowiednich rodzajach dopisać master grupy sprzętu.
+
+Uwaga - dobrze przetestować operacje na dokumentach (rejestracja, edycja, usuwanie itd)-
+-te mechanizmy zostały uwspólnione z rejestracją dokumentu dla urządzeń medycznych
+
+Powinno się samo założyć, ale gdyby jednak nie to:
+ALTER TABLE dc_rodzaj_grupa ADD COLUMN urzmed integer;
+
+Na Lista Dokumentow w Urzadzeniach Medycznych pojawiają się tylko dokumenty, ktore są z rodzaju należącego do grup, ktore mają wybraną opcję
+pozwalającą na laczenie z baza urzadzen
 
 2014-08-23
 Wersja przekazana Michałowi: edycja mastergrup, grup, urządzeń oraz drzewko urządzeń

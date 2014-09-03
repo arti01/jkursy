@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -57,7 +58,7 @@ public class Ogloszenia implements Serializable {
     @ManyToOne()
     private Uzytkownik wprowadzil;
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Struktura> adresaciList;
 
     public Integer getId() {

@@ -12,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.Uzytkownik;
@@ -26,14 +27,17 @@ import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
+import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.managedCfg.Rodzaje;
 
 @ManagedBean(name = "RejestracjaRej")
 @SessionScoped
 public class Rejestracja {
 
     private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
+    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<DcRodzaj>();
     private DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
     private DcDokument obiekt;
@@ -44,6 +48,8 @@ public class Rejestracja {
     private Locale locale;
     @ManagedProperty(value = "#{login}")
     private Login login;
+    @ManagedProperty(value = "#{RodzajeCfg}")
+    private Rodzaje rodzajeMg;
     private DcKontrahenci kontrahent;
     private DcDokDoWiadomosci doWiad;
     private DcDokDoWiadCel doWiadCel;
@@ -68,11 +74,12 @@ public class Rejestracja {
         userDoWiad = new Uzytkownik();
         doWiad = new DcDokDoWiadomosci();
         plikImpC = new DcPlikImportJpaController();
-        refreshObiekt();
+        //refreshObiekt(); - uwaga - zmiana do testow
     }
 
     public void refreshObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
+        rodzajLista.setWrappedData(rodzajeMg.getLista().getWrappedData());
         obiekt = new DcDokument();
         error = null;
     }
@@ -82,21 +89,39 @@ public class Rejestracja {
         error = null;
     }
 
-    public void dodaj() throws Exception {
-        error = dcC.create(obiekt, login.getZalogowany());
+    public boolean dodajAbst() throws NonexistentEntityException {
+        try {
+            error = dcC.create(obiekt, login.getZalogowany());
+        } catch (Exception ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
+            return false;
         } else {
-            System.err.println(obiekt.getDcPlikList());
+            //System.err.println(obiekt.getDcPlikList());
             if (!obiekt.getDcPlikList().isEmpty()) {
-                System.err.println("usuwanie plikow");
-                System.err.println(plikImport.getId());
+                //System.err.println("usuwanie plikow");
+                //System.err.println(plikImport.getId());
                 plikImpC.destroy(plikImport.getId());
-                plikImport=null;
+                plikImport = null;
             }
+            return true;
+        }
+    }
+
+    public void dodaj() throws Exception {
+        if (dodajAbst()) {
+            plikImport=null;
+            refreshObiekt();
+        }
+    }
+
+    public void edytuj() {
+        if (edytujAbst()) {
             refreshObiekt();
         }
     }
@@ -106,7 +131,7 @@ public class Rejestracja {
         refreshBezObiekt();
     }
 
-    public void edytuj() {
+    public boolean edytujAbst() {
         try {
             error = dcC.edit(obiekt);
         } catch (IllegalOrphanException ex) {
@@ -123,8 +148,9 @@ public class Rejestracja {
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
             lista.setWrappedData(dcC.findDcDokumentEntities());
+            return false;
         } else {
-            refreshObiekt();
+            return true;
         }
     }
 
@@ -151,8 +177,12 @@ public class Rejestracja {
     }
 
     public void usun() throws IllegalOrphanException, NonexistentEntityException {
-        dcC.destroy(obiekt.getId());
+        usunAbst();
         refreshObiekt();
+    }
+
+    public void usunAbst() throws IllegalOrphanException, NonexistentEntityException {
+        dcC.destroy(obiekt.getId());
     }
 
     public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
@@ -179,6 +209,13 @@ public class Rejestracja {
         }
     }
 
+    public void listenerOpis(ValueChangeEvent vce) {
+        DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
+        if (!(rodzaj.getSzablon() == null || rodzaj.getSzablon().isEmpty())) {
+            obiekt.setOpis(rodzaj.getSzablon());
+        }
+    }
+
     public void usunPlik() throws IllegalOrphanException, NonexistentEntityException {
         dcPlikC.destroy(plik.getId());
         obiekt.getDcPlikList().remove(plik);
@@ -199,12 +236,12 @@ public class Rejestracja {
         if (plikImport != null) {
             DcPlik dcPlik = new DcPlik();
             dcPlik.setNazwa(plikImport.getNazwa());
-            dcPlik.setPlik(plikImport.getPlik());
+            dcPlik.setPlik(plikImport.getDcPlikImportBin().getPlik());
             dcPlik.setDataDodania(new Date());
             obiekt.setDcPlikList(new ArrayList<DcPlik>());
             obiekt.getDcPlikList().add(dcPlik);
         }
-        return "/dcrej/dokumentList";
+        return "/dcrej/dokumenty";
     }
 
     public String detale() {
@@ -438,6 +475,22 @@ public class Rejestracja {
 
     public void setPlikImport(DcPlikImport plikImport) {
         this.plikImport = plikImport;
+    }
+
+    public Rodzaje getRodzajeMg() {
+        return rodzajeMg;
+    }
+
+    public void setRodzajeMg(Rodzaje rodzajeMg) {
+        this.rodzajeMg = rodzajeMg;
+    }
+
+    public DataModel<DcRodzaj> getRodzajLista() {
+        return rodzajLista;
+    }
+
+    public void setRodzajLista(DataModel<DcRodzaj> rodzajLista) {
+        this.rodzajLista = rodzajLista;
     }
 
 }

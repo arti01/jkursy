@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,6 +36,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DcRodzaj.findAll", query = "SELECT d FROM DcRodzaj d"),
     @NamedQuery(name = "DcRodzaj.findById", query = "SELECT d FROM DcRodzaj d WHERE d.id = :id"),
     @NamedQuery(name = "DcRodzaj.findByNazwa", query = "SELECT d FROM DcRodzaj d WHERE d.nazwa = :nazwa"),
+    @NamedQuery(name = "DcRodzaj.findByUm", query = "SELECT d FROM DcRodzaj d WHERE d.idRodzajGrupa.urzMed=true"),
     @NamedQuery(name = "DcRodzaj.findByOpis", query = "SELECT d FROM DcRodzaj d WHERE d.opis = :opis")})
 public class DcRodzaj implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -56,6 +58,9 @@ public class DcRodzaj implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Size(max = 10485760)
+    @Lob
+    private String szablon;
     @Column(name = "limit_czasu_akceptacji")
     private int limitCzaasuAkceptacji;
     @JoinColumn(name = "id_rodzaj_grupa", referencedColumnName = "id", nullable = false)
@@ -68,6 +73,9 @@ public class DcRodzaj implements Serializable {
     private DcTypFlow idTypFlow;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rodzajId", fetch = FetchType.LAZY)
     private List<DcAkceptKroki> dcAkceptKroki;
+    @JoinColumn(name = "id", referencedColumnName = "id")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
+    private List<UmMasterGrupa> umMasterGrupaList;
 
     public DcRodzaj() {
     }
@@ -153,6 +161,22 @@ public class DcRodzaj implements Serializable {
         this.dcAkceptKroki = dcAkceptKroki;
     }
     
+    public String getSzablon() {
+        return szablon;
+    }
+
+    public void setSzablon(String szablon) {
+        this.szablon = szablon;
+    }
+
+    public List<UmMasterGrupa> getUmMasterGrupaList() {
+        return umMasterGrupaList;
+    }
+
+    public void setUmMasterGrupaList(List<UmMasterGrupa> umMasterGrupaList) {
+        this.umMasterGrupaList = umMasterGrupaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

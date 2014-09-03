@@ -21,6 +21,7 @@
             <hr/>
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
+            <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
 
             <a4j:commandButton id="dodaj" value="Dodaj" action="#{UMasterMg.dodaj}" render="listPanel, dodajPaneMaster" execute="dodajPaneMaster"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneMaster')}.hide();} else {#{rich:component('dodajPaneMaster')}.show();}" 

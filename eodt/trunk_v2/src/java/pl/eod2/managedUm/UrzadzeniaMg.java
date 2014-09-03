@@ -219,4 +219,8 @@ public class UrzadzeniaMg {
         this.filtrGrupa = filtrGrupa;
     }
 
+    public UmUrzadzenieJpaController getDcC() {
+        return dcC;
+    }
+
 }

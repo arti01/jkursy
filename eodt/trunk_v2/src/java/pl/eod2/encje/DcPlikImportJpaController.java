@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -100,7 +101,19 @@ public class DcPlikImportJpaController implements Serializable {
     }
 
     public List<DcPlikImport> findDcPlikImportEntities() {
-        return findDcPlikImportEntities(true, -1, -1);
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcPlikImport.findAllbezPlik");
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
     }
 
     public List<DcPlikImport> findDcPlikImportEntities(int maxResults, int firstResult) {
@@ -144,12 +157,13 @@ public class DcPlikImportJpaController implements Serializable {
             em.close();
         }
     }
+
     public void importFromDir() throws IOException {
         Config cfgDir = new ConfigJpaController().findConfigNazwa("dirImportSkan");
         Config cfgDirBak = new ConfigJpaController().findConfigNazwa("dirImportSkanBak");
         File dir = new File(cfgDir.getWartosc());
         for (File f : dir.listFiles()) {
-            if (f.setLastModified(new Date().getTime() - 10000)&&f.isFile()) {
+            if (f.setLastModified(new Date().getTime() - 10000) && f.isFile()) {
                 System.err.println(f.getAbsolutePath());
                 ByteArrayOutputStream ous = null;
                 InputStream ios = null;
@@ -166,7 +180,7 @@ public class DcPlikImportJpaController implements Serializable {
                         if (ous != null) {
                             ous.close();
                         }
-                        
+
                     } catch (IOException e) {
                     }
 
@@ -175,14 +189,16 @@ public class DcPlikImportJpaController implements Serializable {
                             ios.close();
                         }
                         //przenoszenie pliku
-                        f.renameTo(new File(cfgDirBak.getWartosc()+"/"+f.getName()));
+                        f.renameTo(new File(cfgDirBak.getWartosc() + "/" + f.getName()));
                     } catch (IOException e) {
                     }
                 }
-                DcPlikImport plik=new DcPlikImport();
+                DcPlikImport plik = new DcPlikImport();
                 plik.setDataDodania(new Date());
                 plik.setNazwa(f.getName());
-                plik.setPlik(ous.toByteArray());
+                DcPlikImportBin pim=new DcPlikImportBin();
+                pim.setPlik(ous.toByteArray());
+                plik.setDcPlikImportBin(pim);
                 this.create(plik);
             }
         }

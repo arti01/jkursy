@@ -5,30 +5,30 @@
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                template="/templates/template.xhtml"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
-    <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <h3>Rejestracja dokumentów</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>    
-            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13">
+            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
                             return false;">
                         <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
                     </h:outputLink>
                 </f:facet>
-                <ui:include src="./dokumentEdit.xhtml"/>
-                <a4j:commandButton id="dodaj" value="Dodaj" action="#{RejestracjaRej.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
+                <ui:include src="./dokumentEdit.xhtml">
+                    <ui:param name="detal" value="#{false}"/> 
+                </ui:include>
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
-                <a4j:commandButton id="zapisz" value="Zapisz" action="#{RejestracjaRej.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id!=null}"/>
-                <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" onclick="#{rich:component('dodajPane')}.hide();
                             return false;" />
 
             </rich:popupPanel>
@@ -45,10 +45,10 @@
 
             <rich:panel id="listPanel">
                 <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPane')}.show()"  action="#{RejestracjaRej.refreshObiekt}">
-                    <h4>[dodaj]</h4>
+                    <h4>[dodaj dokument]</h4>
                 </a4j:commandLink>
 
-                <rich:dataTable value="#{RejestracjaRej.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{managedBean.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
@@ -168,7 +168,7 @@
                                            rendered="#{item.dokStatusId.id==1}" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
-                        <a4j:commandButton id="imgDt" execute="@this" action="#{RejestracjaRej.detale}" image="/images/detail.png">
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{managedBean.detale}" image="/images/detail.png">
                             <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                         <a4j:commandButton id="imgAn" execute="@this" render="@none"
@@ -181,7 +181,7 @@
             </rich:panel>
 
 
-            <a4j:jsFunction name="remove" action="#{RejestracjaRej.usun}" render="table" execute="@this"
+            <a4j:jsFunction name="remove" action="#{managedBean.usun}" render="table" execute="@this"
                             oncomplete="#{rich:component('confirmPane')}.hide();" />
             <rich:popupPanel id="confirmPane" autosized="true">
                 Na pewno chcesz skasować?
@@ -207,8 +207,6 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
-    </ui:define>
 
 </ui:composition>
 
