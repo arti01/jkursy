@@ -1,3 +1,7 @@
+2014-09-03
+Zmieniłem tabelę dc_plik_import wywalajac kolumnę plik i laczą ją z tabela dc_plik_import_bin (kwestia wydajnosci)
+Najlepiej wywalić tabelę dc_plik_import - założy się nowa prawidłowo
+
 2014-08-29
 
 sprawdzić, czy w persistence.xml jest:

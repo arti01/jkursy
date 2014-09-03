@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author 103039
  */
 @Entity
-@Table(name = "DC_PLIK_IMPORT")
+@Table(name = "DC_PLIK_IMPORT_BIN")
 public class DcPlikImportBin implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -112,6 +112,7 @@ public class DcDokumentJpaController implements Serializable {
             em.getTransaction().commit();
             em.refresh(dcDokument);
         } catch (Exception ex) {
+            dcDokument.setDcPlikList(pliki);//bo gineły
             ex.printStackTrace();
             return "blad - zapewne nie wypełniony rodzaj";
         } finally {

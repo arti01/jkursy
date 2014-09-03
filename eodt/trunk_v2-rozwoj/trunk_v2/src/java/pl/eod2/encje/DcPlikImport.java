@@ -7,6 +7,7 @@ package pl.eod2.encje;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,8 +50,8 @@ public class DcPlikImport implements Serializable {
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256)
     private String nazwa;
-    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
-    @OneToOne()
+    @JoinColumn(name = "id_bin", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private DcPlikImportBin dcPlikImportBin;
 
     public Integer getId() {

@@ -89,7 +89,7 @@ public class Rejestracja {
         error = null;
     }
 
-    public boolean dodajAbst() throws NonexistentEntityException{
+    public boolean dodajAbst() throws NonexistentEntityException {
         try {
             error = dcC.create(obiekt, login.getZalogowany());
         } catch (Exception ex) {
@@ -115,11 +115,12 @@ public class Rejestracja {
 
     public void dodaj() throws Exception {
         if (dodajAbst()) {
+            plikImport=null;
             refreshObiekt();
         }
     }
-    
-    public void edytuj(){
+
+    public void edytuj() {
         if (edytujAbst()) {
             refreshObiekt();
         }
@@ -183,7 +184,7 @@ public class Rejestracja {
     public void usunAbst() throws IllegalOrphanException, NonexistentEntityException {
         dcC.destroy(obiekt.getId());
     }
-    
+
     public void anuluj() throws IllegalOrphanException, NonexistentEntityException, Exception {
         DcDokumentStatus ds = new DcDokumentStatus(4);
         obiekt.setDokStatusId(ds);
