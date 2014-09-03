@@ -89,8 +89,12 @@ public class Rejestracja {
         error = null;
     }
 
-    public boolean dodajAbst() throws Exception {
-        error = dcC.create(obiekt, login.getZalogowany());
+    public boolean dodajAbst() throws NonexistentEntityException{
+        try {
+            error = dcC.create(obiekt, login.getZalogowany());
+        } catch (Exception ex) {
+            Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();
@@ -231,7 +235,7 @@ public class Rejestracja {
         if (plikImport != null) {
             DcPlik dcPlik = new DcPlik();
             dcPlik.setNazwa(plikImport.getNazwa());
-            dcPlik.setPlik(plikImport.getPlik());
+            dcPlik.setPlik(plikImport.getDcPlikImportBin().getPlik());
             dcPlik.setDataDodania(new Date());
             obiekt.setDcPlikList(new ArrayList<DcPlik>());
             obiekt.getDcPlikList().add(dcPlik);

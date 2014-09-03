@@ -92,8 +92,8 @@ public class FileUploadBean implements Serializable {
         final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.setHeader("Content-Disposition", "attachment;filename=\"" + impPlik.getPlkImp().getNazwa() + "\""); // or whatever type you're sending back
         try {
-            response.getOutputStream().write(impPlik.getPlkImp().getPlik()); // from the UploadDetails bean
-            response.setContentLength(impPlik.getPlkImp().getPlik().length);
+            response.getOutputStream().write(impPlik.getPlkImp().getDcPlikImportBin().getPlik()); // from the UploadDetails bean
+            response.setContentLength(impPlik.getPlkImp().getDcPlikImportBin().getPlik().length);
             response.getOutputStream().flush();
             response.getOutputStream().close();
         } catch (IOException e) {

@@ -78,6 +78,7 @@ public class RejDok {
     public void dodaj() throws Exception {
         if (rejestracja.dodajAbst()) {
             refresh();
+            urzadzeniaMg.refresh();
         }
     }
 

@@ -35,7 +35,7 @@
                 <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id!=null}"/>
-                <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" onclick="#{rich:component('dodajPane')}.hide();
                             return false;" />
             </rich:popupPanel>
 

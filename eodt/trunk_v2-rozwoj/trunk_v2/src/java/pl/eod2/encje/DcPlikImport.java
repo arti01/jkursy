@@ -12,9 +12,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,10 +30,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "DC_PLIK_IMPORT")
 @NamedQueries({
-    @NamedQuery(name = "DcPlikImport.findAll", query = "SELECT d FROM DcPlikImport d")})
+    @NamedQuery(name = "DcPlikImport.findAll", query = "SELECT d FROM DcPlikImport d"),
+    @NamedQuery(name = "DcPlikImport.findAllbezPlik", query = "SELECT d FROM DcPlikImport d")})
 public class DcPlikImport implements Serializable {
+
     private static final long serialVersionUID = 1L;
-     @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCPLIKIMPORT")
     @SequenceGenerator(name = "SEQDCPLIKIMPORT", sequenceName = "SEQDCPLIKIMPORT")
     @Basic(optional = false)
@@ -46,8 +49,9 @@ public class DcPlikImport implements Serializable {
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256)
     private String nazwa;
-    @Lob
-    private byte[] plik;
+    @JoinColumn(name = "id", referencedColumnName = "id", insertable = false, updatable = false)
+    @OneToOne()
+    private DcPlikImportBin dcPlikImportBin;
 
     public Integer getId() {
         return id;
@@ -65,14 +69,13 @@ public class DcPlikImport implements Serializable {
         this.dataDodania = dataDodania;
     }
 
-    public byte[] getPlik() {
-        return plik;
+    public DcPlikImportBin getDcPlikImportBin() {
+        return dcPlikImportBin;
     }
 
-    public void setPlik(byte[] plik) {
-        this.plik = plik;
+    public void setDcPlikImportBin(DcPlikImportBin dcPlikImportBin) {
+        this.dcPlikImportBin = dcPlikImportBin;
     }
-
     public String getNazwa() {
         return nazwa;
     }
@@ -80,7 +83,6 @@ public class DcPlikImport implements Serializable {
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
-
 
     @Override
     public int hashCode() {
@@ -106,5 +108,5 @@ public class DcPlikImport implements Serializable {
     public String toString() {
         return "pl.eod2.encje.DcPlikImport[ id=" + id + " ]";
     }
-    
+
 }

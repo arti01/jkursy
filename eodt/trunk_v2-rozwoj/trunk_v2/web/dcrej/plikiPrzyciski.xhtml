@@ -9,7 +9,7 @@
 
     <rich:tooltip target="imgEd" value="zarejestruj dokument dla tego pliku" layout="block"/>
     <rich:tooltip target="imgDt" value="pobierz" layout="block"/>
-    <h:commandButton id="imgEd" action="#{RejestracjaRej.list}" image="/images/edit.png">
+    <h:commandButton id="imgEd" action="#{RejestracjaRej.list}" image="/images/add.png">
         <f:setPropertyActionListener target="#{RejestracjaRej.plikImport}" value="#{item}" />
     </h:commandButton>
     <h:commandButton id="imgDt" action="#{fileUploadBean.downloadImport}" image="/images/detail.png">
