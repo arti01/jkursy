@@ -26,43 +26,72 @@
             <hr/>
         </h:panelGroup>
         <h:form>
-        <h:panelGroup rendered="#{login.zalogowany!=null}">
-            <center>
-                <h:panelGrid columns="2">
-                    <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" toggleListener="#{login.refresh}" expanded="true">
-                        <rich:dataTable value="#{login.zalogowany.ogloszeniaList}" var="ogloszenie">
-                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
-                                <f:facet name="header">
-                                    tytuł
-                                </f:facet>
-                                #{ogloszenie.tytul}
-                            </rich:column>
-                            <rich:column >
-                                <f:facet name="header">
-                                    tresc
-                                </f:facet>
-                                <rich:collapsiblePanel switchType="client" expanded="false" >
-                                    <h:outputText value="#{ogloszenie.tresc}" escape="false"/>
-                                </rich:collapsiblePanel>
-                            </rich:column>
-                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
-                                <f:facet name="header">
-                                    data
-                                </f:facet>
-                                <h:outputText value="#{ogloszenie.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
-                            </rich:column>
-                            <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
-                                <f:facet name="header">
-                                    wprowadził
-                                </f:facet>
-                                #{ogloszenie.wprowadzil.fullname}
-                            </rich:column>
-                        </rich:dataTable>
-                    </rich:collapsiblePanel>
-                </h:panelGrid>
-            </center>
-        </h:panelGroup>
-</h:form>
+            <h:panelGroup rendered="#{login.zalogowany!=null}">
+                <center>
+                    <h:panelGrid columns="2">
+                        <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" toggleListener="#{login.refresh}" expanded="true">
+                            <rich:dataTable value="#{login.zalogowany.ogloszeniaList}" var="ogloszenie">
+                                <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                    <f:facet name="header">
+                                        tytuł
+                                    </f:facet>
+                                    #{ogloszenie.tytul}
+                                </rich:column>
+                                <rich:column >
+                                    <f:facet name="header">
+                                        tresc
+                                    </f:facet>
+                                    <rich:collapsiblePanel switchType="client" expanded="false" >
+                                        <h:outputText value="#{ogloszenie.tresc}" escape="false"/>
+                                    </rich:collapsiblePanel>
+                                </rich:column>
+                                <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                    <f:facet name="header">
+                                        data
+                                    </f:facet>
+                                    <h:outputText value="#{ogloszenie.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                                </rich:column>
+                                <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
+                                    <f:facet name="header">
+                                        wprowadził
+                                    </f:facet>
+                                    #{ogloszenie.wprowadzil.fullname}
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:collapsiblePanel>
+                        <rich:collapsiblePanel id="urzAlert" header="Zbliżające się terminy przeglądu sprzętu - uwaga, tylko Twoje" switchType="ajax" 
+                                               rendered="#{login.umSprz}" toggleListener="#{login.refresh}" expanded="true">
+                            <rich:dataTable value="#{login.zalogowany.userId.urzadzenieAletrPrzeglList}" var="urzad">
+                                <rich:column>
+                                    <f:facet name="header">nazwa</f:facet>
+                                        #{urzad.nazwa}
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">nr inwentarzowy<br/>nr seryjny</f:facet>
+                                        #{urzad.nrInw}<hr/>
+                                        #{urzad.nrSer}
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">lokalizacja</f:facet>
+                                        #{urzad.lokalizacja}
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">firma serwisująca</f:facet>
+                                        #{urzad.firmaSerw}
+                                </rich:column>
+                                <rich:column style="text-align: center" sortBy="#{urzad.dataPrzegl}" sortOrder="ascending" >
+                                    <f:facet name="header">data przeglądu</f:facet>
+                                    <h:outputText value="#{urzad.dataPrzegl}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                                    <br/>
+                                    <h:outputText value="przeterminowany" style="background-color: red" rendered="#{urzad.dataNizDzis}"/><br/>
+                                    <h:outputText value="niedługo termin" style="background-color: orange" rendered="#{urzad.alertPrzegl}"/>
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:collapsiblePanel>
+                    </h:panelGrid>
+                </center>
+            </h:panelGroup>
+        </h:form>
     </ui:define>
 
 </ui:composition>

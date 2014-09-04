@@ -105,8 +105,6 @@ public class RejDok {
         urzad=urzadzeniaMg.getDcC().findUmUrzadzenie(urzad.getId());
         urzList.add(urzad);
         rejestracja.getObiekt().setUrzadzeniaList(urzList);
-        System.err.println(urzad.getNazwa());
-        System.err.println(urzad.getGrupa().getMasterGrp().getRodzajeDokList());
         rodzajLista.setWrappedData(urzad.getGrupa().getMasterGrp().getRodzajeDokList());
     }
     

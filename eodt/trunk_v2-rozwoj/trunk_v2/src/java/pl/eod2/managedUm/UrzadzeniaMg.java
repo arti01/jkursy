@@ -223,4 +223,4 @@ public class UrzadzeniaMg {
         return dcC;
     }
 
-}
+    }

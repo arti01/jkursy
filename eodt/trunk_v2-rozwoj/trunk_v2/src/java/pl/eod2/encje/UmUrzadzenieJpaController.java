@@ -6,6 +6,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -134,6 +135,16 @@ public class UmUrzadzenieJpaController implements Serializable {
         }
     }
 
+    public List<UmUrzadzenie> findUmUrzadzenieAlertPrzegl(){
+        List<UmUrzadzenie>wynik=new ArrayList<UmUrzadzenie>();
+        for(UmUrzadzenie um:this.findUmUrzadzenieEntities()){
+            if(um.isAlertPrzegl()){
+                wynik.add(um);
+            }
+        }
+        return wynik;
+    }
+    
     public List<UmUrzadzenie> findUmUrzadzenieEntities() {
         return findUmUrzadzenieEntities(true, -1, -1);
     }

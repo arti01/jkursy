@@ -20,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -177,18 +179,13 @@ public class UmUrzadzenie implements Serializable {
     }
 
     public boolean isAlertPrzegl() {
-        System.err.println(dataPrzegl);
-        System.err.println(getDataPrzegl());
-        
         if (dataPrzegl == null || getGrupa().getCzasAlert() == 0) {
             return false;
         }
         Calendar c = Calendar.getInstance();
         c.setTime(dataPrzegl);
         c.add(Calendar.DATE, -(getGrupa().getCzasAlert()));
-        System.err.println(c.getTime());
-        System.err.println(c.before(new Date()));
-        return c.before(new Date());
+        return c.getTime().before(new Date());
     }
 
     @Override
