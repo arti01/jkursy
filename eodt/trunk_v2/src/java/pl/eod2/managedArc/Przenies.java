@@ -9,8 +9,6 @@ import javax.faces.model.ListDataModel;
 import pl.eod.managed.Login;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
-import pl.eod2.encje.DcDokumentKrok;
-import pl.eod2.encje.DcDokumentKrokUzytkownik;
 
 @ManagedBean(name = "PrzeniesArc")
 @SessionScoped
@@ -27,7 +25,7 @@ public class Przenies {
     @PostConstruct
     void init() {
         dcC = new DcDokumentJpaController();
-        refreshObiekt();
+        //refreshObiekt();
     }
 
     public void refreshObiekt() {
@@ -49,10 +47,12 @@ public class Przenies {
     }
     
     public String list() {
+        refreshObiekt();
         return "/dcarc/przeniesList";
     }
     
     public String listW() {
+        refreshObiekt();
         return "/dcarc/listW";
     }
 
