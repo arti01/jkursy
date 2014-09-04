@@ -92,7 +92,8 @@
                         <f:facet name="header">data przeglądu</f:facet>
                         <h:outputText value="#{item.dataPrzegl}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                         <br/>
-                        <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.dataNizDzis}"/>
+                        <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.dataNizDzis}"/><br/>
+                        <h:outputText value="zbliża się termin" style="background-color: orange" rendered="#{item.alertPrzegl}"/>
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.userOdpow.fullname, UrzadzeniaMg.filtrOsobOdp) or UrzadzeniaMg.filtrOsobOdp==''}">
                         <f:facet name="header">osoba odpowiedzialna<br/>

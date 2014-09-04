@@ -6,6 +6,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -73,6 +74,8 @@ public class UmUrzadzenie implements Serializable {
     private List<DcDokument> dokumentyList;
     @Transient
     private boolean dataNizDzis;
+    @Transient
+    private boolean alertPrzegl;
 
     public Long getId() {
         return id;
@@ -171,6 +174,21 @@ public class UmUrzadzenie implements Serializable {
 
     public void setDokumentyList(List<DcDokument> dokumentyList) {
         this.dokumentyList = dokumentyList;
+    }
+
+    public boolean isAlertPrzegl() {
+        System.err.println(dataPrzegl);
+        System.err.println(getDataPrzegl());
+        
+        if (dataPrzegl == null || getGrupa().getCzasAlert() == 0) {
+            return false;
+        }
+        Calendar c = Calendar.getInstance();
+        c.setTime(dataPrzegl);
+        c.add(Calendar.DATE, -(getGrupa().getCzasAlert()));
+        System.err.println(c.getTime());
+        System.err.println(c.before(new Date()));
+        return c.before(new Date());
     }
 
     @Override

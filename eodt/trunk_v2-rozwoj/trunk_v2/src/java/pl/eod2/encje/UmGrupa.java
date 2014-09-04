@@ -7,6 +7,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +25,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -50,6 +55,10 @@ public class UmGrupa implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
+    @Column(name = "czas_alert")
+    @Min(0)
+    @Max(999)
+    private int czasAlert;
     @OrderBy(value = "nazwa ASC")
     @OneToMany(mappedBy = "grupa", cascade = CascadeType.MERGE)
     private List<UmUrzadzenie> urzadzenieList;
@@ -95,6 +104,14 @@ public class UmGrupa implements Serializable {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public int getCzasAlert() {
+        return czasAlert;
+    }
+
+    public void setCzasAlert(int czasAlert) {
+        this.czasAlert = czasAlert;
     }
 
     @Override
