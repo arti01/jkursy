@@ -130,6 +130,8 @@ public class Uzytkownik implements Serializable {
     @OrderBy(value = "id DESC")
     private List<UmUrzadzenie> urzadzenieList;
     @Transient
+    private List<UmUrzadzenie> urzadzenieAletrPrzeglList;
+    @Transient
     boolean eodstru;
 
     public Uzytkownik() {
@@ -376,6 +378,16 @@ public class Uzytkownik implements Serializable {
 
     public void setUrzadzenieList(List<UmUrzadzenie> urzadzenieList) {
         this.urzadzenieList = urzadzenieList;
+    }
+
+    public List<UmUrzadzenie> getUrzadzenieAletrPrzeglList() {
+        urzadzenieAletrPrzeglList=new ArrayList<UmUrzadzenie>();
+        for(UmUrzadzenie um:getUrzadzenieList()){
+            if(um.isAlertPrzegl()){
+                urzadzenieAletrPrzeglList.add(um);
+            }
+        }
+        return urzadzenieAletrPrzeglList;
     }
 
     @Override

@@ -88,11 +88,12 @@
                             </h:inputText></f:facet>
                             #{item.firmaSerw}
                     </rich:column>
-                    <rich:column>
+                    <rich:column style="text-align: center">
                         <f:facet name="header">data przeglądu</f:facet>
                         <h:outputText value="#{item.dataPrzegl}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                         <br/>
-                        <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.dataNizDzis}"/>
+                        <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.dataNizDzis}"/><br/>
+                        <h:outputText value="niedługo termin" style="background-color: orange" rendered="#{item.alertPrzegl}"/>
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.userOdpow.fullname, UrzadzeniaMg.filtrOsobOdp) or UrzadzeniaMg.filtrOsobOdp==''}">
                         <f:facet name="header">osoba odpowiedzialna<br/>
@@ -117,7 +118,7 @@
                             Nowy dokument
                         </rich:tooltip>
                         <a4j:commandButton id="imgHist" execute="@this" oncomplete="#{rich:component('dokHist')}.show()" image="/images/lista.png"/>
-                        <a4j:commandButton id="imgAdd" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" action="#{URejDokMg.nowyDokDlaUrzad}" image="/images/add.png">
+                        <a4j:commandButton id="imgAdd" render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" action="#{URejDokMg.nowyDokDlaUrzad}" image="/images/add.png">
                             <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{item}" />
                         </a4j:commandButton>
                         <rich:popupPanel  id="dokHist" style="text-align: center;" header="Historia dokumentow"  autosized="true" domElementAttachment="parent" left="77" top="13" >

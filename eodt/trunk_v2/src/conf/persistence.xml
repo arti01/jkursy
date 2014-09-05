@@ -6,12 +6,6 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <shared-cache-mode>ALL</shared-cache-mode>
     <properties>
-      <!-- automatyczne zakladanie tabel
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
-            -->
-            <!-- automatyczne zakladanie tabel lub dodawanie pol w tabeli
-      <property name="eclipselink.ddl-generation" value="create-or-extend-tables" />
-            -->
       <property name="javax.persistence.validation.group.pre-update" value="true"/>
       <property name="eclipselink.logging.parameters" value="false"/>
       <property name="eclipselink.logging.level.sql" value="info"/>
