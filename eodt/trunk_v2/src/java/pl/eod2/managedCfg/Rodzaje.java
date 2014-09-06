@@ -78,7 +78,9 @@ public class Rodzaje {
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
+        //System.err.println(obiekt.getUmMasterGrupaList());
         error = dcC.edit(obiekt);
+        //System.err.println(obiekt.getUmMasterGrupaList());
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
             FacesContext context = FacesContext.getCurrentInstance();

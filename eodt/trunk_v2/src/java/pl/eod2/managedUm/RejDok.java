@@ -34,7 +34,7 @@ public class RejDok {
     @ManagedProperty(value = "#{UrzadzeniaMg}")
     private UrzadzeniaMg urzadzeniaMg;
     private DcRodzajJpaController dcR;
-    private List<TreeNode> rootNodes = new ArrayList<TreeNode>();
+    private List<TreeNode> rootNodesDetDok = new ArrayList<TreeNode>();
     private UmUrzadzenie urzad;
 
     @PostConstruct
@@ -51,23 +51,6 @@ public class RejDok {
         }
         lista.setWrappedData(listD);
         rejestracja.setObiekt(null);
-    }
-
-    public void zrobDrzewoDlaDet() {
-        List<UmMasterGrupa> masterList = rejestracja.getObiekt().getRodzajId().getUmMasterGrupaList();
-        rootNodes.clear();
-        for (UmMasterGrupa mg : masterList) {
-            DrzMaster drMa = new DrzMaster(mg);
-            for (UmGrupa gr : mg.getGrupaList()) {
-                DrzGrupa drGr = new DrzGrupa(drMa, gr);
-                for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
-                    DrzUrzad drzU = new DrzUrzad(drGr, uz);
-                    drGr.getDrzUrzad().add(drzU);
-                }
-                drMa.getDrzGrupa().add(drGr);
-            }
-            rootNodes.add(drMa);
-        }
     }
 
     public String list() {
@@ -94,7 +77,6 @@ public class RejDok {
     }
 
     public String detale() {
-        zrobDrzewoDlaDet();
         return "/um/dokumentDetale?faces-redirect=true";
     }
 
@@ -169,14 +151,6 @@ public class RejDok {
         this.rejestracja = rejestracja;
     }
 
-    public List<TreeNode> getRootNodes() {
-        return rootNodes;
-    }
-
-    public void setRootNodes(List<TreeNode> rootNodes) {
-        this.rootNodes = rootNodes;
-    }
-
     public UmUrzadzenie getUrzad() {
         return urzad;
     }
@@ -191,6 +165,28 @@ public class RejDok {
 
     public void setUrzadzeniaMg(UrzadzeniaMg urzadzeniaMg) {
         this.urzadzeniaMg = urzadzeniaMg;
+    }
+
+    public List<TreeNode> getRootNodesDetDok() {
+        List<UmMasterGrupa> masterList = rejestracja.getObiekt().getRodzajId().getUmMasterGrupaList();
+        rootNodesDetDok.clear();
+        for (UmMasterGrupa mg : masterList) {
+            DrzMaster drMa = new DrzMaster(mg);
+            for (UmGrupa gr : mg.getGrupaList()) {
+                DrzGrupa drGr = new DrzGrupa(drMa, gr);
+                for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
+                    DrzUrzad drzU = new DrzUrzad(drGr, uz);
+                    drGr.getDrzUrzad().add(drzU);
+                }
+                drMa.getDrzGrupa().add(drGr);
+            }
+            rootNodesDetDok.add(drMa);
+        }
+        return rootNodesDetDok;
+    }
+
+    public void setRootNodesDetDok(List<TreeNode> rootNodesDetDok) {
+        this.rootNodesDetDok = rootNodesDetDok;
     }
     
 }
