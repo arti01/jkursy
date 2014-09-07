@@ -99,10 +99,10 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
-                        <rich:panelMenuGroup label="Serwis Urządzeń Medycznych" rendered="#{login.umSprz}" expanded="#{login.menuUmSprze}" actionListener="#{login.menuUmSprzExpList}">
+                        <rich:panelMenuGroup label="Baza Zasobów Materiałowych" rendered="#{login.umSprz}" expanded="#{login.menuUmSprze}" actionListener="#{login.menuUmSprzExpList}">
                             <h:commandLink action="#{UrzadzeniaMg.list}">
                                 <rich:panelMenuItem >
-                                    Lista urządzeń
+                                    Lista zasobów
                                 </rich:panelMenuItem>
                             </h:commandLink>
                             <h:commandLink action="#{URejDokMg.list}">
@@ -112,7 +112,7 @@
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
-                        <rich:panelMenuGroup label="Serwis Urządzeń Med - konfiguracja" rendered="#{login.umCfg}" expanded="#{login.menuUmCfg}" actionListener="#{login.menuUmCfgExpList}">
+                        <rich:panelMenuGroup label="Baza Zasob. Mat. - konfiguracja" rendered="#{login.umCfg}" expanded="#{login.menuUmCfg}" actionListener="#{login.menuUmCfgExpList}">
                             <h:commandLink action="#{UMasterMg.list}">
                                 <rich:panelMenuItem >
                                     Master Grupy

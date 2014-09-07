@@ -14,9 +14,6 @@
                     <file>${file.reference.bean-validator.jar-1}</file>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.faces.jar-1}</file>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.javax.faces-2.1.29.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
