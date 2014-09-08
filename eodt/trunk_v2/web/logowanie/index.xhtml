@@ -29,7 +29,8 @@
             <h:panelGroup rendered="#{login.zalogowany!=null}">
                 <center>
                     <h:panelGrid columns="1">
-                        <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" toggleListener="#{login.refresh}" expanded="true">
+                        <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" 
+                                               toggleListener="#{login.refresh}" expanded="true">
                             <rich:dataTable value="#{login.zalogowany.ogloszeniaList}" var="ogloszenie">
                                 <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
                                     <f:facet name="header">
