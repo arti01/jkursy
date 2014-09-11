@@ -10,6 +10,13 @@
            userRoleTable="eod.user_roles_view" roleNameCol="role_name"
            resourceName="eod"/>
     
+  <!--<Realm className="org.apache.catalina.realm.DataSourceRealm" debug="99" 
+           dataSourceName="jdbc/eod" localDataSource="true" 
+           userTable="dbo.userPass" userNameCol="username" userCredCol="password" 
+           userRoleTable="dbo.userRoles" roleNameCol="role_name"/>
+           url="jdbc:derby://10.151.64.147:1527/eod_v2"
+           org.apache.derby.jdbc.ClientDriver
+    -->
     <Resource name="jdbc/eod_v2" auth="Container" type="javax.sql.DataSource"
               username="eod" password="eod"
               driverClassName="org.apache.derby.jdbc.ClientDriver" 
