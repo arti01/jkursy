@@ -37,11 +37,11 @@
         </h:selectOneMenu>
         <rich:message for="zrodloD" styleClass="error" />
 
-        <h:outputLabel for="projektD" value="projekt: "/>
+        <h:outputLabel for="teczkaD" value="teczka: "/>
         <h:selectOneMenu id="projektD" value="#{RejestracjaRej.obiekt.projektId}" converter="#{DcProjektConv}" >
-            <f:selectItems value="#{ProjektyCfg.lista}" var="projekt" itemValue="#{projekt}" itemLabel="#{projekt.nazwa}"/>
+            <f:selectItems value="#{ProjektyCfg.lista}" var="teczka" itemValue="#{teczka}" itemLabel="#{teczka.nazwa}"/>
         </h:selectOneMenu>
-        <rich:message for="projektD" styleClass="error" />
+        <rich:message for="teczkaD" styleClass="error" />
 
         <h:outputLabel for="kontrahentD" value="podaj kontrahenta &lt;br/&gt;(wprowadz min. 3 znaki)" escape="false"/>
         <rich:autocomplete id="kontrahentD" value="#{RejestracjaRej.obiekt.kontrahentId}" mode="lazyClient"
