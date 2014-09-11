@@ -17,15 +17,16 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.managedCfg.InterfaceArti;
 
 /**
  *
  * @author arti01
  */
-public class DcProjektJpaController implements Serializable {
+public class DcTeczkaJpaController implements Serializable, InterfaceArti<DcTeczka> {
     private static final long serialVersionUID = 1L;
 
-    public DcProjektJpaController() {
+    public DcTeczkaJpaController() {
         if (this.emf == null) {
             this.emf = Persistence.createEntityManagerFactory("eodtPU");
         }
@@ -36,7 +37,7 @@ public class DcProjektJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public String create(DcProjekt dcProjekt) {
+    public String create(DcTeczka dcProjekt) {
         EntityManager em = null;
         if (findDcProjekt(dcProjekt.getNazwa()) != null) {
             return "nazwa już istnieje";
@@ -56,16 +57,16 @@ public class DcProjektJpaController implements Serializable {
         return null;
     }
 
-    public String edit(DcProjekt dcProjekt) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public String edit(DcTeczka dcProjekt) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
-        DcProjekt old=findDcProjekt(dcProjekt.getId());
+        DcTeczka old=findDcProjekt(dcProjekt.getId());
         if (findDcProjekt(dcProjekt.getNazwa()) != null && findDcProjekt(dcProjekt.getNazwa()).getId().equals(old.getId())) {
             return "nazwa już istnieje";
         }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DcProjekt persistentDcProjekt = em.find(DcProjekt.class, dcProjekt.getId());
+            DcTeczka persistentDcProjekt = em.find(DcTeczka.class, dcProjekt.getId());
             List<DcDokument> dcDokumentListOld = persistentDcProjekt.getDcDokumentList();
             List<DcDokument> dcDokumentListNew = dcProjekt.getDcDokumentList();
             List<String> illegalOrphanMessages = null;
@@ -90,8 +91,8 @@ public class DcProjektJpaController implements Serializable {
             dcProjekt = em.merge(dcProjekt);
             for (DcDokument dcDokumentListNewDcDokument : dcDokumentListNew) {
                 if (!dcDokumentListOld.contains(dcDokumentListNewDcDokument)) {
-                    DcProjekt oldProjektIdOfDcDokumentListNewDcDokument = dcDokumentListNewDcDokument.getProjektId();
-                    dcDokumentListNewDcDokument.setProjektId(dcProjekt);
+                    DcTeczka oldProjektIdOfDcDokumentListNewDcDokument = dcDokumentListNewDcDokument.getTeczkaId();
+                    dcDokumentListNewDcDokument.setTeczkaId(dcProjekt);
                     dcDokumentListNewDcDokument = em.merge(dcDokumentListNewDcDokument);
                     if (oldProjektIdOfDcDokumentListNewDcDokument != null && !oldProjektIdOfDcDokumentListNewDcDokument.equals(dcProjekt)) {
                         oldProjektIdOfDcDokumentListNewDcDokument.getDcDokumentList().remove(dcDokumentListNewDcDokument);
@@ -122,9 +123,9 @@ public class DcProjektJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DcProjekt dcProjekt;
+            DcTeczka dcProjekt;
             try {
-                dcProjekt = em.getReference(DcProjekt.class, id);
+                dcProjekt = em.getReference(DcTeczka.class, id);
                 dcProjekt.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The dcProjekt with id " + id + " no longer exists.", enfe);
@@ -149,19 +150,19 @@ public class DcProjektJpaController implements Serializable {
         }
     }
 
-    public List<DcProjekt> findEntities() {
+    public List<DcTeczka> findEntities() {
         return findDcProjektEntities(true, -1, -1);
     }
 
-    public List<DcProjekt> findDcProjektEntities(int maxResults, int firstResult) {
+    public List<DcTeczka> findDcProjektEntities(int maxResults, int firstResult) {
         return findDcProjektEntities(false, maxResults, firstResult);
     }
 
-    private List<DcProjekt> findDcProjektEntities(boolean all, int maxResults, int firstResult) {
+    private List<DcTeczka> findDcProjektEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(DcProjekt.class));
+            cq.select(cq.from(DcTeczka.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -173,21 +174,21 @@ public class DcProjektJpaController implements Serializable {
         }
     }
 
-    public DcProjekt findDcProjekt(Integer id) {
+    public DcTeczka findDcProjekt(Integer id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(DcProjekt.class, id);
+            return em.find(DcTeczka.class, id);
         } finally {
             em.close();
         }
     }
 
-    public DcProjekt findDcProjekt(String nazwa) {
+    public DcTeczka findDcProjekt(String nazwa) {
         EntityManager em = getEntityManager();
         try {
-            Query q = em.createNamedQuery("DcProjekt.findByNazwa");
+            Query q = em.createNamedQuery("DcTeczka.findByNazwa");
             q.setParameter("nazwa", nazwa);
-            DcProjekt u = (DcProjekt) q.getResultList().get(0);
+            DcTeczka u = (DcTeczka) q.getResultList().get(0);
             //em.refresh(u.getStruktura());
             return u;
         } catch (NoResultException ex) {
@@ -205,7 +206,7 @@ public class DcProjektJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<DcProjekt> rt = cq.from(DcProjekt.class);
+            Root<DcTeczka> rt = cq.from(DcTeczka.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

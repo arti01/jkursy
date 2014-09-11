@@ -40,14 +40,14 @@
                             #{item.idDokumentKrok.idDok.zrodloId.nazwa}
                     </rich:column>
                     
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.idDokumentKrok.idDok.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.idDokumentKrok.idDok.teczkaId.nazwa,RejestracjaRej.filtrTeczka)}">    
                         <f:facet name="header">teczka
-                            <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="9">
+                            <h:inputText value="#{RejestracjaRej.filtrTeczka}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
-                        <h:outputText id="teczka" value="#{item.idDokumentKrok.idDok.projektId.nazwa}"/>
+                        <h:outputText id="teczka" value="#{item.idDokumentKrok.idDok.teczkaId.nazwa}"/>
                         <rich:tooltip target="teczka">
-                            #{item.idDokumentKrok.idDok.projektId.opis}
+                            #{item.idDokumentKrok.idDok.teczkaId.opis}
                         </rich:tooltip>
                     </rich:column>
                     

@@ -8,32 +8,32 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod2.encje.DcProjekt;
-import pl.eod2.encje.DcProjektJpaController;
+import pl.eod2.encje.DcTeczka;
+import pl.eod2.encje.DcTeczkaJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
-@ManagedBean(name = "ProjektyCfg")
+@ManagedBean(name = "TeczkiCfg")
 @SessionScoped
-public class Projekty {
+public class Teczki {
 
-    private DataModel<DcProjekt> lista;
-    private DcProjektJpaController dcC;
-    private DcProjekt obiekt;
+    private DataModel<DcTeczka> lista;
+    private DcTeczkaJpaController dcC;
+    private DcTeczka obiekt;
     private String error;
     private String link;
     
     @PostConstruct
     void init() {
-        this.lista = new ListDataModel<DcProjekt>();
-        this.dcC = new DcProjektJpaController();
-        this.link = "/dccfg/projekty";
+        this.lista = new ListDataModel<>();
+        this.dcC = new DcTeczkaJpaController();
+        this.link = "/dccfg/teczki";
         refresh();
     }
 
     void refresh() {
         lista.setWrappedData(dcC.findEntities());
-        obiekt = new DcProjekt();
+        obiekt = new DcTeczka();
         error = null;
     }
 
@@ -73,19 +73,19 @@ public class Projekty {
         return link;
     }
 
-    public DataModel<DcProjekt> getLista() {
+    public DataModel<DcTeczka> getLista() {
         return lista;
     }
 
-    public void setLista(DataModel<DcProjekt> lista) {
+    public void setLista(DataModel<DcTeczka> lista) {
         this.lista = lista;
     }
 
-    public DcProjekt getObiekt() {
+    public DcTeczka getObiekt() {
         return obiekt;
     }
 
-    public void setObiekt(DcProjekt obiekt) {
+    public void setObiekt(DcTeczka obiekt) {
         this.obiekt = obiekt;
     }
 

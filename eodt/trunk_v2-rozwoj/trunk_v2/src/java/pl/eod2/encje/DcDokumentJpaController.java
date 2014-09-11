@@ -329,8 +329,8 @@ public class DcDokumentJpaController implements Serializable {
             DcZrodlo zrodloIdNew = dcDokument.getZrodloId();
             DcRodzaj rodzajIdOld = persistentDcDokument.getRodzajId();
             DcRodzaj rodzajIdNew = dcDokument.getRodzajId();
-            DcProjekt projektIdOld = persistentDcDokument.getProjektId();
-            DcProjekt projektIdNew = dcDokument.getProjektId();
+            DcTeczka projektIdOld = persistentDcDokument.getTeczkaId();
+            DcTeczka projektIdNew = dcDokument.getTeczkaId();
             List<DcPlik> dcPlikListOld = persistentDcDokument.getDcPlikList();
             List<DcPlik> dcPlikListNew = dcDokument.getDcPlikList();
             List<String> illegalOrphanMessages = null;
@@ -359,7 +359,7 @@ public class DcDokumentJpaController implements Serializable {
             }
             if (projektIdNew != null) {
                 projektIdNew = em.getReference(projektIdNew.getClass(), projektIdNew.getId());
-                dcDokument.setProjektId(projektIdNew);
+                dcDokument.setTeczkaId(projektIdNew);
             }
             List<DcPlik> attachedDcPlikListNew = new ArrayList<DcPlik>();
             for (DcPlik dcPlikListNewDcPlikToAttach : dcPlikListNew) {
@@ -470,7 +470,7 @@ public class DcDokumentJpaController implements Serializable {
                 rodzajId.getDcDokumentList().remove(dcDokument);
                 rodzajId = em.merge(rodzajId);
             }
-            DcProjekt projektId = dcDokument.getProjektId();
+            DcTeczka projektId = dcDokument.getTeczkaId();
             if (projektId != null) {
                 projektId.getDcDokumentList().remove(dcDokument);
                 projektId = em.merge(projektId);

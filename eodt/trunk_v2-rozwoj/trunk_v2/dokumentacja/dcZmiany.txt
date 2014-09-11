@@ -1,3 +1,8 @@
+2014-09-11
+Uwaga - zmiana projektu na teczki.
+Powinna się stworzyć tabela dc_teczka. Potem można do niej wkopiować rekordy z dc_projekt i wywalić dc_projekt.
+Trzeba jeszcze zadbać o wywalenie kluczy obcych pomiędzy dc_dokument a dc_projekt
+
 2014-09-06
 Dodałem na ekranie startowym info o dokumentach do akceptacji
 Poprawiony bug polegajacy na tym, że w detalach dokumentu/baza urzadzen medycznych nie pojawiała się lista dostępnych urzadzen

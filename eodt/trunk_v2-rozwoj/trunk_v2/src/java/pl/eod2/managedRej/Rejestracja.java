@@ -37,8 +37,8 @@ import pl.eod2.managedUm.RejDok;
 @SessionScoped
 public class Rejestracja {
 
-    private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
-    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<DcRodzaj>();
+    private DataModel<DcDokument> lista = new ListDataModel<>();
+    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
     private DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
     private DcDokument obiekt;
@@ -63,7 +63,7 @@ public class Rejestracja {
     private String filtrStatus;
     private String filtrWprowadzil;
     private String filtrRodzaj;
-    private String filtrProjekt;
+    private String filtrTeczka;
     private String filtrArchiwisci;
     private String filtrArchLokal;
 
@@ -441,12 +441,12 @@ public class Rejestracja {
         this.filtrRodzaj = filtrRodzaj;
     }
 
-    public String getFiltrProjekt() {
-        return filtrProjekt;
+    public String getFiltrTeczka() {
+        return filtrTeczka;
     }
 
-    public void setFiltrProjekt(String filtrProjekt) {
-        this.filtrProjekt = filtrProjekt;
+    public void setFiltrTeczka(String filtrTeczka) {
+        this.filtrTeczka = filtrTeczka;
     }
 
     public String getFiltrArchiwisci() {

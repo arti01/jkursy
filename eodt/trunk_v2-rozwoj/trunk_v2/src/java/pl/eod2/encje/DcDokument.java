@@ -120,7 +120,7 @@ public class DcDokument implements Serializable {
     private DcRodzaj rodzajId;
     @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private DcProjekt projektId;
+    private DcTeczka teczkaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcPlik> dcPlikList;
     @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
@@ -224,12 +224,12 @@ public class DcDokument implements Serializable {
         this.rodzajId = rodzajId;
     }
 
-    public DcProjekt getProjektId() {
-        return projektId;
+    public DcTeczka getTeczkaId() {
+        return teczkaId;
     }
 
-    public void setProjektId(DcProjekt projektId) {
-        this.projektId = projektId;
+    public void setTeczkaId(DcTeczka teczkaId) {
+        this.teczkaId = teczkaId;
     }
 
     public List<DcPlik> getDcPlikList() {

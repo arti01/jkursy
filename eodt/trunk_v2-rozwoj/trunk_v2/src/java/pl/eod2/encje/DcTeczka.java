@@ -28,17 +28,17 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
-@Table(name = "dc_projekt")
+@Table(name = "dc_teczka")
 @NamedQueries({
-    @NamedQuery(name = "DcProjekt.findAll", query = "SELECT d FROM DcProjekt d"),
-    @NamedQuery(name = "DcProjekt.findById", query = "SELECT d FROM DcProjekt d WHERE d.id = :id"),
-    @NamedQuery(name = "DcProjekt.findByNazwa", query = "SELECT d FROM DcProjekt d WHERE d.nazwa = :nazwa"),
-    @NamedQuery(name = "DcProjekt.findByOpis", query = "SELECT d FROM DcProjekt d WHERE d.opis = :opis")})
-public class DcProjekt implements Serializable {
+    @NamedQuery(name = "DcTeczka.findAll", query = "SELECT d FROM DcTeczka d"),
+    @NamedQuery(name = "DcTeczka.findById", query = "SELECT d FROM DcTeczka d WHERE d.id = :id"),
+    @NamedQuery(name = "DcTeczka.findByNazwa", query = "SELECT d FROM DcTeczka d WHERE d.nazwa = :nazwa"),
+    @NamedQuery(name = "DcTeczka.findByOpis", query = "SELECT d FROM DcTeczka d WHERE d.opis = :opis")})
+public class DcTeczka implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCPROJEKT")
-    @SequenceGenerator(name = "SEQDCPROJEKT", sequenceName = "SEQDCPROJEKT")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCTECZKA")
+    @SequenceGenerator(name = "SEQDCTECZKA", sequenceName = "SEQDCTECZKA")
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -51,17 +51,17 @@ public class DcProjekt implements Serializable {
     @Size(max = 10485760)
     @Lob
     private String opis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "projektId", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teczkaId", fetch = FetchType.LAZY)
     private List<DcDokument> dcDokumentList;
 
-    public DcProjekt() {
+    public DcTeczka() {
     }
 
-    public DcProjekt(Integer id) {
+    public DcTeczka(Integer id) {
         this.id = id;
     }
 
-    public DcProjekt(Integer id, String nazwa) {
+    public DcTeczka(Integer id, String nazwa) {
         this.id = id;
         this.nazwa = nazwa;
     }
@@ -108,10 +108,10 @@ public class DcProjekt implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DcProjekt)) {
+        if (!(object instanceof DcTeczka)) {
             return false;
         }
-        DcProjekt other = (DcProjekt) object;
+        DcTeczka other = (DcTeczka) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

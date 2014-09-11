@@ -11,13 +11,13 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
-@ManagedBean(name = "DcProjektConv")
+@ManagedBean(name = "DcTeczkaConv")
 @SessionScoped
-public class DcProjektConv implements Converter, Serializable {
+public class DcTeczkaConv implements Converter, Serializable {
     private static final long serialVersionUID = 1L;
     
     private Object object;
-    DcProjektJpaController uC=new DcProjektJpaController();
+    DcTeczkaJpaController uC=new DcTeczkaJpaController();
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -41,7 +41,7 @@ public class DcProjektConv implements Converter, Serializable {
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
-        DcProjekt u = (DcProjekt) value;
+        DcTeczka u = (DcTeczka) value;
         //System.out.println((value != null) ? u.getId().toString() : null);
         return (value != null) ? u.getId().toString() : null;
     }
