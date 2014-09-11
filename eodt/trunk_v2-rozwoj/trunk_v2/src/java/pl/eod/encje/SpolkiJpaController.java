@@ -22,6 +22,7 @@ import pl.eod.managed.Login;
  * @author arti01
  */
 public class SpolkiJpaController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public SpolkiJpaController() {
         if (this.emf == null) {
@@ -70,6 +71,7 @@ public class SpolkiJpaController implements Serializable {
             prezes.setStKier(true);
             prezes.setSzefId(generyk);
             prezes.setUserId(user);
+            prezes.setMusZast(false);
             em.persist(prezes);
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -159,7 +161,6 @@ public class SpolkiJpaController implements Serializable {
     }
 
     public List<Spolki> findSpolkiEntities() {
-        System.err.println(findSpolkiEntities(true, -1, -1));
         return findSpolkiEntities(true, -1, -1);
     }
 

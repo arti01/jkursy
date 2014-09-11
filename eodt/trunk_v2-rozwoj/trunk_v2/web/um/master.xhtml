@@ -33,7 +33,7 @@
                             #{item.opis}
                     </rich:column>
                     <rich:column>
-                        <f:facet name="header">grupy urządzeń</f:facet>
+                        <f:facet name="header">grupy zasobów</f:facet>
                         <rich:collapsiblePanel switchType="client" expanded="false" header=" - rozwiń" rendered="#{fn:length(item.grupaList)!=0}">
                             <rich:dataTable value="#{item.grupaList}" var="grupa" style="width: auto; border: white thick">
                                 <rich:column>

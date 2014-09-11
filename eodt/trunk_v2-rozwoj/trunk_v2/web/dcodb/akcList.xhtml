@@ -41,12 +41,12 @@
                     </rich:column>
                     
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.idDokumentKrok.idDok.projektId.nazwa,RejestracjaRej.filtrProjekt)}">    
-                        <f:facet name="header">projekt
+                        <f:facet name="header">teczka
                             <h:inputText value="#{RejestracjaRej.filtrProjekt}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
-                        <h:outputText id="projekt" value="#{item.idDokumentKrok.idDok.projektId.nazwa}"/>
-                        <rich:tooltip target="projekt">
+                        <h:outputText id="teczka" value="#{item.idDokumentKrok.idDok.projektId.nazwa}"/>
+                        <rich:tooltip target="teczka">
                             #{item.idDokumentKrok.idDok.projektId.opis}
                         </rich:tooltip>
                     </rich:column>

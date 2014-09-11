@@ -28,8 +28,9 @@
         <h:form>
             <h:panelGroup rendered="#{login.zalogowany!=null}">
                 <center>
-                    <h:panelGrid columns="2">
-                        <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" toggleListener="#{login.refresh}" expanded="true">
+                    <h:panelGrid columns="1">
+                        <rich:collapsiblePanel id="cp" header="Ogłoszenia - zwin i rozwiń aby odświeżyć" switchType="ajax" 
+                                               toggleListener="#{login.refresh}" expanded="true">
                             <rich:dataTable value="#{login.zalogowany.ogloszeniaList}" var="ogloszenie">
                                 <rich:column sortBy="#{ogloszenie.id}" sortOrder="descending">
                                     <f:facet name="header">
@@ -68,8 +69,8 @@
                                 </rich:column>
                                 <rich:column>
                                     <f:facet name="header">nr inwentarzowy<br/>nr seryjny</f:facet>
-                                        #{urzad.nrInw}<hr/>
-                                        #{urzad.nrSer}
+                                    #{urzad.nrInw}<hr/>
+                                    #{urzad.nrSer}
                                 </rich:column>
                                 <rich:column>
                                     <f:facet name="header">lokalizacja</f:facet>
@@ -85,6 +86,39 @@
                                     <br/>
                                     <h:outputText value="przeterminowany" style="background-color: red" rendered="#{urzad.dataNizDzis}"/><br/>
                                     <h:outputText value="niedługo termin" style="background-color: orange" rendered="#{urzad.alertPrzegl}"/>
+                                </rich:column>
+                            </rich:dataTable>
+                        </rich:collapsiblePanel>
+                        <rich:collapsiblePanel id="akceptAlert" header="Czekają na Twoją akceptację" switchType="ajax" 
+                                               rendered="#{login.dcOdb}" toggleListener="#{login.refresh}" expanded="true">
+                            <rich:dataTable value="#{AkceptOdb.login.zalogowany.userId.dcDoAkceptuKrokiList}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                                <rich:column sortBy="#{item.idDokumentKrok.idDok.id}" sortOrder="descending">
+                                    <f:facet name="header">data rejestracji</f:facet>
+                                    <h:outputText value="#{item.idDokumentKrok.idDok.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">nazwa i symbol</f:facet>
+                                    <h:outputText id="nazwaList" value="#{item.idDokumentKrok.idDok.nazwa}"/>
+                                    <br/>
+                                    <h:outputText id="symbolList" value="#{item.idDokumentKrok.idDok.symbolDok}"/>
+                                    <rich:tooltip target="nazwaList">
+                                        #{item.idDokumentKrok.idDok.opis}
+                                    </rich:tooltip>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">data dokumentu</f:facet>
+                                    <h:outputText value="#{item.idDokumentKrok.idDok.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">wprowadził</f:facet>
+                                        #{item.idDokumentKrok.idDok.userId.fullname}
+                                </rich:column>
+                                <rich:column>
+                                    <f:facet name="header">rodzaj</f:facet>
+                                    <h:outputText id="rodzajList" value="#{item.idDokumentKrok.idDok.rodzajId.nazwa}"/>
+                                    <rich:tooltip target="rodzajList">
+                                        #{item.idDokumentKrok.idDok.rodzajId.opis} z grupy:#{item.idDokumentKrok.idDok.rodzajId.idRodzajGrupa.nazwa}
+                                    </rich:tooltip>
                                 </rich:column>
                             </rich:dataTable>
                         </rich:collapsiblePanel>

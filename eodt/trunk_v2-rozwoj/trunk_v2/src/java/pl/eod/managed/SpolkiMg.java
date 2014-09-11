@@ -17,7 +17,7 @@ import pl.eod.encje.exceptions.NonexistentEntityException;
 @SessionScoped
 public class SpolkiMg {
 
-    private DataModel<Spolki> lista = new ListDataModel<Spolki>();
+    private DataModel<Spolki> lista = new ListDataModel<>();
     private SpolkiJpaController dcC;
     private pl.eod.encje.Spolki obiekt;
     private String error;

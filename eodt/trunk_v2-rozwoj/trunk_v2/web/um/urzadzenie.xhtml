@@ -11,7 +11,7 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        <h3>Urządzenia</h3>
+        <h3>Zasób</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <ui:include src="./urzadzenieEdit.xhtml"/>
         <hr/>
@@ -42,7 +42,7 @@
             
             <rich:panel id="listPanel">
                 <a4j:commandLink  execute="@form" action="#{UrzadzeniaMg.newObiekt}" render="dodajPaneRodzaj, listPanel" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
-                    <h4>[dodaj urządzenie]</h4>
+                    <h4>[dodaj zasób]</h4>
                 </a4j:commandLink>
 
                 <rich:dataTable id="tableRodzaj" value="#{UrzadzeniaMg.lista}" var="item" iterationStatusVar="it" rows="10" style="width: 100%">

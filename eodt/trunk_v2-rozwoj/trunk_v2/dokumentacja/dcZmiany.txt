@@ -1,3 +1,12 @@
+2014-09-06
+Dodałem na ekranie startowym info o dokumentach do akceptacji
+Poprawiony bug polegajacy na tym, że w detalach dokumentu/baza urzadzen medycznych nie pojawiała się lista dostępnych urzadzen
+
+2014-09-05
+Dodalem akerty do przeterminowanych urzadzen
+ALTER TABLE um_grupa ADD COLUMN czas_alert integer; (powinno się samo dodać)
+Alerty pojawiają się na liście urządzen i na ekranie startowym
+
 2014-09-03
 Zmieniłem tabelę dc_plik_import wywalajac kolumnę plik i laczą ją z tabela dc_plik_import_bin (kwestia wydajnosci)
 Najlepiej wywalić tabelę dc_plik_import - założy się nowa prawidłowo

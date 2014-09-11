@@ -38,7 +38,7 @@
             Przenieś do właściwej gałęzi
         </rich:dragIndicator>
         <h:form>
-            <rich:panel header="Chwyć i przesuń urządzenie do grupy lub grupę do mastergrupy">
+            <rich:panel header="Chwyć i przesuń zasób do grupy lub grupę do mastergrupy">
                 <rich:tree id="listPanel" nodeType="#{node.type}" var="node" value="#{UStruktMg.rootNodes}" toggleType="ajax" rowKeyVar="row" keepSaved="true">
                     <rich:treeNode type="master" iconCollapsed="/images/folders-stack.png" iconExpanded="/images/folders-stack.png" iconLeaf="/images/folders-stack.png">
                         <a4j:outputPanel layout="block" id="panelMa_#{row}">

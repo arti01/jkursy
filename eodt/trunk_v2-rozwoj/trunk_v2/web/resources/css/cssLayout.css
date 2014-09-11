@@ -13,12 +13,12 @@
 #bottom {
     position: relative;
     background-color: #C1DFFF;/*c8cccd;*/
-    padding: 5px;
-    margin: 10px 0px 0px 0px;
+    padding: 3px;
+    margin: 0px 0px 0px 0px;
     font-family: Arial, tahoma, sans;
     font-size: 12px;
     text-decoration: none;
-    height: 40px;
+    height: 60px;
     vertical-align: middle;
 }
 
@@ -26,7 +26,7 @@
     float: left;
     background-color: #e9efef;
     color: black;
-    padding: 0,0,0,0;
+    padding: 0;
     width: 150px;
     min-height: 520px;
     font-size: 11px;
@@ -132,7 +132,7 @@
     background-color: white;
     padding: 1px;
     margin-left: 155px;
-    height: 720px;
+    height: 650px;
     width: 1060px;
     overflow: auto;
     border: 1px solid black;
