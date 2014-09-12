@@ -13,7 +13,7 @@ import pl.eod2.encje.DcTeczkaJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
-@ManagedBean(name = "TeczkiCfg")
+@ManagedBean(name = "TeczkiOldCfg")
 @SessionScoped
 public class Teczki {
 

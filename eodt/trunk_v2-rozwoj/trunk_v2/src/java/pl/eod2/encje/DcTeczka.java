@@ -22,6 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.abstr.EncjaAbst;
 
 /**
  *
@@ -34,7 +35,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DcTeczka.findById", query = "SELECT d FROM DcTeczka d WHERE d.id = :id"),
     @NamedQuery(name = "DcTeczka.findByNazwa", query = "SELECT d FROM DcTeczka d WHERE d.nazwa = :nazwa"),
     @NamedQuery(name = "DcTeczka.findByOpis", query = "SELECT d FROM DcTeczka d WHERE d.opis = :opis")})
-public class DcTeczka implements Serializable {
+public class DcTeczka extends EncjaAbst implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCTECZKA")
@@ -74,10 +75,12 @@ public class DcTeczka implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getNazwa() {
         return nazwa;
     }
 
+    @Override
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }

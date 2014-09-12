@@ -5,10 +5,15 @@
  */
 package pl.eod2.encje;
 
+import pl.eod.abstr.AbstKontroler;
+
 /**
  *
  * @author 103039
  */
 public class DcTeczkaKontr extends AbstKontroler<DcTeczka>{
-    
+
+    public DcTeczkaKontr() {
+        super(new DcTeczka());
+    }    
 }

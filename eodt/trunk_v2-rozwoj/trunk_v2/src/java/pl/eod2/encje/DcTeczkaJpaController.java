@@ -17,13 +17,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
-import pl.eod2.managedCfg.InterfaceArti;
 
 /**
  *
  * @author arti01
  */
-public class DcTeczkaJpaController implements Serializable, InterfaceArti<DcTeczka> {
+public class DcTeczkaJpaController implements Serializable{
     private static final long serialVersionUID = 1L;
 
     public DcTeczkaJpaController() {
@@ -191,10 +190,7 @@ public class DcTeczkaJpaController implements Serializable, InterfaceArti<DcTecz
             DcTeczka u = (DcTeczka) q.getResultList().get(0);
             //em.refresh(u.getStruktura());
             return u;
-        } catch (NoResultException ex) {
-            //ex.printStackTrace();
-            return null;
-        } catch (ArrayIndexOutOfBoundsException exb) {
+        } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
             //ex.printStackTrace();
             return null;
         } finally {
