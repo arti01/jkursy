@@ -17,6 +17,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.encje.Uzytkownik;
 import pl.eod.encje.UzytkownikJpaController;
+import pl.eod.managed.Login;
 import pl.eod2.encje.DcAkceptKroki;
 import pl.eod2.encje.DcAkceptTypKroku;
 import pl.eod2.encje.DcAkceptTypKrokuJpaController;
@@ -31,15 +32,17 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 @SessionScoped
 public class Rodzaje {
 
-    private DataModel<DcRodzaj> lista = new ListDataModel<DcRodzaj>();
+    private DataModel<DcRodzaj> lista = new ListDataModel<>();
     private DcRodzajJpaController dcC;
     private DcRodzaj obiekt;
     private String error;
     @ManagedProperty(value = "#{RodzajeGrupyCfg}")
     private RodzajeGrupy rodzajeGrupy;
-    private List<DcTypFlow> typFlowLista = new ArrayList<DcTypFlow>();
-    private List<DcAkceptTypKroku> typKrokuLista = new ArrayList<DcAkceptTypKroku>();
-    private List<Uzytkownik> usersLista = new ArrayList<Uzytkownik>();
+    @ManagedProperty(value = "#{login}")
+    private Login login;
+    private List<DcTypFlow> typFlowLista = new ArrayList<>();
+    private List<DcAkceptTypKroku> typKrokuLista = new ArrayList<>();
+    private List<Uzytkownik> usersLista = new ArrayList<>();
     private DcTypFlowJpaController dcTypFlowC;
     private DcAkceptTypKrokuJpaController dcTypKrokuC;
     private UzytkownikJpaController uC;
@@ -59,7 +62,7 @@ public class Rodzaje {
         lista.setWrappedData(dcC.findDcRodzajEntities());
         typFlowLista = dcTypFlowC.findDcTypFlowEntities();
         typKrokuLista = dcTypKrokuC.findDcAkceptTypKrokuEntities();
-        usersLista = uC.findUzytkownikEntities();
+        usersLista = login.getZalogowany().getUserId().getSpolkaId().getUserList();
         obiekt = new DcRodzaj();
         akcKrok = new DcAkceptKroki();
         error = null;
@@ -251,5 +254,12 @@ public class Rodzaje {
     public UzytkownikJpaController getuC() {
         return uC;
     }
-    
+
+    public Login getLogin() {
+        return login;
+    }
+
+    public void setLogin(Login login) {
+        this.login = login;
+    }    
 }

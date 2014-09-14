@@ -38,7 +38,7 @@
         <rich:message for="zrodloD" styleClass="error" />
 
         <h:outputLabel for="teczkaD" value="teczka: "/>
-        <h:selectOneMenu id="projektD" value="#{RejestracjaRej.obiekt.projektId}" converter="#{DcProjektConv}" >
+        <h:selectOneMenu id="teczkaD" value="#{RejestracjaRej.obiekt.projektId}" converter="#{DcProjektConv}" >
             <f:selectItems value="#{ProjektyCfg.lista}" var="teczka" itemValue="#{teczka}" itemLabel="#{teczka.nazwa}"/>
         </h:selectOneMenu>
         <rich:message for="teczkaD" styleClass="error" />
