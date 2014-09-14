@@ -1,0 +1,2 @@
+1.ustawić nie null na false (nulle mogą być) dla pola symbol w tabeli dział
+2.ustawić nie null na false (nulle mogą być) dla pola extraemail w tabeli struktura

@@ -76,7 +76,7 @@ public class Struktura implements Serializable {
     @Column(name = "usuniety", nullable = true)
     private Integer usuniety;
     @NotNull
-    @Column(name = "extraemail", nullable = false)
+    @Column(name = "extraemail", nullable = true)
     private String extraemail;
     @Column(name = "mus_zast", nullable = false)
     private Integer musZast;
