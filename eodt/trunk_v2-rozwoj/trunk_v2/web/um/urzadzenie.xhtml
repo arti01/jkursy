@@ -16,7 +16,7 @@
         <ui:include src="./urzadzenieEdit.xhtml"/>
         <hr/>
         <h:form>
-            
+
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
@@ -39,7 +39,7 @@
                             return false;" />
             </rich:popupPanel>
 
-            
+
             <rich:panel id="listPanel">
                 <a4j:commandLink  execute="@form" action="#{UrzadzeniaMg.newObiekt}" render="dodajPaneRodzaj, listPanel" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()">
                     <h4>[dodaj zasób]</h4>
@@ -50,61 +50,58 @@
                     <f:facet name="footer"><rich:dataScroller for="tableRodzaj" maxPages="5" fastControls="hide"/></f:facet>
                     <rich:column sortBy="#{item.nazwa}" sortOrder="ascending" filterExpression="#{fn:containsIgnoreCase(item.nazwa, UrzadzeniaMg.filtrNazwa) or UrzadzeniaMg.filtrNazwa==''}">
                         <f:facet name="header">
-                            nazwa: <br/> (do filtrowania użyj TAB)<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrNazwa}" size="15">
+                            nazwa: <br/> (do filtrowania<br/> użyj TAB)<br/>
+                            <h:inputText value="#{UrzadzeniaMg.filtrNazwa}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
-                            #{item.nazwa}
-                    </rich:column>
-                    <rich:column>
-                        <f:facet name="header">opis</f:facet>
-                            #{item.notatka}
+                        <h:outputText  id="nazwaT" value="#{item.nazwa}"/>
+                        <rich:tooltip target="nazwaT" value="#{item.notatka}" layout="block"/>    
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.nrInw, UrzadzeniaMg.filtrNrInw) or UrzadzeniaMg.filtrNrInw==''}">
-                        <f:facet name="header">nr inwentarzowy<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrNrInw}" size="15">
+                        <f:facet name="header">nr<br/> inwentarzowy<br/>
+                            <h:inputText value="#{UrzadzeniaMg.filtrNrInw}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.nrInw}
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.nrSer, UrzadzeniaMg.filtrNrSer) or UrzadzeniaMg.filtrNrSer==''}">
-                        <f:facet name="header">nr seryjny<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrNrSer}" size="15">
+                        <f:facet name="header">nr<br/>seryjny<br/>
+                            <h:inputText value="#{UrzadzeniaMg.filtrNrSer}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.nrSer}
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.lokalizacja, UrzadzeniaMg.filtrLokal) or UrzadzeniaMg.filtrLokal==''}">
                         <f:facet name="header">lokalizacja<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrLokal}" size="15">
+                            <h:inputText value="#{UrzadzeniaMg.filtrLokal}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.lokalizacja}
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.firmaSerw, UrzadzeniaMg.filtrFirmaSerw) or UrzadzeniaMg.filtrFirmaSerw==''}">
-                        <f:facet name="header">firma serwisująca<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrFirmaSerw}" size="15">
+                        <f:facet name="header">firma<br/>serwisująca<br/>
+                            <h:inputText value="#{UrzadzeniaMg.filtrFirmaSerw}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.firmaSerw}
                     </rich:column>
                     <rich:column style="text-align: center">
-                        <f:facet name="header">data przeglądu</f:facet>
+                        <f:facet name="header">data<br/>przeglądu</f:facet>
                         <h:outputText value="#{item.dataPrzegl}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                         <br/>
                         <h:outputText value="przeterminowany" style="background-color: red" rendered="#{item.dataNizDzis}"/><br/>
                         <h:outputText value="niedługo termin" style="background-color: orange" rendered="#{item.alertPrzegl}"/>
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.userOdpow.fullname, UrzadzeniaMg.filtrOsobOdp) or UrzadzeniaMg.filtrOsobOdp==''}">
-                        <f:facet name="header">osoba odpowiedzialna<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrOsobOdp}" size="15">
+                        <f:facet name="header">osoba<br/>odpowiedzialna<br/>
+                            <h:inputText value="#{UrzadzeniaMg.filtrOsobOdp}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.userOdpow.fullname}
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.grupa.nazwa, UrzadzeniaMg.filtrGrupa) or UrzadzeniaMg.filtrGrupa==''}">
                         <f:facet name="header">grupa<br/>
-                            <h:inputText value="#{UrzadzeniaMg.filtrGrupa}" size="15">
+                            <h:inputText value="#{UrzadzeniaMg.filtrGrupa}" size="13">
                                 <a4j:ajax event="blur" render="tableRodzaj" execute="@this" />
                             </h:inputText></f:facet>
                             #{item.grupa.nazwa}
@@ -124,7 +121,7 @@
                         <rich:popupPanel  id="dokHist" style="text-align: center;" header="Historia dokumentow"  autosized="true" domElementAttachment="parent" left="77" top="13" >
                             <f:facet name="controls">
                                 <h:outputLink value="#" onclick="#{rich:component('dokHist')}.hide();
-                                        return false;">
+                            return false;">
                                     <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
                                 </h:outputLink>
                             </f:facet>
@@ -179,8 +176,6 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
     </ui:define>
-
 </ui:composition>
 

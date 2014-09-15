@@ -8,17 +8,17 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${file.reference.bean-validator.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.bean-validator.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javax.faces-2.1.29.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javax.faces-2.1.29.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.cron4j-2.2.5.jar}</file>
@@ -38,10 +38,10 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.commons-codec-1.9.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.commons-codec-1.9.jar-1}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${reference.eodtl.jar}</file>

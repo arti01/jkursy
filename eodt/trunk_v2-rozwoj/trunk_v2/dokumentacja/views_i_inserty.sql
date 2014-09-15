@@ -66,10 +66,10 @@ INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VA
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (1, 'generyczny@generyczny', 'generyczny', 3, '', null);
 INSERT INTO uzytkownik (id, adr_email, fullname, haslo_id, ext_id, spolka_id) VALUES (4, 'prezesSp1@prezesSp1', 'Przezes  Spółki 1', 4, '', 1);
 
-INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (3, 1, 3, NULL, NULL, 3, NULL, 1);
-INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (1, 1, 1, NULL, NULL, 1, NULL, 1);
-INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1);
-INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow) VALUES (4, 1, 4, 1, NULL, 4, NULL, 1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow, mus_zast) VALUES (3, 1, 3, NULL, NULL, 3, NULL, 1,1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow, mus_zast) VALUES (1, 1, 1, NULL, NULL, 1, NULL, 1,1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow, mus_zast) VALUES (2, 1, 2, NULL, NULL, 2, NULL, 1,1);
+INSERT INTO struktura (id, st_kier, dzial_id, szef_id, sec_user_id, user_id, usuniety, przyjmowanie_wnioskow, mus_zast) VALUES (4, 1, 4, 1, NULL, 4, NULL, 1,1);
 
 INSERT INTO user_roles (id, role_name, opis) VALUES (2, 'eodstru', 'struktura organizacyjna');
 INSERT INTO user_roles (id, role_name, opis) VALUES (1, 'eodurlop', 'wnioski urlopowe');

@@ -22,8 +22,8 @@ public class DrzUrzad extends NamedNode<UmUrzadzenie> implements TreeNode{
         super(obiektDb);
         this.drzGrupa = drzGrupa;
         type="urzadz";
-        name=obiektDb.getNazwa();
-        opis=obiektDb.getNrInw()+obiektDb.getNrSer()+obiektDb.getNotatka();
+        name=obiektDb.getNazwa()+" ("+obiektDb.getNrInw()+"-"+obiektDb.getNrSer()+")";
+        opis=obiektDb.getNotatka();
     }
     
     @Override

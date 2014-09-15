@@ -199,7 +199,7 @@
                     Przenieś...
                 </rich:dragIndicator>
                 <h:panelGrid id="pgOdb" columns="2" columnClasses="columna1, columna2" style="width: 100%">
-                    <rich:panel>
+                    <rich:panel rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
                         <f:facet name="header">
                             Dostępne zasoby materiałowe
                         </f:facet>
@@ -240,6 +240,8 @@
                         <rich:dataTable value="#{RejestracjaRej.obiekt.urzadzeniaList}" var="urzadz" style="width: 100%; border: white thick">
                             <rich:column sortBy="#{urzadz.nazwa}" sortOrder="ascending">
                                 #{urzadz.nazwa}
+                                (#{urzadz.nrInw}-
+                                #{urzadz.nrSer})
                                 <rich:tooltip target="imgDelOdb" value="usuń zasób" layout="block"/>
                                 <a4j:commandButton id="imgDelOdb" action="#{URejDokMg.usunUrzad}" execute="imgDelOdb" render="bumTab"  image="/images/delete.png" style="width: 16px; height: 16px">
                                     <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{urzadz}" />

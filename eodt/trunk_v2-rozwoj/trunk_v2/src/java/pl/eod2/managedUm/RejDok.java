@@ -25,8 +25,8 @@ import pl.eod2.managedRej.Rejestracja;
 @SessionScoped
 public class RejDok {
 
-    private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
-    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<DcRodzaj>();
+    private DataModel<DcDokument> lista = new ListDataModel<>();
+    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
     @ManagedProperty(value = "#{login}")
     private Login login;
     @ManagedProperty(value = "#{RejestracjaRej}")
@@ -34,7 +34,7 @@ public class RejDok {
     @ManagedProperty(value = "#{UrzadzeniaMg}")
     private UrzadzeniaMg urzadzeniaMg;
     private DcRodzajJpaController dcR;
-    private List<TreeNode> rootNodesDetDok = new ArrayList<TreeNode>();
+    private List<TreeNode> rootNodesDetDok = new ArrayList<>();
     private UmUrzadzenie urzad;
 
     @PostConstruct
@@ -45,7 +45,7 @@ public class RejDok {
     void refresh() {
         dcR = new DcRodzajJpaController();
         rodzajLista.setWrappedData(dcR.findDcRodzajUm());
-        List<DcDokument> listD = new ArrayList<DcDokument>();
+        List<DcDokument> listD = new ArrayList<>();
         for (DcRodzaj rodz : (List<DcRodzaj>) rodzajLista.getWrappedData()) {
             listD.addAll(rodz.getDcDokumentList());
         }
@@ -83,7 +83,7 @@ public class RejDok {
     public void nowyDokDlaUrzad(){
         rejestracja.setObiekt(new DcDokument());
         rejestracja.setError(null);
-        List<UmUrzadzenie>urzList=new ArrayList<UmUrzadzenie>();
+        List<UmUrzadzenie>urzList=new ArrayList<>();
         urzad=urzadzeniaMg.getDcC().findUmUrzadzenie(urzad.getId());
         urzList.add(urzad);
         rejestracja.getObiekt().setUrzadzeniaList(urzList);
