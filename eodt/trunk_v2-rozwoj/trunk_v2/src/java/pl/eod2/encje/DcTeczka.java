@@ -22,7 +22,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import pl.eod.abstr.EncjaAbst;
+import pl.eod.abstr.AbstEncja;
 
 /**
  *
@@ -35,7 +35,7 @@ import pl.eod.abstr.EncjaAbst;
     @NamedQuery(name = "DcTeczka.findById", query = "SELECT d FROM DcTeczka d WHERE d.id = :id"),
     @NamedQuery(name = "DcTeczka.findByNazwa", query = "SELECT d FROM DcTeczka d WHERE d.nazwa = :nazwa"),
     @NamedQuery(name = "DcTeczka.findByOpis", query = "SELECT d FROM DcTeczka d WHERE d.opis = :opis")})
-public class DcTeczka extends EncjaAbst implements Serializable {
+public class DcTeczka extends AbstEncja implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCTECZKA")
@@ -47,12 +47,12 @@ public class DcTeczka extends EncjaAbst implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 256)
-    @Column(nullable = false, length = 256)
+    @Column(nullable = false, length = 256, unique = true)
     private String nazwa;
     @Size(max = 10485760)
     @Lob
     private String opis;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teczkaId", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teczkaId", fetch = FetchType.LAZY)
     private List<DcDokument> dcDokumentList;
 
     public DcTeczka() {
@@ -67,10 +67,12 @@ public class DcTeczka extends EncjaAbst implements Serializable {
         this.nazwa = nazwa;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }

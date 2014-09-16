@@ -71,6 +71,7 @@ public class UrzadzeniaMg {
                 UIComponent input = zapisz.getParent().findComponent(entry.getKey());
                 context.addMessage(input.getClientId(context), message);
             }
+            lista.setWrappedData(dcC.findUmUrzadzenieEntities());
             /*error = dcC.create(obiekt);
              if (error != null) {
              FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);

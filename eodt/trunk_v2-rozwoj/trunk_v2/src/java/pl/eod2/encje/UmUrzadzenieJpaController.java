@@ -39,7 +39,7 @@ public class UmUrzadzenieJpaController implements Serializable {
     }
 
     public Map<String, String> create(UmUrzadzenie umUrzadzenie) {
-        Map<String, String> bledy=new HashMap<String, String>();
+        Map<String, String> bledy=new HashMap<>();
         if(umUrzadzenie.getGrupa()==null) bledy.put("grupaD", "brak grupy");
         if(umUrzadzenie.getUserOdpow()==null) bledy.put("userOdpowD", "brak osoby odpowiedzialnej");
         if(!bledy.isEmpty()) return bledy;
