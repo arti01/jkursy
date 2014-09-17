@@ -24,6 +24,10 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
         this.obiekt = (X) obiekt;
     }
 
+     public void newObiekt() throws InstantiationException, IllegalAccessException {
+        obiekt = (X) obiekt.getClass().newInstance();
+    }
+    
     void refresh() throws InstantiationException, IllegalAccessException {
         lista.setWrappedData(dcC.findEntities());
         obiekt = (X) obiekt.getClass().newInstance();

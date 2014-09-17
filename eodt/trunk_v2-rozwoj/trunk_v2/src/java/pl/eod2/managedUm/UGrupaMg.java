@@ -52,7 +52,6 @@ public class UGrupaMg {
             FacesContext context = FacesContext.getCurrentInstance();
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
-            System.err.println(obiekt.getId());
         } else {
             refresh();
         }

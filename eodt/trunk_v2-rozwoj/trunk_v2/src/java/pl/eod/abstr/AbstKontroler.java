@@ -58,6 +58,15 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
     }
 
+    private X findObiekt(X obiekt) {
+        EntityManager em = getEntityManager();
+        try {
+            return (X) em.find(type.getClass(), obiekt.getId());
+        } finally {
+            em.close();
+        }
+    }
+    
     private List<X> findEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -98,9 +107,10 @@ public abstract class AbstKontroler<X extends AbstEncja> {
     }
 
     public Map<String, String> edit(X obiekt) {
+        X oldObiekt=findObiekt(obiekt);
         Map<String, String> bledy = new HashMap<>();
         EntityManager em = null;
-        if (findEntities(obiekt.getNazwa()) != null) {
+        if ((findEntities(obiekt.getNazwa()) != null)&&(!obiekt.getNazwa().equals(oldObiekt.getNazwa()))) {
             bledy.put("nazwaD", "nazwa już istnieje");
         }
         if(!bledy.isEmpty()) return bledy;
@@ -125,7 +135,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.remove(obiekt);
+            em.remove(em.merge(obiekt));
             em.getTransaction().commit();
         } catch (Exception ex) {
             ex.printStackTrace();
