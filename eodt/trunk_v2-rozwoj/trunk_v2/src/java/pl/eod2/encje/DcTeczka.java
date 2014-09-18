@@ -7,7 +7,6 @@ package pl.eod2.encje;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -125,7 +124,7 @@ public class DcTeczka extends AbstEncja implements Serializable {
 
     @Override
     public String toString() {
-        return "pl.eod2.encje.DcProjekt[ id=" + id + " ]";
+        return "pl.eod2.encje.DcTeczka[ id=" + id + " ]";
     }
     
 }

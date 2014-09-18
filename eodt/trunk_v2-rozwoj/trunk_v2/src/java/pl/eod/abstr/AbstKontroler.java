@@ -8,6 +8,8 @@ package pl.eod.abstr;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -24,6 +26,7 @@ import pl.eod2.encje.DcTeczka;
 public abstract class AbstKontroler<X extends AbstEncja> {
 
     private final X type;
+    static final Logger logger = Logger. getAnonymousLogger();
 
     public AbstKontroler(X type) {
         this.type = type;
@@ -44,21 +47,20 @@ public abstract class AbstKontroler<X extends AbstEncja> {
     public X findEntities(String nazwa) {
         EntityManager em = getEntityManager();
         try {
-            System.err.println(this.type.getClass().getName());
             Query q = em.createNamedQuery(this.type.getClass().getSimpleName() + ".findByNazwa");
             q.setParameter("nazwa", nazwa);
             X u = (X) q.getResultList().get(0);
-            //em.refresh(u.getStruktura());
             return u;
         } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
             //ex.printStackTrace();
+            logger.log(Level.SEVERE, "blad", ex);
             return null;
         } finally {
             em.close();
         }
     }
 
-    private X findObiekt(X obiekt) {
+    public X findObiekt(X obiekt) {
         EntityManager em = getEntityManager();
         try {
             return (X) em.find(type.getClass(), obiekt.getId());
@@ -67,7 +69,16 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
     }
     
-    private List<X> findEntities(boolean all, int maxResults, int firstResult) {
+    public X findObiekt(Integer id) {
+        EntityManager em = getEntityManager();
+        try {
+            return (X) em.find(type.getClass(), id);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<X> findEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
@@ -89,14 +100,15 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         if (findEntities(obiekt.getNazwa()) != null) {
             bledy.put("nazwaD", "nazwa już istnieje");
         }
-        if(!bledy.isEmpty()) return bledy;
+        //if(!bledy.isEmpty()) return bledy;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(obiekt);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //ex.printStackTrace();
+            logger.log(Level.SEVERE, "blad", ex);
             obiekt.setId(null);
         } finally {
             if (em != null) {
@@ -120,7 +132,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             em.merge(obiekt);
             em.getTransaction().commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "blad", ex);
             obiekt.setId(null);
         } finally {
             if (em != null) {
@@ -138,7 +150,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             em.remove(em.merge(obiekt));
             em.getTransaction().commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            logger.log(Level.SEVERE, "blad", ex);
         } finally {
             if (em != null) {
                 em.close();

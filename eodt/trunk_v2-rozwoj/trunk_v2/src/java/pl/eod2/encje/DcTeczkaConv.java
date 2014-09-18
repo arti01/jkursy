@@ -16,8 +16,8 @@ import javax.faces.convert.Converter;
 public class DcTeczkaConv implements Converter, Serializable {
     private static final long serialVersionUID = 1L;
     
-    private Object object;
-    DcTeczkaJpaController uC=new DcTeczkaJpaController();
+    //private Object object;
+    DcTeczkaKontr uC=new DcTeczkaKontr();
     
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
@@ -30,7 +30,7 @@ public class DcTeczkaConv implements Converter, Serializable {
         }
         Object wynik;
         try{
-        wynik=uC.findDcProjekt(new Long(u).intValue());
+        wynik=uC.findObiekt(new Long(u).intValue());
         }catch(NumberFormatException nfe){
             //nfe.printStackTrace();
             wynik=null;
