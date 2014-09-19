@@ -112,6 +112,7 @@ public class RejDok {
             }
         }
         rejestracja.edytujAbst();
+        
     }
 
     public void usunUrzad() {
@@ -174,6 +175,7 @@ public class RejDok {
             DrzMaster drMa = new DrzMaster(mg);
             for (UmGrupa gr : mg.getGrupaList()) {
                 DrzGrupa drGr = new DrzGrupa(drMa, gr);
+                gr.getUrzadzenieList().removeAll(rejestracja.getObiekt().getUrzadzeniaList());
                 for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
                     DrzUrzad drzU = new DrzUrzad(drGr, uz);
                     drGr.getDrzUrzad().add(drzU);

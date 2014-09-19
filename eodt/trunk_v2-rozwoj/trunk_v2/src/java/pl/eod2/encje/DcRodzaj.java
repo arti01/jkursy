@@ -55,6 +55,9 @@ public class DcRodzaj implements Serializable {
     @Size(max = 5)
     @Column(nullable = false, length = 5)
     private String symbol;
+    @Size(max = 10)
+    @Column(nullable = true, length = 10)
+    private String symbolRwa;
     @Size(max = 10485760)
     @Lob
     private String opis;
@@ -76,6 +79,12 @@ public class DcRodzaj implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id")
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
     private List<UmMasterGrupa> umMasterGrupaList;
+    @JoinColumn(name = "id_symb_mer1", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcSymbMer1 symbMer1Id;
+    @JoinColumn(name = "id_symb_mer2", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcSymbMer2 symbMer2Id;
 
     public DcRodzaj() {
     }
@@ -177,6 +186,30 @@ public class DcRodzaj implements Serializable {
         this.umMasterGrupaList = umMasterGrupaList;
     }
 
+    public String getSymbolRwa() {
+        return symbolRwa;
+    }
+
+    public void setSymbolRwa(String symbolRwa) {
+        this.symbolRwa = symbolRwa;
+    }
+
+    public DcSymbMer1 getSymbMer1Id() {
+        return symbMer1Id;
+    }
+
+    public void setSymbMer1Id(DcSymbMer1 symbMer1Id) {
+        this.symbMer1Id = symbMer1Id;
+    }
+
+    public DcSymbMer2 getSymbMer2Id() {
+        return symbMer2Id;
+    }
+
+    public void setSymbMer2Id(DcSymbMer2 symbMer2Id) {
+        this.symbMer2Id = symbMer2Id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -191,10 +224,7 @@ public class DcRodzaj implements Serializable {
             return false;
         }
         DcRodzaj other = (DcRodzaj) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

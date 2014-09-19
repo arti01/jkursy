@@ -16,7 +16,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaQuery;
-import pl.eod2.encje.DcTeczka;
 
 /**
  *
@@ -82,7 +81,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(DcTeczka.class));
+            cq.select(cq.from(type.getClass()));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);

@@ -47,7 +47,7 @@ public class StruktDzialM implements Serializable {
     public synchronized List<Struktura> getSourceRoots() {
         Struktura firma = new Struktura();
         Dzial uDzial = new Dzial();
-        List<Struktura> wynik = new ArrayList<Struktura>();
+        List<Struktura> wynik = new ArrayList<>();
         uDzial.setNazwa("Organizacja - wg działów");
         firma.setDzialId(uDzial);
         srcRoots.clear();

@@ -1,3 +1,11 @@
+2014-09-18
+- Druga sprawa to z dokumentu którego został uruchomiony proces akceptacji  można usunąc sprzęt. Dodanie nowego już się nie pojawia i jest OK
+poprawione (rendered na delete)
+- po wybraniu sprzętu do dokumentu odświeża się zakładka i znika lista i struktura sprzętu. Trzeba ponownie kliknąc na nazwę zakładki.
+render nie na cała zakladke ale na panele z drzewkiem i z lista sprzetu oddzielnie
+
+Uwaga - zmieniłem drzewko - z drzewka są usuwane urzadzenia, ktore już są przypisane do dokumentu - trzeba popatrzeć, czy gdzieś nie ma z tym jakiś blędów.
+
 2014-09-11
 Uwaga - zmiana projektu na teczki.
 Powinna się stworzyć tabela dc_teczka. Potem można do niej wkopiować rekordy z dc_projekt i wywalić dc_projekt.

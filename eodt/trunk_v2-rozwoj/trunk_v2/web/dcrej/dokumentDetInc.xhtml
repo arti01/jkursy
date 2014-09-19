@@ -167,7 +167,7 @@
                 </rich:dataTable>
             </rich:tab>
 
-            <rich:tab header="Baza Zasobów Materiałowych" id="bumTab">
+            <rich:tab header="Baza Zasobów Materiałowych">
                 <h:outputStylesheet>
                     .columna1 {
                     width: 50%;
@@ -198,7 +198,8 @@
                 <rich:dragIndicator id="ind" acceptClass="accept" rejectClass="reject" draggingClass="default">
                     Przenieś...
                 </rich:dragIndicator>
-                <h:panelGrid id="pgOdb" columns="2" columnClasses="columna1, columna2" style="width: 100%">
+
+                <h:panelGrid id="pgSrc" columns="2" columnClasses="columna1, columna2" style="width: 100%">
                     <rich:panel rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
                         <f:facet name="header">
                             Dostępne zasoby materiałowe
@@ -231,19 +232,20 @@
 
                     </rich:panel>
 
-                    <rich:panel>
+                    <rich:panel id="pgTrg">
                         <f:facet name="header">
                             Dokument dotyczy zasobów materiałowych
                         </f:facet>
                         <rich:dropTarget acceptedTypes="urzadz, grupa, master"  dropListener="#{URejDokMg.drop}"
-                                         render="bumTab" dropValue="#{RejestracjaRej.obiekt}"/>
+                                         render="pgSrc, pgTrg" dropValue="#{RejestracjaRej.obiekt}"/>
                         <rich:dataTable value="#{RejestracjaRej.obiekt.urzadzeniaList}" var="urzadz" style="width: 100%; border: white thick">
                             <rich:column sortBy="#{urzadz.nazwa}" sortOrder="ascending">
                                 #{urzadz.nazwa}
                                 (#{urzadz.nrInw}-
                                 #{urzadz.nrSer})
                                 <rich:tooltip target="imgDelOdb" value="usuń zasób" layout="block"/>
-                                <a4j:commandButton id="imgDelOdb" action="#{URejDokMg.usunUrzad}" execute="imgDelOdb" render="bumTab"  image="/images/delete.png" style="width: 16px; height: 16px">
+                                <a4j:commandButton id="imgDelOdb" action="#{URejDokMg.usunUrzad}" execute="imgDelOdb" render="pgSrc, pgTrg"  image="/images/delete.png" style="width: 16px; height: 16px" 
+                                                   rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
                                     <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{urzadz}" />
                                 </a4j:commandButton>
                             </rich:column>
@@ -278,4 +280,3 @@
     <hr/>
 
 </ui:composition>
-
