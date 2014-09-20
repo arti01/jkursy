@@ -44,12 +44,17 @@
                 <rich:message for="symbrwaD" styleClass="error" />
                 
                 <h:outputLabel for="symbmer1D" value="symb. meryt. 1: "/>
-                <h:selectOneMenu id="symbmer1D" value="#{RodzajeCfg.obiekt.symbMer1Id}">
+                <h:selectOneMenu id="symbmer1D" value="#{RodzajeCfg.obiekt.symbMer1Id}" converter="#{DcSymbMer1Conv}">
                     <f:selectItems value="#{SymbMer1Cfg.lista}" var="sm1" itemValue="#{sm1}" itemLabel="#{sm1.nazwa}"/>
                 </h:selectOneMenu>
                 <rich:message for="symbmer1D" styleClass="error" />
                 
-
+                <h:outputLabel for="symbmer2D" value="symb. meryt. 2: "/>
+                <h:selectOneMenu id="symbmer2D" value="#{RodzajeCfg.obiekt.symbMer2Id}" converter="#{DcSymbMer2Conv}">
+                    <f:selectItems value="#{SymbMer2Cfg.lista}" var="sm2" itemValue="#{sm2}" itemLabel="#{sm2.nazwa}"/>
+                </h:selectOneMenu>
+                <rich:message for="symbmer2D" styleClass="error" />
+                
                 <h:outputLabel for="szablonD" value="szablon: "/>
                 <h:inputTextarea id="szablonD" value="#{RodzajeCfg.obiekt.szablon}"  cols="110" rows="15"><rich:validator/></h:inputTextarea>
                 <rich:message for="szablonD" styleClass="error" />

@@ -260,7 +260,7 @@ public class Rejestracja {
         doWiad.getDcDokDoWiadCelList().add(cel);
         //usersLista.remove(user);
         userDoWiad = new Uzytkownik();
-        System.err.println(cel.getId() + "-" + cel.getIdDokDoWiad() + "-" + cel.getUserid());
+        //System.err.println(cel.getId() + "-" + cel.getIdDokDoWiad() + "-" + cel.getUserid());
     }
 
     public void usunDoWiadUser() {
@@ -275,7 +275,7 @@ public class Rejestracja {
         doWiad.setDataWprow(new Date());
         doWiad.setDokid(obiekt);
         error = dcC.editDoWiad(obiekt, doWiad);
-        System.out.println(obiekt.getDcDokDoWiadList());
+        //System.out.println(obiekt.getDcDokDoWiadList());
 
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);

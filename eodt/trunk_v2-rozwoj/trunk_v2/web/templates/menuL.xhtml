@@ -5,7 +5,6 @@
       xmlns:fn="http://java.sun.com/jsp/jstl/functions"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich">
-    <h:outputStylesheet library="css" name="../resources/css/default.css"/>
     <h:form>
         <table
             style="width: 100%; font-size: 11px; font-family: arial, tahoma;" cellpadding="1" cellspacing="0">
@@ -85,12 +84,12 @@
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - archiwum" rendered="#{login.dcArc}" expanded="#{login.menuDcArcExp}" actionListener="#{login.menuDcArcExpList}">
-                            <h:commandLink action="#{PrzeniesArc.list}">
+                            <h:commandLink action="#{PrzeniesArch.listDo}">
                                 <rich:panelMenuItem >
                                     Do archiwum
                                 </rich:panelMenuItem>
                             </h:commandLink>
-                            <h:commandLink action="#{PrzeniesArc.listW}">
+                            <h:commandLink action="#{PrzeniesArch.list}">
                                 <rich:panelMenuItem >
                                     W archiwum
                                 </rich:panelMenuItem>

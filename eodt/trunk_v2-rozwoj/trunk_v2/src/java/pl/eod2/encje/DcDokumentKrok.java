@@ -47,9 +47,12 @@ public class DcDokumentKrok implements Serializable {
     @NotNull
     @Column(name = "LP", nullable = false)
     private int lp;
-    @JoinColumn(name = "ID_DOKUMENT", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "ID_DOKUMENT", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokument idDok;
+    @JoinColumn(name = "ID_DOKUMENT_ARCH", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcDokumentArch idDokArch;
     @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptStatus akcept;
@@ -119,6 +122,14 @@ public class DcDokumentKrok implements Serializable {
         this.dcKrokUzytkownikaList = dcKrokUzytkownikaList;
     }
 
+    public DcDokumentArch getIdDokArch() {
+        return idDokArch;
+    }
+
+    public void setIdDokArch(DcDokumentArch idDokArch) {
+        this.idDokArch = idDokArch;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -133,10 +144,7 @@ public class DcDokumentKrok implements Serializable {
             return false;
         }
         DcDokumentKrok other = (DcDokumentKrok) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

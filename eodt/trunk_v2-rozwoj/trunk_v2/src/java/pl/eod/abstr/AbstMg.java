@@ -9,7 +9,7 @@ import javax.faces.model.ListDataModel;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
-public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
+public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
 
     private DataModel<X> lista;
     private final Y dcC;
@@ -17,17 +17,21 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
     private String error;
     private final String link;
 
-    public AbstMg(String s, AbstKontroler ak, X obiekt) throws InstantiationException, IllegalAccessException {
+    @SuppressWarnings({"unchecked", "unchecked"})
+    public AbstMg(String s, AbstKontroler<X> ak, X obiekt) throws InstantiationException, IllegalAccessException {
         link = s;
         this.lista = new ListDataModel<>();
         this.dcC = (Y) ak.getClass().newInstance();
-        this.obiekt = (X) obiekt;
+        this.obiekt = obiekt;
+        lista.setWrappedData(dcC.findEntities());
     }
 
+    @SuppressWarnings("unchecked")
      public void newObiekt() throws InstantiationException, IllegalAccessException {
         obiekt = (X) obiekt.getClass().newInstance();
     }
     
+    @SuppressWarnings("unchecked")
     void refresh() throws InstantiationException, IllegalAccessException {
         lista.setWrappedData(dcC.findEntities());
         obiekt = (X) obiekt.getClass().newInstance();
@@ -35,6 +39,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
     }
 
     public void dodaj() throws InstantiationException, IllegalAccessException {
+        @SuppressWarnings("unchecked")
         Map<String, String> errorMap = dcC.create(obiekt);
         if (!errorMap.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -51,6 +56,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
     }
 
     public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
+        @SuppressWarnings("unchecked")
         Map<String, String> errorMap = dcC.edit(obiekt);
         if (!errorMap.isEmpty()) {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -67,6 +73,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public void usun() throws IllegalOrphanException, NonexistentEntityException, InstantiationException, IllegalAccessException {
         //rodzajGrupa=lista.getRowData();
         dcC.destroy(obiekt);
@@ -74,7 +81,9 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
     }
 
     public String list() throws InstantiationException, IllegalAccessException {
+        System.err.println(link);
         refresh();
+        System.err.println(link);
         return link;
     }
 
@@ -100,6 +109,10 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler> {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public Y getDcC() {
+        return dcC;
     }
 
 }

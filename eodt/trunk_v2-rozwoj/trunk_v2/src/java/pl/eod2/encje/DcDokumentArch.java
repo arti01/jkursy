@@ -31,6 +31,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.abstr.AbstEncja;
 import pl.eod.encje.Uzytkownik;
 
 /**
@@ -38,23 +39,23 @@ import pl.eod.encje.Uzytkownik;
  * @author arti01
  */
 @Entity
-@Table(name = "dc_dokument")
+@Table(name = "dc_dokument_arch")
 @NamedQueries({
-    @NamedQuery(name = "DcDokument.findAll", query = "SELECT d FROM DcDokument d"),
-    @NamedQuery(name = "DcDokument.findById", query = "SELECT d FROM DcDokument d WHERE d.id = :id"),
-    @NamedQuery(name = "DcDokument.findByNazwa", query = "SELECT d FROM DcDokument d WHERE d.nazwa = :tytul"),
-    @NamedQuery(name = "DcDokument.findByOpis", query = "SELECT d FROM DcDokument d WHERE d.opis = :opis"),
-    @NamedQuery(name = "DcDokument.findByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
-    @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok"),
-    @NamedQuery(name = "DcDokument.findByStatus", query = "SELECT d FROM DcDokument d WHERE d.dokStatusId.id = :statusId"),
-    @NamedQuery(name = "DcDokument.findMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
+    @NamedQuery(name = "DcDokumentArchfindAll", query = "SELECT d FROM DcDokument d"),
+    @NamedQuery(name = "DcDokumentArchfindById", query = "SELECT d FROM DcDokument d WHERE d.id = :id"),
+    @NamedQuery(name = "DcDokumentArchfindByNazwa", query = "SELECT d FROM DcDokument d WHERE d.nazwa = :tytul"),
+    @NamedQuery(name = "DcDokumentArchfindByOpis", query = "SELECT d FROM DcDokument d WHERE d.opis = :opis"),
+    @NamedQuery(name = "DcDokumentArchfindByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
+    @NamedQuery(name = "DcDokumentArchfindByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok"),
+    @NamedQuery(name = "DcDokumentArchfindByStatus", query = "SELECT d FROM DcDokument d WHERE d.dokStatusId.id = :statusId"),
+    @NamedQuery(name = "DcDokumentArchfindMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
 })
-public class DcDokument implements Serializable {
+public class DcDokumentArch extends AbstEncja implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCDOKUMENT")
-    @SequenceGenerator(name = "SEQDCDOKUMENT", sequenceName = "SEQDCDOKUMENT")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCDOKUMENTARCH")
+    @SequenceGenerator(name = "SEQDCDOKUMENTARCH", sequenceName = "SEQDCDOKUMENTARCH")
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -84,7 +85,30 @@ public class DcDokument implements Serializable {
     @Column(name = "data_dok")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDok;
-    
+    @Column(name = "arch_data")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date archData;
+    @Size(max = 256)
+    @Column(name = "arch_osoba_zdajaca", length = 256)
+    private String archOsobaZdajaca;
+    @Size(max = 256)
+    @Column(name = "arch_osoba_odpowiadajaca", length = 256)
+    private String archOsobaOdpowiadajaca;
+    @Size(max = 256)
+    @Column(name = "arch_pokoj ", length = 256)
+    private String archPokoj;
+    @Size(max = 256)
+    @Column(name = "arch_regal ", length = 256)
+    private String archRegal;
+    @Size(max = 256)
+    @Column(name = "arch_polka ", length = 256)
+    private String archPolka;
+    @Size(max = 256)
+    @Column(name = "arch_karton ", length = 256)
+    private String archKarton;
+    @Size(max = 256)
+    @Column(name = "arch_teczka ", length = 256)
+    private String archTeczka;
     
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -98,18 +122,22 @@ public class DcDokument implements Serializable {
     @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcTeczka teczkaId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokArch", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcPlik> dcPlikList;
     @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokumentStatus dokStatusId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokArch", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokumentKrok> dcDokKrok;
+    
     @JoinColumn(name = "kontrahent_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcKontrahenci kontrahentId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokidArch", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosci> dcDokDoWiadList;
+    
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
@@ -118,37 +146,57 @@ public class DcDokument implements Serializable {
     @Transient
     private String dataDokStr;
     @Transient
-    private String procentWykonania;
-    @Transient
-    private boolean alertAkceptacja;
-    @Transient
     private String symbolDok;
     
-    public DcDokument() {
+    public DcDokumentArch() {
+    }
+    
+    public DcDokumentArch(DcDokument dc) {
+        this.dataDok=dc.getDataDok();
+        this.dataWprow=dc.getDataWprow();
+        this.dcDokDoWiadList=dc.getDcDokDoWiadList();
+        this.dcDokKrok=dc.getDcDokKrok();
+        this.dcPlikList=dc.getDcPlikList();
+        this.dokStatusId=dc.getDokStatusId();
+        this.kontrahentId=dc.getKontrahentId();
+        this.nazwa=dc.getNazwa();
+        this.opis=dc.getOpis();
+        this.opisDlugi=dc.getOpisDlugi();
+        this.rodzajId=dc.getRodzajId();
+        this.symbolNrKol=dc.getSymbolNrKol();
+        this.symbolSpDzialRok=dc.getSymbolSpDzialRok();
+        this.teczkaId=dc.getTeczkaId();
+        this.urzadzeniaList=dc.getUrzadzeniaList();
+        this.userId=dc.getUserId();
+        this.zrodloId=dc.getZrodloId();
     }
 
-    public DcDokument(Integer id) {
+    public DcDokumentArch(Integer id) {
         this.id = id;
     }
 
-    public DcDokument(Integer id, String tytul, Date dataWprow, int userId) {
+    public DcDokumentArch(Integer id, String tytul, Date dataWprow, int userId) {
         this.id = id;
         this.nazwa = tytul;
         this.dataWprow = dataWprow;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getNazwa() {
         return nazwa;
     }
 
+    @Override
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
@@ -302,10 +350,6 @@ public class DcDokument implements Serializable {
         return getDataWprow().before(c.getTime());
     }
 
-    public void setAlertAkceptacja(boolean alertAkceptacja) {
-        this.alertAkceptacja = alertAkceptacja;
-    }
-
     public String getSymbolDok() {
         try{
         symbolDok=this.symbolNrKol+"/"+this.symbolSpDzialRok+"/"+this.getRodzajId().getSymbol();
@@ -321,6 +365,70 @@ public class DcDokument implements Serializable {
 
     public void setSymbolNrKol(int symbolNrKol) {
         this.symbolNrKol = symbolNrKol;
+    }
+
+    public Date getArchData() {
+        return archData;
+    }
+
+    public void setArchData(Date archData) {
+        this.archData = archData;
+    }
+
+    public String getArchOsobaZdajaca() {
+        return archOsobaZdajaca;
+    }
+
+    public void setArchOsobaZdajaca(String archOsobaZdajaca) {
+        this.archOsobaZdajaca = archOsobaZdajaca;
+    }
+
+    public String getArchOsobaOdpowiadajaca() {
+        return archOsobaOdpowiadajaca;
+    }
+
+    public void setArchOsobaOdpowiadajaca(String archOsobaOdpowiadajaca) {
+        this.archOsobaOdpowiadajaca = archOsobaOdpowiadajaca;
+    }
+
+    public String getArchPokoj() {
+        return archPokoj;
+    }
+
+    public void setArchPokoj(String archPokoj) {
+        this.archPokoj = archPokoj;
+    }
+
+    public String getArchRegal() {
+        return archRegal;
+    }
+
+    public void setArchRegal(String archRegal) {
+        this.archRegal = archRegal;
+    }
+
+    public String getArchPolka() {
+        return archPolka;
+    }
+
+    public void setArchPolka(String archPolka) {
+        this.archPolka = archPolka;
+    }
+
+    public String getArchKarton() {
+        return archKarton;
+    }
+
+    public void setArchKarton(String archKarton) {
+        this.archKarton = archKarton;
+    }
+
+    public String getArchTeczka() {
+        return archTeczka;
+    }
+
+    public void setArchTeczka(String archTeczka) {
+        this.archTeczka = archTeczka;
     }
 
     public List<UmUrzadzenie> getUrzadzeniaList() {
@@ -341,14 +449,11 @@ public class DcDokument implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DcDokument)) {
+        if (!(object instanceof DcDokumentArch)) {
             return false;
         }
-        DcDokument other = (DcDokument) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        DcDokumentArch other = (DcDokumentArch) object;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override

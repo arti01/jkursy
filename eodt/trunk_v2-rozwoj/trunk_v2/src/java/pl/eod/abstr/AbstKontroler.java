@@ -48,6 +48,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         try {
             Query q = em.createNamedQuery(this.type.getClass().getSimpleName() + ".findByNazwa");
             q.setParameter("nazwa", nazwa);
+            @SuppressWarnings("unchecked")
             X u = (X) q.getResultList().get(0);
             return u;
         } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
@@ -59,6 +60,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public X findObiekt(X obiekt) {
         EntityManager em = getEntityManager();
         try {
@@ -68,6 +70,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public X findObiekt(Integer id) {
         EntityManager em = getEntityManager();
         try {
@@ -77,10 +80,11 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
     }
     
+    @SuppressWarnings("unchecked")
     public List<X> findEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+            CriteriaQuery<Object> cq = em.getCriteriaBuilder().createQuery();
             cq.select(cq.from(type.getClass()));
             Query q = em.createQuery(cq);
             if (!all) {

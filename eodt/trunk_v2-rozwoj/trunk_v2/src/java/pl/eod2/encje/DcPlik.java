@@ -54,9 +54,12 @@ public class DcPlik implements Serializable {
     private Date dataDodania;
     @Lob
     private byte[] plik;
-    @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokument idDok;
+    @JoinColumn(name = "id_dok_arch", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private DcDokumentArch idDokArch;
 
     public DcPlik() {
     }
@@ -109,6 +112,15 @@ public class DcPlik implements Serializable {
     public void setDataDodania(Date dataDodania) {
         this.dataDodania = dataDodania;
     }
+
+    public DcDokumentArch getIdDokArch() {
+        return idDokArch;
+    }
+
+    public void setIdDokArch(DcDokumentArch idDokArch) {
+        this.idDokArch = idDokArch;
+    }
+
 
     @Override
     public int hashCode() {
