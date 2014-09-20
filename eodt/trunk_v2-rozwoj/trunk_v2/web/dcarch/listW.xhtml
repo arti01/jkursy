@@ -15,7 +15,7 @@
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{PrzeniesArc.listaWarchiwum}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{PrzeniesArch.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
