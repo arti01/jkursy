@@ -13,7 +13,13 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h3>Dokumenty do przeniesienia do archiwum</h3>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
+        <ui:include src="./daneArchiw.xhtml"/>
         <h:form>
+            <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
+                              render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                <h4>[archiwizacja pojedyńczych dokumentów]</h4>
+            </a4j:commandLink>
+
             <rich:panel id="listPanel">
                 <rich:dataTable value="#{PrzeniesArch.listaDoArchiwum}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
@@ -41,7 +47,7 @@
                     </rich:column>
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.teczkaId.nazwa,RejestracjaRej.filtrTeczka)}">
-                        <f:facet name="header">teczka
+                        <f:facet name="header">teczka<br/>
                             <h:inputText value="#{RejestracjaRej.filtrTeczka}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
@@ -61,38 +67,6 @@
                     <rich:column>
                         <f:facet name="header">status</f:facet>
                         <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
-
-                        <rich:collapsiblePanel header="dane archiwizacji" expanded="false" switchType="client">
-
-                            <h:panelGrid columns="2" id="dodajGrid">
-                                <h:outputLabel for="archOsobaZdajaca" value="Osoba Zdająca: "/>
-                                <h:inputText id="archOsobaZdajaca" value="#{item.archOsobaZdajaca}" />
-                                
-                                <h:outputLabel for="OsobaOdpowiadajaca" value="Osoba Odpowiadająca: "/>
-                                <h:inputText id="OsobaOdpowiadajaca" value="#{item.archOsobaOdpowiadajaca}" />
-                                
-                                <h:outputLabel for="archPokoj" value="Pokój: "/>
-                                <h:inputText id="archPokoj" value="#{item.archPokoj}" />
-                                
-                                <h:outputLabel for="archRegal" value="Regał: "/>
-                                <h:inputText id="archRegal" value="#{item.archRegal}" />
-                                
-                                <h:outputLabel for="archPolka" value="Półka: "/>
-                                <h:inputText id="archPolka" value="#{item.archPolka}" />
-                                
-                                <h:outputLabel for="archKarton" value="Karton: "/>
-                                <h:inputText id="archKarton" value="#{item.archKarton}" />
-                                
-                                <h:outputLabel for="archTeczka" value="Teczka: "/>
-                                <h:inputText id="archTeczka" value="#{item.archTeczka}" />
-                            </h:panelGrid>
-                            
-                            <a4j:commandButton value="archiwizuj" action="#{PrzeniesArch.przenies}" render="listPanel" rendered="#{item.dokStatusId.id==3}" execute="@this, dodajGrid">
-                                <f:setPropertyActionListener target="#{PrzeniesArch.obiekt}" value="#{item}" />
-                            </a4j:commandButton>
-
-                        </rich:collapsiblePanel>
-
                         <rich:tooltip target="statusList">
                             #{item.dokStatusId.opis}
                         </rich:tooltip>
@@ -107,6 +81,10 @@
                         <rich:tooltip target="rodzajList">
                             #{item.rodzajId.opis} z grupy:#{item.rodzajId.idRodzajGrupa.nazwa}
                         </rich:tooltip>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">do archiwizacji</f:facet>
+                        <h:selectBooleanCheckbox value="#{item.doArchZnacznik}"/>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>

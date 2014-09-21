@@ -31,6 +31,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.abstr.AbstEncja;
 import pl.eod.encje.Uzytkownik;
 
 /**
@@ -49,7 +50,7 @@ import pl.eod.encje.Uzytkownik;
     @NamedQuery(name = "DcDokument.findByStatus", query = "SELECT d FROM DcDokument d WHERE d.dokStatusId.id = :statusId"),
     @NamedQuery(name = "DcDokument.findMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
 })
-public class DcDokument implements Serializable {
+public class DcDokument extends AbstEncja implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -123,6 +124,8 @@ public class DcDokument implements Serializable {
     private boolean alertAkceptacja;
     @Transient
     private String symbolDok;
+    @Transient
+    private boolean doArchZnacznik;
     
     public DcDokument() {
     }
@@ -329,6 +332,14 @@ public class DcDokument implements Serializable {
 
     public void setUrzadzeniaList(List<UmUrzadzenie> urzadzeniaList) {
         this.urzadzeniaList = urzadzeniaList;
+    }
+
+    public boolean isDoArchZnacznik() {
+        return doArchZnacznik;
+    }
+
+    public void setDoArchZnacznik(boolean doArchZnacznik) {
+        this.doArchZnacznik = doArchZnacznik;
     }
         
     @Override

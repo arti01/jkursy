@@ -25,6 +25,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import pl.eod.abstr.AbstKontroler;
 import pl.eod.encje.Struktura;
 import pl.eod.encje.Uzytkownik;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
@@ -34,22 +35,15 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
  *
  * @author 103039
  */
-public class DcDokumentJpaController implements Serializable {
+public class DcDokumentJpaController extends AbstKontroler<DcDokument> implements Serializable {
 
     private static final long serialVersionUID = 1L;
      static final Logger logger = Logger. getAnonymousLogger();
 
     public DcDokumentJpaController() {
-        if (this.emf == null) {
-            this.emf = Persistence.createEntityManagerFactory("eodtPU");
-        }
+        super(new DcDokument() );
     }
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
-    }
-
+    
     private DcDokument createKroki(DcDokument dcDokument) {
         dcDokument.setDcDokKrok(new ArrayList<DcDokumentKrok>());
         EntityManager em = null;
@@ -183,7 +177,9 @@ public class DcDokumentJpaController implements Serializable {
             
             DcDokumentArch docArch=new DcDokumentArch(dcDokument);
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
-            docArch.setArchData(new Date());
+            DcDokumentArchDane docArchDane=new DcDokumentArchDane();
+            docArchDane.setArchData(new Date());
+            docArch.setDokArchDane(docArchDane);
             dcArchKontr.create(docArch);
             em.remove(dcDokument);
             em.getTransaction().commit();
@@ -317,7 +313,7 @@ public class DcDokumentJpaController implements Serializable {
         return null;
     }
 
-    public String edit(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public String editZmiana(DcDokument dcDokument) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
 
         if (dcDokument.getKontrahentId() == null) {
@@ -368,7 +364,7 @@ public class DcDokumentJpaController implements Serializable {
                 projektIdNew = em.getReference(projektIdNew.getClass(), projektIdNew.getId());
                 dcDokument.setTeczkaId(projektIdNew);
             }
-            List<DcPlik> attachedDcPlikListNew = new ArrayList<DcPlik>();
+            List<DcPlik> attachedDcPlikListNew = new ArrayList<>();
             for (DcPlik dcPlikListNewDcPlikToAttach : dcPlikListNew) {
                 dcPlikListNewDcPlikToAttach = em.getReference(dcPlikListNewDcPlikToAttach.getClass(), dcPlikListNewDcPlikToAttach.getId());
                 attachedDcPlikListNew.add(dcPlikListNewDcPlikToAttach);
@@ -376,7 +372,7 @@ public class DcDokumentJpaController implements Serializable {
             
             
             //urzadzenia - USUWANIE duplikatow
-            HashSet<UmUrzadzenie> hs = new HashSet<UmUrzadzenie>();
+            HashSet<UmUrzadzenie> hs = new HashSet<>();
             hs.addAll(dcDokument.getUrzadzeniaList());
             dcDokument.getUrzadzeniaList().clear();
             dcDokument.getUrzadzeniaList().addAll(hs);

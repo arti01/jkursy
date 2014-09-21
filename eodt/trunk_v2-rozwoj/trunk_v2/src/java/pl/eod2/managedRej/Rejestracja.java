@@ -134,7 +134,7 @@ public class Rejestracja {
 
     public boolean edytujAbst() {
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -157,7 +157,7 @@ public class Rejestracja {
 
     public void edytujZdetale() {
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -190,7 +190,7 @@ public class Rejestracja {
         DcDokumentStatus ds = new DcDokumentStatus(4);
         obiekt.setDokStatusId(ds);
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

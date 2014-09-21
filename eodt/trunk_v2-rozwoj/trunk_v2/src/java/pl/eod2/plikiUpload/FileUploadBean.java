@@ -62,7 +62,7 @@ public class FileUploadBean implements Serializable {
         rejRej.getObiekt().getDcPlikList().add(dcPlik);
         String error = null;
         try {
-            error = rejRej.getDcC().edit(rejRej.getObiekt());
+            error = rejRej.getDcC().editZmiana(rejRej.getObiekt());
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(FileUploadBean.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {

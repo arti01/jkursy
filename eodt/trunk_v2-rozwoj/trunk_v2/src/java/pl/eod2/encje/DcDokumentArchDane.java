@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 
 @Embeddable
 public class DcDokumentArchDane implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Column(name = "arch_data")
     @Temporal(TemporalType.TIMESTAMP)
