@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -85,31 +86,9 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @Column(name = "data_dok")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDok;
-    @Column(name = "arch_data")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date archData;
-    @Size(max = 256)
-    @Column(name = "arch_osoba_zdajaca", length = 256)
-    private String archOsobaZdajaca;
-    @Size(max = 256)
-    @Column(name = "arch_osoba_odpowiadajaca", length = 256)
-    private String archOsobaOdpowiadajaca;
-    @Size(max = 256)
-    @Column(name = "arch_pokoj ", length = 256)
-    private String archPokoj;
-    @Size(max = 256)
-    @Column(name = "arch_regal ", length = 256)
-    private String archRegal;
-    @Size(max = 256)
-    @Column(name = "arch_polka ", length = 256)
-    private String archPolka;
-    @Size(max = 256)
-    @Column(name = "arch_karton ", length = 256)
-    private String archKarton;
-    @Size(max = 256)
-    @Column(name = "arch_teczka ", length = 256)
-    private String archTeczka;
-    
+    @Embedded
+    private DcDokumentArchDane dokArchDane;
+
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik userId;
@@ -127,17 +106,17 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokumentStatus dokStatusId;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokArch", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokumentKrok> dcDokKrok;
-    
+
     @JoinColumn(name = "kontrahent_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcKontrahenci kontrahentId;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokidArch", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosci> dcDokDoWiadList;
-    
+
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
@@ -147,28 +126,28 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     private String dataDokStr;
     @Transient
     private String symbolDok;
-    
+
     public DcDokumentArch() {
     }
-    
+
     public DcDokumentArch(DcDokument dc) {
-        this.dataDok=dc.getDataDok();
-        this.dataWprow=dc.getDataWprow();
-        this.dcDokDoWiadList=dc.getDcDokDoWiadList();
-        this.dcDokKrok=dc.getDcDokKrok();
-        this.dcPlikList=dc.getDcPlikList();
-        this.dokStatusId=dc.getDokStatusId();
-        this.kontrahentId=dc.getKontrahentId();
-        this.nazwa=dc.getNazwa();
-        this.opis=dc.getOpis();
-        this.opisDlugi=dc.getOpisDlugi();
-        this.rodzajId=dc.getRodzajId();
-        this.symbolNrKol=dc.getSymbolNrKol();
-        this.symbolSpDzialRok=dc.getSymbolSpDzialRok();
-        this.teczkaId=dc.getTeczkaId();
-        this.urzadzeniaList=dc.getUrzadzeniaList();
-        this.userId=dc.getUserId();
-        this.zrodloId=dc.getZrodloId();
+        this.dataDok = dc.getDataDok();
+        this.dataWprow = dc.getDataWprow();
+        this.dcDokDoWiadList = dc.getDcDokDoWiadList();
+        this.dcDokKrok = dc.getDcDokKrok();
+        this.dcPlikList = dc.getDcPlikList();
+        this.dokStatusId = dc.getDokStatusId();
+        this.kontrahentId = dc.getKontrahentId();
+        this.nazwa = dc.getNazwa();
+        this.opis = dc.getOpis();
+        this.opisDlugi = dc.getOpisDlugi();
+        this.rodzajId = dc.getRodzajId();
+        this.symbolNrKol = dc.getSymbolNrKol();
+        this.symbolSpDzialRok = dc.getSymbolSpDzialRok();
+        this.teczkaId = dc.getTeczkaId();
+        this.urzadzeniaList = dc.getUrzadzeniaList();
+        this.userId = dc.getUserId();
+        this.zrodloId = dc.getZrodloId();
     }
 
     public DcDokumentArch(Integer id) {
@@ -328,22 +307,26 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     }
 
     public String getProcentWykonania() {
-        if(getDokStatusId().getId()==3){
+        if (getDokStatusId().getId() == 3) {
             return "100";
         }
-        int krokiAll=getDcDokKrok().size();
-        int krokiZaakceptowane=0;
-        if(krokiAll==0) return "brak";
-        for(DcDokumentKrok krok: getDcDokKrok()){
-            if(krok.getAkcept().getId()==4){
+        int krokiAll = getDcDokKrok().size();
+        int krokiZaakceptowane = 0;
+        if (krokiAll == 0) {
+            return "brak";
+        }
+        for (DcDokumentKrok krok : getDcDokKrok()) {
+            if (krok.getAkcept().getId() == 4) {
                 krokiZaakceptowane++;
             }
         }
-        return (krokiZaakceptowane*100)/krokiAll+"";
+        return (krokiZaakceptowane * 100) / krokiAll + "";
     }
 
     public boolean isAlertAkceptacja() {
-        if(this.getDokStatusId().getId()!=2) return false;
+        if (this.getDokStatusId().getId() != 2) {
+            return false;
+        }
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, -getRodzajId().getLimitCzaasuAkceptacji());
@@ -351,9 +334,9 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     }
 
     public String getSymbolDok() {
-        try{
-        symbolDok=this.symbolNrKol+"/"+this.symbolSpDzialRok+"/"+this.getRodzajId().getSymbol();
-        }catch (NullPointerException ex){
+        try {
+            symbolDok = this.symbolNrKol + "/" + this.symbolSpDzialRok + "/" + this.getRodzajId().getSymbol();
+        } catch (NullPointerException ex) {
             return null;
         }
         return symbolDok;
@@ -367,68 +350,12 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.symbolNrKol = symbolNrKol;
     }
 
-    public Date getArchData() {
-        return archData;
+    public DcDokumentArchDane getDokArchDane() {
+        return dokArchDane;
     }
 
-    public void setArchData(Date archData) {
-        this.archData = archData;
-    }
-
-    public String getArchOsobaZdajaca() {
-        return archOsobaZdajaca;
-    }
-
-    public void setArchOsobaZdajaca(String archOsobaZdajaca) {
-        this.archOsobaZdajaca = archOsobaZdajaca;
-    }
-
-    public String getArchOsobaOdpowiadajaca() {
-        return archOsobaOdpowiadajaca;
-    }
-
-    public void setArchOsobaOdpowiadajaca(String archOsobaOdpowiadajaca) {
-        this.archOsobaOdpowiadajaca = archOsobaOdpowiadajaca;
-    }
-
-    public String getArchPokoj() {
-        return archPokoj;
-    }
-
-    public void setArchPokoj(String archPokoj) {
-        this.archPokoj = archPokoj;
-    }
-
-    public String getArchRegal() {
-        return archRegal;
-    }
-
-    public void setArchRegal(String archRegal) {
-        this.archRegal = archRegal;
-    }
-
-    public String getArchPolka() {
-        return archPolka;
-    }
-
-    public void setArchPolka(String archPolka) {
-        this.archPolka = archPolka;
-    }
-
-    public String getArchKarton() {
-        return archKarton;
-    }
-
-    public void setArchKarton(String archKarton) {
-        this.archKarton = archKarton;
-    }
-
-    public String getArchTeczka() {
-        return archTeczka;
-    }
-
-    public void setArchTeczka(String archTeczka) {
-        this.archTeczka = archTeczka;
+    public void setDokArchDane(DcDokumentArchDane dokArchDane) {
+        this.dokArchDane = dokArchDane;
     }
 
     public List<UmUrzadzenie> getUrzadzeniaList() {
@@ -438,7 +365,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     public void setUrzadzeniaList(List<UmUrzadzenie> urzadzeniaList) {
         this.urzadzeniaList = urzadzeniaList;
     }
-        
+
     @Override
     public int hashCode() {
         int hash = 0;

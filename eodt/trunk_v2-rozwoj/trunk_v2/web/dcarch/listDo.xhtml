@@ -15,7 +15,7 @@
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{PrzeniesArc.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{PrzeniesArch.listaDoArchiwum}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <rich:column sortBy="#{item.id}" sortOrder="descending">
@@ -87,8 +87,8 @@
                                 <h:inputText id="archTeczka" value="#{item.archTeczka}" />
                             </h:panelGrid>
                             
-                            <a4j:commandButton value="archiwizuj" action="#{PrzeniesArc.przenies}" render="listPanel" rendered="#{item.dokStatusId.id==3}" execute="@this, dodajGrid">
-                                <f:setPropertyActionListener target="#{PrzeniesArc.obiekt}" value="#{item}" />
+                            <a4j:commandButton value="archiwizuj" action="#{PrzeniesArch.przenies}" render="listPanel" rendered="#{item.dokStatusId.id==3}" execute="@this, dodajGrid">
+                                <f:setPropertyActionListener target="#{PrzeniesArch.obiekt}" value="#{item}" />
                             </a4j:commandButton>
 
                         </rich:collapsiblePanel>

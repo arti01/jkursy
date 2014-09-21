@@ -34,6 +34,10 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr>{
         //error = null;
     }
 
+     public String listDo(){
+         return "/dcarch/listDo";
+     }
+     
     public DataModel<DcDokument> getListaDoArchiwum() {
         return listaDoArchiwum;
     }
