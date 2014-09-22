@@ -170,14 +170,19 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         DcDokumentStatus dS6 = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
         em = getEntityManager();
         try {
-            em.getTransaction().begin();
+            
             dcDokument.setDokStatusId(dS6);
-
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
-
-            dcArchKontr.create(docArch);
+            
+            em.getTransaction().begin();
             em.remove(em.merge(dcDokument));
             em.getTransaction().commit();
+            
+            em.getTransaction().begin();
+            dcArchKontr.create(docArch);
+            em.getTransaction().commit();
+            
+            
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "blad", ex);
             em.getTransaction().rollback();

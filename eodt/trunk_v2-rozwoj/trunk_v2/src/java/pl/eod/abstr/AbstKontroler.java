@@ -53,7 +53,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             return u;
         } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
             //ex.printStackTrace();
-            logger.log(Level.SEVERE, "blad", ex);
+            //logger.log(Level.SEVERE, "blad", ex);
             return null;
         } finally {
             em.close();

@@ -81,9 +81,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
     }
 
     public String list() throws InstantiationException, IllegalAccessException {
-        System.err.println(link);
         refresh();
-        System.err.println(link);
         return link;
     }
 

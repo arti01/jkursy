@@ -74,8 +74,6 @@ public class UmUrzadzenie implements Serializable {
     private Uzytkownik userOdpow;
     @ManyToMany(mappedBy = "urzadzeniaList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private List<DcDokument> dokumentyList;
-    @ManyToMany(mappedBy = "urzadzeniaList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
-    private List<DcDokumentArch> dokumentyArchList;
     @Transient
     private boolean dataNizDzis;
     @Transient
@@ -188,14 +186,6 @@ public class UmUrzadzenie implements Serializable {
         c.setTime(dataPrzegl);
         c.add(Calendar.DATE, -(getGrupa().getCzasAlert()));
         return c.getTime().before(new Date());
-    }
-
-    public List<DcDokumentArch> getDokumentyArchList() {
-        return dokumentyArchList;
-    }
-
-    public void setDokumentyArchList(List<DcDokumentArch> dokumentyArchList) {
-        this.dokumentyArchList = dokumentyArchList;
     }
 
     @Override

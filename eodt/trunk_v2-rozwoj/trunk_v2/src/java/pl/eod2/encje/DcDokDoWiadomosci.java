@@ -66,9 +66,6 @@ public class DcDokDoWiadomosci implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokument dokid;
     
-    @JoinColumn(name = "dokid_arch", referencedColumnName = "id", nullable = true)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private DcDokumentArch dokidArch;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokDoWiad", fetch = FetchType.LAZY)
     private List<DcDokDoWiadCel> dcDokDoWiadCelList;
@@ -131,14 +128,6 @@ public class DcDokDoWiadomosci implements Serializable {
 
     public void setDcDokDoWiadCelList(List<DcDokDoWiadCel> dcDokDoWiadCelList) {
         this.dcDokDoWiadCelList = dcDokDoWiadCelList;
-    }
-
-    public DcDokumentArch getDokidArch() {
-        return dokidArch;
-    }
-
-    public void setDokidArch(DcDokumentArch dokidArch) {
-        this.dokidArch = dokidArch;
     }
 
     @Override

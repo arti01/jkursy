@@ -86,7 +86,6 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     }
 
     public List<DcDokument> getWybrane() {
-        System.err.println(wybrane);
         return wybrane;
     }
 

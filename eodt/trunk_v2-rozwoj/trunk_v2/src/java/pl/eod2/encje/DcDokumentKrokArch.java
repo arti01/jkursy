@@ -28,17 +28,13 @@ import javax.validation.constraints.NotNull;
  * @author 103039
  */
 @Entity
-@Table(name = "DC_DOKUMENT_KROK")
-@NamedQueries({
-    @NamedQuery(name = "DcDokumentKrok.findAll", query = "SELECT d FROM DcDokumentKrok d"),
-    @NamedQuery(name = "DcDokumentKrok.findById", query = "SELECT d FROM DcDokumentKrok d WHERE d.id = :id"),
-    @NamedQuery(name = "DcDokumentKrok.findByLp", query = "SELECT d FROM DcDokumentKrok d WHERE d.lp = :lp"),
-    @NamedQuery(name = "DcDokumentKrok.findByAkcept", query = "SELECT d FROM DcDokumentKrok d WHERE d.akcept = :akcept")})
-public class DcDokumentKrok implements Serializable {
+@Table(name = "DC_DOKUMENT_KROK_ARCH")
+
+public class DcDokumentKrokArch implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDcDokumentKrok")
-    @SequenceGenerator(name = "SEQDcDokumentKrok", sequenceName = "SEQDcDokumentKrok")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDcDokumentKrokArch")
+    @SequenceGenerator(name = "SEQDcDokumentKrokArch", sequenceName = "SEQDcDokumentKrokArch")
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID", nullable = false)
@@ -47,9 +43,9 @@ public class DcDokumentKrok implements Serializable {
     @NotNull
     @Column(name = "LP", nullable = false)
     private int lp;
-    @JoinColumn(name = "ID_DOKUMENT", referencedColumnName = "id", nullable = true)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private DcDokument idDok;
+    
+    @ManyToOne()
+    private DcDokumentArch idDokArch;
     
     @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -57,17 +53,23 @@ public class DcDokumentKrok implements Serializable {
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokumentKrok", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<DcDokumentKrokUzytkownik> dcKrokUzytkownikaList;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokumentKrokArch", fetch = FetchType.LAZY, orphanRemoval = true)
+    //private List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaArchList;
 
-    public DcDokumentKrok() {
+    public DcDokumentKrokArch() {
     }
 
-    public DcDokumentKrok(Integer id) {
+    public DcDokumentKrokArch(DcDokumentKrok krok) {
+        this.akcept=krok.getAkcept();
+        this.dcAckeptTypKroku=krok.getDcAckeptTypKroku();
+        this.lp=krok.getLp();
+    }
+
+    public DcDokumentKrokArch(Integer id) {
         this.id = id;
     }
 
-    public DcDokumentKrok(Integer id, int lp, int idDokument, int akcept, int idDcTypKroku) {
+    public DcDokumentKrokArch(Integer id, int lp, int idDokument, int akcept, int idDcTypKroku) {
         this.id = id;
         this.lp = lp;
     }
@@ -88,14 +90,6 @@ public class DcDokumentKrok implements Serializable {
         this.lp = lp;
     }
 
-    public DcDokument getIdDok() {
-        return idDok;
-    }
-
-    public void setIdDok(DcDokument idDok) {
-        this.idDok = idDok;
-    }
-
     public DcAkceptStatus getAkcept() {
         return akcept;
     }
@@ -112,14 +106,24 @@ public class DcDokumentKrok implements Serializable {
         this.dcAckeptTypKroku = dcAckeptTypKroku;
     }
 
-    public List<DcDokumentKrokUzytkownik> getDcKrokUzytkownikaList() {
-        return dcKrokUzytkownikaList;
+    /*
+    public List<DcDokumentKrokUzytkownikArch> getDcKrokUzytkownikaArchList() {
+        return dcKrokUzytkownikaArchList;
     }
 
-    public void setDcKrokUzytkownikaList(List<DcDokumentKrokUzytkownik> dcKrokUzytkownikaList) {
-        this.dcKrokUzytkownikaList = dcKrokUzytkownikaList;
+    public void setDcKrokUzytkownikaArchList(List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaArchList) {
+        this.dcKrokUzytkownikaArchList = dcKrokUzytkownikaArchList;
+    }*/
+
+    public DcDokumentArch getIdDokArch() {
+        return idDokArch;
     }
 
+    public void setIdDokArch(DcDokumentArch idDokArch) {
+        this.idDokArch = idDokArch;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -130,10 +134,10 @@ public class DcDokumentKrok implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DcDokumentKrok)) {
+        if (!(object instanceof DcDokumentKrokArch)) {
             return false;
         }
-        DcDokumentKrok other = (DcDokumentKrok) object;
+        DcDokumentKrokArch other = (DcDokumentKrokArch) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 

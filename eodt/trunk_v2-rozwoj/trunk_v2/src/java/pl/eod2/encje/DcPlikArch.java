@@ -30,16 +30,12 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
-@Table(name = "dc_plik")
-@NamedQueries({
-    @NamedQuery(name = "DcPlik.findAll", query = "SELECT d FROM DcPlik d"),
-    @NamedQuery(name = "DcPlik.findById", query = "SELECT d FROM DcPlik d WHERE d.id = :id"),
-    @NamedQuery(name = "DcPlik.findByNazwa", query = "SELECT d FROM DcPlik d WHERE d.nazwa = :nazwa")})
-public class DcPlik implements Serializable {
+@Table(name = "dc_plik_arch")
+public class DcPlikArch implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCPLIK")
-    @SequenceGenerator(name = "SEQDCPLIK", sequenceName = "SEQDCPLIK")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCPLIKARCH")
+    @SequenceGenerator(name = "SEQDCPLIKARCH", sequenceName = "SEQDCPLIKARCH")
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -54,19 +50,24 @@ public class DcPlik implements Serializable {
     private Date dataDodania;
     @Lob
     private byte[] plik;
-    @JoinColumn(name = "id_dok", referencedColumnName = "id", nullable = true)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private DcDokument idDok;
     
+    @ManyToOne()
+    private DcDokumentArch idDokArch;
 
-    public DcPlik() {
+    public DcPlikArch() {
     }
 
-    public DcPlik(Integer id) {
+    public DcPlikArch(DcPlik plik) {
+        this.dataDodania=plik.getDataDodania();
+        this.nazwa=plik.getNazwa();
+        this.plik=plik.getPlik();
+    }
+
+    public DcPlikArch(Integer id) {
         this.id = id;
     }
 
-    public DcPlik(Integer id, String nazwa) {
+    public DcPlikArch(Integer id, String nazwa) {
         this.id = id;
         this.nazwa = nazwa;
     }
@@ -95,14 +96,6 @@ public class DcPlik implements Serializable {
         this.plik = plik;
     }
 
-    public DcDokument getIdDok() {
-        return idDok;
-    }
-
-    public void setIdDok(DcDokument idDok) {
-        this.idDok = idDok;
-    }
-
     public Date getDataDodania() {
         return dataDodania;
     }
@@ -110,6 +103,15 @@ public class DcPlik implements Serializable {
     public void setDataDodania(Date dataDodania) {
         this.dataDodania = dataDodania;
     }
+
+    public DcDokumentArch getIdDokArch() {
+        return idDokArch;
+    }
+
+    public void setIdDokArch(DcDokumentArch idDokArch) {
+        this.idDokArch = idDokArch;
+    }
+
 
     @Override
     public int hashCode() {
@@ -121,10 +123,10 @@ public class DcPlik implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DcPlik)) {
+        if (!(object instanceof DcPlikArch)) {
             return false;
         }
-        DcPlik other = (DcPlik) object;
+        DcPlikArch other = (DcPlikArch) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
