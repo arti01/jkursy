@@ -1,3 +1,5 @@
+2014-09-21
+
 2014-09-18
 - Druga sprawa to z dokumentu którego został uruchomiony proces akceptacji  można usunąc sprzęt. Dodanie nowego już się nie pojawia i jest OK
 poprawione (rendered na delete)
@@ -8,8 +10,9 @@ Uwaga - zmieniłem drzewko - z drzewka są usuwane urzadzenia, ktore już są pr
 
 2014-09-11
 Uwaga - zmiana projektu na teczki.
-Powinna się stworzyć tabela dc_teczka. Potem można do niej wkopiować rekordy z dc_projekt i wywalić dc_projekt.
+Powinna się stworzyć tabela dc_teczka. Potem trzeba do niej wkopiować rekordy z dc_projekt i wywalić dc_projekt.
 Trzeba jeszcze zadbać o wywalenie kluczy obcych pomiędzy dc_dokument a dc_projekt
+usunąc z dc_dokument pole projekt_id, ale wcześniej przekopiować wartosci do pola teczka_id
 
 2014-09-06
 Dodałem na ekranie startowym info o dokumentach do akceptacji

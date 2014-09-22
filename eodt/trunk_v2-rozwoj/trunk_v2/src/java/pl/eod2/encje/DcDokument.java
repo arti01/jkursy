@@ -96,7 +96,7 @@ public class DcDokument extends AbstEncja implements Serializable {
     @JoinColumn(name = "rodzaj_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private DcRodzaj rodzajId;
-    @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "teczka_id", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcTeczka teczkaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDok", fetch = FetchType.LAZY, orphanRemoval = true)

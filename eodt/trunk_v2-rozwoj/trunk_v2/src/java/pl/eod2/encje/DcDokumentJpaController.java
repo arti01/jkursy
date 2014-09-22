@@ -15,10 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -38,12 +36,12 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 public class DcDokumentJpaController extends AbstKontroler<DcDokument> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-     static final Logger logger = Logger. getAnonymousLogger();
+    static final Logger logger = Logger.getAnonymousLogger();
 
     public DcDokumentJpaController() {
-        super(new DcDokument() );
+        super(new DcDokument());
     }
-    
+
     private DcDokument createKroki(DcDokument dcDokument) {
         dcDokument.setDcDokKrok(new ArrayList<DcDokumentKrok>());
         EntityManager em = null;
@@ -167,24 +165,22 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         return dcDokument;
     }
 
-    public DcDokument wyslijDoArchiwum(DcDokument dcDokument) {
-        EntityManager em = null;
+    public DcDokument przeniesDoArchiwum(DcDokument dcDokument, DcDokumentArch docArch) {
+        EntityManager em;
+        DcDokumentStatus dS6 = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
+        em = getEntityManager();
         try {
-            DcDokumentStatus dS6 = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
-            em = getEntityManager();
             em.getTransaction().begin();
             dcDokument.setDokStatusId(dS6);
-            
-            DcDokumentArch docArch=new DcDokumentArch(dcDokument);
+
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
-            DcDokumentArchDane docArchDane=new DcDokumentArchDane();
-            docArchDane.setArchData(new Date());
-            docArch.setDokArchDane(docArchDane);
+
             dcArchKontr.create(docArch);
-            em.remove(dcDokument);
+            em.remove(em.merge(dcDokument));
             em.getTransaction().commit();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "blad", ex);
+            em.getTransaction().rollback();
             //return "blad";
         } finally {
             if (em != null) {
@@ -369,21 +365,20 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
                 dcPlikListNewDcPlikToAttach = em.getReference(dcPlikListNewDcPlikToAttach.getClass(), dcPlikListNewDcPlikToAttach.getId());
                 attachedDcPlikListNew.add(dcPlikListNewDcPlikToAttach);
             }
-            
-            
+
             //urzadzenia - USUWANIE duplikatow
             HashSet<UmUrzadzenie> hs = new HashSet<>();
             hs.addAll(dcDokument.getUrzadzeniaList());
             dcDokument.getUrzadzeniaList().clear();
             dcDokument.getUrzadzeniaList().addAll(hs);
-            
+
             dcPlikListNew = attachedDcPlikListNew;
             dcDokument.setDcPlikList(dcPlikListNew);
 
             dcDokument = this.createKroki(dcDokument);
 
             dcDokument = em.merge(dcDokument);
-            
+
             if (userIdOld != null && !userIdOld.equals(userIdNew)) {
                 userIdOld.getDcDokumentList().remove(dcDokument);
                 userIdOld = em.merge(userIdOld);

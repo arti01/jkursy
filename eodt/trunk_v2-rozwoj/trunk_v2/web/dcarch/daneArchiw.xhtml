@@ -34,18 +34,14 @@
 
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
-<hr/>
+            <hr/>
             <rich:pickList value="#{PrzeniesArch.wybrane}" sourceCaption="Dokumenty gotowe do archiwizacji" targetCaption="wybrane dokumenty" converter="#{DcDokumentConv}"
                            addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
                 <f:selectItems value="#{PrzeniesArch.doWybrania}" var="dok" itemValue="#{dok}" itemLabel="#{dok.nazwa}-#{dok.symbolDok}" />
             </rich:pickList>
-<hr/>
-            <a4j:commandButton id="dodaj" value="Dodaj" action="#{TeczkiCfg.dodaj}" render="listPanel, dodajPane" execute="dodajPane"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
-                               rendered="#{TeczkiCfg.obiekt.id==null}"/>
-            <a4j:commandButton id="zapisz" value="Zapisz" action="#{TeczkiCfg.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
-                               rendered="#{TeczkiCfg.obiekt.id!=null}"/>
+            <hr/>
+            <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przenies}" render="listPanel, dodajPane" execute="dodajPane"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
             <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                     return false;" />
         </rich:popupPanel>

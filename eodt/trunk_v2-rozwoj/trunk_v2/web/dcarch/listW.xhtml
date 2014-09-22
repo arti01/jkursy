@@ -19,9 +19,9 @@
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
-                    <rich:column sortBy="#{item.archData}" sortOrder="descending">
+                    <rich:column sortBy="#{item.dokArchDane.archData}" sortOrder="descending">
                         <f:facet name="header">data archiwizacji</f:facet>
-                        <h:outputText value="#{item.archData}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
+                        <h:outputText value="#{item.dokArchDane.archData}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                     </rich:column>
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)||fn:containsIgnoreCase(item.symbolDok,RejestracjaRej.filtrNazwa)}">
                         <f:facet name="header">nazwa i symbol<br/>
@@ -47,8 +47,8 @@
                             #{item.zrodloId.nazwa}
                     </rich:column>
 
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.archOsobaOdpowiadajaca, RejestracjaRej.filtrArchiwisci)
-                                                     || fn:containsIgnoreCase(item.archOsobaZdajaca, RejestracjaRej.filtrArchiwisci)}">
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokArchDane.archOsobaOdpowiadajaca, RejestracjaRej.filtrArchiwisci)
+                                                     || fn:containsIgnoreCase(item.dokArchDane.archOsobaZdajaca, RejestracjaRej.filtrArchiwisci)}">
                         <f:facet name="header">archiwiści
                             <br/>
                             <h:inputText value="#{RejestracjaRej.filtrArchiwisci}" size="10">
@@ -56,18 +56,18 @@
                         </f:facet>
                         <h:outputLabel value="zdający:"/>
                         <br/>
-                        <h:outputText id="archOsobaZdajaca" value="#{item.archOsobaZdajaca}"/>
+                        <h:outputText id="archOsobaZdajaca" value="#{item.dokArchDane.archOsobaZdajaca}"/>
                         <hr/>
                         <h:outputLabel value="odpowiadający:"/>
                         <br/>
-                        <h:outputText id="archOsobaOdpowiadajaca" value="#{item.archOsobaOdpowiadajaca}"/>
+                        <h:outputText id="archOsobaOdpowiadajaca" value="#{item.dokArchDane.archOsobaOdpowiadajaca}"/>
                     </rich:column>
 
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.archPokoj,RejestracjaRej.filtrArchLokal)
-                                                     ||fn:containsIgnoreCase(item.archRegal,RejestracjaRej.filtrArchLokal)
-                                                     ||fn:containsIgnoreCase(item.archPolka,RejestracjaRej.filtrArchLokal)
-                                                     ||fn:containsIgnoreCase(item.archKarton,RejestracjaRej.filtrArchLokal)
-                                                     ||fn:containsIgnoreCase(item.archTeczka,RejestracjaRej.filtrArchLokal)}">    
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokArchDane.archPokoj,RejestracjaRej.filtrArchLokal)
+                                                     ||fn:containsIgnoreCase(item.dokArchDane.archRegal,RejestracjaRej.filtrArchLokal)
+                                                     ||fn:containsIgnoreCase(item.dokArchDane.archPolka,RejestracjaRej.filtrArchLokal)
+                                                     ||fn:containsIgnoreCase(item.dokArchDane.archKarton,RejestracjaRej.filtrArchLokal)
+                                                     ||fn:containsIgnoreCase(item.dokArchDane.archTeczka,RejestracjaRej.filtrArchLokal)}">    
                         <f:facet name="header">lokalizacja w archiwum
                             <br/>
                             <h:inputText value="#{RejestracjaRej.filtrArchLokal}" size="10">
@@ -75,15 +75,15 @@
                         </f:facet>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="pokój:"/>
-                            <h:outputText value="#{item.archPokoj}"/>
+                            <h:outputText value="#{item.dokArchDane.archPokoj}"/>
                             <h:outputLabel value="regal:"/>
-                            <h:outputText value="#{item.archRegal}"/>
+                            <h:outputText value="#{item.dokArchDane.archRegal}"/>
                             <h:outputLabel value="półka:"/>
-                            <h:outputText value="#{item.archPolka}"/>
+                            <h:outputText value="#{item.dokArchDane.archPolka}"/>
                             <h:outputLabel value="karton:"/>
-                            <h:outputText value="#{item.archKarton}"/>
+                            <h:outputText value="#{item.dokArchDane.archKarton}"/>
                             <h:outputLabel value="teczka:"/>
-                            <h:outputText value="#{item.archTeczka}"/>
+                            <h:outputText value="#{item.dokArchDane.archTeczka}"/>
                         </h:panelGrid>
                     </rich:column>
 
@@ -114,8 +114,5 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
     </ui:define>
-
 </ui:composition>
-

@@ -5,8 +5,8 @@
  */
 package pl.eod2.managedArch;
 
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -22,43 +22,53 @@ import pl.eod2.encje.DcDokumentJpaController;
 
 @ManagedBean(name = "PrzeniesArch")
 @SessionScoped
-public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr>{
+public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
+
     public Przenies() throws InstantiationException, IllegalAccessException {
         super("/dcarch/listW", new DcDokumentArchKontr(), new DcDokumentArch());
     }
     private DataModel<DcDokument> listaDoArchiwum = new ListDataModel<>();
     private DcDokumentJpaController dcDokC;
-    private DcDokumentArchDane dcDokArchDane=new DcDokumentArchDane();
-    private List<DcDokument> wybrane=new ArrayList<>();
-    private List<DcDokument> doWybrania=new ArrayList<>();
-
+    private DcDokumentArchDane dcDokArchDane = new DcDokumentArchDane();
+    private List<DcDokument> wybrane = new ArrayList<>();
+    private List<DcDokument> doWybrania = new ArrayList<>();
 
     @PostConstruct
-     public void refreshObiekt() {
+    public void refreshObiekt() {
         dcDokC = new DcDokumentJpaController();
         listaDoArchiwum.setWrappedData(dcDokC.findStatus(3));
-        dcDokArchDane=new DcDokumentArchDane();
+        dcDokArchDane = new DcDokumentArchDane();
         //obiekt = new DcDokument();
         //error = null;
     }
 
-     public String listDo(){
-         refreshObiekt();
-         return "/dcarch/listDo";
-     }
-     
+    public String listDo() {
+        refreshObiekt();
+        return "/dcarch/listDo";
+    }
+
     @SuppressWarnings("unchecked")
-     public void archPojDok(){
+    public void archPojDok() {
         wybrane.clear();
-        dcDokArchDane=new DcDokumentArchDane();
-        for(DcDokument dok:(List<DcDokument>)listaDoArchiwum.getWrappedData()){
-            if(dok.isDoArchZnacznik()){
-                  wybrane.add(dok);         
+        dcDokArchDane = new DcDokumentArchDane();
+        for (DcDokument dok : (List<DcDokument>) listaDoArchiwum.getWrappedData()) {
+            if (dok.isDoArchZnacznik()) {
+                wybrane.add(dok);
             }
         }
-        doWybrania=(List<DcDokument>) listaDoArchiwum.getWrappedData();
-     }
-     
+        doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
+    }
+
+    public void przenies() {
+        dcDokArchDane.setArchData(new Date());
+        for (DcDokument dok : wybrane) {
+            DcDokumentArch dokArch = new DcDokumentArch(dok);
+            dokArch.setDokArchDane(dcDokArchDane);
+            dcDokC.przeniesDoArchiwum(dok, dokArch);
+        }
+        refreshObiekt();
+    }
+
     public DataModel<DcDokument> getListaDoArchiwum() {
         return listaDoArchiwum;
     }
@@ -91,5 +101,5 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr>{
     public void setDoWybrania(List<DcDokument> doWybrania) {
         this.doWybrania = doWybrania;
     }
-      
+
 }

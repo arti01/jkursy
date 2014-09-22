@@ -41,7 +41,7 @@ public class PrzeniesOld {
     }
     
     public String przenies() {
-        dcC.wyslijDoArchiwum(obiekt);
+        //dcC.przeniesDoArchiwum(obiekt);
         refreshObiekt();
         return "/dcarch/przeniesList?faces-redirect=true";
     }

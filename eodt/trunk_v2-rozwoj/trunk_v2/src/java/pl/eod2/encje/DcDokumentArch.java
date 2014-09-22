@@ -42,14 +42,9 @@ import pl.eod.encje.Uzytkownik;
 @Entity
 @Table(name = "dc_dokument_arch")
 @NamedQueries({
-    @NamedQuery(name = "DcDokumentArchfindAll", query = "SELECT d FROM DcDokument d"),
-    @NamedQuery(name = "DcDokumentArchfindById", query = "SELECT d FROM DcDokument d WHERE d.id = :id"),
-    @NamedQuery(name = "DcDokumentArchfindByNazwa", query = "SELECT d FROM DcDokument d WHERE d.nazwa = :tytul"),
-    @NamedQuery(name = "DcDokumentArchfindByOpis", query = "SELECT d FROM DcDokument d WHERE d.opis = :opis"),
-    @NamedQuery(name = "DcDokumentArchfindByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
-    @NamedQuery(name = "DcDokumentArchfindByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok"),
-    @NamedQuery(name = "DcDokumentArchfindByStatus", query = "SELECT d FROM DcDokument d WHERE d.dokStatusId.id = :statusId"),
-    @NamedQuery(name = "DcDokumentArchfindMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
+    @NamedQuery(name = "DcDokumentArch.findAll", query = "SELECT d FROM DcDokumentArch d"),
+    @NamedQuery(name = "DcDokumentArch.findById", query = "SELECT d FROM DcDokumentArch d WHERE d.id = :id"),
+    @NamedQuery(name = "DcDokumentArch.findByNazwa", query = "SELECT d FROM DcDokumentArch d WHERE d.nazwa = :nazwa")
 })
 public class DcDokumentArch extends AbstEncja implements Serializable {
 
@@ -98,7 +93,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @JoinColumn(name = "rodzaj_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private DcRodzaj rodzajId;
-    @JoinColumn(name = "projekt_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "teczka_id", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcTeczka teczkaId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokArch", fetch = FetchType.LAZY, orphanRemoval = true)
