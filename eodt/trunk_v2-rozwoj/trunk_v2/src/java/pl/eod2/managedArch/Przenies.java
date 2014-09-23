@@ -46,6 +46,10 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         refreshObiekt();
         return "/dcarch/listDo";
     }
+    
+    public String detale() {
+        return "/dcarch/dokumentDetale";
+    }
 
     @SuppressWarnings("unchecked")
     public void archPojDok() {

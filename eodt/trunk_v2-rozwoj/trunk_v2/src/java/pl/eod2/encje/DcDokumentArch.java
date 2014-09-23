@@ -19,6 +19,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -92,23 +93,23 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcTeczka teczkaId;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "idDokArch")
-    private List<DcPlikArch> dcPlikArchList;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "idDok")
+    private List<DcPlikArch> dcPlikList;
     
     @JoinColumn(name = "dokstatusid_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcDokumentStatus dokStatusId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "idDokArch")
-    private List<DcDokumentKrokArch> dcDokKrokArch;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "idDok")
+    private List<DcDokumentKrokArch> dcDokKrok;
 
     @JoinColumn(name = "kontrahent_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcKontrahenci kontrahentId;
 
-    //@JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
-    //@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    //private List<UmUrzadzenie> urzadzeniaList;
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private List<UmUrzadzenie> urzadzeniaList;
     @Transient
     private String dataWprowStr;
     @Transient
@@ -124,18 +125,18 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.dataDok = dc.getDataDok();
         this.dataWprow = dc.getDataWprow();
         
-        this.dcDokKrokArch=new ArrayList<>();
+        this.dcDokKrok=new ArrayList<>();
         for (DcDokumentKrok kr : dc.getDcDokKrok()) {
             DcDokumentKrokArch ka=new DcDokumentKrokArch(kr);
-            ka.setIdDokArch(this);
-            this.dcDokKrokArch.add(ka);
+            ka.setIdDok(this);
+            this.dcDokKrok.add(ka);
         }
         
-        this.dcPlikArchList=new ArrayList<>();
+        this.dcPlikList=new ArrayList<>();
         for (DcPlik plik : dc.getDcPlikList()) {
             DcPlikArch pa =new DcPlikArch(plik);
-            pa.setIdDokArch(this);
-            this.dcPlikArchList.add(pa);
+            pa.setIdDok(this);
+            this.dcPlikList.add(pa);
         }
         
         this.dokStatusId = dc.getDokStatusId();
@@ -147,7 +148,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.symbolNrKol = dc.getSymbolNrKol();
         this.symbolSpDzialRok = dc.getSymbolSpDzialRok();
         this.teczkaId = dc.getTeczkaId();
-        //this.urzadzeniaList = dc.getUrzadzeniaList();
+        this.urzadzeniaList = dc.getUrzadzeniaList();
         this.userId = dc.getUserId();
         this.zrodloId = dc.getZrodloId();
     }
@@ -238,20 +239,20 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.teczkaId = teczkaId;
     }
 
-    public List<DcPlikArch> getDcPlikArchList() {
-        return dcPlikArchList;
+    public List<DcPlikArch> getDcPlikList() {
+        return dcPlikList;
     }
 
-    public void setDcPlikArchList(List<DcPlikArch> dcPlikArchList) {
-        this.dcPlikArchList = dcPlikArchList;
+    public void setDcPlikList(List<DcPlikArch> dcPlikList) {
+        this.dcPlikList = dcPlikList;
     }
 
-    public List<DcDokumentKrokArch> getDcDokKrokArch() {
-        return dcDokKrokArch;
+    public List<DcDokumentKrokArch> getDcDokKrok() {
+        return dcDokKrok;
     }
 
-    public void setDcDokKrokArch(List<DcDokumentKrokArch> dcDokKrokArch) {
-        this.dcDokKrokArch = dcDokKrokArch;
+    public void setDcDokKrok(List<DcDokumentKrokArch> dcDokKrok) {
+        this.dcDokKrok = dcDokKrok;
     }
 
     public DcDokumentStatus getDokStatusId() {
@@ -334,7 +335,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     public void setDokArchDane(DcDokumentArchDane dokArchDane) {
         this.dokArchDane = dokArchDane;
     }
-/*
+
     public List<UmUrzadzenie> getUrzadzeniaList() {
         return urzadzeniaList;
     }
@@ -342,7 +343,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     public void setUrzadzeniaList(List<UmUrzadzenie> urzadzeniaList) {
         this.urzadzeniaList = urzadzeniaList;
     }
-*/
+
     @Override
     public int hashCode() {
         int hash = 0;

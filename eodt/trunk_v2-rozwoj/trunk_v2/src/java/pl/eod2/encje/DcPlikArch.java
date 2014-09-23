@@ -9,15 +9,11 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -52,7 +48,7 @@ public class DcPlikArch implements Serializable {
     private byte[] plik;
     
     @ManyToOne()
-    private DcDokumentArch idDokArch;
+    private DcDokumentArch idDok;
 
     public DcPlikArch() {
     }
@@ -104,12 +100,12 @@ public class DcPlikArch implements Serializable {
         this.dataDodania = dataDodania;
     }
 
-    public DcDokumentArch getIdDokArch() {
-        return idDokArch;
+    public DcDokumentArch getIdDok() {
+        return idDok;
     }
 
-    public void setIdDokArch(DcDokumentArch idDokArch) {
-        this.idDokArch = idDokArch;
+    public void setIdDok(DcDokumentArch idDok) {
+        this.idDok = idDok;
     }
 
 

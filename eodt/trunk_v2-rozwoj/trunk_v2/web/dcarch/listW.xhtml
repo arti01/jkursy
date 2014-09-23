@@ -106,6 +106,12 @@
                             #{item.rodzajId.opis} z grupy:#{item.rodzajId.idRodzajGrupa.nazwa}
                         </rich:tooltip>
                     </rich:column>
+                    <rich:column>
+                        <f:facet name="header">podgląd</f:facet>
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{PrzeniesArch.detale}" image="/images/detail.png">
+                            <f:setPropertyActionListener target="#{PrzeniesArch.obiekt}" value="#{item}" />
+                        </a4j:commandButton>
+                    </rich:column>
                 </rich:dataTable>
             </rich:panel>
             <rich:popupPanel id="statPane" autosized="true">

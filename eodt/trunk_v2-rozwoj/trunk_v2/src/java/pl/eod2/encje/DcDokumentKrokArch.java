@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -16,8 +17,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -45,7 +44,7 @@ public class DcDokumentKrokArch implements Serializable {
     private int lp;
     
     @ManyToOne()
-    private DcDokumentArch idDokArch;
+    private DcDokumentArch idDok;
     
     @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -53,8 +52,9 @@ public class DcDokumentKrokArch implements Serializable {
     @JoinColumn(name = "ID_DC_TYP_KROKU", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptTypKroku dcAckeptTypKroku;
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "idDokumentKrokArch", fetch = FetchType.LAZY, orphanRemoval = true)
-    //private List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaArchList;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "idDokumentKrok")
+    private List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaList;
 
     public DcDokumentKrokArch() {
     }
@@ -63,6 +63,12 @@ public class DcDokumentKrokArch implements Serializable {
         this.akcept=krok.getAkcept();
         this.dcAckeptTypKroku=krok.getDcAckeptTypKroku();
         this.lp=krok.getLp();
+        this.dcKrokUzytkownikaList=new ArrayList<>();
+        for(DcDokumentKrokUzytkownik ku: krok.getDcKrokUzytkownikaList()){
+            DcDokumentKrokUzytkownikArch ka=new DcDokumentKrokUzytkownikArch(ku);
+            ka.setIdDokumentKrok(this);
+            this.dcKrokUzytkownikaList.add(ka);
+        }
     }
 
     public DcDokumentKrokArch(Integer id) {
@@ -108,19 +114,27 @@ public class DcDokumentKrokArch implements Serializable {
 
     /*
     public List<DcDokumentKrokUzytkownikArch> getDcKrokUzytkownikaArchList() {
-        return dcKrokUzytkownikaArchList;
+        return dcKrokUzytkownikaList;
     }
 
-    public void setDcKrokUzytkownikaArchList(List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaArchList) {
-        this.dcKrokUzytkownikaArchList = dcKrokUzytkownikaArchList;
+    public void setDcKrokUzytkownikaArchList(List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaList) {
+        this.dcKrokUzytkownikaList = dcKrokUzytkownikaList;
     }*/
 
-    public DcDokumentArch getIdDokArch() {
-        return idDokArch;
+    public DcDokumentArch getIdDok() {
+        return idDok;
     }
 
-    public void setIdDokArch(DcDokumentArch idDokArch) {
-        this.idDokArch = idDokArch;
+    public void setIdDok(DcDokumentArch idDok) {
+        this.idDok = idDok;
+    }
+
+    public List<DcDokumentKrokUzytkownikArch> getDcKrokUzytkownikaList() {
+        return dcKrokUzytkownikaList;
+    }
+
+    public void setDcKrokUzytkownikaList(List<DcDokumentKrokUzytkownikArch> dcKrokUzytkownikaList) {
+        this.dcKrokUzytkownikaList = dcKrokUzytkownikaList;
     }
 
     

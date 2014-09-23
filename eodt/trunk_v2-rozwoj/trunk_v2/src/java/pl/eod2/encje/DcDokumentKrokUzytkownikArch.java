@@ -14,8 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -48,15 +46,21 @@ public class DcDokumentKrokUzytkownikArch implements Serializable {
     @JoinColumn(name = "ID_USER", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik idUser;
-    @JoinColumn(name = "ID_DOKUMENT_KROK_ARCH", referencedColumnName = "id", nullable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private DcDokumentKrokArch idDokumentKrokArch;
+    
+    @ManyToOne()
+    private DcDokumentKrokArch idDokumentKrok;
     @JoinColumn(name = "AKCEPT", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcAkceptStatus akcept;
 
-    public DcDokumentKrokUzytkownikArch() {
-        
+    public DcDokumentKrokUzytkownikArch(DcDokumentKrokUzytkownik ku) {
+        this.akcept=ku.getAkcept();
+        this.dataAkcept=ku.getDataAkcept();
+        this.idUser=ku.getIdUser();
+        this.informacja=ku.getInformacja();
+    }
+    
+    public DcDokumentKrokUzytkownikArch() {    
     }
 
     public DcDokumentKrokUzytkownikArch(Integer id) {
@@ -83,12 +87,12 @@ public class DcDokumentKrokUzytkownikArch implements Serializable {
         this.idUser = idUser;
     }
 
-    public DcDokumentKrokArch getIdDokumentKrokArch() {
-        return idDokumentKrokArch;
+    public DcDokumentKrokArch getIdDokumentKrok() {
+        return idDokumentKrok;
     }
 
-    public void setIdDokumentKrokArch(DcDokumentKrokArch idDokumentKrokArch) {
-        this.idDokumentKrokArch = idDokumentKrokArch;
+    public void setIdDokumentKrok(DcDokumentKrokArch idDokumentKrok) {
+        this.idDokumentKrok = idDokumentKrok;
     }
 
     public DcAkceptStatus getAkcept() {
