@@ -4,9 +4,8 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/template.xhtml">
     <ui:define name="content">
-        <ui:include src="/dcrej/dokumentDetInc.xhtml">
-            <ui:param name="detal" value="#{true}"/> 
-            <ui:param name="managedBean" value="#{RejestracjaRej}"/> 
+        <ui:include src="/dcodb/dokumentDetale.xhtml">
+            <ui:param name="managedBean" value="#{PrzeniesArch}"/> 
         </ui:include>
     </ui:define>
 </ui:composition>

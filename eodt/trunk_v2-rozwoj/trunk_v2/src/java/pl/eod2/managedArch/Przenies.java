@@ -48,7 +48,7 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     }
     
     public String detale() {
-        return "/dcarch/dokumentDetale";
+        return "/dcarch/wArchDetale";
     }
 
     @SuppressWarnings("unchecked")

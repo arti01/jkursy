@@ -110,6 +110,10 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<DcDokDoWiadomosciArch> dcDokDoWiadList;
+    
     @Transient
     private String dataWprowStr;
     @Transient
@@ -137,6 +141,13 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
             DcPlikArch pa =new DcPlikArch(plik);
             pa.setIdDok(this);
             this.dcPlikList.add(pa);
+        }
+        
+        this.dcDokDoWiadList=new ArrayList<>();
+        for (DcDokDoWiadomosci doWiad : dc.getDcDokDoWiadList()) {
+            DcDokDoWiadomosciArch dwa =new DcDokDoWiadomosciArch(doWiad);
+            dwa.setDokid(this);
+            this.dcDokDoWiadList.add(dwa);
         }
         
         this.dokStatusId = dc.getDokStatusId();
@@ -287,6 +298,14 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.kontrahentId = kontrahentId;
     }
 
+    public List<DcDokDoWiadomosciArch> getDcDokDoWiadList() {
+        return dcDokDoWiadList;
+    }
+
+    public void setDcDokDoWiadList(List<DcDokDoWiadomosciArch> dcDokDoWiadList) {
+        this.dcDokDoWiadList = dcDokDoWiadList;
+    }
+    
     public String getDataWprowStr() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(getDataWprow());
