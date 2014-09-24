@@ -167,11 +167,11 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
 
     public DcDokument przeniesDoArchiwum(DcDokument dcDokument, DcDokumentArch docArch) {
         EntityManager em;
-        DcDokumentStatus dS6 = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
+        DcDokumentStatus dS7 = new DcDokumentStatusJpaController().findDcDokumentStatus(7);
         em = getEntityManager();
         try {
             
-            dcDokument.setDokStatusId(dS6);
+            dcDokument.setDokStatusId(dS7);
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
             
             em.getTransaction().begin();

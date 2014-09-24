@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       template="/templates/template.xhtml"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:form>
         <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
@@ -35,10 +36,8 @@
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
             <hr/>
-            <rich:pickList value="#{PrzeniesArch.wybrane}" sourceCaption="Dokumenty gotowe do archiwizacji" targetCaption="wybrane dokumenty" converter="#{DcDokumentConv}"
-                           addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
-                <f:selectItems value="#{PrzeniesArch.doWybrania}" var="dok" itemValue="#{dok}" itemLabel="#{dok.nazwa}-#{dok.symbolDok}" />
-            </rich:pickList>
+            <ui:include src="/dcodb/wybrInc.xhtml" #{PrzeniesArch.typWyboru eq 'pojedyncze'}/>
+            <ui:include src="/dcodb/teczkiInc.xhtml" #{PrzeniesArch.typWyboru eq 'teczki'}/>
             <hr/>
             <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przenies}" render="listPanel, dodajPane" execute="dodajPane"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>

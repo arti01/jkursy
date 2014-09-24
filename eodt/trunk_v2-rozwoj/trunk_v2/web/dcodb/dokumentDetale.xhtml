@@ -150,7 +150,7 @@
             </rich:tab>
             
             <rich:tab header="Do wiadomości" id="doWiad">
-                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneWiad')}.show()" rendered="#{managedBean!=PrzeniesArch}">
+                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPaneWiad')}.show()" rendered="#{managedBean!=WArchiwumArch}">
                     <h4>[dodaj do wiadomości]</h4>
                 </a4j:commandLink>
 
@@ -179,7 +179,7 @@
                     </rich:column>
                 </rich:dataTable>
 
-                <rich:popupPanel header="Wprowadź dane" id="dodajPaneWiad"  autosized="true" domElementAttachment="parent" rendered="#{managedBean!=PrzeniesArch}">
+                <rich:popupPanel header="Wprowadź dane" id="dodajPaneWiad"  autosized="true" domElementAttachment="parent" rendered="#{managedBean!=WArchiwumArch}">
                     <h:outputLabel value="wprowadz krótką notatkę: "/>
                     <h:inputText value="#{managedBean.doWiad.tresc}" size="90"/>
                     <h:panelGrid id="doWiadForm" columns="2">

@@ -33,6 +33,7 @@ import pl.eod.abstr.AbstEncja;
     @NamedQuery(name = "DcTeczka.findAll", query = "SELECT d FROM DcTeczka d"),
     @NamedQuery(name = "DcTeczka.findById", query = "SELECT d FROM DcTeczka d WHERE d.id = :id"),
     @NamedQuery(name = "DcTeczka.findByNazwa", query = "SELECT d FROM DcTeczka d WHERE d.nazwa = :nazwa"),
+    @NamedQuery(name = "DcTeczka.findDlaStatus", query = "SELECT d FROM DcTeczka d WHERE d.dcDokumentList.dokStatusId=:status"),
     @NamedQuery(name = "DcTeczka.findByOpis", query = "SELECT d FROM DcTeczka d WHERE d.opis = :opis")})
 public class DcTeczka extends AbstEncja implements Serializable {
     private static final long serialVersionUID = 1L;

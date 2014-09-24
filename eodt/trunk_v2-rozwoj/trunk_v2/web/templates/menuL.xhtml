@@ -84,12 +84,12 @@
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - archiwum" rendered="#{login.dcArc}" expanded="#{login.menuDcArcExp}" actionListener="#{login.menuDcArcExpList}">
-                            <h:commandLink action="#{PrzeniesArch.listDo}">
+                            <h:commandLink action="#{PrzeniesArch.list}">
                                 <rich:panelMenuItem >
                                     Do archiwum
                                 </rich:panelMenuItem>
                             </h:commandLink>
-                            <h:commandLink action="#{PrzeniesArch.list}">
+                            <h:commandLink action="#{WArchiwumArch.list}">
                                 <rich:panelMenuItem >
                                     W archiwum
                                 </rich:panelMenuItem>

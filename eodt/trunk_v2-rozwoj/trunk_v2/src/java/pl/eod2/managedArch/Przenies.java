@@ -13,46 +13,47 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod.abstr.AbstMg;
+import pl.eod2.encje.DcAkceptStatus;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
-import pl.eod2.encje.DcDokumentArchKontr;
 import pl.eod2.encje.DcDokumentJpaController;
+import pl.eod2.encje.DcTeczka;
+import pl.eod2.encje.DcTeczkaKontr;
 
 @ManagedBean(name = "PrzeniesArch")
 @SessionScoped
-public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
+public class Przenies {
 
-    public Przenies() throws InstantiationException, IllegalAccessException {
-        super("/dcarch/listW", new DcDokumentArchKontr(), new DcDokumentArch());
-    }
     private DataModel<DcDokument> listaDoArchiwum = new ListDataModel<>();
     private DcDokumentJpaController dcDokC;
+    private DcTeczkaKontr dcTeczC;
     private DcDokumentArchDane dcDokArchDane = new DcDokumentArchDane();
     private List<DcDokument> wybrane = new ArrayList<>();
     private List<DcDokument> doWybrania = new ArrayList<>();
+    private List<DcTeczka> doWybraniaTeczki = new ArrayList<>();
+    private List<DcTeczka> wybraneTeczki = new ArrayList<>();
+    private String typWyboru="";
 
     @PostConstruct
     public void refreshObiekt() {
         dcDokC = new DcDokumentJpaController();
+        dcTeczC=new DcTeczkaKontr();
         listaDoArchiwum.setWrappedData(dcDokC.findStatus(3));
         dcDokArchDane = new DcDokumentArchDane();
+        typWyboru="";
         //obiekt = new DcDokument();
         //error = null;
     }
 
-    public String listDo() {
+    public String list() {
         refreshObiekt();
         return "/dcarch/listDo";
-    }
-    
-    public String detale() {
-        return "/dcarch/wArchDetale";
     }
 
     @SuppressWarnings("unchecked")
     public void archPojDok() {
+        typWyboru="pojedyncze";
         wybrane.clear();
         dcDokArchDane = new DcDokumentArchDane();
         for (DcDokument dok : (List<DcDokument>) listaDoArchiwum.getWrappedData()) {
@@ -63,6 +64,12 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
 
+    public void archTeczki() {
+        typWyboru="teczki";
+        wybraneTeczki.clear();
+        doWybraniaTeczki=dcTeczC.findDlaStatus(new DcAkceptStatus(3));
+    }
+    
     public void przenies() {
         dcDokArchDane.setArchData(new Date());
         for (DcDokument dok : wybrane) {
@@ -105,4 +112,28 @@ public class Przenies extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         this.doWybrania = doWybrania;
     }
 
+    public String getTypWyboru() {
+        return typWyboru;
+    }
+
+    public void setTypWyboru(String typWyboru) {
+        this.typWyboru = typWyboru;
+    }
+
+    public List<DcTeczka> getDoWybraniaTeczki() {
+        return doWybraniaTeczki;
+    }
+
+    public void setDoWybraniaTeczki(List<DcTeczka> doWybraniaTeczki) {
+        this.doWybraniaTeczki = doWybraniaTeczki;
+    }
+
+    public List<DcTeczka> getWybraneTeczki() {
+        return wybraneTeczki;
+    }
+
+    public void setWybraneTeczki(List<DcTeczka> wybraneTeczki) {
+        this.wybraneTeczki = wybraneTeczki;
+    }
+    
 }

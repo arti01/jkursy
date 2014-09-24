@@ -15,7 +15,7 @@
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>
             <rich:panel id="listPanel">
-                <rich:dataTable value="#{PrzeniesArch.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
+                <rich:dataTable value="#{WArchiwumArch.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
@@ -101,15 +101,24 @@
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">rodzaj</f:facet>
-                        <h:outputText id="rodzajList" value="#{item.rodzajId.nazwa}"/>
+                        <h:panelGrid columns="2" id="rodzajList">
+                            <h:outputLabel value="nazwa:"/>
+                            <h:outputText value="#{item.rodzajId.nazwa}"/>
+                            <h:outputLabel value="RWA:"/>
+                            <h:outputText value="#{item.rodzajId.symbolRwa}"/>
+                            <h:outputLabel value="symb. mer. 1:"/>
+                            <h:outputText value="#{item.rodzajId.symbMer1Id.nazwa}"/>
+                            <h:outputLabel value="symb. mer. 2:"/>
+                            <h:outputText value="#{item.rodzajId.symbMer2Id.nazwa}"/>
+                        </h:panelGrid>
                         <rich:tooltip target="rodzajList">
                             #{item.rodzajId.opis} z grupy:#{item.rodzajId.idRodzajGrupa.nazwa}
                         </rich:tooltip>
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">podgląd</f:facet>
-                        <a4j:commandButton id="imgDt" execute="@this" action="#{PrzeniesArch.detale}" image="/images/detail.png">
-                            <f:setPropertyActionListener target="#{PrzeniesArch.obiekt}" value="#{item}" />
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{WArchiwumArch.detale}" image="/images/detail.png">
+                            <f:setPropertyActionListener target="#{WArchiwumArch.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>

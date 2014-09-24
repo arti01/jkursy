@@ -1,4 +1,12 @@
-2014-09-21
+2014-09-23
+
+Wprowadzenie nowego statusu "w poczekalni":
+
+insert into DC_DOKUMENT_STATUS values (99, 'archiwum - poczekalnia', 'dokument w poczekalni do archiwizacji', '#888888');
+update DC_DOKUMENT set dokstatusid_id=99 where dokstatusid_id=6;
+update DC_DOKUMENT_STATUS set id=7 where id=6;
+update DC_DOKUMENT set dokstatusid_id=7 where dokstatusid_id=99;
+update DC_DOKUMENT_STATUS set id=6 where id=99;
 
 2014-09-11
 Uwaga - zmiana projektu na teczki.

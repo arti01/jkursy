@@ -19,6 +19,11 @@
                               render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                 <h3>[archiwizacja wybranych dokumentów]</h3>
             </a4j:commandLink>
+            
+            <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archTeczki}" 
+                              render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                <h3>[archiwizacja wg teczek]</h3>
+            </a4j:commandLink>
 
             <rich:panel id="listPanel">
                 <rich:dataTable value="#{PrzeniesArch.listaDoArchiwum}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
