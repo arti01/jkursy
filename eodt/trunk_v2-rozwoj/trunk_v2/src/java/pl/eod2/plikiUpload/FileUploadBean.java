@@ -2,7 +2,6 @@ package pl.eod2.plikiUpload;
 
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.IOException;

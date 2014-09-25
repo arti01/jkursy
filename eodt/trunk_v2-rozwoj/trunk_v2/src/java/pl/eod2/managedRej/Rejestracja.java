@@ -23,6 +23,7 @@ import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcKontrahenci;
+import pl.eod.abstr.AbstPlik;
 import pl.eod2.encje.DcPlik;
 import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikImportJpaController;
@@ -42,7 +43,7 @@ public class Rejestracja {
     private DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
     private DcDokument obiekt;
-    private DcPlik plik;
+    private AbstPlik plik;
     private DcPlikImport plikImport;
     private DcPlikImportJpaController plikImpC;
     private String error;
@@ -337,11 +338,11 @@ public class Rejestracja {
         this.dcPlikC = dcPlikC;
     }
 
-    public DcPlik getPlik() {
+    public AbstPlik getPlik() {
         return plik;
     }
 
-    public void setPlik(DcPlik plik) {
+    public void setPlik(AbstPlik plik) {
         this.plik = plik;
     }
 

@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.abstr.AbstPlik;
 
 /**
  *
@@ -27,7 +28,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "dc_plik_arch")
-public class DcPlikArch implements Serializable {
+public class DcPlikArch extends AbstPlik implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCPLIKARCH")

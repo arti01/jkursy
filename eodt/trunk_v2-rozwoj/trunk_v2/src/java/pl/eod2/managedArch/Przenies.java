@@ -18,6 +18,7 @@ import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
 import pl.eod2.encje.DcDokumentJpaController;
+import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcTeczka;
 import pl.eod2.encje.DcTeczkaKontr;
 
@@ -33,15 +34,15 @@ public class Przenies {
     private List<DcDokument> doWybrania = new ArrayList<>();
     private List<DcTeczka> doWybraniaTeczki = new ArrayList<>();
     private List<DcTeczka> wybraneTeczki = new ArrayList<>();
-    private String typWyboru="";
+    private String typWyboru = "";
 
     @PostConstruct
     public void refreshObiekt() {
         dcDokC = new DcDokumentJpaController();
-        dcTeczC=new DcTeczkaKontr();
+        dcTeczC = new DcTeczkaKontr();
         listaDoArchiwum.setWrappedData(dcDokC.findStatus(3));
         dcDokArchDane = new DcDokumentArchDane();
-        typWyboru="";
+        typWyboru = "";
         //obiekt = new DcDokument();
         //error = null;
     }
@@ -53,7 +54,7 @@ public class Przenies {
 
     @SuppressWarnings("unchecked")
     public void archPojDok() {
-        typWyboru="pojedyncze";
+        typWyboru = "pojedyncze";
         wybrane.clear();
         dcDokArchDane = new DcDokumentArchDane();
         for (DcDokument dok : (List<DcDokument>) listaDoArchiwum.getWrappedData()) {
@@ -65,17 +66,29 @@ public class Przenies {
     }
 
     public void archTeczki() {
-        typWyboru="teczki";
+        typWyboru = "teczki";
         wybraneTeczki.clear();
-        doWybraniaTeczki=dcTeczC.findDlaStatus(new DcAkceptStatus(3));
+        doWybraniaTeczki = dcTeczC.findDlaStatus(new DcDokumentStatus(3));
     }
-    
-    public void przenies() {
+
+    public void przeniesPoj() {
         dcDokArchDane.setArchData(new Date());
         for (DcDokument dok : wybrane) {
             DcDokumentArch dokArch = new DcDokumentArch(dok);
             dokArch.setDokArchDane(dcDokArchDane);
             dcDokC.przeniesDoArchiwum(dok, dokArch);
+        }
+        refreshObiekt();
+    }
+
+    public void przeniesTeczki() {
+        dcDokArchDane.setArchData(new Date());
+        for (DcTeczka tc : wybraneTeczki) {
+            for (DcDokument dok : tc.getDcDokumentListDoArch()) {
+                DcDokumentArch dokArch = new DcDokumentArch(dok);
+                dokArch.setDokArchDane(dcDokArchDane);
+                dcDokC.przeniesDoArchiwum(dok, dokArch);
+            }
         }
         refreshObiekt();
     }
@@ -135,5 +148,5 @@ public class Przenies {
     public void setWybraneTeczki(List<DcTeczka> wybraneTeczki) {
         this.wybraneTeczki = wybraneTeczki;
     }
-    
+
 }

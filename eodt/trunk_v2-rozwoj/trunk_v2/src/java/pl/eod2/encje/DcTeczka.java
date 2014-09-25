@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import pl.eod.abstr.AbstEncja;
@@ -33,9 +35,10 @@ import pl.eod.abstr.AbstEncja;
     @NamedQuery(name = "DcTeczka.findAll", query = "SELECT d FROM DcTeczka d"),
     @NamedQuery(name = "DcTeczka.findById", query = "SELECT d FROM DcTeczka d WHERE d.id = :id"),
     @NamedQuery(name = "DcTeczka.findByNazwa", query = "SELECT d FROM DcTeczka d WHERE d.nazwa = :nazwa"),
-    @NamedQuery(name = "DcTeczka.findDlaStatus", query = "SELECT d FROM DcTeczka d WHERE d.dcDokumentList.dokStatusId=:status"),
+    @NamedQuery(name = "DcTeczka.findDlaStatus", query = "SELECT DISTINCT d.teczkaId from DcDokument d where d.dokStatusId=:status"),
     @NamedQuery(name = "DcTeczka.findByOpis", query = "SELECT d FROM DcTeczka d WHERE d.opis = :opis")})
 public class DcTeczka extends AbstEncja implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQDCTECZKA")
@@ -54,6 +57,8 @@ public class DcTeczka extends AbstEncja implements Serializable {
     private String opis;
     @OneToMany(mappedBy = "teczkaId", fetch = FetchType.LAZY)
     private List<DcDokument> dcDokumentList;
+    @Transient
+    private List<DcDokument> dcDokumentListDoArch;
 
     public DcTeczka() {
     }
@@ -103,6 +108,16 @@ public class DcTeczka extends AbstEncja implements Serializable {
         this.dcDokumentList = dcDokumentList;
     }
 
+    public List<DcDokument> getDcDokumentListDoArch() {
+        List<DcDokument> wynik=new ArrayList<>();
+        for (DcDokument dok : this.dcDokumentList) {
+            if (dok.getDokStatusId().getId() == 3) {
+                wynik.add(dok);
+            }
+        }
+        return wynik;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -127,5 +142,5 @@ public class DcTeczka extends AbstEncja implements Serializable {
     public String toString() {
         return "pl.eod2.encje.DcTeczka[ id=" + id + " ]";
     }
-    
+
 }

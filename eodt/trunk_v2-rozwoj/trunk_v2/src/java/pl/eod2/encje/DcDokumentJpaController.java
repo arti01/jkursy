@@ -170,19 +170,18 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         DcDokumentStatus dS7 = new DcDokumentStatusJpaController().findDcDokumentStatus(7);
         em = getEntityManager();
         try {
-            
+
             dcDokument.setDokStatusId(dS7);
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
-            
+
             em.getTransaction().begin();
             em.remove(em.merge(dcDokument));
             em.getTransaction().commit();
-            
+
             em.getTransaction().begin();
             dcArchKontr.create(docArch);
             em.getTransaction().commit();
-            
-            
+
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "blad", ex);
             em.getTransaction().rollback();
@@ -594,8 +593,16 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
             Query q = em.createNamedQuery("DcDokument.findMaxNrKol");
             q.setParameter("symbolSpDzialRok", dokument.getSymbolSpDzialRok());
             int u = (Integer) q.getResultList().get(0);
-            //em.refresh(u.getStruktura());
-            return u + 1;
+
+            Query qArch = em.createNamedQuery("DcDokumentArch.findMaxNrKol");
+            qArch.setParameter("symbolSpDzialRok", dokument.getSymbolSpDzialRok());
+            int uArch = (Integer) qArch.getResultList().get(0);
+            if (u > uArch) {
+                return u + 1;
+            } else {
+                return uArch + 1;
+            }
+
         } catch (NoResultException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
             logger.log(Level.SEVERE, "blad", ex);
             return 1;

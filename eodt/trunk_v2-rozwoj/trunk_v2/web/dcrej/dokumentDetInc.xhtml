@@ -33,7 +33,7 @@
             <rich:tab header="Załączniki" id="tabPliki">
                 <rich:fileUpload fileUploadListener="#{fileUploadBean.listener}" id="upload" maxFilesQuantity="1" immediateUpload="true" 
                                  addLabel="dodaj plik" listHeight="40px"  rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
-                    <a4j:ajax event="uploadcomplete" execute="@none" render="tabPliki" />
+                    <a4j:ajax event="uploadcomplete" execute="@none" render="table, upload" />
                 </rich:fileUpload>
                 <hr/>
                 <rich:dataTable value="#{RejestracjaRej.obiekt.dcPlikList}" var="item" iterationStatusVar="it" rows="10" id="table"  style="width: 100%">

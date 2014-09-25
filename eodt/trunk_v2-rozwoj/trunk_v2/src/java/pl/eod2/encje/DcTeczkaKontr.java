@@ -21,7 +21,7 @@ public class DcTeczkaKontr extends AbstKontroler<DcTeczka>{
         super(new DcTeczka());
     }
     
-    public List<DcTeczka> findDlaStatus(DcAkceptStatus dcStatus){
+    public List<DcTeczka> findDlaStatus(DcDokumentStatus dcStatus){
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("DcTeczka.findDlaStatus");

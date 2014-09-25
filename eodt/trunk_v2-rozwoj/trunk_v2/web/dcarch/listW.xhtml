@@ -42,16 +42,19 @@
                         <h:outputText value="#{item.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                     </rich:column>
 
-                    <rich:column>
-                        <f:facet name="header">żródło</f:facet>
-                            #{item.zrodloId.nazwa}
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.teczkaId.nazwa,RejestracjaRej.filtrTeczka)||fn:containsIgnoreCase(item.zrodloId.nazwa,RejestracjaRej.filtrTeczka)}">
+                        <f:facet name="header">żródło<br/>teczka
+                        <h:inputText value="#{RejestracjaRej.filtrTeczka}" size="7">
+                                <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                        </f:facet>
+                            #{item.zrodloId.nazwa}<hr/>#{item.teczkaId.nazwa}
                     </rich:column>
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokArchDane.archOsobaOdpowiadajaca, RejestracjaRej.filtrArchiwisci)
                                                      || fn:containsIgnoreCase(item.dokArchDane.archOsobaZdajaca, RejestracjaRej.filtrArchiwisci)}">
                         <f:facet name="header">archiwiści
                             <br/>
-                            <h:inputText value="#{RejestracjaRej.filtrArchiwisci}" size="10">
+                            <h:inputText value="#{RejestracjaRej.filtrArchiwisci}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputLabel value="zdający:"/>

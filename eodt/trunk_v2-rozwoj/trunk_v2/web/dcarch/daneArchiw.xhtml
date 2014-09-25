@@ -5,7 +5,6 @@
       xmlns:h="http://java.sun.com/jsf/html"
       template="/templates/template.xhtml"
       xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <h:form>
@@ -36,11 +35,20 @@
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
             <hr/>
-            <ui:include src="/dcodb/wybrInc.xhtml" #{PrzeniesArch.typWyboru eq 'pojedyncze'}/>
-            <ui:include src="/dcodb/teczkiInc.xhtml" #{PrzeniesArch.typWyboru eq 'teczki'}/>
-            <hr/>
-            <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przenies}" render="listPanel, dodajPane" execute="dodajPane"
+            
+            <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'pojedyncze'}">
+                <ui:include src="/dcarch/wybrInc.xhtml"/>
+                <hr/>
+                <a4j:commandButton id="dodaj" value="Przenies" action="#{PrzeniesArch.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
+            </h:panelGroup>
+            <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'teczki'}">
+                <ui:include src="/dcarch/teczkiInc.xhtml"/>
+                <hr/>
+                <a4j:commandButton id="dodajTecz" value="Przenies" action="#{PrzeniesArch.przeniesTeczki}" render="listPanel, dodajPane" execute="dodajPane"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
+            </h:panelGroup>
+            
             <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                     return false;" />
         </rich:popupPanel>

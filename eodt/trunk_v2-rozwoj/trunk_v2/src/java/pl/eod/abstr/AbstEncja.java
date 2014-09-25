@@ -6,8 +6,9 @@
 package pl.eod.abstr;
 
 public abstract class AbstEncja {
-    String nazwa;
-     private Integer id;
+
+    private String nazwa;
+    private Integer id;
 
     public String getNazwa() {
         return nazwa;
@@ -24,5 +25,5 @@ public abstract class AbstEncja {
     public void setId(Integer id) {
         this.id = id;
     }
-    
+
 }
