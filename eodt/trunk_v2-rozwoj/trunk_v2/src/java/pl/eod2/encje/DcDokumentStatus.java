@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.eod2.encje;
 
 import java.io.Serializable;
@@ -18,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import pl.eod.abstr.AbstEncja;
 
 /**
  *
@@ -29,8 +26,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DcDokumentStatus.findAll", query = "SELECT d FROM DcDokumentStatus d"),
     @NamedQuery(name = "DcDokumentStatus.findById", query = "SELECT d FROM DcDokumentStatus d WHERE d.id = :id"),
     @NamedQuery(name = "DcDokumentStatus.findByNazwa", query = "SELECT d FROM DcDokumentStatus d WHERE d.nazwa = :nazwa"),
+    @NamedQuery(name = "DcDokumentStatus.findByTabela", query = "SELECT d FROM DcDokumentStatus d WHERE d.dlaTabeli = :tabela"),
     @NamedQuery(name = "DcDokumentStatus.findByOpis", query = "SELECT d FROM DcDokumentStatus d WHERE d.opis = :opis")})
-public class DcDokumentStatus implements Serializable {
+public class DcDokumentStatus extends AbstEncja implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -46,8 +44,15 @@ public class DcDokumentStatus implements Serializable {
     @Size(max = 10)
     @Column(name = "kolor", length = 10)
     private String kolor;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokStatusId", fetch = FetchType.LAZY, orphanRemoval = false)
+    @Size(max = 50)
+    @Column(name = "dla_tabeli", length = 50)
+    private String dlaTabeli;
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "dokStatusId", fetch = FetchType.LAZY, orphanRemoval = false)
     private List<DcDokument> dcDokumentList;
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "dcDokStatusPocz", fetch = FetchType.LAZY, orphanRemoval = false)
+    private List<DcRodzaj> dcRodzajPoczList;
+    @OneToMany(cascade = {CascadeType.MERGE}, mappedBy = "dcDokStatusKonc", fetch = FetchType.LAZY, orphanRemoval = false)
+    private List<DcRodzaj> dcRodzajKoncList;
 
     public DcDokumentStatus() {
     }
@@ -56,18 +61,22 @@ public class DcDokumentStatus implements Serializable {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getNazwa() {
         return nazwa;
     }
 
+    @Override
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
@@ -94,6 +103,30 @@ public class DcDokumentStatus implements Serializable {
 
     public void setDcDokumentList(List<DcDokument> dcDokumentList) {
         this.dcDokumentList = dcDokumentList;
+    }
+
+    public List<DcRodzaj> getDcRodzajPoczList() {
+        return dcRodzajPoczList;
+    }
+
+    public void setDcRodzajPoczList(List<DcRodzaj> dcRodzajPoczList) {
+        this.dcRodzajPoczList = dcRodzajPoczList;
+    }
+
+    public List<DcRodzaj> getDcRodzajKoncList() {
+        return dcRodzajKoncList;
+    }
+
+    public void setDcRodzajKoncList(List<DcRodzaj> dcRodzajKoncList) {
+        this.dcRodzajKoncList = dcRodzajKoncList;
+    }
+
+    public String getDlaTabeli() {
+        return dlaTabeli;
+    }
+
+    public void setDlaTabeli(String dlaTabeli) {
+        this.dlaTabeli = dlaTabeli;
     }
     
     @Override

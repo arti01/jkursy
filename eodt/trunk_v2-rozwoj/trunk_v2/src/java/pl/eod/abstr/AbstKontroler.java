@@ -43,6 +43,10 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         return findEntities(true, -1, -1);
     }
 
+    public List<X> getFindEntities() {
+        return findEntities();
+    }
+    
     public X findEntities(String nazwa) {
         EntityManager em = getEntityManager();
         try {

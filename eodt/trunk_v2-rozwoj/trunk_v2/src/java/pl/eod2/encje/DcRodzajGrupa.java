@@ -54,6 +54,7 @@ public class DcRodzajGrupa implements Serializable {
     @Lob
     private String opis;
     private int urzMed;
+    private int archiw;
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, mappedBy = "idRodzajGrupa", fetch = FetchType.LAZY)
     private List<DcRodzaj> dcRodzajList;
 
@@ -108,6 +109,15 @@ public class DcRodzajGrupa implements Serializable {
     public void setUrzMed(boolean urzMed) {
         if(urzMed) this.urzMed=1;
         else this.urzMed=0;
+    }
+    
+    public boolean isArchiw() {
+        return archiw == 1;
+    }
+
+    public void setArchiw(boolean archiw) {
+        if(archiw) this.archiw=1;
+        else this.archiw=0;
     }
 
     @Override

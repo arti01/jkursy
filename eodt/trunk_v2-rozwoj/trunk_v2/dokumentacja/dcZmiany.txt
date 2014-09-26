@@ -1,3 +1,28 @@
+2014-09-26
+
+alter table DC_DOKUMENT_STATUS ADD COLUMN dla_tabeli varchar(50);
+update DC_DOKUMENT_STATUS set dla_tabeli='dokumenty' where id<6;
+update DC_DOKUMENT_STATUS set dla_tabeli='archiwum' where id>=6;
+
+
+Opis przenoszenia do archiwum
+Można dokument przenieść bezpośrednio, przenosząc dokument o statusie "zamknięty" do tabeli archiwalnej.
+Przy tej operacji wszystkie dane z nim związane (historia akceptacji, pliki, do wiadomości) są przenoszone
+do analogicznych tabel archiwalnych (z koncówką Arch), a dokument otrzymuje status "w archiwum".
+
+Można też skorzystać z "poczekalni". To nowe statusy, mówiące o tym, że dokument uzyskał akceptacje do
+przeniesienia do archiwum. Dokumenty o tym statusie są w tabeli dcDokumenty. Dopiero po operacji "przenieś
+do archiwum" i uzupełnieniu danych związanych z archiwizacją.
+Czyli najpierw się wybiera dokumenty do archiwizacji (otrzymują status poczekalnia start), po zaakceptowaniu
+otrzymuja status poczekalnia - stop, no a potem trzeba je przeniesc do archiwum (uzupelniając dane do archiwizacji)
+
+W Grupy Rodzaje trzeba stworzyć grupę z opcją "czy rodzaje mogą obsługiwać&lt;br/&gt;Dokumenty Archiwalne"
+W rodzaje trzeba stworzyc rodzaj, ktory należy do ww grupy.
+Wtedy pojawią się dwa pola - status poczatkowy i koncowy.
+Pierwszy określa jakie dokumenty mogą zostać przypisane do ww rodzaju, drugi - jaki status uzyska
+powiazany dokument po zakonczonym procesie akceptacji.
+np - poczekalnia - start -> poczekalnia-stop
+
 2014-09-23
 
 Wprowadzenie nowego statusu "w poczekalni":

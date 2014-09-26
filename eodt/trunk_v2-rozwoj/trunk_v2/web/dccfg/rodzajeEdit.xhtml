@@ -25,7 +25,7 @@
                 <h:outputLabel for="grupaD" value="grupa: "/>
                 <h:selectOneMenu id="grupaD" value="#{RodzajeCfg.obiekt.idRodzajGrupa}" converter="#{DcRodzajGrupaConv}">
                     <f:selectItems value="#{RodzajeGrupyCfg.lista}" var="grupa" itemValue="#{grupa}" itemLabel="#{grupa.nazwa}"/>
-                    <a4j:ajax event="change" render="bazUzMedD" oncomplete="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();"/>
+                    <a4j:ajax event="change" render="bazUzMedD, archiwDP" oncomplete="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();"/>
                 </h:selectOneMenu>
                 <rich:message for="grupaD" styleClass="error" />
 
@@ -42,19 +42,19 @@
                 <h:outputLabel for="symbrwaD" value="symbol RWA: "/>
                 <h:inputText id="symbrwaD" value="#{RodzajeCfg.obiekt.symbolRwa}" size="10"><rich:validator/></h:inputText>
                 <rich:message for="symbrwaD" styleClass="error" />
-                
+
                 <h:outputLabel for="symbmer1D" value="symb. meryt. 1: "/>
                 <h:selectOneMenu id="symbmer1D" value="#{RodzajeCfg.obiekt.symbMer1Id}" converter="#{DcSymbMer1Conv}">
                     <f:selectItems value="#{SymbMer1Cfg.lista}" var="sm1" itemValue="#{sm1}" itemLabel="#{sm1.nazwa}"/>
                 </h:selectOneMenu>
                 <rich:message for="symbmer1D" styleClass="error" />
-                
+
                 <h:outputLabel for="symbmer2D" value="symb. meryt. 2: "/>
                 <h:selectOneMenu id="symbmer2D" value="#{RodzajeCfg.obiekt.symbMer2Id}" converter="#{DcSymbMer2Conv}">
                     <f:selectItems value="#{SymbMer2Cfg.lista}" var="sm2" itemValue="#{sm2}" itemLabel="#{sm2.nazwa}"/>
                 </h:selectOneMenu>
                 <rich:message for="symbmer2D" styleClass="error" />
-                
+
                 <h:outputLabel for="szablonD" value="szablon: "/>
                 <h:inputTextarea id="szablonD" value="#{RodzajeCfg.obiekt.szablon}"  cols="110" rows="15"><rich:validator/></h:inputTextarea>
                 <rich:message for="szablonD" styleClass="error" />
@@ -67,6 +67,32 @@
                         <f:selectItems value="#{UGrupaMg.login.zalogowany.userId.spolkaId.umMasterGrupaList}" var="master" itemValue="#{master}" itemLabel="#{master.nazwa}" />
                     </rich:pickList>
                 </rich:collapsiblePanel>
+            </h:panelGroup>
+            <h:panelGroup id="archiwDP">
+                <rich:collapsiblePanel header="powiązanie z bazą dokumentów archiwalnych" expanded="true" switchType="client" rendered="#{RodzajeCfg.obiekt.idRodzajGrupa.archiw}"
+                                       onswitch="#{rich:component('dodajPaneRodzaj')}.hide();#{rich:component('dodajPaneRodzaj')}.show();">
+                    <rich:panel>
+                        Do dokumentu będą mogły zostać przypisane dokumenty o statusie określonym przez pole "początkowy status dokumentów". 
+                        Po zakończeniu procedu akceptacji ww dokumenty zmienią status na taki jak w polu "końcowy status dokumentów".
+                        Uwaga! Tylko dla dokumentów w Archiwum
+                    </rich:panel>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="archiwPoczD" value="początkowy status dokumentów: "/>
+                        <h:outputLabel for="archiwKoncD" value="końcowy status dokumentów: "/>
+
+                        <h:selectOneMenu id="archiwPoczD" value="#{RodzajeCfg.obiekt.dcDokStatusPocz}" converter="#{DcDokumentStatusConv}">
+                            <f:selectItems value="#{DcDokumentStatusJpaController.findDlaArchiwum}" var="stat" itemValue="#{stat}" itemLabel="#{stat.nazwa}"/>
+                        </h:selectOneMenu>
+
+                        <h:selectOneMenu id="archiwKoncD" value="#{RodzajeCfg.obiekt.dcDokStatusKonc}" converter="#{DcDokumentStatusConv}">
+                            <f:selectItems value="#{DcDokumentStatusJpaController.findDlaArchiwum}" var="stat" itemValue="#{stat}" itemLabel="#{stat.nazwa}"/>
+                        </h:selectOneMenu>
+                    </h:panelGrid>
+                    <rich:message for="archiwPoczD" styleClass="error" />
+                    <rich:message for="archiwKoncD" styleClass="error" />
+
+                </rich:collapsiblePanel>
+
             </h:panelGroup>
             <hr/>
             <rich:message for="zapisz" styleClass="error" />

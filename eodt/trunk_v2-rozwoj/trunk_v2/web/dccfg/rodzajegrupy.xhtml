@@ -28,6 +28,10 @@
                     <h:outputLabel for="urzMedD" value="czy rodzaje mogą obsługiwać&lt;br/&gt;Bazę Zasobów Materiałowych" escape="false"/>
                     <h:selectBooleanCheckbox id="urzMedD" value="#{RodzajeGrupyCfg.rodzajGrupa.urzMed}"/>
                     <rich:message for="urzMedD" styleClass="error" />
+                    
+                    <h:outputLabel for="archiwD" value="czy rodzaje mogą obsługiwać&lt;br/&gt;Dokumenty Archiwalne" escape="false"/>
+                    <h:selectBooleanCheckbox id="archiwD" value="#{RodzajeGrupyCfg.rodzajGrupa.archiw}"/>
+                    <rich:message for="archiwD" styleClass="error" />
                 </h:panelGrid>
                 <rich:message for="zapisz" styleClass="error" />
                 <rich:message for="dodaj" styleClass="error" />

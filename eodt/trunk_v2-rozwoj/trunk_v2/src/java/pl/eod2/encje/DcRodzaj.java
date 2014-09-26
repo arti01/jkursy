@@ -79,6 +79,12 @@ public class DcRodzaj implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id")
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
     private List<UmMasterGrupa> umMasterGrupaList;
+    @JoinColumn(name = "id_dc_status_pocz", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private DcDokumentStatus dcDokStatusPocz;
+    @JoinColumn(name = "id_dc_status_konc", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private DcDokumentStatus dcDokStatusKonc;
     @JoinColumn(name = "id_symb_mer1", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcSymbMer1 symbMer1Id;
@@ -208,6 +214,22 @@ public class DcRodzaj implements Serializable {
 
     public void setSymbMer2Id(DcSymbMer2 symbMer2Id) {
         this.symbMer2Id = symbMer2Id;
+    }
+
+    public DcDokumentStatus getDcDokStatusPocz() {
+        return dcDokStatusPocz;
+    }
+
+    public void setDcDokStatusPocz(DcDokumentStatus dcDokStatusPocz) {
+        this.dcDokStatusPocz = dcDokStatusPocz;
+    }
+
+    public DcDokumentStatus getDcDokStatusKonc() {
+        return dcDokStatusKonc;
+    }
+
+    public void setDcDokStatusKonc(DcDokumentStatus dcDokStatusKonc) {
+        this.dcDokStatusKonc = dcDokStatusKonc;
     }
 
     @Override

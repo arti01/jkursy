@@ -10,33 +10,27 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.NoResultException;
+import pl.eod.abstr.AbstKontroler;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.encje.exceptions.PreexistingEntityException;
 
-/**
- *
- * @author arti01
- */
-public class DcDokumentStatusJpaController implements Serializable {
+@ManagedBean(name = "DcDokumentStatusJpaController")
+@SessionScoped
+public class DcDokumentStatusJpaController extends AbstKontroler<DcDokumentStatus> implements Serializable {
     private static final long serialVersionUID = 1L;
 
     public DcDokumentStatusJpaController() {
-        if (this.emf == null) {
-            this.emf = Persistence.createEntityManagerFactory("eodtPU");
-        }
-    }
-    private EntityManagerFactory emf = null;
-
-    public EntityManager getEntityManager() {
-        return emf.createEntityManager();
+        super(new DcDokumentStatus());
     }
 
-    public void create(DcDokumentStatus dcDokumentStatus) throws PreexistingEntityException, Exception {
+    public void createSpec(DcDokumentStatus dcDokumentStatus) throws PreexistingEntityException, Exception {
         if (dcDokumentStatus.getDcDokumentList() == null) {
             dcDokumentStatus.setDcDokumentList(new ArrayList<DcDokument>());
         }
@@ -73,7 +67,7 @@ public class DcDokumentStatusJpaController implements Serializable {
         }
     }
 
-    public void edit(DcDokumentStatus dcDokumentStatus) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void editSpec(DcDokumentStatus dcDokumentStatus) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -129,7 +123,7 @@ public class DcDokumentStatusJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroySpec(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -202,6 +196,22 @@ public class DcDokumentStatusJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<DcDokumentStatus> getFindDlaArchiwum() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcDokumentStatus.findByTabela");
+            q.setParameter("tabela", "archiwum");
+            return q.getResultList();
+            //return hs;
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            //logger.log(Level.SEVERE, "blad", ex);
+            return null;
         } finally {
             em.close();
         }
