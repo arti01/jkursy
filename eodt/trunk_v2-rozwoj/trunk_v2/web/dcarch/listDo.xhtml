@@ -11,20 +11,23 @@
 
     <ui:define name="content">
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
-        <h3>Dokumenty do przeniesienia do archiwum</h3>
+        <h2>Dokumenty do przeniesienia do archiwum</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <ui:include src="./daneArchiw.xhtml"/>
         <h:form>
-            <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
-                              render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
-                <h3>[archiwizacja wybranych dokumentów]</h3>
-            </a4j:commandLink>
-            
-            <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archTeczki}" 
-                              render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
-                <h3>[archiwizacja wg teczek]</h3>
-            </a4j:commandLink>
+            <div id="tabela">
+                <h:panelGrid columns="3" style="background-color: orange">
+                <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
+                                  render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                    <h3>[archiwizacja wybranych dokumentów]</h3>
+                </a4j:commandLink>
 
+                <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archTeczki}" 
+                                  render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                    <h3>[archiwizacja wg teczek]</h3>
+                </a4j:commandLink>
+            </h:panelGrid>
+</div>
             <rich:panel id="listPanel">
                 <rich:dataTable value="#{PrzeniesArch.listaDoArchiwum}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>

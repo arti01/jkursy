@@ -99,8 +99,11 @@
                     </rich:column>
 
                     <rich:column>
-                        <f:facet name="header">wprowadził</f:facet>
-                            #{item.userId.fullname}
+                        <f:facet name="header">status</f:facet>
+                        <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
+                        <rich:tooltip target="statusList">
+                            #{item.dokStatusId.opis}
+                        </rich:tooltip>
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">rodzaj</f:facet>
