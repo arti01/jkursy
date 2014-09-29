@@ -43,6 +43,7 @@ import pl.eod.encje.Uzytkownik;
     @NamedQuery(name = "DcDokumentArch.findAll", query = "SELECT d FROM DcDokumentArch d"),
     @NamedQuery(name = "DcDokumentArch.findById", query = "SELECT d FROM DcDokumentArch d WHERE d.id = :id"),
     @NamedQuery(name = "DcDokumentArch.findByNazwa", query = "SELECT d FROM DcDokumentArch d WHERE d.nazwa = :nazwa"),
+    @NamedQuery(name = "DcDokumentArch.findByStatus", query = "SELECT d FROM DcDokumentArch d WHERE d.dokStatusId.id = :statusId"),
     @NamedQuery(name = "DcDokumentArch.findMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokumentArch d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
 })
 public class DcDokumentArch extends AbstEncja implements Serializable {

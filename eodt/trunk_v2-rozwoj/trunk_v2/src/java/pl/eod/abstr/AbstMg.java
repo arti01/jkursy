@@ -11,10 +11,10 @@ import pl.eod2.encje.exceptions.NonexistentEntityException;
 
 public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
 
-    private DataModel<X> lista;
-    private final Y dcC;
-    private X obiekt;
-    private String error;
+    public DataModel<X> lista;
+    public final Y dcC;
+    public X obiekt;
+    public String error;
     private final String link;
 
     @SuppressWarnings({"unchecked", "unchecked"})
@@ -32,7 +32,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
     }
     
     @SuppressWarnings("unchecked")
-    void refresh() throws InstantiationException, IllegalAccessException {
+    public void refresh() throws InstantiationException, IllegalAccessException {
         lista.setWrappedData(dcC.findEntities());
         obiekt = (X) obiekt.getClass().newInstance();
         error = null;

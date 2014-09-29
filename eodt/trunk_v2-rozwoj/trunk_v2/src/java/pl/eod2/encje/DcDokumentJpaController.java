@@ -29,10 +29,6 @@ import pl.eod.encje.Uzytkownik;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 
-/**
- *
- * @author 103039
- */
 public class DcDokumentJpaController extends AbstKontroler<DcDokument> implements Serializable {
 
     private static final long serialVersionUID = 1L;
