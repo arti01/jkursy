@@ -355,6 +355,22 @@ public class DcRodzajJpaController implements Serializable {
             em.close();
         }
     }
+    public List<DcRodzaj> findDcRodzajArch() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcRodzaj.findByArch");
+            //em.refresh(u.getStruktura());
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 
     public int getDcRodzajCount() {
         EntityManager em = getEntityManager();

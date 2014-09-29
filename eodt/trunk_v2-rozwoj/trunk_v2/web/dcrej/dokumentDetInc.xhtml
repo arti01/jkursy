@@ -254,6 +254,27 @@
                 </h:panelGrid>
 
             </rich:tab>
+
+            <rich:tab header="Archiwum - dokumenty powiązane">
+                    <rich:panel id="pgArch">
+                        <f:facet name="header">
+                            Dokument powiązany z dokumentami w archiwum
+                        </f:facet>
+
+                        <rich:dataTable value="#{RejestracjaRej.obiekt.dcArchList}" var="arch" style="width: 100%; border: white thick">
+                            <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
+                                #{arch.nazwa}
+                                (#{arch.symbolDok})
+                                <rich:tooltip target="imgDelOdb" value="usuń zasób" layout="block"/>
+                                <a4j:commandButton id="imgDelOdb" action="#{URejDokMg.usunUrzad}" execute="imgDelOdb" render="pgArch"  image="/images/delete.png" style="width: 16px; height: 16px" 
+                                                   rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
+                                    <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{urzadz}" />
+                                </a4j:commandButton>
+                            </rich:column>
+                        </rich:dataTable>
+                    </rich:panel>
+            </rich:tab>
+
             <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"
                             oncomplete="#{rich:component('confirmPane')}.hide();" />
             <rich:popupPanel id="confirmPane" autosized="true">

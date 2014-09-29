@@ -607,12 +607,26 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         }
     }
 
-    @SuppressWarnings({"unchecked", "unchecked", "unchecked"})
+    @SuppressWarnings({"unchecked"})
     public List<DcDokument> findStatus(int statusId) {
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("DcDokument.findByStatus");
             q.setParameter("statusId", statusId);
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            logger.log(Level.SEVERE, "blad", ex);
+            return Collections.EMPTY_LIST;
+        } finally {
+            em.close();
+        }
+    }
+    
+    @SuppressWarnings({"unchecked"})
+    public List<DcDokument> findEntitiesDlaArch() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcDokument.findDlaArch");
             return q.getResultList();
         } catch (NoResultException ex) {
             logger.log(Level.SEVERE, "blad", ex);

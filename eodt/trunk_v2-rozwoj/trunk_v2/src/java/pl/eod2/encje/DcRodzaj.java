@@ -36,7 +36,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "DcRodzaj.findAll", query = "SELECT d FROM DcRodzaj d"),
     @NamedQuery(name = "DcRodzaj.findById", query = "SELECT d FROM DcRodzaj d WHERE d.id = :id"),
     @NamedQuery(name = "DcRodzaj.findByNazwa", query = "SELECT d FROM DcRodzaj d WHERE d.nazwa = :nazwa"),
-    @NamedQuery(name = "DcRodzaj.findByUm", query = "SELECT d FROM DcRodzaj d WHERE d.idRodzajGrupa.urzMed=true"),
+    @NamedQuery(name = "DcRodzaj.findByUm", query = "SELECT d FROM DcRodzaj d WHERE d.idRodzajGrupa.urzMed=1"),
+    @NamedQuery(name = "DcRodzaj.findByArch", query = "SELECT d FROM DcRodzaj d WHERE d.idRodzajGrupa.archiw=1"),
     @NamedQuery(name = "DcRodzaj.findByOpis", query = "SELECT d FROM DcRodzaj d WHERE d.opis = :opis")})
 public class DcRodzaj implements Serializable {
     private static final long serialVersionUID = 1L;

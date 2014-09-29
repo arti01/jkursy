@@ -48,6 +48,7 @@ import pl.eod.encje.Uzytkownik;
     @NamedQuery(name = "DcDokument.findByDataWprow", query = "SELECT d FROM DcDokument d WHERE d.dataWprow = :dataWprow"),
     @NamedQuery(name = "DcDokument.findByDataDok", query = "SELECT d FROM DcDokument d WHERE d.dataDok = :dataDok"),
     @NamedQuery(name = "DcDokument.findByStatus", query = "SELECT d FROM DcDokument d WHERE d.dokStatusId.id = :statusId"),
+    @NamedQuery(name = "DcDokument.findDlaArch", query = "SELECT d FROM DcDokument d WHERE d.rodzajId.idRodzajGrupa.archiw =1"),
     @NamedQuery(name = "DcDokument.findMaxNrKol", query = "SELECT max(d.symbolNrKol) FROM DcDokument d WHERE d.symbolSpDzialRok=:symbolSpDzialRok")
 })
 public class DcDokument extends AbstEncja implements Serializable {
@@ -114,6 +115,8 @@ public class DcDokument extends AbstEncja implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private List<DcDokumentArch> dcArchList;
     @Transient
     private String dataWprowStr;
     @Transient
@@ -140,18 +143,22 @@ public class DcDokument extends AbstEncja implements Serializable {
         this.dataWprow = dataWprow;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public String getNazwa() {
         return nazwa;
     }
 
+    @Override
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
     }
@@ -340,6 +347,14 @@ public class DcDokument extends AbstEncja implements Serializable {
 
     public void setDoArchZnacznik(boolean doArchZnacznik) {
         this.doArchZnacznik = doArchZnacznik;
+    }
+
+    public List<DcDokumentArch> getDcArchList() {
+        return dcArchList;
+    }
+
+    public void setDcArchList(List<DcDokumentArch> dcArchList) {
+        this.dcArchList = dcArchList;
     }
         
     @Override

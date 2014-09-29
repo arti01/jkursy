@@ -26,6 +26,11 @@
                                   render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                     <h3>[archiwizacja wg teczek]</h3>
                 </a4j:commandLink>
+                     
+                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
+                                  render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                    <h3>[stworz dokument zdawczo - odbiorczy]</h3>
+                </a4j:commandLink>
             </h:panelGrid>
 </div>
             <rich:panel id="listPanel">

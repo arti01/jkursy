@@ -81,6 +81,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     private Date dataDok;
     @Embedded
     private DcDokumentArchDane dokArchDane;
+    
 
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -116,12 +117,17 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosciArch> dcDokDoWiadList;
     
+    @ManyToMany(mappedBy = "dcArchList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    private List<DcDokument> dokumentyList;
+    
     @Transient
     private String dataWprowStr;
     @Transient
     private String dataDokStr;
     @Transient
     private String symbolDok;
+    @Transient
+    private boolean wyborZnacznik;
 
     public DcDokumentArch() {
     }
@@ -363,6 +369,14 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
 
     public void setUrzadzeniaList(List<UmUrzadzenie> urzadzeniaList) {
         this.urzadzeniaList = urzadzeniaList;
+    }
+
+    public boolean isWyborZnacznik() {
+        return wyborZnacznik;
+    }
+
+    public void setWyborZnacznik(boolean wyborZnacznik) {
+        this.wyborZnacznik = wyborZnacznik;
     }
 
     @Override

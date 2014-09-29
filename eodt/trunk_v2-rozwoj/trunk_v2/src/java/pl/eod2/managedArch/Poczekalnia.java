@@ -5,6 +5,7 @@
  */
 package pl.eod2.managedArch;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import pl.eod.abstr.AbstMg;
@@ -22,12 +23,14 @@ public class Poczekalnia extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     @Override
     public void refresh() throws InstantiationException, IllegalAccessException {
         lista.setWrappedData(dcC.findStatus(6));
+        System.err.println(dcC.findStatus(6));
         obiekt = obiekt.getClass().newInstance();
         error = null;
     }
 
     @Override
-    public String list(){
+    public String list() throws InstantiationException, IllegalAccessException{
+        refresh();
         return "/dcarch/listPoczekalnia";
     }
 

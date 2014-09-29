@@ -64,7 +64,7 @@ public class Przenies {
         }
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
-
+    
     public void archTeczki() {
         typWyboru = "teczki";
         wybraneTeczki.clear();
