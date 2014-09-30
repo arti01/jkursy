@@ -13,9 +13,9 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h2>Dokumenty do przeniesienia do archiwum</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <h:form>
-            <ui:include src="./daneArchiw.xhtml"/>
+        <ui:include src="./daneArchiw.xhtml"/>
 
+        <h:form>
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPaneDok"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPaneDok')}.hide();
@@ -39,18 +39,18 @@
 
             <div id="tabela">
                 <h:panelGrid columns="3" style="background-color: orange">
-                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
+                    <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.archPojDok}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                         <h3>[archiwizacja wybranych dokumentów]</h3>
                     </a4j:commandLink>
 
-                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archTeczki}" 
+                    <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.archTeczki}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                         <h3>[archiwizacja wg teczek]</h3>
                     </a4j:commandLink>
 
-                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.stworzDokZdawOdb()}" 
-                                      render="dodajPane" oncomplete="#{rich:component('dodajPaneDok')}.show()">
+                    <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.stworzDokZdawOdb}" 
+                                      render="dodajPaneDok" oncomplete="#{rich:component('dodajPaneDok')}.show()">
                         <h3>[stwórz dokument zdawczo - odbiorczy dla wybranych]</h3>
                     </a4j:commandLink>
                 </h:panelGrid>

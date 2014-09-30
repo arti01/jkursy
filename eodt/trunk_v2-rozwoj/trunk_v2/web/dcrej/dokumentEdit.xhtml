@@ -24,9 +24,6 @@
             <rich:validator /></rich:calendar>
         <rich:message for="dataD" styleClass="error" />
 
-        #{managedBean}
-        #{RejestracjaRej.obiekt}
-        
         <h:outputLabel for="rodzajD" value="rodzaj: "/>
         <rich:select id="rodzajD" value="#{RejestracjaRej.obiekt.rodzajId}" converter="#{DcRodzajConv}" valueChangeListener="#{RejestracjaRej.listenerOpis}">
             <f:selectItems value="#{managedBean.rodzajLista}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.nazwa}"/>

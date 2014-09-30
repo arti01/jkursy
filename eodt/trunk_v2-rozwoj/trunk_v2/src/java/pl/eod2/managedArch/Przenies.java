@@ -73,9 +73,8 @@ public class Przenies {
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
     
-    public void stworzDokZdawOdb() throws InstantiationException, IllegalAccessException{
+    public void stworzDokZdawOdb() {
         archPojDok();
-        dokumenty.refresh();
         rejestracja.refreshObiekt();
         List<DcDokumentArch> wybraneArch=new ArrayList<>();
         for (DcDokument dok : wybrane) {
@@ -85,6 +84,9 @@ public class Przenies {
             wybraneArch.add(dokArch);
         }
         rejestracja.getObiekt().setDcArchList(wybraneArch);
+        System.err.println("tuuu");
+        System.err.println(rejestracja.getObiekt());
+        System.err.println(rejestracja.getObiekt().getDcArchList());
     }
     
     public void przeniesDokZdawczoOdb() throws NonexistentEntityException{

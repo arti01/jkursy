@@ -34,22 +34,25 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         super("/dcarch/dokumenty", new DcDokumentJpaController(), new DcDokument());
     }
 
-
+    @PostConstruct
     @Override
-    public void refresh() throws InstantiationException, IllegalAccessException {
+    public void refresh() {
         dcR = new DcRodzajJpaController();
         rodzajLista.setWrappedData(dcR.findDcRodzajArch());
         lista.setWrappedData(dcC.findEntitiesDlaArch());
-        obiekt = obiekt.getClass().newInstance();
+        try {
+            obiekt = obiekt.getClass().newInstance();
+        } catch (InstantiationException | IllegalAccessException ex1) {
+            Logger.getLogger(Dokumenty.class.getName()).log(Level.SEVERE, null, ex1);
+        }
         error = null;
         rejestracja.setObiekt(null);
-        System.err.println(rodzajLista.getWrappedData());
     }
 
     public String detale() {
         return "/dcarch/dokumentDetale?faces-redirect=true";
     }
-    
+
     @Override
     public void dodaj() throws InstantiationException, IllegalAccessException {
         try {
@@ -70,7 +73,7 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         this.rodzajLista = rodzajLista;
     }
 
-   public Rejestracja getRejestracja() {
+    public Rejestracja getRejestracja() {
         return rejestracja;
     }
 

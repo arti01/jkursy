@@ -32,14 +32,12 @@
                 <h:inputText id="archTeczka" value="#{PrzeniesArch.dcDokArchDane.archTeczka}" />
             </h:panelGrid>
 
-            <rich:message for="zapisz" styleClass="error" />
-            <rich:message for="dodaj" styleClass="error" />
+            <rich:message for="przenies" styleClass="error" />
             <hr/>
-            
             <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'pojedyncze'}">
                 <ui:include src="/dcarch/wybrInc.xhtml"/>
                 <hr/>
-                <a4j:commandButton id="dodaj" value="Przenies" action="#{PrzeniesArch.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="przenies" value="Przenies" action="#{PrzeniesArch.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
             </h:panelGroup>
             <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'teczki'}">
