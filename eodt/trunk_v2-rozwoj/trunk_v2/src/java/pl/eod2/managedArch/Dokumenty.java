@@ -7,6 +7,7 @@ package pl.eod2.managedArch;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -33,6 +34,7 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         super("/dcarch/dokumenty", new DcDokumentJpaController(), new DcDokument());
     }
 
+
     @Override
     public void refresh() throws InstantiationException, IllegalAccessException {
         dcR = new DcRodzajJpaController();
@@ -41,6 +43,7 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         obiekt = obiekt.getClass().newInstance();
         error = null;
         rejestracja.setObiekt(null);
+        System.err.println(rodzajLista.getWrappedData());
     }
 
     public String detale() {

@@ -14,7 +14,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import pl.eod2.encje.DcAkceptStatus;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
@@ -22,7 +21,6 @@ import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcTeczka;
 import pl.eod2.encje.DcTeczkaKontr;
-import pl.eod2.encje.UmUrzadzenie;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.managedRej.Rejestracja;
 
@@ -42,6 +40,9 @@ public class Przenies {
     
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rejestracja;
+    
+    @ManagedProperty(value = "#{DokumentyArch}")
+    private Dokumenty dokumenty;
 
     @PostConstruct
     public void refreshObiekt() {
@@ -72,10 +73,10 @@ public class Przenies {
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
     
-    public void stworzDokZdawOdb(){
+    public void stworzDokZdawOdb() throws InstantiationException, IllegalAccessException{
         archPojDok();
-        rejestracja.setObiekt(new DcDokument());
-        rejestracja.setError(null);
+        dokumenty.refresh();
+        rejestracja.refreshObiekt();
         List<DcDokumentArch> wybraneArch=new ArrayList<>();
         for (DcDokument dok : wybrane) {
             DcDokumentArch dokArch = new DcDokumentArch(dok);
@@ -86,11 +87,15 @@ public class Przenies {
         rejestracja.getObiekt().setDcArchList(wybraneArch);
     }
     
-    public void przeniesDokZdawOdb() throws NonexistentEntityException{
-        
+    public void przeniesDokZdawczoOdb() throws NonexistentEntityException{
+        System.err.println(rejestracja.getObiekt().getNazwa());
+        System.err.println(rejestracja.getObiekt().getDokStatusId());
         if (rejestracja.dodajAbst()) {
             refreshObiekt();
-            
+            //usuwanie dokumentow
+            for (DcDokument dok : wybrane) {
+                dcDokC.destroy(dok);
+            }
             //urzadzeniaMg.refresh();
         }
     }
@@ -185,6 +190,14 @@ public class Przenies {
 
     public void setRejestracja(Rejestracja rejestracja) {
         this.rejestracja = rejestracja;
+    }
+
+    public Dokumenty getDokumenty() {
+        return dokumenty;
+    }
+
+    public void setDokumenty(Dokumenty dokumenty) {
+        this.dokumenty = dokumenty;
     }
 
 }

@@ -13,9 +13,10 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h2>Dokumenty do przeniesienia do archiwum</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <ui:include src="./daneArchiw.xhtml"/>
-        
-        <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPaneDok"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
+        <h:form>
+            <ui:include src="./daneArchiw.xhtml"/>
+
+            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPaneDok"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPaneDok')}.hide();
                             return false;">
@@ -27,15 +28,15 @@
                     <ui:param name="managedBean" value="#{DokumentyArch}"/>
                 </ui:include>
 
-                <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przeniesDokZdawOdb()}" render="listPanel, dodajPaneDok" execute="dodajPaneDok"
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przeniesDokZdawczoOdb}" render="listPanel, dodajPaneDok" execute="dodajPaneDok"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneDok')}.hide();} else {#{rich:component('dodajPaneDok')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
                 <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPaneDok" onclick="#{rich:component('dodajPaneDok')}.hide();
                             return false;" />
             </rich:popupPanel>
-        
-        
-        <h:form>
+
+
+
             <div id="tabela">
                 <h:panelGrid columns="3" style="background-color: orange">
                     <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
