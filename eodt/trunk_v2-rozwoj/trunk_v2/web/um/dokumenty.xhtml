@@ -5,7 +5,8 @@
                 template="/templates/template.xhtml">
     <ui:define name="content">
         <ui:include src="/dcrej/dokumentList.xhtml">
-            <ui:param name="managedBean" value="#{URejDokMg}"/> 
+            <ui:param name="managedBean" value="#{URejDokMg}"/>
+            <ui:param name="widok" value="#{false}"/>
         </ui:include>
     </ui:define>
 </ui:composition>

@@ -5,6 +5,8 @@
  */
 package pl.eod2.managedArch;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -12,11 +14,10 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod.abstr.AbstMg;
 import pl.eod2.encje.DcDokument;
-import pl.eod2.encje.DcDokumentArch;
-import pl.eod2.encje.DcDokumentArchKontr;
 import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.DcRodzajJpaController;
+import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.managedRej.Rejestracja;
 
 @ManagedBean(name = "DokumentyArch")
@@ -44,6 +45,18 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
 
     public String detale() {
         return "/dcarch/dokumentDetale?faces-redirect=true";
+    }
+    
+    @Override
+    public void dodaj() throws InstantiationException, IllegalAccessException {
+        try {
+            if (rejestracja.dodajAbst()) {
+                refresh();
+                //urzadzeniaMg.refresh();
+            }
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Dokumenty.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public DataModel<DcRodzaj> getRodzajLista() {

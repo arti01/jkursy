@@ -5,7 +5,6 @@
  */
 package pl.eod2.managedArch;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import pl.eod.abstr.AbstMg;

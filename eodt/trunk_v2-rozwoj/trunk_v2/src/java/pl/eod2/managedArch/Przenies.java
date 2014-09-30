@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -21,6 +22,9 @@ import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.DcTeczka;
 import pl.eod2.encje.DcTeczkaKontr;
+import pl.eod2.encje.UmUrzadzenie;
+import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.managedRej.Rejestracja;
 
 @ManagedBean(name = "PrzeniesArch")
 @SessionScoped
@@ -35,6 +39,9 @@ public class Przenies {
     private List<DcTeczka> doWybraniaTeczki = new ArrayList<>();
     private List<DcTeczka> wybraneTeczki = new ArrayList<>();
     private String typWyboru = "";
+    
+    @ManagedProperty(value = "#{RejestracjaRej}")
+    private Rejestracja rejestracja;
 
     @PostConstruct
     public void refreshObiekt() {
@@ -65,6 +72,29 @@ public class Przenies {
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
     
+    public void stworzDokZdawOdb(){
+        archPojDok();
+        rejestracja.setObiekt(new DcDokument());
+        rejestracja.setError(null);
+        List<DcDokumentArch> wybraneArch=new ArrayList<>();
+        for (DcDokument dok : wybrane) {
+            DcDokumentArch dokArch = new DcDokumentArch(dok);
+            dokArch.setDokStatusId(new DcDokumentStatus(6));
+            dokArch.setDokArchDane(dcDokArchDane);
+            wybraneArch.add(dokArch);
+        }
+        rejestracja.getObiekt().setDcArchList(wybraneArch);
+    }
+    
+    public void przeniesDokZdawOdb() throws NonexistentEntityException{
+        
+        if (rejestracja.dodajAbst()) {
+            refreshObiekt();
+            
+            //urzadzeniaMg.refresh();
+        }
+    }
+    
     public void archTeczki() {
         typWyboru = "teczki";
         wybraneTeczki.clear();
@@ -76,7 +106,7 @@ public class Przenies {
         for (DcDokument dok : wybrane) {
             DcDokumentArch dokArch = new DcDokumentArch(dok);
             dokArch.setDokArchDane(dcDokArchDane);
-            dcDokC.przeniesDoArchiwum(dok, dokArch);
+            dcDokC.przeniesDoArchiwum(dok, dokArch, false);
         }
         refreshObiekt();
     }
@@ -87,7 +117,7 @@ public class Przenies {
             for (DcDokument dok : tc.getDcDokumentListDoArch()) {
                 DcDokumentArch dokArch = new DcDokumentArch(dok);
                 dokArch.setDokArchDane(dcDokArchDane);
-                dcDokC.przeniesDoArchiwum(dok, dokArch);
+                dcDokC.przeniesDoArchiwum(dok, dokArch, false);
             }
         }
         refreshObiekt();
@@ -147,6 +177,14 @@ public class Przenies {
 
     public void setWybraneTeczki(List<DcTeczka> wybraneTeczki) {
         this.wybraneTeczki = wybraneTeczki;
+    }
+
+    public Rejestracja getRejestracja() {
+        return rejestracja;
+    }
+
+    public void setRejestracja(Rejestracja rejestracja) {
+        this.rejestracja = rejestracja;
     }
 
 }

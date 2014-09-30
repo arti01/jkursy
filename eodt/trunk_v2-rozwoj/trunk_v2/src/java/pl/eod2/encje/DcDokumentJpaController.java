@@ -161,13 +161,18 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         return dcDokument;
     }
 
-    public DcDokument przeniesDoArchiwum(DcDokument dcDokument, DcDokumentArch docArch) {
+    public DcDokument przeniesDoArchiwum(DcDokument dcDokument, DcDokumentArch docArch, boolean poczekalnia) {
         EntityManager em;
-        DcDokumentStatus dS7 = new DcDokumentStatusJpaController().findDcDokumentStatus(7);
+        DcDokumentStatus dS;
+        if (poczekalnia) {
+            dS = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
+        } else {
+            dS = new DcDokumentStatusJpaController().findDcDokumentStatus(7);
+        }
         em = getEntityManager();
         try {
 
-            docArch.setDokStatusId(dS7);
+            docArch.setDokStatusId(dS);
             DcDokumentArchKontr dcArchKontr = new DcDokumentArchKontr();
 
             em.getTransaction().begin();
@@ -621,7 +626,7 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
             em.close();
         }
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public List<DcDokument> findEntitiesDlaArch() {
         EntityManager em = getEntityManager();
