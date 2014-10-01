@@ -48,7 +48,7 @@
 
 
             <div id="tabela">
-                <h:panelGrid columns="3" style="background-color: orange">
+                <h:panelGrid columns="4" style="background-color: orange">
                     <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.archPojDok}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                         <h3>[archiwizacja wybranych dokumentów]</h3>
@@ -59,10 +59,11 @@
                         <h3>[archiwizacja wg teczek]</h3>
                     </a4j:commandLink>
 
-                    <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.stworzDokZdawOdb}" 
-                                      render="dodajPaneDok" oncomplete="#{rich:component('dodajPaneDok')}.show()">
+                    <a4j:commandLink  id="stwDokZO" execute="@this, listPanel" action="#{PrzeniesArch.stworzDokZdawOdb}" 
+                                      render="dodajPaneDok" oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneDok')}.show();}" >
                         <h3>[stwórz dokument zdawczo - odbiorczy dla wybranych]</h3>
                     </a4j:commandLink>
+                    <rich:message for="stwDokZO"/>
                 </h:panelGrid>
             </div>
             <rich:panel id="listPanel">

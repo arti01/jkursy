@@ -83,12 +83,10 @@ public class Przenies {
         List<DcDokumentArch> wybraneArch = new ArrayList<>();
         if(wybrane.isEmpty()){
             FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-            request.getSession().invalidate();
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "brak dokumentow", "brak dokumentow");
             UIComponent zapisz = UIComponent.getCurrentComponent(context);
             context.addMessage(zapisz.getClientId(context), message);
-            throw new UnsupportedOperationException("brak dokumentow");
+            //throw new UnsupportedOperationException("brak dokumentow");
         }
         for (DcDokument dok : wybrane) {
             DcDokumentArch dokArch = new DcDokumentArch(dok);
