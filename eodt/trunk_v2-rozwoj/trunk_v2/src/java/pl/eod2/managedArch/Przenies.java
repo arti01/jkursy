@@ -9,11 +9,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.servlet.http.HttpServletRequest;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
@@ -37,10 +41,10 @@ public class Przenies {
     private List<DcTeczka> doWybraniaTeczki = new ArrayList<>();
     private List<DcTeczka> wybraneTeczki = new ArrayList<>();
     private String typWyboru = "";
-    
+
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rejestracja;
-    
+
     @ManagedProperty(value = "#{DokumentyArch}")
     private Dokumenty dokumenty;
 
@@ -72,11 +76,20 @@ public class Przenies {
         }
         doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
-    
+
     public void stworzDokZdawOdb() {
         archPojDok();
         rejestracja.refreshObiekt();
-        List<DcDokumentArch> wybraneArch=new ArrayList<>();
+        List<DcDokumentArch> wybraneArch = new ArrayList<>();
+        if(wybrane.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+            request.getSession().invalidate();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "brak dokumentow", "brak dokumentow");
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            throw new UnsupportedOperationException("brak dokumentow");
+        }
         for (DcDokument dok : wybrane) {
             DcDokumentArch dokArch = new DcDokumentArch(dok);
             dokArch.setDokStatusId(new DcDokumentStatus(6));
@@ -84,24 +97,18 @@ public class Przenies {
             wybraneArch.add(dokArch);
         }
         rejestracja.getObiekt().setDcArchList(wybraneArch);
-        System.err.println("tuuu");
-        System.err.println(rejestracja.getObiekt());
-        System.err.println(rejestracja.getObiekt().getDcArchList());
     }
-    
-    public void przeniesDokZdawczoOdb() throws NonexistentEntityException{
-        System.err.println(rejestracja.getObiekt().getNazwa());
-        System.err.println(rejestracja.getObiekt().getDokStatusId());
+
+    public void przeniesDokZdawczoOdb() throws NonexistentEntityException {
         if (rejestracja.dodajAbst()) {
-            refreshObiekt();
             //usuwanie dokumentow
             for (DcDokument dok : wybrane) {
                 dcDokC.destroy(dok);
             }
-            //urzadzeniaMg.refresh();
+            refreshObiekt();
         }
     }
-    
+
     public void archTeczki() {
         typWyboru = "teczki";
         wybraneTeczki.clear();

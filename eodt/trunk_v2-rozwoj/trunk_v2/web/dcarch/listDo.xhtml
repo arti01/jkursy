@@ -27,7 +27,17 @@
                     <ui:param name="detal" value="#{false}"/> 
                     <ui:param name="managedBean" value="#{DokumentyArch}"/>
                 </ui:include>
-
+                <rich:panel id="pgArch">
+                    <f:facet name="header">
+                        Dokument powiązany z dokumentami w archiwum
+                    </f:facet>
+                    <rich:dataTable value="#{RejestracjaRej.obiekt.dcArchList}" var="arch" style="width: 100%; border: white thick">
+                        <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
+                            #{arch.nazwa}
+                            (#{arch.symbolDok})
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:panel>
                 <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przeniesDokZdawczoOdb}" render="listPanel, dodajPaneDok" execute="dodajPaneDok"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneDok')}.hide();} else {#{rich:component('dodajPaneDok')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
@@ -116,6 +126,12 @@
                         <rich:tooltip target="rodzajList">
                             #{item.rodzajId.opis} z grupy:#{item.rodzajId.idRodzajGrupa.nazwa}
                         </rich:tooltip>
+                    </rich:column>
+                    <rich:column style="width: 30px">
+                        <rich:tooltip target="imgDt" value="detale" layout="block"/>
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{RejestracjaRej.detale}" image="/images/detail.png">
+                            <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{item}" />
+                        </a4j:commandButton>
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">do archiwizacji</f:facet>

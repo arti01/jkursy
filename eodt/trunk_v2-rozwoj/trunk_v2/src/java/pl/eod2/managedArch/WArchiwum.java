@@ -20,7 +20,7 @@ public class WArchiwum extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     }
 
     public String detale() {
-        return "/dcarch/wArchDetale";
+        return "/dcarch/wArchDetale?faces-redirect=true";
     }
 
 }

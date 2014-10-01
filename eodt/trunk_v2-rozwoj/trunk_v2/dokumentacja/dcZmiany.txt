@@ -1,3 +1,34 @@
+2014-10-01
+
+zmiana statusow w poczekalni - w trakcie akceptacji i gotowy do archiwizacji
+
+update DC_DOKUMENT_STATUS set nazwa='poczekalnia - do akceptu', opis='dokument w poczekalni archiwizacji w trakcie akceptacji' where id=6;
+insert into DC_DOKUMENT_STATUS values (99, 'poczekalnia - zaakceptowany', 'dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji', '#888888', 'archiwum');
+update DC_DOKUMENT_ARCH set dokstatusid_id=99 where dokstatusid_id=7;
+update DC_DOKUMENT set dokstatusid_id=99 where dokstatusid_id=7;
+update DC_RODZAJ set id_dc_status_pocz=99 where id_dc_status_pocz=7;
+update DC_RODZAJ set id_dc_status_konc=99 where id_dc_status_konc=7;
+update DC_DOKUMENT_STATUS set id=8 where id=7;
+update DC_RODZAJ set id_dc_status_pocz=8 where id_dc_status_pocz=99;
+update DC_RODZAJ set id_dc_status_konc=8 where id_dc_status_konc=99;
+update DC_DOKUMENT_ARCH set dokstatusid_id=8 where dokstatusid_id=99;
+update DC_DOKUMENT set dokstatusid_id=8 where dokstatusid_id=99;
+update DC_DOKUMENT_STATUS set id=7 where id=99;
+
+Po tym wszystkim tabela dc_dokument_status powinna wygladac tak (trzeba pamietac aby ustawic kolorki
+no i sprawdzic status poczatkowy i koncowy dla rodzajow, ktore obslugują dokumentu archiwalne,
+powinno byc z pocz. do akceptu do pocz. zaakceptowany
+
+1	nowy                            dokument po zarejestrowaniu                     #CCCCCC	dokumenty
+2	w trakcie                       dokument w trakcie akceptacji lub dystrybucji	#AAAAAA	dokumenty
+3	zamknięty                       dokument zamknięty                              #BBBBBB	dokumenty
+4	anulowany                       anulowany                                       #999999	dokumenty
+5	odrzucony                       dokument odrzucony                              #777777	dokumenty
+6	poczekalnia - do akceptu	dokument w poczekalni archiwizacji w trakcie akceptacji	#888888	archiwum
+7	poczekalnia - zaakceptowany	dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji	#888888	archiwum
+8	w archiwum                      dokument w archiwum                             #989898	archiwum
+
+
 2014-09-26
 
 --alter table DC_DOKUMENT_STATUS ADD COLUMN dla_tabeli varchar(50);

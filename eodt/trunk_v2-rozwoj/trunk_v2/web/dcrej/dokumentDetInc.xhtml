@@ -265,11 +265,6 @@
                             <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
                                 #{arch.nazwa}
                                 (#{arch.symbolDok})
-                                <rich:tooltip target="imgDelOdb" value="usuń zasób" layout="block"/>
-                                <a4j:commandButton id="imgDelOdb" action="#{URejDokMg.usunUrzad}" execute="imgDelOdb" render="pgArch"  image="/images/delete.png" style="width: 16px; height: 16px" 
-                                                   rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1}">
-                                    <f:setPropertyActionListener target="#{URejDokMg.urzad}" value="#{urzadz}" />
-                                </a4j:commandButton>
                             </rich:column>
                         </rich:dataTable>
                     </rich:panel>

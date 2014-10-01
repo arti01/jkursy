@@ -72,8 +72,11 @@
                             #{item.kontrahentId.adres} #{item.kontrahentId.adres} #{item.kontrahentId.nipRegon}
                         </rich:tooltip>
                     </rich:column>
-                    <rich:column>
-                        <f:facet name="header">status</f:facet>
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
+                        <f:facet name="header">status<br/>
+                            <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
+                                <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                        </f:facet>
                         <h:outputText id="statusList" value="#{item.dokStatusId.nazwa}"/>
                         <rich:tooltip target="statusList">
                             #{item.dokStatusId.opis}
@@ -93,6 +96,12 @@
                     <rich:column>
                         <f:facet name="header">wybierz</f:facet>
                         <h:selectBooleanCheckbox value="#{item.wyborZnacznik}"/>
+                    </rich:column>
+                    <rich:column>
+                        <f:facet name="header">podgląd</f:facet>
+                        <a4j:commandButton id="imgDt" execute="@this" action="#{WArchiwumArch.detale}" image="/images/detail.png">
+                            <f:setPropertyActionListener target="#{WArchiwumArch.obiekt}" value="#{item}" />
+                        </a4j:commandButton>
                     </rich:column>
                 </rich:dataTable>
             </rich:panel>
