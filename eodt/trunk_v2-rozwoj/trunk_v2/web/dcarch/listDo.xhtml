@@ -13,8 +13,9 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h2>Dokumenty do przeniesienia do archiwum</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <ui:include src="./daneArchiw.xhtml"/>
-
+        <ui:include src="./daneArchiw.xhtml">
+            <ui:param name="managedBean" value="#{PrzeniesArch}"/> 
+        </ui:include>
         <h:form>
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPaneDok"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">

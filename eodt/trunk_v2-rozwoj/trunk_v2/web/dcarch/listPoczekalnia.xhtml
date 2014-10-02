@@ -13,16 +13,18 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h2>Poczekalnia</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <ui:include src="./daneArchiw.xhtml"/>
+        <ui:include src="./daneArchiw.xhtml">
+            <ui:param name="managedBean" value="#{PoczekalniaArch}"/> 
+        </ui:include>
         <h:form>
             <div id="tabela">
                 <h:panelGrid columns="3" style="background-color: orange">
-                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archPojDok}" 
+                    <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archPojDok}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                         <h3>[archiwizacja wybranych dokumentów]</h3>
                     </a4j:commandLink>
 
-                    <a4j:commandLink  execute="@form" action="#{PrzeniesArch.archTeczki}" 
+                    <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archTeczki}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
                         <h3>[archiwizacja wg teczek]</h3>
                     </a4j:commandLink>

@@ -11,39 +11,39 @@
         <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
             <h:panelGrid columns="2" id="dodajGrid">
                 <h:outputLabel for="archOsobaZdajaca" value="Osoba Zdająca: "/>
-                <h:inputText id="archOsobaZdajaca" value="#{PrzeniesArch.dcDokArchDane.archOsobaZdajaca}" />
+                <h:inputText id="archOsobaZdajaca" value="#{managedBean.dcDokArchDane.archOsobaZdajaca}" />
 
                 <h:outputLabel for="OsobaOdpowiadajaca" value="Osoba Odpowiadająca: "/>
-                <h:inputText id="OsobaOdpowiadajaca" value="#{PrzeniesArch.dcDokArchDane.archOsobaOdpowiadajaca}" />
+                <h:inputText id="OsobaOdpowiadajaca" value="#{managedBean.dcDokArchDane.archOsobaOdpowiadajaca}" />
 
                 <h:outputLabel for="archPokoj" value="Pokój: "/>
-                <h:inputText id="archPokoj" value="#{PrzeniesArch.dcDokArchDane.archPokoj}" />
+                <h:inputText id="archPokoj" value="#{managedBean.dcDokArchDane.archPokoj}" />
 
                 <h:outputLabel for="archRegal" value="Regał: "/>
-                <h:inputText id="archRegal" value="#{PrzeniesArch.dcDokArchDane.archRegal}" />
+                <h:inputText id="archRegal" value="#{managedBean.dcDokArchDane.archRegal}" />
 
                 <h:outputLabel for="archPolka" value="Półka: "/>
-                <h:inputText id="archPolka" value="#{PrzeniesArch.dcDokArchDane.archPolka}" />
+                <h:inputText id="archPolka" value="#{managedBean.dcDokArchDane.archPolka}" />
 
                 <h:outputLabel for="archKarton" value="Karton: "/>
-                <h:inputText id="archKarton" value="#{PrzeniesArch.dcDokArchDane.archKarton}" />
+                <h:inputText id="archKarton" value="#{managedBean.dcDokArchDane.archKarton}" />
 
                 <h:outputLabel for="archTeczka" value="Teczka: "/>
-                <h:inputText id="archTeczka" value="#{PrzeniesArch.dcDokArchDane.archTeczka}" />
+                <h:inputText id="archTeczka" value="#{managedBean.dcDokArchDane.archTeczka}" />
             </h:panelGrid>
 
             <rich:message for="przenies" styleClass="error" />
             <hr/>
-            <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'pojedyncze'}">
+            <h:panelGroup  rendered="#{managedBean.typWyboru eq 'pojedyncze'}">
                 <ui:include src="/dcarch/wybrInc.xhtml"/>
                 <hr/>
-                <a4j:commandButton id="przenies" value="Przenies" action="#{PrzeniesArch.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="przenies" value="Przenies" action="#{managedBean.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
             </h:panelGroup>
-            <h:panelGroup  rendered="#{PrzeniesArch.typWyboru eq 'teczki'}">
+            <h:panelGroup  rendered="#{managedBean.typWyboru eq 'teczki'}">
                 <ui:include src="/dcarch/teczkiInc.xhtml"/>
                 <hr/>
-                <a4j:commandButton id="dodajTecz" value="Przenies" action="#{PrzeniesArch.przeniesTeczki}" render="listPanel, dodajPane" execute="dodajPane"
+                <a4j:commandButton id="dodajTecz" value="Przenies" action="#{managedBean.przeniesTeczki}" render="listPanel, dodajPane" execute="dodajPane"
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
             </h:panelGroup>
             

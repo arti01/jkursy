@@ -1,4 +1,2 @@
 - z poczekalni do archiwum przeniesienie
 - edycja danych archiwalizacji (w tym hurtowa)
-- wyświetlanie zalaczonych dokumentow w formatce tworzenia dokuemntu do poczekalni
-- blokada, gdy nie ma wybranych dokuemtów dla ww

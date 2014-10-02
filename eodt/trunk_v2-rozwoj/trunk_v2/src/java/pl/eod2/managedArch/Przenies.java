@@ -17,7 +17,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.servlet.http.HttpServletRequest;
 import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
@@ -64,19 +63,6 @@ public class Przenies {
         return "/dcarch/listDo";
     }
 
-    @SuppressWarnings("unchecked")
-    public void archPojDok() {
-        typWyboru = "pojedyncze";
-        wybrane.clear();
-        dcDokArchDane = new DcDokumentArchDane();
-        for (DcDokument dok : (List<DcDokument>) listaDoArchiwum.getWrappedData()) {
-            if (dok.isDoArchZnacznik()) {
-                wybrane.add(dok);
-            }
-        }
-        doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
-    }
-
     public void stworzDokZdawOdb() {
         archPojDok();
         rejestracja.refreshObiekt();
@@ -107,12 +93,19 @@ public class Przenies {
         }
     }
 
-    public void archTeczki() {
-        typWyboru = "teczki";
-        wybraneTeczki.clear();
-        doWybraniaTeczki = dcTeczC.findDlaStatus(new DcDokumentStatus(3));
+    @SuppressWarnings("unchecked")
+    public void archPojDok() {
+        typWyboru = "pojedyncze";
+        wybrane.clear();
+        dcDokArchDane = new DcDokumentArchDane();
+        for (DcDokument dok : (List<DcDokument>) listaDoArchiwum.getWrappedData()) {
+            if (dok.isDoArchZnacznik()) {
+                wybrane.add(dok);
+            }
+        }
+        doWybrania = (List<DcDokument>) listaDoArchiwum.getWrappedData();
     }
-
+    
     public void przeniesPoj() {
         dcDokArchDane.setArchData(new Date());
         for (DcDokument dok : wybrane) {
@@ -121,6 +114,12 @@ public class Przenies {
             dcDokC.przeniesDoArchiwum(dok, dokArch, false);
         }
         refreshObiekt();
+    }
+
+    public void archTeczki() {
+        typWyboru = "teczki";
+        wybraneTeczki.clear();
+        doWybraniaTeczki = dcTeczC.findDlaStatus(new DcDokumentStatus(3));
     }
 
     public void przeniesTeczki() {

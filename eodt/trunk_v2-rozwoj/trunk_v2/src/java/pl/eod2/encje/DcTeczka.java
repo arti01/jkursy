@@ -57,8 +57,12 @@ public class DcTeczka extends AbstEncja implements Serializable {
     private String opis;
     @OneToMany(mappedBy = "teczkaId", fetch = FetchType.LAZY)
     private List<DcDokument> dcDokumentList;
+    @OneToMany(mappedBy = "teczkaId", fetch = FetchType.LAZY)
+    private List<DcDokumentArch> dcDokumentArchList;
     @Transient
     private List<DcDokument> dcDokumentListDoArch;
+    @Transient
+    private List<DcDokumentArch> dcDokumentListPoczDoArch;
 
     public DcTeczka() {
     }
@@ -109,13 +113,31 @@ public class DcTeczka extends AbstEncja implements Serializable {
     }
 
     public List<DcDokument> getDcDokumentListDoArch() {
-        List<DcDokument> wynik=new ArrayList<>();
+        List<DcDokument> wynik = new ArrayList<>();
         for (DcDokument dok : this.dcDokumentList) {
             if (dok.getDokStatusId().getId() == 3) {
                 wynik.add(dok);
             }
         }
         return wynik;
+    }
+
+    public List<DcDokumentArch> getDcDokumentListPoczDoArch() {
+        List<DcDokumentArch> wynik = new ArrayList<>();
+        for (DcDokumentArch dok : this.dcDokumentArchList) {
+            if (dok.getDokStatusId().getId() == 7) {
+                wynik.add(dok);
+            }
+        }
+        return wynik;
+    }
+
+    public List<DcDokumentArch> getDcDokumentArchList() {
+        return dcDokumentArchList;
+    }
+
+    public void setDcDokumentArchList(List<DcDokumentArch> dcDokumentArchList) {
+        this.dcDokumentArchList = dcDokumentArchList;
     }
 
     @Override
