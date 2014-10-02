@@ -6,8 +6,13 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 
+    <rich:pickList value="#{managedBean.wybrane}" sourceCaption="Dokumenty gotowe do archiwizacji" targetCaption="wybrane dokumenty" converter="#{DcDokumentArchConv}"
+                   addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń" rendered="#{managedBean==PoczekalniaArch}">
+        <f:selectItems value="#{managedBean.doWybrania}" var="dok" itemValue="#{dok}" itemLabel="#{dok.nazwa}-#{dok.symbolDok}" />
+    </rich:pickList>
+    
     <rich:pickList value="#{managedBean.wybrane}" sourceCaption="Dokumenty gotowe do archiwizacji" targetCaption="wybrane dokumenty" converter="#{DcDokumentConv}"
-                   addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
+                   addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń" rendered="#{managedBean==PrzeniesArch}">
         <f:selectItems value="#{managedBean.doWybrania}" var="dok" itemValue="#{dok}" itemLabel="#{dok.nazwa}-#{dok.symbolDok}" />
     </rich:pickList>
 

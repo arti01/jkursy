@@ -45,6 +45,7 @@ public class Poczekalnia extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         lista.setWrappedData(suma);
         obiekt = obiekt.getClass().newInstance();
         error = null;
+        wybrane.clear();
     }
 
     @Override
@@ -71,9 +72,10 @@ public class Poczekalnia extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         for (DcDokumentArch dok : wybrane) {
             if (dok.getDokStatusId().getId() != 7) {
                 FacesContext context = FacesContext.getCurrentInstance();
-                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "błędny status"+dok.getDokStatusId().getNazwa(), "błędny status"+dok.getDokStatusId().getNazwa());
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "błędny status: "+dok.getDokStatusId().getNazwa(), "błędny status: "+dok.getDokStatusId().getNazwa());
                 UIComponent zapisz = UIComponent.getCurrentComponent(context);
                 context.addMessage(zapisz.getClientId(context), message);
+                continue;
             }
             dok.setDokArchDane(dcDokArchDane);
             dok.setDokStatusId(new DcDokumentStatus(8));

@@ -6,9 +6,9 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <rich:pickList value="#{PrzeniesArch.wybraneTeczki }" sourceCaption="Teczki do archiwizacji" targetCaption="wybrane teczki" converter="#{DcTeczkaConv}"
+    <rich:pickList value="#{managedBean.wybraneTeczki }" sourceCaption="Teczki do archiwizacji" targetCaption="wybrane teczki" converter="#{DcTeczkaConv}"
                    addAllText="dodaj wszystkie" addText="dodaj" removeAllText="usuń wszystkie" removeText="usuń">
-        <f:selectItems value="#{PrzeniesArch.doWybraniaTeczki}" var="teczka" itemValue="#{teczka}" itemLabel="#{teczka.nazwa}" />
+        <f:selectItems value="#{managedBean.doWybraniaTeczki}" var="teczka" itemValue="#{teczka}" itemLabel="#{teczka.nazwa}" />
     </rich:pickList>
 
 </html>

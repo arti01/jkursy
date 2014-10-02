@@ -13,10 +13,11 @@
         <h:outputStylesheet library="css" name="../resources/css/default.css"/>
         <h2>Poczekalnia</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <ui:include src="./daneArchiw.xhtml">
-            <ui:param name="managedBean" value="#{PoczekalniaArch}"/> 
-        </ui:include>
         <h:form>
+            <ui:include src="./daneArchiw.xhtml">
+                <ui:param name="managedBean" value="#{PoczekalniaArch}"/> 
+            </ui:include>
+
             <div id="tabela">
                 <h:panelGrid columns="3" style="background-color: orange">
                     <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archPojDok}" 
@@ -26,7 +27,7 @@
 
                     <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archTeczki}" 
                                       render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
-                        <h3>[archiwizacja wg teczek]</h3>
+                        <h3>[archiwizacja wg teczek - tylko zaakcepowane]</h3>
                     </a4j:commandLink>
                 </h:panelGrid>
             </div>
@@ -113,7 +114,7 @@
             </rich:popupPanel>
         </h:form>
         <hr/>
-
+        <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
     </ui:define>
 
 </ui:composition>

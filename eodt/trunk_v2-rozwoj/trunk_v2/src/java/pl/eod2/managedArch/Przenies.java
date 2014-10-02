@@ -54,6 +54,7 @@ public class Przenies {
         listaDoArchiwum.setWrappedData(dcDokC.findStatus(3));
         dcDokArchDane = new DcDokumentArchDane();
         typWyboru = "";
+        wybrane.clear();
         //obiekt = new DcDokument();
         //error = null;
     }

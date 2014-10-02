@@ -7,9 +7,8 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form>
         <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
-            <h:panelGrid columns="2" id="dodajGrid">
+            <h:panelGrid columns="2" id="dodajGridArch">
                 <h:outputLabel for="archOsobaZdajaca" value="Osoba Zdająca: "/>
                 <h:inputText id="archOsobaZdajaca" value="#{managedBean.dcDokArchDane.archOsobaZdajaca}" />
 
@@ -50,5 +49,4 @@
             <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                     return false;" />
         </rich:popupPanel>
-    </h:form>
 </html>
