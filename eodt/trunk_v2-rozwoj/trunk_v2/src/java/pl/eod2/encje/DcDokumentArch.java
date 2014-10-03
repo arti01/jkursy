@@ -379,6 +379,14 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.wyborZnacznik = wyborZnacznik;
     }
 
+    public List<DcDokument> getDokumentyList() {
+        return dokumentyList;
+    }
+
+    public void setDokumentyList(List<DcDokument> dokumentyList) {
+        this.dokumentyList = dokumentyList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
