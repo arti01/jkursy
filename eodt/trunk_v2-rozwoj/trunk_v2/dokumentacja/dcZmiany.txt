@@ -1,4 +1,24 @@
 2014-10-01
+Opis procesu raz jeszcze.
+1. Należy stworzyć grupę rodzajów z zaptaszkowanym "czy rodzaje mogą obsługiwać Dokumenty Archiwalne"
+2. Stworzyć symbole merytoryczne 1 i 2
+3. Stworzyć rodzaj należący do tej grupy, np dok zdawczo odbiorczy, wybrać symbole merytoryczne,
+    wypełnić ewentualnie szablon, początkowy status dokumentow wybrać "poczekalnia - do akceptu",
+    końcowy status - "poczekalnia - zaakceptowany".
+4. Pamiętać o stworzeniu kroków akceptacji.
+5. W dokumenty archiwum->do archiwum zaznaczyć właściwe dokumenty, kliknąć na "stwórz dok. zdawczo-odbiorczy ....",
+    wprowadzić nazwę, wybrać wcześniej zdefiniowany rodzaj. To stworzy "normalny" dokument z przypisanymi (widocznymi
+    w detalach) dokumentami do archiwizacji. Dokumment widoczny jest w podmenu "dokumenty" i normalnie w menu rejestracja.
+    Podłączone do niego dokumenty uzyskują status "poczekalnia - do akceptu" i są widoczne w podmenu poczekalnia.
+6. Wysłać go do akceptacji
+7. Zaakceptować. Wtedy dokumenty związane uzyskują status "poczekalnia - zaakceptowany", ale są nadal w poczekalni.
+8. W poczekalni można wtedy przeprowadzić przeniesienie do archiwum, wybierając dokumenty i uzupełniając dane
+    dotyczące lokalizacji w archiwum i osób odpowiedzialnych.
+9. Wariacja procedu - można stworzyć rodzaj o statusie pocz. "poczekalnia - do akceptu". a końcowym "w archiwum",
+    wtedy po zakończeniu procesu akceptacji dokumenty powiązane od razu wylądują w archiwum, tyle, że bez daty
+    archiwizacji i bez wypełnionych danych dotyczących lokalizacji w archiwum
+
+2014-10-01
 
 zmiana statusow w poczekalni - w trakcie akceptacji i gotowy do archiwizacji
 

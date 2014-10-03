@@ -1,2 +1,2 @@
-- z poczekalni do archiwum przeniesienie
-- edycja danych archiwalizacji (w tym hurtowa)
+- blokada na pokazywanie rodzajów bez kroków
+- dla dokumentów do archiwizacji dorobić okienko gdzie pokazuje dokumenty do jakich są przypisane.

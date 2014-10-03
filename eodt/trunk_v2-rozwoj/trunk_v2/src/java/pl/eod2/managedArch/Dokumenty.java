@@ -66,6 +66,7 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
     }
 
     public DataModel<DcRodzaj> getRodzajLista() {
+        rodzajLista.setWrappedData(dcR.findDcRodzajArch());
         return rodzajLista;
     }
 
