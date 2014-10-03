@@ -21,12 +21,12 @@
             <div id="tabela">
                 <h:panelGrid columns="3" style="background-color: orange">
                     <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archPojDok}" 
-                                      render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                                      render="dodajPaneArch" oncomplete="#{rich:component('dodajPaneArch')}.show()">
                         <h3>[archiwizacja wybranych dokumentów]</h3>
                     </a4j:commandLink>
 
                     <a4j:commandLink  execute="@form" action="#{PoczekalniaArch.archTeczki}" 
-                                      render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                                      render="dodajPaneArch" oncomplete="#{rich:component('dodajPaneArch')}.show()">
                         <h3>[archiwizacja wg teczek - tylko zaakcepowane]</h3>
                     </a4j:commandLink>
                 </h:panelGrid>

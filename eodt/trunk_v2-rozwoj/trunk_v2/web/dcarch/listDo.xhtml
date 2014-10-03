@@ -18,9 +18,9 @@
                 <ui:param name="managedBean" value="#{PrzeniesArch}"/> 
             </ui:include>
 
-            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPaneDok"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
+            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
-                    <h:outputLink value="#" onclick="#{rich:component('dodajPaneDok')}.hide();
+                    <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
                             return false;">
                         <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
                     </h:outputLink>
@@ -40,10 +40,10 @@
                         </rich:column>
                     </rich:dataTable>
                 </rich:panel>
-                <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przeniesDokZdawczoOdb}" render="listPanel, dodajPaneDok" execute="dodajPaneDok"
-                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneDok')}.hide();} else {#{rich:component('dodajPaneDok')}.show();}" 
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{PrzeniesArch.przeniesDokZdawczoOdb}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id==null}"/>
-                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPaneDok" onclick="#{rich:component('dodajPaneDok')}.hide();
+                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" onclick="#{rich:component('dodajPane')}.hide();
                             return false;" />
             </rich:popupPanel>
 
@@ -52,17 +52,17 @@
             <div id="tabela">
                 <h:panelGrid columns="4" style="background-color: orange">
                     <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.archPojDok}" 
-                                      render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                                      render="dodajPaneArch" oncomplete="#{rich:component('dodajPaneArch')}.show()">
                         <h3>[archiwizacja wybranych dokumentów]</h3>
                     </a4j:commandLink>
 
                     <a4j:commandLink  execute="@this, listPanel" action="#{PrzeniesArch.archTeczki}" 
-                                      render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
+                                      render="dodajPaneArch" oncomplete="#{rich:component('dodajPaneArch')}.show()">
                         <h3>[archiwizacja wg teczek]</h3>
                     </a4j:commandLink>
 
                     <a4j:commandLink  id="stwDokZO" execute="@this, listPanel" action="#{PrzeniesArch.stworzDokZdawOdb}" 
-                                      render="dodajPaneDok" oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneDok')}.show();}" >
+                                      render="dodajPane" oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.show();}" >
                         <h3>[stwórz dokument zdawczo - odbiorczy dla wybranych]</h3>
                     </a4j:commandLink>
                     <rich:message for="stwDokZO"/>

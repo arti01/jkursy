@@ -7,7 +7,7 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
+    <rich:popupPanel header="Wprowadź dane" id="dodajPaneArch"  autosized="true" domElementAttachment="parent">
         <h:panelGrid columns="2" id="dodajGridArch">
             <h:outputLabel for="archOsobaZdajaca" value="Osoba Zdająca: "/>
             <h:inputText id="archOsobaZdajaca" value="#{managedBean.dcDokArchDane.archOsobaZdajaca}" />
@@ -37,22 +37,22 @@
         <h:panelGroup  rendered="#{managedBean.typWyboru eq 'pojedyncze'}">
             <ui:include src="/dcarch/wybrInc.xhtml"/>
             <hr/>
-            <a4j:commandButton id="przenies" value="Przenieś" action="#{managedBean.przeniesPoj}" render="listPanel, dodajPane" execute="dodajPane"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
+            <a4j:commandButton id="przenies" value="Przenieś" action="#{managedBean.przeniesPoj}" render="listPanel, dodajPaneArch" execute="dodajPaneArch"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneArch')}.hide();} else {#{rich:component('dodajPaneArch')}.show();}"/>
         </h:panelGroup>
         <h:panelGroup  rendered="#{managedBean.typWyboru eq 'teczki'}">
             <ui:include src="/dcarch/teczkiInc.xhtml"/>
             <hr/>
-            <a4j:commandButton id="dodajTecz" value="Przenieś" action="#{managedBean.przeniesTeczki}" render="listPanel, dodajPane" execute="dodajPane"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
+            <a4j:commandButton id="dodajTecz" value="Przenieś" action="#{managedBean.przeniesTeczki}" render="listPanel, dodajPaneArch" execute="dodajPaneArch"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneArch')}.hide();} else {#{rich:component('dodajPaneArch')}.show();}"/>
         </h:panelGroup>
 
         <h:panelGroup  rendered="#{managedBean.typWyboru eq 'zmianaDanych'}">
-            <a4j:commandButton id="zmiana" value="Zapisz" action="#{managedBean.zmianaDanychArchWykonaj}" render="listPanel, dodajPane" execute="dodajPane"
-                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}"/>
+            <a4j:commandButton id="zmiana" value="Zapisz" action="#{managedBean.zmianaDanychArchWykonaj}" render="listPanel, dodajPaneArch" execute="dodajPaneArch"
+                               oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneArch')}.hide();} else {#{rich:component('dodajPaneArch')}.show();}"/>
         </h:panelGroup>
         
-        <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
+        <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneArch')}.hide();
                 return false;" />
     </rich:popupPanel>
 </html>

@@ -81,10 +81,10 @@ public class DcRodzaj implements Serializable {
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH},fetch = FetchType.LAZY)
     private List<UmMasterGrupa> umMasterGrupaList;
     @JoinColumn(name = "id_dc_status_pocz", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private DcDokumentStatus dcDokStatusPocz;
     @JoinColumn(name = "id_dc_status_konc", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private DcDokumentStatus dcDokStatusKonc;
     @JoinColumn(name = "id_symb_mer1", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
