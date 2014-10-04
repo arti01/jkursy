@@ -167,7 +167,7 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         if (poczekalnia) {
             dS = new DcDokumentStatusJpaController().findDcDokumentStatus(6);
         } else {
-            dS = new DcDokumentStatusJpaController().findDcDokumentStatus(7);
+            dS = new DcDokumentStatusJpaController().findDcDokumentStatus(8);
         }
         em = getEntityManager();
         try {

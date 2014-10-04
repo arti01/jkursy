@@ -9,6 +9,9 @@ dokumentów i jakie rodzaje dokumentów (status początkowy i końcowy) się zde
 Czyli aby wydawać dokumenty trzeba stworzyć rodzaj: staus poczatkowy "w archiwum", końcowy "wydany", a aby potem przyjąć
 status poczatkowy "wydany", koncowy "w archiwum".
 
+Wprowadziłem alert i blokadę wyboru dla rodzajów bez kroku akceptacji - do tej pory gdy stworzyło się dokument dla takiego rodzaju
+to była kiszka - dokument wisiał ze statusem "w trakcie" a nie mozna go było zamknąć, bo nie było kroków. No, można było anulować...
+
 2014-10-01
 Opis procesu raz jeszcze.
 1. Należy stworzyć grupę rodzajów z zaptaszkowanym "czy rodzaje mogą obsługiwać Dokumenty Archiwalne"

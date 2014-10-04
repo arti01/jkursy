@@ -1,2 +1,0 @@
-- blokada na pokazywanie rodzajów bez kroków
-- dla dokumentów do archiwizacji dorobić okienko gdzie pokazuje dokumenty do jakich są przypisane.

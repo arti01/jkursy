@@ -85,6 +85,15 @@ public class Przenies {
     }
 
     public void przeniesDokZdawczoOdb() throws NonexistentEntityException {
+        //walidacja, aby dokument byl zdawczo orbiorczy
+        if(rejestracja.getObiekt().getRodzajId().getDcDokStatusPocz().getId()!=6){
+            FacesContext context = FacesContext.getCurrentInstance();
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "błędny rodzaj - status początkowy różny od: poczekalnia - do akceptu", "błędny rodzaj - status początkowy różny od: poczekalnia - do akceptu");
+            UIComponent zapisz = UIComponent.getCurrentComponent(context);
+            context.addMessage(zapisz.getClientId(context), message);
+            return;
+        }
+            
         if (rejestracja.dodajAbst()) {
             //usuwanie dokumentow
             for (DcDokument dok : wybrane) {
