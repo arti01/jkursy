@@ -1,3 +1,14 @@
+2014-10-03
+INSERT INTO dc_dokument_status  VALUES (9, 'wydany', 'dokument wydany z archiwum', '#999999', 'archiwum');
+
+W podmenu W archiwum nowa czynnosc "[nowa czynność archiwalna]". Dla zaznaczonych dokumentów w archiwum można stworzyć dowolny
+dokument, który należy do rodzaju "archiwalnego", czyli takiej grupy rodzajów, która ma zaznaczoną obsługę archiwum.
+Chodzi o to, że w tej opcji można na przykład tworzyć dokumenty wydania z archiwum - wszystko zależy od tego, jakie stworzy się statusy
+dokumentów i jakie rodzaje dokumentów (status początkowy i końcowy) się zdefiniuje
+
+Czyli aby wydawać dokumenty trzeba stworzyć rodzaj: staus poczatkowy "w archiwum", końcowy "wydany", a aby potem przyjąć
+status poczatkowy "wydany", koncowy "w archiwum".
+
 2014-10-01
 Opis procesu raz jeszcze.
 1. Należy stworzyć grupę rodzajów z zaptaszkowanym "czy rodzaje mogą obsługiwać Dokumenty Archiwalne"

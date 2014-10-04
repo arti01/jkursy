@@ -29,6 +29,7 @@ import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.DcRodzaj;
+import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.managedCfg.Rodzaje;
@@ -42,6 +43,7 @@ public class Rejestracja {
     private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
     private DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
+    private DcRodzajJpaController dcRodzC;
     private DcDokument obiekt;
     private AbstPlik plik;
     private DcPlikImport plikImport;
@@ -50,8 +52,6 @@ public class Rejestracja {
     private Locale locale;
     @ManagedProperty(value = "#{login}")
     private Login login;
-    @ManagedProperty(value = "#{RodzajeCfg}")
-    private Rodzaje rodzajeMg;
     private DcKontrahenci kontrahent;
     private DcDokDoWiadomosci doWiad;
     private DcDokDoWiadCel doWiadCel;
@@ -72,6 +72,7 @@ public class Rejestracja {
     void init() {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
+        dcRodzC=new DcRodzajJpaController();
         kontrahent = new DcKontrahenci();
         userDoWiad = new Uzytkownik();
         doWiad = new DcDokDoWiadomosci();
@@ -81,7 +82,7 @@ public class Rejestracja {
 
     public void refreshObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
-        rodzajLista.setWrappedData(rodzajeMg.getLista().getWrappedData());
+        rodzajLista.setWrappedData(dcRodzC.findDcRodzajEntities());
         obiekt = new DcDokument();
         error = null;
     }
@@ -129,7 +130,7 @@ public class Rejestracja {
     }
 
     public void wyslijDoAkceptacji() {
-        obiekt = dcC.wyslijDoAkceptacji(obiekt);;
+        obiekt = dcC.wyslijDoAkceptacji(obiekt);
         refreshBezObiekt();
     }
 
@@ -477,14 +478,6 @@ public class Rejestracja {
 
     public void setPlikImport(DcPlikImport plikImport) {
         this.plikImport = plikImport;
-    }
-
-    public Rodzaje getRodzajeMg() {
-        return rodzajeMg;
-    }
-
-    public void setRodzajeMg(Rodzaje rodzajeMg) {
-        this.rodzajeMg = rodzajeMg;
     }
 
     public DataModel<DcRodzaj> getRodzajLista() {

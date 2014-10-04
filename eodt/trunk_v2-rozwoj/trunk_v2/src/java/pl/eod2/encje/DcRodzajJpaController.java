@@ -283,7 +283,7 @@ public class DcRodzajJpaController implements Serializable {
         return rodzaj;
     }
 
-    public List<DcRodzaj> findDcRodzajEntities() {
+    public List<DcRodzaj> findDcRodzajEntitiesAll() {
         return findDcRodzajEntities(true, -1, -1);
     }
 
@@ -355,6 +355,24 @@ public class DcRodzajJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<DcRodzaj> findDcRodzajEntities() {
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("DcRodzaj.findAllzKrok");
+            //em.refresh(u.getStruktura());
+            return q.getResultList();
+        } catch (NoResultException ex) {
+            //ex.printStackTrace();
+            return null;
+        } catch (ArrayIndexOutOfBoundsException exb) {
+            //ex.printStackTrace();
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<DcRodzaj> findDcRodzajArch() {
         EntityManager em = getEntityManager();
         try {

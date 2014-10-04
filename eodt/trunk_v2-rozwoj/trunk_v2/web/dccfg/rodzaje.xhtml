@@ -54,6 +54,10 @@
                             <h:outputText value="#{item.idRodzajGrupa.opis}"/>
                         </rich:tooltip>
                     </rich:column>
+                    <rich:column>
+                        <f:facet name="header">alert</f:facet>
+                        <h:outputText styleClass="error" value="brak kroków akceptacji!!!" rendered="#{fn:length(item.dcAkceptKroki)==0}"/>
+                    </rich:column>
                     <rich:column style="width: 70px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>

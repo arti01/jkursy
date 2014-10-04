@@ -59,7 +59,7 @@ public class Rodzaje {
     }
 
     void refresh() {
-        lista.setWrappedData(dcC.findDcRodzajEntities());
+        lista.setWrappedData(dcC.findDcRodzajEntitiesAll());
         typFlowLista = dcTypFlowC.findDcTypFlowEntities();
         typKrokuLista = dcTypKrokuC.findDcAkceptTypKrokuEntities();
         usersLista = login.getZalogowany().getUserId().getSpolkaId().getUserList();

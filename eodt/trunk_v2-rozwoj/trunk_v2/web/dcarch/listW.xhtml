@@ -18,12 +18,48 @@
                 <ui:param name="managedBean" value="#{WArchiwumArch}"/> 
             </ui:include>
 
-            <h:panelGrid columns="3" style="background-color: orange">
-                <a4j:commandLink  execute="@form" action="#{WArchiwumArch.zmianaDanychArch}" 
-                                  render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()">
-                    <h3>[zmiana danych archiwalnych wybranych dokumentów]</h3>
-                </a4j:commandLink>
-            </h:panelGrid>
+            <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
+                <f:facet name="controls">
+                    <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
+                            return false;">
+                        <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+                    </h:outputLink>
+                </f:facet>
+                <ui:include src="../dcrej/dokumentEdit.xhtml">
+                    <ui:param name="detal" value="#{false}"/> 
+                    <ui:param name="managedBean" value="#{DokumentyArch}"/>
+                </ui:include>
+                <rich:panel id="pgArch">
+                    <f:facet name="header">
+                        Dokument powiązany z dokumentami w archiwum
+                    </f:facet>
+                    <rich:dataTable value="#{RejestracjaRej.obiekt.dcArchList}" var="arch" style="width: 100%; border: white thick">
+                        <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
+                            #{arch.nazwa}
+                            (#{arch.symbolDok})
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:panel>
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{WArchiwumArch.nowaAkcjaZapisz}" render="listPanel, dodajPane" execute="dodajPane"
+                                   oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();} else {#{rich:component('dodajPane')}.show();}" 
+                                   rendered="#{RejestracjaRej.obiekt.id==null}"/>
+                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" onclick="#{rich:component('dodajPane')}.hide();
+                            return false;" />
+            </rich:popupPanel>
+
+            <div id="tabela">
+                <h:panelGrid columns="3" style="background-color: orange">
+                    <a4j:commandLink  execute="@this, listPanel" action="#{WArchiwumArch.zmianaDanychArch}" 
+                                      render="dodajPane" oncomplete="#{rich:component('dodajPaneArch')}.show()">
+                        <h3>[zmiana danych archiwalnych wybranych dokumentów]</h3>
+                    </a4j:commandLink>
+                    <a4j:commandLink  id="nCzAr" execute="@this, listPanel" action="#{WArchiwumArch.nowaAkcja}" 
+                                      render="dodajPane" oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.show();}" >
+                        <h3>[nowa czynność archiwalna]</h3>
+                    </a4j:commandLink>
+                    <rich:message for="nCzAr"/>
+                </h:panelGrid>
+            </div>
             <rich:panel id="listPanel">
                 <rich:dataTable value="#{WArchiwumArch.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
@@ -108,7 +144,7 @@
                         </rich:tooltip>
                     </rich:column>
 
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
+                    <rich:column style="background-color: #{item.dokStatusId.kolor} ; text-align: center" filterExpression="#{fn:containsIgnoreCase(item.dokStatusId.nazwa,RejestracjaRej.filtrStatus)}">    
                         <f:facet name="header">status<br/>
                             <h:inputText value="#{RejestracjaRej.filtrStatus}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>

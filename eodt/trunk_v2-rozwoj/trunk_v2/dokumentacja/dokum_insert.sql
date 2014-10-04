@@ -25,14 +25,15 @@ INSERT INTO uzytkownik_user_roles (role_id, uzytkownik_id ) VALUES (11, 2);
 INSERT INTO dc_typ_flow (id, nazwa, opis ) VALUES (1, 'akceptacje', 'dokument podlegający procesowi akceptacji');
 INSERT INTO dc_typ_flow (id, nazwa, opis ) VALUES (2, 'informacje', 'dokument do zapoznania się i ewentualnie potwierdzenia');
 
-INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (1, 'nowy', 'dokument po zarejestrowaniu', '#222222', 'dokumenty');
-INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (2, 'w trakcie', 'dokument w trakcie akceptacji lub dystrybucji', '#333333', 'dokumenty');
-INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (3, 'zamknięty', 'dokument zamknięty', '#444444', 'dokumenty');
-INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (4, 'anulowany', 'dokument anulowany', '#555555', 'dokumenty');
-INSERT INTO dc_dokument_status (id, nazwa, opis ) VALUES (5, 'odrzucony', 'dokument odrzucony', '#666666', 'dokumenty');
-insert into dc_dokument_status (id, nazwa, opis,  kolor) values (6, 'poczekalnia - do akceptu', 'dokument w poczekalni archiwizacji w trakcie akceptacji', '#777777', 'archiwum');
+INSERT INTO dc_dokument_status  VALUES (1, 'nowy', 'dokument po zarejestrowaniu', '#222222', 'dokumenty');
+INSERT INTO dc_dokument_status  VALUES (2, 'w trakcie', 'dokument w trakcie akceptacji lub dystrybucji', '#333333', 'dokumenty');
+INSERT INTO dc_dokument_status  VALUES (3, 'zamknięty', 'dokument zamknięty', '#444444', 'dokumenty');
+INSERT INTO dc_dokument_status  VALUES (4, 'anulowany', 'dokument anulowany', '#555555', 'dokumenty');
+INSERT INTO dc_dokument_status  VALUES (5, 'odrzucony', 'dokument odrzucony', '#666666', 'dokumenty');
+insert into dc_dokument_status  values (6, 'poczekalnia - do akceptu', 'dokument w poczekalni archiwizacji w trakcie akceptacji', '#777777', 'archiwum');
 insert into DC_DOKUMENT_STATUS values (7 'poczekalnia - zaakceptowany', 'dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji', '#888888', 'archiwum');
-INSERT INTO dc_dokument_status (id, nazwa, opis,  kolor) VALUES (8, 'w archiwum', 'dokument w archiwum', 'brown', 'archiwum');
+INSERT INTO dc_dokument_status  VALUES (8, 'w archiwum', 'dokument w archiwum', 'brown', 'archiwum');
+INSERT INTO dc_dokument_status  VALUES (9, 'wydany', 'dokument wydany z archiwum', '#999999', 'archiwum');
 
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (1, 'wszyscy muszą zaakceptować');
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (2, 'wystarczy jeden do akceptacji');
