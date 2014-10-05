@@ -25,7 +25,7 @@ import javax.persistence.criteria.CriteriaQuery;
 public abstract class AbstKontroler<X extends AbstEncja> {
 
     private final X type;
-    static final Logger logger = Logger. getAnonymousLogger();
+    static final Logger logger = Logger.getAnonymousLogger();
 
     public AbstKontroler(X type) {
         this.type = type;
@@ -46,7 +46,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
     public List<X> getFindEntities() {
         return findEntities();
     }
-    
+
     public X findEntities(String nazwa) {
         EntityManager em = getEntityManager();
         try {
@@ -73,7 +73,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             em.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public X findObiekt(Integer id) {
         EntityManager em = getEntityManager();
@@ -83,7 +83,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             em.close();
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     public List<X> findEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
@@ -104,8 +104,10 @@ public abstract class AbstKontroler<X extends AbstEncja> {
     public Map<String, String> create(X obiekt) {
         Map<String, String> bledy = new HashMap<>();
         EntityManager em = null;
-        if (findEntities(obiekt.getNazwa()) != null) {
-            bledy.put("nazwaD", "nazwa już istnieje");
+        if (obiekt.getNazwa() != null) {
+            if (findEntities(obiekt.getNazwa()) != null) {
+                bledy.put("nazwaD", "nazwa już istnieje");
+            }
         }
         //if(!bledy.isEmpty()) return bledy;
         try {
@@ -116,7 +118,6 @@ public abstract class AbstKontroler<X extends AbstEncja> {
             System.err.println(obiekt.getNazwa());
             em.getTransaction().commit();
         } catch (Exception ex) {
-            ex.printStackTrace();
             logger.log(Level.SEVERE, "blad", ex);
             obiekt.setId(null);
         } finally {
@@ -128,13 +129,17 @@ public abstract class AbstKontroler<X extends AbstEncja> {
     }
 
     public Map<String, String> edit(X obiekt) {
-        X oldObiekt=findObiekt(obiekt);
+        X oldObiekt = findObiekt(obiekt);
         Map<String, String> bledy = new HashMap<>();
         EntityManager em = null;
-        if ((findEntities(obiekt.getNazwa()) != null)&&(!obiekt.getNazwa().equals(oldObiekt.getNazwa()))) {
-            bledy.put("nazwaD", "nazwa już istnieje");
+        if (obiekt.getNazwa() != null) {
+            if ((findEntities(obiekt.getNazwa()) != null) && (!obiekt.getNazwa().equals(oldObiekt.getNazwa()))) {
+                bledy.put("nazwaD", "nazwa już istnieje");
+            }
         }
-        if(!bledy.isEmpty()) return bledy;
+        if (!bledy.isEmpty()) {
+            return bledy;
+        }
         try {
             em = getEntityManager();
             em.getTransaction().begin();
@@ -150,7 +155,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         }
         return bledy;
     }
-    
+
     public void destroy(X obiekt) {
         EntityManager em = null;
         try {

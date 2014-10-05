@@ -41,6 +41,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> im
     }
 
     public void dodaj() throws InstantiationException, IllegalAccessException {
+        System.err.println(obiekt);
         @SuppressWarnings("unchecked")
         Map<String, String> errorMap = dcC.create(obiekt);
         if (!errorMap.isEmpty()) {
