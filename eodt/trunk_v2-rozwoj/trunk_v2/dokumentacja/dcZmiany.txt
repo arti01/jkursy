@@ -1,3 +1,7 @@
+2014-10-05
+Ściągnięte unikalne z dział nazwa i symbol
+(ściągnij proszę w bazie)
+
 2014-10-03
 INSERT INTO dc_dokument_status  VALUES (9, 'wydany', 'dokument wydany z archiwum', '#999999', 'archiwum');
 
@@ -12,7 +16,7 @@ status poczatkowy "wydany", koncowy "w archiwum".
 Wprowadziłem alert i blokadę wyboru dla rodzajów bez kroku akceptacji - do tej pory gdy stworzyło się dokument dla takiego rodzaju
 to była kiszka - dokument wisiał ze statusem "w trakcie" a nie mozna go było zamknąć, bo nie było kroków. No, można było anulować...
 
-2014-10-01
+2014-10-02
 Opis procesu raz jeszcze.
 1. Należy stworzyć grupę rodzajów z zaptaszkowanym "czy rodzaje mogą obsługiwać Dokumenty Archiwalne"
 2. Stworzyć symbole merytoryczne 1 i 2

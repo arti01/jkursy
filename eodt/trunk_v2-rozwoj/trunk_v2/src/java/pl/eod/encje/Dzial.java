@@ -43,11 +43,11 @@ public class Dzial implements Serializable {
     private Long id;
     
     @Size(min=0, max=255)
-    @Column(name = "nazwa", nullable = false, unique = true)
+    @Column(name = "nazwa", nullable = false)
     private String nazwa;
     
     @Size(min=0, max=5)
-    @Column(name = "symbol", nullable = true, unique = true)
+    @Column(name = "symbol", nullable = true)
     private String symbol;
     
     @OneToMany(mappedBy = "dzialId", fetch = FetchType.LAZY)
