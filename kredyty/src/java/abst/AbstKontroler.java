@@ -113,9 +113,7 @@ public abstract class AbstKontroler<X extends AbstEncja> {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            System.err.println(obiekt.getNazwa());
             em.persist(obiekt);
-            System.err.println(obiekt.getNazwa());
             em.getTransaction().commit();
         } catch (Exception ex) {
             logger.log(Level.SEVERE, "blad", ex);

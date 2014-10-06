@@ -6,20 +6,21 @@ package pl.arti01.encja;
 
 import abst.AbstEncja;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -28,16 +29,17 @@ import javax.validation.constraints.Size;
  * @author arti01
  */
 @Entity
-@Table(name = "bank")
+@Table(name = "kredyt")
 @NamedQueries({
-    @NamedQuery(name = "Bank.findAll", query = "SELECT d FROM Bank d"),
-    @NamedQuery(name = "Bank.findById", query = "SELECT d FROM Bank d WHERE d.id = :id"),
-    @NamedQuery(name = "Bank.findByNazwa", query = "SELECT d FROM Bank d WHERE d.nazwa = :nazwa")})
-public class Bank extends AbstEncja implements Serializable {
+    @NamedQuery(name = "Kredyt.findAll", query = "SELECT d FROM Kredyt d"),
+    @NamedQuery(name = "Kredyt.findById", query = "SELECT d FROM Kredyt d WHERE d.id = :id"),
+    @NamedQuery(name = "Kredyt.findByNazwa", query = "SELECT d FROM Kredyt d WHERE d.nazwa = :nazwa")})
+public class Kredyt extends AbstEncja implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQBank")
-    @SequenceGenerator(name = "SEQBank", sequenceName = "SEQBank")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQKredyt")
+    @SequenceGenerator(name = "SEQKredyt", sequenceName = "SEQKredyt")
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)
@@ -47,13 +49,16 @@ public class Bank extends AbstEncja implements Serializable {
     @Size(min = 1, max = 256)
     @Column(nullable = false, length = 256, unique = true)
     private String nazwa;
-    
-    @OneToMany(mappedBy = "bank", fetch = FetchType.LAZY)
-    private List<OkresOds> okredOdsList;
 
-    @OneToMany(mappedBy = "bank", fetch = FetchType.LAZY)
-    private List<Kredyt> kredytList;
-    
+    @Temporal(TemporalType.DATE)
+    private Date dataUrucho;
+
+    private int liczbaRat;
+    private boolean ratyRowne;
+
+    @ManyToOne()
+    private Bank bank;
+
     @Override
     public Integer getId() {
         return id;
@@ -74,20 +79,36 @@ public class Bank extends AbstEncja implements Serializable {
         this.nazwa = nazwa;
     }
 
-    public List<OkresOds> getOkredOdsList() {
-        return okredOdsList;
+    public Bank getBank() {
+        return bank;
     }
 
-    public void setOkredOdsList(List<OkresOds> okredOdsList) {
-        this.okredOdsList = okredOdsList;
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+    
+    public Date getDataUrucho() {
+        return dataUrucho;
     }
 
-    public List<Kredyt> getKredytList() {
-        return kredytList;
+    public void setDataUrucho(Date dataUrucho) {
+        this.dataUrucho = dataUrucho;
     }
 
-    public void setKredytList(List<Kredyt> kredytList) {
-        this.kredytList = kredytList;
+    public int getLiczbaRat() {
+        return liczbaRat;
+    }
+
+    public void setLiczbaRat(int liczbaRat) {
+        this.liczbaRat = liczbaRat;
+    }
+
+    public boolean isRatyRowne() {
+        return ratyRowne;
+    }
+
+    public void setRatyRowne(boolean ratyRowne) {
+        this.ratyRowne = ratyRowne;
     }
 
     @Override
@@ -105,12 +126,12 @@ public class Bank extends AbstEncja implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Bank other = (Bank) obj;
+        final Kredyt other = (Kredyt) obj;
         return Objects.equals(this.id, other.id);
     }
 
     @Override
     public String toString() {
-        return "Bank{" + "id=" + id + ", nazwa=" + nazwa + '}';
+        return "Kredyt{" + "id=" + id + ", nazwa=" + nazwa + '}';
     }
 }

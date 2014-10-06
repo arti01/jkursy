@@ -25,5 +25,7 @@
             <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
                         return false;" />
         </rich:popupPanel>
+        
+        <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
     </h:form>
 </html>

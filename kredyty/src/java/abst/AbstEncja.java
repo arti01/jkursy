@@ -5,8 +5,6 @@
  */
 package abst;
 
-import java.util.Objects;
-
 public abstract class AbstEncja {
 
     private String nazwa;
