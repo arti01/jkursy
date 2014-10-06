@@ -6,21 +6,17 @@ package pl.arti01.encja;
 
 import abst.AbstEncja;
 import java.io.Serializable;
-import java.util.Currency;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -35,8 +31,9 @@ import javax.validation.constraints.NotNull;
 @Table(name = "okres_ods")
 @NamedQueries({
     @NamedQuery(name = "OkresOds.findAll", query = "SELECT d FROM OkresOds d"),
-    @NamedQuery(name = "OkresOds.findWaliddataOd", query = "SELECT d FROM OkresOds d WHERE (:dataOd between d.dataOd and d.dataDo) and d.bank=:bank"),
-    @NamedQuery(name = "OkresOds.findWaliddataDo", query = "SELECT d FROM OkresOds d WHERE (:dataDo between d.dataOd and d.dataDo) and d.bank=:bank"),
+    @NamedQuery(name = "OkresOds.findWaliddataOd", query = "SELECT d FROM OkresOds d WHERE (:dataOd between d.dataOd and d.dataDo) and d.bank=:bank and d.id!=:okres"),
+    @NamedQuery(name = "OkresOds.findWaliddataDo", query = "SELECT d FROM OkresOds d WHERE (:dataDo between d.dataOd and d.dataDo) and d.bank=:bank and d.id!=:okres"),
+    @NamedQuery(name = "OkresOds.findWaliddataZakres", query = "SELECT d FROM OkresOds d WHERE (d.dataDo between :dataOd and :dataDo) and d.bank=:bank and d.id!=:okres"),
     @NamedQuery(name = "OkresOds.findById", query = "SELECT d FROM OkresOds d WHERE d.id = :id")})
 public class OkresOds extends AbstEncja implements Serializable {
     private static final long serialVersionUID = 1L;

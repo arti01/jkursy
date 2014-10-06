@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import sun.jdbc.odbc.OdbcDef;
 
 public class OkresOdsKontr extends AbstKontroler<OkresOds> {
 
@@ -31,12 +30,7 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
         if (obiekt.getDataDo().compareTo(obiekt.getDataOd()) <= 0) {
             bledy.put("dataDoD", "data DO młodsza/równa niż data OD");
         }
-        if (this.findWalidDataOd(obiekt) != 0) {
-            bledy.put("dataOdD", "data od pokrywa inny zakres");
-        }
-        if (this.findWalidDataDo(obiekt) != 0) {
-            bledy.put("dataDoD", "data do pokrywa inny zakres");
-        }
+        bledy.putAll(this.findWalidData(obiekt));
         if (!bledy.isEmpty()) {
             return bledy;
         }
@@ -65,24 +59,19 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
     }
 
     @Override
-     public Map<String, String> edit(OkresOds obiekt) {
+    public Map<String, String> edit(OkresOds obiekt) {
         OkresOds oldObiekt = findObiekt(obiekt);
         Map<String, String> bledy = new HashMap<>();
-        
+
         //walidacja
         if (obiekt.getDataDo().compareTo(obiekt.getDataOd()) <= 0) {
             bledy.put("dataDoD", "data DO młodsza/równa niż data OD");
         }
-        if (this.findWalidDataOd(obiekt) != 0) {
-            bledy.put("dataOdD", "data od pokrywa inny zakres");
-        }
-        if (this.findWalidDataDo(obiekt) != 0) {
-            bledy.put("dataDoD", "data do pokrywa inny zakres");
-        }
+        bledy.putAll(this.findWalidData(obiekt));
         if (!bledy.isEmpty()) {
             return bledy;
         }
-        
+
         EntityManager em = null;
         if (obiekt.getNazwa() != null) {
             if ((findEntities(obiekt.getNazwa()) != null) && (!obiekt.getNazwa().equals(oldObiekt.getNazwa()))) {
@@ -108,34 +97,39 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
         return bledy;
     }
 
-    
-    public int findWalidDataOd(OkresOds oo) {
-        EntityManager em = getEntityManager();
-        try {
-            Query q = em.createNamedQuery("OkresOds.findWaliddataOd");
-            q.setParameter("dataOd", oo.getDataOd());
-            q.setParameter("bank", oo.getBank());
-            return q.getResultList().size();
-        } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
-            //ex.printStackTrace();
-            logger.log(Level.SEVERE, "blad", ex);
-            return 0;
-        } finally {
-            em.close();
-        }
-    }
-    
-    public int findWalidDataDo(OkresOds oo) {
+    public Map<String, String> findWalidData(OkresOds oo) {
+        Map<String, String> bledy = new HashMap<>();
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("OkresOds.findWaliddataDo");
-            q.setParameter("dataDo", oo.getDataOd());
+            q.setParameter("dataDo", oo.getDataDo());
             q.setParameter("bank", oo.getBank());
-            return q.getResultList().size();
-        } catch (NoResultException | ArrayIndexOutOfBoundsException ex) {
+            q.setParameter("okres", oo.getId());
+            if (!q.getResultList().isEmpty()) {
+                bledy.put("dataDoD", "data do pokrywa inny zakres");
+            }
+
+            Query q1 = em.createNamedQuery("OkresOds.findWaliddataOd");
+            q1.setParameter("dataOd", oo.getDataOd());
+            q1.setParameter("bank", oo.getBank());
+            q1.setParameter("okres", oo.getId());
+            if (!q1.getResultList().isEmpty()) {
+                bledy.put("dataOdD", "data od pokrywa inny zakres");
+            }
+
+            Query q2 = em.createNamedQuery("OkresOds.findWaliddataZakres");
+            q2.setParameter("dataDo", oo.getDataDo());
+            q2.setParameter("dataOd", oo.getDataOd());
+            q2.setParameter("bank", oo.getBank());
+            q2.setParameter("okres", oo.getId());
+            if (!q2.getResultList().isEmpty()) {
+                bledy.put("dataDoD", "daty zawierają inny zakres");
+            }
+            return bledy;
+        } catch (Exception ex) {
             //ex.printStackTrace();
             logger.log(Level.SEVERE, "blad", ex);
-            return 0;
+            return null;
         } finally {
             em.close();
         }
