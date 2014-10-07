@@ -14,4 +14,8 @@ public class Kredyty extends AbstMg<Kredyt, KredytKontr>{
     public Kredyty() throws InstantiationException, IllegalAccessException {
         super("/kredyty/kredyty", new KredytKontr(), new Kredyt());
     }
+    
+    public String oblicz(){
+        return "/kredyty/wynik";
+    }
 }

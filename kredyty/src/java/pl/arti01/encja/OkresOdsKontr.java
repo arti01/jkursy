@@ -30,6 +30,8 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
         if (obiekt.getDataDo().compareTo(obiekt.getDataOd()) <= 0) {
             bledy.put("dataDoD", "data DO młodsza/równa niż data OD");
         }
+        System.err.println("-------------------------");
+        System.err.println(this.findWalidData(obiekt));
         bledy.putAll(this.findWalidData(obiekt));
         if (!bledy.isEmpty()) {
             return bledy;
@@ -98,13 +100,20 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
     }
 
     public Map<String, String> findWalidData(OkresOds oo) {
+        Integer id;
+        if(oo.getId()==null){
+            id=0;  
+        }else{
+            id=oo.getId();
+        }
         Map<String, String> bledy = new HashMap<>();
         EntityManager em = getEntityManager();
         try {
             Query q = em.createNamedQuery("OkresOds.findWaliddataDo");
             q.setParameter("dataDo", oo.getDataDo());
             q.setParameter("bank", oo.getBank());
-            q.setParameter("okres", oo.getId());
+            q.setParameter("okres", id);
+            System.err.println(q.getResultList());
             if (!q.getResultList().isEmpty()) {
                 bledy.put("dataDoD", "data do pokrywa inny zakres");
             }
@@ -112,7 +121,7 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
             Query q1 = em.createNamedQuery("OkresOds.findWaliddataOd");
             q1.setParameter("dataOd", oo.getDataOd());
             q1.setParameter("bank", oo.getBank());
-            q1.setParameter("okres", oo.getId());
+            q1.setParameter("okres", id);
             if (!q1.getResultList().isEmpty()) {
                 bledy.put("dataOdD", "data od pokrywa inny zakres");
             }
@@ -121,13 +130,13 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
             q2.setParameter("dataDo", oo.getDataDo());
             q2.setParameter("dataOd", oo.getDataOd());
             q2.setParameter("bank", oo.getBank());
-            q2.setParameter("okres", oo.getId());
+            q2.setParameter("okres", id);
             if (!q2.getResultList().isEmpty()) {
                 bledy.put("dataDoD", "daty zawierają inny zakres");
             }
             return bledy;
         } catch (Exception ex) {
-            //ex.printStackTrace();
+            System.err.println("bbbbbbbbbbbbbb");
             logger.log(Level.SEVERE, "blad", ex);
             return null;
         } finally {

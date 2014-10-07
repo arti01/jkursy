@@ -51,7 +51,7 @@ public class Kredyt extends AbstEncja implements Serializable {
     private String nazwa;
 
     @Temporal(TemporalType.DATE)
-    private Date dataUrucho;
+    private Date dataPierwSplaty;
 
     private int liczbaRat;
     private boolean ratyRowne;
@@ -87,12 +87,12 @@ public class Kredyt extends AbstEncja implements Serializable {
         this.bank = bank;
     }
     
-    public Date getDataUrucho() {
-        return dataUrucho;
+    public Date getDataPierwSplaty() {
+        return dataPierwSplaty;
     }
 
-    public void setDataUrucho(Date dataUrucho) {
-        this.dataUrucho = dataUrucho;
+    public void setDataPierwSplaty(Date dataPierwSplaty) {
+        this.dataPierwSplaty = dataPierwSplaty;
     }
 
     public int getLiczbaRat() {

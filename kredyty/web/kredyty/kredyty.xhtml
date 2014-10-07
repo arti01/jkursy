@@ -40,15 +40,25 @@
                     </rich:column>
                     
                     <rich:column>
-                        <f:facet name="header">data uruchomienia</f:facet>
-                        <h:outputText value="#{item.dataUrucho}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
+                        <f:facet name="header">data pierwszej spłaty</f:facet>
+                        <h:outputText value="#{item.dataPierwSplaty}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
+                    </rich:column>
+                    
+                    <rich:column>
+                        <f:facet name="header">liczba rat</f:facet>
+                        <h:outputText value="#{item.liczbaRar}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
                     </rich:column>
                     
                     <rich:column style="width: 45px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
+                        <rich:tooltip target="imgOb" value="oblicz raty" layout="block"/>
                         <a4j:commandButton id="imgDe" execute="@this" render="@none"
                                            oncomplete="#{rich:component('confirmPane')}.show()" image="/images/delete.png">
+                            <f:setPropertyActionListener target="#{Kredyty.obiekt}" value="#{item}" />
+                        </a4j:commandButton>
+                        <a4j:commandButton id="imgOb" execute="@this" render="@none" action="#{Kredyty.oblicz}"
+                                           image="/images/oblicz.png">
                             <f:setPropertyActionListener target="#{Kredyty.obiekt}" value="#{item}" />
                         </a4j:commandButton>
                         <a4j:commandButton id="imgEd" render="dodajPane" execute="@this" oncomplete="#{rich:component('dodajPane')}.show()" image="/images/edit.png">
