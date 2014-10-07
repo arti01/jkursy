@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -60,7 +61,7 @@ public class Kredyt extends AbstEncja implements Serializable {
     private int kwota;
     private boolean ratyRowne;
 
-    @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
     private List<Wynik> wynikList;
     
     @ManyToOne()
@@ -124,6 +125,14 @@ public class Kredyt extends AbstEncja implements Serializable {
 
     public void setRatyRowne(boolean ratyRowne) {
         this.ratyRowne = ratyRowne;
+    }
+
+    public List<Wynik> getWynikList() {
+        return wynikList;
+    }
+
+    public void setWynikList(List<Wynik> wynikList) {
+        this.wynikList = wynikList;
     }
 
     @Override

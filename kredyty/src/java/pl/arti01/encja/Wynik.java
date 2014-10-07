@@ -53,11 +53,13 @@ public class Wynik extends AbstEncja implements Serializable {
     private int liczbaRat;
     private int kwota;
     private String nazwaBanku;
+    @Temporal(TemporalType.DATE)
+    private Date dataPierwSplaty;
     
     @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "wynik", fetch = FetchType.LAZY)
     private List<WynikRata> wynikRataList;
 
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     private Kredyt kredyt;
 
     public Wynik() {
@@ -69,6 +71,8 @@ public class Wynik extends AbstEncja implements Serializable {
         this.nazwaBanku = kredyt.getBank().getNazwa();
         this.liczbaRat=kredyt.getLiczbaRat();
         this.wynikRataList=new ArrayList<>();
+        this.kredyt=kredyt;
+        this.dataPierwSplaty=kredyt.getDataPierwSplaty();
     }
     
     @Override
@@ -127,6 +131,14 @@ public class Wynik extends AbstEncja implements Serializable {
 
     public void setLiczbaRat(int liczbaRat) {
         this.liczbaRat = liczbaRat;
+    }
+
+    public Date getDataPierwSplaty() {
+        return dataPierwSplaty;
+    }
+
+    public void setDataPierwSplaty(Date dataPierwSplaty) {
+        this.dataPierwSplaty = dataPierwSplaty;
     }
 
     @Override

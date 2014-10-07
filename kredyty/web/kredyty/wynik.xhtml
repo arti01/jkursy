@@ -18,17 +18,17 @@
                 <rich:dataTable value="#{Wyniki.obiekt.wynikRataList}" var="item" id="table"  style="width: 100%">
                     
                     <rich:column sortBy="#{item.rataNumer}" sortOrder="ascending">
-                        <f:facet name="header">numer</f:facet>
+                        <f:facet name="header">Numer Raty</f:facet>
                         #{item.rataNumer}
                     </rich:column>
                     
                     <rich:column>
-                        <f:facet name="header">data raty</f:facet>
-                        #{item.rataData}
+                        <f:facet name="header">Data Raty</f:facet>
+                        <h:outputText value="#{item.rataData}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
                     </rich:column>
                     
                     <rich:column>
-                        <f:facet name="header">rataKapitalowa</f:facet>
+                        <f:facet name="header">Rata Kapitałowa</f:facet>
                         #{item.rataKapitalowa}
                     </rich:column>
                     
