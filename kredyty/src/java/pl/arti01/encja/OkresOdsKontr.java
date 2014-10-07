@@ -6,12 +6,12 @@
 package pl.arti01.encja;
 
 import abst.AbstKontroler;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 public class OkresOdsKontr extends AbstKontroler<OkresOds> {
@@ -30,8 +30,6 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
         if (obiekt.getDataDo().compareTo(obiekt.getDataOd()) <= 0) {
             bledy.put("dataDoD", "data DO młodsza/równa niż data OD");
         }
-        System.err.println("-------------------------");
-        System.err.println(this.findWalidData(obiekt));
         bledy.putAll(this.findWalidData(obiekt));
         if (!bledy.isEmpty()) {
             return bledy;
@@ -113,7 +111,6 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
             q.setParameter("dataDo", oo.getDataDo());
             q.setParameter("bank", oo.getBank());
             q.setParameter("okres", id);
-            System.err.println(q.getResultList());
             if (!q.getResultList().isEmpty()) {
                 bledy.put("dataDoD", "data do pokrywa inny zakres");
             }
@@ -136,7 +133,23 @@ public class OkresOdsKontr extends AbstKontroler<OkresOds> {
             }
             return bledy;
         } catch (Exception ex) {
-            System.err.println("bbbbbbbbbbbbbb");
+            logger.log(Level.SEVERE, "blad", ex);
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public OkresOds findDlaDaty(Date dataRaty, Bank bank) {
+        
+        EntityManager em = getEntityManager();
+        try {
+            Query q = em.createNamedQuery("OkresOds.findWaliddataDo");
+            q.setParameter("dataDo", dataRaty);
+            q.setParameter("bank", bank);
+            q.setParameter("okres", 0);
+            return (OkresOds) q.getResultList().get(0);
+        } catch (Exception ex) {
             logger.log(Level.SEVERE, "blad", ex);
             return null;
         } finally {

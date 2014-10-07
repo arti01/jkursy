@@ -7,16 +7,19 @@ package pl.arti01.encja;
 import abst.AbstEncja;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -54,8 +57,12 @@ public class Kredyt extends AbstEncja implements Serializable {
     private Date dataPierwSplaty;
 
     private int liczbaRat;
+    private int kwota;
     private boolean ratyRowne;
 
+    @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY)
+    private List<Wynik> wynikList;
+    
     @ManyToOne()
     private Bank bank;
 
@@ -101,6 +108,14 @@ public class Kredyt extends AbstEncja implements Serializable {
 
     public void setLiczbaRat(int liczbaRat) {
         this.liczbaRat = liczbaRat;
+    }
+
+    public int getKwota() {
+        return kwota;
+    }
+
+    public void setKwota(int kwota) {
+        this.kwota = kwota;
     }
 
     public boolean isRatyRowne() {

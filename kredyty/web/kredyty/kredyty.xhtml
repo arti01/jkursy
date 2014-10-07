@@ -46,10 +46,15 @@
                     
                     <rich:column>
                         <f:facet name="header">liczba rat</f:facet>
-                        <h:outputText value="#{item.liczbaRar}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
+                        <h:outputText value="#{item.liczbaRat}"/>
                     </rich:column>
                     
-                    <rich:column style="width: 45px">
+                    <rich:column>
+                        <f:facet name="header">kwota</f:facet>
+                        <h:outputText value="#{item.kwota}"/>
+                    </rich:column>
+                    
+                    <rich:column style="width: 75px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <rich:tooltip target="imgOb" value="oblicz raty" layout="block"/>

@@ -6,10 +6,12 @@ package pl.arti01.encja;
 
 import abst.AbstEncja;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +27,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -37,6 +38,7 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Wynik.findAll", query = "SELECT d FROM Wynik d"),
     @NamedQuery(name = "Wynik.findById", query = "SELECT d FROM Wynik d WHERE d.id = :id")})
 public class Wynik extends AbstEncja implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQWynik")
@@ -45,15 +47,29 @@ public class Wynik extends AbstEncja implements Serializable {
     @NotNull
     @Column(nullable = false)
     private Integer id;
-    
+
     @Temporal(TemporalType.TIMESTAMP)
-    private Date data;
+    private Date dataWyliczenia;
+    private int liczbaRat;
+    private int kwota;
+    private String nazwaBanku;
     
-    @OneToMany(mappedBy = "Wynik", fetch = FetchType.LAZY)
-    private List<Obliczenie> ObliczenieList;
+    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "wynik", fetch = FetchType.LAZY)
+    private List<WynikRata> wynikRataList;
 
     @ManyToOne()
     private Kredyt kredyt;
+
+    public Wynik() {
+    }
+
+    public Wynik(Kredyt kredyt) {
+        this.dataWyliczenia = new Date();
+        this.kwota = kredyt.getKwota();
+        this.nazwaBanku = kredyt.getBank().getNazwa();
+        this.liczbaRat=kredyt.getLiczbaRat();
+        this.wynikRataList=new ArrayList<>();
+    }
     
     @Override
     public Integer getId() {
@@ -65,20 +81,20 @@ public class Wynik extends AbstEncja implements Serializable {
         this.id = id;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDataWyliczenia() {
+        return dataWyliczenia;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDataWyliczenia(Date dataWyliczenia) {
+        this.dataWyliczenia = dataWyliczenia;
     }
 
-    public List<Obliczenie> getObliczenieList() {
-        return ObliczenieList;
+    public List<WynikRata> getWynikRataList() {
+        return wynikRataList;
     }
 
-    public void setObliczenieList(List<Obliczenie> ObliczenieList) {
-        this.ObliczenieList = ObliczenieList;
+    public void setWynikRataList(List<WynikRata> wynikRataList) {
+        this.wynikRataList = wynikRataList;
     }
 
     public Kredyt getKredyt() {
@@ -89,7 +105,29 @@ public class Wynik extends AbstEncja implements Serializable {
         this.kredyt = kredyt;
     }
 
-    
+    public int getKwota() {
+        return kwota;
+    }
+
+    public void setKwota(int kwota) {
+        this.kwota = kwota;
+    }
+
+    public String getNazwaBanku() {
+        return nazwaBanku;
+    }
+
+    public void setNazwaBanku(String nazwaBanku) {
+        this.nazwaBanku = nazwaBanku;
+    }
+
+    public int getLiczbaRat() {
+        return liczbaRat;
+    }
+
+    public void setLiczbaRat(int liczbaRat) {
+        this.liczbaRat = liczbaRat;
+    }
 
     @Override
     public int hashCode() {

@@ -10,25 +10,29 @@
     <h:form>
         <rich:popupPanel header="Wprowadź dane" id="dodajPane"  autosized="true" domElementAttachment="parent">
             <h:panelGrid columns="3" id="dodajGrid">
-                
+
                 <h:outputLabel for="nazwaD" value="nazwa: "/>
-                <h:inputText id="nazwaD" value="#{Kredyty.obiekt.nazwa}" size="7"></h:inputText>
+                <h:inputText id="nazwaD" value="#{Kredyty.obiekt.nazwa}" size="70"></h:inputText>
                 <rich:message for="nazwaD" styleClass="error" />
-                
+
                 <h:outputLabel for="bankD" value="bank: "/>
                 <h:selectOneMenu id="bankD" value="#{Kredyty.obiekt.bank}" converter="#{BankConv}">
                     <f:selectItems value="#{Banki.lista}" var="bank" itemValue="#{bank}" itemLabel="#{bank.nazwa}"/>
                 </h:selectOneMenu>
                 <rich:message for="bankD" styleClass="error" />
-                
+
                 <h:outputLabel for="dataUruchoD" value="data uruchomienia: "/>
                 <h:inputText id="dataUruchoD" value="#{Kredyty.obiekt.dataPierwSplaty}" size="7"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:inputText>
                 <rich:message for="dataUruchoD" styleClass="error" />
-                
+
                 <h:outputLabel for="liczbaRatD" value="liczba rat: "/>
                 <h:inputText id="liczbaRatD" value="#{Kredyty.obiekt.liczbaRat}" size="7"></h:inputText>
                 <rich:message for="liczbaRatD" styleClass="error" />
-                
+
+                <h:outputLabel for="kwotaD" value="kwota: "/>
+                <h:inputText id="kwotaD" value="#{Kredyty.obiekt.kwota}" size="7"></h:inputText>
+                <rich:message for="kwotaD" styleClass="error" />
+
             </h:panelGrid>
             <rich:message for="zapisz" styleClass="error" />
             <rich:message for="dodaj" styleClass="error" />
@@ -40,10 +44,10 @@
                                oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
                                rendered="#{Kredyty.obiekt.id!=null}"/>
             <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPane')}.hide();
-                        return false;" />
+                    return false;" />
         </rich:popupPanel>
-        
+
         <rich:notifyMessages stayTime="3000" nonblocking="true" style="" nonblockingOpacity=".7"/>
-        
+
     </h:form>
 </html>
