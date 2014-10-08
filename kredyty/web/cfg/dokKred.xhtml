@@ -6,22 +6,18 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:a4j="http://richfaces.org/a4j">
-    <rich:popupPanel  id="dokHist" style="text-align: center;" header="Historia wyliczen"  autosized="true" domElementAttachment="parent" left="77" top="13" >
+    <rich:popupPanel  id="dokKred" style="text-align: center;" header="Historia wyliczen"  autosized="true" domElementAttachment="parent" left="77" top="13" >
         <f:facet name="controls">
             <h:outputLink value="#" onclick="#{rich:component('dokHist')}.hide();
                     return false;">
                 <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
             </h:outputLink>
         </f:facet>
-        <rich:dataTable value="#{item.wynikList}" var="dok"  id="tableDok" style="width: 100%">
-            <rich:column sortBy="#{dok.dataWyliczenia}" sortOrder="descending" >
-                <f:facet name="header">data wyliczenia</f:facet>
-                <h:outputText value="#{dok.dataWyliczenia}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm" timeZone="CET"/></h:outputText>
-            </rich:column>
+        <rich:dataTable value="#{item.kredytList}" var="dok" id="tableDok" style="width: 100%">
 
             <rich:column>
-                <f:facet name="header">nazwa banku</f:facet>
-                    #{dok.nazwaBanku}
+                <f:facet name="header">nazwa</f:facet>
+                    #{dok.nazwa}
             </rich:column>
 
             <rich:column>
@@ -47,9 +43,9 @@
 
             <rich:column style="width: 35px">
                 <rich:tooltip target="imgDt" value="podgląd" layout="block"/>
-                <a4j:commandButton id="imgDt" execute="@this" render="@none" action="#{Wyniki.podglad}"
+                <a4j:commandButton id="imgDt" execute="@this" render="@none" action="#{Kredyty.podglad}"
                                    image="/images/detail.png">
-                    <f:setPropertyActionListener target="#{Wyniki.obiekt}" value="#{dok}" />
+                    <f:setPropertyActionListener target="#{Kredyty.obiekt}" value="#{dok}" />
                 </a4j:commandButton>
             </rich:column>
 

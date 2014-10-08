@@ -12,7 +12,8 @@
                                     groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                                     topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
                         <rich:panelMenuItem>
-                            <h:commandLink value="Start" action="#{ba}" style="font-size: 13px; font-weight: bold"/>
+                            <h:outputLink target="/start/index.xhtml" style="font-size: 13px; font-weight: bold">
+                                Start</h:outputLink>
                         </rich:panelMenuItem>
 
                         <rich:panelMenuGroup label="Konfiguracja" expanded="#{true}">
@@ -27,7 +28,7 @@
                                 </rich:panelMenuItem>
                             </h:commandLink>
                         </rich:panelMenuGroup>
-                        
+
                         <rich:panelMenuGroup label="Kredyty" expanded="#{true}">
                             <h:commandLink action="#{Kredyty.list}">
                                 <rich:panelMenuItem >

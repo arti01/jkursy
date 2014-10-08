@@ -49,6 +49,7 @@ public class Wynik extends AbstEncja implements Serializable {
     @Column(nullable = false)
     private Integer id;
 
+    private String nazwa;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataWyliczenia;
     private int liczbaRat;
@@ -58,7 +59,7 @@ public class Wynik extends AbstEncja implements Serializable {
     private Date dataPierwSplaty;
     private boolean ratyRowne;
     
-    @OneToMany(cascade = {CascadeType.PERSIST}, mappedBy = "wynik", fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "wynik", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WynikRata> wynikRataList;
 
     @ManyToOne(cascade = {CascadeType.REFRESH})
@@ -76,6 +77,7 @@ public class Wynik extends AbstEncja implements Serializable {
         this.kredyt=kredyt;
         this.dataPierwSplaty=kredyt.getDataPierwSplaty();
         this.ratyRowne=kredyt.isRatyRowne();
+        this.nazwa=kredyt.getNazwa();
     }
     
     @Override
@@ -86,6 +88,16 @@ public class Wynik extends AbstEncja implements Serializable {
     @Override
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Override
+    public void setNazwa(String nazwa) {
+        this.nazwa=nazwa;
+    }
+
+    @Override
+    public String getNazwa() {
+        return nazwa;
     }
 
     public Date getDataWyliczenia() {

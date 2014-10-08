@@ -3,6 +3,8 @@ package pl.arti01.mg.kredyt;
 
 import abst.AbstMg;
 import encje.exceptions.BrakOprocentowaniaEx;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -36,6 +38,13 @@ public class Kredyty extends AbstMg<Kredyt, KredytKontr>{
         return "/kredyty/wynik?faces-redirect=true";
     }
 
+    public String podglad(){
+        List<Kredyt> lTmp=new ArrayList<>();
+        lTmp.add(obiekt);
+        lista.setWrappedData(lTmp);
+        return "/kredyty/kredyty?faces-redirect=true";
+    }
+    
     public Wyniki getWyniki() {
         return wyniki;
     }

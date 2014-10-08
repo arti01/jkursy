@@ -62,7 +62,7 @@ public class Kredyt extends AbstEncja implements Serializable {
     private BigDecimal kwota;
     private boolean ratyRowne;
 
-    @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
+    @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.REMOVE}, orphanRemoval = true)
     private List<Wynik> wynikList;
     
     @ManyToOne()
