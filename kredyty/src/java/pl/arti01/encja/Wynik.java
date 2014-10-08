@@ -6,6 +6,7 @@ package pl.arti01.encja;
 
 import abst.AbstEncja;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,7 +52,7 @@ public class Wynik extends AbstEncja implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataWyliczenia;
     private int liczbaRat;
-    private int kwota;
+    private BigDecimal kwota;
     private String nazwaBanku;
     @Temporal(TemporalType.DATE)
     private Date dataPierwSplaty;
@@ -111,11 +112,11 @@ public class Wynik extends AbstEncja implements Serializable {
         this.kredyt = kredyt;
     }
 
-    public int getKwota() {
+    public BigDecimal getKwota() {
         return kwota;
     }
 
-    public void setKwota(int kwota) {
+    public void setKwota(BigDecimal kwota) {
         this.kwota = kwota;
     }
 

@@ -6,6 +6,7 @@ package pl.arti01.encja;
 
 import abst.AbstEncja;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -58,7 +59,7 @@ public class Kredyt extends AbstEncja implements Serializable {
     private Date dataPierwSplaty;
 
     private int liczbaRat;
-    private int kwota;
+    private BigDecimal kwota;
     private boolean ratyRowne;
 
     @OneToMany(mappedBy = "kredyt", fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
@@ -111,11 +112,11 @@ public class Kredyt extends AbstEncja implements Serializable {
         this.liczbaRat = liczbaRat;
     }
 
-    public int getKwota() {
+    public BigDecimal getKwota() {
         return kwota;
     }
 
-    public void setKwota(int kwota) {
+    public void setKwota(BigDecimal kwota) {
         this.kwota = kwota;
     }
 

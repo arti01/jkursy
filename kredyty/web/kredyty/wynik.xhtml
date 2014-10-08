@@ -11,7 +11,27 @@
 
     <ui:define name="content">
         <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        <h3>Wynik</h3>
+        <h3>Wynik dla kredytu <h:outputText value="#{Wyniki.obiekt.nazwa}"/></h3>
+        <h:panelGrid columns="4">
+            <h:outputLabel value="data obliczeń:"/>
+            <h:outputText value="#{Wyniki.obiekt.dataWyliczenia}"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputText>
+            
+            <h:outputLabel value="kwota:"/>
+            <h:outputText value="#{Wyniki.obiekt.kwota}"/>
+            
+            <h:outputLabel value="liczba rat:"/>
+            <h:outputText value="#{Wyniki.obiekt.liczbaRat}"/>
+            
+            <h:outputLabel value="data pierwszej spłaty:"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:outputLabel>
+            <h:outputText value="#{Wyniki.obiekt.dataPierwSplaty}"/>
+            
+            <h:outputLabel value="nazwa banku:"/>
+            <h:outputText value="#{Wyniki.obiekt.nazwaBanku}"/>
+            
+            <h:outputLabel value="czy równe raty:"/>
+            <h:outputText value="TAK" rendered="#{Wyniki.obiekt.ratyRowne}"/>
+            <h:outputText value="NIE" rendered="#{!Wyniki.obiekt.ratyRowne}"/>
+        </h:panelGrid>
         <h:form>
             <rich:panel id="listPanel">
                 
