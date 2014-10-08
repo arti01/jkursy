@@ -4,7 +4,8 @@
       xmlns:rich="http://richfaces.org/rich"
       template="/templates/template.xhtml"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j">
     <rich:popupPanel  id="dokHist" style="text-align: center;" header="Historia wyliczen"  autosized="true" domElementAttachment="parent" left="77" top="13" >
         <f:facet name="controls">
             <h:outputLink value="#" onclick="#{rich:component('dokHist')}.hide();
@@ -20,7 +21,7 @@
 
             <rich:column>
                 <f:facet name="header">nazwa banku</f:facet>
-                #{dok.nazwaBanku}
+                    #{dok.nazwaBanku}
             </rich:column>
 
             <rich:column>
@@ -37,6 +38,21 @@
                 <f:facet name="header">kwota</f:facet>
                 <h:outputText value="#{dok.kwota}"/>
             </rich:column>
+
+            <rich:column>
+                <f:facet name="header">czy równe raty</f:facet>
+                <h:outputText value="Tak" rendered="#{dok.ratyRowne}"/>
+                <h:outputText value="Nie" rendered="#{!dok.ratyRowne}"/>
+            </rich:column>
+
+            <rich:column style="width: 35px">
+                <rich:tooltip target="imgDt" value="podgląd" layout="block"/>
+                <a4j:commandButton id="imgDt" execute="@this" render="@none" action="#{Wyniki.podglad}"
+                                   image="/images/detail.png">
+                    <f:setPropertyActionListener target="#{Wyniki.obiekt}" value="#{dok}" />
+                </a4j:commandButton>
+            </rich:column>
+
         </rich:dataTable>
         <hr/>
     </rich:popupPanel>

@@ -21,7 +21,7 @@
                 </h:selectOneMenu>
                 <rich:message for="bankD" styleClass="error" />
 
-                <h:outputLabel for="dataUruchoD" value="data uruchomienia: "/>
+                <h:outputLabel for="dataUruchoD" value="data pierwszej spłaty: "/>
                 <h:inputText id="dataUruchoD" value="#{Kredyty.obiekt.dataPierwSplaty}" size="7"><f:convertDateTime type="date" pattern="yyyy-MM" timeZone="CET"/></h:inputText>
                 <rich:message for="dataUruchoD" styleClass="error" />
 
@@ -32,6 +32,10 @@
                 <h:outputLabel for="kwotaD" value="kwota: "/>
                 <h:inputText id="kwotaD" value="#{Kredyty.obiekt.kwota}" size="7"></h:inputText>
                 <rich:message for="kwotaD" styleClass="error" />
+                
+                <h:outputLabel for="ratyRowneD" value="czy równe raty: "/>
+                <h:selectBooleanCheckbox id="ratyRowneD" value="#{Kredyty.obiekt.ratyRowne}"/>
+                <rich:message for="ratyRowneD" styleClass="error" />
 
             </h:panelGrid>
             <rich:message for="zapisz" styleClass="error" />

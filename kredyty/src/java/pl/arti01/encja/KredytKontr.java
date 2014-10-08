@@ -19,7 +19,15 @@ public class KredytKontr extends AbstKontroler<Kredyt> {
         super(new Kredyt());
     }
     
-    public Wynik oblicz(Kredyt kredyt) throws BrakOprocentowaniaEx {
+    
+    public Wynik oblicz(Kredyt kredyt) throws BrakOprocentowaniaEx{
+        if(kredyt.isRatyRowne()) {
+            return this.obliczRowneRaty(kredyt);
+        }
+        else return null;
+    }
+    
+    public Wynik obliczRowneRaty(Kredyt kredyt) throws BrakOprocentowaniaEx {
         //stworzenie wyniku
         Wynik wynik = new Wynik(kredyt);
         //pętla dla rat

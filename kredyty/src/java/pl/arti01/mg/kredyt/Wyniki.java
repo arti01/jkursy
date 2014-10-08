@@ -14,4 +14,8 @@ public class Wyniki extends AbstMg<Wynik, WynikKontr>{
     public Wyniki() throws InstantiationException, IllegalAccessException {
         super("/kredyty/wynikList", new WynikKontr(), new Wynik());
     }
+    
+    public String podglad(){
+        return "/kredyty/wynik?faces-redirect=true";
+    }
 }

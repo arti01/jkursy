@@ -53,6 +53,12 @@
                         <f:facet name="header">kwota</f:facet>
                         <h:outputText value="#{item.kwota}"/>
                     </rich:column>
+                    
+                    <rich:column>
+                        <f:facet name="header">czy równe raty</f:facet>
+                        <h:outputText value="Tak" rendered="#{item.ratyRowne}"/>
+                        <h:outputText value="Nie" rendered="#{!item.ratyRowne}"/>
+                    </rich:column>
 
                     <rich:column style="width: 115px">
                         <rich:tooltip target="imgDe" value="usuń" layout="block"/>
