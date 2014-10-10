@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -61,6 +62,9 @@ public class Wynik extends AbstEncja implements Serializable {
     
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "wynik", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<WynikRata> wynikRataList;
+    
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "wynik", fetch = FetchType.LAZY, orphanRemoval = true)
+    private PlikWynik plik;
 
     @ManyToOne(cascade = {CascadeType.REFRESH})
     private Kredyt kredyt;
@@ -162,6 +166,14 @@ public class Wynik extends AbstEncja implements Serializable {
 
     public void setRatyRowne(boolean ratyRowne) {
         this.ratyRowne = ratyRowne;
+    }
+
+    public PlikWynik getPlik() {
+        return plik;
+    }
+
+    public void setPlik(PlikWynik plik) {
+        this.plik = plik;
     }
 
     @Override
