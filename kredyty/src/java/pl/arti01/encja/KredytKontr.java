@@ -9,12 +9,15 @@ import abst.AbstKontroler;
 import encje.exceptions.BrakOprocentowaniaEx;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class KredytKontr extends AbstKontroler<Kredyt> {
@@ -64,7 +67,7 @@ public class KredytKontr extends AbstKontroler<Kredyt> {
             wynik.getWynikRataList().add(rata);
             cal.add(Calendar.MONTH, 1);
         }
-        
+
         kredyt.getWynikList().add(this.zrobPlik(wynik));
         this.edit(kredyt);
         return wynik;
@@ -133,41 +136,45 @@ public class KredytKontr extends AbstKontroler<Kredyt> {
         BigDecimal mnoz = kwota.multiply(gora).setScale(10, BigDecimal.ROUND_HALF_EVEN);
         return mnoz.divide(mianownik, RoundingMode.HALF_EVEN).setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
-    
-    public Wynik zrobPlik(Wynik wynik){
+
+    public Wynik zrobPlik(Wynik wynik) {
         //przygotowanie pliku
-        PlikWynik pw=new PlikWynik();
+        PlikWynik pw = new PlikWynik();
         pw.setNazwa(wynik.getNazwa());
         pw.setWynik(wynik);
-        
-        List<WynikRata>krokiSort=wynik.getWynikRataList();
-        
+
+        List<WynikRata> krokiSort = wynik.getWynikRataList();
+
         Collections.sort(krokiSort, new Comparator<WynikRata>() {
             @Override
             public int compare(WynikRata o1, WynikRata o2) {
                 int wynik;
                 try {
-                    if(o1.getRataNumer()<=o2.getRataNumer()){
-                        wynik=-1;
+                    if (o1.getRataNumer() <= o2.getRataNumer()) {
+                        wynik = -1;
+                    } else {
+                        wynik = 1;
                     }
-                    else wynik=1;
                 } catch (NullPointerException mpe) {
                     wynik = 0;
                 }
                 return wynik;
             }
         });
-        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
-        String plik="";
-        for(WynikRata wr: krokiSort){
-            plik=plik+wr.getRataNumer()+";";
-            plik=plik+sdf.format(wr.getRataData())+";";
-            plik=plik+wr.getRataKapitalowa()+";";
-            plik=plik+wr.getRataOdsetkowa()+";";
-            plik=plik+wr.getRataKapitalowa().add(wr.getRataOdsetkowa())+";";
-            plik=plik+wr.getDoSplaty()+";";
-            plik=plik+wr.getOprocentowanie()*100+"";
-            plik=plik+"\r\n";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        String plik = "";
+        for (WynikRata wr : krokiSort) {
+            plik = plik + wr.getRataNumer() + ";";
+            plik = plik + sdf.format(wr.getRataData()) + ";";
+            plik = plik + wr.getRataKapitalowa() + ";";
+            plik = plik + wr.getRataOdsetkowa() + ";";
+            plik = plik + wr.getRataKapitalowa().add(wr.getRataOdsetkowa()) + ";";
+            plik = plik + wr.getDoSplaty() + ";";
+            NumberFormat percentFormat = NumberFormat.getPercentInstance(Locale.ENGLISH);
+            percentFormat.setMaximumFractionDigits(2);
+            String actualResult = percentFormat.format(wr.getOprocentowanie());
+            plik = plik + (actualResult) + "";
+            plik = plik + "\r\n";
         }
         pw.setPlik(plik.getBytes());
         wynik.setPlik(pw);

@@ -21,7 +21,7 @@
                     <h4>[dodaj]</h4>
                 </a4j:commandLink>
 
-                <rich:dataTable value="#{OkresyOds.lista}" var="item" iterationStatusVar="it" id="table" rows="10" style="width: 100%">
+                <rich:dataTable value="#{OkresyOds.lista}" var="item" iterationStatusVar="it" id="table" rows="15" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                     <rich:column sortBy="#{item.bank.nazwa}" sortOrder="ascending" filterExpression="#{fn:containsIgnoreCase(item.bank.nazwa, filtrNazwa)}">
