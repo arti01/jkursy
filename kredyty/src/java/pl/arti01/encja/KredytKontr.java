@@ -157,15 +157,16 @@ public class KredytKontr extends AbstKontroler<Kredyt> {
                 return wynik;
             }
         });
-        
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
         String plik="";
         for(WynikRata wr: krokiSort){
             plik=plik+wr.getRataNumer()+";";
-            plik=plik+wr.getRataData()+";";
+            plik=plik+sdf.format(wr.getRataData())+";";
             plik=plik+wr.getRataKapitalowa()+";";
             plik=plik+wr.getRataOdsetkowa()+";";
             plik=plik+wr.getRataKapitalowa().add(wr.getRataOdsetkowa())+";";
-            plik=plik+wr.getDoSplaty()+"";
+            plik=plik+wr.getDoSplaty()+";";
+            plik=plik+wr.getOprocentowanie()*100+"";
             plik=plik+"\r\n";
         }
         pw.setPlik(plik.getBytes());
