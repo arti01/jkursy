@@ -18,11 +18,9 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import pl.eod.abstr.AbstMg;
-import pl.eod2.encje.DcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
 import pl.eod2.encje.DcDokumentArchKontr;
-import pl.eod2.encje.DcDokumentStatus;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
 import pl.eod2.managedRej.Rejestracja;
 

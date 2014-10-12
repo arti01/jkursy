@@ -58,10 +58,19 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         try {
             if (rejestracja.dodajAbst()) {
                 refresh();
+                rejestracja.refreshObiekt();
                 //urzadzeniaMg.refresh();
             }
         } catch (NonexistentEntityException ex) {
             Logger.getLogger(Dokumenty.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void edytuj() {
+        if (rejestracja.edytujAbst()) {
+            rejestracja.refreshObiekt();
+            refresh();
         }
     }
 

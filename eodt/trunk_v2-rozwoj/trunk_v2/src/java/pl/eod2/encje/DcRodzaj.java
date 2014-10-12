@@ -183,6 +183,9 @@ public class DcRodzaj implements Serializable {
     }
 
     public void setSzablon(String szablon) {
+        if(szablon==null||szablon.isEmpty()){
+            szablon=" ";
+        }
         this.szablon = szablon;
     }
 

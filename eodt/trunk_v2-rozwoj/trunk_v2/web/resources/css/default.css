@@ -84,6 +84,24 @@ textarea{
 .rf-cp-b {    
 }
 
+.rf-pm-itm-lbl{
+    font-size: 10px;
+    padding: 1px;
+}
+
+.rf-pm-top-gr-lbl{
+    font-size: 10px;
+    padding: 1px;
+}
+
+.rf-pm-itm {
+    padding: 1px;
+}
+
+.rf-pm-top-gr-hdr {
+    padding: 1px;
+}
+
 input.rf-au-inp{
     
 }

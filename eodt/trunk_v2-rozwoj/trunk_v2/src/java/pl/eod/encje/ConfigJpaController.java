@@ -22,6 +22,7 @@ import pl.eod.encje.exceptions.PreexistingEntityException;
  * @author arti01
  */
 public class ConfigJpaController implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public ConfigJpaController() {
         if (this.emf == null) {

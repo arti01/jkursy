@@ -1,3 +1,25 @@
+2014-10-12
+Wyszukiwarka (w rejestracji dla dokumentów, w archiwum - dla dokumentow_arch)
+Jesli data dokumentu nie jest wypełniona, domyślnie ustawiana jest data bieząca
+
+bo jak był pusty szablon, to się nie zmienial
+update dc_rodzaj set szablon=' ' where length(szablon)=0;
+
+Pola w wyszukiwarce:
+nazwa dokumentu: 	
+opis dokumentu: 	
+data rejestracji OD: 	
+data rejestracji DO: 	
+data dokumentu OD: 	
+data dokumentu DO: 	
+rodzaj: 	
+Innych nie dodawałem, bo i tak potem można filtrować tabele
+
+Uwaga! wyłączyłem zmianę struktury tabel, bo się szybciej bootuje aplikacja
+<!--<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />--> - w razie czego trzeba odremowac
+(<property name="eclipselink.ddl-generation" value="create-or-extend-tables" />)
+
+
 2014-10-05
 Ściągnięte unikalne z dział nazwa i symbol
 (ściągnij proszę w bazie)

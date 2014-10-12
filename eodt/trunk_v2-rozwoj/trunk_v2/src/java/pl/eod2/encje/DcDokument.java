@@ -184,6 +184,9 @@ public class DcDokument extends AbstEncja implements Serializable {
     }
 
     public void setDataDok(Date dataDok) {
+        if(dataDok==null){
+            dataDok=new Date();
+        }
         this.dataDok = dataDok;
     }
 
@@ -323,6 +326,10 @@ public class DcDokument extends AbstEncja implements Serializable {
             return null;
         }
         return symbolDok;
+    }
+
+    public void setSymbolDok(String symbolDok) {
+        this.symbolDok = symbolDok;
     }
 
     public int getSymbolNrKol() {

@@ -5,6 +5,7 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -618,6 +619,60 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
         } catch (NoResultException | ArrayIndexOutOfBoundsException | NullPointerException ex) {
             logger.log(Level.SEVERE, "blad", ex);
             return 1;
+        } finally {
+            em.close();
+        }
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public List<DcDokument> findByExample(DcDokument dokument, Date dataRejOd, Date dataRejDo, Date dataDokOd, Date dataDokDo) throws ParseException {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Object> cq = cb.createQuery();
+            Root<DcDokument> cfg = cq.from(DcDokument.class);
+            cq.select(cfg);
+            Predicate nazwa = cb.like(cb.lower(cfg.get(DcDokument_.nazwa)), "%" + dokument.getNazwa().toLowerCase() + "%");
+            Predicate opis = cb.like(cb.lower(cfg.get(DcDokument_.opis)), "%" + dokument.getOpis().toLowerCase() + "%");
+            Predicate rodzaj = cb.equal(cfg.get(DcDokument_.rodzajId), dokument.getRodzajId());
+            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+            
+            if(dataRejOd==null){
+                dataRejOd=sdf.parse("1900-01-01");
+            }
+            if(dataRejDo==null){
+                dataRejDo=sdf.parse("2100-01-01");
+            }
+            
+            if(dataDokOd==null&&dataDokDo!=null){
+                dataDokOd=sdf.parse("1900-01-01");
+            }
+            if(dataDokDo==null&&dataDokOd!=null){
+                dataDokDo=sdf.parse("2100-01-01");
+            }
+            
+            Predicate pdata = cb.between(cfg.get(DcDokument_.dataWprow), dataRejOd, dataRejDo);
+            Predicate ddata = cb.between(cfg.get(DcDokument_.dataDok), dataDokOd, dataDokDo);
+            
+            List<Predicate> warunek=new ArrayList<>();
+            warunek.add(cb.or(nazwa));
+            warunek.add(cb.or(opis));
+            warunek.add(cb.and(pdata));
+            if(dataDokOd!=null&&dataDokDo!=null){
+                warunek.add(cb.and(ddata));
+            }
+            
+            if (dokument.getRodzajId() != null) {
+                warunek.add(cb.and(rodzaj));
+            }
+
+            cq.where(warunek.toArray(new Predicate[warunek.size()]));
+
+            Query q = em.createQuery(cq);
+
+            List<DcDokument> wynik;
+            wynik = (List<DcDokument>) q.getResultList();
+            return wynik;
         } finally {
             em.close();
         }

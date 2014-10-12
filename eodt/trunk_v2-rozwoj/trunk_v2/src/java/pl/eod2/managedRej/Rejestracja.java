@@ -39,12 +39,12 @@ import pl.eod2.managedUm.RejDok;
 @SessionScoped
 public class Rejestracja {
 
-    private DataModel<DcDokument> lista = new ListDataModel<>();
+    DataModel<DcDokument> lista = new ListDataModel<>();
     private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
-    private DcDokumentJpaController dcC;
+    DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
     private DcRodzajJpaController dcRodzC;
-    private DcDokument obiekt;
+    DcDokument obiekt;
     private AbstPlik plik;
     private DcPlikImport plikImport;
     private DcPlikImportJpaController plikImpC;

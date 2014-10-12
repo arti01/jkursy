@@ -63,6 +63,11 @@
                                     Raport pocztowy
                                 </rich:panelMenuItem>
                             </h:commandLink>
+                            <h:commandLink action="#{WyszukajRej.form}">
+                                <rich:panelMenuItem >
+                                    Wyszukaj
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">
@@ -103,6 +108,11 @@
                                 <rich:panelMenuItem >
                                     Dokumenty
                                 </rich:panelMenuItem>
+                                <h:commandLink action="#{WyszukajArch.form}">
+                                <rich:panelMenuItem >
+                                    Wyszukaj w archiwum
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                             </h:commandLink>
                         </rich:panelMenuGroup>
 
