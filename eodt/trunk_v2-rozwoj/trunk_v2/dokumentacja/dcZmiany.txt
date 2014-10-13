@@ -1,4 +1,17 @@
 2014-10-12
+w brakowaniu brany jest czas podany w symb. mer 1 LUB symb. Mer 2
+W rejestracja->lista dokumentów dokumenty ktore powinny być brakowane mają czerwony znacznik przy dacie.
+W Archiwum nowa pozycja >Do brakowania< w ktorej pokazane są dokumenty ARCHIWALNE dla których
+minał czas brakowania (niezależnie od statusu)
+
+update DC_DOKUMENT set data_dok=data_wprow where data_dok is null;
+update DC_DOKUMENT_arch set data_dok=data_wprow where data_dok is null;
+
+sprawdzić, czy w dc_rodzaj w polach id_symb_mer... nie ma nuli - jak są, to uzupełnić (mozna przez aplikację).
+
+do dokumentów ktore mogą być poddane archiwizacji dodałem statusy odrzucony i anulowany - coś trzeba z nimi zrobić.
+
+2014-10-12
 Wyszukiwarka (w rejestracji dla dokumentów, w archiwum - dla dokumentow_arch)
 Jesli data dokumentu nie jest wypełniona, domyślnie ustawiana jest data bieząca
 

@@ -51,7 +51,10 @@ public class Przenies {
     public void refreshObiekt() {
         dcDokC = new DcDokumentJpaController();
         dcTeczC = new DcTeczkaKontr();
-        listaDoArchiwum.setWrappedData(dcDokC.findStatus(3));
+        List<DcDokument> l=dcDokC.findStatus(3);
+        l.addAll(dcDokC.findStatus(4));
+        l.addAll(dcDokC.findStatus(5));
+        listaDoArchiwum.setWrappedData(l);
         dcDokArchDane = new DcDokumentArchDane();
         typWyboru = "";
         wybrane.clear();

@@ -83,6 +83,8 @@
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
                         </f:facet>
                         <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                        <br/>
+                        <h:outputText value="do brakowania" style="background-color: red" rendered="#{item.alertBrakowanie}"/><br/>
                     </rich:column>
 
                     <rich:column filterExpression="#{fn:containsIgnoreCase(item.kontrahentId.nazwa,RejestracjaRej.filtrKontrahent)}" rendered="#{!widok}">    

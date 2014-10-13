@@ -128,6 +128,8 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     private String symbolDok;
     @Transient
     private boolean wyborZnacznik;
+    @Transient
+    private boolean alertBrakowanie;
 
     public DcDokumentArch() {
     }
@@ -387,6 +389,20 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.dokumentyList = dokumentyList;
     }
 
+    public boolean isAlertBrakowanie() {
+        alertBrakowanie = false;
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(dataDok);
+        cal1.add(Calendar.MONTH, getRodzajId().getSymbMer1Id().getCzas());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(dataDok);
+        cal2.add(Calendar.MONTH, getRodzajId().getSymbMer2Id().getCzas());
+        if(cal1.before(Calendar.getInstance())||cal2.before(Calendar.getInstance())){
+            return true;
+        }
+        return alertBrakowanie;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;

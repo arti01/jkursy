@@ -4,9 +4,9 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/template.xhtml">
     <ui:define name="content">
-        <h3>Dokumenty przeniesione do archiwum</h3>
+        <h3>Dokumenty w archiwum podlegające brakowaniu</h3>
         <ui:include src="/dcarch/listWInc.xhtml">
-            <ui:param name="managedArch" value="#{WArchiwumArch}"/>
+            <ui:param name="managedArch" value="#{BrakowanieArch}"/>
         </ui:include>
     </ui:define>
 </ui:composition>
