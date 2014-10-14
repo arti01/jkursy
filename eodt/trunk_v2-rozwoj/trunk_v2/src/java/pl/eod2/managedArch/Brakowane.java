@@ -41,11 +41,12 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void refresh() throws InstantiationException, IllegalAccessException {
         super.refresh();
         List<DcDokumentArch> l=new ArrayList<>();
         for(DcDokumentArch d:(List<DcDokumentArch>) lista.getWrappedData()){
-            if(d.isAlertBrakowanie()){
+            if(d.isAlertBrakowanie()&&d.getDokStatusId().getId()!=10){
                 l.add(d);
             }
         }

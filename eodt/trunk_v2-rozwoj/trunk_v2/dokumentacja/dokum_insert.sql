@@ -34,6 +34,7 @@ insert into dc_dokument_status  values (6, 'poczekalnia - do akceptu', 'dokument
 insert into DC_DOKUMENT_STATUS values (7 'poczekalnia - zaakceptowany', 'dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji', '#888888', 'archiwum');
 INSERT INTO dc_dokument_status  VALUES (8, 'w archiwum', 'dokument w archiwum', 'brown', 'archiwum');
 INSERT INTO dc_dokument_status  VALUES (9, 'wydany', 'dokument wydany z archiwum', '#999999', 'archiwum');
+INSERT INTO dc_dokument_status  VALUES (10, 'poddany brakowaniu', 'dokument poddany procesowi brakowania', '#131313', 'archiwum');
 
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (1, 'wszyscy muszą zaakceptować');
 INSERT INTO DC_AKCEPT_TYP_KROKU (id, nazwa ) VALUES (2, 'wystarczy jeden do akceptacji');

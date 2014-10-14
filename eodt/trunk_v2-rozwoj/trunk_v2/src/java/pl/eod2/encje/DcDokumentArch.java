@@ -138,6 +138,9 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.id = dc.getId();
         this.dataDok = dc.getDataDok();
         this.dataWprow = dc.getDataWprow();
+        DcDokumentArchDane dad=new DcDokumentArchDane();
+        dad.setArchData(new Date());
+        this.dokArchDane=dad;
         
         this.dcDokKrok=new ArrayList<>();
         for (DcDokumentKrok kr : dc.getDcDokKrok()) {

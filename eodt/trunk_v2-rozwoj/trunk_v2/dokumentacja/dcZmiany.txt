@@ -1,3 +1,20 @@
+2014-10-13
+INSERT INTO dc_dokument_status  VALUES (10, 'poddany brakowaniu', 'dokument poddany procesowi brakowania', '#131313', 'archiwum');
+
+i teraz tak:
+- brakowanie robi się w opcji archiwum
+- dokumenty do brakowania muszą miec status zamkniety, anulowany, odrzucony (tak jak i inne, ktore mozna archiwizować)
+- trzeba je normalnie poddać archiwizacji
+
+trzeba stworzyć rodzaj który ma status start "w archiwum" a status stop - "poddany w brakowaniu" i potem analogicznie
+jak z wydawaniem - wybrać, stworzyć dokument określonego rodzaju, ten dokument wysłać do akceptacji, po zaakceptowaniu
+zmienią status na poddany brakowaniu
+
+prawdę mówiąc można też stworzyć rodzaj status start poczekalnia - do akceptu, status stop - poddany brakowaniu i wtedy w opcji
+"do archiwum" jak się wybierze dokumenty i pusci akceptacje to wskoczą do archiwum od razu ze statusem "poddany brakowaniu" :)
+
+
+
 2014-10-12
 w brakowaniu brany jest czas podany w symb. mer 1 LUB symb. Mer 2
 W rejestracja->lista dokumentów dokumenty ktore powinny być brakowane mają czerwony znacznik przy dacie.
