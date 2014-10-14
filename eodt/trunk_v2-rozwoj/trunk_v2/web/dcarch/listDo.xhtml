@@ -88,6 +88,8 @@
                     <rich:column>
                         <f:facet name="header">data dokumentu</f:facet>
                         <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                        <br/>
+                        <h:outputText value="do brakowania" style="background-color: red" rendered="#{item.alertBrakowanie}"/><br/>
                     </rich:column>
                     <rich:column>
                         <f:facet name="header">żródło</f:facet>

@@ -4,9 +4,9 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/template.xhtml">
     <ui:define name="content">
-    <h3>Dokumenty</h3>
+        <h3>Dokumenty do brakowania</h3>
         <ui:include src="/dcrej/dokumentList.xhtml">
-            <ui:param name="managedBean" value="#{RejestracjaRej}"/> 
+            <ui:param name="managedBean" value="#{BrakowanieRej}"/> 
             <ui:param name="widok" value="#{false}"/>
         </ui:include>
     </ui:define>

@@ -68,6 +68,11 @@
                                     Wyszukaj
                                 </rich:panelMenuItem>
                             </h:commandLink>
+                            <h:commandLink action="#{BrakowanieRej.list()}">
+                                <rich:panelMenuItem >
+                                    Do brakowania
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Dokumenty - odbiór" rendered="#{login.dcOdb}" expanded="#{login.menuDcOdbExp}" actionListener="#{login.menuDcOdbExpList}">

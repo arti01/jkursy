@@ -32,8 +32,6 @@ import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
-import pl.eod2.managedCfg.Rodzaje;
-import pl.eod2.managedUm.RejDok;
 
 @ManagedBean(name = "RejestracjaRej")
 @SessionScoped
