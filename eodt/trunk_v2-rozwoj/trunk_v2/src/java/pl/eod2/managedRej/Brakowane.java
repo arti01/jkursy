@@ -1,6 +1,5 @@
 package pl.eod2.managedRej;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -11,7 +10,8 @@ import pl.eod2.encje.DcDokument;
 @ManagedBean(name = "BrakowanieRej")
 @SessionScoped
 public class Brakowane extends Rejestracja {
-int listaSize=0;
+
+    int listaSize = 0;
 
     public Brakowane() {
         super();
@@ -20,23 +20,24 @@ int listaSize=0;
 
     @PostConstruct
     @Override
-    public void refreshObiekt(){
+    @SuppressWarnings("unchecked")
+    public void refreshObiekt() {
         super.refreshObiekt();
-        List<DcDokument> l=new ArrayList<>();
-        for(DcDokument d:(List<DcDokument>) lista.getWrappedData()){
-            if(d.isAlertBrakowanie()){
+        List<DcDokument> l = new ArrayList<>();
+        for (DcDokument d : (List<DcDokument>) lista.getWrappedData()) {
+            if (d.isAlertBrakowanie()) {
                 l.add(d);
             }
         }
-        listaSize=l.size();
+        listaSize = l.size();
         lista.setWrappedData(l);
     }
-    
+
     @Override
     public String list() {
         refreshObiekt();
         return "/dcrej/dokumentyDoBrak";
-}
+    }
 
     public int getListaSize() {
         return listaSize;
@@ -45,5 +46,5 @@ int listaSize=0;
     public void setListaSize(int listaSize) {
         this.listaSize = listaSize;
     }
-    
+
 }

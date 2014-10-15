@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -32,27 +33,35 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     private List<DcDokumentArch> doWybrania = new ArrayList<>();
     private String typWyboru = "";
     private DcDokumentArchDane dcDokArchDane = new DcDokumentArchDane();
+    private int listaSize = 0;
 
     @ManagedProperty(value = "#{RejestracjaRej}")
     private Rejestracja rejestracja;
 
     public Brakowane() throws InstantiationException, IllegalAccessException {
         super("/dcarch/listWbrakowanie", new DcDokumentArchKontr(), new DcDokumentArch());
+        super.refresh();
     }
 
+    @PostConstruct
     @Override
     @SuppressWarnings("unchecked")
-    public void refresh() throws InstantiationException, IllegalAccessException {
-        super.refresh();
-        List<DcDokumentArch> l=new ArrayList<>();
-        for(DcDokumentArch d:(List<DcDokumentArch>) lista.getWrappedData()){
-            if(d.isAlertBrakowanie()&&d.getDokStatusId().getId()!=10){
+    public void refresh() {
+        try {
+            super.refresh();
+        } catch (InstantiationException | IllegalAccessException ex) {
+            Logger.getLogger(Brakowane.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        List<DcDokumentArch> l = new ArrayList<>();
+        for (DcDokumentArch d : (List<DcDokumentArch>) lista.getWrappedData()) {
+            if (d.isAlertBrakowanie() && d.getDokStatusId().getId() != 10) {
                 l.add(d);
             }
         }
+        listaSize = l.size();
         lista.setWrappedData(l);
     }
-    
+
     @SuppressWarnings("unchecked")
     public void zmianaDanychArch() {
         typWyboru = "zmianaDanych";
@@ -120,7 +129,7 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
             rejestracja.getObiekt().setDcArchList(wybrane);
             rejestracja.edytujAbst();
             refresh();
-        } catch (NonexistentEntityException | InstantiationException | IllegalAccessException ex) {
+        } catch (NonexistentEntityException ex) {
             Logger.getLogger(Brakowane.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -168,4 +177,13 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     public void setRejestracja(Rejestracja rejestracja) {
         this.rejestracja = rejestracja;
     }
+
+    public int getListaSize() {
+        return listaSize;
+    }
+
+    public void setListaSize(int listaSize) {
+        this.listaSize = listaSize;
+    }
+
 }

@@ -123,12 +123,14 @@
                                 </rich:column>
                             </rich:dataTable>
                         </rich:collapsiblePanel>
-                        <rich:panel header="liczba dokumentów do brakowania" rendered="#{login.dcRej}">
-                            #{BrakowanieRej.listaSize}
-                        </rich:panel>
-                        <rich:panel header="liczba dokumentów w archiwum do brakowania" rendered="#{login.dcArc}">
-                            
-                        </rich:panel>
+                        <h:panelGrid columns="2">
+                            <rich:panel header="liczba dokumentów do brakowania" rendered="#{login.dcRej}">
+                                #{BrakowanieRej.listaSize}
+                            </rich:panel>
+                            <rich:panel header="liczba dokumentów w archiwum do brakowania" rendered="#{login.dcArc}">
+                                #{BrakowanieArch.listaSize}
+                            </rich:panel>
+                        </h:panelGrid>
                     </h:panelGrid>
                 </center>
             </h:panelGroup>
