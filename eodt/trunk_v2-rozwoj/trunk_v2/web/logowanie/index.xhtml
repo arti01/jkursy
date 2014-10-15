@@ -2,6 +2,7 @@
 <ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
                 template="#{login.template}"
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:f="http://java.sun.com/jsf/core">
@@ -122,6 +123,12 @@
                                 </rich:column>
                             </rich:dataTable>
                         </rich:collapsiblePanel>
+                        <rich:panel header="liczba dokumentów do brakowania" rendered="#{login.dcRej}">
+                            #{BrakowanieRej.listaSize}
+                        </rich:panel>
+                        <rich:panel header="liczba dokumentów w archiwum do brakowania" rendered="#{login.dcArc}">
+                            
+                        </rich:panel>
                     </h:panelGrid>
                 </center>
             </h:panelGroup>
