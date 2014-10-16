@@ -213,7 +213,7 @@ public class Rejestracja {
     public void listenerOpis(ValueChangeEvent vce) {
         DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
         if (!(rodzaj.getSzablon() == null || rodzaj.getSzablon().isEmpty())) {
-            obiekt.setOpis(rodzaj.getSzablon());
+            obiekt.setOpisDlugi(rodzaj.getSzablon());
         }
     }
 

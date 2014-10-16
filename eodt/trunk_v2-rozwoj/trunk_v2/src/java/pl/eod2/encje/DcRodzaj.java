@@ -30,10 +30,10 @@ import javax.validation.constraints.Size;
  *
  * @author arti01
  */
-@Entity
+@Entity(name = "DcRodzaj")
 @Table(name = "dc_rodzaj")
 @NamedQueries({
-    @NamedQuery(name = "DcRodzaj.findAll", query = "SELECT d FROM DcRodzaj d"),
+    @NamedQuery(name = "opisBind.findAll", query = "SELECT d FROM DcRodzaj d"),
     @NamedQuery(name = "DcRodzaj.findAllzKrok", query = "SELECT d FROM DcRodzaj d WHERE SIZE(d.dcAkceptKroki)>0"),
     @NamedQuery(name = "DcRodzaj.findById", query = "SELECT d FROM DcRodzaj d WHERE d.id = :id"),
     @NamedQuery(name = "DcRodzaj.findByNazwa", query = "SELECT d FROM DcRodzaj d WHERE d.nazwa = :nazwa"),

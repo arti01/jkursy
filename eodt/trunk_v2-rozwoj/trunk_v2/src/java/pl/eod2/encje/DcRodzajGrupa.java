@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  *
  * @author arti01
  */
-@Entity
+@Entity(name="DcRodzajGrupa")
 @Table(name = "dc_rodzaj_grupa")
 @NamedQueries({
     @NamedQuery(name = "DcRodzajGrupa.findAll", query = "SELECT d FROM DcRodzajGrupa d"),

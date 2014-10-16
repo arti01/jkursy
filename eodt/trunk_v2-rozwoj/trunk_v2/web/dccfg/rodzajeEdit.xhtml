@@ -18,7 +18,7 @@
                 <h:inputText id="symbolD" value="#{RodzajeCfg.obiekt.symbol}"  size="5" ><rich:validator/></h:inputText>
                 <rich:message for="symbolD" styleClass="error" />
 
-                <h:outputLabel for="opisD" value="opis: "/>
+                <h:outputLabel for="opisD" value="uwagi: "/>
                 <h:inputTextarea id="opisD" value="#{RodzajeCfg.obiekt.opis}"  cols="110" ><rich:validator/></h:inputTextarea>
                 <rich:message for="opisD" styleClass="error" />
 
@@ -39,17 +39,17 @@
                 <h:inputText id="limitCzaasuAkceptacjiD" value="#{RodzajeCfg.obiekt.limitCzaasuAkceptacji}" size="2"><rich:validator/></h:inputText>
                 <rich:message for="limitCzaasuAkceptacjiD" styleClass="error" />
 
-                <h:outputLabel for="symbrwaD" value="symbol RWA: "/>
+                <h:outputLabel for="symbrwaD" value="symbol klasyfikacyjny: "/>
                 <h:inputText id="symbrwaD" value="#{RodzajeCfg.obiekt.symbolRwa}" size="10"><rich:validator/></h:inputText>
                 <rich:message for="symbrwaD" styleClass="error" />
 
-                <h:outputLabel for="symbmer1D" value="symb. meryt. 1: "/>
+                <h:outputLabel for="symbmer1D" value="kat. arch. w kom. merytorycznej: "/>
                 <h:selectOneMenu id="symbmer1D" value="#{RodzajeCfg.obiekt.symbMer1Id}" converter="#{DcSymbMer1Conv}">
                     <f:selectItems value="#{SymbMer1Cfg.lista}" var="sm1" itemValue="#{sm1}" itemLabel="#{sm1.nazwa}"/>
                 </h:selectOneMenu>
                 <rich:message for="symbmer1D" styleClass="error" />
 
-                <h:outputLabel for="symbmer2D" value="symb. meryt. 2: "/>
+                <h:outputLabel for="symbmer2D" value="kat. arch. w innych komórkach: "/>
                 <h:selectOneMenu id="symbmer2D" value="#{RodzajeCfg.obiekt.symbMer2Id}" converter="#{DcSymbMer2Conv}">
                     <f:selectItems value="#{SymbMer2Cfg.lista}" var="sm2" itemValue="#{sm2}" itemLabel="#{sm2.nazwa}"/>
                 </h:selectOneMenu>
