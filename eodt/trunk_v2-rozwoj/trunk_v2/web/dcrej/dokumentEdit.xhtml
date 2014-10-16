@@ -60,13 +60,13 @@
     </h:panelGrid>
 
     <hr style="width: 30%;"/>
-    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ dole strony) (najpierw wybierz rodzaj dokumentu -&lt;br/&gt;- zmiana rodzaju dokumentu na taki,&lt;br/&gt;który posiada szablon wyczyści to pole)" expanded="false" rendered="#{!detal}" switchType="client" onswitch="#{rich:component('dodajPane')}.hide();#{rich:component('dodajPane')}.show();">
-        <rich:editor binding="#{opisBind}" id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
+    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ dole strony) (najpierw wybierz rodzaj dokumentu - zmiana rodzaju dokumentu na taki, który posiada szablon wyczyści to pole)" expanded="false" rendered="#{!detal}" switchType="client" onswitch="#{rich:component('dodajPane')}.hide();#{rich:component('dodajPane')}.show();">
+        <rich:editor  id="opisDlugiD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
         <h:outputText value="#{RejestracjaRej.obiekt.opisDlugi}" escape="false" rendered="#{RejestracjaRej.obiekt.dokStatusId.id!=1}"/>
     </rich:collapsiblePanel>
     
-    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony) (najpierw wybierz rodzaj dokumentu -&lt;br/&gt;- zmiana rodzaju dokumentu na taki,&lt;br/&gt;który posiada szablon wyczyści to pole)" expanded="false" rendered="#{detal}" switchType="client" >
-        <rich:editor binding="#{opisBind}" id="opisDlugiDD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
+    <rich:collapsiblePanel header="dodatkowy opis  (po modyfikacji naciśnij przycisk ZAPISZ na górze lub dole strony) (najpierw wybierz rodzaj dokumentu - zmiana rodzaju dokumentu na taki, który posiada szablon wyczyści to pole)" expanded="false" rendered="#{detal}" switchType="client" >
+        <rich:editor id="opisDlugiDD" toolbar="full" value="#{RejestracjaRej.obiekt.opisDlugi}" style="margin-bottom: 1em" rendered="#{RejestracjaRej.obiekt.dokStatusId.id==1 or RejestracjaRej.obiekt.dokStatusId.id==null}" />
         <h:outputText value="#{RejestracjaRej.obiekt.opisDlugi}" escape="false" rendered="#{RejestracjaRej.obiekt.dokStatusId.id!=1}"/>
     </rich:collapsiblePanel>
     

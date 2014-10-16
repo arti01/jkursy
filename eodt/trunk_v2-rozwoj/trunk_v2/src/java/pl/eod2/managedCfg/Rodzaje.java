@@ -6,6 +6,8 @@ package pl.eod2.managedCfg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -80,9 +82,15 @@ public class Rodzaje {
         }
     }
 
-    public void edytuj() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        //System.err.println(obiekt.getUmMasterGrupaList());
-        error = dcC.edit(obiekt);
+    public void edytuj() {
+        try {
+            //System.err.println(obiekt.getUmMasterGrupaList());
+            error = dcC.edit(obiekt);
+        } catch (NonexistentEntityException ex) {
+            Logger.getLogger(Rodzaje.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(Rodzaje.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //System.err.println(obiekt.getUmMasterGrupaList());
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
