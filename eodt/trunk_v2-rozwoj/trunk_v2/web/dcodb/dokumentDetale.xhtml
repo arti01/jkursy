@@ -178,17 +178,16 @@
                         #{doWiad.tresc}
                     </rich:column>
                 </rich:dataTable>
-
                 <rich:popupPanel header="Wprowadź dane" id="dodajPaneWiad"  autosized="true" domElementAttachment="parent" rendered="#{managedBean!=WArchiwumArch}">
                     <h:outputLabel value="wprowadz krótką notatkę: "/>
                     <h:inputText value="#{managedBean.doWiad.tresc}" size="90"/>
                     <h:panelGrid id="doWiadForm" columns="2">
                         <rich:panel id="doWiadFormLista">
                             <f:facet name="header">lista odbiorców</f:facet>
-                            <rich:list id="user_list" value="#{managedBean.doWiad.dcDokDoWiadCelList}" var="cel">
+                            <rich:list id="user_list" value="#{DoWiadOdb.doWiad.dcDokDoWiadCelList}" var="cel">
                                 #{cel.userid.fullname} #{cel.userid.adrEmail}
-                                <a4j:commandButton id="usunUser" action="#{managedBean.usunDoWiadUser}" render="doWiadFormLista" execute="user_list" image="/images/delete.png">
-                                    <f:setPropertyActionListener target="#{managedBean.doWiadCel}" value="#{cel}" />
+                                <a4j:commandButton id="usunUser" action="#{DoWiadOdb.usunDoWiadUser}" render="doWiadFormLista" execute="user_list" image="/images/delete.png">
+                                    <f:setPropertyActionListener target="#{DoWiadOdb.doWiadCel}" value="#{cel}" />
                                 </a4j:commandButton>
                             </rich:list>
                         </rich:panel>
@@ -196,19 +195,19 @@
                             <f:facet name="header"></f:facet>
                             <h:panelGrid id="doWiadForm2" columns="3">
                                 <h:outputLabel for="cel" value="podaj email (wprowadz min. 3 znaki)"/>
-                                <rich:autocomplete id="cel" value="#{managedBean.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
+                                <rich:autocomplete id="cel" value="#{DoWiadOdb.userDoWiad}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}">
                                     #{user.adrEmail}
                                     #{user.fullname}
                                 </rich:autocomplete>
                                 <rich:message for="user_id" styleClass="error" />
-                                <a4j:commandButton value="dodaj" execute="doWiadForm2" action="#{managedBean.dodajDoWiadUser}" render="doWiadForm, wyslijDoPrzyciski"/>
+                                <a4j:commandButton value="dodaj" execute="doWiadForm2" action="#{DoWiadOdb.dodajDoWiadUser}" render="doWiadForm, wyslijDoPrzyciski"/>
                             </h:panelGrid>
                         </rich:panel>
                     </h:panelGrid>
                     <rich:panel id="wyslijDoPrzyciski">
-                        <a4j:commandButton id="wyslijDoWiad" action="#{managedBean.dodajDoWiad}" value="Wyślij" render="dodajPaneWiad, doWiadList" execute="dodajPaneWiad"
+                        <a4j:commandButton id="wyslijDoWiad" action="#{DoWiadOdb.dodajDoWiad}" value="Wyślij" render="dodajPaneWiad, doWiadList" execute="dodajPaneWiad"
                                            oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPaneWiad')}.hide();} else {#{rich:component('dodajPaneWiad')}.show();}" 
-                                           rendered="#{fn:length(managedBean.doWiad.dcDokDoWiadCelList)>0}"/>
+                                           rendered="#{fn:length(DoWiadOdb.doWiad.dcDokDoWiadCelList)>0}"/>
                         <a4j:commandButton value="Wyjdź" onclick="#{rich:component('dodajPaneWiad')}.hide();
                                 return false;" />
                     </rich:panel>

@@ -120,6 +120,13 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @ManyToMany(mappedBy = "dcArchList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     private List<DcDokument> dokumentyList;
     
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
+    private List<DcDokumentArch> dcArchList;
+    
+    @ManyToMany(mappedBy = "dcArchList")
+    private List<DcDokumentArch> dcArchListOld;
+    
     @Transient
     private String dataWprowStr;
     @Transient
@@ -162,6 +169,8 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
             dwa.setDokid(this);
             this.dcDokDoWiadList.add(dwa);
         }
+        
+        this.dcArchList=dc.getDcArchList();
         
         this.dokStatusId = dc.getDokStatusId();
         this.kontrahentId = dc.getKontrahentId();
@@ -404,6 +413,22 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
             return true;
         }
         return alertBrakowanie;
+    }
+
+    public List<DcDokumentArch> getDcArchListOld() {
+        return dcArchListOld;
+    }
+
+    public void setDcArchListOld(List<DcDokumentArch> dcArchListOld) {
+        this.dcArchListOld = dcArchListOld;
+    }
+
+    public List<DcDokumentArch> getDcArchList() {
+        return dcArchList;
+    }
+
+    public void setDcArchList(List<DcDokumentArch> dcArchList) {
+        this.dcArchList = dcArchList;
     }
     
     @Override
