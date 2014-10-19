@@ -1,3 +1,6 @@
+2014-10-19
+W wyszukiwarce pole opis przegląda również pole opis długi
+
 2014-10-18
 bardziej kompaktowy sposób prezentacji danych w Archiwum (zwinięty rodzaj i lokalizacja), wyszukiwanie w tabeli wg rodzaju oraz dat wprow, dok i archiw,
 zmiana nazwy pol w tej tabeli (symbole merytoryczne)
