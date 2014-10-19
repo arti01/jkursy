@@ -44,7 +44,7 @@
                 <h:inputText id="dataDokDo" value="#{WyszukajRej.dataDokDo}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:inputText>
                  
                 <h:outputLabel for="rodzaj" value="rodzaj:"/>
-                <rich:select id="teczka" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{WyszukajRej.obiekt.rodzajId}" converter="#{DcRodzajConv}"  >
+                <rich:select id="rodzaj" enableManualInput="true" defaultLabel="zacznij wpisywać"  value="#{WyszukajRej.obiekt.rodzajId}" converter="#{DcRodzajConv}"  >
                     <f:selectItems value="#{RodzajeCfg.lista}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.nazwa}"/>
                 </rich:select>
             </h:panelGrid>

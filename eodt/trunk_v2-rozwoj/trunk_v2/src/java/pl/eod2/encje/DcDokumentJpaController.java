@@ -634,6 +634,7 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
             cq.select(cfg);
             Predicate nazwa = cb.like(cb.lower(cfg.get(DcDokument_.nazwa)), "%" + dokument.getNazwa().toLowerCase() + "%");
             Predicate opis = cb.like(cb.lower(cfg.get(DcDokument_.opis)), "%" + dokument.getOpis().toLowerCase() + "%");
+            Predicate opisDlugi = cb.like(cb.lower(cfg.get(DcDokument_.opisDlugi)), "%" + dokument.getOpis().toLowerCase() + "%");
             Predicate rodzaj = cb.equal(cfg.get(DcDokument_.rodzajId), dokument.getRodzajId());
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
             
@@ -656,7 +657,7 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
             
             List<Predicate> warunek=new ArrayList<>();
             warunek.add(cb.or(nazwa));
-            warunek.add(cb.or(opis));
+            warunek.add(cb.or(opis, opisDlugi));
             warunek.add(cb.and(pdata));
             if(dataDokOd!=null&&dataDokDo!=null){
                 warunek.add(cb.and(ddata));
