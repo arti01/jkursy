@@ -1,3 +1,7 @@
+2014-10-18
+bardziej kompaktowy sposób prezentacji danych w Archiwum (zwinięty rodzaj i lokalizacja), wyszukiwanie w tabeli wg rodzaju oraz dat wprow, dok i archiw,
+zmiana nazwy pol w tej tabeli (symbole merytoryczne)
+
 2014-10-13
 INSERT INTO dc_dokument_status  VALUES (10, 'poddany brakowaniu', 'dokument poddany procesowi brakowania', '#131313', 'archiwum');
 

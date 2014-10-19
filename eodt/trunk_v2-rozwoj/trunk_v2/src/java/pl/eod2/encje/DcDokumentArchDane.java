@@ -5,11 +5,13 @@
 package pl.eod2.encje;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 @Embeddable
@@ -40,6 +42,9 @@ public class DcDokumentArchDane implements Serializable {
     @Size(max = 256)
     @Column(name = "arch_teczka ", length = 256)
     private String archTeczka;
+    
+    @Transient
+    private String archDataStr;
     
     public DcDokumentArchDane() {
     }
@@ -108,4 +113,12 @@ public class DcDokumentArchDane implements Serializable {
         this.archTeczka = archTeczka;
     }
 
+    public String getArchDataStr() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (getArchData()== null) {
+            return "";
+        } else {
+            return sdf.format(getArchData());
+        }
+    }
 }

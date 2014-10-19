@@ -62,8 +62,11 @@
                 <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
                 <f:facet name="footer"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
 
-                <rich:column sortBy="#{item.dokArchDane.archData}" sortOrder="descending">
-                    <f:facet name="header">data archiwizacji</f:facet>
+                <rich:column sortBy="#{item.dokArchDane.archData}"  filterExpression="#{fn:containsIgnoreCase(item.dokArchDane.archDataStr, RejestracjaRej.filtrdataDok)}" 
+                             sortOrder="descending">
+                    <f:facet name="header">data archiwizacji<br/><h:inputText value="#{RejestracjaRej.filtrdataDok}" size="9">
+                            <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                    </f:facet>
                     <h:outputText value="#{item.dokArchDane.archData}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                 </rich:column>
                 <rich:column filterExpression="#{fn:containsIgnoreCase(item.nazwa,RejestracjaRej.filtrNazwa)||fn:containsIgnoreCase(item.symbolDok,RejestracjaRej.filtrNazwa)}">
@@ -78,8 +81,11 @@
                         #{item.opis}
                     </rich:tooltip>
                 </rich:column>
-                <rich:column>
-                    <f:facet name="header">data dokumentu <br/> data wyprowadzenia</f:facet>
+                <rich:column filterExpression="#{fn:containsIgnoreCase(item.dataDokStr,RejestracjaRej.filtrdataWprow)||fn:containsIgnoreCase(item.dataWprowStr,RejestracjaRej.filtrdataWprow)}">
+                    <f:facet name="header">data dokumentu/data wyprowadzenia<br/>
+                        <h:inputText value="#{RejestracjaRej.filtrdataWprow}" size="9">
+                            <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                    </f:facet>
                     <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                     <hr/>
                     <h:outputText value="#{item.dataWprow}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
@@ -153,8 +159,11 @@
                         #{item.dokStatusId.opis}
                     </rich:tooltip>
                 </rich:column>
-                <rich:column>
-                    <f:facet name="header">rodzaj</f:facet>
+                <rich:column filterExpression="#{fn:containsIgnoreCase(item.rodzajId.nazwa,RejestracjaRej.filtrRodzaj)}">
+                    <f:facet name="header">rodzaj<br/>
+                        <h:inputText value="#{RejestracjaRej.filtrRodzaj}" size="9">
+                            <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>
+                    </f:facet>
                     <rich:collapsiblePanel expanded="false" header="#{item.rodzajId.nazwa}" switchType="client">
                         <h:panelGrid columns="2" id="rodzajList">
                             <h:outputLabel value="symbol klasyfikacyjny: "/>
