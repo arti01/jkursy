@@ -6,7 +6,7 @@ CREATE TABLE extpass
   id bigint NOT NULL,
   ulimit character varying(50),
   CONSTRAINT extpass_pkey PRIMARY KEY (id )
-)
+);
 
 CREATE VIEW userpass AS 
          SELECT u.adr_email AS username, p.pass AS password
