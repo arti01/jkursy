@@ -1,3 +1,6 @@
+2014-10-20
+Maly merge z rozwojem - pole szablon w rich:editor i wyszukiwarka
+
 2014-09-18
 - Druga sprawa to z dokumentu którego został uruchomiony proces akceptacji  można usunąc sprzęt. Dodanie nowego już się nie pojawia i jest OK
 poprawione (rendered na delete)

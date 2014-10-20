@@ -7,9 +7,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-
-        <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
-        <h3>Rejestracja dokumentów</h3>
+<link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form>    
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
@@ -44,7 +42,7 @@
             </script>
 
             <rich:panel id="listPanel">
-                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPane')}.show()"  action="#{RejestracjaRej.refreshObiekt}">
+                <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPane')}.show()"  action="#{RejestracjaRej.refreshObiekt}"  rendered="#{!brakDodaj}">
                     <h4>[dodaj dokument]</h4>
                 </a4j:commandLink>
 
@@ -86,7 +84,7 @@
                         <h:outputText value="#{item.dataDok}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
                     </rich:column>
 
-                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.kontrahentId.nazwa,RejestracjaRej.filtrKontrahent)}">    
+                    <rich:column filterExpression="#{fn:containsIgnoreCase(item.kontrahentId.nazwa,RejestracjaRej.filtrKontrahent)}" rendered="#{!widok}">    
                         <f:facet name="header">kontrahent
                             <h:inputText value="#{RejestracjaRej.filtrKontrahent}" size="9">
                                 <a4j:ajax event="blur" render="table" execute="@this" /></h:inputText>

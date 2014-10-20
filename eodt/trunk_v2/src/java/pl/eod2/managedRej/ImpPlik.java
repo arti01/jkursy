@@ -4,7 +4,6 @@
  */
 package pl.eod2.managedRej;
 
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,7 +17,7 @@ import pl.eod2.encje.DcPlikImportJpaController;
 public class ImpPlik {
 
     DcPlikImportJpaController dcpiC;
-    private DataModel<DcPlikImport> lista = new ListDataModel<DcPlikImport>();
+    private DataModel<DcPlikImport> lista = new ListDataModel<>();
     DcPlikImport plkImp;
 
     @PostConstruct

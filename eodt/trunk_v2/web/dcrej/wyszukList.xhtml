@@ -4,10 +4,9 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/template.xhtml">
     <ui:define name="content">
-    <h3>Dokumenty</h3>
         <ui:include src="/dcrej/dokumentList.xhtml">
-            <ui:param name="managedBean" value="#{RejestracjaRej}"/> 
-            <ui:param name="widok" value="#{false}"/>
+            <ui:param name="managedBean" value="#{WyszukajRej}"/>
+            <ui:param name="widok" value="#{true}"/>
         </ui:include>
     </ui:define>
 </ui:composition>

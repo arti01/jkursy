@@ -28,20 +28,20 @@ import pl.eod2.encje.DcPlikImport;
 import pl.eod2.encje.DcPlikImportJpaController;
 import pl.eod2.encje.DcPlikJpaController;
 import pl.eod2.encje.DcRodzaj;
+import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
-import pl.eod2.managedCfg.Rodzaje;
-import pl.eod2.managedUm.RejDok;
 
 @ManagedBean(name = "RejestracjaRej")
 @SessionScoped
 public class Rejestracja {
 
-    private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
-    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<DcRodzaj>();
-    private DcDokumentJpaController dcC;
+    DataModel<DcDokument> lista = new ListDataModel<>();
+    private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
+    DcDokumentJpaController dcC;
     private DcPlikJpaController dcPlikC;
-    private DcDokument obiekt;
+    private DcRodzajJpaController dcRodzC;
+    DcDokument obiekt;
     private DcPlik plik;
     private DcPlikImport plikImport;
     private DcPlikImportJpaController plikImpC;
@@ -49,8 +49,6 @@ public class Rejestracja {
     private Locale locale;
     @ManagedProperty(value = "#{login}")
     private Login login;
-    @ManagedProperty(value = "#{RodzajeCfg}")
-    private Rodzaje rodzajeMg;
     private DcKontrahenci kontrahent;
     private DcDokDoWiadomosci doWiad;
     private DcDokDoWiadCel doWiadCel;
@@ -71,6 +69,7 @@ public class Rejestracja {
     void init() {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
+        dcRodzC=new DcRodzajJpaController();
         kontrahent = new DcKontrahenci();
         userDoWiad = new Uzytkownik();
         doWiad = new DcDokDoWiadomosci();
@@ -80,7 +79,7 @@ public class Rejestracja {
 
     public void refreshObiekt() {
         lista.setWrappedData(dcC.findDcDokumentEntities());
-        rodzajLista.setWrappedData(rodzajeMg.getLista().getWrappedData());
+        rodzajLista.setWrappedData(dcRodzC.findDcRodzajEntities());
         obiekt = new DcDokument();
         error = null;
     }
@@ -128,13 +127,13 @@ public class Rejestracja {
     }
 
     public void wyslijDoAkceptacji() {
-        obiekt = dcC.wyslijDoAkceptacji(obiekt);;
+        obiekt = dcC.wyslijDoAkceptacji(obiekt);
         refreshBezObiekt();
     }
 
     public boolean edytujAbst() {
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -157,7 +156,7 @@ public class Rejestracja {
 
     public void edytujZdetale() {
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -190,7 +189,7 @@ public class Rejestracja {
         DcDokumentStatus ds = new DcDokumentStatus(4);
         obiekt.setDokStatusId(ds);
         try {
-            error = dcC.edit(obiekt);
+            error = dcC.editZmiana(obiekt);
         } catch (IllegalOrphanException ex) {
             Logger.getLogger(Rejestracja.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NonexistentEntityException ex) {
@@ -213,7 +212,7 @@ public class Rejestracja {
     public void listenerOpis(ValueChangeEvent vce) {
         DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
         if (!(rodzaj.getSzablon() == null || rodzaj.getSzablon().isEmpty())) {
-            obiekt.setOpis(rodzaj.getSzablon());
+            obiekt.setOpisDlugi(rodzaj.getSzablon());
         }
     }
 
@@ -260,7 +259,7 @@ public class Rejestracja {
         doWiad.getDcDokDoWiadCelList().add(cel);
         //usersLista.remove(user);
         userDoWiad = new Uzytkownik();
-        System.err.println(cel.getId() + "-" + cel.getIdDokDoWiad() + "-" + cel.getUserid());
+        //System.err.println(cel.getId() + "-" + cel.getIdDokDoWiad() + "-" + cel.getUserid());
     }
 
     public void usunDoWiadUser() {
@@ -275,7 +274,7 @@ public class Rejestracja {
         doWiad.setDataWprow(new Date());
         doWiad.setDokid(obiekt);
         error = dcC.editDoWiad(obiekt, doWiad);
-        System.out.println(obiekt.getDcDokDoWiadList());
+        //System.out.println(obiekt.getDcDokDoWiadList());
 
         if (error != null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, error, error);
@@ -476,14 +475,6 @@ public class Rejestracja {
 
     public void setPlikImport(DcPlikImport plikImport) {
         this.plikImport = plikImport;
-    }
-
-    public Rodzaje getRodzajeMg() {
-        return rodzajeMg;
-    }
-
-    public void setRodzajeMg(Rodzaje rodzajeMg) {
-        this.rodzajeMg = rodzajeMg;
     }
 
     public DataModel<DcRodzaj> getRodzajLista() {
