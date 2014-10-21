@@ -9,7 +9,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 <link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-        <h:form>    
+        <h:form id="formPanel">    
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
@@ -26,10 +26,11 @@
                 <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, dodajPane" execute="dodajPane"
                                    oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('dodajPane')}.hide();}  else {#{rich:component('dodajPane')}.show();}" 
                                    rendered="#{RejestracjaRej.obiekt.id!=null}"/>
-                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" onclick="#{rich:component('dodajPane')}.hide();
-                            return false;" />
+                <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" oncomplete="#{rich:component('dodajPane')}.hide(); return false;" execute="@this"/>
 
             </rich:popupPanel>
+#{RejestracjaRej.obiekt.kontrahentId.id}
+#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}
 
             <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <a4j:jsFunction name="test1" onbegin="if(#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}) {#{rich:component('dodajPane')}.show();} else {return;}"/>

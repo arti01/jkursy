@@ -82,6 +82,7 @@ public class Rejestracja {
         lista.setWrappedData(dcC.findDcDokumentEntities());
         rodzajLista.setWrappedData(dcRodzC.findDcRodzajEntities());
         obiekt = new DcDokument();
+        kontrahent = new DcKontrahenci();
         error = null;
     }
 
