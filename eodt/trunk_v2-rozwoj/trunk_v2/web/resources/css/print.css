@@ -1,8 +1,7 @@
-body
-{
-    margin: 0 auto;
-    padding: 0px;
-    font-family: arial,tahoma,verdana,helvetica,sans-serif;
-    background-color: white;
-    font-size: 12px;
-}
+#printable { display: none; }
+
+    @media print
+    {
+    	#non-printable { display: none; }
+    	#printable { display: block; }
+    }

@@ -7,9 +7,9 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-<link type="text/css" rel="stylesheet" href="../resources/css/default.css"></link>
         <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
         <h:form id="formPanel">    
+            <ui:include src="./dokumentListPrint.xhtml"/>
             <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="450" minWidth="950">
                 <f:facet name="controls">
                     <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
@@ -29,9 +29,6 @@
                 <a4j:commandButton value="Wyjdź" action="#{RejestracjaRej.refreshObiekt}" render="dodajPane" oncomplete="#{rich:component('dodajPane')}.hide(); return false;" execute="@this"/>
 
             </rich:popupPanel>
-#{RejestracjaRej.obiekt.kontrahentId.id}
-#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}
-
             <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <a4j:jsFunction name="test1" onbegin="if(#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}) {#{rich:component('dodajPane')}.show();} else {return;}"/>
             <script language="javascript">
@@ -43,9 +40,15 @@
             </script>
 
             <rich:panel id="listPanel">
+                <h4>
                 <a4j:commandLink  execute="@this" oncomplete="#{rich:component('dodajPane')}.show()"  action="#{RejestracjaRej.refreshObiekt}"  rendered="#{!brakDodaj}">
-                    <h4>[dodaj dokument]</h4>
+                    [dodaj dokument] 
                 </a4j:commandLink>
+                    <a4j:commandLink  execute="@this" oncomplete="#{rich:component('printPane')}.show()"  action="#{RejestracjaRej.refreshObiekt}"  rendered="#{!brakDodaj}">
+                    [drukuj]
+                </a4j:commandLink>
+                </h4>
+                
 
                 <rich:dataTable value="#{managedBean.lista}" var="item" iterationStatusVar="it" rows="10" id="table" style="width: 100%">
                     <f:facet name="header"><rich:dataScroller for="table" fastControls="hide" maxPages="5"/></f:facet>
