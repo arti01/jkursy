@@ -28,14 +28,14 @@ import pl.eod2.encje.DcZrodlo;
 public class Raporty {
 
     private DcDokumentJpaController dcC;
-    private DataModel<DcDokument> lista = new ListDataModel<DcDokument>();
+    private DataModel<DcDokument> lista = new ListDataModel<>();
     private DcRodzajGrupa filtrRodzGrupa;
     private Date filtrDataRejOd;
     private Date filtrDataRejDo;
     private DcZrodlo filtrZrodlo;
     String templateFilePath;
     String fopConf;
-    boolean pokazDruk=false;
+    boolean pokazDruk = false;
 
     @PostConstruct
     void init() {
@@ -52,8 +52,11 @@ public class Raporty {
 
     public void pokazRap() {
         lista.setWrappedData(dcC.findRaport(filtrRodzGrupa, filtrDataRejOd, filtrDataRejDo, filtrZrodlo));
-        if(lista.getRowCount()>0) pokazDruk=true;
-        else pokazDruk=false;
+        if (lista.getRowCount() > 0) {
+            pokazDruk = true;
+        } else {
+            pokazDruk = false;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -134,5 +137,5 @@ public class Raporty {
     public void setPokazDruk(boolean pokazDruk) {
         this.pokazDruk = pokazDruk;
     }
-    
+
 }

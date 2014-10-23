@@ -15,7 +15,7 @@ import pl.eod2.encje.DcDokument;
 @XmlRootElement(name="DcDokPocztaList")
 @XmlSeeAlso({DcDokPoczta.class})
 public class DcDokPocztaList {
-    private List<DcDokPoczta> dokumentList=new ArrayList<DcDokPoczta>();
+    private List<DcDokPoczta> dokumentList=new ArrayList<>();
     private String dataOd;
     private String dataDo;
 

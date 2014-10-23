@@ -47,6 +47,7 @@ public class Wydruk {
         System.err.println(templateFilePath);
         //C:/Documents and Settings/bialoa01/Moje dokumenty/NetBeansProjects/eodt/trunk_02/build/web/WEB-INF/classes/pl/eod/wydruki
         
+        @SuppressWarnings("unchecked")
         DcDokPocztaList pocztaList=new DcDokPocztaList((List<DcDokument>)rej.getLista().getWrappedData());
         PDFHandler handler = new PDFHandler();
         try {
