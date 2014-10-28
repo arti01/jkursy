@@ -58,14 +58,15 @@ public class Brakowane extends Rejestracja {
         this.listaSize = listaSize;
     }
 
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void druk() {
+        //System.err.println("druk");
         DcDokPocztaList pocztaList = new DcDokPocztaList((List<DcDokument>) lista.getWrappedData());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         PDFHandler handler = new PDFHandler();
         try {
             ByteArrayOutputStream streamSource = handler.getXMLSource(pocztaList);
-            ByteArrayOutputStream pdf = handler.createPDFStream(streamSource, raporty.templateFilePath + "rapPocztowy.xsl", raporty.fopConf);
+            ByteArrayOutputStream pdf = handler.createPDFStream(streamSource, raporty.templateFilePath + "rapBrak.xsl", raporty.fopConf);
             //System.err.println(pdf);
             final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.setHeader("Content-Disposition", "attachment;filename=\"" + "wydruk.pdf" + "\""); // or whatever type you're sending back

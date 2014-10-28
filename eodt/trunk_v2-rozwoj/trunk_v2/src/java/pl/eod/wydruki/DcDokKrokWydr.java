@@ -17,7 +17,7 @@ public class DcDokKrokWydr {
     int lp;
     String typNazwa;
     String status;
-    List<DcDokKrokUserWydr> krokiUserList = new ArrayList<DcDokKrokUserWydr>();
+    List<DcDokKrokUserWydr> krokiUserList = new ArrayList<>();
 
     DcDokKrokWydr(DcDokumentKrok krok) {
         id = krok.getId();

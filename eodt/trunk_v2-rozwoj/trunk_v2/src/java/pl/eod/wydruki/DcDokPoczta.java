@@ -24,7 +24,7 @@ public class DcDokPoczta {
     String kontrahentNazwa;
     String kontrahentAdres;
     String dataWydruku;
-    private List<DcDokKrokWydr> dcDokKrokWydrList=new ArrayList<DcDokKrokWydr>();
+    private List<DcDokKrokWydr> dcDokKrokWydrList=new ArrayList<>();
 
     public DcDokPoczta(DcDokument doc){
         id=doc.getId();
@@ -52,8 +52,8 @@ public class DcDokPoczta {
         
         for(DcDokumentKrok krok:krokiSort){
             DcDokKrokWydr dKr=new DcDokKrokWydr(krok);
-            System.err.println(krok.getLp());
-            System.err.println(dKr.getLp());
+            //System.err.println(krok.getLp());
+            //System.err.println(dKr.getLp());
             dcDokKrokWydrList.add(dKr);
         }
         //dcDokKrokWydrList=doc.getDcDokKrok();
