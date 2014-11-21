@@ -124,6 +124,11 @@
                                     Do brakowania
                                 </rich:panelMenuItem>
                             </h:commandLink>
+                            <h:commandLink action="#{ZajetoscArch.list}">
+                                <rich:panelMenuItem >
+                                    Zajętość Archiwów
+                                </rich:panelMenuItem>
+                            </h:commandLink>
                         </rich:panelMenuGroup>
 
                         <rich:panelMenuGroup label="Ogłoszenia - zarządzanie" rendered="#{login.ogl}" expanded="#{login.menuOglExp}" actionListener="#{login.menuOglExpList}">

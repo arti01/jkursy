@@ -19,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import pl.eod.abstr.AbstMg;
+import pl.eod2.encje.DcArchDcDokument;
 import pl.eod2.encje.DcDokumentArch;
 import pl.eod2.encje.DcDokumentArchDane;
 import pl.eod2.encje.DcDokumentArchKontr;
@@ -102,7 +103,14 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
             context.addMessage(zapisz.getClientId(context), message);
             //throw new UnsupportedOperationException("brak dokumentow");
         } else {
-            rejestracja.getObiekt().setDcArchList(wybrane);
+            List<DcArchDcDokument>wybraneA=new ArrayList<>();
+            for(DcDokumentArch d:wybrane){
+                DcArchDcDokument da=new DcArchDcDokument();
+                da.setDokument(rejestracja.getObiekt());
+                da.setDokumentArch(d);
+                wybraneA.add(da);
+            }
+            rejestracja.getObiekt().setDcArchList(wybraneA);
         }
     }
 
@@ -119,9 +127,11 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
         }
         try {
             // bo inaczej kaskada się sypie
-            rejestracja.getObiekt().setDcArchList(new ArrayList<DcDokumentArch>());
+            rejestracja.getObiekt().setDcArchList(new ArrayList<DcArchDcDokument>());
             rejestracja.dodajAbst();
             for (DcDokumentArch dok : wybrane) {
+                DcArchDcDokument da=new DcArchDcDokument();
+                da.setDokument(rejestracja.getObiekt());
                 dok.getDokumentyList().add(rejestracja.getObiekt());
                 dcC.edit(dok);
             }

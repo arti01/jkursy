@@ -31,7 +31,7 @@ INSERT INTO dc_dokument_status  VALUES (3, 'zamknięty', 'dokument zamknięty', 
 INSERT INTO dc_dokument_status  VALUES (4, 'anulowany', 'dokument anulowany', '#555555', 'dokumenty');
 INSERT INTO dc_dokument_status  VALUES (5, 'odrzucony', 'dokument odrzucony', '#666666', 'dokumenty');
 insert into dc_dokument_status  values (6, 'poczekalnia - do akceptu', 'dokument w poczekalni archiwizacji w trakcie akceptacji', '#777777', 'archiwum');
-insert into DC_DOKUMENT_STATUS values (7 'poczekalnia - zaakceptowany', 'dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji', '#888888', 'archiwum');
+insert into DC_DOKUMENT_STATUS values (7, 'poczekalnia - zaakceptowany', 'dokument w poczekalni archiwizacji zaakceptowany, gotowy do archiwizacji', '#888888', 'archiwum');
 INSERT INTO dc_dokument_status  VALUES (8, 'w archiwum', 'dokument w archiwum', 'brown', 'archiwum');
 INSERT INTO dc_dokument_status  VALUES (9, 'wydany', 'dokument wydany z archiwum', '#999999', 'archiwum');
 INSERT INTO dc_dokument_status  VALUES (10, 'poddany brakowaniu', 'dokument poddany procesowi brakowania', '#131313', 'archiwum');

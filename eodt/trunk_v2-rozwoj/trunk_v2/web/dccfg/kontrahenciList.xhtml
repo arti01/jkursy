@@ -66,7 +66,7 @@
                 </rich:column>
                 <rich:column style="width: 45px">
                     <rich:tooltip target="imgDe" value="usuń" layout="block"/>
-                    <rich:tooltip target="imgEd" value="edytujj" layout="block"/>
+                    <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                     <a4j:commandButton id="imgDe" execute="@this" render="@none" rendered="#{item.id!=1}"
                                        oncomplete="#{rich:component('confirmPane')}.show()" image="/images/delete.png">
                         <f:setPropertyActionListener target="#{KontrahenciCfg.obiekt}" value="#{item}" />

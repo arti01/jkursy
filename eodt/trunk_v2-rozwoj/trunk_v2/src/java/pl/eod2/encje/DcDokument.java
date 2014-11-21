@@ -114,8 +114,10 @@ public class DcDokument extends AbstEncja implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    private List<DcDokumentArch> dcArchList;
+    
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "dokument")
+    private List<DcArchDcDokument> dcArchList;
+    
     @Transient
     private String dataWprowStr;
     @Transient
@@ -361,14 +363,14 @@ public class DcDokument extends AbstEncja implements Serializable {
         this.doArchZnacznik = doArchZnacznik;
     }
 
-    public List<DcDokumentArch> getDcArchList() {
+    public List<DcArchDcDokument> getDcArchList() {
         return dcArchList;
     }
 
-    public void setDcArchList(List<DcDokumentArch> dcArchList) {
+    public void setDcArchList(List<DcArchDcDokument> dcArchList) {
         this.dcArchList = dcArchList;
     }
-
+    
     public boolean isAlertBrakowanie() {
         alertBrakowanie = false;
         Calendar cal1 = Calendar.getInstance();

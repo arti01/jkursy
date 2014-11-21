@@ -240,13 +240,13 @@ public class DcDokumentJpaController extends AbstKontroler<DcDokument> implement
             //jesli nie ma kolejnego kroku a biezacy jest zaakceptowany zmien status dokumentu 
             if (dkNext == null && dku.getIdDokumentKrok().getAkcept().getId() == 4) {
                 dku.getIdDokumentKrok().getIdDok().setDokStatusId(new DcDokumentStatus(3));
-                //obsluga dprzypisanych dokumentow z archiwum
+                //obsluga przypisanych dokumentow z archiwum
                 if ((dku.getIdDokumentKrok().getIdDok().getDcArchList() != null) && (!dku.getIdDokumentKrok().getIdDok().getDcArchList().isEmpty())) {
-                    List<DcDokumentArch> lista = new ArrayList();
+                    List<DcArchDcDokument> lista = new ArrayList();
                     DcDokumentStatus dsKoncowy = dku.getIdDokumentKrok().getIdDok().getRodzajId().getDcDokStatusKonc();
-                    for (DcDokumentArch da : dku.getIdDokumentKrok().getIdDok().getDcArchList()) {
-                        da.setDokStatusId(dsKoncowy);
-                        lista.add(da);
+                    for (DcArchDcDokument daa : dku.getIdDokumentKrok().getIdDok().getDcArchList()) {
+                        daa.getDokumentArch().setDokStatusId(dsKoncowy);
+                        lista.add(daa);
                     }
                     dku.getIdDokumentKrok().getIdDok().getDcArchList().clear();
                     dku.getIdDokumentKrok().getIdDok().getDcArchList().addAll(lista);
