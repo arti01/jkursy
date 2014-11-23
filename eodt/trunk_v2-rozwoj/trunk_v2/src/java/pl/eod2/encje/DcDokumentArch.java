@@ -117,10 +117,15 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dokid", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<DcDokDoWiadomosciArch> dcDokDoWiadList;
     
+    @ManyToMany(mappedBy = "dcArchList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    private List<DcDokument> dokumentyList;
     
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH}, mappedBy = "dokumentArch")
-    private List<DcArchDcDokument> dcArchHistList;
-   
+    @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
+    private List<DcDokumentArch> dcArchList;
+    
+    @ManyToMany(mappedBy = "dcArchList")
+    private List<DcDokumentArch> dcArchListOld;
     
     @Transient
     private String dataWprowStr;
@@ -165,7 +170,7 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
             this.dcDokDoWiadList.add(dwa);
         }
         
-        //this.dcArchList=dc.getDcArchList();
+        this.dcArchList=dc.getDcArchList();
         
         this.dokStatusId = dc.getDokStatusId();
         this.kontrahentId = dc.getKontrahentId();
@@ -388,6 +393,14 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
         this.wyborZnacznik = wyborZnacznik;
     }
 
+    public List<DcDokument> getDokumentyList() {
+        return dokumentyList;
+    }
+
+    public void setDokumentyList(List<DcDokument> dokumentyList) {
+        this.dokumentyList = dokumentyList;
+    }
+
     public boolean isAlertBrakowanie() {
         alertBrakowanie = false;
         Calendar cal1 = Calendar.getInstance();
@@ -400,6 +413,22 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
             return true;
         }
         return alertBrakowanie;
+    }
+
+    public List<DcDokumentArch> getDcArchListOld() {
+        return dcArchListOld;
+    }
+
+    public void setDcArchListOld(List<DcDokumentArch> dcArchListOld) {
+        this.dcArchListOld = dcArchListOld;
+    }
+
+    public List<DcDokumentArch> getDcArchList() {
+        return dcArchList;
+    }
+
+    public void setDcArchList(List<DcDokumentArch> dcArchList) {
+        this.dcArchList = dcArchList;
     }
     
     @Override

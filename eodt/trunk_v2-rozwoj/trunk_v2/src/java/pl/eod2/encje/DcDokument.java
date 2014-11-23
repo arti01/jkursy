@@ -86,7 +86,8 @@ public class DcDokument extends AbstEncja implements Serializable {
     @Column(name = "data_dok")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDok;
-
+    
+    
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik userId;
@@ -114,10 +115,8 @@ public class DcDokument extends AbstEncja implements Serializable {
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = true)
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<UmUrzadzenie> urzadzeniaList;
-    
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST}, mappedBy = "dokument")
-    private List<DcArchDcDokument> dcArchList;
-    
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    private List<DcDokumentArch> dcArchList;
     @Transient
     private String dataWprowStr;
     @Transient
@@ -132,7 +131,7 @@ public class DcDokument extends AbstEncja implements Serializable {
     private String symbolDok;
     @Transient
     private boolean doArchZnacznik;
-
+    
     public DcDokument() {
     }
 
@@ -187,8 +186,8 @@ public class DcDokument extends AbstEncja implements Serializable {
     }
 
     public void setDataDok(Date dataDok) {
-        if (dataDok == null) {
-            dataDok = new Date();
+        if(dataDok==null){
+            dataDok=new Date();
         }
         this.dataDok = dataDok;
     }
@@ -296,26 +295,22 @@ public class DcDokument extends AbstEncja implements Serializable {
     }
 
     public String getProcentWykonania() {
-        if (getDokStatusId().getId() == 3) {
+        if(getDokStatusId().getId()==3){
             return "100";
         }
-        int krokiAll = getDcDokKrok().size();
-        int krokiZaakceptowane = 0;
-        if (krokiAll == 0) {
-            return "brak";
-        }
-        for (DcDokumentKrok krok : getDcDokKrok()) {
-            if (krok.getAkcept().getId() == 4) {
+        int krokiAll=getDcDokKrok().size();
+        int krokiZaakceptowane=0;
+        if(krokiAll==0) return "brak";
+        for(DcDokumentKrok krok: getDcDokKrok()){
+            if(krok.getAkcept().getId()==4){
                 krokiZaakceptowane++;
             }
         }
-        return (krokiZaakceptowane * 100) / krokiAll + "";
+        return (krokiZaakceptowane*100)/krokiAll+"";
     }
 
     public boolean isAlertAkceptacja() {
-        if (this.getDokStatusId().getId() != 2) {
-            return false;
-        }
+        if(this.getDokStatusId().getId()!=2) return false;
         Calendar c = Calendar.getInstance();
         c.setTime(new Date());
         c.add(Calendar.DATE, -getRodzajId().getLimitCzaasuAkceptacji());
@@ -327,9 +322,9 @@ public class DcDokument extends AbstEncja implements Serializable {
     }
 
     public String getSymbolDok() {
-        try {
-            symbolDok = this.symbolNrKol + "/" + this.symbolSpDzialRok + "/" + this.getRodzajId().getSymbol();
-        } catch (NullPointerException ex) {
+        try{
+        symbolDok=this.symbolNrKol+"/"+this.symbolSpDzialRok+"/"+this.getRodzajId().getSymbol();
+        }catch (NullPointerException ex){
             return null;
         }
         return symbolDok;
@@ -363,14 +358,14 @@ public class DcDokument extends AbstEncja implements Serializable {
         this.doArchZnacznik = doArchZnacznik;
     }
 
-    public List<DcArchDcDokument> getDcArchList() {
+    public List<DcDokumentArch> getDcArchList() {
         return dcArchList;
     }
 
-    public void setDcArchList(List<DcArchDcDokument> dcArchList) {
+    public void setDcArchList(List<DcDokumentArch> dcArchList) {
         this.dcArchList = dcArchList;
     }
-    
+
     public boolean isAlertBrakowanie() {
         alertBrakowanie = false;
         Calendar cal1 = Calendar.getInstance();

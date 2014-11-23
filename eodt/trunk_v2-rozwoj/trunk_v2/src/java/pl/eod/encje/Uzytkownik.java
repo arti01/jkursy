@@ -31,7 +31,6 @@ import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.IdValidation;
 import org.eclipse.persistence.annotations.PrimaryKey;
 import pl.eod2.encje.DcAkceptKroki;
-import pl.eod2.encje.DcArchDcDokument;
 import pl.eod2.encje.DcDokDoWiadCel;
 import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
@@ -130,11 +129,6 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userOdpow", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<UmUrzadzenie> urzadzenieList;
-    
-    @OneToMany(mappedBy = "wydal", orphanRemoval = false, fetch = FetchType.LAZY)
-    @OrderBy(value = "id DESC")
-    private List<DcArchDcDokument> dcArchDcDokumentList;
-    
     @Transient
     private List<UmUrzadzenie> urzadzenieAletrPrzeglList;
     @Transient
@@ -387,21 +381,13 @@ public class Uzytkownik implements Serializable {
     }
 
     public List<UmUrzadzenie> getUrzadzenieAletrPrzeglList() {
-        urzadzenieAletrPrzeglList=new ArrayList<>();
+        urzadzenieAletrPrzeglList=new ArrayList<UmUrzadzenie>();
         for(UmUrzadzenie um:getUrzadzenieList()){
             if(um.isAlertPrzegl()){
                 urzadzenieAletrPrzeglList.add(um);
             }
         }
         return urzadzenieAletrPrzeglList;
-    }
-
-    public List<DcArchDcDokument> getDcArchDcDokumentList() {
-        return dcArchDcDokumentList;
-    }
-
-    public void setDcArchDcDokumentList(List<DcArchDcDokument> dcArchDcDokumentList) {
-        this.dcArchDcDokumentList = dcArchDcDokumentList;
     }
 
     @Override
