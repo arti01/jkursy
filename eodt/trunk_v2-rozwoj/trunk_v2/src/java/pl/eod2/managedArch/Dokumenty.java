@@ -50,6 +50,7 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
     }
 
     public String detale() {
+         System.err.println(obiekt.getDokArchDod());
         return "/dcarch/dokumentDetale?faces-redirect=true";
     }
 

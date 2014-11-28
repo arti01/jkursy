@@ -123,6 +123,7 @@ public class Rejestracja {
     }
 
     public void edytuj() {
+        //System.err.println(obiekt.getDokArchDod());
         if (edytujAbst()) {
             refreshObiekt();
         }
@@ -247,6 +248,7 @@ public class Rejestracja {
     }
 
     public String detale() {
+         //System.err.println(obiekt.getDokArchDod());
         return "/dcrej/dokumentDetale?faces-redirect=true";
     }
 
@@ -269,6 +271,9 @@ public class Rejestracja {
     }
 
     public void dodajDoWiad() throws IllegalOrphanException, NonexistentEntityException, Exception {
+        
+         System.err.println(obiekt.getDokArchDod());
+        
         if (obiekt.getDcDokDoWiadList() == null) {
             obiekt.setDcDokDoWiadList(new ArrayList<DcDokDoWiadomosci>());
         }

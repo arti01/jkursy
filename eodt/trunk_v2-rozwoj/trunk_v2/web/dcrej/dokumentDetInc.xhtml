@@ -256,18 +256,43 @@
             </rich:tab>
 
             <rich:tab header="Archiwum - dokumenty powiązane">
-                    <rich:panel id="pgArch">
-                        <f:facet name="header">
-                            Dokument powiązany z dokumentami w archiwum
-                        </f:facet>
+                <rich:panel id="pgArchDod">
+                    <f:facet name="header">
+                        Informacje dodatkowe
+                    </f:facet>
+                    <h:panelGrid columns="6">
+                        <h:outputLabel value=""/>
+                        <h:inputText id="nazwImie" value="#{RejestracjaRej.obiekt.dokArchDod.imieNazwisko}"/>
+                        <rich:message for="nazwImie" styleClass="error" />
+                        
+                        <h:outputLabel value="planowana data zwrotu dokumentu:"/>
+                        <h:inputText id="plDaZw" value="#{RejestracjaRej.obiekt.dokArchDod.dataPlanZwrot}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:inputText>
+                        <rich:message for="plDaZw" styleClass="error" />
+                        
+                        <h:outputLabel value="rzeczywista data zwrotu dokumentu:"/>
+                        <h:inputText value="#{RejestracjaRej.obiekt.dokArchDod.dataRzeczZwrot}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:inputText>
+                        <h:outputLabel value="wydał (podaj email, wprowadz min. 3 znaki):"/>
+                        <rich:autocomplete value="#{RejestracjaRej.obiekt.dokArchDod.wydal}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" autofill="true">
+                            #{user.adrEmail}
+                            #{user.fullname}
+                        </rich:autocomplete>
+                    </h:panelGrid>
+                    <a4j:commandButton action="#{RejestracjaRej.edytuj}" value="zapisz" execute="pgArchDod"/>
+                </rich:panel>
 
-                        <rich:dataTable value="#{RejestracjaRej.obiekt.dcArchList}" var="arch" style="width: 100%; border: white thick">
-                            <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
-                                #{arch.nazwa}
-                                (#{arch.symbolDok})
-                            </rich:column>
-                        </rich:dataTable>
-                    </rich:panel>
+                <rich:panel id="pgArch">
+                    <f:facet name="header">
+                        Dokument powiązany z dokumentami w archiwum
+                    </f:facet>
+
+                    <rich:dataTable value="#{RejestracjaRej.obiekt.dcArchList}" var="arch" style="width: 100%; border: white thick">
+                        <rich:column sortBy="#{arch.symbolDok}" sortOrder="ascending">
+                            #{arch.nazwa}
+                            (#{arch.symbolDok})
+                        </rich:column>
+                    </rich:dataTable>
+                </rich:panel>
+
             </rich:tab>
 
             <a4j:jsFunction name="remove" action="#{RejestracjaRej.usunPlik}" render="tabPliki" execute="@this"

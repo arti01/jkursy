@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -132,17 +133,23 @@ public class DcDokument extends AbstEncja implements Serializable {
     @Transient
     private boolean doArchZnacznik;
     
+    @Embedded
+    private DcDokumentArchDod dokArchDod;
+    
     public DcDokument() {
+        this.dokArchDod=new DcDokumentArchDod();
     }
 
     public DcDokument(Integer id) {
         this.id = id;
+        this.dokArchDod=new DcDokumentArchDod();
     }
 
     public DcDokument(Integer id, String tytul, Date dataWprow, int userId) {
         this.id = id;
         this.nazwa = tytul;
         this.dataWprow = dataWprow;
+        this.dokArchDod=new DcDokumentArchDod();
     }
 
     @Override
@@ -378,6 +385,14 @@ public class DcDokument extends AbstEncja implements Serializable {
             return true;
         }
         return alertBrakowanie;
+    }
+
+    public DcDokumentArchDod getDokArchDod() {
+        return dokArchDod;
+    }
+
+    public void setDokArchDod(DcDokumentArchDod dokArchDod) {
+        this.dokArchDod = dokArchDod;
     }
 
     @Override

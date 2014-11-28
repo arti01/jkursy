@@ -34,6 +34,7 @@ import pl.eod2.encje.DcAkceptKroki;
 import pl.eod2.encje.DcDokDoWiadCel;
 import pl.eod2.encje.DcDokDoWiadomosci;
 import pl.eod2.encje.DcDokument;
+import pl.eod2.encje.DcDokumentArchDod;
 import pl.eod2.encje.DcDokumentKrokUzytkownik;
 import pl.eod2.encje.Ogloszenia;
 import pl.eod2.encje.UmUrzadzenie;
@@ -129,6 +130,11 @@ public class Uzytkownik implements Serializable {
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "userOdpow", orphanRemoval = false, fetch = FetchType.LAZY)
     @OrderBy(value = "id DESC")
     private List<UmUrzadzenie> urzadzenieList;
+    
+    //@OneToMany(cascade = CascadeType.MERGE, mappedBy = "wydal", orphanRemoval = false, fetch = FetchType.LAZY)
+    //@OrderBy(value = "id DESC")
+    //private List<DcDokumentArchDod> dokArchDodList;
+    
     @Transient
     private List<UmUrzadzenie> urzadzenieAletrPrzeglList;
     @Transient
@@ -389,7 +395,15 @@ public class Uzytkownik implements Serializable {
         }
         return urzadzenieAletrPrzeglList;
     }
+/*
+    public List<DcDokumentArchDod> getDokArchDodList() {
+        return dokArchDodList;
+    }
 
+    public void setDokArchDodList(List<DcDokumentArchDod> dokArchDodList) {
+        this.dokArchDodList = dokArchDodList;
+    }
+*/
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
