@@ -256,21 +256,29 @@
             </rich:tab>
 
             <rich:tab header="Archiwum - dokumenty powiązane">
-                <rich:panel id="pgArchDod">
+                <rich:panel id="pgArchDod" rendered="#{RejestracjaRej.obiekt.rodzajId.idRodzajGrupa.archiw}">
                     <f:facet name="header">
                         Informacje dodatkowe
                     </f:facet>
                     <h:panelGrid columns="6">
-                        <h:outputLabel value=""/>
+                        <h:outputLabel value="nazwisko i imię osoby wypożyczającej"/>
                         <h:inputText id="nazwImie" value="#{RejestracjaRej.obiekt.dokArchDod.imieNazwisko}"/>
                         <rich:message for="nazwImie" styleClass="error" />
-                        
+
                         <h:outputLabel value="planowana data zwrotu dokumentu:"/>
-                        <h:inputText id="plDaZw" value="#{RejestracjaRej.obiekt.dokArchDod.dataPlanZwrot}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:inputText>
+                        <rich:calendar id="plDaZw" value="#{RejestracjaRej.obiekt.dokArchDod.dataPlanZwrot}" locale="#{RejestracjaRej.locale}"
+                                       popup="true" datePattern="yyyy-MM-dd"
+                                       showApplyButton="#{calendarBean.showApply}" style="width:200px">
+                            <rich:validator /></rich:calendar>
                         <rich:message for="plDaZw" styleClass="error" />
-                        
+
                         <h:outputLabel value="rzeczywista data zwrotu dokumentu:"/>
-                        <h:inputText value="#{RejestracjaRej.obiekt.dokArchDod.dataRzeczZwrot}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:inputText>
+                        <rich:calendar id="realDaZw" value="#{RejestracjaRej.obiekt.dokArchDod.dataRzeczZwrot}" locale="#{RejestracjaRej.locale}"
+                                       popup="true" datePattern="yyyy-MM-dd"
+                                       showApplyButton="#{calendarBean.showApply}" style="width:200px">
+                            <rich:validator /></rich:calendar>
+                        <rich:message for="realDaZw" styleClass="error" />
+
                         <h:outputLabel value="wydał (podaj email, wprowadz min. 3 znaki):"/>
                         <rich:autocomplete value="#{RejestracjaRej.obiekt.dokArchDod.wydal}"  minChars="3" mode="lazyClient" autocompleteList="#{RodzajeCfg.usersLista}" var="user" fetchValue="#{user.adrEmail}" converter="#{UzytkownikConvEmail}" autofill="true">
                             #{user.adrEmail}

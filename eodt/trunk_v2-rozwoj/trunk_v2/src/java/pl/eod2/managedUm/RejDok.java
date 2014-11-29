@@ -80,16 +80,16 @@ public class RejDok {
         return "/um/dokumentDetale?faces-redirect=true";
     }
 
-    public void nowyDokDlaUrzad(){
+    public void nowyDokDlaUrzad() {
         rejestracja.setObiekt(new DcDokument());
         rejestracja.setError(null);
-        List<UmUrzadzenie>urzList=new ArrayList<>();
-        urzad=urzadzeniaMg.getDcC().findUmUrzadzenie(urzad.getId());
+        List<UmUrzadzenie> urzList = new ArrayList<>();
+        urzad = urzadzeniaMg.getDcC().findUmUrzadzenie(urzad.getId());
         urzList.add(urzad);
         rejestracja.getObiekt().setUrzadzeniaList(urzList);
         rodzajLista.setWrappedData(urzad.getGrupa().getMasterGrp().getRodzajeDokList());
     }
-    
+
     public void drop(DropEvent event) {
 
         //przypisanie urzadzenia do dokumenty
@@ -112,7 +112,7 @@ public class RejDok {
             }
         }
         rejestracja.edytujAbst();
-        
+
     }
 
     public void usunUrzad() {
@@ -169,20 +169,23 @@ public class RejDok {
     }
 
     public List<TreeNode> getRootNodesDetDok() {
-        List<UmMasterGrupa> masterList = rejestracja.getObiekt().getRodzajId().getUmMasterGrupaList();
-        rootNodesDetDok.clear();
-        for (UmMasterGrupa mg : masterList) {
-            DrzMaster drMa = new DrzMaster(mg);
-            for (UmGrupa gr : mg.getGrupaList()) {
-                DrzGrupa drGr = new DrzGrupa(drMa, gr);
-                gr.getUrzadzenieList().removeAll(rejestracja.getObiekt().getUrzadzeniaList());
-                for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
-                    DrzUrzad drzU = new DrzUrzad(drGr, uz);
-                    drGr.getDrzUrzad().add(drzU);
+        try {
+            List<UmMasterGrupa> masterList = rejestracja.getObiekt().getRodzajId().getUmMasterGrupaList();
+            rootNodesDetDok.clear();
+            for (UmMasterGrupa mg : masterList) {
+                DrzMaster drMa = new DrzMaster(mg);
+                for (UmGrupa gr : mg.getGrupaList()) {
+                    DrzGrupa drGr = new DrzGrupa(drMa, gr);
+                    gr.getUrzadzenieList().removeAll(rejestracja.getObiekt().getUrzadzeniaList());
+                    for (UmUrzadzenie uz : gr.getUrzadzenieList()) {
+                        DrzUrzad drzU = new DrzUrzad(drGr, uz);
+                        drGr.getDrzUrzad().add(drzU);
+                    }
+                    drMa.getDrzGrupa().add(drGr);
                 }
-                drMa.getDrzGrupa().add(drGr);
+                rootNodesDetDok.add(drMa);
             }
-            rootNodesDetDok.add(drMa);
+        } catch (NullPointerException ex) {
         }
         return rootNodesDetDok;
     }
@@ -190,5 +193,5 @@ public class RejDok {
     public void setRootNodesDetDok(List<TreeNode> rootNodesDetDok) {
         this.rootNodesDetDok = rootNodesDetDok;
     }
-    
+
 }

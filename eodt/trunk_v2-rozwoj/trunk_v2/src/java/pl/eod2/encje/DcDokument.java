@@ -134,6 +134,7 @@ public class DcDokument extends AbstEncja implements Serializable {
     private boolean doArchZnacznik;
     
     @Embedded
+    //pamietać, aby w tej klasie coś dopisać (nawet pusty string w jakims polu), bo wali nulami
     private DcDokumentArchDod dokArchDod;
     
     public DcDokument() {

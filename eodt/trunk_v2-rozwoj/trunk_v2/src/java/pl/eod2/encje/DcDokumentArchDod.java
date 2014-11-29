@@ -37,7 +37,7 @@ public class DcDokumentArchDod implements Serializable {
     //data_real_zwr - data rzeczywistego zwrotu
 
     @Column(name="imie_nazwisko")
-    private String imieNazwisko;
+    private String imieNazwisko="";
     //nazwisko_imie - nazwisko i imię osoby wypożyczającej
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Uzytkownik wydal;

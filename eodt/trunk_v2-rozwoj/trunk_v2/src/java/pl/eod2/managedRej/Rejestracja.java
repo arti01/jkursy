@@ -272,8 +272,6 @@ public class Rejestracja {
 
     public void dodajDoWiad() throws IllegalOrphanException, NonexistentEntityException, Exception {
         
-         System.err.println(obiekt.getDokArchDod());
-        
         if (obiekt.getDcDokDoWiadList() == null) {
             obiekt.setDcDokDoWiadList(new ArrayList<DcDokDoWiadomosci>());
         }
