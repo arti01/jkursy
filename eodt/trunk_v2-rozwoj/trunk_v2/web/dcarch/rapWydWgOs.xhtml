@@ -4,11 +4,12 @@
                 xmlns="http://www.w3.org/1999/xhtml"
                 template="/templates/template.xhtml">
     <ui:define name="content">
-        <ui:include src="/dcarch/dokumentList.xhtml">
-            <ui:param name="managedBean" value="#{DokumentyArch}"/> 
-            <ui:param name="widok" value="#{true}"/> 
-            <ui:param name="brakDodaj" value="#{true}"/> 
-        </ui:include>
+        <h4>Raport - wydane wg osób</h4>
+            <ui:include src="/dcarch/rapWydInc.xhtml">
+                <ui:param name="managedBean" value="#{RaportyArch}"/> 
+                <ui:param name="sortowanie" value="#{item.dokWyszuk.dokArchDod.imieNazwisko}"/>
+                <ui:param name="sortporzadek" value="ascending"/>
+            </ui:include>
     </ui:define>
 </ui:composition>
 

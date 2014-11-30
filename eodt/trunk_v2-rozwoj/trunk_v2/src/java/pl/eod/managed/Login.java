@@ -62,6 +62,7 @@ public class Login implements Serializable {
     boolean menuDcRejExp = false;
     boolean menuDcOdbExp = false;
     boolean menuDcArcExp = false;
+    boolean menuDcArcRap = false;
     boolean menuOglExp = false;
     boolean menuUmCfg = false;
     boolean menuUmSprze = false;
@@ -205,6 +206,7 @@ public class Login implements Serializable {
         menuOglExp=false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
 
     public void menuUrlopExpList(ActionEvent event) {
@@ -217,6 +219,7 @@ public class Login implements Serializable {
         menuOglExp=false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
 
     public void menuDcCfgExpList(ActionEvent event) {
@@ -229,6 +232,7 @@ public class Login implements Serializable {
         menuOglExp=false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
 
     public void menuDcRejExpList(ActionEvent event) {
@@ -241,6 +245,7 @@ public class Login implements Serializable {
         menuOglExp=false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
 
     public void menuDcOdbExpList(ActionEvent event) {
@@ -253,10 +258,25 @@ public class Login implements Serializable {
         menuOglExp=false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
     
     public void menuDcArcExpList(ActionEvent event) {
         menuDcArcExp = !menuDcArcExp;
+        menuStrukturaExp = false;
+        menuUrlopExp = false;
+        menuDcCfgExp = false;
+        menuDcRejExp = false;
+        menuDcOdbExp = false;
+        menuOglExp=false;
+        menuUmCfg=false;
+        menuUmSprze=false;
+        menuDcArcRap = false;
+    }
+    
+    public void menuDcArcRapList(ActionEvent event) {
+        menuDcArcRap = !menuDcArcRap;
+        menuDcArcExp = false;
         menuStrukturaExp = false;
         menuUrlopExp = false;
         menuDcCfgExp = false;
@@ -277,6 +297,7 @@ public class Login implements Serializable {
         menuDcOdbExp = false;
         menuUmCfg=false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
     
     public void menuUmCfgExpList(ActionEvent event) {
@@ -289,6 +310,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcOdbExp = false;
         menuUmSprze=false;
+        menuDcArcRap = false;
     }
     
     public void menuUmSprzExpList(ActionEvent event) {
@@ -301,6 +323,7 @@ public class Login implements Serializable {
         menuDcRejExp = false;
         menuDcOdbExp = false;
         menuUmCfg=false;
+        menuDcArcRap = false;
     }
 
     public Struktura getZalogowany() {
@@ -516,6 +539,14 @@ public class Login implements Serializable {
 
     public void setMenuUmSprze(boolean menuUmSprze) {
         this.menuUmSprze = menuUmSprze;
+    }
+
+    public boolean isMenuDcArcRap() {
+        return menuDcArcRap;
+    }
+
+    public void setMenuDcArcRap(boolean menuDcArcRap) {
+        this.menuDcArcRap = menuDcArcRap;
     }
 
     public boolean isBladLicencj() {

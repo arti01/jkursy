@@ -33,9 +33,6 @@ public class WArchiwum extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     private String typWyboru = "";
     private DcDokumentArchDane dcDokArchDane = new DcDokumentArchDane();
 
-    @ManagedProperty(value = "#{RejestracjaRej}")
-    private Rejestracja rejestracja;
-
     public WArchiwum() throws InstantiationException, IllegalAccessException {
         super("/dcarch/listW", new DcDokumentArchKontr(), new DcDokumentArch());
     }
@@ -146,14 +143,6 @@ public class WArchiwum extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
 
     public void setDcDokArchDane(DcDokumentArchDane dcDokArchDane) {
         this.dcDokArchDane = dcDokArchDane;
-    }
-
-    public Rejestracja getRejestracja() {
-        return rejestracja;
-    }
-
-    public void setRejestracja(Rejestracja rejestracja) {
-        this.rejestracja = rejestracja;
     }
 
 }

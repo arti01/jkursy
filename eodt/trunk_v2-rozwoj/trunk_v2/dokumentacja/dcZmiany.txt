@@ -1,3 +1,8 @@
+2014-11-29
+Nowa opcja - zarządzanie lokalizacjami w archiwum - czyli metry
+Zmiana danych wyświetlanych w dokumenty-archiwum/dokumenty (nie inkludowana "zwykla "dokumentyList" a dedykowana tabelka)
+Nowe menu - archiwum raporty
+
 2014-10-19
 W wyszukiwarce pole opis przegląda również pole opis długi
 

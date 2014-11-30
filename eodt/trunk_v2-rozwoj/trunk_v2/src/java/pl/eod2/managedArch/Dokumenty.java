@@ -27,8 +27,6 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
 
     private DataModel<DcRodzaj> rodzajLista = new ListDataModel<>();
     private DcRodzajJpaController dcR;
-    @ManagedProperty(value = "#{RejestracjaRej}")
-    private Rejestracja rejestracja;
 
     public Dokumenty() throws InstantiationException, IllegalAccessException {
         super("/dcarch/dokumenty", new DcDokumentJpaController(), new DcDokument());
@@ -47,12 +45,18 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
         }
         error = null;
         rejestracja.setObiekt(null);
+        rejestracja.czyscFiltry();
     }
 
     public String detale() {
         return "/dcarch/dokumentDetale?faces-redirect=true";
     }
 
+     public void wyslijDoAkceptacji() {
+        rejestracja.wyslijDoAkceptacji();
+        refresh();
+    }
+    
     @Override
     public void dodaj() throws InstantiationException, IllegalAccessException {
         try {
@@ -81,14 +85,6 @@ public class Dokumenty extends AbstMg<DcDokument, DcDokumentJpaController> {
 
     public void setRodzajLista(DataModel<DcRodzaj> rodzajLista) {
         this.rodzajLista = rodzajLista;
-    }
-
-    public Rejestracja getRejestracja() {
-        return rejestracja;
-    }
-
-    public void setRejestracja(Rejestracja rejestracja) {
-        this.rejestracja = rejestracja;
     }
 
 }

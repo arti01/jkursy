@@ -22,12 +22,12 @@ import javax.persistence.criteria.Root;
 import pl.eod.abstr.AbstKontroler;
 import static pl.eod2.encje.DcDokumentJpaController.logger;
 
-public class DcDokumentArchKontr extends AbstKontroler<DcDokumentArch>{
+public class DcDokumentArchKontr extends AbstKontroler<DcDokumentArch> {
 
     public DcDokumentArchKontr() {
         super(new DcDokumentArch());
     }
-     
+
     public List<DcDokumentArch> findStatus(int statusId) {
         EntityManager em = getEntityManager();
         try {
@@ -41,7 +41,7 @@ public class DcDokumentArchKontr extends AbstKontroler<DcDokumentArch>{
             em.close();
         }
     }
-    
+
     @SuppressWarnings({"unchecked"})
     public List<DcDokumentArch> findByExample(DcDokumentArch dokument, Date dataRejOd, Date dataRejDo, Date dataDokOd, Date dataDokDo) throws ParseException {
         EntityManager em = getEntityManager();
@@ -54,33 +54,33 @@ public class DcDokumentArchKontr extends AbstKontroler<DcDokumentArch>{
             Predicate opis = cb.like(cb.lower(cfg.get(DcDokumentArch_.opis)), "%" + dokument.getOpis().toLowerCase() + "%");
             Predicate opisDlugi = cb.like(cb.lower(cfg.get(DcDokumentArch_.opisDlugi)), "%" + dokument.getOpis().toLowerCase() + "%");
             Predicate rodzaj = cb.equal(cfg.get(DcDokumentArch_.rodzajId), dokument.getRodzajId());
-            SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-            
-            if(dataRejOd==null){
-                dataRejOd=sdf.parse("1900-01-01");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+            if (dataRejOd == null) {
+                dataRejOd = sdf.parse("1900-01-01");
             }
-            if(dataRejDo==null){
-                dataRejDo=sdf.parse("2100-01-01");
+            if (dataRejDo == null) {
+                dataRejDo = sdf.parse("2100-01-01");
             }
-            
-            if(dataDokOd==null&&dataDokDo!=null){
-                dataDokOd=sdf.parse("1900-01-01");
+
+            if (dataDokOd == null && dataDokDo != null) {
+                dataDokOd = sdf.parse("1900-01-01");
             }
-            if(dataDokDo==null&&dataDokOd!=null){
-                dataDokDo=sdf.parse("2100-01-01");
+            if (dataDokDo == null && dataDokOd != null) {
+                dataDokDo = sdf.parse("2100-01-01");
             }
-            
+
             Predicate pdata = cb.between(cfg.get(DcDokumentArch_.dataWprow), dataRejOd, dataRejDo);
             Predicate ddata = cb.between(cfg.get(DcDokumentArch_.dataDok), dataDokOd, dataDokDo);
-            
-            List<Predicate> warunek=new ArrayList<>();
+
+            List<Predicate> warunek = new ArrayList<>();
             warunek.add(cb.or(nazwa));
             warunek.add(cb.or(opis, opisDlugi));
             warunek.add(cb.and(pdata));
-            if(dataDokOd!=null&&dataDokDo!=null){
+            if (dataDokOd != null && dataDokDo != null) {
                 warunek.add(cb.and(ddata));
             }
-            
+
             if (dokument.getRodzajId() != null) {
                 warunek.add(cb.and(rodzaj));
             }
@@ -92,6 +92,38 @@ public class DcDokumentArchKontr extends AbstKontroler<DcDokumentArch>{
             List<DcDokumentArch> wynik;
             wynik = (List<DcDokumentArch>) q.getResultList();
             return wynik;
+        } finally {
+            em.close();
+        }
+    }
+
+    @SuppressWarnings({"unchecked"})
+    public List<DcDokumentArch> findEntitiesWydane(boolean niezwrocone) {
+        EntityManager em = getEntityManager();
+        List<DcDokumentArch> wynik = new ArrayList<>();
+        try {
+            Query q = em.createNamedQuery("DcDokumentArch.findByStatus");
+            q.setParameter("statusId", 9);
+            //wyszukiwanie ostatnich dokumentow ktore zmieniają status na wydany
+            for (DcDokumentArch da : (List<DcDokumentArch>) q.getResultList()) {
+                for (DcDokument d : da.getDokumentyList()) {
+                    if (d.getRodzajId().getDcDokStatusKonc().getId() == 9) {
+                        if (da.getDokWyszuk() == null) {
+                            da.setDokWyszuk(d);
+                        }
+                        if (d.getDataWprow().after(da.getDokWyszuk().getDataWprow())) {
+                            da.setDokWyszuk(d);
+                        }
+                    }
+                }
+                if (da.getDokWyszuk().getDokArchDod().getDataPlanZwrot().before(new Date())||!niezwrocone) {
+                    wynik.add(da);
+                }
+            }
+            return wynik;
+        } catch (NoResultException ex) {
+            logger.log(Level.SEVERE, "blad", ex);
+            return Collections.EMPTY_LIST;
         } finally {
             em.close();
         }

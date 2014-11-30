@@ -35,9 +35,6 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
     private DcDokumentArchDane dcDokArchDane = new DcDokumentArchDane();
     private int listaSize = 0;
 
-    @ManagedProperty(value = "#{RejestracjaRej}")
-    private Rejestracja rejestracja;
-
     public Brakowane() throws InstantiationException, IllegalAccessException {
         super("/dcarch/listWbrakowanie", new DcDokumentArchKontr(), new DcDokumentArch());
         super.refresh();
@@ -168,14 +165,6 @@ public class Brakowane extends AbstMg<DcDokumentArch, DcDokumentArchKontr> {
 
     public void setDcDokArchDane(DcDokumentArchDane dcDokArchDane) {
         this.dcDokArchDane = dcDokArchDane;
-    }
-
-    public Rejestracja getRejestracja() {
-        return rejestracja;
-    }
-
-    public void setRejestracja(Rejestracja rejestracja) {
-        this.rejestracja = rejestracja;
     }
 
     public int getListaSize() {

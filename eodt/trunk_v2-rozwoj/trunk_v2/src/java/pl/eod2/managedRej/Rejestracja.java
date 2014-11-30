@@ -65,12 +65,13 @@ public class Rejestracja {
     private String filtrTeczka;
     private String filtrArchiwisci;
     private String filtrArchLokal;
+    private String filtrDaneDod;
 
     @PostConstruct
     void init() {
         dcC = new DcDokumentJpaController();
         dcPlikC = new DcPlikJpaController();
-        dcRodzC=new DcRodzajJpaController();
+        dcRodzC = new DcRodzajJpaController();
         kontrahent = new DcKontrahenci();
         userDoWiad = new Uzytkownik();
         doWiad = new DcDokDoWiadomosci();
@@ -117,7 +118,7 @@ public class Rejestracja {
 
     public void dodaj() throws Exception {
         if (dodajAbst()) {
-            plikImport=null;
+            plikImport = null;
             refreshObiekt();
         }
     }
@@ -214,6 +215,7 @@ public class Rejestracja {
 
     public void listenerOpis(ValueChangeEvent vce) {
         DcRodzaj rodzaj = (DcRodzaj) vce.getNewValue();
+        obiekt.setRodzajId(rodzaj);
         if (!(rodzaj.getSzablon() == null || rodzaj.getSzablon().isEmpty())) {
             obiekt.setOpisDlugi(rodzaj.getSzablon());
         }
@@ -248,7 +250,7 @@ public class Rejestracja {
     }
 
     public String detale() {
-         //System.err.println(obiekt.getDokArchDod());
+        //System.err.println(obiekt.getDokArchDod());
         return "/dcrej/dokumentDetale?faces-redirect=true";
     }
 
@@ -271,7 +273,7 @@ public class Rejestracja {
     }
 
     public void dodajDoWiad() throws IllegalOrphanException, NonexistentEntityException, Exception {
-        
+
         if (obiekt.getDcDokDoWiadList() == null) {
             obiekt.setDcDokDoWiadList(new ArrayList<DcDokDoWiadomosci>());
         }
@@ -291,6 +293,21 @@ public class Rejestracja {
             userDoWiad = new Uzytkownik();
             doWiad = new DcDokDoWiadomosci();
         }
+    }
+
+    public void czyscFiltry() {
+        filtrdataWprow = "";
+        filtrNazwa = "";
+        filtrdataDok = "";
+        filtrKontrahent = "";
+        filtrZrodlo = "";
+        filtrStatus = "";
+        filtrWprowadzil = "";
+        filtrRodzaj = "";
+        filtrTeczka = "";
+        filtrArchiwisci = "";
+        filtrArchLokal = "";
+        filtrDaneDod = "";
     }
 
     public DataModel<DcDokument> getLista() {
@@ -490,4 +507,11 @@ public class Rejestracja {
         this.rodzajLista = rodzajLista;
     }
 
+    public String getFiltrDaneDod() {
+        return filtrDaneDod;
+    }
+
+    public void setFiltrDaneDod(String filtrDaneDod) {
+        this.filtrDaneDod = filtrDaneDod;
+    }
 }

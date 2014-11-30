@@ -137,6 +137,9 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
     private boolean wyborZnacznik;
     @Transient
     private boolean alertBrakowanie;
+    
+    @Transient//specjalny dokument do wyswietlania w raportach
+    private DcDokument dokWyszuk;
 
     public DcDokumentArch() {
     }
@@ -429,6 +432,14 @@ public class DcDokumentArch extends AbstEncja implements Serializable {
 
     public void setDcArchList(List<DcDokumentArch> dcArchList) {
         this.dcArchList = dcArchList;
+    }
+
+    public DcDokument getDokWyszuk() {
+        return dokWyszuk;
+    }
+
+    public void setDokWyszuk(DcDokument dokWyszuk) {
+        this.dokWyszuk = dokWyszuk;
     }
     
     @Override

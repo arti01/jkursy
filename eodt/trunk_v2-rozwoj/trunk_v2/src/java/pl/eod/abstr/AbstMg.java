@@ -2,12 +2,14 @@ package pl.eod.abstr;
 
 import java.util.Map;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import pl.eod2.encje.exceptions.IllegalOrphanException;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
+import pl.eod2.managedRej.Rejestracja;
 
 public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
 
@@ -16,6 +18,8 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
     public X obiekt;
     public String error;
     private final String link;
+    @ManagedProperty(value = "#{RejestracjaRej}")
+    public Rejestracja rejestracja;
 
     @SuppressWarnings({"unchecked", "unchecked"})
     public AbstMg(String s, AbstKontroler<X> ak, X obiekt) throws InstantiationException, IllegalAccessException {
@@ -24,6 +28,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
         this.dcC = (Y) ak.getClass().newInstance();
         this.obiekt = obiekt;
         lista.setWrappedData(dcC.findEntities());
+        rejestracja=new Rejestracja();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,6 +41,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
         lista.setWrappedData(dcC.findEntities());
         obiekt = (X) obiekt.getClass().newInstance();
         error = null;
+        rejestracja.czyscFiltry();
     }
 
     public void dodaj() throws InstantiationException, IllegalAccessException {
@@ -113,4 +119,11 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
         return dcC;
     }
 
+    public Rejestracja getRejestracja() {
+        return rejestracja;
+    }
+
+    public void setRejestracja(Rejestracja rejestracja) {
+        this.rejestracja = rejestracja;
+    }
 }
