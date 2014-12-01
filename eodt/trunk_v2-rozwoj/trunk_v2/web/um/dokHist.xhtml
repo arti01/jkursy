@@ -38,6 +38,21 @@
                 </rich:tooltip>
             </rich:column>
             <rich:column>
+                <f:facet name="header">dane dodatkowe</f:facet>
+                 <h:panelGrid columns="2">
+                        <h:outputLabel value="wypożyczający:" rendered="#{fn:length(dok.dokArchDod.imieNazwisko)>0}"/>
+                        <h:outputText value="#{dok.dokArchDod.imieNazwisko}" rendered="#{fn:length(dok.dokArchDod.imieNazwisko)>0}"/>
+                        <h:outputLabel value="planowana data zwrotu:" rendered="#{dok.dokArchDod.dataPlanZwrot!=null}"/>
+                        <h:outputText value="#{dok.dokArchDod.dataPlanZwrot}" rendered="#{dok.dokArchDod.dataPlanZwrot!=null}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                        <h:outputLabel value="rzeczywista data zwrotu:" rendered="#{dok.dokArchDod.dataRzeczZwrot!=null}"/>
+                        <h:outputText value="#{dok.dokArchDod.dataRzeczZwrot}" rendered="#{dok.dokArchDod.dataRzeczZwrot!=null}"><f:convertDateTime type="date" pattern="yyyy-MM-dd" timeZone="CET"/></h:outputText>
+                        <h:outputLabel value="wydał:" rendered="#{fn:length(dok.dokArchDod.wydal.adrEmail)>0}"/>
+                        <h:outputText value="#{dok.dokArchDod.wydal.adrEmail}" rendered="#{fn:length(dok.dokArchDod.wydal.adrEmail)>0}"></h:outputText>
+                    </h:panelGrid>
+            </rich:column>
+            
+            
+            <rich:column>
                 <rich:tooltip target="imgDt" value="detale" layout="block"/>
                 <a4j:commandButton id="imgDt" execute="@this" action="#{URejDokMg.detale}" image="/images/detail.png">
                     <f:setPropertyActionListener target="#{RejestracjaRej.obiekt}" value="#{dok}" />
