@@ -132,7 +132,7 @@ public class Rejestracja {
 
     public void wyslijDoAkceptacji() {
         obiekt = dcC.wyslijDoAkceptacji(obiekt);
-        refreshBezObiekt();
+        refreshObiekt();
     }
 
     public boolean edytujAbst() {

@@ -63,12 +63,12 @@
                         <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
                         <rich:tooltip target="imgDt" value="detale" layout="block"/>
                         <a4j:commandButton id="imgDe" execute="@this" render="@none" image="/images/delete.png"
-                                         oncomplete="#{rich:component('confirmPaneRodzaj')}.show()" rendered="#{fn:length(item.dcDokumentList)==0}">
+                                         oncomplete="#{rich:component('confirmPaneRodzaj')}.show()" rendered="#{(fn:length(item.dcDokumentList)==0) and (fn:length(item.dcDokumentArchList)==0)}">
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />
                         </a4j:commandButton>
-                        <h:graphicImage id="imgB"  value="/images/delete.png" alt="delete" rendered="#{fn:length(item.dcDokumentList)>0}"/>
-                        <rich:tooltip id="ttbl" layout="block"  rendered="#{fn:length(item.dcDokumentList)>0}" target="imgB">
-                            nie można usunąć - rodzaj posiada już dokumenty
+                        <h:graphicImage id="imgB"  value="/images/delete.png" alt="delete" rendered="#{(fn:length(item.dcDokumentList)>0)||(fn:length(item.dcDokumentArchList)>0)}"/>
+                        <rich:tooltip id="ttbl" layout="block"  rendered="#{(fn:length(item.dcDokumentList)>0)||(fn:length(item.dcDokumentArchList)>0)}" target="imgB">
+                            nie można usunąć - rodzaj posiada już dokumenty lub dokumenty archiwalne
                         </rich:tooltip>
                         <a4j:commandButton id="imgEd" render="dodajPaneRodzaj" execute="@this" oncomplete="#{rich:component('dodajPaneRodzaj')}.show()" image="/images/edit.png">
                             <f:setPropertyActionListener target="#{RodzajeCfg.obiekt}" value="#{item}" />

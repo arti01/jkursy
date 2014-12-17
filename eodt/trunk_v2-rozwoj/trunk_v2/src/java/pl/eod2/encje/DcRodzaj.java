@@ -93,6 +93,8 @@ public class DcRodzaj implements Serializable {
     @JoinColumn(name = "id_symb_mer2", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DcSymbMer2 symbMer2Id;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rodzajId", fetch = FetchType.LAZY)
+    private List<DcDokumentArch> dcDokumentArchList;
 
     public DcRodzaj() {
     }
@@ -235,6 +237,14 @@ public class DcRodzaj implements Serializable {
 
     public void setDcDokStatusKonc(DcDokumentStatus dcDokStatusKonc) {
         this.dcDokStatusKonc = dcDokStatusKonc;
+    }
+
+    public List<DcDokumentArch> getDcDokumentArchList() {
+        return dcDokumentArchList;
+    }
+
+    public void setDcDokumentArchList(List<DcDokumentArch> dcDokumentArchList) {
+        this.dcDokumentArchList = dcDokumentArchList;
     }
 
     @Override

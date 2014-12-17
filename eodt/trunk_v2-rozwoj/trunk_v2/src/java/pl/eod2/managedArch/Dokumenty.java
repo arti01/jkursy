@@ -9,7 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
@@ -19,7 +18,6 @@ import pl.eod2.encje.DcDokumentJpaController;
 import pl.eod2.encje.DcRodzaj;
 import pl.eod2.encje.DcRodzajJpaController;
 import pl.eod2.encje.exceptions.NonexistentEntityException;
-import pl.eod2.managedRej.Rejestracja;
 
 @ManagedBean(name = "DokumentyArch")
 @SessionScoped
