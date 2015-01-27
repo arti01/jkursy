@@ -58,7 +58,27 @@ public class UserRolesJpaController implements Serializable {
             //cq.where(cb.equal(cfg.get(UserRoles_.rolename), rola1));
             cq.where(
                     cb.or(
-                    cb.equal(cfg.get(UserRoles_.rolename), rola1), cb.equal(cfg.get(UserRoles_.rolename), rola2)));
+                    cb.equal(cfg.get(UserRoles_.rolename), rola1), cb.equal(cfg.get(UserRoles_.rolename), rola2), cb.between(cfg.get(UserRoles_.id), 100, 120))
+            );
+            Query q = em.createQuery(cq);
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<UserRoles> findDostepneDoRodzajowUrlopow() {
+
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<UserRoles> cfg = cq.from(UserRoles.class);
+            cq.select(cfg);
+            //cq.where(cb.equal(cfg.get(UserRoles_.rolename), rola1));
+            cq.where(
+                    cb.between(cfg.get(UserRoles_.id), 100, 120)
+            );
             Query q = em.createQuery(cq);
             return q.getResultList();
         } finally {
@@ -74,6 +94,13 @@ public class UserRolesJpaController implements Serializable {
         return findRolesEntities(false, maxResults, firstResult);
     }
 
+    public void edit(UserRoles rola){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(rola);
+        em.getTransaction().commit();
+    }
+    
     private List<UserRoles> findRolesEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
@@ -89,4 +116,6 @@ public class UserRolesJpaController implements Serializable {
             em.close();
         }
     }
+    
+
 }

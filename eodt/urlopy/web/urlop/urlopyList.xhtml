@@ -15,7 +15,7 @@
         <div id="tabela">
             <h4>Twoje wnioski</h4>
             <h:form id="form1">
-                <a4j:outputPanel id="formWprow" layout="block">
+                <a4j:outputPanel id="formWprow" layout="block" rendered="#{fn:length(UrlopM.dostepneRodzaje)>0}">
 
                     <h:panelGrid columns="3" id="form">
                         <h:outputLabel for="name" value="Imię i nazwisko: "/>
@@ -24,7 +24,7 @@
 
                         <h:outputLabel for="rodzajW" value="Zwracam się z prośbą o udzielenie urlopu (rodzaj):"/>
                         <h:selectOneMenu id="rodzajW" value="#{UrlopM.urlop.rodzajId}" converter="#{WnRodzajeConv}">
-                            <f:selectItems value="#{UrlopM.rodzajeC.findWnRodzajeEntities}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
+                            <f:selectItems value="#{UrlopM.dostepneRodzaje}" var="rodzaj" itemValue="#{rodzaj}" itemLabel="#{rodzaj.opis}"/>
                             <a4j:ajax render="form" execute="rodzajW"/>
                         </h:selectOneMenu>
                         <rich:message for="rodzajW" styleClass="error" />

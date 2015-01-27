@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/template.xhtml"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <ui:define name="content">
+        <h:outputStylesheet library="css" name="../resources/css/default.css"/>
+        <h:outputStylesheet>
+            .rf-ind-drag.default{
+            background-position: 3px;
+            background-repeat: no-repeat;
+            border:1px solid grey
+            }
+
+            .rf-ind-drag.accept{
+            background-position: 5px;
+            background-repeat: no-repeat;
+            border:2px solid green
+            }
+
+            .rf-ind-drag.reject{
+            background-position: 5px;
+            background-repeat: no-repeat;
+            border:2px solid red
+            }
+
+        </h:outputStylesheet>
+
+        <rich:dragIndicator id="ind" acceptClass="accept" rejectClass="reject" draggingClass="default">
+            Przenieś do właściwej pozycji
+        </rich:dragIndicator>
+        <div id="tabela">
+            <h4>Uprawnienia do Rodzajów Urlopów</h4>
+            <h:form>
+                <h:panelGrid columns="2" id="grid">
+                    <h:dataTable value="#{RodzUrlopMg.lista}" var="rola" id="repeat">
+                        <h:column>
+                            <rich:panel style="float:left; width:250px; padding:5px;">
+                                <rich:dropTarget acceptedTypes="grupa" dropListener="#{RodzUrlopMg.drop}"
+                                                 render="grid" dropValue="#{rola}"/>
+                                <f:facet name="header">
+                                    #{rola.rolename} <br/>(#{rola.opis})
+                                </f:facet>
+                                <h:dataTable id="tabrodz" value="#{rola.wnRodzaje}" var="rodzaj" >
+                                    <h:column>
+                                        <a4j:outputPanel layout="block">
+                                            #{rodzaj.opis}
+                                        </a4j:outputPanel>            
+                                    </h:column>
+                                    <h:column>
+                                        <a4j:commandButton value="usuń" action="#{RodzUrlopMg.usun}" render="grid">
+                                            <f:setPropertyActionListener target="#{RodzUrlopMg.obiekt}" value="#{rola}"/>
+                                            <f:setPropertyActionListener target="#{RodzUrlopMg.obiektRodzaj}" value="#{rodzaj}"/>
+                                        </a4j:commandButton>
+                                    </h:column>
+                                </h:dataTable>
+                            </rich:panel>
+                        </h:column>
+                    </h:dataTable>
+
+                    <rich:panel header="rodzaje urlopów" style="float:left; width:250px; padding:5px;">
+                        <h:dataTable value="#{UrlopM.rodzajeC.findWnRodzajeEntities}" var="rodzaj">
+                            <h:column>
+                                <a4j:outputPanel layout="block">
+                                    #{rodzaj.opis}
+                                    <rich:dragSource dragValue="#{rodzaj}" type="grupa" dragIndicator="ind"/>
+                                </a4j:outputPanel>
+                            </h:column>
+                        </h:dataTable>
+                    </rich:panel>
+                </h:panelGrid>
+            </h:form>
+        </div>
+    </ui:define>
+
+</ui:composition>

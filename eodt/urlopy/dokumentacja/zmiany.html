@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+
+27-01-2015
+
+Uwaga - to przykład:
+INSERT INTO user_roles (id, role_name, opis) VALUES (100, 'eodurlwyp', 'urlop wypoczynkowy');
+INSERT INTO user_roles (id, role_name, opis) VALUES (101, 'eodurloko', 'urlop okolicznosciowy');
+INSERT INTO user_roles (id, role_name, opis) VALUES (102, 'eodurp', 'różne delegacje');
+
+W user_roles należy zdefiniować nowe prawa (id od 100 do 120)
+Po deploy pojawi się tabela wn_rodzaje_user_roles i:
+- jest ona jest wypelniana w opcji Struktura org/rodzaje urlopów
+- do przypisania pojawiają się wszystkie rodzaje urlopów oraz prawa o id od 100 do 120
+- można również skorzystać z już istniejących praw i zainsertować recznie tą tabelę, np rekord 1,1 przypisze prawo wypełnienia
+wniosku urop wypoczynkowy (1) wszystkim posiadającym prawo eodurlop (też 1)
+
 <html>
     <head>
         <title></title>

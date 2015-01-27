@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -24,7 +25,9 @@ import org.richfaces.component.SortOrder;
 import pl.eod.encje.KomKolejka;
 import pl.eod.encje.KomKolejkaJpaController;
 import pl.eod.encje.Struktura;
+import pl.eod.encje.UserRoles;
 import pl.eod.encje.WnHistoria;
+import pl.eod.encje.WnRodzaje;
 import pl.eod.encje.WnRodzajeJpaController;
 import pl.eod.encje.WnStatusy;
 import pl.eod.encje.WnUrlop;
@@ -52,6 +55,7 @@ public class UrlopM implements Serializable {
     String namePodwFilter;
     private Map<String, String> filterValues = Maps.newHashMap();
     private Map<String, SortOrder> sortOrders = Maps.newHashMapWithExpectedSize(1);
+    private List<WnRodzaje> dostepneRodzaje = new ArrayList<WnRodzaje>();
 
     public String list() {
         initUrlop();
@@ -190,8 +194,8 @@ public class UrlopM implements Serializable {
                     KomKolC.create(kk);
                 }
                 info = "Wniosek wysłany";
-            
-            if ((urlop.getAkceptant().getStruktura().getSecUserId()!=null)&&(!urlop.getAkceptant().getStruktura().getSecUserId().getAdrEmail().equals(""))) {
+
+                if ((urlop.getAkceptant().getStruktura().getSecUserId() != null) && (!urlop.getAkceptant().getStruktura().getSecUserId().getAdrEmail().equals(""))) {
                     KomKolejka kk = new KomKolejka();
                     kk.setAdresList(urlop.getAkceptant().getStruktura().getSecUserId().getAdrEmail());
                     kk.setStatus(0);
@@ -210,7 +214,7 @@ public class UrlopM implements Serializable {
                 }
                 info = "Wniosek wysłany";
             }
-        
+
         } catch (Exception ex) {
             if (login.getZalogowany().getSzefId() == null) {
                 info = "nie można ustawić akceptanta, brak przełożonego";
@@ -394,8 +398,8 @@ public class UrlopM implements Serializable {
             kk.setTresc("Twoj wniosek o urlop " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
         }
-        
-         if (!urlop.getAkceptant().getAdrEmail().equals("")) {
+
+        if (!urlop.getAkceptant().getAdrEmail().equals("")) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getPrzyjmujacy().getAdrEmail());
             kk.setStatus(0);
@@ -403,8 +407,8 @@ public class UrlopM implements Serializable {
             kk.setTemat("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " został cofnięty do poprawy");
             kk.setTresc("Wniosek o urlop " + urlop.getUzytkownik().getFullname() + " nr wniosku: " + urlop.getNrWniosku() + " został cofnięty do poprawy");
             KomKolC.create(kk);
-         }
-        
+        }
+
         if (urlop.isExtraemail()) {
             KomKolejka kk = new KomKolejka();
             kk.setAdresList(urlop.getUzytkownik().getStruktura().getExtraemail());
@@ -480,9 +484,13 @@ public class UrlopM implements Serializable {
 
     private void initUrlop() {
         login.refresh();
+        dostepneRodzaje.clear();
+        for (UserRoles ur : login.getZalogowany().getUserId().getRole()) {
+            dostepneRodzaje.addAll(ur.getWnRodzaje());
+        }
         urlop = new WnUrlop();
         urlop.setUzytkownik(login.getZalogowany().getUserId());
-        if(!login.getZalogowany().getExtraemail().isEmpty()){
+        if (!login.getZalogowany().getExtraemail().isEmpty()) {
             urlop.setExtraemail(true);
         }
         urlopyList.setWrappedData(login.getZalogowany().getUserId().getWnUrlopList());
@@ -592,4 +600,13 @@ public class UrlopM implements Serializable {
     public Map<String, SortOrder> getSortOrders() {
         return sortOrders;
     }
+
+    public List<WnRodzaje> getDostepneRodzaje() {
+        return dostepneRodzaje;
+    }
+
+    public void setDostepneRodzaje(List<WnRodzaje> dostepneRodzaje) {
+        this.dostepneRodzaje = dostepneRodzaje;
+    }
+    
 }

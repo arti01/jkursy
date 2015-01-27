@@ -7,6 +7,7 @@ package pl.eod.encje;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,6 +52,9 @@ public class UserRoles implements Serializable {
     @ManyToMany(mappedBy = "role")
     private List<Uzytkownik> uzytkownik;
     
+    @ManyToMany(mappedBy = "role", cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
+    private List<WnRodzaje> WnRodzaje;
+    
     public UserRoles() {
     }
 
@@ -88,6 +92,14 @@ public class UserRoles implements Serializable {
 
     public void setOpis(String opis) {
         this.opis = opis;
+    }
+
+    public List<WnRodzaje> getWnRodzaje() {
+        return WnRodzaje;
+    }
+
+    public void setWnRodzaje(List<WnRodzaje> WnRodzaje) {
+        this.WnRodzaje = WnRodzaje;
     }
     
     @Override
