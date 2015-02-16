@@ -24,7 +24,7 @@ UNION
 
 ALTER TABLE userpass
   OWNER TO eod;
-
+/*
 CREATE OR REPLACE VIEW user_roles_view AS 
          SELECT u.adr_email AS username, ur.role_name
            FROM user_roles ur
@@ -33,6 +33,21 @@ CREATE OR REPLACE VIEW user_roles_view AS
 UNION 
          SELECT extpass.login AS username, extpass.rola AS role_name
            FROM extpass;
+*/
+CREATE OR REPLACE VIEW user_roles_view AS 
+SELECT u.adr_email AS username, ur.role_name
+           FROM user_roles ur
+      JOIN uzytkownik_user_roles uur ON ur.id = uur.role_id
+   JOIN uzytkownik u ON u.id = uur.uzytkownik_id
+UNION 
+         SELECT extpass.login AS username, extpass.rola AS role_name
+           FROM extpass
+UNION 
+         SELECT ex.login AS username, ur.role_name AS role_name
+           FROM extpass ex 
+           join uzytkownik u on ex.login=u.ext_id
+           JOIN uzytkownik_user_roles uur ON u.id = uur.uzytkownik_id 
+	   JOIN user_roles ur ON ur.id = uur.role_id
 
 ALTER TABLE user_roles_view
   OWNER TO eod;
