@@ -5,17 +5,33 @@
  */
 package sebprop;
 
+import com.sun.org.apache.xml.internal.security.utils.Constants;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import pl.arti01.prop.PodmienWplikach;
+import pl.arti01.prop.CzytajConfig;
+
 /**
  *
  * @author arti01
  */
 public class SebProp {
 
-    /**
-     * @param args the command line arguments
-     */
+    static Properties config;
+
     public static void main(String[] args) {
-        // TODO code application logic here
+        config = new CzytajConfig().getConfig();
+        zmienPlikiProp("test", "ffffffffff");
     }
-    
+
+    static private void zmienPlikiProp(String klucz, String war) {
+        try {
+            PodmienWplikach pwP = new PodmienWplikach(new CzytajConfig().doList(config.getProperty("plikiProperties")));
+            pwP.zmien(klucz, war);
+        } catch (NullPointerException ex) {
+            Logger.getLogger(SebProp.class.getName()).log(Level.SEVERE, "brak listy plikow prop", ex);
+        }
+    }
+
 }
