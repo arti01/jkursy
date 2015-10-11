@@ -17,7 +17,7 @@ import org.junit.runners.Suite;
  * @author arti01
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({pl.arti01.prop.PodmienWplikachTest.class})
+@Suite.SuiteClasses({pl.arti01.prop.PodmienWplikachTest.class, pl.arti01.prop.ParserPropToCfgTest.class})
 public class NewTestSuite {
 
     @BeforeClass
