@@ -44,7 +44,7 @@ public class PodmienWplikachTest {
     @Test
     public void testZmienWartosci() throws Exception {
         System.out.println("zmienWartosci");
-        String klucz = "test";
+        String klucz = "testWartosc";
         String wartosc = "tttttt";
 
         PodmienWplikach instance = new PodmienWplikach(new CzytajConfig().doList(new CzytajConfig().getConfig().getProperty("plikiProperties")));
