@@ -42,7 +42,7 @@ public class PodmienWplikach {
         //przeglada pliki z properties i jesli natrafi na dany klucz to zmienia mu wartość
         for (PlikiProp pr : pliki) {
             if (pr.getProp().containsKey(klucz)) {
-                System.out.println(pr.getPlik()+" - old: "+pr.getProp().getProperty(klucz)+" - new: "+wartosc);
+                System.out.println(pr.getPlik()+":"+klucz+" - old: "+pr.getProp().getProperty(klucz)+" - new: "+wartosc);
                 pr.getProp().setProperty(klucz, wartosc);
                 pr.getProp().store(new FileOutputStream(pr.getPlik()), null);
             }

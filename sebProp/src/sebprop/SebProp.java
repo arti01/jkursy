@@ -24,19 +24,22 @@ public class SebProp {
     public static void main(String[] args) {
         config = new CzytajConfig().getConfig();
         try {
-            if (args[0].equals("-w")) {
-                zmienPlikiProp(args[1], args[2]);
-            }
-            if (args[0].equals("-f")) {
-                zmienWgPliku(args[1]);
-            }
-            if (args[0].equals("-p")) {
-                parseCfg(args[1], args[2], args[3]);
-            } else {
-                System.err.println("parametr: " + args[0] + " nieznany");
-                System.err.println("brak parametrow: -w <klucz> <wartosc>");
-                System.err.println("brak parametrow: -f <plik properties z nowymi wartosciami>");
-                System.err.println("brak parametrow: -p <wzorzec cfg> <properties> <docelowy cfg>");
+            switch (args[0]) {
+                case "-w":
+                    zmienPlikiProp(args[1], args[2]);
+                    break;
+                case "-f":
+                    zmienWgPliku(args[1]);
+                    break;
+                case "-p":
+                    parseCfg(args[1], args[2], args[3]);
+                    break;
+                default:
+                    System.err.println("parametr: " + args[0] + " nieznany");
+                    System.err.println("brak parametrow: -w <klucz> <wartosc>");
+                    System.err.println("brak parametrow: -f <plik properties z nowymi wartosciami>");
+                    System.err.println("brak parametrow: -p <wzorzec cfg> <properties> <docelowy cfg>");
+                    break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("brak parametrow: -w <klucz> <wartosc>");
