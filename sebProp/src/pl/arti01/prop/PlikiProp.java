@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl;
+package pl.arti01.prop;
 
 import java.util.Properties;
 
 /**
  *
  * @author arti01
- */
+ obiekt - para properties i nazwa pliku w ktorym siedzi*/
 public class PlikiProp {
     String plik;
     Properties prop;

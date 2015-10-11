@@ -5,7 +5,7 @@
  */
 package sebprop;
 
-import com.sun.org.apache.xml.internal.security.utils.Constants;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,15 +22,27 @@ public class SebProp {
 
     public static void main(String[] args) {
         config = new CzytajConfig().getConfig();
-        zmienPlikiProp("test", "ffffffffff");
+        try {
+            if (args[0].equals("-p")) {
+                zmienPlikiProp(args[1], args[2]);
+            }
+            else{
+                System.err.println("parametr: "+args[0]+" nieznany");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("brak parametrow: -p <klucz> <wartosc>");
+        }
+
     }
 
     static private void zmienPlikiProp(String klucz, String war) {
         try {
             PodmienWplikach pwP = new PodmienWplikach(new CzytajConfig().doList(config.getProperty("plikiProperties")));
-            pwP.zmien(klucz, war);
+            pwP.zmienWartosci(klucz, war);
         } catch (NullPointerException ex) {
             Logger.getLogger(SebProp.class.getName()).log(Level.SEVERE, "brak listy plikow prop", ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SebProp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
