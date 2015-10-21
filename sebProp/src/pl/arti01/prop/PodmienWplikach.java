@@ -5,12 +5,16 @@
  */
 package pl.arti01.prop;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -38,11 +42,21 @@ public class PodmienWplikach {
         }
     }
 
+    private void kopiaPlikow() throws IOException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm");
+        for (PlikiProp plik : pliki) {
+            //wykonuje kopie pliku
+            String plikKopia = plik.getPlik() + sdf.format(Calendar.getInstance().getTime());
+            Files.copy(new File(plik.getPlik()).toPath(), new File(plikKopia).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
     public void zmienWartosci(String klucz, String wartosc) throws IOException {
         //przeglada pliki z properties i jesli natrafi na dany klucz to zmienia mu wartość
         for (PlikiProp pr : pliki) {
             if (pr.getProp().containsKey(klucz)) {
-                System.out.println(pr.getPlik()+":"+klucz+" - old: "+pr.getProp().getProperty(klucz)+" - new: "+wartosc);
+                //
+                System.out.println(pr.getPlik() + ":" + klucz + " - old: " + pr.getProp().getProperty(klucz) + " - new: " + wartosc);
                 pr.getProp().setProperty(klucz, wartosc);
                 pr.getProp().store(new FileOutputStream(pr.getPlik()), null);
             }
@@ -50,14 +64,15 @@ public class PodmienWplikach {
     }
 
     public void podmienWgPliku(String plikProp) throws FileNotFoundException, IOException {
+        this.kopiaPlikow();
         //argumentem jest plik prop, wartosci w nim wystepujace sa wyszukiwane i zmieniane w innych (zdefiniowanych) plikach 
         FileInputStream in = new FileInputStream(plikProp);
         Properties plikNoweWartosci = new Properties();
         plikNoweWartosci.load(in);
         Enumeration<?> e = plikNoweWartosci.propertyNames();
         for (; e.hasMoreElements();) {
-            String klucz=e.nextElement().toString();
-            String wartosc=plikNoweWartosci.getProperty(klucz);
+            String klucz = e.nextElement().toString();
+            String wartosc = plikNoweWartosci.getProperty(klucz);
             this.zmienWartosci(klucz, wartosc);
         }
     }

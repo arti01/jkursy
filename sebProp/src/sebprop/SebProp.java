@@ -23,6 +23,7 @@ public class SebProp {
 
     public static void main(String[] args) {
         config = new CzytajConfig().getConfig();
+        
         try {
             switch (args[0]) {
                 case "-w":
@@ -34,6 +35,7 @@ public class SebProp {
                 case "-p":
                     parseCfg(args[1], args[2], args[3]);
                     break;
+                    
                 default:
                     System.err.println("parametr: " + args[0] + " nieznany");
                     System.err.println("brak parametrow: -w <klucz> <wartosc>");

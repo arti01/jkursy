@@ -17,6 +17,8 @@ import org.junit.Test;
  */
 public class PodmienWplikachTest {
 
+    private static final String OS = System.getProperty("os.name").toLowerCase();
+
     public PodmienWplikachTest() {
     }
 
@@ -60,12 +62,18 @@ public class PodmienWplikachTest {
      */
     @Test
     public void testPodmienWgPliku() throws Exception {
-        System.out.println("podmienWgPliku");
-        String plikProp = "/home/arti01/tmp/nowe.prop";
+        System.out.println("podmienWgPliku, os: "+OS);
+        String plikProp="";
+        if (OS.contains("linux")) {
+            plikProp = "/home/arti01/tmp/nowe.prop";
+        }else if (OS.contains("win")) {
+            plikProp = "d:/tmp/1/test.prop";
+        }
+        else{
+           throw new Exception("nieznany os: "+OS);
+        }
         PodmienWplikach instance = new PodmienWplikach(new CzytajConfig().doList(new CzytajConfig().getConfig().getProperty("plikiProperties")));
         instance.podmienWgPliku(plikProp);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
 
 }
