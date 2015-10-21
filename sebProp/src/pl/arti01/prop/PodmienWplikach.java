@@ -11,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,7 +46,11 @@ public class PodmienWplikach {
         for (PlikiProp plik : pliki) {
             //wykonuje kopie pliku
             String plikKopia = plik.getPlik() + sdf.format(Calendar.getInstance().getTime());
-            Files.copy(new File(plik.getPlik()).toPath(), new File(plikKopia).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            try {
+                Files.copy(new File(plik.getPlik()).toPath(), new File(plikKopia).toPath());
+            } catch (java.nio.file.FileAlreadyExistsException e1) {
+                System.err.println("plik kopi już istnieje: " + plikKopia);
+            }
         }
     }
 

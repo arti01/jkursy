@@ -10,7 +10,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Enumeration;
@@ -28,10 +27,13 @@ public class ParserPropToCfg {
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm");
         String plikKopia = plikDsc + sdf.format(Calendar.getInstance().getTime());
         try {
-            Files.copy(new File(plikDsc).toPath(), new File(plikKopia).toPath(), StandardCopyOption.REPLACE_EXISTING);   
+            Files.copy(new File(plikDsc).toPath(), new File(plikKopia).toPath());   
         } catch (java.nio.file.NoSuchFileException e) {
             System.err.println("brak pliku docelowego: "+plikDsc+" stworze nowy");
+        }catch (java.nio.file.FileAlreadyExistsException e1){
+            System.err.println("plik kopi już istnieje: "+plikKopia);
         }
+        
 
         FileInputStream in = new FileInputStream(plikProp);
         Properties plikNoweWartosci = new Properties();
