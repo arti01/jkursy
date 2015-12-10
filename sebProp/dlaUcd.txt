@@ -1,0 +1,24 @@
+przygotowanie plikow z properties dla aplikacji obsługujących konfigurację z UCD
+=====================================================================
+
+1. Przygotowanie nowych plikow app.prop
+sebProp -jar -f d:\automatyczny_deployment\tworzenie_maszyn\mapa_BM2_BZWBK24_CEKE_ZT4.txt
+gdzie parametrem jest nowy plik mapy, a w konfiguracji aplikacji (config.properties, klucz plikiProperties)
+zapisane są pliki, które mają być poddane procesowi modyfikacji namiarów.
+Uwaga - w plikach app.prop i w plikach wzorcach konfiguracji aplikacji należy wyrównać nazwy kluczy
+do kluczy używanych w pliku mapy.
+Dla zmodyfikowanych plikow tworzona jest kopia ze znacznikiem czasu
+
+
+2. parsowanie plikow aplikacji
+Wykonanie tego, co wykonuje UCD podczas wdrożenia, czyli stworzenie na podstawie plikow
+app.prop i plikow wzorcow konfiguracji docelowcyh plikow konfiguracyjnych
+
+-p d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\udep_konf\ubb01-BM2-unl_wzor.txt d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\udep_konf\tux-config.properties d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\ubb01-BM2-unl.txt
+-p d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\udep_konf\dmconf01-unl_wzor.txt d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\udep_konf\tux-config.properties d:\automatyczny_deployment\tworzenie_maszyn\tuxedo\dmconf01-unl.txt
+gdzie pierwszy parametr to wzorzec konfiguracji (plik z kluczami w formacie ${nazwa_klucza}), drugi to plik z properties (klucz=wartosc), trzeci to plik wynikowy (plik wzorca gdzie ${nazwa_klucza} jest zastąpiony przez wartosc)
+np wzorzec domain="${BM2_DNS}", properties BM2_DNS=bm2zt7, wynikowy domain="bm2zt7"
+Poprzednie pliki wynikowe są zabezpieczone przez wykonanie kopi ze znacznikiem czasu
+Po zakończeniu parsowania system waliduje plik wynikowy sprawdzając, czy nie zostały w nim niezmienione klucze i jeśli coś takiego wystąpi zwraca je na wyjściu.
+
+3. Wykonanie standardowych działań administratora, czyli rekompilacje tuxedo, restarty itd

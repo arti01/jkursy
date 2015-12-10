@@ -11,8 +11,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -24,16 +26,9 @@ public class ParserPropToCfg {
 
     public static void Parsuj(String plikSrc, String plikProp, String plikDsc) throws IOException {
         //kopia pliku docelowego
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm");
-        String plikKopia = plikDsc + sdf.format(Calendar.getInstance().getTime());
-        try {
-            Files.copy(new File(plikDsc).toPath(), new File(plikKopia).toPath());   
-        } catch (java.nio.file.NoSuchFileException e) {
-            System.err.println("brak pliku docelowego: "+plikDsc+" stworze nowy");
-        }catch (java.nio.file.FileAlreadyExistsException e1){
-            System.err.println("plik kopi już istnieje: "+plikKopia);
-        }
-        
+        List<String> plikiBkp = new ArrayList<>();
+        plikiBkp.add(plikDsc);
+        KopiaPlikow.kopieZrob(plikiBkp, true);
 
         FileInputStream in = new FileInputStream(plikProp);
         Properties plikNoweWartosci = new Properties();
@@ -46,6 +41,23 @@ public class ParserPropToCfg {
             String zmienna = "\\$\\{" + klucz + "}";
             plikTresc = plikTresc.replaceAll(zmienna, wartosc);
             Files.write(Paths.get(plikDsc), plikTresc.getBytes());
+        }
+
+        //sprawdzenie, czy nie zostaly jakies klucze
+        String pozostaleKlucze = "";
+        int pozycja = 0;
+        while (pozycja < plikTresc.length()) {
+            pozycja = plikTresc.indexOf("${", pozycja);
+            int pozycjaEnd = plikTresc.indexOf("}", pozycja + 1);
+            if (pozycja < 0) {
+                break;
+            } else {
+                pozostaleKlucze += plikTresc.substring(pozycja, pozycjaEnd + 1) + ", ";
+                pozycja = pozycjaEnd + 1;
+            }
+        }
+        if (pozostaleKlucze.length() > 0) {
+            System.err.println("klucze niesparsowane: " + pozostaleKlucze);
         }
     }
 

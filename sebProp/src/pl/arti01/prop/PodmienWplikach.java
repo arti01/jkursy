@@ -5,15 +5,11 @@
  */
 package pl.arti01.prop;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
@@ -42,23 +38,17 @@ public class PodmienWplikach {
     }
 
     private void kopiaPlikow() throws IOException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd-HHmm");
+        List<String> plikiBkp = new ArrayList<>();
         for (PlikiProp plik : pliki) {
-            //wykonuje kopie pliku
-            String plikKopia = plik.getPlik() + sdf.format(Calendar.getInstance().getTime());
-            try {
-                Files.copy(new File(plik.getPlik()).toPath(), new File(plikKopia).toPath());
-            } catch (java.nio.file.FileAlreadyExistsException e1) {
-                System.err.println("plik kopi już istnieje: " + plikKopia);
-            }
+            plikiBkp.add(plik.getPlik());
         }
+        KopiaPlikow.kopieZrob(plikiBkp, true);
     }
 
     public void zmienWartosci(String klucz, String wartosc) throws IOException {
         //przeglada pliki z properties i jesli natrafi na dany klucz to zmienia mu wartość
         for (PlikiProp pr : pliki) {
             if (pr.getProp().containsKey(klucz)) {
-                //
                 System.out.println(pr.getPlik() + ":" + klucz + " - old: " + pr.getProp().getProperty(klucz) + " - new: " + wartosc);
                 pr.getProp().setProperty(klucz, wartosc);
                 pr.getProp().store(new FileOutputStream(pr.getPlik()), null);
