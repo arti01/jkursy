@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pl.arti01.prop.PodmienWplikach;
 import pl.arti01.prop.CzytajConfig;
-import pl.arti01.prop.FindDupKey;
+import pl.arti01.prop.ValidPropFile;
 import pl.arti01.prop.Ip2Ip;
 import pl.arti01.prop.ParserPropToCfg;
 
@@ -42,7 +42,7 @@ public class SebProp {
                     ip2ipM(args[1], args[2]);
                     break;
                 case "-d":
-                    duplikaty(args[1]);
+                    duplikaty(args[1], args[2]);
                     break;
                 default:
                     System.err.println("parametr: " + args[0] + " nieznany");
@@ -50,7 +50,7 @@ public class SebProp {
                     System.err.println("brak parametrow: -f <plik properties z nowymi wartosciami>");
                     System.err.println("brak parametrow: -p <wzorzec cfg> <properties> <docelowy cfg>");
                     System.err.println("brak parametrow: -z <plik mapy old> <plik mapy new>");
-                    System.err.println("brak parametrow: -d <plik mapy old>");
+                    System.err.println("brak parametrow: -d [-u lub -l] <plik mapy old>");
                     break;
             }
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -58,7 +58,7 @@ public class SebProp {
             System.err.println("brak parametrow: -f <plik properties z nowymi wartosciami>");
             System.err.println("brak parametrow: -p <wzorzec cfg> <properties> <docelowy cfg>");
             System.err.println("brak parametrow: -z <plik mapy old> <plik mapy new>");
-            System.err.println("brak parametrow: -d <plik mapy old>");
+            System.err.println("brak parametrow: -d [-u lub -l] <plik mapy old>");
         }
 
     }
@@ -95,9 +95,10 @@ public class SebProp {
         Ip2Ip.zmienPliki(new CzytajConfig().doList(config.getProperty("plikiMapOldNew")), plikMapOld, plikMapNew);
     }
 
-    static private void duplikaty(String plik) {
-
-        for (Map.Entry<String, String> entry : FindDupKey.doItPlik(plik).entrySet()) {
+    static private void duplikaty(String plik, String duzeMale) {
+        boolean sprawdzacDuze;
+        sprawdzacDuze = duzeMale.equals("-d");
+        for (Map.Entry<String, String> entry : ValidPropFile.doItPlik(plik, sprawdzacDuze).entrySet()) {
             System.err.println(entry.getKey() + " - " + entry.getValue());
         }
     }

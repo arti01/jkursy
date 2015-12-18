@@ -19,15 +19,15 @@ import java.util.Properties;
  *
  * @author 103039
  */
-public class FindDupKey {
+public class ValidPropFile {
 
-    public static Map<String, String> doItPlik(String plik) {
+    public static Map<String, String> doItPlik(String plik, boolean sprDuzeLitry) {
         try {
             FileInputStream in = new FileInputStream(plik);
             Properties prop = new Properties();
             prop.load(in);
             BufferedReader br = new BufferedReader(new FileReader(plik));
-            return FindDupKey.doIt(br);
+            return ValidPropFile.doIt(br, sprDuzeLitry);
         } catch (FileNotFoundException ex) {
             System.err.println("brak pliku " + plik);
         } catch (IOException | IllegalArgumentException ex) {
@@ -37,7 +37,7 @@ public class FindDupKey {
         return null;
     }
 
-    public static Map<String, String> doIt(BufferedReader br) throws IOException {
+    public static Map<String, String> doIt(BufferedReader br, boolean sprDuzeLitry) throws IOException {
         Properties prop=new Properties();
         Map<String, String>wynik=new HashMap<>();
         for (String line; (line = br.readLine()) != null;) {
@@ -50,7 +50,7 @@ public class FindDupKey {
             if(podzial[0].contains(" ")){
                 kom="zawiera spacje, ";
             }
-            if(!podzial[0].toUpperCase().equals(podzial[0])){
+            if(!podzial[0].toUpperCase().equals(podzial[0])&&sprDuzeLitry){
                 kom+="zawiera małe litery, ";
             }
             if(!kom.isEmpty()){
@@ -58,10 +58,10 @@ public class FindDupKey {
                 continue;
             }
             //walidacja duplikatow
-            if(prop.containsKey(podzial[0])){
+            if(prop.containsKey(podzial[0].toUpperCase())){
                 wynik.put(podzial[0], "jest duplikatem");
             }else{
-                prop.put(podzial[0], podzial[1]);
+                prop.put(podzial[0].toUpperCase(), podzial[1]);
             }
         }
         return wynik;
