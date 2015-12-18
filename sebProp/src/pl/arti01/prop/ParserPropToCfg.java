@@ -5,18 +5,14 @@
  */
 package pl.arti01.prop;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-import java.util.Scanner;
 
 /**
  *
@@ -33,7 +29,8 @@ public class ParserPropToCfg {
         FileInputStream in = new FileInputStream(plikProp);
         Properties plikNoweWartosci = new Properties();
         plikNoweWartosci.load(in);
-        String plikTresc = new Scanner(new File(plikSrc)).useDelimiter("\\Z").next();
+        String plikTresc = new String(Files.readAllBytes(Paths.get(plikSrc)));
+        //String plikTresc = new Scanner(new File(plikSrc)).useDelimiter("\\Z").next();
         Enumeration<?> e = plikNoweWartosci.propertyNames();
         for (; e.hasMoreElements();) {
             String klucz = e.nextElement().toString();

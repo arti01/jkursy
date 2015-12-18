@@ -1,3 +1,6 @@
+wywolanie:
+java -jar sebProp.jar -opcja parametry
+
 opcje: 
 -f <plik properties z nowymi wartosciami> - podmienia wartości w plikach zdefiniowanych w config.properties, klucz plikiProperties
 czyli bierze klucz i wartość z pliku podanego jako parametr wywolania (plik mapy), wyszukuje takie same klucze w plikach zdefiniowanych 

@@ -45,11 +45,14 @@ public class Ip2Ip {
             System.out.println("==================");
             System.out.println("plik: "+plik);
             try {
-                String plikTresc = new Scanner(new File(plik)).useDelimiter("\\Z").next();
+                //String plikTresc = new Scanner(new File(plik)).useDelimiter("\\Z").next();
+                String plikTresc = new String(Files.readAllBytes(Paths.get(plik)));
+                //System.out.println(plikTresc+"tresc");
                 for (; e.hasMoreElements();) {
                     String klucz = e.nextElement().toString();
                     String wartoscNew = plikMapNewProp.getProperty(klucz);
                     String wartoscOld = plikMapOldProp.getProperty(klucz);
+                    //System.out.println(klucz + "=" + wartoscOld + "->" + wartoscNew);
                     if (!wartoscNew.equals(wartoscOld)) {
                         if (plikTresc.contains(wartoscOld)) {
                             System.out.println(klucz + "=" + wartoscOld + "->" + wartoscNew);
