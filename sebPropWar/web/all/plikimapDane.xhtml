@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:rich="http://richfaces.org/rich"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+
+    <rich:popupPanel header="dane pliku map" id="danePanel"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="150" minWidth="470">
+        <f:facet name="controls">
+            <h:outputLink value="#" onclick="#{rich:component('danePanel')}.hide();
+                        return false;">
+                <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+            </h:outputLink>
+        </f:facet>
+
+        <rich:dataTable id="tableDane" value="#{managedBean.obiekt.plikimapDaneList}" var="item" sortMode="single" iterationStatusVar="it" rows="30" style="width: 100%" limitRender="true">
+            <f:facet name="header"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
+            <f:facet name="footer"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
+
+            <rich:column sortBy="#{item.nazwa}">
+                <f:facet name="header">klucz</f:facet>
+                <h:outputText value="#{item.nazwa}" style="font-size: small"/>
+            </rich:column>
+        </rich:dataTable>
+
+        <a4j:commandButton id="zapiszDane" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel" execute="danePanel"
+                           oncomplete="#{rich:component('danePanel')}.hide()"/>
+        <a4j:commandButton id="wyjdzDane" value="Wyjdź" action="#{managedBean.newObiekt}" execute="@this"
+                           oncomplete="#{rich:component('danePanel')}.hide()"/>
+    </rich:popupPanel>
+    <hr/>
+
+</ui:composition>
+
