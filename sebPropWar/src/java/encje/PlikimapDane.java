@@ -42,7 +42,7 @@ public class PlikimapDane extends AbstEncja implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQPlikimapDane")
-    @SequenceGenerator(name = "SEQPlikimapDane", sequenceName = "SEQPlikimapDane")
+    @SequenceGenerator(name = "SEQPlikimapDane", sequenceName = "SEQPlikimapDane", allocationSize = 10)
     @Basic(optional = false)
     @NotNull
     @Column(nullable = false)

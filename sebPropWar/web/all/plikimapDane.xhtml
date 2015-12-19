@@ -9,7 +9,7 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 
-    <rich:popupPanel header="dane pliku map" id="danePanel"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="150" minWidth="470">
+    <rich:popupPanel header="dane pliku map" id="danePanel"  autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="250" minWidth="470">
         <f:facet name="controls">
             <h:outputLink value="#" onclick="#{rich:component('danePanel')}.hide();
                         return false;">
@@ -24,6 +24,11 @@
             <rich:column sortBy="#{item.nazwa}">
                 <f:facet name="header">klucz</f:facet>
                 <h:outputText value="#{item.nazwa}" style="font-size: small"/>
+            </rich:column>
+            
+            <rich:column sortBy="#{item.dane}">
+                <f:facet name="header">wartosc</f:facet>
+                <h:outputText value="#{item.dane}" style="font-size: small"/>
             </rich:column>
         </rich:dataTable>
 

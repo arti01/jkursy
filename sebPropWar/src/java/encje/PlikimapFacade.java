@@ -6,7 +6,9 @@
 package encje;
 
 import abstr.AbstKontroler;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,15 +53,18 @@ public class PlikimapFacade extends AbstKontroler<Plikimap> {
         if ((findEntities(obiekt.getNazwa()) != null) && (!obiekt.getNazwa().equals(oldObiekt.getNazwa()))) {
             bledy.put("nazwaD", "nazwa już istnieje");
         }
-        if (findEntitiesSrodowisko(obiekt.getSrodowisko())!= null && (!obiekt.getSrodowisko().equals(oldObiekt.getSrodowisko()))) {
+        if (findEntitiesSrodowisko(obiekt.getSrodowisko()) != null && (!obiekt.getSrodowisko().equals(oldObiekt.getSrodowisko()))) {
             bledy.put("srodowiskoD", "środowisko już istnieje");
         }
         if (!bledy.isEmpty()) {
             return bledy;
         }
-        //czyszczenie starych danych
-        for(PlikimapDane pmd:oldObiekt.getPlikimapDaneList()){
-            em.remove(pmd);
+
+        //czyszczenie starych danych (bo inaczej klucz unikalny się rozjezdza)
+        for (PlikimapDane pmd : oldObiekt.getPlikimapDaneList()) {
+            if(!obiekt.getPlikimapDaneList().contains(pmd)){
+                em.remove(pmd);
+            }
         }
         em.flush();
         em.merge(obiekt);

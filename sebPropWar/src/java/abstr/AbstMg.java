@@ -31,6 +31,12 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
         obiekt = (X) obiekt.getClass().newInstance();
     }
 
+    public static void addFacesMessage(String messageText) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(messageText));
+    }
+    
+    @SuppressWarnings("unchecked")
     public void refresh() {
         try {
             lista.setWrappedData(dcC.findEntities());

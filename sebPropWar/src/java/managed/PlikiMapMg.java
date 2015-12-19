@@ -10,11 +10,15 @@ import abstr.AbstMg;
 import encje.Plikimap;
 import encje.PlikimapDane;
 import encje.PlikimapFacade;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,13 +31,18 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.richfaces.event.FileUploadEvent;
 import org.richfaces.model.UploadedFile;
+import pl.arti01.prop.ValidPropFile;
 
 @SessionScoped
 @Named
 public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Inject
     private PlikimapFacade dcCM;
+    boolean sprDuzeLit;
+    Map<String, String> bledyPliku = new HashMap<>();
 
     public PlikiMapMg() throws InstantiationException, IllegalAccessException {
         super("/all/plikimap", new Plikimap());
@@ -45,11 +54,27 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         refresh();
     }
 
+    @Override
+    public void refresh() {
+        bledyPliku.clear();
+        sprDuzeLit = true;
+        super.refresh(); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public void listenerLadujPlik(FileUploadEvent event) throws Exception {
         Properties plikMapy = new Properties();
         UploadedFile item = event.getUploadedFile();
         ByteArrayInputStream in = new ByteArrayInputStream(item.getData());
+        BufferedReader bR = new BufferedReader(new InputStreamReader(in));
 
+        //walidacja pliku;
+        in.mark(0);
+        bledyPliku = ValidPropFile.doIt(bR, sprDuzeLit);
+        in.reset();
+        if(!bledyPliku.isEmpty()){
+            return;
+        }
+        addFacesMessage("plik wydaje się OK");
         try {
             plikMapy.load(in);
             getObiekt().setPlikimapDaneList(new ArrayList<PlikimapDane>());
@@ -73,7 +98,6 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
             context.addMessage(input.getClientId(context), message);
             Logger.getLogger(AbstMg.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
     /*    @PostConstruct
@@ -129,6 +153,22 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
 
     public void setDcCM(PlikimapFacade dcCM) {
         this.dcCM = dcCM;
+    }
+
+    public boolean isSprDuzeLit() {
+        return sprDuzeLit;
+    }
+
+    public void setSprDuzeLit(boolean sprDuzeLit) {
+        this.sprDuzeLit = sprDuzeLit;
+    }
+
+    public Map<String, String> getBledyPliku() {
+        return bledyPliku;
+    }
+
+    public void setBledyPliku(Map<String, String> bledyPliku) {
+        this.bledyPliku = bledyPliku;
     }
 
 }
