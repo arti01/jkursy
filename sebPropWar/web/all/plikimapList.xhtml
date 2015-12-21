@@ -8,11 +8,11 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-    <h:form id="formPanel" onsubmit="return false;">    
+    <h:form id="formPanel" onkeypress="if (event.keyCode === 13){return false;}" >    
         <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane" autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="230" minWidth="470">
             <f:facet name="controls">
                 <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
-                        return false;">
+            return false;">
                     <h:outputText value="(X)"  style="font-weight: bold;"/>
                 </h:outputLink>
             </f:facet>
@@ -127,6 +127,9 @@
                                        image="/images/detail.png">
                         <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
                     </a4j:commandButton>
+                    <h:commandButton id="ssss" action="#{plikiMapMg.download}" value="pobierz plik" immediate="true">
+                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
+                    </h:commandButton>
                 </rich:column>
             </rich:dataTable>
         </rich:panel>
@@ -137,9 +140,9 @@
         <rich:popupPanel id="confirmPane" autosized="true">
             Na pewno chcesz skasować?
             <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-            return false;" />
-            <a4j:commandButton value="Tak" onclick="remove();
                 return false;" />
+            <a4j:commandButton value="Tak" onclick="remove();
+                    return false;" />
         </rich:popupPanel>
 
         <a4j:jsFunction name="anuluj" action="#{RejestracjaRej.anuluj}" render="table" execute="@this"
@@ -147,9 +150,9 @@
         <rich:popupPanel id="anulujPane" autosized="true">
             Na pewno chcesz anulować?
             <a4j:commandButton value="Nie" onclick="#{rich:component('anulujPane')}.hide();
-                return false;" />
+                    return false;" />
             <a4j:commandButton value="Tak" onclick="anuluj();
-                return false;" />
+                    return false;" />
         </rich:popupPanel>
 
         <rich:notifyMessages stayTime="2300" nonblocking="true" nonblockingOpacity=".5" showShadow="true"/>

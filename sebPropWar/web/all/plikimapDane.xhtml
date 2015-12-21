@@ -9,7 +9,8 @@
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 
-    <rich:popupPanel header="dane pliku map" id="danePanel" autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="250" minWidth="470">
+    <rich:popupPanel header="dane pliku map" id="danePanel" autosized="false" domElementAttachment="parent" 
+                     left="13" top="13" minHeight="650" minWidth="470" resizeable="true">
         <ui:param name="filtrKlucz" value="#{null}"/>
         <ui:param name="filtrWartosc" value="#{null}"/>
         <f:facet name="controls">
@@ -18,29 +19,26 @@
                 <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
             </h:outputLink>
         </f:facet>
-        <h:commandButton id="imgDt" action="#{plikiMapMg.download}" value="pobież plik">
-        </h:commandButton>
-        <h/>
-
+        
         <rich:dataTable id="tableDane" value="#{managedBean.obiekt.plikimapDaneList}" var="item" sortMode="single" iterationStatusVar="it" 
-                        rows="30" style="width: 100%" limitRender="true" filterVar="filterValue">
+                        rows="25" style="width: 100%" limitRender="true" filterVar="filterValue">
             <f:facet name="header"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
             <f:facet name="footer"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
 
             <rich:column sortBy="#{item.nazwa}" filterExpression="#{fn:containsIgnoreCase(item.nazwa, filterValue) or filtrKlucz==''}" filterValue="#{filtrKlucz}">
                 <f:facet name="header">klucz</f:facet>
-                <h:inputText  id="daneNazwa" value="#{item.nazwa}" style="font-size: small"/>
+                <h:inputText  id="daneNazwa" value="#{item.nazwa}"/>
                 <rich:message for="daneNazwa"/>
             </rich:column>
 
             <rich:column sortBy="#{item.dane}" filterExpression="#{fn:containsIgnoreCase(item.dane, filterValue) or filtrWartosc==''}" filterValue="#{filtrWartosc}">
                 <f:facet name="header">wartosc</f:facet>
-                <h:inputText value="#{item.dane}" style="font-size: small"/>
+                <h:inputText value="#{item.dane}"/>
             </rich:column>
 
             <rich:column sortBy="#{item.opie}" filterExpression="#{fn:containsIgnoreCase(item.opis, filterValue) or filtrOpis==''}" filterValue="#{filtrOpis}">
                 <f:facet name="header">opis</f:facet>
-                <h:inputText value="#{item.opis}" style="font-size: small"/>
+                <h:inputText value="#{item.opis}"/>
             </rich:column>
         </rich:dataTable>
 

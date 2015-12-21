@@ -13,9 +13,11 @@ import encje.PlikimapFacade;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +32,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
@@ -118,6 +121,12 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         }
     }
 
+    public void downloadList(ActionEvent event){
+        System.err.println("ssssssssssss");
+	download();
+ 
+  }
+    
     public void download() {
         final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.setHeader("Content-Disposition", "attachment;filename=\"" + getObiekt().getNazwa() + "\""); // or whatever type you're sending back
@@ -126,21 +135,18 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         Properties pr = new Properties();
         for (PlikimapDane pmd : getObiekt().getPlikimapDaneList()) {
             plikTresc += pmd.getNazwa() + "=" + pmd.getDane();
-            System.err.println(plikTresc);
             pr.put(pmd.getNazwa(), pmd.getDane());
         }
         try {
-            ByteArrayOutputStream bos = null;
-            ObjectOutputStream oos = null;
-            //oos = new ObjectOutputStream(pr.store(, plikTresc));
-            pr.store(bos, "koment");
-
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            pr.store(bos, "plik dla środowiska: "+getObiekt().getSrodowisko());
+            
             response.getOutputStream().write(bos.toByteArray()); // from the UploadDetails bean
-            response.setContentLength(rejRej.getPlik().getPlik().length);
+            response.setContentLength(bos.size());
             response.getOutputStream().flush();
             response.getOutputStream().close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(AbstMg.class.getName()).log(Level.SEVERE, null, e);
         }
         FacesContext.getCurrentInstance().responseComplete();
     }
