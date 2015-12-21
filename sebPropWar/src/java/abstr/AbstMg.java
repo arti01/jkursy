@@ -33,7 +33,8 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
 
     public static void addFacesMessage(String messageText) {
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage(messageText));
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, messageText, messageText);
+        context.addMessage(null, message);
     }
     
     @SuppressWarnings("unchecked")
@@ -48,7 +49,13 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
         }
     }
 
+    
+    //jesli nie chce się nadpisać moetody z komunikatem
     public void dodaj() {
+        this.dodaj("dodanie OK");
+    }
+    
+    public void dodaj(String messageOK) {
         obiekt.setDataZmiany(new Date());
         Map<String, String> errorMap=new HashMap<>();
         try {
@@ -66,11 +73,17 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
                 context.addMessage(input.getClientId(context), message);
             }
         } else {
+            addFacesMessage(messageOK);
             refresh();
         }
     }
 
+    //jesli nie chce się nadpisać moetody z komunikatem
     public void edytuj() {
+        this.dodaj("zmiana OK");
+    }
+    
+    public void edytuj(String messageOK) {
         obiekt.setDataZmiany(new Date());
         FacesContext context = FacesContext.getCurrentInstance();
         UIComponent zapisz = UIComponent.getCurrentComponent(context);
@@ -88,6 +101,7 @@ public abstract class AbstMg<X extends AbstEncja, Y extends AbstKontroler<X>> {
             }
             lista.setWrappedData(dcC.findEntities());
         } else {
+            addFacesMessage(messageOK);
             refresh();
         }
     }

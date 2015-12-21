@@ -8,7 +8,7 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-    <h:form id="formPanel">    
+    <h:form id="formPanel" onsubmit="return false;">    
         <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane" autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="230" minWidth="470">
             <f:facet name="controls">
                 <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
@@ -35,42 +35,45 @@
                     <h:outputLabel for="upload" value="importuj plik &lt;br/&gt;(tylko .properties, .prop lub .txt), &lt;br/&gt;używaj z rozwagą - wywalisz poprzednie dane w kosmos:" escape="false"/>
                     <rich:fileUpload fileUploadListener="#{plikiMapMg.listenerLadujPlik}" id="upload" acceptedTypes=".properties, .txt, .prop"
                                      ontyperejected="alert('Tylko .properties, .prop lub .txt');" maxFilesQuantity="1" immediateUpload="true" 
-                                     addLabel="załaduj plik mapy" listHeight="50px" render="dodajPane" execute="upload, sprDuzeLitD">
+                                     addLabel="załaduj plik mapy" listHeight="50px" render="panelBledy" execute="upload, sprDuzeLitD">
+                        <rich:componentControl target="dodajPane" event="filesubmit" operation="hide"/>
                         <rich:componentControl target="dodajPane" event="uploadcomplete" operation="show"/>
                     </rich:fileUpload>
 
                     <rich:messages for="upload"/>
                     <rich:messages id="bladD" for="bladD"/>
-                    <rich:notifyMessages stayTime="1700" nonblocking="true" nonblockingOpacity=".5" showShadow="true"/>
                 </h:panelGrid>
                 <hr/>
                 <h:panelGroup id="panelBledy">
                     <fieldset>
                         <legend>Walidacja</legend>
                         <h:messages id="messages"/>
+
+                        <rich:dataTable value="#{plikiMapMg.bledyPliku.entrySet().toArray()}" var="bledy" id="tabBledy" rendered="#{plikiMapMg.bledyPliku.size()>0}">
+                            <f:facet name="header">jeśli są błędy - plik nie zostanie wczytany</f:facet>
+                            <rich:column>
+                                #{bledy.key}
+                            </rich:column>
+                            <rich:column>
+                                #{bledy.value}
+                            </rich:column>
+                        </rich:dataTable>
                     </fieldset>
-                    <rich:dataTable value="#{plikiMapMg.bledyPliku.entrySet().toArray()}" var="bledy" id="tabBledy" rendered="#{plikiMapMg.bledyPliku.size()>0}">
-                        <f:facet name="header">jeśli są błędy - plik nie zostanie wczytany</f:facet>
-                        <rich:column>
-                            #{bledy.key}
-                        </rich:column>
-                        <rich:column>
-                            #{bledy.value}
-                        </rich:column>
-                    </rich:dataTable>
                     <hr/>
                 </h:panelGroup>
 
-                <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, panelW" execute="dodajPane"
-                                   oncomplete="if (#{facesContext.maximumSeverity!=null}) {#{rich:component('dodajPane')}.show();} else{#{rich:component('dodajPane')}.hide();}" 
+                <a4j:commandButton id="dodaj" value="Dodaj" action="#{managedBean.dodaj}" render="listPanel, panelW" execute="panelW"
+                                   oncomplete="if (#{facesContext.maximumSeverity.ordinal>1}) {#{rich:component('dodajPane')}.show();} else{#{rich:component('dodajPane')}.hide();}" 
                                    rendered="#{managedBean.obiekt.id==null}"/>
-                <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, panelW" execute="dodajPane"
-                                   oncomplete="if (#{facesContext.maximumSeverity!=null}) {#{rich:component('dodajPane')}.show();} else{#{rich:component('dodajPane')}.hide();}" 
+                <a4j:commandButton id="zapisz" value="Zapisz" action="#{managedBean.edytuj}" render="listPanel, panelW" execute="panelW"
+                                   oncomplete="if (#{facesContext.maximumSeverity.ordinal>1}) {#{rich:component('dodajPane')}.show();} else{#{rich:component('dodajPane')}.hide();}" 
                                    rendered="#{managedBean.obiekt.id!=null}"/>
                 <a4j:commandButton id="wyjdz" value="Wyjdź" action="#{managedBean.refresh}" render="panelW" execute="@this"
                                    oncomplete="#{rich:component('dodajPane')}.hide()"/>
             </a4j:outputPanel>
         </rich:popupPanel>
+
+
         <a4j:jsFunction name="test" onbegin="if(#{RejestracjaRej.obiekt.kontrahentId.id}!='') {#{rich:component('dodajPane')}.show();} else {return;}"/>
         <a4j:jsFunction name="test1" onbegin="if(#{fn:length(RejestracjaRej.obiekt.dcPlikList)>0}) {#{rich:component('dodajPane')}.show();} else {return;}"/>
         <script language="javascript">
@@ -134,9 +137,9 @@
         <rich:popupPanel id="confirmPane" autosized="true">
             Na pewno chcesz skasować?
             <a4j:commandButton value="Nie" onclick="#{rich:component('confirmPane')}.hide();
-                return false;" />
+            return false;" />
             <a4j:commandButton value="Tak" onclick="remove();
-                    return false;" />
+                return false;" />
         </rich:popupPanel>
 
         <a4j:jsFunction name="anuluj" action="#{RejestracjaRej.anuluj}" render="table" execute="@this"
@@ -144,10 +147,12 @@
         <rich:popupPanel id="anulujPane" autosized="true">
             Na pewno chcesz anulować?
             <a4j:commandButton value="Nie" onclick="#{rich:component('anulujPane')}.hide();
-                    return false;" />
+                return false;" />
             <a4j:commandButton value="Tak" onclick="anuluj();
-                    return false;" />
+                return false;" />
         </rich:popupPanel>
+
+        <rich:notifyMessages stayTime="2300" nonblocking="true" nonblockingOpacity=".5" showShadow="true"/>
 
         <rich:popupPanel id="statPane" autosized="true">
             <h:graphicImage value="/images/ai.gif" alt="ai" />

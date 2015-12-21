@@ -52,9 +52,12 @@ public class PlikimapDane extends AbstEncja implements Serializable{
     @Column(nullable = false, length = 250)
     private String nazwa;
     @NotNull
-    @Size(min = 1, max = 250)
-    @Column(nullable = false, length = 250)
+    @Size(max = 250)
+    @Column(length = 250)
     private String dane;
+    @Size(max = 250)
+    @Column(length = 250)
+    private String opis;
     
     @JoinColumn(name = "id_plikimap", referencedColumnName = "id", nullable = true)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
@@ -97,6 +100,14 @@ public class PlikimapDane extends AbstEncja implements Serializable{
 
     public void setPlikimap(Plikimap plikimap) {
         this.plikimap = plikimap;
+    }
+
+    public String getOpis() {
+        return opis;
+    }
+
+    public void setOpis(String opis) {
+        this.opis = opis;
     }
     
     @Override

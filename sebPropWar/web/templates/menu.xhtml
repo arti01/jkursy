@@ -11,9 +11,14 @@
             <rich:panelMenu itemMode="client" groupMode="client" groupExpandedLeftIcon="triangleUp"
                             groupCollapsedLeftIcon="triangleDown" topGroupExpandedRightIcon="chevronUp"
                             topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc">
+                <h:outputLink value="#{request.contextPath}">
+                    <rich:panelMenuItem >
+                        Home
+                    </rich:panelMenuItem>
+                </h:outputLink>
                 <h:commandLink action="#{plikiMapMg.list}">
                     <rich:panelMenuItem >
-                        Zarządzanie plikami
+                        Zarządzanie plikami Map
                     </rich:panelMenuItem>
                 </h:commandLink>
             </rich:panelMenu>
