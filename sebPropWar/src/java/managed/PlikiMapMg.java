@@ -13,16 +13,14 @@ import encje.PlikimapFacade;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -32,7 +30,6 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
@@ -45,6 +42,9 @@ import pl.arti01.prop.ValidPropFile;
 public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private String maskaZ;
+    private String maskaNa;
+    
 
     @Inject
     private PlikimapFacade dcCM;
@@ -85,7 +85,6 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
     public void klonuj() {
         Plikimap plikRodzic = getObiekt();
         setObiekt(new Plikimap());
-        System.err.println(plikRodzic.getNazwa());
         getObiekt().setPlikimapRodzic(plikRodzic);
         getObiekt().setPlikimapDaneList(new ArrayList<PlikimapDane>());
         for (PlikimapDane pd : plikRodzic.getPlikimapDaneList()) {
@@ -96,9 +95,19 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
             pdN.setPlikimap(getObiekt());
             getObiekt().getPlikimapDaneList().add(pdN);
         }
-        System.err.println(getObiekt().getNazwa());
     }
 
+    public void zmienWgMaski() throws Exception{
+        List<PlikimapDane> noweDane=new ArrayList<>();
+        for(PlikimapDane pd:getObiekt().getPlikimapDaneList()){
+            String dane=pd.getDane();
+            pd.setDane(dane.replace(maskaZ, maskaNa));
+            noweDane.add(pd);
+        }
+        getObiekt().setPlikimapDaneList(noweDane);
+        dcCM.edit(getObiekt());
+    }
+    
     public void listenerLadujPlik(FileUploadEvent event) throws Exception {
         Properties plikMapy = new Properties();
         UploadedFile item = event.getUploadedFile();
@@ -162,6 +171,22 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         FacesContext.getCurrentInstance().responseComplete();
     }
 
+    public String getMaskaZ() {
+        return maskaZ;
+    }
+
+    public void setMaskaZ(String maskaZ) {
+        this.maskaZ = maskaZ;
+    }
+
+    public String getMaskaNa() {
+        return maskaNa;
+    }
+
+    public void setMaskaNa(String maskaNa) {
+        this.maskaNa = maskaNa;
+    }
+    
     public PlikimapFacade getDcCM() {
         return dcCM;
     }

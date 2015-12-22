@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
+<html xmlns:ui="http://java.sun.com/jsf/facelets" 
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:rich="http://richfaces.org/rich"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -8,7 +8,9 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
-    <h:form id="formPanel" onkeypress="if (event.keyCode === 13){return false;}" >    
+    <h:form id="formPanel" onkeypress="if (event.keyCode === 13) {
+                return false;
+            }" >    
         <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane" autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="230" minWidth="470">
             <f:facet name="controls">
                 <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
@@ -84,8 +86,9 @@
             };
         </script>
 
-
+        
         <ui:include src="/all/plikimapDane.xhtml"/>
+        <ui:include src="/all/plikimapZmMaski.xhtml"/>
 
         <rich:panel id="listPanel">
             <h2>
@@ -111,23 +114,30 @@
                     <h:outputText value="#{item.dataZmiany}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                 </rich:column>
                 <rich:column sortBy="#{item.plikimapRodzic.srodowisko}">
-                    <f:facet name="header">rodzic</f:facet>
+                    <f:facet name="header">środowisko rodzica</f:facet>
                     <h:outputText value="#{item.plikimapRodzic.srodowisko}"/>
                 </rich:column>
-                
+
                 <rich:column >
                     <h:commandButton id="pobierz" action="#{plikiMapMg.download}" value="pobierz plik" immediate="true">
                         <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
                     </h:commandButton>
                 </rich:column>
-                
+
                 <rich:column >
                     <a4j:commandButton id="clon" execute="@this" action="#{plikiMapMg.klonuj}" render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()"
                                        value="klonuj">
                         <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
                     </a4j:commandButton>
                 </rich:column>
-                
+
+                <rich:column >
+                    <a4j:commandButton id="maskB" execute="@this" render="maskaPanel" oncomplete="#{rich:component('maskaPanel')}.show()"
+                                       value="zmień wg maski">
+                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
+                    </a4j:commandButton>
+                </rich:column>
+
                 <rich:column style="width: 75px">
                     <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                     <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
@@ -178,5 +188,5 @@
     </h:form>
     <hr/>
 
-</ui:composition>
+</html>
 
