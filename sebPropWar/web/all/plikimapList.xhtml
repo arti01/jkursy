@@ -110,7 +110,24 @@
                     <f:facet name="header">data zmiany</f:facet>
                     <h:outputText value="#{item.dataZmiany}"><f:convertDateTime type="date" pattern="yyyy-MM-dd HH:mm:ss" timeZone="CET"/></h:outputText>
                 </rich:column>
-
+                <rich:column sortBy="#{item.plikimapRodzic.srodowisko}">
+                    <f:facet name="header">rodzic</f:facet>
+                    <h:outputText value="#{item.plikimapRodzic.srodowisko}"/>
+                </rich:column>
+                
+                <rich:column >
+                    <h:commandButton id="pobierz" action="#{plikiMapMg.download}" value="pobierz plik" immediate="true">
+                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
+                    </h:commandButton>
+                </rich:column>
+                
+                <rich:column >
+                    <a4j:commandButton id="clon" execute="@this" action="#{plikiMapMg.klonuj}" render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()"
+                                       value="klonuj">
+                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
+                    </a4j:commandButton>
+                </rich:column>
+                
                 <rich:column style="width: 75px">
                     <rich:tooltip target="imgDe" value="usuń" layout="block"/>
                     <rich:tooltip target="imgEd" value="edytuj" layout="block"/>
@@ -127,9 +144,6 @@
                                        image="/images/detail.png">
                         <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
                     </a4j:commandButton>
-                    <h:commandButton id="ssss" action="#{plikiMapMg.download}" value="pobierz plik" immediate="true">
-                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
-                    </h:commandButton>
                 </rich:column>
             </rich:dataTable>
         </rich:panel>

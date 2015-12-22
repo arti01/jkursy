@@ -8,7 +8,6 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${libs.rf4.5.10.classpath}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
                     <file>${reference.sebProp-1.jar}</file>
@@ -16,6 +15,7 @@
                 </library>
                 <library dirs="200">
                     <file>${libs.rf4.5.12.classpath}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>

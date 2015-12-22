@@ -82,6 +82,23 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         super.edytuj("zmieniono dane w pliku");
     }
 
+    public void klonuj() {
+        Plikimap plikRodzic = getObiekt();
+        setObiekt(new Plikimap());
+        System.err.println(plikRodzic.getNazwa());
+        getObiekt().setPlikimapRodzic(plikRodzic);
+        getObiekt().setPlikimapDaneList(new ArrayList<PlikimapDane>());
+        for (PlikimapDane pd : plikRodzic.getPlikimapDaneList()) {
+            PlikimapDane pdN = new PlikimapDane();
+            pdN.setNazwa(pd.getNazwa());
+            pdN.setOpis(pd.getOpis());
+            pdN.setDane(pd.getDane());
+            pdN.setPlikimap(getObiekt());
+            getObiekt().getPlikimapDaneList().add(pdN);
+        }
+        System.err.println(getObiekt().getNazwa());
+    }
+
     public void listenerLadujPlik(FileUploadEvent event) throws Exception {
         Properties plikMapy = new Properties();
         UploadedFile item = event.getUploadedFile();
@@ -121,12 +138,6 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         }
     }
 
-    public void downloadList(ActionEvent event){
-        System.err.println("ssssssssssss");
-	download();
- 
-  }
-    
     public void download() {
         final HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         response.setHeader("Content-Disposition", "attachment;filename=\"" + getObiekt().getNazwa() + "\""); // or whatever type you're sending back
@@ -139,8 +150,8 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         }
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            pr.store(bos, "plik dla środowiska: "+getObiekt().getSrodowisko());
-            
+            pr.store(bos, "plik dla środowiska: " + getObiekt().getSrodowisko());
+
             response.getOutputStream().write(bos.toByteArray()); // from the UploadDetails bean
             response.setContentLength(bos.size());
             response.getOutputStream().flush();
@@ -151,53 +162,6 @@ public class PlikiMapMg extends AbstMg<Plikimap, PlikimapFacade> implements Seri
         FacesContext.getCurrentInstance().responseComplete();
     }
 
-    /*    @PostConstruct
-    @Override
-    public void refresh() {
-        getLista().setWrappedData(dcR.findEntities());
-        try {
-            setObiekt(getObiekt().getClass().newInstance());
-        } catch (InstantiationException | IllegalAccessException ex1) {
-            Logger.getLogger(PlikiMapMg.class.getName()).log(Level.SEVERE, null, ex1);
-        }
-        setError(null);
-    }
-
-    public String detale() {
-        return "/dcarch/dokumentDetale?faces-redirect=true";
-    }
-
-    
-    @Override
-    public void dodaj() throws InstantiationException, IllegalAccessException {
-        try {
-            if (rejestracja.dodajAbst()) {
-                refresh();
-                rejestracja.refreshObiekt();
-                //urzadzeniaMg.refresh();
-            }
-        } catch (NonexistentEntityException ex) {
-            Logger.getLogger(Dokumenty.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    @Override
-    public void edytuj() {
-        if (rejestracja.edytujAbst()) {
-            rejestracja.refreshObiekt();
-            refresh();
-        }
-    }
-
-    public DataModel<DcRodzaj> getRodzajLista() {
-        rodzajLista.setWrappedData(dcR.findDcRodzajArch());
-        return rodzajLista;
-    }
-
-    public void setRodzajLista(DataModel<DcRodzaj> rodzajLista) {
-        this.rodzajLista = rodzajLista;
-    }
-     */
     public PlikimapFacade getDcCM() {
         return dcCM;
     }

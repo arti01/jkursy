@@ -59,7 +59,7 @@ public class PlikimapDane extends AbstEncja implements Serializable{
     @Column(length = 250)
     private String opis;
     
-    @JoinColumn(name = "id_plikimap", referencedColumnName = "id", nullable = true)
+    @JoinColumn(name = "id_plikimap", referencedColumnName = "id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Plikimap plikimap;
     

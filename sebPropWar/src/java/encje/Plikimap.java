@@ -17,6 +17,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -69,6 +71,13 @@ public class Plikimap extends AbstEncja implements Serializable{
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "plikimap", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<PlikimapDane> plikimapDaneList;
     
+    @OneToMany(cascade = {CascadeType.REFRESH}, mappedBy = "plikimapRodzic", fetch = FetchType.LAZY, orphanRemoval = false)
+    private List<Plikimap> plikimapDzieciList;
+    
+    @JoinColumn(name = "id_plikimap_rodzic", referencedColumnName = "id", nullable = true)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Plikimap plikimapRodzic;
+    
     public Plikimap() {
     }
 
@@ -116,6 +125,22 @@ public class Plikimap extends AbstEncja implements Serializable{
 
     public void setPlikimapDaneList(List<PlikimapDane> plikimapDaneList) {
         this.plikimapDaneList = plikimapDaneList;
+    }
+
+    public List<Plikimap> getPlikimapDzieciList() {
+        return plikimapDzieciList;
+    }
+
+    public void setPlikimapDzieciList(List<Plikimap> plikimapDzieciList) {
+        this.plikimapDzieciList = plikimapDzieciList;
+    }
+
+    public Plikimap getPlikimapRodzic() {
+        return plikimapRodzic;
+    }
+
+    public void setPlikimapRodzic(Plikimap plikimapRodzic) {
+        this.plikimapRodzic = plikimapRodzic;
     }
     
     
