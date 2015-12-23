@@ -1,23 +1,25 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:ui="http://java.sun.com/jsf/facelets" 
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
     <h:form id="formPanel" onkeypress="if (event.keyCode === 13) {
                 return false;
             }" >    
         <rich:popupPanel header="Wprowadź podstawowe informacje" id="dodajPane" autosized="true" domElementAttachment="parent" left="13" top="13" minHeight="230" minWidth="470">
             <f:facet name="controls">
-                <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide();
+                <h:outputLink value="#" onclick="#{rich:component('dodajPane')}.hide(); refresh();
             return false;">
                     <h:outputText value="(X)"  style="font-weight: bold;"/>
                 </h:outputLink>
             </f:facet>
+            <a4j:commandButton id="wyjdzG" value="Wyjdź" action="#{managedBean.refresh}" render="panelW" execute="@this"
+                                   oncomplete="#{rich:component('dodajPane')}.hide()"/>
             <a4j:outputPanel id="panelW">
                 <h:panelGrid columns="3" id="dodajGrid" >
                     <h:outputLabel for="nazwaD" value="nazwa: "/>
@@ -86,9 +88,9 @@
             };
         </script>
 
-        
-        <ui:include src="/all/plikimapDane.xhtml"/>
         <ui:include src="/all/plikimapZmMaski.xhtml"/>
+        <ui:include src="/all/plikimapWaliduj.xhtml"/>
+        <ui:include src="/all/plikimapDane.xhtml"/>
 
         <rich:panel id="listPanel">
             <h2>
@@ -127,6 +129,13 @@
                 <rich:column >
                     <a4j:commandButton id="clon" execute="@this" action="#{plikiMapMg.klonuj}" render="dodajPane" oncomplete="#{rich:component('dodajPane')}.show()"
                                        value="klonuj">
+                        <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
+                    </a4j:commandButton>
+                </rich:column>
+                
+                <rich:column >
+                    <a4j:commandButton id="wal" execute="@this" action="#{plikiMapMg.waliduj}" render="walidPanel" oncomplete="#{rich:component('walidPanel')}.show()"
+                                       value="waliduj dane">
                         <f:setPropertyActionListener target="#{managedBean.obiekt}" value="#{item}" />
                     </a4j:commandButton>
                 </rich:column>
@@ -171,6 +180,7 @@
 
         <a4j:jsFunction name="anuluj" action="#{RejestracjaRej.anuluj}" render="table" execute="@this"
                         oncomplete="#{rich:component('anulujPane')}.hide();" />
+        <a4j:jsFunction name="refresh" action="#{plikiMapMg.refresh}" execute="@this" render="@form"/>
         <rich:popupPanel id="anulujPane" autosized="true">
             Na pewno chcesz anulować?
             <a4j:commandButton value="Nie" onclick="#{rich:component('anulujPane')}.hide();

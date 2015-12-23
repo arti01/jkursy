@@ -1,51 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns:ui="http://java.sun.com/jsf/facelets" 
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
+    <ui:composition>
 
-    <rich:popupPanel header="dane pliku map" id="danePanel" autosized="false" domElementAttachment="parent" 
-                     left="13" top="13" minHeight="650" minWidth="1024" resizeable="true">
-        <ui:param name="filtrKlucz" value="#{null}"/>
-        <ui:param name="filtrWartosc" value="#{null}"/>
-        <f:facet name="controls">
-            <h:outputLink value="#" onclick="#{rich:component('danePanel')}.hide();
-                    return false;">
-                <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
-            </h:outputLink>
-        </f:facet>
-        
-        <rich:dataTable id="tableDane" value="#{managedBean.obiekt.plikimapDaneList}" var="item" sortMode="single" iterationStatusVar="it" 
-                        rows="25" style="width: 100%" limitRender="true" filterVar="filterValue">
-            <f:facet name="header"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
-            <f:facet name="footer"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
+        <rich:popupPanel header="dane pliku map" id="danePanel" autosized="false" domElementAttachment="parent" 
+                         left="13" top="13" minHeight="650" minWidth="1024" resizeable="true">
+            <ui:param name="filtrKlucz" value="#{null}"/>
+            <ui:param name="filtrWartosc" value="#{null}"/>
+            <f:facet name="controls">
+                <h:outputLink value="#" onclick="#{rich:component('danePanel')}.hide(); refresh;
+                        return false;">
+                    <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+                </h:outputLink>
+            </f:facet>
 
-            <rich:column sortBy="#{item.nazwa}" filterExpression="#{fn:containsIgnoreCase(item.nazwa, filterValue) or filtrKlucz==''}" filterValue="#{filtrKlucz}">
-                <f:facet name="header">klucz</f:facet>
-                <h:inputText  id="daneNazwa" value="#{item.nazwa}" size="45"/>
-                <rich:message for="daneNazwa"/>
-            </rich:column>
+            <rich:dataTable id="tableDane" value="#{managedBean.obiekt.plikimapDaneList}" var="item" sortMode="single" iterationStatusVar="it" 
+                            rows="25" style="width: 100%" limitRender="true" filterVar="filterValue">
+                <f:facet name="header"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
+                <f:facet name="footer"><rich:dataScroller for="tableDane" fastControls="hide" maxPages="5"/></f:facet>
 
-            <rich:column sortBy="#{item.dane}" filterExpression="#{fn:containsIgnoreCase(item.dane, filterValue) or filtrWartosc==''}" filterValue="#{filtrWartosc}">
-                <f:facet name="header">wartosc</f:facet>
-                <h:inputText value="#{item.dane}" size="45"/>
-            </rich:column>
+                <rich:column sortBy="#{item.nazwa}" filterExpression="#{fn:containsIgnoreCase(item.nazwa, filterValue) or filtrKlucz==''}" filterValue="#{filtrKlucz}">
+                    <f:facet name="header">klucz</f:facet>
+                    <h:inputText  id="daneNazwa" value="#{item.nazwa}" size="45"/>
+                    <rich:message for="daneNazwa"/>
+                </rich:column>
 
-            <rich:column sortBy="#{item.opie}" filterExpression="#{fn:containsIgnoreCase(item.opis, filterValue) or filtrOpis==''}" filterValue="#{filtrOpis}">
-                <f:facet name="header">opis</f:facet>
-                <h:inputText value="#{item.opis}" size="45"/>
-            </rich:column>
-        </rich:dataTable>
+                <rich:column sortBy="#{item.dane}" filterExpression="#{fn:containsIgnoreCase(item.dane, filterValue) or filtrWartosc==''}" filterValue="#{filtrWartosc}">
+                    <f:facet name="header">wartosc</f:facet>
+                    <h:inputText value="#{item.dane}" size="45"/>
+                </rich:column>
 
-        <a4j:commandButton id="zapiszDane" value="Zapisz" action="#{managedBean.edytujDane}" render="listPanel, danePanel" execute="danePanel"
-                           oncomplete="if (#{facesContext.maximumSeverity.ordinal>1}) {#{rich:component('danePanel')}.hide();#{rich:component('danePanel')}.show()} else{#{rich:component('danePanel')}.hide()};"/>
-        <a4j:commandButton id="wyjdzDane" value="Wyjdź" action="#{managedBean.newObiekt}" onclick="#{rich:component('danePanel')}.hide(); return false"/>
-    </rich:popupPanel>
-    <hr/>
+                <rich:column sortBy="#{item.opie}" filterExpression="#{fn:containsIgnoreCase(item.opis, filterValue) or filtrOpis==''}" filterValue="#{filtrOpis}">
+                    <f:facet name="header">opis</f:facet>
+                    <h:inputText value="#{item.opis}" size="45"/>
+                </rich:column>
+            </rich:dataTable>
 
+            <a4j:commandButton id="zapiszDane" value="Zapisz" action="#{managedBean.edytujDane}" render="listPanel, danePanel" execute="danePanel"
+                               oncomplete="if (#{facesContext.maximumSeverity.ordinal>1}) {#{rich:component('danePanel')}.hide();#{rich:component('danePanel')}.show()} else{#{rich:component('danePanel')}.hide()};"/>
+            <a4j:commandButton id="wyjdzDane" value="Wyjdź" action="#{managedBean.newObiekt}" onclick="#{rich:component('danePanel')}.hide(); return false"/>
+        </rich:popupPanel>
+        <hr/>
+
+    </ui:composition>
 </html>

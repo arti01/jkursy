@@ -1,55 +1,61 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets" 
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:rich="http://richfaces.org/rich"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:a4j="http://richfaces.org/a4j"
-                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+<html   
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition >
 
+        <rich:popupPanel header="zmień dane wg maski w pliku:" id="maskaPanel" domElementAttachment="parent" 
+                         left="13" top="13" minHeight="350" minWidth="640" resizeable="true">
+            <f:facet name="controls">
+                <h:outputLink value="#" onclick="#{rich:component('maskaPanel')}.hide();
+                        return false;">
+                    <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+                </h:outputLink>
+            </f:facet>
+            <h3>#{plikiMapMg.obiekt.nazwa}</h3>
+            <h:panelGrid columns="3" id="zmienMaskGrid" >
+                <h:outputLabel for="maskaZ" value="z jakiej wartości zmienić: "/>
+                <h:inputText id="maskaZ" value="#{plikiMapMg.maskaZ}" size="60" ><rich:validator/></h:inputText>
+                <rich:message for="maskaZ" styleClass="error" />
 
-    <rich:popupPanel header="zmień dane wg maski w pliku:" id="maskaPanel" autosized="true" domElementAttachment="parent" 
-                     left="13" top="13" minHeight="150" minWidth="640">
-        <f:facet name="controls">
-            <h:outputLink value="#" onclick="#{rich:component('maskaPanel')}.hide();
-                    return false;">
-                <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
-            </h:outputLink>
-        </f:facet>
-        <h3>#{plikiMapMg.obiekt.nazwa}</h3>
-        <h:panelGrid columns="3" id="zmienMaskGrid" >
-            <h:outputLabel for="maskaZ" value="z jakiej wartości zmienić: "/>
-            <h:inputText id="maskaZ" value="#{plikiMapMg.maskaZ}" size="60" ><rich:validator/></h:inputText>
-            <rich:message for="maskaZ" styleClass="error" />
+                <h:outputLabel for="maskaNa" value="na jaką wartość zmienić: "/>
+                <h:inputText id="maskaNa" value="#{plikiMapMg.maskaNa}" size="60" ><rich:validator/></h:inputText>
+                <rich:message for="maskaNa" styleClass="error" />
+            </h:panelGrid>
 
-            <h:outputLabel for="maskaNa" value="na jaką wartość zmienić: "/>
-            <h:inputText id="maskaNa" value="#{plikiMapMg.maskaNa}" size="60" ><rich:validator/></h:inputText>
-            <rich:message for="maskaNa" styleClass="error" />
-        </h:panelGrid>
+            <h:panelGroup id="maskPrzyciski">
+                <a4j:commandButton id="wykZmMask" value="Przygotuj zmianę" action="#{plikiMapMg.zmienWgMaski}" render="panelMaskRaport, maskPrzyciski" 
+                                   execute="maskaPanel" rendered="#{plikiMapMg.bledyPliku.entrySet().size()==0}"/>
+                <a4j:commandButton id="zapZmMask" value="Zapisz zmianę" action="#{plikiMapMg.edytuj}" render="listPanel" 
+                                   execute="maskaPanel" rendered="#{plikiMapMg.bledyPliku.entrySet().size()!=0}"
+                                   oncomplete="if (#{facesContext.maximumSeverity.ordinal>1}) {#{rich:component('maskaPanel')}.hide();#{rich:component('maskaPanel')}.show()} else{#{rich:component('maskaPanel')}.hide()};"/>
 
-        <a4j:commandButton id="wykZmMask" value="Wykonaj zmianę" action="#{plikiMapMg.zmienWgMaski}" render="listPanel, panelMaskRaport" execute="maskaPanel"/>
-        <a4j:commandButton value="Wyjdź" onclick="#{rich:component('maskaPanel')}.hide(); return false"/>
+                <a4j:commandButton value="Wyjdź" onclick="#{rich:component('maskaPanel')}.hide(); return false"/>
+            </h:panelGroup>
+            <h:panelGroup id="panelMaskRaport">
+                <fieldset>
+                    <legend>Wynik</legend>
+                    <h:messages id="messagesKolon"/>
 
-        <h:panelGroup id="panelMaskRaport">
-            <fieldset>
-                <legend>Walidacja</legend>
-                <h:messages id="messages"/>
+                    <rich:dataTable value="#{plikiMapMg.bledyPliku.entrySet().toArray()}" var="bledy" rendered="#{plikiMapMg.bledyPliku.size()>0}">
+                        <f:facet name="header">jeśli są błędy - plik nie zostanie wczytany</f:facet>
+                        <rich:column>
+                            #{bledy.key}
+                        </rich:column>
+                        <rich:column>
+                            #{bledy.value}
+                        </rich:column>
+                    </rich:dataTable>
+                </fieldset>
+                <hr/>
+            </h:panelGroup>
 
-                <rich:dataTable value="#{plikiMapMg.bledyPliku.entrySet().toArray()}" var="bledy" rendered="#{plikiMapMg.bledyPliku.size()>0}">
-                    <f:facet name="header">jeśli są błędy - plik nie zostanie wczytany</f:facet>
-                    <rich:column>
-                        #{bledy.key}
-                    </rich:column>
-                    <rich:column>
-                        #{bledy.value}
-                    </rich:column>
-                </rich:dataTable>
-            </fieldset>
-            <hr/>
-        </h:panelGroup>
-
-    </rich:popupPanel>
-    <hr/>
-
-</ui:composition>
+        </rich:popupPanel>
+        <hr/>
+    </ui:composition>
+</html>

@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html   
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:rich="http://richfaces.org/rich"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:a4j="http://richfaces.org/a4j"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition >
+
+        <rich:popupPanel header="walidacja danych" id="walidPanel" domElementAttachment="parent" 
+                         left="13" top="13" minHeight="350" minWidth="640" resizeable="true">
+            <f:facet name="controls">
+                <h:outputLink value="#" onclick="#{rich:component('walidPanel')}.hide(); refresh;
+                        return false;">
+                    <h:outputText value="zamknij (X)"  style="font-weight: bold;"/>
+                </h:outputLink>
+            </f:facet>
+            <h3>#{plikiMapMg.obiekt.nazwa}</h3>
+            <a4j:commandButton value="Wyjdź" render="listPanel" onclick="#{rich:component('walidPanel')}.hide(); return false"/>
+
+            <h:panelGroup id="panelWalidRaport">
+                <fieldset>
+                    <legend>Wynik</legend>
+                    <h:messages id="messagesWal"/>
+
+                    <rich:dataTable value="#{plikiMapMg.bledyPlikuWalid.entrySet().toArray()}" var="bledy" rendered="#{plikiMapMg.bledyPlikuWalid.size()>0}">
+                        <f:facet name="header">jeśli są błędy - plik nie zostanie wczytany</f:facet>
+                        <rich:column>
+                            #{bledy.key}
+                        </rich:column>
+                        <rich:column>
+                            #{bledy.value}
+                        </rich:column>
+                    </rich:dataTable>
+                </fieldset>
+                <hr/>
+            </h:panelGroup>
+
+        </rich:popupPanel>
+        <hr/>
+    </ui:composition>
+</html>
